@@ -1,4 +1,4 @@
-import "../Chat.css"
+import "../style/chat.css"
 import "../config"
 
 import firebase from "firebase/compat/app"
@@ -18,11 +18,10 @@ function GlobalChat() {
   const [user] = useAuthState(auth)
 
   return (
-    <div className="App">
-      <header>
-        <h1></h1>
+    <div className="global-chat">
+      {/* <header>
         <SignOut />
-      </header>
+      </header> */}
       <section>{user ? <ChatRoom /> : <SignIn />}</section>
     </div>
   )

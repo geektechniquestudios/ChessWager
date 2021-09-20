@@ -1,14 +1,15 @@
-body {
+/* body {
   background-color: #282c34;
-}
+} */
 
-.App {
+.global-chat {
   text-align: center;
-  max-width: 728px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.App header {
+/* .App header {
   background-color: #181717;
   height: 10vh;
   min-height: 50px;
@@ -23,45 +24,42 @@ body {
   z-index: 99;
   padding: 10px;
   box-sizing: border-box;
-}
+} */
 
-.App section {
+.global-chat section {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100vh;
   background-color: rgb(40, 37, 53);
+  max-height: 93.5vh; 
+  /* @todo figure out better way to scale chat */
 }
 
-main {
+.global-chat main {
   padding: 10px;
-  height: 78vh;
-  margin: 10vh 0 10vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column-reverse;
   bottom: 0;
 }
 
-main::-webkit-scrollbar {
+.global-chat main::-webkit-scrollbar {
   width: 0.25rem;
 }
 
-main::-webkit-scrollbar-track {
+.global-chat main::-webkit-scrollbar-track {
   background: #1e1e24;
 }
 
-main::-webkit-scrollbar-thumb {
+.global-chat main::-webkit-scrollbar-thumb {
   background: #6649b8;
 }
 
 form {
-  height: 10vh;
-  position: fixed;
+  height: 5vh;
   bottom: 0;
   background-color: rgb(24, 23, 23);
   width: 100%;
-  max-width: 728px;
   display: flex;
   font-size: 1.5rem;
 }
@@ -104,6 +102,7 @@ button:disabled {
 .sign-in {
   color: #282c34;
   background: white;
+  /* @todo */
   max-width: 400px;
   margin: 0 auto;
 }

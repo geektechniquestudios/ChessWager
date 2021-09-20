@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+#page {
+  height: 100vh;
+  display: grid;
+  gap: 1rem;
+  grid-template-areas: 
+    "head  head  head"
+    "game  game  chat"
+    "game  game  chat"
+    "lobby lobby chat"
+    "foot  foot  chat";
+  grid-template-columns: minmax(10em, 3fr) minmax(10em, 3fr) minmax(16em, 2fr);
+  grid-template-rows: minmax(1em, 1fr) minmax(auto, 5fr) minmax(auto, 5fr) minmax(1em, 6fr) minmax(1em, 1fr); 
+  /* justify-items: center; */
+  /* align-items: center; */
+}
+
+#page > header {
+  grid-area: head;
+  background-color: orange;
+}
+#page > nav {
+  grid-area: lobby;
+  background-color: green;
+}
+#page > main {
+  grid-area: game;
+  background-color: blue;
+}
+#page > aside {
+  grid-area: chat;
+  background-color: chartreuse;
+}
+#page > footer {
+  grid-area: foot;
+  background-color: cyan;
+}
