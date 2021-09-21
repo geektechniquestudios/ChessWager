@@ -10,43 +10,23 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useRef, useState } from "react"
 
-const auth = firebase.auth()
 const firestore = firebase.firestore()
 //const storage = getStorage()
 
-function GlobalChat() {
-  const [user] = useAuthState(auth)
+function GlobalChat({user, auth}) {
 
   return (
     <div className="global-chat">
       {/* <header>
         <SignOut />
       </header> */}
-      <section>{user ? <ChatRoom /> : <SignIn />}</section>
+      {/* <section>{user ? <ChatRoom /> : <SignIn />}</section> */}
+      <section> <ChatRoom user={user} auth={auth}/> </section>
     </div>
   )
 }
 
-function SignIn() {
-  const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    auth.signInWithPopup(provider)
-  }
-
-  return (
-    <>
-      <button onClick={signInWithGoogle}>Sign in with Google</button>
-    </>
-  )
-}
-
-function SignOut() {
-  return (
-    auth.currentUser && <button onClick={() => auth.signOut()}>Sign Out</button>
-  )
-}
-
-const ChatRoom = () => {
+const ChatRoom = ({user, auth}) => {
   const dummy = useRef()
   const messagesRef = firestore.collection("messages")
   const query = messagesRef.orderBy("createdAt", "desc").limit(25)
@@ -56,7 +36,7 @@ const ChatRoom = () => {
 
   const sendMessage = async e => {
     e.preventDefault()
-    if (formValue === "") {
+    if (formValue === "" || !user) {
       //@todo make regex for any empty string
       return
     }
@@ -79,7 +59,7 @@ const ChatRoom = () => {
       <main>
         <span ref={dummy}></span>
         {messages &&
-          messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+          messages.map(msg => <ChatMessage key={msg.id} message={msg} auth={auth}/>)}
       </main>
       <form onSubmit={sendMessage}>
         <input value={formValue} onChange={e => setFormValue(e.target.value)} />
@@ -89,10 +69,12 @@ const ChatRoom = () => {
   )
 }
 
-function ChatMessage({ message }) {
+function ChatMessage({ message, auth }) {
   const { text, uid, photoURL, userName } = message
 
-  const messageClass = uid === auth.currentUser.uid ? "sent" : "received"
+  let messageClass
+  if(!auth.currentUser) {messageClass = "received"}
+  else { messageClass = uid === auth.currentUser.uid ? "sent" : "received"}
   return (
     <>
       <div className={`message ${messageClass}`}>

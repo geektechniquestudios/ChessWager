@@ -1,0 +1,5 @@
+#auth-buttons {
+  display: flex;
+  float: right;
+  margin: 0 1em 0 0;
+}

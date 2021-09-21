@@ -10,20 +10,19 @@ import ChessGame from "./components/ChessGame"
 import Header from "./components/Header"
 import "./style/index.css"
 import Footer from "./components/Footer"
+import { useAuthState } from "react-firebase-hooks/auth"
+
+const auth = firebase.auth()
 
 const App = () => {
+  const [user] = useAuthState(auth)
   return (
     <section id="page">
-      {/* <Header className="header"/> */}
-      <header>header</header>
-      {/* <BettingLobby className="lobby"/> */}
-      <nav>nav</nav>
-      {/* <ChessGame className="game"/> */}
+      <header><Header user={user}/></header>
+      <nav><BettingLobby /></nav>
       <main><ChessGame /></main>
-      {/* <GlobalChat className="chat"/> */}
-      <aside><GlobalChat /></aside>
-      {/* <Footer className="footer" /> */}
-      <footer>footer</footer>
+      <aside><GlobalChat user={user} auth={auth}/></aside>
+      <footer><Footer /></footer>
     </section>
   )
 }
