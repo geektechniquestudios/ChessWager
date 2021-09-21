@@ -153,3 +153,6 @@ img {
   margin: 2px 5px;
 }
 
+fieldset {
+  border: 0;
+}

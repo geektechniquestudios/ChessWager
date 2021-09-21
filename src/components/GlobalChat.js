@@ -13,20 +13,22 @@ import { useRef, useState } from "react"
 const firestore = firebase.firestore()
 //const storage = getStorage()
 
-function GlobalChat({user, auth}) {
-
+function GlobalChat({ user, auth }) {
   return (
     <div className="global-chat">
       {/* <header>
         <SignOut />
       </header> */}
       {/* <section>{user ? <ChatRoom /> : <SignIn />}</section> */}
-      <section> <ChatRoom user={user} auth={auth}/> </section>
+      <section>
+        {" "}
+        <ChatRoom user={user} auth={auth} />{" "}
+      </section>
     </div>
   )
 }
 
-const ChatRoom = ({user, auth}) => {
+const ChatRoom = ({ user, auth }) => {
   const dummy = useRef()
   const messagesRef = firestore.collection("messages")
   const query = messagesRef.orderBy("createdAt", "desc").limit(25)
@@ -53,18 +55,26 @@ const ChatRoom = ({user, auth}) => {
     setFormValue("")
     dummy.current.scrollIntoView({ behavior: "smooth" })
   }
-
+    
   return (
+
     <>
       <main>
         <span ref={dummy}></span>
         {messages &&
-          messages.map(msg => <ChatMessage key={msg.id} message={msg} auth={auth}/>)}
+          messages.map(msg => (
+            <ChatMessage key={msg.id} message={msg} auth={auth} />
+          ))}
       </main>
-      <form onSubmit={sendMessage}>
-        <input value={formValue} onChange={e => setFormValue(e.target.value)} />
-        <button type="submit">🕊️</button>
-      </form>
+      <fieldset disabled={!auth.currentUser}>
+        <form onSubmit={sendMessage}>
+          <input
+            value={auth.currentUser ? formValue : "sign in to chat"}
+            onChange={e => setFormValue(e.target.value)}
+          />
+          <button type="submit">🕊️</button>
+        </form>
+      </fieldset>
     </>
   )
 }
@@ -73,8 +83,11 @@ function ChatMessage({ message, auth }) {
   const { text, uid, photoURL, userName } = message
 
   let messageClass
-  if(!auth.currentUser) {messageClass = "received"}
-  else { messageClass = uid === auth.currentUser.uid ? "sent" : "received"}
+  if (!auth.currentUser) {
+    messageClass = "received"
+  } else {
+    messageClass = uid === auth.currentUser.uid ? "sent" : "received"
+  }
   return (
     <>
       <div className={`message ${messageClass}`}>
