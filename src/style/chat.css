@@ -31,6 +31,7 @@
   flex-direction: column;
   justify-content: center;
   background-color: rgb(40, 37, 53);
+  min-height: 93.5vh; 
   max-height: 93.5vh; 
   /* @todo figure out better way to scale chat */
 }
@@ -62,10 +63,11 @@ form {
   width: 100%;
   display: flex;
   font-size: 1.5rem;
+  bottom: 0;
 }
 
 form button {
-  width: 20%;
+  min-width: 20%;
   background-color: rgb(56, 56, 143);
 }
 
@@ -79,6 +81,8 @@ input {
   outline: none;
   border: none;
   padding: 0 10px;
+  white-space: break-spaces;
+
 }
 
 button {

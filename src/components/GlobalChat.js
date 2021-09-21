@@ -6,7 +6,6 @@ import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import "firebase/compat/analytics"
 
-import { useAuthState } from "react-firebase-hooks/auth"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useRef, useState } from "react"
 
@@ -16,13 +15,8 @@ const firestore = firebase.firestore()
 function GlobalChat({ user, auth }) {
   return (
     <div className="global-chat">
-      {/* <header>
-        <SignOut />
-      </header> */}
-      {/* <section>{user ? <ChatRoom /> : <SignIn />}</section> */}
       <section>
-        {" "}
-        <ChatRoom user={user} auth={auth} />{" "}
+        <ChatRoom user={user} auth={auth} />
       </section>
     </div>
   )
@@ -55,9 +49,8 @@ const ChatRoom = ({ user, auth }) => {
     setFormValue("")
     dummy.current.scrollIntoView({ behavior: "smooth" })
   }
-    
-  return (
 
+  return (
     <>
       <main>
         <span ref={dummy}></span>

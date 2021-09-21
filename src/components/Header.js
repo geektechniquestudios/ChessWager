@@ -18,7 +18,7 @@ const Header = ({ user }) => {
 function SignIn() {
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
-    auth.signInWithPopup(provider)
+    auth.signInWithRedirect(provider).then((_, error) => {console.log(error)})
   }
 
   return (

@@ -19,7 +19,7 @@ const App = () => {
   return (
     <section id="page">
       <header><Header user={user}/></header>
-      <nav><BettingLobby /></nav>
+      <nav><BettingLobby auth={auth}/></nav>
       <main><ChessGame /></main>
       <aside><GlobalChat user={user} auth={auth}/></aside>
       <footer><Footer /></footer>
