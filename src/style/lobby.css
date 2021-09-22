@@ -1,0 +1,6 @@
+.bet {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(6, minmax(10em, 1fr));
+  margin-right: 10px;
+}

@@ -1,5 +1,5 @@
-import "../style/chat.css"
-import "../config"
+import "../../style/chat.css"
+import "../../config"
 
 import firebase from "firebase/compat/app"
 import "firebase/compat/firestore"
@@ -84,7 +84,7 @@ function ChatMessage({ message, auth }) {
   return (
     <>
       <div className={`message ${messageClass}`}>
-        <p style={{ fontSize: 5, padding: 5 }}>{userName}</p>
+        {/* <p style={{ fontSize: 5, padding: 5 }}>{userName}</p> */}
         {/* remove inline style @todo */}
         <img src={photoURL} alt="" />
         <p>{text}</p>
