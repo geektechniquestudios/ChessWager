@@ -2,6 +2,8 @@ import React from "react"
 
 import Card from "react-bootstrap/Card"
 
+import "../../style/lobby.css"
+
 const Bet = ({
   id,
   amount,
