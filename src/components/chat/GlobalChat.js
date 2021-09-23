@@ -84,9 +84,7 @@ function ChatMessage({ message, auth }) {
   return (
     <>
       <div className={`message ${messageClass}`}>
-        {/* <p style={{ fontSize: 5, padding: 5 }}>{userName}</p> */}
-        {/* remove inline style @todo */}
-        <img src={photoURL} alt="" />
+        <img src={photoURL} alt="" title={userName}/>
         <p>{text}</p>
       </div>
     </>

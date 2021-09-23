@@ -37,6 +37,7 @@
 }
 
 .global-chat main {
+  /* @todo make this grid */
   padding: 10px;
   overflow-y: scroll;
   display: flex;

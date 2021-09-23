@@ -8,3 +8,35 @@
 .range {
   min-width: 14em;
 }
+
+.lobby {
+  display: grid;
+  overflow-y: hidden;
+}
+
+.lobby main {
+  display: grid;
+  overflow-y: auto;
+  /* bottom: 0; */
+  max-height: 27vh;
+
+}
+
+.lobby-container {
+  /* overflow-y: scroll; */
+}
+
+.lobby main::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+.lobby main::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+.lobby main::-webkit-scrollbar-thumb {
+  background: #6649b8;
+}
+
+.bet {
+}
