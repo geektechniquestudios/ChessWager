@@ -2,26 +2,50 @@ import React, { useState } from "react"
 import { Form } from "react-bootstrap"
 import CurrencyInput from "react-currency-input-field"
 import "../../style/lobby.css"
+import "../../config"
+import firebase from "firebase/compat/app"
 //import "rc-slider/assets/index.css"
 // import Slider, { SliderTooltip } from "../src"
 //import "rc-tooltip/assets/bootstrap.css"
 
+
+
 const WagerForm = ({ lobbyRef, auth }) => {
   const [betSide, setBetSide] = useState("white")
-  const [betAmount, setBetAmount] = useState(0.0)
+  const [betAmount, setBetAmount] = useState(0.34)
   const [multiplier, setMultiplier] = useState(1.0)
   const [sliderVal, setSliderVal] = useState(0.0)
 
-  const createWager = async () => {
-    const { uid } = auth.currentUser
-    await lobbyRef.add({})
+  const createWager = async e => { //@todo? make a "are you sure?" popup with all the relevant info
+    e.preventDefault()
+    const { uid, photoURL } = auth.currentUser
+    console.log(betAmount)
+    console.log(betSide)
+    console.log(firebase.firestore.FieldValue.serverTimestamp())
+    console.log(uid)
+    console.log(photoURL)
+
+    await lobbyRef.add({ //@todo don't let people write to this unless they own it somehow
+        amount: Number(betAmount),
+        betSide: betSide,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        gameId: "", //@todo get from api call to lichess, will use redux, update auth
+        multiplier: Number(multiplier).toFixed(2),
+        status: "active",
+        user1Id: uid,
+        user1Metamask: "", //@todo get from web3
+        user1PhotoURL: photoURL,
+        user2Id: "",
+        user2Metamask: "",
+        user2PhotoURL: "",    
+    })
   }
 
   const calcMultiplier = (sliderVal) => {
     if (sliderVal <= 0) {
       setMultiplier(1.0 + Number(sliderVal))
     } else {
-      setMultiplier(1 / (1 - sliderVal))
+      setMultiplier(1 / (1 - Number(sliderVal)))
     }
   }
 
@@ -45,17 +69,19 @@ const WagerForm = ({ lobbyRef, auth }) => {
           <option value="white">white</option>
           <option value="black">black</option>
         </select>
-        <label>Amount</label>
+        <label>Amount (eth)</label>
         <CurrencyInput
           id="bet-amount"
           name="amount"
           placeholder="Chooes your bet"
           defaultValue={0.34} //@todo display usd equivalent here
           decimalsLimit={6}
+          value={betAmount}
           onValueChange={value => setBetAmount(value)}
+          allowNegativeValue={false}
+          suffix="Ξ"
         />
         <label>Multiplier</label>
-        {/* <Slider />  */}
         {/* @todo replace with slider */}
         {/* <input
           type="number"
@@ -77,7 +103,6 @@ const WagerForm = ({ lobbyRef, auth }) => {
             tooltip="off"
           />
           <p>{Number(multiplier).toFixed(2)}</p>
-          {/* <p>{multiplier}</p> */}
         </div>
       </form>
     </div>

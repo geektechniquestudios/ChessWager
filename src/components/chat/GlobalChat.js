@@ -1,5 +1,4 @@
 import "../../style/chat.css"
-import "../../config"
 
 import firebase from "firebase/compat/app"
 import "firebase/compat/firestore"
@@ -8,6 +7,7 @@ import "firebase/compat/analytics"
 
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useRef, useState } from "react"
+import "../../config"
 
 const firestore = firebase.firestore()
 //const storage = getStorage()

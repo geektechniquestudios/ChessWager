@@ -12,13 +12,15 @@ const Bet = ({
   status,
   user1Id,
   user1Metamask,
+  user1PhotoURL,
   user2Id,
   user2Metamask,
+  user2PhotoURL,
   createdAt,
   gameId,
   auth,
 }) => {
-  const { uid, photoURL } = auth.currentUser
+  const potSize = amount + amount * multiplier
 
   const acceptBet = () => {
     //@todo popup modal with stats about bet,
@@ -26,17 +28,18 @@ const Bet = ({
     //
     return <> {alert("This isn't built yet!")}</>
   }
-
+  
   return (
     <div>
       <Card>
         <Card.Body className="bet">
+          <img src={user1PhotoURL} alt="" />
           <button onClick={acceptBet}> Accept Bet </button>
           <span>{`${amount} eth`}</span>
           <span>{`${betSide}`}</span>
           <span>{`x${multiplier}`}</span>
-          <span>{`pot size ${amount * multiplier}`}</span>
-          <img src={photoURL} alt="" />
+          <span>{`pot size ${potSize}`}</span>
+          {user2PhotoURL !== "" && <img src={user2PhotoURL} alt="" />}
         </Card.Body>
       </Card>
     </div>

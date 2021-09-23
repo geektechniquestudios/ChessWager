@@ -11,6 +11,7 @@ import Header from "./components/header/MainHeader"
 import "./style/index.css"
 import Footer from "./components/footer/MainFooter"
 import { useAuthState } from "react-firebase-hooks/auth"
+import "./config"
 
 const auth = firebase.auth()
 
@@ -20,7 +21,7 @@ const App = () => {
 
   return (
     <section id="page">
-          <header><Header user={user}/></header>
+          <header><Header user={user} auth={auth}/></header>
           <nav><BettingLobby auth={auth}/></nav>
           <main><ChessGame /></main>
           <aside><GlobalChat user={user} auth={auth}/></aside>

@@ -3,17 +3,16 @@ import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 import "../../style/header.css"
 
-const auth = firebase.auth()
 
-const Header = ({ user }) => {
+const Header = ({ user, auth }) => {
   return (
     <>
-      <div id="auth-buttons">{user ? <SignOut /> : <SignIn />}</div>
+      <div id="auth-buttons">{user ? <SignOut auth={auth}/> : <SignIn auth={auth}/>}</div>
     </>
   )
 }
 
-function SignIn() {
+function SignIn({auth}) {
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     auth.signInWithRedirect(provider).then((_, error) => {
@@ -24,7 +23,7 @@ function SignIn() {
   return <button onClick={signInWithGoogle}>Sign in with Google</button>
 }
 
-function SignOut() {
+function SignOut({auth}) {
   return (
     <>
       {auth.currentUser && (
