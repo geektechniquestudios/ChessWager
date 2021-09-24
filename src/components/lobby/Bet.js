@@ -5,6 +5,7 @@ import "../../config"
 import firebase from "firebase/compat/app"
 import "../../style/lobby.css"
 import "firebase/compat/functions"
+import Modal from "react-modal"
 
 const Bet = ({
   user,
@@ -39,10 +40,15 @@ const Bet = ({
       betId: id,
       uid: auth.currentUser.uid,
       photoURL: auth.currentUser.photoURL,
-    }).then(res => console.log(res.data)) // @todo
+    }) //.then(res => {if (res != null) {alert(res.data)}}) // @todo
 
-    return <> {alert("Bet accepted")}</>
+    // return <> {alert("Bet accepted")}</>
   }
+
+  const isPending =
+    auth.currentUser &&
+    (user1Id === auth.currentUser.uid || user2Id === auth.currentUser.uid) &&
+    status === "pending"
 
   return (
     <div>
@@ -50,7 +56,15 @@ const Bet = ({
         <Card.Body className={`${className} bet`}>
           <img src={user1PhotoURL} alt="" />
           <span>{status}</span>
-          {user && <button disabled={status === "pending" || user1Id === auth.currentUser.uid || !user} onClick={acceptBet}> Accept Bet </button>}
+          {user && user1Id !== auth.currentUser.uid && (
+            <button
+              disabled={status === "pending" || !user}
+              onClick={acceptBet}
+            >
+              {" "}
+              Accept Bet{" "}
+            </button>
+          )}
           <span>{`${amount} eth`}</span>
           <span>{`${betSide}`}</span>
           <span>{`x${multiplier}`}</span>
@@ -58,6 +72,14 @@ const Bet = ({
           {user2PhotoURL && <img src={user2PhotoURL} alt="" />}
         </Card.Body>
       </Card>
+      <Modal isOpen={isPending} ariaHideApp={false}>
+        {/* leftoff@todo show conditions of bet and prompt metamask 
+          accept and cancel buttons
+          cancel would make bet go back to ready
+        */}
+
+        <div>content for the Modal</div>
+      </Modal>
     </div>
   )
 }

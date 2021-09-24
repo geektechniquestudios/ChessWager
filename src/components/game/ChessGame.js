@@ -1,10 +1,13 @@
 import React from 'react'
-import ChessBoard from "chessboardjsx"
+import Chessground from 'react-chessground'
+// import 'react-chessground/dist/styles/chessground.css'
+import "../../style/game.css"
 
 const ChessGame = () => {
     return (
-        <div>
-            <ChessBoard position="start" />
+        <div id="chess-board">
+            {/* <ChessBoard position="start" /> */}
+            <Chessground />
         </div>
     )
 }
