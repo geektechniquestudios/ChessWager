@@ -38,5 +38,10 @@
   background: #6649b8;
 }
 
-.bet {
+.ready-bet {
+  background-color: aquamarine;
+}
+
+.pending-bet {
+  background-color: yellow;
 }

@@ -14,6 +14,8 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import "./config"
 
 const auth = firebase.auth()
+// firebase.functions();
+
 
 
 const App = () => {
@@ -22,7 +24,7 @@ const App = () => {
   return (
     <section id="page">
           <header><Header user={user} auth={auth}/></header>
-          <nav><BettingLobby auth={auth}/></nav>
+          <nav><BettingLobby user={user} auth={auth}/></nav>
           <main><ChessGame /></main>
           <aside><GlobalChat user={user} auth={auth}/></aside>
           <footer><Footer /></footer>

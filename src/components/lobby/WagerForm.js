@@ -31,13 +31,13 @@ const WagerForm = ({ lobbyRef, auth }) => {
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         gameId: "", //@todo get from api call to lichess, will use redux, update auth
         multiplier: Number(multiplier).toFixed(2),
-        status: "active",
+        status: "ready",
         user1Id: uid,
         user1Metamask: "", //@todo get from web3
         user1PhotoURL: photoURL,
-        user2Id: "",
-        user2Metamask: "",
-        user2PhotoURL: "",    
+        // user2Id: "",
+        // user2Metamask: "",
+        // user2PhotoURL: "",    
     })
   }
 
