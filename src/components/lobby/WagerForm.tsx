@@ -1,47 +1,57 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Form } from "react-bootstrap"
 import CurrencyInput from "react-currency-input-field"
 import "../../style/lobby.css"
 import "../../config"
 import firebase from "firebase/compat/app"
+import RangeSlider from 'react-bootstrap-range-slider';
+
 //import "rc-slider/assets/index.css"
 // import Slider, { SliderTooltip } from "../src"
 //import "rc-tooltip/assets/bootstrap.css"
 
-const WagerForm = ({ lobbyRef, auth }) => {
+interface Props {
+  lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+  auth: firebase.auth.Auth
+}
+
+
+const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
   const [betSide, setBetSide] = useState("white")
   const [betAmount, setBetAmount] = useState(0.34)
   const [multiplier, setMultiplier] = useState(1.0)
   const [sliderVal, setSliderVal] = useState(0.0)
 
-  const createWager = async e => {
+  const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     //@todo? make a "are you sure?" popup with all the relevant info
     e.preventDefault()
-    const { uid, photoURL } = auth.currentUser
-    console.log(betAmount)
-    console.log(betSide)
-    console.log(firebase.firestore.FieldValue.serverTimestamp())
-    console.log(uid)
-    console.log(photoURL)
+    if (auth.currentUser) {
+      const { uid, photoURL }: firebase.User = auth.currentUser
+      // console.log(betAmount)
+      // console.log(betSide)
+      // console.log(firebase.firestore.FieldValue.serverTimestamp())
+      // console.log(uid)
+      // console.log(photoURL)
 
-    await lobbyRef.add({
-      //@todo don't let people write to this unless they own it somehow
-      amount: Number(betAmount),
-      betSide: betSide,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      gameId: "", //@todo get from api call to lichess, will use redux, update auth
-      multiplier: Number(multiplier).toFixed(2),
-      status: "ready",
-      user1Id: uid,
-      user1Metamask: "", //@todo get from web3
-      user1PhotoURL: photoURL,
-      // user2Id: "",
-      // user2Metamask: "",
-      // user2PhotoURL: "",
-    })
+      await lobbyRef.add({
+        //@todo don't let people write to this unless they own it somehow
+        amount: Number(betAmount),
+        betSide: betSide,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        gameId: "", //@todo get from api call to lichess, will use redux, update auth
+        multiplier: Number(multiplier).toFixed(2),
+        status: "Ready",
+        user1Id: uid,
+        user1Metamask: "", //@todo get from web3
+        user1PhotoURL: photoURL,
+        // user2Id: "",
+        // user2Metamask: "",
+        // user2PhotoURL: "",
+      })
+    }
   }
 
-  const calcMultiplier = sliderVal => {
+  const calcMultiplier = (sliderVal: number) => {
     if (sliderVal <= 0) {
       setMultiplier(1.0 + Number(sliderVal))
     } else {
@@ -49,8 +59,8 @@ const WagerForm = ({ lobbyRef, auth }) => {
     }
   }
 
-  const updateSlider = e => {
-    const newSliderVal = e.target.value
+  const updateSlider = (e: React.ChangeEvent<HTMLInputElement>) => { //@todo figure out how to do this correctly
+    const newSliderVal: number = Number(e.target.value)
     setSliderVal(newSliderVal)
     calcMultiplier(newSliderVal)
   }
@@ -78,23 +88,13 @@ const WagerForm = ({ lobbyRef, auth }) => {
             defaultValue={0.34} //@todo display usd equivalent here
             decimalsLimit={6}
             value={betAmount}
-            onValueChange={value => setBetAmount(value)}
+            onValueChange={value => setBetAmount(Number(value))}
             allowNegativeValue={false}
             suffix="Ξ"
           />
           <label>Multiplier</label>
-          {/* @todo replace with slider */}
-          {/* <input
-          type="number"
-          id="quantity"
-          name="quantity"
-          min="0.1"
-          max="10"
-          value={multiplier}
-          onChange={e => setMultiplier(e.target.value)}
-        /> */}
           <div>
-            <Form.Range
+            <RangeSlider
               className="range"
               value={sliderVal}
               onChange={updateSlider}

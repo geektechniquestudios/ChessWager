@@ -7,7 +7,27 @@ import "../../style/lobby.css"
 import "firebase/compat/functions"
 import Modal from "react-modal"
 
-const Bet = ({
+interface Props {
+  user: firebase.User | null | undefined
+  className: string
+  lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+  id: string
+  amount: number
+  betSide: string
+  multiplier: number
+  status: string
+  user1Id: string
+  user1Metamask: string
+  user1PhotoURL: string
+  user2Id: string
+  user2Metamask: string
+  user2PhotoURL: string
+  createdAt: Date
+  gameId: string
+  auth: firebase.auth.Auth
+}
+
+const Bet: React.FC<Props> = ({
   user,
   className,
   lobbyRef,
@@ -32,17 +52,19 @@ const Bet = ({
     //@todo popup modal with stats about bet,
     // when both people hit ready, popup metamask, timer 10s?
     //
-    // lobbyRef.doc(id).update({ status: "complete" })
+    if (auth.currentUser) {
+      lobbyRef.doc(id).update({ status: "complete" })
 
-    // call cloud function  with betid and user2id
-    var acceptBet = firebase.functions().httpsCallable("acceptBet")
-    acceptBet({
-      betId: id,
-      uid: auth.currentUser.uid,
-      photoURL: auth.currentUser.photoURL,
-    }) //.then(res => {if (res != null) {alert(res.data)}}) // @todo
+      // call cloud function  with betid and user2id
+      var acceptBet = firebase.functions().httpsCallable("acceptBet")
+      acceptBet({
+        betId: id,
+        uid: auth.currentUser.uid,
+        photoURL: auth.currentUser.photoURL,
+      }) //.then(res => {if (res != null) {alert(res.data)}}) // @todo
 
-    // return <> {alert("Bet accepted")}</>
+      // return <> {alert("Bet accepted")}</>
+    }
   }
 
   const isPending =
@@ -56,7 +78,7 @@ const Bet = ({
         <Card.Body className={`${className} bet`}>
           <img src={user1PhotoURL} alt="" />
           <span>{status}</span>
-          {user && user1Id !== auth.currentUser.uid && (
+          {user && auth.currentUser && user1Id !== auth.currentUser.uid && (
             <button
               disabled={status === "pending" || !user}
               onClick={acceptBet}
@@ -72,14 +94,15 @@ const Bet = ({
           {user2PhotoURL && <img src={user2PhotoURL} alt="" />}
         </Card.Body>
       </Card>
-      <Modal isOpen={isPending} ariaHideApp={false}>
+      < >
+          {/* isOpen={isPending} ariaHideApp={false}> */}
         {/* leftoff@todo show conditions of bet and prompt metamask 
           accept and cancel buttons
           cancel would make bet go back to ready
         */}
 
-        <div>content for the Modal</div>
-      </Modal>
+        {/* <div>content for the Modal</div> */}
+      </>
     </div>
   )
 }
