@@ -17,6 +17,7 @@ code {
   display: grid;
   gap: 1rem;
   grid-template-areas: 
+  /* @todo should probably make this 2x4 instead of 3x4 */
     "head  head  head"
     "game  game  chat"
     "game  game  chat"
