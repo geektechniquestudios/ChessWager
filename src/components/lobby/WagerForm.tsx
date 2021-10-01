@@ -40,7 +40,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         gameId: "", //@todo get from api call to lichess, will use redux, update auth
         multiplier: Number(multiplier).toFixed(2),
-        status: "Ready",
+        status: "ready",
         user1Id: uid,
         user1Metamask: "", //@todo get from web3
         user1PhotoURL: photoURL,
