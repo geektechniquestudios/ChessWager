@@ -9,7 +9,6 @@
     "@types/jest": "^26.0.24",
     "@types/node": "^12.20.27",
     "@types/react": "^17.0.25",
-    "@types/react-bootstrap": "^0.32.26",
     "@types/react-dom": "^17.0.9",
     "bootstrap": "^5.1.1",
     "firebase": "^9.1.0",
