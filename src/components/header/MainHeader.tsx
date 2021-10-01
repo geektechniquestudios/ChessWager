@@ -11,6 +11,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ user, auth }) => {
   return (
     <>
+    {/* @todo: logo, metamaks login */}
       <div id="auth-buttons">{user ? <SignOut auth={auth}/> : <SignIn auth={auth}/>}</div>
     </>
   )
