@@ -34,7 +34,6 @@ const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
       // console.log(photoURL)
 
       await lobbyRef.add({
-        //@todo don't let people write to this unless they own it somehow
         amount: Number(betAmount),
         betSide: betSide,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -44,9 +43,6 @@ const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
         user1Id: uid,
         user1Metamask: "", //@todo get from web3
         user1PhotoURL: photoURL,
-        // user2Id: "",
-        // user2Metamask: "",
-        // user2PhotoURL: "",
       })
     }
   }
