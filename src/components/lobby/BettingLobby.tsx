@@ -33,13 +33,19 @@ interface Lobby {
   gameId: string
 }
 
-
 const BettingLobby: React.FC<Props> = ({ user, auth }) => {
-  const lobbyRef = firestore.collection("lobby")
+  const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+    firestore.collection("lobby") //@todo order by created at
   const query = lobbyRef.where("status", "!=", "complete") //.where("status", "==", "ready") //.orderBy("createdAt", "desc").limit(10) //.where("status", "==", "active")
 
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
+
+  let userId = ""
+  if (auth.currentUser) {
+    const { uid }: firebase.User = auth.currentUser
+    userId = uid
+  }
 
   return (
     <div className="lobby">
@@ -50,9 +56,39 @@ const BettingLobby: React.FC<Props> = ({ user, auth }) => {
       </header>
       <main>
         <div className="lobby-container">
+          {lobby && user && // get related-to-user games
+            lobby
+              .filter(i => i.user1Id === userId || i.user2Id === userId)
+              .map(bet => (
+                <Bet
+                  user={user}
+                  className="in-progress-bet"
+                  lobbyRef={lobbyRef}
+                  key={bet.id}
+                  id={bet.id}
+                  amount={bet.amount}
+                  betSide={bet.betSide}
+                  multiplier={bet.multiplier}
+                  status={bet.status}
+                  user1Id={bet.user1Id}
+                  user1Metamask={bet.user1Metamask}
+                  user1PhotoURL={bet.user1PhotoURL}
+                  user2Id={bet.user2Id}
+                  user2Metamask={bet.user2Metamask}
+                  user2PhotoURL={bet.user2PhotoURL}
+                  createdAt={bet.createdAt}
+                  gameId={bet.gameId}
+                  auth={auth}
+                />
+              ))}
           {lobby &&
             lobby
-              .filter(i => i.status === "ready")
+              .filter(
+                i =>
+                  i.status === "ready" &&
+                  i.user1Id !== userId &&
+                  i.user2Id !== userId
+              )
               .map(bet => (
                 <Bet
                   user={user}
@@ -77,7 +113,12 @@ const BettingLobby: React.FC<Props> = ({ user, auth }) => {
               ))}
           {lobby &&
             lobby
-              .filter(i => i.status === "pending")
+              .filter(
+                i =>
+                  i.status === "pending" &&
+                  i.user1Id !== userId &&
+                  i.user2Id !== userId
+              )
               .map(bet => (
                 <Bet
                   user={user}

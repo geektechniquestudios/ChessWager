@@ -45,3 +45,7 @@
 .pending-bet {
   background-color: yellow;
 }
+
+.in-progress-bet {
+  background-color: chartreuse;
+}
