@@ -75,7 +75,8 @@ const Bet: React.FC<Props> = ({
   }
 
   const cancel = () => {
-    if (auth.currentUser) { // @todo are these current user checks really neccessary??
+    if (auth.currentUser) {
+      // @todo are these current user checks really neccessary??
       const cancelBet = firebase.functions().httpsCallable("cancelBet")
       cancelBet({
         betId: id,
@@ -151,21 +152,31 @@ const Bet: React.FC<Props> = ({
             auth.currentUser &&
             user2Id === auth.currentUser.uid &&
             status === "pending" && (
-              <button onClick={cancel}> Leave Bet</button>
+              <button onClick={cancel}> Leave Bet </button>
             )}
           {/* delete bet visible only to user1*/}
-          {user && auth.currentUser && user1Id === auth.currentUser.uid && <><button onClick={complete}> Delete Bet</button> </>}
+          {user && auth.currentUser && user1Id === auth.currentUser.uid && status !== "approved" && (
+            <>
+              <button onClick={complete}> Delete Bet</button>{" "}
+            </>
+          )}
 
           {/* approve button only visible to user1 after user2 joins*/}
-          {user && auth.currentUser && user1Id === auth.currentUser.uid && status === "pending" && (
-            <button onClick={approve}>Approve</button>
-          )}
+          {user &&
+            auth.currentUser &&
+            user1Id === auth.currentUser.uid &&
+            status === "pending" && <button onClick={approve}>Approve</button>}
 
           {/* kick only visible to user1 */}
-          {user && auth.currentUser && user1Id === auth.currentUser.uid && status === "pending" && (
-            <button onClick={kick}> Kick </button>
-          )}
+          {user &&
+            auth.currentUser &&
+            user1Id === auth.currentUser.uid &&
+            status === "pending" && <button onClick={kick}> Kick </button>}
           {/* block only visible to user1, maybe should go in profile?*/}
+          {user &&
+            auth.currentUser &&
+            user1Id === auth.currentUser.uid &&
+            status === "pending" && <button> block </button>}
           {/* delete bet only visible to user 1 the entire time */}
           <span>{`${amount} eth`}</span>
           <span>{`${betSide}`}</span>

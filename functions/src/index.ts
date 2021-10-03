@@ -6,8 +6,8 @@ admin.initializeApp()
 const db = admin.firestore()
 const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("lobby")
-const userRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-  db.collection("users")
+// const userRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+//   db.collection("users")
 
 interface AcceptArgs {
   betId: string
