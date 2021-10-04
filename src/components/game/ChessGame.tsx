@@ -11,7 +11,7 @@ const ChessGame = () => {
   return (
     <div id="chess-board">
       {/* @todo remove in prod */}
-      <button onClick={e => clearBets()}> clear </button> 
+      <button onClick={_e => clearBets()}> clear </button> 
 
       {/* <ChessBoard position="start" /> */}
       <a href="https://lichess.org/" target="_blank" rel="noreferrer">

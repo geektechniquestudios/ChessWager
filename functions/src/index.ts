@@ -11,28 +11,41 @@ const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.Docume
 
 interface AcceptArgs {
   betId: string
-  uid: string
   photoURL: string
+  hostUid: string
+}
+
+const authCheck = (context: any) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      "failed-precondition",
+      "The function must be called while authenticated."
+    )
+  }
 }
 
 exports.acceptBet = functions.https.onCall(
-  async ({ betId, photoURL }: AcceptArgs, context: any) => {
-    //context.auth etc
-    if (!context.auth) {
-      throw new functions.https.HttpsError(
-        "failed-precondition",
-        "The function must be called while authenticated."
-      )
+  async ({ betId, photoURL, hostUid }: AcceptArgs, context: any) => {
+    authCheck(context)
+    //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+    const betDocRef = lobbyRef.doc(betId)
+
+    const userDocRef: firebase.firestore.DocumentReference = db
+      .collection("users")
+      .doc(hostUid)
+
+    let toReturn = false
+    await userDocRef.get().then((doc: any) => {
+      const blocked: string[] = doc.data().blocked
+      toReturn = blocked.includes(context.auth.uid)
+    })
+    if (toReturn) {
+      return "You are blocked from joining this lobby"
     }
 
-    //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-    const docRef = lobbyRef.doc(betId)
-
-    await docRef.get().then((doc: any) => {
-      // userRef.where(doc.user1Id, "", "")
+    await betDocRef.get().then((doc: any) => {
       if (doc.data().user2Id == null || doc.data().user2Id === "") {
-        // and user2 isn't on user1's block list
-        docRef.update({
+        betDocRef.update({
           status: "pending",
           user2Id: context.auth.uid,
           // user2Metamask: userMetamask, @todo
@@ -41,9 +54,45 @@ exports.acceptBet = functions.https.onCall(
       }
     })
 
-    return
+    return ""
   }
 )
+
+// exports.acceptBet = functions.https.onCall(
+//   async ({ betId, photoURL, hostUid }: AcceptArgs, { context }: any) => {
+//     // authCheck(context)
+//     // const userCollectionRef = db.collection("users")
+//     // const userDocRef: firebase.firestore.DocumentReference =
+//     //   userCollectionRef.doc(hostUid)
+
+//     // let toReturn = false
+//     // await userDocRef.get().then((doc: any) => {
+//     //   if(doc.data().blocked.contains(context.auth.uid)){
+//     //     toReturn = true
+//     //   }
+//     // })
+//     // if (toReturn) {return "user is blocked"}
+//     //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+
+//     const betDocRef = lobbyRef.doc(betId)
+
+//     // betDocRef.get().then((doc: any) => {
+//     //   // userRef.where(doc.user1Id, "", "")
+//     //   if (doc.data()?.user2Id == null || doc.data()?.user2Id === "") {
+//     //     // and user2 isn't on user1's block list
+//     betDocRef.update({
+//       status: "pending",
+//       user2Id: context.auth.uid,
+//       // user2Metamask: userMetamask, @todo
+//       user2PhotoURL: photoURL,
+//     })
+//     // }
+//     //})
+
+//     //return "bet accepted"
+//     return
+//   }
+// )
 
 interface CancelArgs {
   betId: string
@@ -51,12 +100,7 @@ interface CancelArgs {
 
 exports.cancelBet = functions.https.onCall(
   async ({ betId }: CancelArgs, context: any) => {
-    if (!context.auth) {
-      throw new functions.https.HttpsError(
-        "failed-precondition",
-        "The function must be called while authenticated."
-      )
-    }
+    authCheck(context)
     const docRef = lobbyRef.doc(betId)
 
     await docRef.get().then((doc: any) => {
@@ -79,12 +123,7 @@ interface ApproveArgs {
 
 exports.approveBet = functions.https.onCall(
   async ({ betId }: ApproveArgs, context: any) => {
-    if (!context.auth) {
-      throw new functions.https.HttpsError(
-        "failed-precondition",
-        "The function must be called while authenticated."
-      )
-    }
+    authCheck(context)
     const docRef = lobbyRef.doc(betId)
 
     await docRef.get().then((doc: any) => {
@@ -104,12 +143,7 @@ interface CompleteArgs {
 
 exports.completeBet = functions.https.onCall(
   async ({ betId }: CompleteArgs, context: any) => {
-    if (!context.auth) {
-      throw new functions.https.HttpsError(
-        "failed-precondition",
-        "The function must be called while authenticated."
-      )
-    }
+    authCheck(context)
     const docRef = lobbyRef.doc(betId)
 
     await docRef.get().then((doc: any) => {
@@ -125,12 +159,7 @@ exports.completeBet = functions.https.onCall(
 
 exports.kickUser = functions.https.onCall(
   async ({ betId }: CompleteArgs, context: any) => {
-    if (!context.auth) {
-      throw new functions.https.HttpsError(
-        "failed-precondition",
-        "The function must be called while authenticated."
-      )
-    }
+    authCheck(context)
 
     const docRef = lobbyRef.doc(betId)
 
