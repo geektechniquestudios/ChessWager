@@ -1,3 +1,5 @@
+import "../../style/footer.css"
+
 const MainFooter = () => {
     return (
         <div id="main-footer">

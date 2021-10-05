@@ -1,2 +1,15 @@
-#id {
+#main-footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(1em, 1fr));
+}
+
+#main-footer > a {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+#main-footer > a > img {
+  justify-items: center;
+  align-items: center;
 }
