@@ -84,6 +84,8 @@ const Buttons: React.FC<Props> = ({
 
   return (
     <>
+    
+      {/* accept button for user 2, */}
       {user &&
         auth.currentUser &&
         user1Id !== auth.currentUser.uid &&
@@ -94,23 +96,22 @@ const Buttons: React.FC<Props> = ({
             // }
             onClick={accept}
           >
-            {" "}
-            Accept Bet{" "}
+            Accept Bet
           </button>
         )}
+
       {/* cancel button for user2, different cancel button for user1 */}
       {user &&
         auth.currentUser &&
         user2Id === auth.currentUser.uid &&
         status === "pending" && <button onClick={cancel}> Leave Bet </button>}
+
       {/* delete bet visible only to user1*/}
       {user &&
         auth.currentUser &&
         user1Id === auth.currentUser.uid &&
         status !== "approved" && (
-          <>
-            <button onClick={complete}> Delete Bet</button>{" "}
-          </>
+          <button onClick={complete}> Delete Bet</button>
         )}
 
       {/* approve button only visible to user1 after user2 joins*/}
@@ -124,6 +125,7 @@ const Buttons: React.FC<Props> = ({
         auth.currentUser &&
         user1Id === auth.currentUser.uid &&
         status === "pending" && <button onClick={kick}> Kick </button>}
+
       {/* block only visible to user1, maybe should go in profile?*/}
       {user &&
         auth.currentUser &&
