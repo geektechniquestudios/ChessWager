@@ -38,6 +38,8 @@ const BettingLobby: React.FC<Props> = ({ user, auth }) => {
     firestore.collection("lobby") //@todo order by created at
   const query = lobbyRef.where("status", "!=", "complete") //.where("status", "==", "ready") //.orderBy("createdAt", "desc").limit(10) //.where("status", "==", "active")
 
+// @todo make query by time range(time most recent game was started, )
+
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 

@@ -52,62 +52,6 @@ const Bet: React.FC<Props> = ({
 }) => {
   const potSize = amount + amount * multiplier
 
-  // const accept = () => {
-  //   const acceptBet = firebase.functions().httpsCallable("acceptBet")
-  //   acceptBet({
-  //     betId: id,
-  //     photoURL: auth.currentUser?.photoURL,
-  //   })
-  // }
-
-  // const cancel = () => {
-  //   const cancelBet = firebase.functions().httpsCallable("cancelBet")
-  //   cancelBet({
-  //     betId: id,
-  //   })
-  // }
-
-  // const approve = () => {
-  //   const approveBet = firebase.functions().httpsCallable("approveBet")
-  //   approveBet({
-  //     betId: id,
-  //   })
-  // }
-
-  // const complete = () => {
-  //   const completeBet = firebase.functions().httpsCallable("completeBet")
-  //   completeBet({
-  //     betId: id,
-  //   })
-  // }
-
-  // const kick = () => {
-  //   const kickUser = firebase.functions().httpsCallable("kickUser")
-  //   kickUser({
-  //     betId: id,
-  //   })
-  // }
-
-  // const block = () => {
-  //   const userCollectionRef = firestore.collection("users")
-  //   const userDocRef = userCollectionRef.doc(auth.currentUser?.uid)
-
-  //   userDocRef.get().then(doc => {
-  //     if (doc.data()) {
-  //       if (!doc.data()?.blocked.includes(user2Id)) {
-  //         userDocRef.update({
-  //           blocked: [...doc.data()?.blocked, user2Id],
-  //         })
-  //       }
-  //     } else {
-  //       userDocRef.set({
-  //         blocked: [user2Id],
-  //       })
-  //     }
-  //   })
-  //   kick()
-  // }
-
   const isPending =
     auth.currentUser &&
     // (user1Id === auth.currentUser.uid || user2Id === auth.currentUser.uid) && // what was I thinking?
@@ -125,7 +69,6 @@ const Bet: React.FC<Props> = ({
             user2Id={user2Id}
             auth={auth}
           />
-          <> {} </>
           <img src={user1PhotoURL} alt="" />
           <span>{status}</span>
           {/* accept button, only for user1 */}
@@ -138,13 +81,11 @@ const Bet: React.FC<Props> = ({
         </Card.Body>
       </Card>
       <>
-        {/* isOpen={isPending} ariaHideApp={false}> */}
         {/* leftoff@todo show conditions of bet and prompt metamask 
           accept and cancel buttons
           cancel would make bet go back to ready
         */}
 
-        {/* <div>content for the Modal</div> */}
       </>
     </div>
   )

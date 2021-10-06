@@ -6,6 +6,7 @@ import Chessground from "react-chessground"
 import ndjsonStream from "can-ndjson-stream"
 import "react-chessground/dist/styles/chessground.css"
 import "../../style/game.css"
+import PlayerData from "./PlayerData"
 
 interface Featured {
   t: string
@@ -29,6 +30,16 @@ interface Player {
   rating: number
 }
 
+// interface Fen {
+//   value: {
+//     d: {
+//       fen: string
+//       bc: string
+//       wc: string
+//     }
+//   }
+// }
+
 const ChessGame: React.FC = () => {
   const clearBets = firebase.functions().httpsCallable("clearAllActiveBets")
 
@@ -36,17 +47,17 @@ const ChessGame: React.FC = () => {
   const [gameId, setGameId] = useState("")
 
   const [whiteName, setWhiteName] = useState("")
-  const [whiteTime, setWhiteTime] = useState("")
+  const [whiteTime, setWhiteTime] = useState(0)
   const [whiteRating, setWhiteRating] = useState(0)
   const [whiteTitle, setWhiteTitle] = useState("")
 
   const [blackName, setBlackName] = useState("")
-  const [blackTime, setBlackTime] = useState("")
+  const [blackTime, setBlackTime] = useState(0)
   const [blackRating, setBlackRating] = useState(0)
   const [blackTitle, setBlackTitle] = useState("")
+  const [orientation, setOrientation] = useState("white")
 
   const updateTitles = (res: Featured): void => {
-    console.log(res)
     const white: Player | undefined = res.d.players.find(
       player => player.color === "white"
     )
@@ -54,21 +65,21 @@ const ChessGame: React.FC = () => {
       player => player.color === "black"
     )
 
-    // console.log(black)
-    // console.log(white)
-
     if (black === undefined || white === undefined) return
 
     setFen(res.d.fen)
     setGameId(res.d.id)
+    setOrientation(res.d.orientation)
 
-    if(white.user.title !== undefined) setWhiteTitle(white.user.title)
+    if (white.user.title === undefined) setWhiteTitle("")
     setWhiteName(white.user.name)
     setWhiteRating(white.rating)
+    //setWhiteTime(0)
 
-    if(black.user.title !== undefined) setBlackTitle(white.user.title)
+    if (black.user.title === undefined) setBlackTitle("")
     setBlackName(black.user.name)
     setBlackRating(black.rating)
+    //setBlackTime(0)
 
     return
   }
@@ -82,14 +93,15 @@ const ChessGame: React.FC = () => {
       })
       .then(todoStream => {
         const streamReader = todoStream.getReader()
-        streamReader.read().then(async (res: any) => {
+        streamReader.read().then(async (res: Featured | any) => {
           updateTitles(res.value)
           while (!res || !res.done) {
             res = await streamReader.read()
-            //updateTitles(res.value)
             if (res.value.t === "fen") {
               // game has reset
               setFen(res.value.d.fen)
+              setWhiteTime(res.value.d.wc)
+              setBlackTime(res.value.d.bc)
             } else {
               updateTitles(res.value)
             }
@@ -104,28 +116,34 @@ const ChessGame: React.FC = () => {
   return (
     <div id="chess-board">
       {/* @todo remove in prod */}
-      <button onClick={_e => clearBets()}> clear </button>
+      <button onClick={_e => clearBets()} style={{ float: "right" }}>
+        clear
+      </button>
 
-      {/* <ChessBoard position="start" /> */}
-      <a href="https://lichess.org/" target="_blank" rel="noreferrer">
-        Check out the game on lichess
-      </a>
-      <span>
-        <Chessground
-          width="40em"
-          height="40em"
-          viewOnly={true}
-          id="chess-board"
-          fen={fen}
-        />
-        <div>
-          {whiteTitle} {whiteName}
-          {`${whiteTime}`}
-          <br />
-          {blackTitle} {blackName}
-          {`${blackTime}`}
-        </div>
-      </span>
+      <PlayerData
+        side={orientation === "white" ? "black" : "white"}
+        title={orientation === "white" ? blackTitle : whiteTitle}
+        name={orientation === "white" ? blackName : whiteName}
+        time={orientation === "white" ? blackTime : whiteTime}
+        rating={orientation === "white" ? blackRating : whiteRating}
+        fen={fen}
+      />
+      <Chessground
+        width="40em"
+        height="40em"
+        viewOnly={true}
+        id="chess-board"
+        fen={fen}
+        orientation={orientation}
+      />
+      <PlayerData
+        side={orientation === "white" ? "white" : "black"}
+        title={orientation === "black" ? blackTitle : whiteTitle}
+        name={orientation === "black" ? blackName : whiteName}
+        time={orientation === "black" ? blackTime : whiteTime}
+        rating={orientation === "black" ? blackRating : whiteRating}
+        fen={fen}
+      />
     </div>
   )
 }

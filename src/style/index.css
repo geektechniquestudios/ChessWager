@@ -39,7 +39,7 @@ code {
 }
 #page > main {
   grid-area: game;
-  background-color: blue;
+  background-color: gray;
 }
 #page > aside {
   grid-area: chat;
