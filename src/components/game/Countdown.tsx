@@ -12,7 +12,9 @@ const Countdown: React.FC<Props> = ({ fen, side, time }) => {
   const prependZeros = (num: number): string => {
     if (num < 10) {
       return "0" + String(num)
-    } else {return String(num)}
+    } else {
+      return String(num)
+    }
   }
 
   const formatTime = (inSeconds: number): string => {
@@ -29,20 +31,29 @@ const Countdown: React.FC<Props> = ({ fen, side, time }) => {
     )
   }
 
-  useEffect(() => { // hacky, interval should restart every time [time] changes
-    const interval = setInterval(() => {
-      if (fen.slice(-1) === side.slice(0, 1) && time > 0) {
+  useEffect(() => {
+    if (fen.slice(-1) === side.slice(0, 1)) {
+      const interval = setInterval(() => {
         setCount(count + 1)
-      }
-    }, 1000)
-    return () => clearInterval(interval)
+      }, 1000)
+      return () => clearInterval(interval)
+    }
+    return
   })
 
   useEffect(() => {
     setCount(0)
   }, [time])
 
-  return <>{formatTime(time - count - 1)}</>
+  const secondsToShow = (num: number) => {
+    if (num < 0) {
+      return 0
+    } else {
+      return num
+    }
+  }
+
+  return <>{formatTime(secondsToShow(time - count - 1))}</>
 }
 
 export default Countdown
