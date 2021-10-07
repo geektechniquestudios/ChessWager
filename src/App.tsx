@@ -25,13 +25,21 @@ const App: React.FC = () => {
 
   return (
     <section id="page">
-      <header><Header user={user} auth={auth}/></header>
-          <nav><BettingLobby user={user} auth={auth}/></nav>
-          <main><ChessGame /></main>
+      <header>
+        <Header user={user} auth={auth} />
+      </header>
+      <nav>
+        <BettingLobby user={user} auth={auth} />
+      </nav>
+      <main>
+        <ChessGame />
+      </main>
       <aside>
         <GlobalChat user={user} auth={auth} />
       </aside>
-      <footer><Footer /></footer>
+      <footer id="footer-container">
+        <Footer />
+      </footer>
     </section>
   )
 }
