@@ -1,15 +1,14 @@
 #main-footer {
   display: grid;
+  margin: auto;
   grid-template-columns: repeat(auto-fit, minmax(1em, 1fr));
 }
 
 #main-footer > a {
   display: grid;
   justify-items: center;
-  align-items: center;
 }
 
 #main-footer > a > div {
-  justify-items: center;
-  align-items: center;
+  vertical-align: middle;
 }

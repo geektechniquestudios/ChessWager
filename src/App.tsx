@@ -38,7 +38,7 @@ const App: React.FC = () => {
         <GlobalChat user={user} auth={auth} />
       </aside>
       <footer id="footer-container">
-        <Footer />
+          <Footer />
       </footer>
     </section>
   )
