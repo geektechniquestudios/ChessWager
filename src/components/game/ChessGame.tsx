@@ -74,12 +74,10 @@ const ChessGame: React.FC = () => {
     if (white.user.title === undefined) setWhiteTitle("")
     setWhiteName(white.user.name)
     setWhiteRating(white.rating)
-    //setWhiteTime(0)
 
     if (black.user.title === undefined) setBlackTitle("")
     setBlackName(black.user.name)
     setBlackRating(black.rating)
-    //setBlackTime(0)
 
     return
   }
@@ -88,17 +86,14 @@ const ChessGame: React.FC = () => {
     fetch("https://lichess.org/api/tv/feed", {
       method: "get",
     })
-      .then(data => {
-        return ndjsonStream(data.body)
-      })
-      .then(todoStream => {
-        const streamReader = todoStream.getReader()
+      .then(data => ndjsonStream(data.body))
+      .then(stream => {
+        const streamReader = stream.getReader()
         streamReader.read().then(async (res: Featured | any) => {
           updateTitles(res.value)
           while (!res || !res.done) {
             res = await streamReader.read()
             if (res.value.t === "fen") {
-              // game has reset
               setFen(res.value.d.fen)
               setWhiteTime(res.value.d.wc)
               setBlackTime(res.value.d.bc)
@@ -113,12 +108,19 @@ const ChessGame: React.FC = () => {
       })
   }, [])
 
+  const lichessUrl = "https://lichess.org/" + gameId
+
   return (
     <div id="chess-board">
       {/* @todo remove in prod */}
       <button onClick={_e => clearBets()} style={{ float: "right" }}>
         clear
       </button>
+
+      <a href={lichessUrl} style={{ float: "right" }}>
+        {" "}
+        Check out the game on lichess
+      </a>
 
       <PlayerData
         side={orientation === "white" ? "black" : "white"}

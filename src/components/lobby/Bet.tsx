@@ -5,11 +5,8 @@ import "../../config"
 import firebase from "firebase/compat/app"
 import "../../style/lobby.css"
 import "firebase/compat/functions"
-import Modal from "react-modal"
-import { useDocument } from "react-firebase-hooks/firestore"
 import Buttons from "./Buttons"
 
-// const firestore = firebase.firestore()
 
 interface Props {
   user: firebase.User | null | undefined

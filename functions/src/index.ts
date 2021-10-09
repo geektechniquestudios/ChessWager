@@ -138,11 +138,14 @@ exports.kickUser = functions.https.onCall(
   }
 )
 
-exports.clearAllActiveBets = functions.https.onCall(async () => {
-  const query = lobbyCollectionRef.where("status", "!=", "complete")
-  query
-    .get()
-    .then(lobbySnapshot =>
-      lobbySnapshot.forEach(doc => doc.ref.update({ status: "complete" }))
-    )
-}) // call at the end of each game
+exports.clearAllActiveBets = functions.https.onCall(
+  async (_: any, context: any) => {
+    authCheck(context)
+    const query = lobbyCollectionRef.where("status", "!=", "complete")
+    query
+      .get()
+      .then(lobbySnapshot =>
+        lobbySnapshot.forEach(doc => doc.ref.update({ status: "complete" }))
+      )
+  }
+) // call at the end of each game
