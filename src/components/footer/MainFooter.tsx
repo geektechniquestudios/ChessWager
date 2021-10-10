@@ -3,6 +3,7 @@ const MainFooter = () => {
         <div id="main-footer">
             {/* facebook, youtube, twitter, instagram, ?reddit, contact
             evenly spaced flexbox probably
+
             
             */}
 

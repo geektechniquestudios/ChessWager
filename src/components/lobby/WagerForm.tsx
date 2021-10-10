@@ -23,16 +23,9 @@ const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
   const [sliderVal, setSliderVal] = useState(0.0)
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
-    //@todo? make a "are you sure?" popup with all the relevant info
     e.preventDefault()
     if (auth.currentUser) {
       const { uid, photoURL }: firebase.User = auth.currentUser
-      // console.log(betAmount)
-      // console.log(betSide)
-      // console.log(firebase.firestore.FieldValue.serverTimestamp())
-      // console.log(uid)
-      // console.log(photoURL)
-
       await lobbyRef.add({
         amount: Number(betAmount),
         betSide: betSide,
