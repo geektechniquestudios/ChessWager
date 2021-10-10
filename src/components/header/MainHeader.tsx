@@ -18,8 +18,8 @@ const Header: React.FC<HeaderProps> = ({ user, auth }) => {
       {/* @todo: logo, metamaks login */}
       <div id="auth-buttons">
         <span>
-        {user ? <SignOut auth={auth} /> : <SignIn auth={auth} />}
-        <img src={photoURL} alt="" />
+          {user ? <SignOut auth={auth} /> : <SignIn auth={auth} />}
+          <img src={photoURL} alt="" />
         </span>
       </div>
     </>
@@ -36,11 +36,14 @@ const SignIn = ({ auth }: SignInProps) => {
       const usersCollectionRef = firestore.collection("users")
       const userDoc = usersCollectionRef.doc(auth.currentUser.uid)
       userDoc.get().then(docSnapshot => {
-        if (!docSnapshot.exists) {
+        if (!docSnapshot.data()) {
+          console.log("new user, creating db entry")
           userDoc.set({
             followThrough: [0, 0],
-            blocked: []
+            blocked: [],
           })
+        } else {
+          console.log("user already in db")
         }
       })
 
@@ -48,10 +51,12 @@ const SignIn = ({ auth }: SignInProps) => {
     }
   }
 
-  const signInWithGoogle = () => {
+  const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider()
-    auth.signInWithRedirect(provider) //.then(() => addToUsers()).catch(alert) //@todo make better message in prod
-    // addToUsers()
+    await auth
+      .signInWithRedirect(provider)
+      .catch(console.log) //@todo make better message in prod
+    //addToUsers() @todo this isn't working. Might scrap
   }
 
   return <button onClick={signInWithGoogle}>Sign in with Google</button>

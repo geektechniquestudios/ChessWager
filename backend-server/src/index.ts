@@ -5,8 +5,11 @@ import ndjson from "ndjson"
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
+//const serviceAccount = require("../../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
+
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
+  // credential: admin.credential.cert(serviceAccount)
 })
 
 const db = admin.firestore()
@@ -17,11 +20,17 @@ const lobbyCollectionRef: firebase.firestore.CollectionReference<firebase.firest
 const clearActiveBets = () => {
   console.log("new game, clearing bets")
   const query = lobbyCollectionRef.where("status", "!=", "complete")
-  query.get().then(lobbySnapshot => {
-    lobbySnapshot.forEach(doc => {
-      doc.ref.update({ status: "complete" })
+  query
+    .get()
+    .then(lobbySnapshot => {
+      lobbySnapshot.forEach(doc => {
+        doc.ref.update({ status: "complete" })
+      })
     })
-  })
+    .then(() => {
+      console.log("bet clearing complete")
+    })
+    .catch(console.error)
 }
 
 const callLichessLiveTv = () => {
@@ -37,4 +46,6 @@ const callLichessLiveTv = () => {
 }
 
 console.log("lobby clearing program starting")
-callLichessLiveTv() //@todo wrap in while(true) || make way to restart on stall
+while (true) {
+  callLichessLiveTv()
+}
