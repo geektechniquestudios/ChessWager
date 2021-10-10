@@ -46,6 +46,4 @@ const callLichessLiveTv = () => {
 }
 
 console.log("lobby clearing program starting")
-while (true) {
-  callLichessLiveTv()
-}
+callLichessLiveTv()
