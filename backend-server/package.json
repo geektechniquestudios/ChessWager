@@ -20,14 +20,10 @@
   "dependencies": {
     "@types/ndjson": "^2.0.1",
     "@types/node": "^16.10.3",
-    "@types/node-fetch": "^3.0.3",
     "axios": "^0.22.0",
-    "can-ndjson-stream": "^1.0.2",
     "firebase": "^9.1.2",
     "firebase-admin": "^9.12.0",
     "hyperquest": "^2.1.3",
-    "ndjson": "^2.0.0",
-    "node-fetch": "^2.6.5",
-    "xhr2": "^0.2.1"
+    "ndjson": "^2.0.0"
   }
 }

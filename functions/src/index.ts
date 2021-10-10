@@ -146,6 +146,6 @@ exports.clearAllActiveBets = functions.https.onCall(
       .get()
       .then(lobbySnapshot =>
         lobbySnapshot.forEach(doc => doc.ref.update({ status: "complete" }))
-      )
+      ) // catch or close off {}
   }
 ) // call at the end of each game
