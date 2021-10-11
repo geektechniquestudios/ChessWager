@@ -5,11 +5,11 @@ import ndjson from "ndjson"
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
-const serviceAccount = require("../../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
+// const serviceAccount = require("../../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
 
 admin.initializeApp({
-  // credential: admin.credential.applicationDefault(),
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.applicationDefault(),
+  // credential: admin.credential.cert(serviceAccount),
 })
 
 const db = admin.firestore()
@@ -34,16 +34,16 @@ const clearActiveBets = () => {
 }
 
 const callLichessLiveTv = () => {
-    hyperquest("https://lichess.org/api/tv/feed")
-      .pipe(ndjson.parse())
-      .on("data", (obj: any) => {
-        if (obj.t === "featured") {
-          clearActiveBets()
-        } else {
-          console.log("players moving")
-        }
-      })
-      .on("finish", callLichessLiveTv) // figure out a different way to do this. infinite recursion
+  hyperquest("https://lichess.org/api/tv/feed")
+    .pipe(ndjson.parse())
+    .on("data", (obj: any) => {
+      if (obj.t === "featured") {
+        clearActiveBets()
+      } else {
+        console.log("players moving")
+      }
+    })
+    .on("finish", callLichessLiveTv) // figure out a different way to do this. infinite recursion
 }
 
 console.log("lobby clearing program starting")
