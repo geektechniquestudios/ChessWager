@@ -37,26 +37,20 @@ const SignIn = ({ auth }: SignInProps) => {
       const userDoc = usersCollectionRef.doc(auth.currentUser.uid)
       userDoc.get().then(docSnapshot => {
         if (!docSnapshot.data()) {
-          console.log("new user, creating db entry")
           userDoc.set({
             followThrough: [0, 0],
             blocked: [],
-          })
-        } else {
-          console.log("user already in db")
+          }).catch(console.error)
         }
       })
-
-      // const query = userRef.where("userId", "==", auth.currentUser?.uid)
     }
   }
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
-    await auth
-      .signInWithRedirect(provider)
-      .catch(console.log) //@todo make better message in prod
-    //addToUsers() @todo this isn't working. Might scrap
+    auth
+      .signInWithPopup(provider).then(() => {addToUsers()})
+      .catch(console.error)
   }
 
   return <button onClick={signInWithGoogle}>Sign in with Google</button>

@@ -1,11 +1,10 @@
-import firebase from "firebase/compat/app"
+// import firebase from "firebase/compat/app"
 const functions = require("firebase-functions")
-
 const admin = require("firebase-admin")
+
 admin.initializeApp()
 const db = admin.firestore()
-const lobbyCollectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-  db.collection("lobby")
+const lobbyCollectionRef = db.collection("lobby") //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
 
 const authCheck = (context: any) => {
   if (!context.auth) {
@@ -27,16 +26,14 @@ exports.acceptBet = functions.https.onCall(
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
-    const userDocRef: firebase.firestore.DocumentReference = db
-      .collection("users")
-      .doc(hostUid)
+    const userDocRef = db.collection("users").doc(hostUid) //: firebase.firestore.DocumentReference = db
 
-    let toReturn = false
+    let isPlayerBlocked = false
     await userDocRef.get().then((doc: any) => {
       const blocked: string[] = doc.data().blocked
-      toReturn = blocked.includes(context.auth.uid)
+      isPlayerBlocked = blocked.includes(context.auth.uid)
     })
-    if (toReturn) {
+    if (isPlayerBlocked) {
       return "You are blocked from joining this lobby"
     }
 
@@ -138,14 +135,14 @@ exports.kickUser = functions.https.onCall(
   }
 )
 
-exports.clearAllActiveBets = functions.https.onCall(
-  async (_: any, context: any) => {
-    authCheck(context)
-    const query = lobbyCollectionRef.where("status", "!=", "complete")
-    query
-      .get()
-      .then(lobbySnapshot =>
-        lobbySnapshot.forEach(doc => doc.ref.update({ status: "complete" }))
-      ) // catch or close off {}
-  }
-) // call at the end of each game
+// exports.clearAllActiveBets = functions.https.onCall(
+//   async (_: any, context: any) => {
+//     authCheck(context)
+//     const query = lobbyCollectionRef.where("status", "!=", "complete")
+//     query
+//       .get()
+//       .then(lobbySnapshot =>
+//         lobbySnapshot.forEach(doc => doc.ref.update({ status: "complete" }))
+//       ) // catch or close off {}
+//   }
+// )

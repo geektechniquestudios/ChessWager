@@ -113,12 +113,11 @@ const ChessGame: React.FC = () => {
   return (
     <div id="chess-board">
       {/* @todo remove in prod */}
-      <button onClick={_e => clearBets()} style={{ float: "right" }}>
+      {/* <button onClick={_e => clearBets()} style={{ float: "right" }}>
         clear
-      </button>
+      </button> */}
 
       <a href={lichessUrl} style={{ float: "right" }}>
-        {" "}
         Check out the game on lichess
       </a>
 
