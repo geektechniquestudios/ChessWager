@@ -10,8 +10,8 @@ import { useRef, useState } from "react"
 import "../../config"
 import { AuthContainer } from "../containers/Auth"
 import ChatMessage from "./ChatMessage"
+import { FirestoreContainer } from "../containers/Firestore"
 
-const firestore = firebase.firestore()
 
 const GlobalChat: React.FC = () => {
   return (
@@ -24,7 +24,9 @@ const GlobalChat: React.FC = () => {
 }
 
 const ChatRoom: React.FC = () => {
+  const {firestore} = FirestoreContainer.useContainer()
   const {user, auth} = AuthContainer.useContainer()
+
   const dummy = useRef<HTMLInputElement>(null)
   const messagesRef = firestore.collection("messages")
   const query = messagesRef.orderBy("createdAt", "desc").limit(25)

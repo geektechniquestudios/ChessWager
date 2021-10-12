@@ -4,8 +4,8 @@ import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import "../../style/header.css"
 import { AuthContainer } from "../containers/Auth"
+import { FirestoreContainer } from "../containers/Firestore"
 
-const firestore = firebase.firestore()
 
 const Header: React.FC = () => {
   const {user, auth} = AuthContainer.useContainer()
@@ -28,6 +28,8 @@ interface SignInProps {
 }
 
 const SignIn = ({ auth }: SignInProps) => {
+  const {firestore} = FirestoreContainer.useContainer()
+  
   const addToUsers = () => {
     if (auth.currentUser) {
       const usersCollectionRef = firestore.collection("users")

@@ -15,38 +15,33 @@ import "./style/index.css"
 import "./config"
 import { GameId } from "./components/containers/GameId"
 import { AuthContainer } from "./components/containers/Auth"
-
-const auth: firebase.auth.Auth = firebase.auth()
+import { FirestoreContainer } from "./components/containers/Firestore"
 
 const App: React.FC = () => {
-  const [user]: [
-    firebase.User | null | undefined,
-    boolean,
-    firebase.auth.Error | undefined
-  ] = useAuthState(auth)
-
   return (
-    <AuthContainer.Provider>
-      <GameId.Provider>
-        <section id="page">
-          <header>
-            <Header />
-          </header>
-          <nav>
-            <BettingLobby />
-          </nav>
-          <main>
-            <ChessGame />
-          </main>
-          <aside>
-            <GlobalChat />
-          </aside>
-          <footer>
-            <Footer />
-          </footer>
-        </section>
-      </GameId.Provider>
-    </AuthContainer.Provider>
+    <FirestoreContainer.Provider>
+      <AuthContainer.Provider>
+        <GameId.Provider>
+          <section id="page">
+            <header>
+              <Header />
+            </header>
+            <nav>
+              <BettingLobby />
+            </nav>
+            <main>
+              <ChessGame />
+            </main>
+            <aside>
+              <GlobalChat />
+            </aside>
+            <footer>
+              <Footer />
+            </footer>
+          </section>
+        </GameId.Provider>
+      </AuthContainer.Provider>
+    </FirestoreContainer.Provider>
   )
 }
 
