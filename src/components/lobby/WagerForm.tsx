@@ -1,14 +1,10 @@
 import { useState } from "react"
-import { Form } from "react-bootstrap"
 import CurrencyInput from "react-currency-input-field"
 import "../../style/lobby.css"
 import "../../config"
 import firebase from "firebase/compat/app"
 import RangeSlider from 'react-bootstrap-range-slider';
-
-//import "rc-slider/assets/index.css"
-// import Slider, { SliderTooltip } from "../src"
-//import "rc-tooltip/assets/bootstrap.css"
+import { GameId } from "../containers/GameId"
 
 interface Props {
   lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
@@ -17,6 +13,8 @@ interface Props {
 
 
 const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
+  const {gameId, setGameId} = GameId.useContainer() // @todo const?
+
   const [betSide, setBetSide] = useState("white")
   const [betAmount, setBetAmount] = useState(0.34)
   const [multiplier, setMultiplier] = useState(1.0)
@@ -30,7 +28,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
         amount: Number(betAmount),
         betSide: betSide,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        gameId: "", //@todo get from api call to lichess, will use redux, update auth
+        gameId: gameId, //@todo get from api call to lichess, will use redux/context , update auth
         multiplier: Number(multiplier).toFixed(2),
         status: "ready",
         user1Id: uid,
@@ -42,7 +40,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
 
   const calcMultiplier = (sliderVal: number) => {
     if (sliderVal <= 0) {
-      setMultiplier(1.0 + Number(sliderVal))
+      setMultiplier(1.0 + Number(sliderVal)) // @todo are these number casts redundant? don't remember why I did this
     } else {
       setMultiplier(1 / (1 - Number(sliderVal)))
     }

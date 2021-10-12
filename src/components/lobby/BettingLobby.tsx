@@ -7,15 +7,11 @@ import { useCollectionData } from "react-firebase-hooks/firestore"
 import Bet from "./Bet"
 
 import WagerForm from "./WagerForm"
-import { Data } from "react-firebase-hooks/firestore/dist/firestore/types"
 import { FirebaseError } from "@firebase/util"
+import { GameId } from "../containers/GameId"
+import { AuthContainer } from "../containers/Auth"
 
 const firestore = firebase.firestore() //@todo move into parent, use redux
-
-interface Props {
-  user: firebase.User | null | undefined
-  auth: firebase.auth.Auth
-}
 
 interface Lobby {
   id: string
@@ -33,11 +29,15 @@ interface Lobby {
   gameId: string
 }
 
-const BettingLobby: React.FC<Props> = ({ user, auth }) => {
+const BettingLobby: React.FC = () => {
+  const {user, auth} = AuthContainer.useContainer()
+  const gameIdContainer = GameId.useContainer() // @todo const?
+
+
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby") //@todo order by created at
-  const query = lobbyRef.where("status", "!=", "complete") //.where("status", "==", "ready") //.orderBy("createdAt", "desc").limit(10) //.where("status", "==", "active")
-
+  //const query = lobbyRef.where("status", "!=", "complete") //.where("status", "==", "ready") //.orderBy("createdAt", "desc").limit(10) //.where("status", "==", "active")
+  const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
 // @todo make query by time range(time most recent game was started, )
 // ref.orderBy().startAt(call to db, new Date() when ).endAt(never)
 
@@ -64,7 +64,6 @@ const BettingLobby: React.FC<Props> = ({ user, auth }) => {
               .filter(i => i.user1Id === userId || i.user2Id === userId)
               .map(bet => (
                 <Bet
-                  user={user}
                   className="in-progress-bet"
                   lobbyRef={lobbyRef}
                   key={bet.id}
@@ -81,7 +80,6 @@ const BettingLobby: React.FC<Props> = ({ user, auth }) => {
                   user2PhotoURL={bet.user2PhotoURL}
                   createdAt={bet.createdAt}
                   gameId={bet.gameId}
-                  auth={auth}
                 />
               ))}
           {lobby &&
@@ -94,7 +92,6 @@ const BettingLobby: React.FC<Props> = ({ user, auth }) => {
               )
               .map(bet => (
                 <Bet
-                  user={user}
                   className="ready-bet"
                   lobbyRef={lobbyRef}
                   key={bet.id}
@@ -111,7 +108,6 @@ const BettingLobby: React.FC<Props> = ({ user, auth }) => {
                   user2PhotoURL={bet.user2PhotoURL}
                   createdAt={bet.createdAt}
                   gameId={bet.gameId}
-                  auth={auth}
                 />
               ))}
           {lobby &&
@@ -124,7 +120,6 @@ const BettingLobby: React.FC<Props> = ({ user, auth }) => {
               )
               .map(bet => (
                 <Bet
-                  user={user}
                   className="pending-bet"
                   lobbyRef={lobbyRef}
                   key={bet.id}
@@ -141,7 +136,6 @@ const BettingLobby: React.FC<Props> = ({ user, auth }) => {
                   user2PhotoURL={bet.user2PhotoURL}
                   createdAt={bet.createdAt}
                   gameId={bet.gameId}
-                  auth={auth}
                 />
               ))}
         </div>

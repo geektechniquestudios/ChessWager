@@ -9,5 +9,5 @@
     "target": "es2017"
   },
   "compileOnSave": true,
-  "include": ["src", "../backend-server/src/test.js"]
+  "include": ["src"]
 }

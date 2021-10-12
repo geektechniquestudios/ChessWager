@@ -1,11 +1,10 @@
-import firebase from "firebase/compat/app"
+// import firebase from "firebase/compat/app"
 const functions = require("firebase-functions")
-
 const admin = require("firebase-admin")
+
 admin.initializeApp()
 const db = admin.firestore()
-const lobbyCollectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-  db.collection("lobby")
+const lobbyCollectionRef = db.collection("lobby") //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
 
 const authCheck = (context: any) => {
   if (!context.auth) {
@@ -27,9 +26,7 @@ exports.acceptBet = functions.https.onCall(
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
-    const userDocRef: firebase.firestore.DocumentReference = db
-      .collection("users")
-      .doc(hostUid)
+    const userDocRef = db.collection("users").doc(hostUid) //: firebase.firestore.DocumentReference = db
 
     let toReturn = false
     await userDocRef.get().then((doc: any) => {
@@ -102,15 +99,21 @@ interface CompleteArgs {
   betId: string
 }
 
-exports.completeBet = functions.https.onCall(
+exports.deleteBet = functions.https.onCall(
   async ({ betId }: CompleteArgs, context: any) => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
+    // if not in "approved" state //@todo
+
     await betDocRef.get().then((doc: any) => {
-      if (context.auth.uid === doc.data().user1Id) {
+      if (
+        context.auth.uid === doc.data().user1Id &&
+        doc.data().status !== "approved"
+      ) {
         betDocRef.update({
-          status: "complete",
+          status: "deleted",
+          gameId: "",
         })
       }
     })
@@ -137,15 +140,3 @@ exports.kickUser = functions.https.onCall(
     return
   }
 )
-
-exports.clearAllActiveBets = functions.https.onCall(
-  async (_: any, context: any) => {
-    authCheck(context)
-    const query = lobbyCollectionRef.where("status", "!=", "complete")
-    query
-      .get()
-      .then(lobbySnapshot =>
-        lobbySnapshot.forEach(doc => doc.ref.update({ status: "complete" }))
-      ) // catch or close off {}
-  }
-) // call at the end of each game

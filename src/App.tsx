@@ -13,26 +13,35 @@ import Footer from "./components/footer/MainFooter"
 import { useAuthState } from "react-firebase-hooks/auth"
 import "./style/index.css"
 import "./config"
-
-const auth: firebase.auth.Auth = firebase.auth()
+import { GameId } from "./components/containers/GameId"
+import { AuthContainer } from "./components/containers/Auth"
+import { FirestoreContainer } from "./components/containers/Firestore"
 
 const App: React.FC = () => {
-  const [user]: [
-    firebase.User | null | undefined,
-    boolean,
-    firebase.auth.Error | undefined
-  ] = useAuthState(auth)
-
   return (
-    <section id="page">
-      <header><Header user={user} auth={auth}/></header>
-          <nav><BettingLobby user={user} auth={auth}/></nav>
-          <main><ChessGame /></main>
-      <aside>
-        <GlobalChat user={user} auth={auth} />
-      </aside>
-      <footer><Footer /></footer>
-    </section>
+    <FirestoreContainer.Provider>
+      <AuthContainer.Provider>
+        <GameId.Provider>
+          <section id="page">
+            <header>
+              <Header />
+            </header>
+            <nav>
+              <BettingLobby />
+            </nav>
+            <main>
+              <ChessGame />
+            </main>
+            <aside>
+              <GlobalChat />
+            </aside>
+            <footer>
+              <Footer />
+            </footer>
+          </section>
+        </GameId.Provider>
+      </AuthContainer.Provider>
+    </FirestoreContainer.Provider>
   )
 }
 

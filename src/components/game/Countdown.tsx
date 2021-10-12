@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 interface Props {
   fen: string
@@ -10,11 +10,7 @@ const Countdown: React.FC<Props> = ({ fen, side, time }) => {
   const [count, setCount] = useState(0)
 
   const prependZeros = (num: number): string => {
-    if (num < 10) {
-      return "0" + String(num)
-    } else {
-      return String(num)
-    }
+    return num < 10 ? "0" + String(num) : String(num)
   }
 
   const formatTime = (inSeconds: number): string => {

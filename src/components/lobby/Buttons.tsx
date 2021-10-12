@@ -1,26 +1,28 @@
 import firebase from "firebase/compat"
+import { AuthContainer } from "../containers/Auth"
+import { GameId } from "../containers/GameId"
 
 const firestore = firebase.firestore()
 
 // see '~/functions/src/index.tsx' for corresponding functions
 
 interface Props {
-  user: firebase.User | null | undefined
   id: string
   status: string
   user1Id: string
   user2Id: string
-  auth: firebase.auth.Auth
+
 }
 
 const Buttons: React.FC<Props> = ({
-  user,
-  id,
+  id, //@todo need to rename to betid
   status,
   user1Id,
   user2Id,
-  auth,
 }) => {
+  const {user, auth} = AuthContainer.useContainer()
+  const {gameId, setGameId} = GameId.useContainer() // @todo const?
+
   const accept = () => {
     const acceptBet = firebase.functions().httpsCallable("acceptBet")
     acceptBet({
@@ -48,9 +50,9 @@ const Buttons: React.FC<Props> = ({
     })
   }
 
-  const complete = () => {
-    const completeBet = firebase.functions().httpsCallable("completeBet")
-    completeBet({
+  const deleteCurrentBet = () => {
+    const deleteBet = firebase.functions().httpsCallable("deleteBet")
+    deleteBet({
       betId: id,
     })
   }
@@ -84,7 +86,7 @@ const Buttons: React.FC<Props> = ({
 
   return (
     <>
-    
+      {gameId}
       {/* accept button for user 2, */}
       {user &&
         auth.currentUser &&
@@ -111,7 +113,7 @@ const Buttons: React.FC<Props> = ({
         auth.currentUser &&
         user1Id === auth.currentUser.uid &&
         status !== "approved" && (
-          <button onClick={complete}> Delete Bet</button>
+          <button onClick={deleteCurrentBet}> Delete Bet</button>
         )}
 
       {/* approve button only visible to user1 after user2 joins*/}
