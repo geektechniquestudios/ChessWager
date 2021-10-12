@@ -6,7 +6,7 @@ import firebase from "firebase/compat/app"
 import "../../style/lobby.css"
 import "firebase/compat/functions"
 import Buttons from "./Buttons"
-
+import { GameId } from "../containers/GameId"
 
 interface Props {
   user: firebase.User | null | undefined
@@ -32,7 +32,7 @@ const Bet: React.FC<Props> = ({
   user,
   className,
   lobbyRef,
-  id,
+  id, // @todo betId, should update name
   amount,
   betSide,
   multiplier,
@@ -58,14 +58,14 @@ const Bet: React.FC<Props> = ({
     <div>
       <Card>
         <Card.Body className={`${className} bet`}>
-          <Buttons
-            user={user}
-            id={id}
-            status={status}
-            user1Id={user1Id}
-            user2Id={user2Id}
-            auth={auth}
-          />
+            <Buttons
+              user={user}
+              id={id}
+              status={status}
+              user1Id={user1Id}
+              user2Id={user2Id}
+              auth={auth}
+            />
           <img src={user1PhotoURL} alt="" />
           <span>{status}</span>
           {/* accept button, only for user1 */}
@@ -82,7 +82,6 @@ const Bet: React.FC<Props> = ({
           accept and cancel buttons
           cancel would make bet go back to ready
         */}
-
       </>
     </div>
   )

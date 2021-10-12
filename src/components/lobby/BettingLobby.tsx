@@ -9,6 +9,7 @@ import Bet from "./Bet"
 import WagerForm from "./WagerForm"
 import { Data } from "react-firebase-hooks/firestore/dist/firestore/types"
 import { FirebaseError } from "@firebase/util"
+import { GameId } from "../containers/GameId"
 
 const firestore = firebase.firestore() //@todo move into parent, use redux
 
@@ -34,10 +35,14 @@ interface Lobby {
 }
 
 const BettingLobby: React.FC<Props> = ({ user, auth }) => {
+
+  const gameIdContainer = GameId.useContainer() // @todo const?
+
+
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby") //@todo order by created at
-  const query = lobbyRef.where("status", "!=", "complete") //.where("status", "==", "ready") //.orderBy("createdAt", "desc").limit(10) //.where("status", "==", "active")
-
+  //const query = lobbyRef.where("status", "!=", "complete") //.where("status", "==", "ready") //.orderBy("createdAt", "desc").limit(10) //.where("status", "==", "active")
+  const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
 // @todo make query by time range(time most recent game was started, )
 // ref.orderBy().startAt(call to db, new Date() when ).endAt(never)
 

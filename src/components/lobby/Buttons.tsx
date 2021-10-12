@@ -1,4 +1,5 @@
 import firebase from "firebase/compat"
+import { GameId } from "../containers/GameId"
 
 const firestore = firebase.firestore()
 
@@ -15,12 +16,14 @@ interface Props {
 
 const Buttons: React.FC<Props> = ({
   user,
-  id,
+  id, //@todo need to rename to betid
   status,
   user1Id,
   user2Id,
   auth,
 }) => {
+  let {gameId, setGameId} = GameId.useContainer() // @todo const?
+
   const accept = () => {
     const acceptBet = firebase.functions().httpsCallable("acceptBet")
     acceptBet({
@@ -84,7 +87,7 @@ const Buttons: React.FC<Props> = ({
 
   return (
     <>
-    
+      {gameId}
       {/* accept button for user 2, */}
       {user &&
         auth.currentUser &&

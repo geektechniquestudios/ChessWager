@@ -28,12 +28,12 @@ exports.acceptBet = functions.https.onCall(
 
     const userDocRef = db.collection("users").doc(hostUid) //: firebase.firestore.DocumentReference = db
 
-    let isPlayerBlocked = false
+    let toReturn = false
     await userDocRef.get().then((doc: any) => {
       const blocked: string[] = doc.data().blocked
-      isPlayerBlocked = blocked.includes(context.auth.uid)
+      toReturn = blocked.includes(context.auth.uid)
     })
-    if (isPlayerBlocked) {
+    if (toReturn) {
       return "You are blocked from joining this lobby"
     }
 

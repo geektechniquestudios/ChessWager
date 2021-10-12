@@ -7,6 +7,7 @@ import ndjsonStream from "can-ndjson-stream"
 import "react-chessground/dist/styles/chessground.css"
 import "../../style/game.css"
 import PlayerData from "./PlayerData"
+import { GameId } from "../containers/GameId"
 
 interface Featured {
   t: string
@@ -41,10 +42,13 @@ interface Player {
 // }
 
 const ChessGame: React.FC = () => {
-  const clearBets = firebase.functions().httpsCallable("clearAllActiveBets")
+  // const clearBets = firebase.functions().httpsCallable("clearAllActiveBets")
+
+  const {gameId, setGameId} = GameId.useContainer() // @todo const?
+  
 
   const [fen, setFen] = useState("")
-  const [gameId, setGameId] = useState("")
+  // const [gameId, setGameId] = useState("")
 
   const [whiteName, setWhiteName] = useState("")
   const [whiteTime, setWhiteTime] = useState(0)
@@ -103,9 +107,7 @@ const ChessGame: React.FC = () => {
           }
         })
       })
-      .catch(err => {
-        console.error(err)
-      })
+      .catch(console.error)
   }, [])
 
   const lichessUrl = "https://lichess.org/" + gameId
