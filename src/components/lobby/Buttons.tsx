@@ -51,9 +51,9 @@ const Buttons: React.FC<Props> = ({
     })
   }
 
-  const complete = () => {
-    const completeBet = firebase.functions().httpsCallable("completeBet")
-    completeBet({
+  const deleteCurrentBet = () => {
+    const deleteBet = firebase.functions().httpsCallable("deleteBet")
+    deleteBet({
       betId: id,
     })
   }
@@ -114,7 +114,7 @@ const Buttons: React.FC<Props> = ({
         auth.currentUser &&
         user1Id === auth.currentUser.uid &&
         status !== "approved" && (
-          <button onClick={complete}> Delete Bet</button>
+          <button onClick={deleteCurrentBet}> Delete Bet</button>
         )}
 
       {/* approve button only visible to user1 after user2 joins*/}

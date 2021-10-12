@@ -99,15 +99,21 @@ interface CompleteArgs {
   betId: string
 }
 
-exports.completeBet = functions.https.onCall(
+exports.deleteBet = functions.https.onCall(
   async ({ betId }: CompleteArgs, context: any) => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
+    // if not in "approved" state //@todo
+
     await betDocRef.get().then((doc: any) => {
-      if (context.auth.uid === doc.data().user1Id) {
+      if (
+        context.auth.uid === doc.data().user1Id &&
+        doc.data().status !== "approved"
+      ) {
         betDocRef.update({
-          status: "complete",
+          status: "deleted",
+          gameId: "",
         })
       }
     })
