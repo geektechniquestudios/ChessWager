@@ -42,13 +42,10 @@ interface Player {
 // }
 
 const ChessGame: React.FC = () => {
-  // const clearBets = firebase.functions().httpsCallable("clearAllActiveBets")
-
   const {gameId, setGameId} = GameId.useContainer() // @todo const?
   
 
   const [fen, setFen] = useState("")
-  // const [gameId, setGameId] = useState("")
 
   const [whiteName, setWhiteName] = useState("")
   const [whiteTime, setWhiteTime] = useState(0)

@@ -1,4 +1,5 @@
 import firebase from "firebase/compat"
+import { AuthContainer } from "../containers/Auth"
 import { GameId } from "../containers/GameId"
 
 const firestore = firebase.firestore()
@@ -6,23 +7,21 @@ const firestore = firebase.firestore()
 // see '~/functions/src/index.tsx' for corresponding functions
 
 interface Props {
-  user: firebase.User | null | undefined
   id: string
   status: string
   user1Id: string
   user2Id: string
-  auth: firebase.auth.Auth
+
 }
 
 const Buttons: React.FC<Props> = ({
-  user,
   id, //@todo need to rename to betid
   status,
   user1Id,
   user2Id,
-  auth,
 }) => {
-  let {gameId, setGameId} = GameId.useContainer() // @todo const?
+  const {user, auth} = AuthContainer.useContainer()
+  const {gameId, setGameId} = GameId.useContainer() // @todo const?
 
   const accept = () => {
     const acceptBet = firebase.functions().httpsCallable("acceptBet")

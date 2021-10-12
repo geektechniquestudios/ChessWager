@@ -1,15 +1,10 @@
 import { useState } from "react"
-import { Form } from "react-bootstrap"
 import CurrencyInput from "react-currency-input-field"
 import "../../style/lobby.css"
 import "../../config"
 import firebase from "firebase/compat/app"
 import RangeSlider from 'react-bootstrap-range-slider';
 import { GameId } from "../containers/GameId"
-
-//import "rc-slider/assets/index.css"
-// import Slider, { SliderTooltip } from "../src"
-//import "rc-tooltip/assets/bootstrap.css"
 
 interface Props {
   lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>

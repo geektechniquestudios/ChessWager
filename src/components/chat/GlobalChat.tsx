@@ -8,26 +8,23 @@ import "firebase/compat/analytics"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useRef, useState } from "react"
 import "../../config"
+import { AuthContainer } from "../containers/Auth"
+import ChatMessage from "./ChatMessage"
 
 const firestore = firebase.firestore()
-//const storage = getStorage()
 
-interface Props {
-  user: firebase.User | null | undefined
-  auth: firebase.auth.Auth
-}
-
-const GlobalChat: React.FC<Props> = ({ user, auth }) => {
+const GlobalChat: React.FC = () => {
   return (
     <div className="global-chat">
       <section>
-        <ChatRoom user={user} auth={auth} />
+        <ChatRoom />
       </section>
     </div>
   )
 }
 
-const ChatRoom: React.FC<Props> = ({ user, auth }) => {
+const ChatRoom: React.FC = () => {
+  const {user, auth} = AuthContainer.useContainer()
   const dummy = useRef<HTMLInputElement>(null)
   const messagesRef = firestore.collection("messages")
   const query = messagesRef.orderBy("createdAt", "desc").limit(25)
@@ -67,7 +64,7 @@ const ChatRoom: React.FC<Props> = ({ user, auth }) => {
         <span ref={dummy}></span>
         {messages &&
           messages.map(msg => (
-            <ChatMessage key={msg.id} message={msg} auth={auth} />
+            <ChatMessage key={msg.id} message={msg} />
           ))}
       </main>
       <fieldset disabled={!auth.currentUser}>
@@ -83,31 +80,5 @@ const ChatRoom: React.FC<Props> = ({ user, auth }) => {
   )
 }
 
-const ChatMessage: React.FC<{
-  message: {
-    text: string
-    uid: string
-    photoURL: string
-    userName: string
-  }
-  auth: firebase.auth.Auth
-}> = ({ message, auth }) => {
-  const { text, uid, photoURL, userName } = message
-
-  let messageClass
-  if (!auth.currentUser) {
-    messageClass = "received"
-  } else {
-    messageClass = uid === auth.currentUser.uid ? "sent" : "received"
-  }
-  return (
-    <>
-      <div className={`message ${messageClass}`}>
-        <img src={photoURL} alt="" title={userName} />
-        <p>{text}</p>
-      </div>
-    </>
-  )
-}
 
 export default GlobalChat

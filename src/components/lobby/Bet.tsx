@@ -7,9 +7,9 @@ import "../../style/lobby.css"
 import "firebase/compat/functions"
 import Buttons from "./Buttons"
 import { GameId } from "../containers/GameId"
+import { AuthContainer } from "../containers/Auth"
 
 interface Props {
-  user: firebase.User | null | undefined
   className: string
   lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
   id: string
@@ -25,11 +25,9 @@ interface Props {
   user2PhotoURL: string
   createdAt: Date
   gameId: string
-  auth: firebase.auth.Auth
 }
 
 const Bet: React.FC<Props> = ({
-  user,
   className,
   lobbyRef,
   id, // @todo betId, should update name
@@ -45,8 +43,8 @@ const Bet: React.FC<Props> = ({
   user2PhotoURL,
   createdAt,
   gameId,
-  auth,
 }) => {
+  const {user, auth} = AuthContainer.useContainer()
   const potSize = amount + amount * multiplier
 
   const isPending =
@@ -59,12 +57,10 @@ const Bet: React.FC<Props> = ({
       <Card>
         <Card.Body className={`${className} bet`}>
             <Buttons
-              user={user}
               id={id}
               status={status}
               user1Id={user1Id}
               user2Id={user2Id}
-              auth={auth}
             />
           <img src={user1PhotoURL} alt="" />
           <span>{status}</span>

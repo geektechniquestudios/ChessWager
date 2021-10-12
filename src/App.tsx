@@ -14,6 +14,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import "./style/index.css"
 import "./config"
 import { GameId } from "./components/containers/GameId"
+import { AuthContainer } from "./components/containers/Auth"
 
 const auth: firebase.auth.Auth = firebase.auth()
 
@@ -25,27 +26,27 @@ const App: React.FC = () => {
   ] = useAuthState(auth)
 
   return (
-    <>
+    <AuthContainer.Provider>
       <GameId.Provider>
         <section id="page">
           <header>
-            <Header user={user} auth={auth} />
+            <Header />
           </header>
           <nav>
-            <BettingLobby user={user} auth={auth} />
+            <BettingLobby />
           </nav>
           <main>
             <ChessGame />
           </main>
           <aside>
-            <GlobalChat user={user} auth={auth} />
+            <GlobalChat />
           </aside>
           <footer>
             <Footer />
           </footer>
         </section>
       </GameId.Provider>
-    </>
+    </AuthContainer.Provider>
   )
 }
 

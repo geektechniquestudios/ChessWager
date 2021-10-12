@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import Countdown from "./Countdown"
 
 interface Props {

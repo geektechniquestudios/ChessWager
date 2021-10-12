@@ -3,15 +3,12 @@ import firebase from "firebase/compat/app"
 import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import "../../style/header.css"
+import { AuthContainer } from "../containers/Auth"
 
 const firestore = firebase.firestore()
 
-interface HeaderProps {
-  user: firebase.User | null | undefined
-  auth: firebase.auth.Auth
-}
-
-const Header: React.FC<HeaderProps> = ({ user, auth }) => {
+const Header: React.FC = () => {
+  const {user, auth} = AuthContainer.useContainer()
   const photoURL: string = auth.currentUser?.photoURL!
   return (
     <>
