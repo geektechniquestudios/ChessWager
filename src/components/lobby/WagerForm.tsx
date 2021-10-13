@@ -3,17 +3,21 @@ import CurrencyInput from "react-currency-input-field"
 import "../../style/lobby.css"
 import "../../config"
 import firebase from "firebase/compat/app"
-import RangeSlider from 'react-bootstrap-range-slider';
+import RangeSlider from "react-bootstrap-range-slider"
 import { GameId } from "../containers/GameId"
+import { useMoralis } from "react-moralis"
+import { Auth } from "../containers/Auth"
 
 interface Props {
   lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
   auth: firebase.auth.Auth
 }
 
-
-const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
-  const {gameId, setGameId} = GameId.useContainer() // @todo const?
+const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
+  const { gameId } = GameId.useContainer() // @todo const?
+  const { user, isAuthenticated } = useMoralis()
+  const user1Metamask = user?.get("ethAddress")
+  const { auth } = Auth.useContainer()
 
   const [betSide, setBetSide] = useState("white")
   const [betAmount, setBetAmount] = useState(0.34)
@@ -22,17 +26,17 @@ const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (auth.currentUser) {
+    if (auth.currentUser && isAuthenticated) {
       const { uid, photoURL }: firebase.User = auth.currentUser
       await lobbyRef.add({
         amount: Number(betAmount),
         betSide: betSide,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        gameId: gameId, //@todo get from api call to lichess, will use redux/context , update auth
+        gameId: gameId,
         multiplier: Number(multiplier).toFixed(2),
         status: "ready",
         user1Id: uid,
-        user1Metamask: "", //@todo get from web3
+        user1Metamask: user1Metamask,
         user1PhotoURL: photoURL,
       })
     }
@@ -46,7 +50,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef, auth }) => {
     }
   }
 
-  const updateSlider = (e: React.ChangeEvent<HTMLInputElement>) => { //@todo figure out how to do this correctly
+  const updateSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSliderVal: number = Number(e.target.value)
     setSliderVal(newSliderVal)
     calcMultiplier(newSliderVal)

@@ -1,4 +1,5 @@
 import "../../style/chat.css"
+import "../../config"
 
 import firebase from "firebase/compat/app"
 import "firebase/compat/firestore"
@@ -7,11 +8,9 @@ import "firebase/compat/analytics"
 
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useRef, useState } from "react"
-import "../../config"
-import { AuthContainer } from "../containers/Auth"
+import { Auth } from "../containers/Auth"
 import ChatMessage from "./ChatMessage"
-import { FirestoreContainer } from "../containers/Firestore"
-
+import { Firestore } from "../containers/Firestore"
 
 const GlobalChat: React.FC = () => {
   return (
@@ -24,8 +23,8 @@ const GlobalChat: React.FC = () => {
 }
 
 const ChatRoom: React.FC = () => {
-  const {firestore} = FirestoreContainer.useContainer()
-  const {user, auth} = AuthContainer.useContainer()
+  const { firestore } = Firestore.useContainer()
+  const { user, auth } = Auth.useContainer()
 
   const dummy = useRef<HTMLInputElement>(null)
   const messagesRef = firestore.collection("messages")
@@ -34,9 +33,7 @@ const ChatRoom: React.FC = () => {
   const [messages] = useCollectionData(query, { idField: "id" })
   const [formValue, setFormValue] = useState("")
 
-  const sendMessage = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (formValue === "" || !user) {
       //@todo make regex for any empty string
@@ -65,9 +62,7 @@ const ChatRoom: React.FC = () => {
       <main>
         <span ref={dummy}></span>
         {messages &&
-          messages.map(msg => (
-            <ChatMessage key={msg.id} message={msg} />
-          ))}
+          messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
       </main>
       <fieldset disabled={!auth.currentUser}>
         <form onSubmit={e => sendMessage(e)}>
@@ -81,6 +76,5 @@ const ChatRoom: React.FC = () => {
     </>
   )
 }
-
 
 export default GlobalChat

@@ -1,14 +1,16 @@
-import { AuthContainer } from "../containers/Auth"
+import { Auth } from "../containers/Auth"
 
-const ChatMessage: React.FC<{
+interface Props {
   message: {
     text: string
     uid: string
     photoURL: string
     userName: string
   }
-}> = ({ message }) => {
-  const { auth } = AuthContainer.useContainer()
+}
+
+const ChatMessage: React.FC<Props> = ({ message }) => {
+  const { auth } = Auth.useContainer()
   const { text, uid, photoURL, userName } = message
 
   let messageClass
