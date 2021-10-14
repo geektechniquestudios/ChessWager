@@ -15,7 +15,7 @@ interface Props {
 }
 
 const Buttons: React.FC<Props> = ({
-  id, //@todo need to rename to betid
+  id, 
   status,
   user1Id,
   user2Id,
@@ -24,7 +24,7 @@ const Buttons: React.FC<Props> = ({
   const user2Metamask = user?.get("ethAddress")
 
   const authContainer = Auth.useContainer()
-  const { gameId, setGameId } = GameId.useContainer()
+  const { gameId } = GameId.useContainer()
 
   const accept = () => {
     const acceptBet = firebase.functions().httpsCallable("acceptBet")

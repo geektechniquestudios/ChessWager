@@ -37,10 +37,11 @@ const BettingLobby: React.FC = () => {
     firestore.collection("lobby")
   const query = lobbyRef
     .where("gameId", "==", gameIdContainer.gameId)
-    .orderBy("createdAt", "desc")
+    // .orderBy("createdAt", "desc")
 
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
+    
 
   return (
     <div className="lobby">

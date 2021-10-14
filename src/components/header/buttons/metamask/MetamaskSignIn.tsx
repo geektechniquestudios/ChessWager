@@ -1,12 +1,13 @@
 import { useMoralis } from "react-moralis"
 
-const MetamaskSignIn = () => {
-  const { authenticate } = useMoralis()
+const MetamaskSignIn: React.FC = () => {
+  const { authenticate, user } = useMoralis()
+
   return (
     <>
       <button
         onClick={() => {
-          authenticate().catch(console.error)
+          authenticate()
         }}
       >
         Connect Metamask

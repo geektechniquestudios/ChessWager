@@ -2,7 +2,7 @@ import { Auth } from "../../../containers/Auth"
 import GoogleSignOut from "./GoogleSignOut"
 import GoogleSignIn from "./GoogleSignIn"
 
-const GoogleAuthButtons = () => {
+const GoogleAuthButtons: React.FC = () => {
   const { user, auth } = Auth.useContainer()
   const photoURL: string = auth.currentUser?.photoURL!
 
