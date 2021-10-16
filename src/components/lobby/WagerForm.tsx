@@ -15,7 +15,7 @@ interface Props {
 }
 
 const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
-  const { gameId } = GameId.useContainer() // @todo const?
+  const { gameId } = GameId.useContainer()
   const { user, isAuthenticated, enableWeb3, isWeb3Enabled} = useMoralis()
   const user1Metamask = user?.get("ethAddress")
   const { auth } = Auth.useContainer()
@@ -28,15 +28,13 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!isWeb3Enabled) {
-      const web3: any = await enableWeb3()
+    // if (!isWeb3Enabled) {
 
-      const balance = web3.eth.getBalance()
 
-      
+    //   // @todo current
 
-      return
-    }
+    //   return
+    // }
 
     // check if balance is present in metamask
 
