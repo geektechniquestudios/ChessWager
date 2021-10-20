@@ -7,7 +7,6 @@ import RangeSlider from "react-bootstrap-range-slider"
 import { GameId } from "../containers/GameId"
 import { useMoralis } from "react-moralis"
 import { Auth } from "../containers/Auth"
-import Moralis from "moralis/types"
 
 interface Props {
   lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
@@ -16,7 +15,7 @@ interface Props {
 
 const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
   const { gameId } = GameId.useContainer()
-  const { user, isAuthenticated, enableWeb3, isWeb3Enabled} = useMoralis()
+  const { user, isAuthenticated, authenticate, enableWeb3, isWeb3Enabled} = useMoralis()
   const user1Metamask = user?.get("ethAddress")
   const { auth } = Auth.useContainer()
 
@@ -28,17 +27,20 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // if (!isWeb3Enabled) {
-
-
-    //   // @todo current
-
-    //   return
-    // }
+    if (!isWeb3Enabled) {
+      enableWeb3()
+      return
+    }
 
     // check if balance is present in metamask
 
-    if (auth.currentUser && isAuthenticated) {
+    if (!isAuthenticated) {
+      await authenticate()
+      return
+    }
+
+
+    if (auth.currentUser) { // && isAuthenticated) {
       const { uid, photoURL }: firebase.User = auth.currentUser
       await lobbyRef.add({
         amount: Number(betAmount),

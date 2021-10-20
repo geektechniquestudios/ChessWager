@@ -1,13 +1,14 @@
 import { useMoralis } from "react-moralis"
 
 const MetamaskSignIn: React.FC = () => {
-  const { authenticate, user } = useMoralis()
+  const { authenticate, enableWeb3 } = useMoralis()
 
   return (
     <>
       <button
         onClick={() => {
-          authenticate()
+          authenticate() //@todo do I need both of these?
+          enableWeb3()
         }}
       >
         Connect Metamask

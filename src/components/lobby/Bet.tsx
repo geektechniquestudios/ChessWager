@@ -9,6 +9,7 @@ import Buttons from "./Buttons"
 import { GameId } from "../containers/GameId"
 import { Auth } from "../containers/Auth"
 import { useMoralis } from "react-moralis"
+import MetamaskPrompt from "./MetamaskPrompt"
 
 interface Props {
   className: string
@@ -59,6 +60,18 @@ const Bet: React.FC<Props> = ({
   return (
     <>
       <Card>
+        {status === "approved" && (
+          <MetamaskPrompt
+            betId={id}
+            amount={amount}
+            betSide={betSide}
+            multiplier={multiplier}
+            user1Id={user1Id}
+            user1Metamask={user1Metamask}
+            user2Id={user2Id}
+            user2Metamask={user2Metamask}
+          />
+        )}
         <Card.Body className={`${className} bet`}>
           <Buttons
             id={id}

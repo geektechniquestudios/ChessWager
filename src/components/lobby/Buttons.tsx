@@ -27,6 +27,7 @@ const Buttons: React.FC<Props> = ({
   const { gameId } = GameId.useContainer()
 
   const accept = () => {
+    //add checks for authentication and metamask
     const acceptBet = firebase.functions().httpsCallable("acceptBet")
     acceptBet({
       betId: id,
