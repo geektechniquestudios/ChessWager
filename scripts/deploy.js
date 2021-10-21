@@ -15,7 +15,7 @@ async function main() {
 
   // We get the contract to deploy
   const ChessWager = await hre.ethers.getContractFactory("ChessWager");
-  const chessWager = await ChessWager.deploy("Hello, Hardhat!");
+  const chessWager = await ChessWager.deploy();
 
   await chessWager.deployed();
 
