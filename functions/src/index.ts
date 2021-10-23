@@ -19,30 +19,31 @@ interface AcceptArgs {
   betId: string
   photoURL: string
   hostUid: string
+  user2Metamask: string
 }
 
 exports.acceptBet = functions.https.onCall(
-  async ({ betId, photoURL, hostUid }: AcceptArgs, context: any) => {
+  async ({ betId, photoURL, hostUid, user2Metamask }: AcceptArgs, context: any) => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
     const userDocRef = db.collection("users").doc(hostUid) //: firebase.firestore.DocumentReference = db
 
-    let toReturn = false
+    let isPlayerBlocked = false
     await userDocRef.get().then((doc: any) => {
       const blocked: string[] = doc.data().blocked
-      toReturn = blocked.includes(context.auth.uid)
+      isPlayerBlocked = blocked.includes(context.auth.uid)
     })
-    if (toReturn) {
+    if (isPlayerBlocked) {
       return "You are blocked from joining this lobby"
     }
 
     await betDocRef.get().then((doc: any) => {
-      if (doc.data().user2Id == null || doc.data().user2Id === "") {
+      if (doc.data().user2Id === null || doc.data().user2Id === "") { // if someone else hasn't already joined
         betDocRef.update({
           status: "pending",
           user2Id: context.auth.uid,
-          // user2Metamask: userMetamask, @todo
+          user2Metamask: user2Metamask, 
           user2PhotoURL: photoURL,
         })
       }

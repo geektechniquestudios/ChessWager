@@ -1,13 +1,12 @@
-import firebase from "firebase/compat"
-import React, { useEffect, useState } from "react"
-// @ts-ignore
-import Chessground from "react-chessground"
+import React, { useCallback, useEffect, useState } from "react"
 // @ts-ignore
 import ndjsonStream from "can-ndjson-stream"
 import "react-chessground/dist/styles/chessground.css"
 import "../../style/game.css"
 import PlayerData from "./PlayerData"
 import { GameId } from "../containers/GameId"
+// @ts-ignore
+import Chessground from "react-chessground"
 
 interface Featured {
   t: string
@@ -31,19 +30,8 @@ interface Player {
   rating: number
 }
 
-// interface Fen {
-//   value: {
-//     d: {
-//       fen: string
-//       bc: string
-//       wc: string
-//     }
-//   }
-// }
-
 const ChessGame: React.FC = () => {
-  const {gameId, setGameId} = GameId.useContainer() // @todo const?
-  
+  const { gameId, setGameId } = GameId.useContainer()
 
   const [fen, setFen] = useState("")
 
@@ -58,30 +46,33 @@ const ChessGame: React.FC = () => {
   const [blackTitle, setBlackTitle] = useState("")
   const [orientation, setOrientation] = useState("white")
 
-  const updateTitles = (res: Featured): void => {
-    const white: Player | undefined = res.d.players.find(
-      player => player.color === "white"
-    )
-    const black: Player | undefined = res.d.players.find(
-      player => player.color === "black"
-    )
+  const updateTitles = useCallback(
+    (res: Featured): void => {
+      const white: Player | undefined = res.d.players.find(
+        player => player.color === "white"
+      )
+      const black: Player | undefined = res.d.players.find(
+        player => player.color === "black"
+      )
 
-    if (black === undefined || white === undefined) return
+      if (black === undefined || white === undefined) return
 
-    setFen(res.d.fen)
-    setGameId(res.d.id)
-    setOrientation(res.d.orientation)
+      setFen(res.d.fen)
+      setGameId(res.d.id)
+      setOrientation(res.d.orientation)
 
-    if (white.user.title === undefined) setWhiteTitle("")
-    setWhiteName(white.user.name)
-    setWhiteRating(white.rating)
+      if (white.user.title === undefined) setWhiteTitle("")
+      setWhiteName(white.user.name)
+      setWhiteRating(white.rating)
 
-    if (black.user.title === undefined) setBlackTitle("")
-    setBlackName(black.user.name)
-    setBlackRating(black.rating)
+      if (black.user.title === undefined) setBlackTitle("")
+      setBlackName(black.user.name)
+      setBlackRating(black.rating)
 
-    return
-  }
+      return
+    },
+    [setGameId]
+  )
 
   useEffect(() => {
     fetch("https://lichess.org/api/tv/feed", {
@@ -105,17 +96,12 @@ const ChessGame: React.FC = () => {
         })
       })
       .catch(console.error)
-  }, [])
+  }, [updateTitles])
 
   const lichessUrl = "https://lichess.org/" + gameId
 
   return (
     <div id="chess-board">
-      {/* @todo remove in prod */}
-      {/* <button onClick={_e => clearBets()} style={{ float: "right" }}>
-        clear
-      </button> */}
-
       <a href={lichessUrl} style={{ float: "right" }}>
         Check out the game on lichess
       </a>

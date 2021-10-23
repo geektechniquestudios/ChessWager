@@ -1,4 +1,3 @@
-// import "../src/config"
 import firebase from "firebase/compat"
 import ndjson from "ndjson"
 

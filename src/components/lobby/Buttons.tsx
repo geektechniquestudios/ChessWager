@@ -1,5 +1,6 @@
 import firebase from "firebase/compat"
-import { AuthContainer } from "../containers/Auth"
+import { useMoralis } from "react-moralis"
+import { Auth } from "../containers/Auth"
 import { GameId } from "../containers/GameId"
 
 const firestore = firebase.firestore()
@@ -11,29 +12,29 @@ interface Props {
   status: string
   user1Id: string
   user2Id: string
-
 }
 
 const Buttons: React.FC<Props> = ({
-  id, //@todo need to rename to betid
+  id, 
   status,
   user1Id,
   user2Id,
 }) => {
-  const {user, auth} = AuthContainer.useContainer()
-  const {gameId, setGameId} = GameId.useContainer() // @todo const?
+  const { user, isAuthenticated } = useMoralis()
+
+  const authContainer = Auth.useContainer()
+  const { gameId } = GameId.useContainer()
 
   const accept = () => {
+    const user2Metamask = user?.get("ethAddress")
+    //add checks for authentication and metamask
     const acceptBet = firebase.functions().httpsCallable("acceptBet")
     acceptBet({
       betId: id,
-      photoURL: auth.currentUser?.photoURL,
+      photoURL: authContainer.auth.currentUser?.photoURL,
       hostUid: user1Id,
-    }).then(res => {
-      if (res.data !== "") {
-        alert(res.data)
-      }
-    })
+      user2Metamask: user2Metamask,
+    }).catch(console.error) //@todo do this catch to all or none of the firebase methods
   }
 
   const cancel = () => {
@@ -66,7 +67,9 @@ const Buttons: React.FC<Props> = ({
 
   const block = () => {
     const userCollectionRef = firestore.collection("users")
-    const userDocRef = userCollectionRef.doc(auth.currentUser?.uid)
+    const userDocRef = userCollectionRef.doc(
+      authContainer.auth.currentUser?.uid
+    )
 
     userDocRef.get().then(doc => {
       if (doc.data()) {
@@ -88,9 +91,10 @@ const Buttons: React.FC<Props> = ({
     <>
       {gameId}
       {/* accept button for user 2, */}
-      {user &&
-        auth.currentUser &&
-        user1Id !== auth.currentUser.uid &&
+      {authContainer.user &&
+        isAuthenticated &&
+        authContainer.auth.currentUser &&
+        user1Id !== authContainer.auth.currentUser.uid &&
         status === "ready" && (
           <button
             // disabled={
@@ -103,35 +107,35 @@ const Buttons: React.FC<Props> = ({
         )}
 
       {/* cancel button for user2, different cancel button for user1 */}
-      {user &&
-        auth.currentUser &&
-        user2Id === auth.currentUser.uid &&
+      {authContainer.user &&
+        authContainer.auth.currentUser &&
+        user2Id === authContainer.auth.currentUser.uid &&
         status === "pending" && <button onClick={cancel}> Leave Bet </button>}
 
       {/* delete bet visible only to user1*/}
-      {user &&
-        auth.currentUser &&
-        user1Id === auth.currentUser.uid &&
+      {authContainer.user &&
+        authContainer.auth.currentUser &&
+        user1Id === authContainer.auth.currentUser.uid &&
         status !== "approved" && (
           <button onClick={deleteCurrentBet}> Delete Bet</button>
         )}
 
       {/* approve button only visible to user1 after user2 joins*/}
-      {user &&
-        auth.currentUser &&
-        user1Id === auth.currentUser.uid &&
+      {authContainer.user &&
+        authContainer.auth.currentUser &&
+        user1Id === authContainer.auth.currentUser.uid &&
         status === "pending" && <button onClick={approve}>Approve</button>}
 
       {/* kick only visible to user1 */}
-      {user &&
-        auth.currentUser &&
-        user1Id === auth.currentUser.uid &&
+      {authContainer.user &&
+        authContainer.auth.currentUser &&
+        user1Id === authContainer.auth.currentUser.uid &&
         status === "pending" && <button onClick={kick}> Kick </button>}
 
       {/* block only visible to user1, maybe should go in profile?*/}
-      {user &&
-        auth.currentUser &&
-        user1Id === auth.currentUser.uid &&
+      {authContainer.user &&
+        authContainer.auth.currentUser &&
+        user1Id === authContainer.auth.currentUser.uid &&
         status === "pending" && <button onClick={block}> block </button>}
     </>
   )

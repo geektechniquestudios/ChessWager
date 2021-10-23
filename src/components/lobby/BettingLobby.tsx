@@ -9,7 +9,7 @@ import Bet from "./Bet"
 import WagerForm from "./WagerForm"
 import { FirebaseError } from "@firebase/util"
 import { GameId } from "../containers/GameId"
-import { AuthContainer } from "../containers/Auth"
+import { Auth } from "../containers/Auth"
 
 const firestore = firebase.firestore() //@todo move into parent, use redux
 
@@ -30,38 +30,34 @@ interface Lobby {
 }
 
 const BettingLobby: React.FC = () => {
-  const {user, auth} = AuthContainer.useContainer()
-  const gameIdContainer = GameId.useContainer() // @todo const?
-
+  const { user, auth } = Auth.useContainer()
+  const gameIdContainer = GameId.useContainer()
 
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-    firestore.collection("lobby") //@todo order by created at
-  //const query = lobbyRef.where("status", "!=", "complete") //.where("status", "==", "ready") //.orderBy("createdAt", "desc").limit(10) //.where("status", "==", "active")
-  const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
-// @todo make query by time range(time most recent game was started, )
-// ref.orderBy().startAt(call to db, new Date() when ).endAt(never)
+    firestore.collection("lobby")
+  const query = lobbyRef
+    .where("gameId", "==", gameIdContainer.gameId)
+    // .orderBy("createdAt", "desc")
 
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
-
-  let userId = ""
-  if (auth.currentUser) {
-    const { uid }: firebase.User = auth.currentUser
-    userId = uid
-  }
+    
 
   return (
     <div className="lobby">
       <header>
         {/* @todo! add column names allowing sorting */}
-        {/* @todo make css grid to bottom of container, consider putting at the top so new bets cascade downwards */}
-        <WagerForm lobbyRef={lobbyRef} auth={auth} />
+        <WagerForm lobbyRef={lobbyRef} />
       </header>
       <main>
         <div className="lobby-container">
-          {lobby && user && // get related-to-user games
+          {/* get related-to-user games */}
+          {lobby &&
+            user &&
             lobby
-              .filter(i => i.user1Id === userId || i.user2Id === userId)
+              .filter(
+                bet => bet.user1Id === user.uid || bet.user2Id === user.uid
+              )
               .map(bet => (
                 <Bet
                   className="in-progress-bet"
@@ -85,10 +81,10 @@ const BettingLobby: React.FC = () => {
           {lobby &&
             lobby
               .filter(
-                i =>
-                  i.status === "ready" &&
-                  i.user1Id !== userId &&
-                  i.user2Id !== userId
+                bet =>
+                  bet.status === "ready" &&
+                  bet.user1Id !== user?.uid &&
+                  bet.user2Id !== user?.uid
               )
               .map(bet => (
                 <Bet
@@ -113,10 +109,10 @@ const BettingLobby: React.FC = () => {
           {lobby &&
             lobby
               .filter(
-                i =>
-                  i.status === "pending" &&
-                  i.user1Id !== userId &&
-                  i.user2Id !== userId
+                bet =>
+                  bet.status === "pending" &&
+                  bet.user1Id !== user?.uid &&
+                  bet.user2Id !== user?.uid
               )
               .map(bet => (
                 <Bet

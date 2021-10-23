@@ -12,4 +12,4 @@ const useAuth = () => {
   return { user, auth }
 }
 
-export const AuthContainer = createContainer(useAuth)
+export const Auth = createContainer(useAuth)
