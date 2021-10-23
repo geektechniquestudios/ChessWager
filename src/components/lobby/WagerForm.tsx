@@ -10,7 +10,6 @@ import { Auth } from "../containers/Auth"
 
 interface Props {
   lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
-  auth: firebase.auth.Auth
 }
 
 const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
@@ -20,24 +19,24 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
   const { auth } = Auth.useContainer()
 
   const [betSide, setBetSide] = useState("white")
-  const [betAmount, setBetAmount] = useState(0.34)
+  const [betAmount, setBetAmount] = useState(0.000034)
   const [multiplier, setMultiplier] = useState(1.0)
   const [sliderVal, setSliderVal] = useState(0.0)
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!isWeb3Enabled) {
-      enableWeb3()
-      return
-    }
+    // if (!isWeb3Enabled) {
+    //   enableWeb3()
+    //   return 
+    // }
 
     // check if balance is present in metamask
     // @todo these 2 if statements are gross, do it right
-    if (!isAuthenticated) {
-      await authenticate()
-      return
-    }
+  if (!isAuthenticated) { //@todo switch to using ethers 
+    await authenticate()
+    return
+  }
 
 
     if (auth.currentUser) { // && isAuthenticated) {

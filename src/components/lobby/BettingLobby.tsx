@@ -47,7 +47,7 @@ const BettingLobby: React.FC = () => {
     <div className="lobby">
       <header>
         {/* @todo! add column names allowing sorting */}
-        <WagerForm lobbyRef={lobbyRef} auth={auth} />
+        <WagerForm lobbyRef={lobbyRef} />
       </header>
       <main>
         <div className="lobby-container">

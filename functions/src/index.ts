@@ -39,7 +39,7 @@ exports.acceptBet = functions.https.onCall(
     }
 
     await betDocRef.get().then((doc: any) => {
-      if (doc.data().user2Id == null || doc.data().user2Id === "") { // @todo wtf is this if statement?
+      if (doc.data().user2Id === null || doc.data().user2Id === "") { // if someone else hasn't already joined
         betDocRef.update({
           status: "pending",
           user2Id: context.auth.uid,

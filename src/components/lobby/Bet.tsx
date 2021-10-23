@@ -70,6 +70,7 @@ const Bet: React.FC<Props> = ({
             user1Metamask={user1Metamask}
             user2Id={user2Id}
             user2Metamask={user2Metamask}
+            gameId={gameId}
           />
         )}
         <Card.Body className={`${className} bet`}>

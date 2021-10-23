@@ -21,15 +21,14 @@ const Buttons: React.FC<Props> = ({
   user2Id,
 }) => {
   const { user, isAuthenticated } = useMoralis()
-  const user2Metamask = user?.get("ethAddress")
 
   const authContainer = Auth.useContainer()
   const { gameId } = GameId.useContainer()
 
   const accept = () => {
+    const user2Metamask = user?.get("ethAddress")
     //add checks for authentication and metamask
     const acceptBet = firebase.functions().httpsCallable("acceptBet")
-    console.log(user2Metamask)
     acceptBet({
       betId: id,
       photoURL: authContainer.auth.currentUser?.photoURL,
