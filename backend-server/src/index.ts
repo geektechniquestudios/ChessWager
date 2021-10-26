@@ -16,28 +16,28 @@ const db = admin.firestore()
 const lobbyCollectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("lobby")
 
-const clearActiveBets = () => {
-  console.log("new game, clearing bets")
-  const query = lobbyCollectionRef.where("status", "!=", "complete")
-  query
-    .get()
-    .then(lobbySnapshot => {
-      lobbySnapshot.forEach(doc => {
-        doc.ref.update({ status: "complete" })
-      })
-    })
-    .then(() => {
-      console.log("bet clearing complete")
-    })
-    .catch(console.error)
-}
+// const clearActiveBets = () => {
+//   console.log("new game, clearing bets")
+//   const query = lobbyCollectionRef.where("status", "!=", "complete")
+//   query
+//     .get()
+//     .then(lobbySnapshot => {
+//       lobbySnapshot.forEach(doc => {
+//         doc.ref.update({ status: "complete" })
+//       })
+//     })
+//     .then(() => {
+//       console.log("bet clearing complete")
+//     })
+//     .catch(console.error)
+// }
 
 const callLichessLiveTv = () => {
   hyperquest("https://lichess.org/api/tv/feed")
     .pipe(ndjson.parse())
     .on("data", (obj: any) => {
       if (obj.t === "featured") {
-        clearActiveBets()
+        // store current game id and move 
       } else {
         console.log("players moving")
       }

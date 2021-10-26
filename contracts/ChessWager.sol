@@ -19,15 +19,12 @@ contract ChessWager {
   }
   mapping(string => Game) private gameIdToGameData;
   struct Game {
-    uint[] betIdArray;
+    string[] betIdArray;
     bool isOver;
     uint endTime;
   }
   mapping(address => uint) private addressToBalance;
   mapping(string => uint) private betIdToPrizePool;
-  // mapping(string => uint[]) private gameIdToBetIdArray; // when game is over, find all bets associated with that game, go over the array, pay each winner
-  // mapping(string => uint) private gameIdToGameState; // 0 = not started, 1 = started, 2 = ended
-  // mapping(string => uint) private gameIdToGameEndTime; // use to determine if bet was too late to pay winner, make sure to send error msg
 
   // constructor() { 
   //   // set owner
@@ -42,12 +39,14 @@ contract ChessWager {
 
     if (betIdToBetData[_betId].multiplier == 0) {// bet is new
       emit TestEvent("new bet created"); // make this update ui in react
+
       betIdToPrizePool[_betId] += _bet.amount; // make new entry for bet
-      // add bet to betid to betdata
+      
+      gameIdToGameData[_bet.gameId].betIdArray.push(_betId);
       betIdToBetData[_betId] = _bet;
 
     } else { // bet is being matched
-      //set var indicating that both parties sent bet
+      // set var indicating that both parties sent bet
       require(betIdToBetData[_betId].amount == _bet.amount);
       require(keccak256(abi.encodePacked(betIdToBetData[_betId].betSide)) == keccak256(abi.encodePacked(_bet.betSide)));
       require(keccak256(abi.encodePacked(betIdToBetData[_betId].user1Id)) == keccak256(abi.encodePacked(_bet.user1Id)));
@@ -59,8 +58,8 @@ contract ChessWager {
       
       emit TestEvent("bet matched, paying user 1");
       betIdToPrizePool[_betId] += _bet.amount;
-      //pay user 1, temp
-      _bet.user1Metamask.transfer(betIdToPrizePool[_betId]);
+      
+      // _bet.user1Metamask.transfer(betIdToPrizePool[_betId]);
     }
   }
 
@@ -68,7 +67,20 @@ contract ChessWager {
 
   function matchedBet() private {}
 
-  function payWinners(string calldata _betId) external {}
+  
+
+  function payWinners(string calldata _gameId, string calldata winningSide) external payable { // require owner to call this
+    // go over game.betIdArray, and pay winner from each game
+    for (uint i = 0; i < gameIdToGameData[_gameId].betIdArray.length; i++) {
+      if (keccak256(abi.encodePacked(betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]].betSide)) == keccak256(abi.encodePacked(winningSide))) { // if user1 won
+        // pay user 1
+        betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]].user1Metamask.transfer(betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]);
+      } else {
+        // pay user 2
+        betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]].user2Metamask.transfer(betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]);
+      }
+    }
+  }
 
   function withdraw(address payable userAddress) external { // might only keep for contingicy situations
     require(userAddress == msg.sender);
