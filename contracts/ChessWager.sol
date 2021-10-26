@@ -2,8 +2,11 @@
 pragma solidity ^0.8.4;
 
 import "hardhat/console.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
 
 contract ChessWager {
+  mapping(string => Bet) private betIdToBetData;
   struct Bet {
     uint amount;
     string betSide; //which side user1 bets on
@@ -14,9 +17,17 @@ contract ChessWager {
     uint multiplier; // need to div by 100
     string gameId;
   }
-  mapping(string => Bet) private betIdToBetData;
+  mapping(string => Game) private gameIdToGameData;
+  struct Game {
+    uint[] betIdArray;
+    bool isOver;
+    uint endTime;
+  }
   mapping(address => uint) private addressToBalance;
   mapping(string => uint) private betIdToPrizePool;
+  // mapping(string => uint[]) private gameIdToBetIdArray; // when game is over, find all bets associated with that game, go over the array, pay each winner
+  // mapping(string => uint) private gameIdToGameState; // 0 = not started, 1 = started, 2 = ended
+  // mapping(string => uint) private gameIdToGameEndTime; // use to determine if bet was too late to pay winner, make sure to send error msg
 
   // constructor() { 
   //   // set owner
@@ -35,9 +46,8 @@ contract ChessWager {
       // add bet to betid to betdata
       betIdToBetData[_betId] = _bet;
 
-
     } else { // bet is being matched
-      //set var saying both parties bet
+      //set var indicating that both parties sent bet
       require(betIdToBetData[_betId].amount == _bet.amount);
       require(keccak256(abi.encodePacked(betIdToBetData[_betId].betSide)) == keccak256(abi.encodePacked(_bet.betSide)));
       require(keccak256(abi.encodePacked(betIdToBetData[_betId].user1Id)) == keccak256(abi.encodePacked(_bet.user1Id)));
@@ -58,10 +68,11 @@ contract ChessWager {
 
   function matchedBet() private {}
 
-  function withdraw(address payable userAddress) external {
+  function payWinners(string calldata _betId) external {}
+
+  function withdraw(address payable userAddress) external { // might only keep for contingicy situations
     require(userAddress == msg.sender);
     userAddress.transfer(addressToBalance[userAddress]);
-
   }
 
   function viewBalance(address userAddress) external view returns (uint) {

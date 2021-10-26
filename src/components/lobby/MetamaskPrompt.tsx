@@ -27,7 +27,7 @@ const MetamaskPrompt: React.FC<Props> = ({
   user2Metamask,
   gameId,
 }) => {
-  const chessWagerAddress = "0xC8331Af2815e0Cf07cDfBB212bBdfBa4c6715e43" //@todo update to mainnet & make dynamic
+  const contractAddress = "0xaB41278ee8FaE5969ab4040469aeb48feBa77af6" //@todo update to mainnet & make dynamic
 
   let bet = {
     amount: ethers.utils.parseEther(amount.toString()),
@@ -42,23 +42,25 @@ const MetamaskPrompt: React.FC<Props> = ({
 
   let overrides = {
     value: ethers.utils.parseEther(amount.toString()), //@todo ugly pointless parse. do it right, formatEther or something
-    // value: ethers.utils.parseEther("0.00001")
   }
+
+  let contract: ethers.Contract
 
   const sendBet = async () => {
     if (typeof window.ethereum !== undefined) {
       await window.ethereum.enable()
       await window.ethereum.request({ method: "eth_requestAccounts" })
-      const provider = new ethers.providers.Web3Provider(window.ethereum) //@todo fix memory leak, move this in useEffect, then contract.removeAllListeners()
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer: any = provider.getSigner()
-      const contract = new ethers.Contract(
-        chessWagerAddress,
+      contract = new ethers.Contract(
+        contractAddress,
         ChessWager.abi,
         signer
       )
 
-      contract.on("TestEvent", message => {
+      contract.on("TestEvent", message => { //@todo add filter for userMetamask
         console.log(message)
+        //update ui, event will emit which user paid, use that
       })
 
       try {
@@ -74,7 +76,8 @@ const MetamaskPrompt: React.FC<Props> = ({
 
   useEffect(() => {
     sendBet()
-  }, []) //@todo fix memory leak, cleanup subscriptions when unrendered
+    return () => {contract.removeAllListeners()}
+  }, []) 
 
   return <> </>
 }
