@@ -4,7 +4,7 @@ pragma solidity ^0.8.4;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ChessWager is Ownable{
+contract ChessWager is Ownable {
   mapping(string => Bet) private betIdToBetData;
   struct Bet {
     uint256 amount;
@@ -23,6 +23,9 @@ contract ChessWager is Ownable{
   }
   mapping(address => uint256) private addressToBalance;
   mapping(string => uint256) private betIdToPrizePool;
+  mapping(string => bool) private betIdToIsBetMatched;
+  // mapping for who bet first
+  mapping(string => string) private whoBetFirst; // enum {user1, user2}
 
   // constructor() {
   //   // set owner
@@ -40,6 +43,15 @@ contract ChessWager is Ownable{
 
     if (betIdToBetData[_betId].multiplier == 0) {
       // bet is new
+      betIdToIsBetMatched[_betId] = false;
+
+      // make whoBetFirst mapping
+      if (msg.sender == _bet.user1Metamask) {
+        whoBetFirst[_betId] = "user1";
+      } else {
+        whoBetFirst[_betId] = "user2";
+      }
+
       emit TestEvent("new bet created"); // make this update ui in react
 
       betIdToPrizePool[_betId] += _bet.amount; // make new entry for bet
@@ -47,7 +59,8 @@ contract ChessWager is Ownable{
       gameIdToGameData[_bet.gameId].betIdArray.push(_betId);
       betIdToBetData[_betId] = _bet;
     } else {
-      // bet is being matched
+      // bet is matched
+      betIdToIsBetMatched[_betId] = true;
       require(betIdToBetData[_betId].amount == _bet.amount);
       require(
         keccak256(abi.encodePacked(betIdToBetData[_betId].betSide)) ==
@@ -85,25 +98,51 @@ contract ChessWager is Ownable{
     payable
     onlyOwner
   {
-    // require owner to call this
     // go over game.betIdArray, and pay winner from each game
     for (uint256 i = 0; i < gameIdToGameData[_gameId].betIdArray.length; i++) {
-      if ( // if bet is on winning side
-        keccak256(
-          abi.encodePacked(
-            betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]].betSide
-          )
-        ) == keccak256(abi.encodePacked(winningSide))
+      if (
+        betIdToIsBetMatched[gameIdToGameData[_gameId].betIdArray[i]] == false
+      ) {
+        // bet is not matched
+        // return money to user that bet first
+        if (
+          keccak256(
+            abi.encodePacked(
+              whoBetFirst[gameIdToGameData[_gameId].betIdArray[i]]
+            )
+          ) == keccak256(abi.encodePacked("user1"))
+        ) {
+          betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]]
+            .user1Metamask
+            .transfer(
+              betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]
+            );
+        } else { // user2
+          betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]]
+            .user2Metamask
+            .transfer(
+              betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]
+            );
+        }
+        continue;
+      }
+
+      Bet memory bet = betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]];
+
+      if (
+        // if bet is on winning side
+        keccak256(abi.encodePacked(bet.betSide)) ==
+        keccak256(abi.encodePacked(winningSide))
       ) {
         // pay user 1
-        betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]]
-          .user1Metamask
-          .transfer(betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]);
+        bet.user1Metamask.transfer(
+          betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]
+        );
       } else {
         // pay user 2
-        betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]]
-          .user2Metamask
-          .transfer(betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]);
+        bet.user2Metamask.transfer(
+          betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]
+        );
       }
     }
   }

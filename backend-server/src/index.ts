@@ -24,7 +24,7 @@ const lobbyCollectionRef: firebase.firestore.CollectionReference<firebase.firest
 //     .then(lobbySnapshot => {
 //       lobbySnapshot.forEach(doc => {
 //         doc.ref.update({ status: "complete" })
-//       })
+//       }) 
 //     })
 //     .then(() => {
 //       console.log("bet clearing complete")
@@ -38,11 +38,12 @@ const callLichessLiveTv = () => {
     .on("data", (obj: any) => {
       if (obj.t === "featured") {
         // store current game id and move 
+
       } else {
         console.log("players moving")
       }
     })
-    .on("finish", callLichessLiveTv) // figure out a different way to do this. infinite recursion
+    // .on("finish", callLichessLiveTv) // figure out a different way to do this. infinite recursion
 }
 
 console.log("lobby clearing program starting")
