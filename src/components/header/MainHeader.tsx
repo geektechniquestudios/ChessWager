@@ -5,6 +5,8 @@ import "../../style/header.css"
 import GoogleAuthButtons from "./buttons/google/GoogleAuthButtons"
 import MetamaskAuthButtons from "./buttons/metamask/MetamaskAuthButtons"
 
+
+
 const Header: React.FC = () => {
   return (
     <span id="auth-buttons">
