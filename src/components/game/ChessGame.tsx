@@ -115,8 +115,8 @@ const ChessGame: React.FC = () => {
         fen={fen}
       />
       <Chessground
-        width="40em"
-        height="40em"
+        width="30vw"
+        height="30vw"
         viewOnly={true}
         id="chess-board"
         fen={fen}
