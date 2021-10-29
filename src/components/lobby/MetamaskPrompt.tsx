@@ -27,7 +27,7 @@ const MetamaskPrompt: React.FC<Props> = ({
   user2Metamask,
   gameId,
 }) => {
-  const contractAddress = "0xaB41278ee8FaE5969ab4040469aeb48feBa77af6" //@todo update to mainnet & make dynamic
+  const contractAddress = "0x4A799c24dDb3c23ee0a21D2f2B1e62cBdF6dFb99" //@todo update to mainnet & make dynamic
 
   let bet = {
     amount: ethers.utils.parseEther(amount.toString()),
@@ -77,8 +77,7 @@ const MetamaskPrompt: React.FC<Props> = ({
   useEffect(() => {
     sendBet()
     return () => {contract.removeAllListeners()}
-  }, []) 
-
+  }, []) //@todo fix dep issue, ?useCallback
   return <> </>
 }
 

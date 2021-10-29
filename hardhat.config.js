@@ -29,13 +29,13 @@ module.exports = {
     hardhat: {
       chainId: 1337,
     },
-    // bscTestnet: {
-    //   url: "https://speedy-nodes-nyc.moralis.io/f8b3d0bbbe6f4ababc2d263a/bsc/testnet/",
-    //   accounts: [accountKey],
-    // },
-    // avalancheMainnet: {
-    //   url: "https://speedy-nodes-nyc.moralis.io/f8b3d0bbbe6f4ababc2d263a/avalanche/mainnet/",
-    //   accounts: [accountKey],
-    // },
+    bscTestnet: {
+      url: process.env.BSC_TESTNET_RPC_URL,
+      accounts: [accountKey],
+    },
+    avalancheMainnet: {
+      url: process.env.AVALANCHE_MAINNET_RPC_URL,
+      accounts: [accountKey],
+    },
   },
 }

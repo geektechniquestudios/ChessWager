@@ -17,7 +17,7 @@ const App: React.FC = () => {
       <nav>
         <BettingLobby />
       </nav>
-      <main>
+      <main className="">
         <ChessGame />
       </main>
       <aside>

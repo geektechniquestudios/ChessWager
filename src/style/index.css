@@ -35,7 +35,7 @@ code {
 
 #page > header {
   grid-area: head;
-  background-color: orange;
+  /* background-color: orange; */
 }
 #page > nav {
   grid-area: lobby;

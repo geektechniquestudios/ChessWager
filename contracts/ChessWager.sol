@@ -24,6 +24,7 @@ contract ChessWager is Ownable {
   mapping(address => uint256) private addressToBalance;
   mapping(string => uint256) private betIdToPrizePool;
   mapping(string => bool) private betIdToIsBetMatched;
+  mapping(string => bool) private betIdToIsBetCompleted;
   // mapping for who bet first
   mapping(string => string) private whoBetFirst; // enum {user1, user2}
 
@@ -33,11 +34,11 @@ contract ChessWager is Ownable {
   // }
 
   function placeBet(Bet calldata _bet, string calldata _betId) public payable {
-    //@todo check if memory or call data is best
     require(_bet.amount == msg.value); // if user is user2, then _bet.amount should == msg.value * multiplier / 100, else if the user is user1, then simply bet amount
     require(
       msg.sender == _bet.user1Metamask || msg.sender == _bet.user2Metamask
     );
+    require(betIdToIsBetCompleted[_betId] == false);
 
     // bool isUser1 = msg.sender == _bet.user1Metamask;
 
@@ -98,8 +99,14 @@ contract ChessWager is Ownable {
     payable
     onlyOwner
   {
+    emit TestEvent("payWinners called");
     // go over game.betIdArray, and pay winner from each game
     for (uint256 i = 0; i < gameIdToGameData[_gameId].betIdArray.length; i++) {
+      Bet memory bet = betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]];
+      uint256 prizePool = betIdToPrizePool[
+        gameIdToGameData[_gameId].betIdArray[i]
+      ];
+      betIdToIsBetCompleted[gameIdToGameData[_gameId].betIdArray[i]] = true;
       if (
         betIdToIsBetMatched[gameIdToGameData[_gameId].betIdArray[i]] == false
       ) {
@@ -112,22 +119,28 @@ contract ChessWager is Ownable {
             )
           ) == keccak256(abi.encodePacked("user1"))
         ) {
-          betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]]
-            .user1Metamask
-            .transfer(
-              betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]
-            );
-        } else { // user2
-          betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]]
-            .user2Metamask
-            .transfer(
-              betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]
-            );
+          bet.user1Metamask.transfer(prizePool);
+        } else {
+          // user2 was the only one that paid
+          bet.user2Metamask.transfer(prizePool);
         }
         continue;
       }
 
-      Bet memory bet = betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]];
+      // if game is a draw, then return money to both users //@todo current
+      if (
+        keccak256(abi.encodePacked(winningSide)) ==
+        keccak256(abi.encodePacked("draw"))
+      ) {
+        uint256 user1BetAmount = (prizePool / (1 + (bet.multiplier / 100)));
+        bet.user1Metamask.transfer(
+          user1BetAmount // minus comission
+        );
+        bet.user2Metamask.transfer(
+          prizePool - user1BetAmount // minus comission
+        );
+        continue;
+      }
 
       if (
         // if bet is on winning side
@@ -135,16 +148,13 @@ contract ChessWager is Ownable {
         keccak256(abi.encodePacked(winningSide))
       ) {
         // pay user 1
-        bet.user1Metamask.transfer(
-          betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]
-        );
+        bet.user1Metamask.transfer(prizePool);
       } else {
         // pay user 2
-        bet.user2Metamask.transfer(
-          betIdToPrizePool[gameIdToGameData[_gameId].betIdArray[i]]
-        );
+        bet.user2Metamask.transfer(prizePool);
       }
     }
+    emit TestEvent("payWinners finished");
   }
 
   function withdraw(address payable userAddress) external {
