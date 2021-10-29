@@ -1,8 +1,11 @@
 // import firebase from "firebase/compat"
 import ndjson from "ndjson"
-import fetch from "node-fetch"
+const fetch = require("node-fetch")
+const axios = require("axios").default
 
-var Web3 = require("web3")
+// axios.<method> will now provide autocomplete and parameter typings
+
+const Web3 = require("web3")
 const Provider = require("@truffle/hdwallet-provider")
 
 const hyperquest = require("hyperquest")
@@ -15,40 +18,43 @@ const hyperquest = require("hyperquest")
 //   // credential: admin.credential.cert(serviceAccount),
 // })
 
-
 const callLichessLiveTv = () => {
   let lastGameId = ""
   let gameId = ""
   hyperquest("https://lichess.org/api/tv/feed")
     .pipe(ndjson.parse())
     .on("data", (obj: any) => {
-      if (obj.t === "featured") { // new game
-        lastGameId = gameId
+      if (obj.t === "featured") {
+        // new game
+        console.log("new game: ", obj.d.id)
+        lastGameId = gameId === "" ? obj.d.id : gameId // bad
         gameId = obj.d.id
         // call lichess for game data from gameId
         fetch(`https://lichess.org/api/game/${lastGameId}`)
-          .then(res => res.json())
-          .then(gameData => {
+          .then((res: any) => res.json())
+          .then((gameData: any) => {
+            console.log(gameData)
             // check if game has been completed
-            if (gameData.hasOwnProperty("winner")) {
+            if (gameData.hasOwnProperty("winner")) { // what if draw??
               console.log("game is over, checking for winners")
               const whiteWins = gameData.winner === "white"
               const blackWins = gameData.winner === "black"
               if (whiteWins) {
-                console.log("white wins")
+                console.log("white wins, updating contract")
                 payWinnersContractCall(lastGameId, "white")
               } else if (blackWins) {
-                console.log("black wins")
+                console.log("black wins, updating contract")
                 payWinnersContractCall(lastGameId, "black")
               }
             } else if (obj.status === "draw" || obj.status === "stalemate") {
               console.log("game is a draw")
               payWinnersContractCall(lastGameId, "draw")
-            }  else {
+            } else {
               // something is wrong, game is not over
-              console.log("game is not over")
+              console.log("game is not over : ", gameData)
             }
           })
+          .catch(console.error)
       } else {
         console.log("players moving ", obj)
       }
@@ -179,7 +185,7 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
   const contract = new web3.eth.Contract(contractABI, contractAddress)
   const payWinners = await contract.methods
     .payWinners(gameId, winningSide)
-    .send({from: metamaskAddress})
+    .send({ from: metamaskAddress })
   console.log("payout transaction hash: ", payWinners.transactionHash)
 }
 
