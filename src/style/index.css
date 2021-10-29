@@ -39,17 +39,17 @@ code {
 }
 #page > nav {
   grid-area: lobby;
-  background-color: green;
+  /* background-color: green; */
 }
 #page > main {
   grid-area: game;
-  background-color: gray;
+  /* background-color: gray; */
 }
 #page > aside {
   grid-area: chat;
-  background-color: chartreuse;
+  /* background-color: chartreuse; */
 }
 #page > footer {
   grid-area: foot;
-  background-color: cyan;
+  /* background-color: cyan; */
 }
