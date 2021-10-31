@@ -1,6 +1,7 @@
 import { ethers } from "ethers"
 import { useEffect } from "react"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
+import { Auth } from "../containers/Auth"
 
 interface Props {
   betId: string
@@ -29,8 +30,16 @@ const MetamaskPrompt: React.FC<Props> = ({
 }) => {
   const contractAddress = "0x4A799c24dDb3c23ee0a21D2f2B1e62cBdF6dFb99" //@todo update to mainnet & make dynamic
 
-  let bet = {
-    amount: ethers.utils.parseEther(amount.toString()),
+
+  const {auth} = Auth.useContainer()
+
+  const betAmount = (auth.currentUser!.uid === user1Id) ? amount : amount * multiplier //@todo current
+  console.log(betAmount)
+
+
+  let bet = { // @todo current if user 2, amount * multiplier
+    amount: ethers.utils.parseEther(betAmount.toString()), // @todo current, causing falure with multiplication
+    // amount: ethers.utils.parseEther((amount * multiplier).toString()),
     betSide: betSide,
     user1Id: user1Id,
     user1Metamask: user1Metamask,

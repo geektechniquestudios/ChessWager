@@ -6,6 +6,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ChessWager is Ownable {
   mapping(string => Bet) private betIdToBetData;
+  mapping(string => uint256) private betIdToPrizePool;
+  mapping(string => bool) private betIdToIsBetMatched;
+  mapping(string => bool) private betIdToIsBetCompleted;
   struct Bet {
     uint256 amount;
     string betSide; //which side user1 bets on
@@ -21,17 +24,18 @@ contract ChessWager is Ownable {
     string[] betIdArray;
     uint256 endTime;
   }
-  mapping(address => uint256) private addressToBalance;
-  mapping(string => uint256) private betIdToPrizePool;
-  mapping(string => bool) private betIdToIsBetMatched;
-  mapping(string => bool) private betIdToIsBetCompleted;
+  mapping(address => uint256) private addressToBalance; // @todo remove if not using
   // mapping for who bet first
-  mapping(string => string) private whoBetFirst; // enum {user1, user2}
+  mapping(string => string) private betIdtoWhoBetFirst; // enum {user1, user2}
+  uint256 private chessWagerFunds;
+  address  private chessWagerAddress;
 
-  // constructor() {
-  //   // set owner
+  constructor() {
+    // store chesswageraddress
+    chessWagerAddress = msg.sender;
+    chessWagerFunds = 0;
 
-  // }
+  }
 
   function placeBet(Bet calldata _bet, string calldata _betId) public payable {
     require(_bet.amount == msg.value); // if user is user2, then _bet.amount should == msg.value * multiplier / 100, else if the user is user1, then simply bet amount
@@ -48,9 +52,9 @@ contract ChessWager is Ownable {
 
       // make whoBetFirst mapping
       if (msg.sender == _bet.user1Metamask) {
-        whoBetFirst[_betId] = "user1";
+        betIdtoWhoBetFirst[_betId] = "user1";
       } else {
-        whoBetFirst[_betId] = "user2";
+        betIdtoWhoBetFirst[_betId] = "user2";
       }
 
       emit TestEvent("new bet created"); // make this update ui in react
@@ -115,7 +119,7 @@ contract ChessWager is Ownable {
         if (
           keccak256(
             abi.encodePacked(
-              whoBetFirst[gameIdToGameData[_gameId].betIdArray[i]]
+              betIdtoWhoBetFirst[gameIdToGameData[_gameId].betIdArray[i]]
             )
           ) == keccak256(abi.encodePacked("user1"))
         ) {
@@ -157,15 +161,27 @@ contract ChessWager is Ownable {
     emit TestEvent("payWinners finished");
   }
 
-  function withdraw(address payable userAddress) external {
-    // might only keep for contingicy situations
-    require(userAddress == msg.sender);
-    userAddress.transfer(addressToBalance[userAddress]);
+  function returnMoneyToUnassociatedBets() external onlyOwner {
+    // if bet is older than one hour, then return money to user
+  }
+
+  function withdraw(address payable userAddress) external payable {
+
+    userAddress.transfer(addressToBalance[userAddress]); // @todo this is not working, no balances stored
+  }
+
+  function withdrawChessWagerBalance(address payable userAddress) external payable {
+
+    userAddress.transfer(addressToBalance[userAddress]); // @todo this is not working, no balances stored
   }
 
   function viewBalance(address userAddress) external view returns (uint256) {
     require(userAddress == msg.sender);
-    return addressToBalance[userAddress];
+    return addressToBalance[userAddress]; //@todo emit instead
+  }
+
+  function viewChessWagerBalance() external view returns (uint256) {
+    return chessWagerFunds;
   }
 
   event TestEvent(string message);

@@ -1,12 +1,15 @@
+// import { Provider } from '@truffle/hdwallet-provider';
 // import firebase from "firebase/compat"
 import ndjson from "ndjson"
+require("dotenv").config({ path: "../../.env" })
 const fetch = require("node-fetch")
-const axios = require("axios").default
+// const axios = require("axios").default
+const ethers = require("ethers")
 
 // axios.<method> will now provide autocomplete and parameter typings
 
-const Web3 = require("web3")
-const Provider = require("@truffle/hdwallet-provider")
+// const Web3 = require("web3")
+// const Provider = require("@truffle/hdwallet-provider")
 
 const hyperquest = require("hyperquest")
 // const admin = require("firebase-admin")
@@ -35,7 +38,8 @@ const callLichessLiveTv = () => {
           .then((gameData: any) => {
             console.log(gameData)
             // check if game has been completed
-            if (gameData.hasOwnProperty("winner")) { // what if draw??
+            if (gameData.hasOwnProperty("winner")) {
+              // what if draw??
               console.log("game is over, checking for winners")
               const whiteWins = gameData.winner === "white"
               const blackWins = gameData.winner === "black"
@@ -48,7 +52,7 @@ const callLichessLiveTv = () => {
               }
             } else if (obj.status === "draw" || obj.status === "stalemate") {
               console.log("game is a draw")
-              payWinnersContractCall(lastGameId, "draw")
+              payWinnersContractCall(lastGameId, "draw") // @todo call twice with even more previous game to deal with possiblility of people sending bet late, maybe
             } else {
               // something is wrong, game is not over
               console.log("game is not over : ", gameData)
@@ -67,6 +71,25 @@ const contractABI = [
     anonymous: false,
     inputs: [
       {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: false,
         internalType: "string",
         name: "message",
@@ -75,6 +98,37 @@ const contractABI = [
     ],
     name: "TestEvent",
     type: "event",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_gameId",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "winningSide",
+        type: "string",
+      },
+    ],
+    name: "payWinners",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
   },
   {
     inputs: [
@@ -137,6 +191,26 @@ const contractABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -172,21 +246,39 @@ const contractABI = [
 const metamaskAddress = process.env.METAMASK_ACCOUNT_ADDRESS
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
 const rpcUrl = process.env.BSC_TESTNET_RPC_URL
+console.log(metamaskAddress, metamaskKey, rpcUrl)
+
+// const payWinnersContractCall = async (gameId: string, winningSide: string) => {
+//   console.log(
+//     "paying out winners for game ",
+//     gameId,
+//     " with winning side ",
+//     winningSide
+//   )
+//   // const provider = new Provider(metamaskKey, rpcUrl)
+//   // set provider
+//   const provider = new Web3.providers.Provider(metamaskKey, rpcUrl)
+//   const web3 = new Web3(provider)
+//   const contract = new web3.eth.Contract(contractABI, contractAddress)
+//   const payWinners = await contract.methods
+//     .payWinners(gameId, winningSide)
+//     .send({ from: metamaskAddress })
+//   console.log("payout transaction hash: ", payWinners.transactionHash)
+// }
+
+const Wallet = ethers.Wallet
+const Contract = ethers.Contract
+const utils = ethers.utils
+const providers = ethers.providers
 
 const payWinnersContractCall = async (gameId: string, winningSide: string) => {
-  console.log(
-    "paying out winners for game ",
-    gameId,
-    " with winning side ",
-    winningSide
-  )
-  const provider = new Provider(metamaskKey, rpcUrl)
-  const web3 = new Web3(provider)
-  const contract = new web3.eth.Contract(contractABI, contractAddress)
-  const payWinners = await contract.methods
-    .payWinners(gameId, winningSide)
-    .send({ from: metamaskAddress })
+  const provider = new providers.JsonRpcProvider(rpcUrl)
+  const wallet = new Wallet(metamaskKey, provider)
+  const contract = new Contract(contractAddress, contractABI, wallet)
+
+  const payWinners = await contract.payWinners(gameId, winningSide)
   console.log("payout transaction hash: ", payWinners.transactionHash)
 }
 
 callLichessLiveTv()
+// payWinnersContractCall("gameId", "white")
