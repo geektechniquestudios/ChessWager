@@ -11,7 +11,7 @@ import "./config"
 const App: React.FC = () => {
   return (
     <section id="page">
-      <header className="bg-gradient-to-b from-gray-900 via-gray-900">
+      <header className="bg-gradient-to-b from-gray-900 via-gray-900 min-w-full">
         <MainHeader />
       </header>
       <nav>

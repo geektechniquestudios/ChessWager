@@ -17,7 +17,7 @@ code {
 }
 
 #page {
-  height: 100vh;
+  /* height: 100vh; */
   display: grid;
   gap: 1rem;
   grid-template-areas: 
@@ -35,8 +35,8 @@ code {
 
 #page > header {
   grid-area: head;
-  /* background-color: orange; */
 }
+
 #page > nav {
   grid-area: lobby;
   /* background-color: green; */

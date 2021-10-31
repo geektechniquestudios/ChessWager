@@ -1,4 +1,4 @@
-#auth-buttons {
+/* #auth-buttons {
   display: flex;
   float: right;
   margin: 0.5rem;
@@ -6,4 +6,11 @@
 
 #auth-buttons > * {
   margin-right: 0.5rem;
+} */
+
+.header-button {
+  @apply bg-gray-600 
+  hover:bg-gray-200 
+  text-black 
+  hover:text-green-800;
 }
