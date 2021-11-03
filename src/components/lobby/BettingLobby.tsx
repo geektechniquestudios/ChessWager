@@ -22,15 +22,17 @@ interface Lobby {
   user1Id: string
   user1Metamask: string
   user1PhotoURL: string
+  hasUser1Paid: boolean
   user2Id: string
   user2Metamask: string
   user2PhotoURL: string
+  hasUser2Paid: boolean
   createdAt: Date
   gameId: string
 }
 
 const BettingLobby: React.FC = () => {
-  const { user, auth } = Auth.useContainer()
+  const { user } = Auth.useContainer()
   const gameIdContainer = GameId.useContainer()
 
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
@@ -71,9 +73,11 @@ const BettingLobby: React.FC = () => {
                   user1Id={bet.user1Id}
                   user1Metamask={bet.user1Metamask}
                   user1PhotoURL={bet.user1PhotoURL}
+                  hasUser1Paid={bet.hasUser1Paid}
                   user2Id={bet.user2Id}
                   user2Metamask={bet.user2Metamask}
                   user2PhotoURL={bet.user2PhotoURL}
+                  hasUser2Paid={bet.hasUser2Paid}
                   createdAt={bet.createdAt}
                   gameId={bet.gameId}
                 />
@@ -99,9 +103,11 @@ const BettingLobby: React.FC = () => {
                   user1Id={bet.user1Id}
                   user1Metamask={bet.user1Metamask}
                   user1PhotoURL={bet.user1PhotoURL}
+                  hasUser1Paid={bet.hasUser1Paid}
                   user2Id={bet.user2Id}
                   user2Metamask={bet.user2Metamask}
                   user2PhotoURL={bet.user2PhotoURL}
+                  hasUser2Paid={bet.hasUser2Paid}
                   createdAt={bet.createdAt}
                   gameId={bet.gameId}
                 />
@@ -127,9 +133,11 @@ const BettingLobby: React.FC = () => {
                   user1Id={bet.user1Id}
                   user1Metamask={bet.user1Metamask}
                   user1PhotoURL={bet.user1PhotoURL}
+                  hasUser1Paid={bet.hasUser1Paid}
                   user2Id={bet.user2Id}
                   user2Metamask={bet.user2Metamask}
                   user2PhotoURL={bet.user2PhotoURL}
+                  hasUser2Paid={bet.hasUser2Paid}
                   createdAt={bet.createdAt}
                   gameId={bet.gameId}
                 />

@@ -99,5 +99,7 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "compileOnSave": true,
-  "include": ["src"]
+  "include": ["src"],
+  "moduleResolution": "node",
+  "resolveJsonModule": true
 }
