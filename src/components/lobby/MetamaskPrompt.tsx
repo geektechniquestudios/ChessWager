@@ -2,6 +2,7 @@ import { ethers } from "ethers"
 import { useEffect } from "react"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
+require("dotenv").config()
 
 interface Props {
   betId: string
@@ -28,18 +29,20 @@ const MetamaskPrompt: React.FC<Props> = ({
   user2Metamask,
   gameId,
 }) => {
-  const contractAddress = "0x4A799c24dDb3c23ee0a21D2f2B1e62cBdF6dFb99" //@todo update to mainnet & make dynamic
+  const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
 
+  const { auth } = Auth.useContainer()
 
-  const {auth} = Auth.useContainer()
+  console.log(auth.currentUser!.uid, user1Id, amount, multiplier)
 
-  const betAmount = (auth.currentUser!.uid === user1Id) ? amount : amount * multiplier //@todo current
-  console.log(betAmount)
+  const betAmount =
+    auth.currentUser?.uid === user1Id ? amount : (amount * multiplier) //@todo current
 
+  // console.log(betAmount)
+  // console.log(ethers.utils.parseEther(betAmount.toString()))
 
-  let bet = { // @todo current if user 2, amount * multiplier
-    amount: ethers.utils.parseEther(betAmount.toString()), // @todo current, causing falure with multiplication
-    // amount: ethers.utils.parseEther((amount * multiplier).toString()),
+  const bet = {
+    amount: ethers.utils.parseEther(amount.toString()), 
     betSide: betSide,
     user1Id: user1Id,
     user1Metamask: user1Metamask,
@@ -49,8 +52,8 @@ const MetamaskPrompt: React.FC<Props> = ({
     gameId: gameId,
   }
 
-  let overrides = {
-    value: ethers.utils.parseEther(amount.toString()), //@todo ugly pointless parse. do it right, formatEther or something
+  const overrides = {
+    value: ethers.utils.parseEther(betAmount.toString()), //@todo ugly pointless parse. do it right, formatEther or something
   }
 
   let contract: ethers.Contract
@@ -61,16 +64,7 @@ const MetamaskPrompt: React.FC<Props> = ({
       await window.ethereum.request({ method: "eth_requestAccounts" })
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer: any = provider.getSigner()
-      contract = new ethers.Contract(
-        contractAddress,
-        ChessWager.abi,
-        signer
-      )
-
-      contract.on("TestEvent", message => { //@todo add filter for userMetamask
-        console.log(message)
-        //update ui, event will emit which user paid, use that
-      })
+      contract = new ethers.Contract(contractAddress, ChessWager.abi, signer)
 
       try {
         const transaction = await contract.placeBet(bet, betId, overrides)
@@ -85,7 +79,9 @@ const MetamaskPrompt: React.FC<Props> = ({
 
   useEffect(() => {
     sendBet()
-    return () => {contract.removeAllListeners()}
+    return () => {
+      contract.removeAllListeners()
+    }
   }, []) //@todo fix dep issue, ?useCallback
   return <> </>
 }

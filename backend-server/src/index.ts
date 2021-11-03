@@ -1,25 +1,21 @@
-// import { Provider } from '@truffle/hdwallet-provider';
-// import firebase from "firebase/compat"
+import firebase from "firebase/compat/app"
 import ndjson from "ndjson"
-require("dotenv").config({ path: "../../.env" })
+const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
+require("dotenv").config({ path: "../.env" })
 const fetch = require("node-fetch")
-// const axios = require("axios").default
 const ethers = require("ethers")
 
-// axios.<method> will now provide autocomplete and parameter typings
-
-// const Web3 = require("web3")
-// const Provider = require("@truffle/hdwallet-provider")
-
 const hyperquest = require("hyperquest")
-// const admin = require("firebase-admin")
+const admin = require("firebase-admin")
 
-// const serviceAccount = require("../../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
+const serviceAccount = require("../../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
 
-// admin.initializeApp({
-//   credential: admin.credential.applicationDefault(),
-//   // credential: admin.credential.cert(serviceAccount),
-// })
+admin.initializeApp({
+  //credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert(serviceAccount),
+})
+
+const db = admin.firestore()
 
 const callLichessLiveTv = () => {
   let lastGameId = ""
@@ -50,7 +46,10 @@ const callLichessLiveTv = () => {
                 console.log("black wins, updating contract")
                 payWinnersContractCall(lastGameId, "black")
               }
-            } else if (obj.status === "draw" || obj.status === "stalemate") {
+            } else if (
+              gameData.status === "draw" ||
+              gameData.status === "stalemate"
+            ) {
               console.log("game is a draw")
               payWinnersContractCall(lastGameId, "draw") // @todo call twice with even more previous game to deal with possiblility of people sending bet late, maybe
             } else {
@@ -65,220 +64,41 @@ const callLichessLiveTv = () => {
     })
 }
 
-const contractAddress = "0x4A799c24dDb3c23ee0a21D2f2B1e62cBdF6dFb99"
-const contractABI = [
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "OwnershipTransferred",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "message",
-        type: "string",
-      },
-    ],
-    name: "TestEvent",
-    type: "event",
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "_gameId",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "winningSide",
-        type: "string",
-      },
-    ],
-    name: "payWinners",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "uint256",
-            name: "amount",
-            type: "uint256",
-          },
-          {
-            internalType: "string",
-            name: "betSide",
-            type: "string",
-          },
-          {
-            internalType: "string",
-            name: "user1Id",
-            type: "string",
-          },
-          {
-            internalType: "address payable",
-            name: "user1Metamask",
-            type: "address",
-          },
-          {
-            internalType: "string",
-            name: "user2Id",
-            type: "string",
-          },
-          {
-            internalType: "address payable",
-            name: "user2Metamask",
-            type: "address",
-          },
-          {
-            internalType: "uint256",
-            name: "multiplier",
-            type: "uint256",
-          },
-          {
-            internalType: "string",
-            name: "gameId",
-            type: "string",
-          },
-        ],
-        internalType: "struct ChessWager.Bet",
-        name: "_bet",
-        type: "tuple",
-      },
-      {
-        internalType: "string",
-        name: "_betId",
-        type: "string",
-      },
-    ],
-    name: "placeBet",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "userAddress",
-        type: "address",
-      },
-    ],
-    name: "viewBalance",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address payable",
-        name: "userAddress",
-        type: "address",
-      },
-    ],
-    name: "withdraw",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-]
+const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS
+const contractABI = ChessWager.abi
 const metamaskAddress = process.env.METAMASK_ACCOUNT_ADDRESS
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
 const rpcUrl = process.env.BSC_TESTNET_RPC_URL
 console.log(metamaskAddress, metamaskKey, rpcUrl)
-
-// const payWinnersContractCall = async (gameId: string, winningSide: string) => {
-//   console.log(
-//     "paying out winners for game ",
-//     gameId,
-//     " with winning side ",
-//     winningSide
-//   )
-//   // const provider = new Provider(metamaskKey, rpcUrl)
-//   // set provider
-//   const provider = new Web3.providers.Provider(metamaskKey, rpcUrl)
-//   const web3 = new Web3(provider)
-//   const contract = new web3.eth.Contract(contractABI, contractAddress)
-//   const payWinners = await contract.methods
-//     .payWinners(gameId, winningSide)
-//     .send({ from: metamaskAddress })
-//   console.log("payout transaction hash: ", payWinners.transactionHash)
-// }
 
 const Wallet = ethers.Wallet
 const Contract = ethers.Contract
 const utils = ethers.utils
 const providers = ethers.providers
 
-const payWinnersContractCall = async (gameId: string, winningSide: string) => {
-  const provider = new providers.JsonRpcProvider(rpcUrl)
-  const wallet = new Wallet(metamaskKey, provider)
-  const contract = new Contract(contractAddress, contractABI, wallet)
+const provider = new providers.JsonRpcProvider(rpcUrl)
+const wallet = new Wallet(metamaskKey, provider)
+const contract = new Contract(contractAddress, contractABI, wallet)
 
-  const payWinners = await contract.payWinners(gameId, winningSide)
-  console.log("payout transaction hash: ", payWinners.transactionHash)
+const payWinnersContractCall = async (gameId: string, winningSide: string) => {
+  contract.payWinners(gameId, winningSide)
 }
+
+const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+  db.collection("lobby")
+
+contract.on("StatusUpdate", (message: string, betId: string) => {
+  console.log("StatusUpdate: ", message, betId)
+  if (message === "user1 has paid") {
+    lobbyRef.doc(betId).update({
+      hasUser1Paid: true,
+    })
+  } else if (message === "user2 has paid") {
+    lobbyRef.doc(betId).update({
+      hasUser2Paid: true,
+    })
+  }
+})
 
 callLichessLiveTv()
 // payWinnersContractCall("gameId", "white")

@@ -9,6 +9,7 @@ contract ChessWager is Ownable {
   mapping(string => uint256) private betIdToPrizePool;
   mapping(string => bool) private betIdToIsBetMatched;
   mapping(string => bool) private betIdToIsBetCompleted;
+  mapping(string => string) private betIdToWhoBetFirst; // enum {user1, user2}
   struct Bet {
     uint256 amount;
     string betSide; //which side user1 bets on
@@ -26,25 +27,30 @@ contract ChessWager is Ownable {
   }
   mapping(address => uint256) private addressToBalance; // @todo remove if not using
   // mapping for who bet first
-  mapping(string => string) private betIdtoWhoBetFirst; // enum {user1, user2}
-  uint256 private chessWagerFunds;
-  address  private chessWagerAddress;
+  uint256 private chessWagerBalance;
+  address payable private chessWagerAddress;
+
+  uint256 public totalWagered;
 
   constructor() {
     // store chesswageraddress
-    chessWagerAddress = msg.sender;
-    chessWagerFunds = 0;
-
+    chessWagerAddress = payable(msg.sender);
+    chessWagerBalance = 0;
   }
 
   function placeBet(Bet calldata _bet, string calldata _betId) public payable {
-    require(_bet.amount == msg.value); // if user is user2, then _bet.amount should == msg.value * multiplier / 100, else if the user is user1, then simply bet amount
+    totalWagered += msg.value;
+    // require(_bet.amount == msg.value); // if user is user2, then _bet.amount should == msg.value * multiplier / 100, else if the user is user1, then simply bet amount
     require(
       msg.sender == _bet.user1Metamask || msg.sender == _bet.user2Metamask
     );
     require(betIdToIsBetCompleted[_betId] == false);
-
-    // bool isUser1 = msg.sender == _bet.user1Metamask;
+    require(
+      keccak256(abi.encodePacked(_bet.betSide)) ==
+        keccak256(abi.encodePacked("white")) ||
+        keccak256(abi.encodePacked(_bet.betSide)) ==
+        keccak256(abi.encodePacked("black"))
+    );
 
     if (betIdToBetData[_betId].multiplier == 0) {
       // bet is new
@@ -52,20 +58,23 @@ contract ChessWager is Ownable {
 
       // make whoBetFirst mapping
       if (msg.sender == _bet.user1Metamask) {
-        betIdtoWhoBetFirst[_betId] = "user1";
+        // user1
+        require(msg.value == _bet.amount);
+        betIdToWhoBetFirst[_betId] = "user1";
+        emit StatusUpdate("user1 has paid", _betId);
       } else {
-        betIdtoWhoBetFirst[_betId] = "user2";
+        // user2
+        require(msg.value == (_bet.amount * _bet.multiplier) / 100);
+        betIdToWhoBetFirst[_betId] = "user2";
+        emit StatusUpdate("user2 has paid", _betId);
       }
 
-      emit TestEvent("new bet created"); // make this update ui in react
+      betIdToPrizePool[_betId] = msg.value;
 
-      betIdToPrizePool[_betId] += _bet.amount; // make new entry for bet
-
-      gameIdToGameData[_bet.gameId].betIdArray.push(_betId);
+      gameIdToGameData[_bet.gameId].betIdArray.push(_betId); // this is iterated over when payout occurs
       betIdToBetData[_betId] = _bet;
     } else {
-      // bet is matched
-      betIdToIsBetMatched[_betId] = true;
+      // requirements to check for matching values between user1 and user2
       require(betIdToBetData[_betId].amount == _bet.amount);
       require(
         keccak256(abi.encodePacked(betIdToBetData[_betId].betSide)) ==
@@ -86,11 +95,25 @@ contract ChessWager is Ownable {
         keccak256(abi.encodePacked(betIdToBetData[_betId].gameId)) ==
           keccak256(abi.encodePacked(_bet.gameId))
       );
-
-      emit TestEvent("bet matched, paying user 1");
-      betIdToPrizePool[_betId] += _bet.amount;
-
-      // _bet.user1Metamask.transfer(betIdToPrizePool[_betId]);
+      // check bet amount, update prize pool based on user
+      if (
+        keccak256(abi.encodePacked(betIdToWhoBetFirst[_betId])) ==
+        keccak256(abi.encodePacked("user2"))
+      ) {
+        // user2 bet first, so this statement is true if user1 paid during this method call
+        require(msg.sender == _bet.user1Metamask);
+        require(msg.value == _bet.amount);
+        betIdToPrizePool[_betId] += msg.value;
+        emit StatusUpdate("user1 has paid", _betId);
+      } else {
+        // this runs if user2 paid this method call
+        require(msg.sender == _bet.user2Metamask);
+        require(msg.value == (_bet.amount * _bet.multiplier) / 100);
+        betIdToPrizePool[_betId] += msg.value;
+        emit StatusUpdate("user2 has paid", _betId);
+      }
+      // bet is matched, second person pays
+      betIdToIsBetMatched[_betId] = true;
     }
   }
 
@@ -103,7 +126,6 @@ contract ChessWager is Ownable {
     payable
     onlyOwner
   {
-    emit TestEvent("payWinners called");
     // go over game.betIdArray, and pay winner from each game
     for (uint256 i = 0; i < gameIdToGameData[_gameId].betIdArray.length; i++) {
       Bet memory bet = betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]];
@@ -117,21 +139,22 @@ contract ChessWager is Ownable {
         // bet is not matched
         // return money to user that bet first
         if (
+          // user1 was the only one that paid
           keccak256(
             abi.encodePacked(
-              betIdtoWhoBetFirst[gameIdToGameData[_gameId].betIdArray[i]]
+              betIdToWhoBetFirst[gameIdToGameData[_gameId].betIdArray[i]]
             )
           ) == keccak256(abi.encodePacked("user1"))
         ) {
           bet.user1Metamask.transfer(prizePool);
         } else {
           // user2 was the only one that paid
-          bet.user2Metamask.transfer(prizePool);
+          bet.user2Metamask.transfer((prizePool * bet.multiplier) / 100);
         }
         continue;
       }
 
-      // if game is a draw, then return money to both users //@todo current
+      // if game is a draw, then return money to both users
       if (
         keccak256(abi.encodePacked(winningSide)) ==
         keccak256(abi.encodePacked("draw"))
@@ -146,6 +169,12 @@ contract ChessWager is Ownable {
         continue;
       }
 
+      // all checks done, only outcomes are one side winning
+      // subtract 4.5% vig from prize pool
+      uint256 vig = ((prizePool * 9) / 2) / 100;
+      chessWagerBalance += vig;
+      prizePool -= vig;
+
       if (
         // if bet is on winning side
         keccak256(abi.encodePacked(bet.betSide)) ==
@@ -158,7 +187,6 @@ contract ChessWager is Ownable {
         bet.user2Metamask.transfer(prizePool);
       }
     }
-    emit TestEvent("payWinners finished");
   }
 
   function returnMoneyToUnassociatedBets() external onlyOwner {
@@ -166,23 +194,23 @@ contract ChessWager is Ownable {
   }
 
   function withdraw(address payable userAddress) external payable {
-
-    userAddress.transfer(addressToBalance[userAddress]); // @todo this is not working, no balances stored
+    userAddress.transfer(addressToBalance[userAddress]);
+    addressToBalance[userAddress] = 0;
   }
 
-  function withdrawChessWagerBalance(address payable userAddress) external payable {
-
-    userAddress.transfer(addressToBalance[userAddress]); // @todo this is not working, no balances stored
+  function withdrawChessWagerBalance() external payable onlyOwner {
+    chessWagerAddress.transfer(chessWagerBalance);
+    chessWagerBalance = 0;
   }
 
-  function viewBalance(address userAddress) external view returns (uint256) {
-    require(userAddress == msg.sender);
-    return addressToBalance[userAddress]; //@todo emit instead
+  // function viewBalance(address userAddress) external view returns (uint256) {
+  //   require(userAddress == msg.sender);
+  //   return addressToBalance[userAddress]; //@todo emit instead
+  // }
+
+  function viewChessWagerBalance() external view onlyOwner returns (uint256) {
+    return chessWagerBalance;
   }
 
-  function viewChessWagerBalance() external view returns (uint256) {
-    return chessWagerFunds;
-  }
-
-  event TestEvent(string message);
+  event StatusUpdate(string message, string betId);
 }
