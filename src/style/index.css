@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -31,21 +35,21 @@ code {
 
 #page > header {
   grid-area: head;
-  background-color: orange;
+  /* background-color: orange; */
 }
 #page > nav {
   grid-area: lobby;
-  background-color: green;
+  /* background-color: green; */
 }
 #page > main {
   grid-area: game;
-  background-color: gray;
+  /* background-color: gray; */
 }
 #page > aside {
   grid-area: chat;
-  background-color: chartreuse;
+  /* background-color: chartreuse; */
 }
 #page > footer {
   grid-area: foot;
-  background-color: cyan;
+  /* background-color: cyan; */
 }

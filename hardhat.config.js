@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-waffle")
+require("dotenv").config()
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -16,6 +17,9 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
+
+const accountKey = process.env.METAMASK_ACCOUNT_KEY
+
 module.exports = {
   solidity: "0.8.4",
   paths: {
@@ -26,10 +30,12 @@ module.exports = {
       chainId: 1337,
     },
     bscTestnet: {
-      url: "https://speedy-nodes-nyc.moralis.io/f8b3d0bbbe6f4ababc2d263a/bsc/testnet",
-      accounts: [
-        "702a6ca9c5522c1c972bd844c887231c3bb97aba838124f4d109907a3f848753",
-      ], //@todo make env var
+      url: process.env.BSC_TESTNET_RPC_URL,
+      accounts: [accountKey],
+    },
+    avalancheMainnet: {
+      url: process.env.AVALANCHE_MAINNET_RPC_URL,
+      accounts: [accountKey],
     },
   },
 }

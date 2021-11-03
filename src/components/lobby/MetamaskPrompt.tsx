@@ -1,6 +1,8 @@
 import { ethers } from "ethers"
 import { useEffect } from "react"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
+import { Auth } from "../containers/Auth"
+require("dotenv").config()
 
 interface Props {
   betId: string
@@ -27,10 +29,20 @@ const MetamaskPrompt: React.FC<Props> = ({
   user2Metamask,
   gameId,
 }) => {
-  const chessWagerAddress = "0xC8331Af2815e0Cf07cDfBB212bBdfBa4c6715e43" //@todo update to mainnet & make dynamic
+  const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
 
-  let bet = {
-    amount: ethers.utils.parseEther(amount.toString()),
+  const { auth } = Auth.useContainer()
+
+  console.log(auth.currentUser!.uid, user1Id, amount, multiplier)
+
+  const betAmount =
+    auth.currentUser?.uid === user1Id ? amount : (amount * multiplier) //@todo current
+
+  // console.log(betAmount)
+  // console.log(ethers.utils.parseEther(betAmount.toString()))
+
+  const bet = {
+    amount: ethers.utils.parseEther(amount.toString()), 
     betSide: betSide,
     user1Id: user1Id,
     user1Metamask: user1Metamask,
@@ -40,26 +52,19 @@ const MetamaskPrompt: React.FC<Props> = ({
     gameId: gameId,
   }
 
-  let overrides = {
-    value: ethers.utils.parseEther(amount.toString()), //@todo ugly pointless parse. do it right, formatEther or something
-    // value: ethers.utils.parseEther("0.00001")
+  const overrides = {
+    value: ethers.utils.parseEther(betAmount.toString()), //@todo ugly pointless parse. do it right, formatEther or something
   }
+
+  let contract: ethers.Contract
 
   const sendBet = async () => {
     if (typeof window.ethereum !== undefined) {
       await window.ethereum.enable()
       await window.ethereum.request({ method: "eth_requestAccounts" })
-      const provider = new ethers.providers.Web3Provider(window.ethereum) //@todo fix memory leak, move this in useEffect, then contract.removeAllListeners()
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer: any = provider.getSigner()
-      const contract = new ethers.Contract(
-        chessWagerAddress,
-        ChessWager.abi,
-        signer
-      )
-
-      contract.on("TestEvent", message => {
-        console.log(message)
-      })
+      contract = new ethers.Contract(contractAddress, ChessWager.abi, signer)
 
       try {
         const transaction = await contract.placeBet(bet, betId, overrides)
@@ -74,8 +79,10 @@ const MetamaskPrompt: React.FC<Props> = ({
 
   useEffect(() => {
     sendBet()
-  }, []) //@todo fix memory leak, cleanup subscriptions when unrendered
-
+    return () => {
+      contract.removeAllListeners()
+    }
+  }, []) //@todo fix dep issue, ?useCallback
   return <> </>
 }
 

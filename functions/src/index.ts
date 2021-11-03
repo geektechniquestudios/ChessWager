@@ -141,3 +141,4 @@ exports.kickUser = functions.https.onCall(
     return
   }
 )
+

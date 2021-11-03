@@ -22,9 +22,11 @@ interface Props {
   user1Id: string
   user1Metamask: string
   user1PhotoURL: string
+  hasUser1Paid: boolean
   user2Id: string
   user2Metamask: string
   user2PhotoURL: string
+  hasUser2Paid: boolean
   createdAt: Date
   gameId: string
 }
@@ -40,9 +42,11 @@ const Bet: React.FC<Props> = ({
   user1Id,
   user1Metamask,
   user1PhotoURL,
+  hasUser1Paid,
   user2Id,
   user2Metamask,
   user2PhotoURL,
+  hasUser2Paid,
   createdAt,
   gameId,
 }) => {
@@ -80,7 +84,10 @@ const Bet: React.FC<Props> = ({
             user1Id={user1Id}
             user2Id={user2Id}
           />
-          <img src={user1PhotoURL} alt="" />
+          <span>
+            <img src={user1PhotoURL} alt="" />
+            {hasUser1Paid && "$$$"}
+          </span>
           <span>{status}</span>
           {/* accept button, only for user1 */}
 
@@ -88,7 +95,10 @@ const Bet: React.FC<Props> = ({
           <span>{`${betSide}`}</span>
           <span>{`x${multiplier}`}</span>
           <span>{`pot size ${potSize}`}</span>
-          {user2PhotoURL && <img src={user2PhotoURL} alt="" />}
+          <span>
+            {user2PhotoURL && <img src={user2PhotoURL} alt="" />}
+            {hasUser2Paid && "$$$"}
+          </span>
         </Card.Body>
       </Card>
       <>
