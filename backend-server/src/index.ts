@@ -10,10 +10,17 @@ const admin = require("firebase-admin")
 
 const serviceAccount = require("../../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
 
-admin.initializeApp({
-  //credential: admin.credential.applicationDefault(),
-  credential: admin.credential.cert(serviceAccount),
-})
+const credValue = process.env.CRED_VALUE
+
+if (credValue === "local") {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  })
+} else {
+  admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+  })
+}
 
 const db = admin.firestore()
 
