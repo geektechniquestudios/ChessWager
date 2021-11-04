@@ -44,7 +44,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "deployContract": "npx hardhat run scripts/deploy.js --network bscTestnet"
+    "deploy-contract": "npx hardhat run scripts/deploy.js --network bscTestnet"
   },
   "eslintConfig": {
     "extends": [

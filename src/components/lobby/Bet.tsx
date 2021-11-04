@@ -101,12 +101,6 @@ const Bet: React.FC<Props> = ({
           </span>
         </Card.Body>
       </Card>
-      <>
-        {/* leftoff@todo show conditions of bet and prompt metamask 
-          accept and cancel buttons
-          cancel would make bet go back to ready
-        */}
-      </>
     </>
   )
 }

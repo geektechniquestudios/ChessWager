@@ -105,14 +105,12 @@ exports.deleteBet = functions.https.onCall(
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
-    // if not in "approved" state //@todo
-
     await betDocRef.get().then((doc: any) => {
       if (
         context.auth.uid === doc.data().user1Id &&
         doc.data().status !== "approved"
       ) {
-        betDocRef.update({
+        betDocRef.update({ 
           status: "deleted",
           gameId: "",
         })

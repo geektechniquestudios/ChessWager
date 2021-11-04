@@ -5,6 +5,7 @@ import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ChessWager is Ownable {
+  mapping(string => bool) private gameIdToIsGameOver;
   mapping(string => Bet) private betIdToBetData;
   mapping(string => uint256) private betIdToPrizePool;
   mapping(string => bool) private betIdToIsBetMatched;
@@ -29,7 +30,6 @@ contract ChessWager is Ownable {
   // mapping for who bet first
   uint256 private chessWagerBalance;
   address payable private chessWagerAddress;
-
   uint256 public totalWagered;
 
   constructor() {
@@ -39,8 +39,7 @@ contract ChessWager is Ownable {
   }
 
   function placeBet(Bet calldata _bet, string calldata _betId) public payable {
-    totalWagered += msg.value;
-    // require(_bet.amount == msg.value); // if user is user2, then _bet.amount should == msg.value * multiplier / 100, else if the user is user1, then simply bet amount
+    require(gameIdToIsGameOver[_bet.gameId] != true);
     require(
       msg.sender == _bet.user1Metamask || msg.sender == _bet.user2Metamask
     );
@@ -51,6 +50,8 @@ contract ChessWager is Ownable {
         keccak256(abi.encodePacked(_bet.betSide)) ==
         keccak256(abi.encodePacked("black"))
     );
+
+    totalWagered += msg.value;
 
     if (betIdToBetData[_betId].multiplier == 0) {
       // bet is new
@@ -126,17 +127,18 @@ contract ChessWager is Ownable {
     payable
     onlyOwner
   {
-    // go over game.betIdArray, and pay winner from each game
+    gameIdToIsGameOver[_gameId] = true; // prevents new bets on old games
     for (uint256 i = 0; i < gameIdToGameData[_gameId].betIdArray.length; i++) {
+      // going over each bet for this gameId
       Bet memory bet = betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]];
       uint256 prizePool = betIdToPrizePool[
         gameIdToGameData[_gameId].betIdArray[i]
       ];
       betIdToIsBetCompleted[gameIdToGameData[_gameId].betIdArray[i]] = true;
       if (
+        // bet is not matched
         betIdToIsBetMatched[gameIdToGameData[_gameId].betIdArray[i]] == false
       ) {
-        // bet is not matched
         // return money to user that bet first
         if (
           // user1 was the only one that paid
@@ -169,7 +171,7 @@ contract ChessWager is Ownable {
         continue;
       }
 
-      // all checks done, only outcomes are one side winning
+      // all checks done, only remaining outcome is one side winning
       // subtract 4.5% vig from prize pool
       uint256 vig = ((prizePool * 9) / 2) / 100;
       chessWagerBalance += vig;
@@ -180,22 +182,27 @@ contract ChessWager is Ownable {
         keccak256(abi.encodePacked(bet.betSide)) ==
         keccak256(abi.encodePacked(winningSide))
       ) {
-        // pay user 1
         bet.user1Metamask.transfer(prizePool);
       } else {
-        // pay user 2
         bet.user2Metamask.transfer(prizePool);
       }
     }
   }
 
-  function returnMoneyToUnassociatedBets() external onlyOwner {
-    // if bet is older than one hour, then return money to user
-  }
+  function withdraw(string calldata _betId)
+    external
+    payable
+  {
+    require(
+      keccak256(abi.encodePacked(betIdToBetData[_betId].user1Metamask)) ==
+        keccak256(abi.encodePacked(msg.sender)) ||
+        keccak256(abi.encodePacked(betIdToBetData[_betId].user2Metamask)) ==
+        keccak256(abi.encodePacked(msg.sender))
+    );
 
-  function withdraw(address payable userAddress) external payable {
-    userAddress.transfer(addressToBalance[userAddress]);
-    addressToBalance[userAddress] = 0;
+    // this method is junk
+    // _userAddress.transfer(addressToBalance[_userAddress]);
+    // addressToBalance[_userAddress] = 0;
   }
 
   function withdrawChessWagerBalance() external payable onlyOwner {

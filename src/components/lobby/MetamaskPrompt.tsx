@@ -33,13 +33,8 @@ const MetamaskPrompt: React.FC<Props> = ({
 
   const { auth } = Auth.useContainer()
 
-  console.log(auth.currentUser!.uid, user1Id, amount, multiplier)
-
   const betAmount =
     auth.currentUser?.uid === user1Id ? amount : (amount * multiplier) //@todo current
-
-  // console.log(betAmount)
-  // console.log(ethers.utils.parseEther(betAmount.toString()))
 
   const bet = {
     amount: ethers.utils.parseEther(amount.toString()), 
