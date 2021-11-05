@@ -22,7 +22,7 @@ const ChatMessage: React.FC<Props> = ({ message }) => {
   return (
     <>
       <div className={`message ${messageClass}`}>
-        <img src={photoURL} alt="" title={userName} />
+        <img src={photoURL} alt="" title={userName} className="user-img" />
         <p>{text}</p>
       </div>
     </>

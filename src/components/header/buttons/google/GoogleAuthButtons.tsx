@@ -9,7 +9,7 @@ const GoogleAuthButtons: React.FC = () => {
   return (
     <>
       {user ? <GoogleSignOut /> : <GoogleSignIn />}
-      <img src={photoURL} alt="" />
+      <img src={photoURL} alt="" className="user-img"/>
     </>
   )
 }
