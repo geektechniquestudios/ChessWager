@@ -14,9 +14,7 @@ const App: React.FC = () => {
   return (
     <section id="page" className={isDarkOn ? "dark" : ""}>
       <header className="bg-gradient-to-b from-gray-900 via-gray-900 min-w-full">
-        <MainHeader
-          setIsDarkOn={setIsDarkOn}
-        />
+        <MainHeader setIsDarkOn={setIsDarkOn} />
       </header>
       <nav>
         <BettingLobby />

@@ -5,7 +5,7 @@ import MetamaskSignOut from "./MetamaskSignOut"
 const MetamaskAuthButtons: React.FC = () => {
   const { isAuthenticated } = useMoralis()
 
-  return <div>{isAuthenticated ? <MetamaskSignOut /> : <MetamaskSignIn />}</div>
+  return <>{isAuthenticated ? <MetamaskSignOut /> : <MetamaskSignIn />}</>
 }
 
 export default MetamaskAuthButtons
