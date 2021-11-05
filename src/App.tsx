@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import BettingLobby from "./components/lobby/BettingLobby"
 import ChessGame from "./components/game/ChessGame"
@@ -9,10 +9,14 @@ import "./style/index.css"
 import "./config"
 
 const App: React.FC = () => {
+  const [isDarkOn, setIsDarkOn] = useState(false)
+
   return (
-    <section id="page">
+    <section id="page" className={isDarkOn ? "dark" : ""}>
       <header className="bg-gradient-to-b from-gray-900 via-gray-900 min-w-full">
-        <MainHeader />
+        <MainHeader
+          setIsDarkOn={setIsDarkOn}
+        />
       </header>
       <nav>
         <BettingLobby />
