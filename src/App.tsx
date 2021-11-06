@@ -12,23 +12,25 @@ const App: React.FC = () => {
   const [isDarkOn, setIsDarkOn] = useState(false)
 
   return (
-    <section id="page" className={isDarkOn ? "dark" : ""}>
-      <header className="bg-gradient-to-b from-gray-900 via-gray-900 min-w-full">
-        <MainHeader setIsDarkOn={setIsDarkOn} />
-      </header>
-      <nav>
-        <BettingLobby />
-      </nav>
-      <main>
-        <ChessGame />
-      </main>
-      <aside>
-        <GlobalChat />
-      </aside>
-      <footer>
-        <Footer />
-      </footer>
-    </section>
+    <div className={isDarkOn ? "dark" : ""}>
+      <section id="page">
+        <header className="bg-gradient-to-b from-gray-900 via-gray-900 min-w-full">
+          <MainHeader setIsDarkOn={setIsDarkOn} />
+        </header>
+        <nav>
+          <BettingLobby />
+        </nav>
+        <main>
+          <ChessGame />
+        </main>
+        <aside>
+          <GlobalChat />
+        </aside>
+        <footer>
+          <Footer />
+        </footer>
+      </section>
+    </div>
   )
 }
 
