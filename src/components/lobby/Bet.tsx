@@ -1,6 +1,6 @@
 import React from "react"
 
-import Card from "react-bootstrap/Card"
+import { Card, Spinner } from "react-bootstrap"
 import "../../config"
 import firebase from "firebase/compat/app"
 import "../../style/lobby.css"
@@ -10,6 +10,7 @@ import { GameId } from "../containers/GameId"
 import { Auth } from "../containers/Auth"
 import { useMoralis } from "react-moralis"
 import MetamaskPrompt from "./MetamaskPrompt"
+import Countdown from "react-countdown"
 
 interface Props {
   className: string
@@ -64,19 +65,6 @@ const Bet: React.FC<Props> = ({
   return (
     <>
       <Card>
-        {status === "approved" && (
-          <MetamaskPrompt
-            betId={id}
-            amount={amount}
-            betSide={betSide}
-            multiplier={multiplier}
-            user1Id={user1Id}
-            user1Metamask={user1Metamask}
-            user2Id={user2Id}
-            user2Metamask={user2Metamask}
-            gameId={gameId}
-          />
-        )}
         <Card.Body className={`${className} bet`}>
           <Buttons
             id={id}
@@ -89,8 +77,33 @@ const Bet: React.FC<Props> = ({
             {hasUser1Paid && "$$$"}
           </span>
           <span>{status}</span>
+          {status === "approved" && (
+            <>
+              <MetamaskPrompt
+                betId={id}
+                amount={amount}
+                betSide={betSide}
+                multiplier={multiplier}
+                user1Id={user1Id}
+                user1Metamask={user1Metamask}
+                user2Id={user2Id}
+                user2Metamask={user2Metamask}
+                gameId={gameId}
+              />
+              <div className="">
+                <div className="absolute">
+                  <Countdown
+                    date={Date.now() + 15000}
+                    renderer={({ seconds }) => seconds}
+                  />
+                </div>   
+                <div className="absolute">
+                  <Spinner animation="grow" />
+                </div>
+              </div>
+            </>
+          )}
           {/* accept button, only for user1 */}
-
           <span>{`${amount} eth`}</span>
           <span>{`${betSide}`}</span>
           <span>{`x${multiplier}`}</span>

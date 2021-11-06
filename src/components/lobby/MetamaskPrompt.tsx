@@ -34,7 +34,7 @@ const MetamaskPrompt: React.FC<Props> = ({
   const { auth } = Auth.useContainer()
 
   const betAmount =
-    auth.currentUser?.uid === user1Id ? amount : (amount * multiplier) //@todo current
+    auth.currentUser?.uid === user1Id ? amount : (amount * multiplier)  
 
   const bet = {
     amount: ethers.utils.parseEther(amount.toString()), 
@@ -78,6 +78,7 @@ const MetamaskPrompt: React.FC<Props> = ({
       contract.removeAllListeners()
     }
   }, []) //@todo fix dep issue, ?useCallback
+
   return <> </>
 }
 
