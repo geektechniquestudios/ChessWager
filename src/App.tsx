@@ -14,7 +14,14 @@ const App: React.FC = () => {
   return (
     <div className={isDarkOn ? "dark" : ""}>
       <section id="page">
-        <header className="bg-gradient-to-b from-gray-900 via-gray-900 min-w-full">
+        <header
+          className="
+        bg-gradient-to-b 
+        from-gray-900 via-gray-900 
+        dark:bg-gradient-to-b dark:from-gray-500 dark:via-gray-500 
+        min-w-full
+        "
+        >
           <MainHeader setIsDarkOn={setIsDarkOn} />
         </header>
         <nav>
