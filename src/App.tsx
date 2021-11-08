@@ -15,35 +15,40 @@ import { Auth } from "./components/containers/Auth"
 const App: React.FC = () => {
   //state for if dark is on
 
-  const { auth, user } = Auth.useContainer()
+  const { auth } = Auth.useContainer()
+
+  const [isDarkOn, setIsDarkOn] = useState(
+    localStorage.getItem("darkMode") === "true" ||
+      localStorage.getItem("darkMode") === "false"
+      ? JSON.parse(localStorage.getItem("darkMode")!)
+      : true
+  )
 
   useEffect(() => {
-    if (auth.currentUser?.uid) {
-      const userRef: firebase.firestore.DocumentReference = firebase
-        .firestore()
-        .collection("users")
-        .doc(auth.currentUser!.uid)
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (
+        user &&
+        localStorage.getItem("darkMode") !== "true" &&
+        localStorage.getItem("darkMode") !== "false"
+      ) {
+        const userRef: firebase.firestore.DocumentReference = firebase
+          .firestore()
+          .collection("users")
+          .doc(user.uid)
 
-      userRef
-        .get()
-        .then(doc => doc.data()?.darkMode)
-        .then(darkMode => {
-          setIsDarkOn(darkMode)
-          console.log(darkMode)
-        })
-        .catch(console.error)
-    } else {
-      // const darkMode = localStorage.getItem("darkMode")
-      // if (darkMode) {
-      //   setIsDarkOn(darkMode === "true")
-      // }
-    }
-
-
-  }, [])
-
-    const [isDarkOn, setIsDarkOn] = useState(true)
-
+        userRef
+          .get()
+          .then(doc => doc.data()?.darkMode ?? true)
+          .then(darkMode => {
+            setIsDarkOn(darkMode)
+          })
+          .catch(console.error)
+      } else {
+        console.log("no user")
+      }
+      return unsubscribe()
+    })
+  }, [auth])
 
   return (
     <div className={isDarkOn ? "dark" : ""}>
@@ -56,7 +61,7 @@ const App: React.FC = () => {
         min-w-full
         "
         >
-          <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn}/>
+          <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
         </header>
         <nav>
           <BettingLobby />
