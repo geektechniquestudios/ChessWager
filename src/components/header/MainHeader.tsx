@@ -29,6 +29,7 @@ const MainHeader: React.FC<Props> = ({isDarkOn, setIsDarkOn}) => {
         darkMode: isChecked,
       })
     }
+    localStorage.setItem("darkMode", isChecked.toString())
   }
 
   return (
