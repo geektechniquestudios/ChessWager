@@ -151,9 +151,6 @@ p {
   color: black;
 }
 
-.user-img {
-  @apply w-8 h-8 rounded-full;
-}
 
 fieldset {
   border: 0;

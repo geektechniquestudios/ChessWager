@@ -19,7 +19,6 @@
   overflow-y: auto;
   /* bottom: 0; */
   max-height: 27vh;
-
 }
 
 .lobby-container {
@@ -48,4 +47,8 @@
 
 .in-progress-bet {
   background-color: chartreuse;
+}
+
+.bet-button {
+  @apply border-2 border-gray-600;
 }
