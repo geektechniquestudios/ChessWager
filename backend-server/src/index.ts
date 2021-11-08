@@ -8,7 +8,7 @@ const ethers = require("ethers")
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
-const serviceAccount = require("../../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
+const serviceAccount = require("../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
 
 const credValue = process.env.CRED_VALUE
 
