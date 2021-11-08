@@ -14,12 +14,7 @@ interface Props {
   user2Id: string
 }
 
-const Buttons: React.FC<Props> = ({
-  id, 
-  status,
-  user1Id,
-  user2Id,
-}) => {
+const Buttons: React.FC<Props> = ({ id, status, user1Id, user2Id }) => {
   const { user, isAuthenticated } = useMoralis()
 
   const authContainer = Auth.useContainer()
@@ -101,6 +96,7 @@ const Buttons: React.FC<Props> = ({
             //   status === "pending" || status === "in-progress" || !user
             // }
             onClick={accept}
+            className="bet-button"
           >
             Accept Bet
           </button>
@@ -110,33 +106,51 @@ const Buttons: React.FC<Props> = ({
       {authContainer.user &&
         authContainer.auth.currentUser &&
         user2Id === authContainer.auth.currentUser.uid &&
-        status === "pending" && <button onClick={cancel}> Leave Bet </button>}
+        status === "pending" && (
+          <button onClick={cancel} className="bet-button">
+            Leave Bet
+          </button>
+        )}
 
       {/* delete bet visible only to user1*/}
       {authContainer.user &&
         authContainer.auth.currentUser &&
         user1Id === authContainer.auth.currentUser.uid &&
         status !== "approved" && (
-          <button onClick={deleteCurrentBet}> Delete Bet</button>
+          <button onClick={deleteCurrentBet} className="bet-button">
+            Delete Bet
+          </button>
         )}
 
       {/* approve button only visible to user1 after user2 joins*/}
       {authContainer.user &&
         authContainer.auth.currentUser &&
         user1Id === authContainer.auth.currentUser.uid &&
-        status === "pending" && <button onClick={approve}>Approve</button>}
+        status === "pending" && (
+          <button onClick={approve} className="bet-button">
+            Approve
+          </button>
+        )}
 
       {/* kick only visible to user1 */}
       {authContainer.user &&
         authContainer.auth.currentUser &&
         user1Id === authContainer.auth.currentUser.uid &&
-        status === "pending" && <button onClick={kick}> Kick </button>}
+        status === "pending" && (
+          <button onClick={kick} className="bet-button">
+            Kick
+          </button>
+        )}
 
       {/* block only visible to user1, maybe should go in profile?*/}
       {authContainer.user &&
         authContainer.auth.currentUser &&
         user1Id === authContainer.auth.currentUser.uid &&
-        status === "pending" && <button onClick={block}> block </button>}
+        status === "pending" && (
+          <button onClick={block} className="bet-button">
+            block
+          </button>
+        )}
     </>
   )
 }

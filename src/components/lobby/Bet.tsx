@@ -71,7 +71,7 @@ const Bet: React.FC<Props> = ({
             user2Id={user2Id}
           />
           <span>
-            <img src={user1PhotoURL} alt="" />
+            <img src={user1PhotoURL} alt="" className="user-img"/>
             {hasUser1Paid && "$$$"}
           </span>
           <span>{status}</span>
@@ -107,7 +107,7 @@ const Bet: React.FC<Props> = ({
           <span>{`x${multiplier}`}</span>
           <span>{`pot size ${potSize}`}</span>
           <span>
-            {user2PhotoURL && <img src={user2PhotoURL} alt="" />}
+            {user2PhotoURL && <img src={user2PhotoURL} alt="" className="user-img"/>}
             {hasUser2Paid && "$$$"}
           </span>
         </Card.Body>

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import "../../style/header.css"
@@ -8,12 +8,29 @@ import { SiLichess } from "react-icons/si"
 import { IconContext } from "react-icons"
 import Toggle from "react-toggle"
 import "react-toggle/style.css"
+import firebase from "firebase/compat"
+import { Auth } from "../containers/Auth"
 
 interface Props {
+  isDarkOn: boolean
   setIsDarkOn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const MainHeader: React.FC<Props> = ({ setIsDarkOn }) => {
+const MainHeader: React.FC<Props> = ({isDarkOn, setIsDarkOn}) => {
+
+  const { auth, user } = Auth.useContainer()
+
+  const userDocumentRef = firebase.firestore().collection("users")
+
+  const updateUserDarkPref = (isChecked: boolean) => {
+    if (user?.uid) {
+      const userRef = userDocumentRef.doc(user!.uid)
+      userRef.update({
+        darkMode: isChecked,
+      })
+    }
+  }
+
   return (
     <div className="grid grid-flow-col max-h-5">
       <div className="">
@@ -30,8 +47,11 @@ const MainHeader: React.FC<Props> = ({ setIsDarkOn }) => {
       <div className="col-span-4">
         <Toggle
           onChange={e => {
-            setIsDarkOn(e.target.checked)
+            const isChecked = e.target.checked
+            setIsDarkOn(isChecked)
+            updateUserDarkPref(isChecked)
           }}
+          checked={isDarkOn}
         />
       </div>
       <div className="grid grid-flow-col">
