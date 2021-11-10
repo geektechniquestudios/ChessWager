@@ -43,9 +43,7 @@ const App: React.FC = () => {
             setIsDarkOn(darkMode)
           })
           .catch(console.error)
-      } else {
-        console.log("no user")
-      }
+      } 
       return unsubscribe()
     })
   }, [auth])
@@ -55,8 +53,7 @@ const App: React.FC = () => {
       <section id="page">
         <header
           className="
-        bg-gradient-to-b 
-        from-gray-900 via-gray-900 
+        bg-gradient-to-b from-gray-900 via-gray-900 
         dark:bg-gradient-to-b dark:from-gray-500 dark:via-gray-500 
         min-w-full
         "

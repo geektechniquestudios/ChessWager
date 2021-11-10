@@ -9,6 +9,7 @@ import Buttons from "./Buttons"
 import { Auth } from "../containers/Auth"
 import MetamaskPrompt from "./MetamaskPrompt"
 import Countdown from "react-countdown"
+import { timeStamp } from "console"
 
 interface Props {
   className: string
@@ -28,6 +29,7 @@ interface Props {
   hasUser2Paid: boolean
   createdAt: Date
   gameId: string
+  timestamp: number
 }
 
 const Bet: React.FC<Props> = ({
@@ -48,6 +50,7 @@ const Bet: React.FC<Props> = ({
   hasUser2Paid,
   createdAt,
   gameId,
+  timestamp
 }) => {
   const { auth } = Auth.useContainer()
   const potSize = amount + amount * multiplier
@@ -87,6 +90,7 @@ const Bet: React.FC<Props> = ({
                 user2Id={user2Id}
                 user2Metamask={user2Metamask}
                 gameId={gameId}
+                timestamp={timestamp}
               />
               <div className="">
                 <div className="absolute">
@@ -95,9 +99,9 @@ const Bet: React.FC<Props> = ({
                     renderer={({ seconds }) => seconds}
                   />
                 </div>   
-                <div className="absolute">
+                {/* <div className="absolute">
                   <Spinner animation="grow" />
-                </div>
+                </div> */}
               </div>
             </>
           )}

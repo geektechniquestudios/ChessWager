@@ -29,7 +29,10 @@ const Buttons: React.FC<Props> = ({ id, status, user1Id, user2Id }) => {
       photoURL: authContainer.auth.currentUser?.photoURL,
       hostUid: user1Id,
       user2Metamask: user2Metamask,
-    }).catch(console.error) //@todo do this catch to all or none of the firebase methods
+    })
+      // .then(res => String(res.data))
+      // .then(alert)
+      .catch(console.error) //@todo do this catch to all or none of the firebase methods
   }
 
   const cancel = () => {
