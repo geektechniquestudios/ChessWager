@@ -54,10 +54,11 @@ const App: React.FC = () => {
     <div className={isDarkOn ? "dark" : ""}>
       <section id="page">
         <header
-          className="
+          className="  
         bg-gradient-to-b 
-        from-gray-900 via-gray-900 
-        dark:bg-gradient-to-b dark:from-gray-500 dark:via-gray-500 
+        from-primary via-primary 
+        dark:bg-gradient-to-b 
+        dark:from-primary-primaryDark dark:via-primary-primaryDark 
         min-w-full
         "
         >

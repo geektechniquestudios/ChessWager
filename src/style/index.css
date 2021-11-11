@@ -34,7 +34,9 @@ code {
     ) minmax(1em, 1fr);
   /* justify-items: center; */
   /* align-items: center; */
-  @apply bg-gray-100 dark:bg-gray-800;
+  @apply 
+  bg-primary
+  dark:bg-primary-primaryDark;
 }
 
 #page > header {

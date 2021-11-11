@@ -8,6 +8,7 @@ const MetamaskSignOut = () => {
         onClick={() => {
           logout()
         }}
+        className="header-button"
       >
         Disconnect Metamask
       </button>
