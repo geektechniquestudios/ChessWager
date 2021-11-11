@@ -10,6 +10,7 @@
 
 .header-button {
   @apply bg-secondary 
+  dark:bg-secondary-secondaryDark
   hover:bg-tertiary 
   dark:hover:bg-tertiary-tertiaryDark;
 }
