@@ -9,8 +9,8 @@
 } */
 
 .header-button {
-  @apply bg-gray-600 
-  hover:bg-gray-200 
-  text-black 
-  hover:text-green-800;
+  @apply bg-secondary 
+  dark:bg-secondary-secondaryDark
+  hover:bg-tertiary 
+  dark:hover:bg-tertiary-tertiaryDark;
 }

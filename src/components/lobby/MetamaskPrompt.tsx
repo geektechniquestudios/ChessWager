@@ -29,19 +29,17 @@ const MetamaskPrompt: React.FC<Props> = ({
   user2Id,
   user2Metamask,
   gameId,
-  timestamp,
+  timestamp
 }) => {
   const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
 
   const { auth } = Auth.useContainer()
 
   const betAmount =
-    auth.currentUser?.uid === user1Id ? amount : (amount * multiplier)
-
-  const formattedBetAmount = ethers.utils.parseEther(betAmount.toString())
+    (auth.currentUser?.uid === user1Id ? amount : (amount * multiplier)).toFixed(18)
 
   const bet = {
-    amount: formattedBetAmount, 
+    amount: ethers.utils.parseEther(amount.toString()), 
     betSide: betSide,
     user1Id: user1Id,
     user1Metamask: user1Metamask,
@@ -49,11 +47,10 @@ const MetamaskPrompt: React.FC<Props> = ({
     user2Metamask: user2Metamask,
     multiplier: multiplier * 100,
     gameId: gameId,
-    timestamp: timestamp,
   }
 
   const overrides = {
-    value: formattedBetAmount,
+    value: ethers.utils.parseEther(betAmount.toString()), //@todo ugly pointless parse. do it right, formatEther or something
   }
 
   let contract: ethers.Contract
