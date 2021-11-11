@@ -39,28 +39,28 @@ const Buttons: React.FC<Props> = ({ id, status, user1Id, user2Id }) => {
     const cancelBet = firebase.functions().httpsCallable("cancelBet")
     cancelBet({
       betId: id,
-    })
+    }).catch(console.error)
   }
 
   const approve = () => {
     const approveBet = firebase.functions().httpsCallable("approveBet")
     approveBet({
       betId: id,
-    })
+    }).catch(console.error)
   }
 
   const deleteCurrentBet = () => {
     const deleteBet = firebase.functions().httpsCallable("deleteBet")
     deleteBet({
       betId: id,
-    })
+    }).catch(console.error)
   }
 
   const kick = () => {
     const kickUser = firebase.functions().httpsCallable("kickUser")
     kickUser({
       betId: id,
-    })
+    }).catch(console.error)
   }
 
   const block = () => {
@@ -81,7 +81,7 @@ const Buttons: React.FC<Props> = ({ id, status, user1Id, user2Id }) => {
           blocked: [user2Id],
         })
       }
-    })
+    }).catch(console.error)
     kick()
   }
 

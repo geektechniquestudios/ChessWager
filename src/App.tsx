@@ -13,8 +13,6 @@ import firebase from "firebase/compat"
 import { Auth } from "./components/containers/Auth"
 
 const App: React.FC = () => {
-  //state for if dark is on
-
   const { auth } = Auth.useContainer()
 
   const [isDarkOn, setIsDarkOn] = useState(
@@ -43,7 +41,7 @@ const App: React.FC = () => {
             setIsDarkOn(darkMode)
           })
           .catch(console.error)
-      } 
+      }
       return unsubscribe()
     })
   }, [auth])
