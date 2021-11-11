@@ -29,35 +29,38 @@ const Buttons: React.FC<Props> = ({ id, status, user1Id, user2Id }) => {
       photoURL: authContainer.auth.currentUser?.photoURL,
       hostUid: user1Id,
       user2Metamask: user2Metamask,
-    }).catch(console.error) //@todo do this catch to all or none of the firebase methods
+    })
+      // .then(res => String(res.data))
+      // .then(alert)
+      .catch(console.error) //@todo do this catch to all or none of the firebase methods
   }
 
   const cancel = () => {
     const cancelBet = firebase.functions().httpsCallable("cancelBet")
     cancelBet({
       betId: id,
-    })
+    }).catch(console.error)
   }
 
   const approve = () => {
     const approveBet = firebase.functions().httpsCallable("approveBet")
     approveBet({
       betId: id,
-    })
+    }).catch(console.error)
   }
 
   const deleteCurrentBet = () => {
     const deleteBet = firebase.functions().httpsCallable("deleteBet")
     deleteBet({
       betId: id,
-    })
+    }).catch(console.error)
   }
 
   const kick = () => {
     const kickUser = firebase.functions().httpsCallable("kickUser")
     kickUser({
       betId: id,
-    })
+    }).catch(console.error)
   }
 
   const block = () => {
@@ -78,7 +81,7 @@ const Buttons: React.FC<Props> = ({ id, status, user1Id, user2Id }) => {
           blocked: [user2Id],
         })
       }
-    })
+    }).catch(console.error)
     kick()
   }
 

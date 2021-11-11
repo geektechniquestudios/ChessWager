@@ -29,6 +29,7 @@ interface Lobby {
   hasUser2Paid: boolean
   createdAt: Date
   gameId: string
+  timestamp: number
 }
 
 const BettingLobby: React.FC = () => {
@@ -37,13 +38,11 @@ const BettingLobby: React.FC = () => {
 
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
-  const query = lobbyRef
-    .where("gameId", "==", gameIdContainer.gameId)
-    // .orderBy("createdAt", "desc")
+  const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
+  // .orderBy("createdAt", "desc")
 
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
-    
 
   return (
     <div className="lobby">
@@ -80,6 +79,7 @@ const BettingLobby: React.FC = () => {
                   hasUser2Paid={bet.hasUser2Paid}
                   createdAt={bet.createdAt}
                   gameId={bet.gameId}
+                  timestamp={bet.timestamp}
                 />
               ))}
           {lobby &&
@@ -110,6 +110,7 @@ const BettingLobby: React.FC = () => {
                   hasUser2Paid={bet.hasUser2Paid}
                   createdAt={bet.createdAt}
                   gameId={bet.gameId}
+                  timestamp={bet.timestamp}
                 />
               ))}
           {lobby &&
@@ -140,6 +141,7 @@ const BettingLobby: React.FC = () => {
                   hasUser2Paid={bet.hasUser2Paid}
                   createdAt={bet.createdAt}
                   gameId={bet.gameId}
+                  timestamp={bet.timestamp}
                 />
               ))}
         </div>

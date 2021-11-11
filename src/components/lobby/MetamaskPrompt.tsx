@@ -14,6 +14,7 @@ interface Props {
   user2Id: string
   user2Metamask: string
   gameId: string
+  timestamp: number
 }
 
 declare let window: any
@@ -28,6 +29,7 @@ const MetamaskPrompt: React.FC<Props> = ({
   user2Id,
   user2Metamask,
   gameId,
+  timestamp
 }) => {
   const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
 
