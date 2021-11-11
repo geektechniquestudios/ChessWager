@@ -51,6 +51,6 @@
 
 .bet-button {
   @apply border-2 
-  border-primary-DEFAULT-600 
-  dark:border-primary-primaryDark-200;
+  border-primary
+  dark:border-primary-primaryDark;
 }

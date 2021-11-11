@@ -35,8 +35,8 @@ code {
   /* justify-items: center; */
   /* align-items: center; */
   @apply 
-  bg-primary-DEFAULT-400
-  dark:bg-primary-primaryDark-600;
+  bg-primary
+  dark:bg-primary-primaryDark;
 }
 
 #page > header {

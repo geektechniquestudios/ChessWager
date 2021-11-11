@@ -10,6 +10,7 @@ const MetamaskSignIn: React.FC = () => {
           authenticate() //@todo do I need both of these?
           enableWeb3()
         }}
+        className="header-button"
       >
         Connect Metamask
       </button>

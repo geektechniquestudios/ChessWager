@@ -5,30 +5,35 @@ module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: "class",
   theme: {
-    extend: {
-      gradientColorStops: ["dark"],
-      colors: {
-        primary: {
-          DEFAULT: colors.warmGray,
-          primaryDark: colors.warmGray,
-        },
-        secondary: {
-          DEFAULT: colors.warmGray,
-          secondaryDark: colors.warmGray,
-        },
-        tertiary: {
-          DEFAULT: colors.amber,
-          tertiaryDark: colors.amber,
-        },
-        positive: {
-          DEFAULT: colors.green,
-          positiveDark: colors.green,
-        },
-        negative: {
-          DEFAULT: colors.rose,
-          negativeDark: colors.rose,
-        },
+    colors: {
+      primary: {
+        DEFAULT: '#F5F5F4',
+        primaryDark: '#292524',
       },
+      secondary: {
+        DEFAULT: '#57534E',
+        secondaryDark: '#A8A29E',
+      },
+      tertiary: {
+        DEFAULT: '#D97706',
+        tertiaryDark: '#FBBF24',
+      },
+      positive: {
+        DEFAULT: '#16A34A',
+        positiveDark: '#4ADE80',
+      },
+      negative: {
+        DEFAULT: '#DC2626',
+        negativeDark: '#F87171',
+      },
+      transparent: "transparent",
+      current: "currentColor",
+      black: colors.black,
+      white: colors.white,
+      warmGray: colors.warmGray,
+      rose: colors.rose,
+      amber: colors.amber,
+      green: colors.green,
     },
   },
   variants: {

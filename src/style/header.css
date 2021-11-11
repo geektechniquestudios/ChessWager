@@ -9,7 +9,7 @@
 } */
 
 .header-button {
-  @apply bg-secondary-DEFAULT-600 
-  hover:bg-secondary-DEFAULT-200
-  hover:text-positive-DEFAULT-400;
+  @apply bg-secondary 
+  hover:bg-tertiary 
+  dark:hover:bg-tertiary-tertiaryDark;
 }

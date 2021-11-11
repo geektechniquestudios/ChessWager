@@ -33,7 +33,7 @@ const SignIn: React.FC = () => {
       .catch(console.error)
   }
 
-  return <button onClick={signInWithGoogle}>Sign in with Google</button>
+  return <button onClick={signInWithGoogle} className="header-button">Sign in with Google</button>
 }
 
 export default SignIn
