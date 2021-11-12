@@ -29,7 +29,7 @@ interface Lobby {
   hasUser2Paid: boolean
   createdAt: Date
   gameId: string
-  timestamp: number
+  timestamp: any
 }
 
 const BettingLobby: React.FC = () => {
@@ -77,7 +77,6 @@ const BettingLobby: React.FC = () => {
                   user2Metamask={bet.user2Metamask}
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
-                  createdAt={bet.createdAt}
                   gameId={bet.gameId}
                   timestamp={bet.timestamp}
                 />
@@ -108,7 +107,6 @@ const BettingLobby: React.FC = () => {
                   user2Metamask={bet.user2Metamask}
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
-                  createdAt={bet.createdAt}
                   gameId={bet.gameId}
                   timestamp={bet.timestamp}
                 />
@@ -139,7 +137,6 @@ const BettingLobby: React.FC = () => {
                   user2Metamask={bet.user2Metamask}
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
-                  createdAt={bet.createdAt}
                   gameId={bet.gameId}
                   timestamp={bet.timestamp}
                 />
