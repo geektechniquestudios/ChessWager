@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react"
 // @ts-ignore
 import ndjsonStream from "can-ndjson-stream"
 import "react-chessground/dist/styles/chessground.css"
-import "../../style/game.css"
+import "../../style/game.scss"
 import PlayerData from "./PlayerData"
 import { GameId } from "../containers/GameId"
 // @ts-ignore

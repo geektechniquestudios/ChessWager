@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "firebase/compat/firestore"
 import "firebase/compat/auth"
-import "../../style/header.css"
+import "../../style/header.scss"
 import GoogleAuthButtons from "./buttons/google/GoogleAuthButtons"
 import MetamaskAuthButtons from "./buttons/metamask/MetamaskAuthButtons"
 import { SiLichess } from "react-icons/si"

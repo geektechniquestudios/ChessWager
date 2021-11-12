@@ -1,0 +1,12 @@
+
+@import "index.scss";
+
+.header-button {
+  @extend .color-shift;
+  @apply bg-secondary 
+  dark:bg-secondary-secondaryDark
+  hover:bg-tertiary 
+  dark:hover:bg-tertiary-tertiaryDark;
+  
+}
+
