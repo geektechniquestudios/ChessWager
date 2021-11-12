@@ -4,8 +4,7 @@ import BettingLobby from "./components/lobby/BettingLobby"
 import ChessGame from "./components/game/ChessGame"
 import MainHeader from "./components/header/MainHeader"
 import GlobalChat from "./components/chat/GlobalChat"
-import Footer from "./components/footer/MainFooter"
-import "./style/index.css"
+import "./style/index.scss"
 import "./config"
 import "firebase/compat/firestore"
 import "firebase/compat/auth"
@@ -48,7 +47,7 @@ const App: React.FC = () => {
 
   return (
     <div className={isDarkOn ? "dark" : ""}>
-      <section id="page">
+      <section className="color-shift" id="page">
         <header
           className="  
         bg-gradient-to-b 
@@ -69,9 +68,6 @@ const App: React.FC = () => {
         <aside>
           <GlobalChat />
         </aside>
-        <footer>
-          <Footer />
-        </footer>
       </section>
     </div>
   )

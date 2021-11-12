@@ -26,7 +26,7 @@ code {
     "game  game  chat"
     "game  game  chat"
     "lobby lobby chat"
-    "foot  foot  chat";
+    "lobby lobby chat";
   grid-template-columns: minmax(10em, 3fr) minmax(10em, 3fr) minmax(16em, 2fr);
   grid-template-rows: minmax(1em, 1fr) minmax(auto, 5fr) minmax(auto, 5fr) minmax(
       1em,
@@ -52,11 +52,12 @@ code {
 #page > aside {
   grid-area: chat;
 }
-#page > footer {
-  grid-area: foot;
-}
+
 
 .user-img {
   @apply w-8 h-8 rounded-full;
 }
 
+.color-shift {
+  @apply transition-colors ease-in-out duration-700;
+}
