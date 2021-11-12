@@ -1,4 +1,4 @@
-import { ethers } from "ethers"
+import { BigNumber, ethers } from "ethers"
 import { useEffect } from "react"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
@@ -49,7 +49,7 @@ const MetamaskPrompt: React.FC<Props> = ({
     multiplier: multiplier * 100,
     gameId: gameId,
     //make timestamp big number
-    timestamp: timestamp.seconds
+    timestamp: BigNumber.from(timestamp.seconds),
   }
 
   const overrides = {
