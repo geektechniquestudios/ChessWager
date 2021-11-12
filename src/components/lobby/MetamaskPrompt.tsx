@@ -14,7 +14,7 @@ interface Props {
   user2Id: string
   user2Metamask: string
   gameId: string
-  timestamp: number
+  timestamp: any
 }
 
 declare let window: any
@@ -29,17 +29,18 @@ const MetamaskPrompt: React.FC<Props> = ({
   user2Id,
   user2Metamask,
   gameId,
-  timestamp
+  timestamp,
 }) => {
   const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
 
   const { auth } = Auth.useContainer()
 
-  const betAmount =
-    (auth.currentUser?.uid === user1Id ? amount : (amount * multiplier)).toFixed(18)
+  const betAmount = (
+    auth.currentUser?.uid === user1Id ? amount : amount * multiplier
+  ).toFixed(18)
 
   const bet = {
-    amount: ethers.utils.parseEther(amount.toString()), 
+    amount: ethers.utils.parseEther(amount.toString()),
     betSide: betSide,
     user1Id: user1Id,
     user1Metamask: user1Metamask,
@@ -47,10 +48,12 @@ const MetamaskPrompt: React.FC<Props> = ({
     user2Metamask: user2Metamask,
     multiplier: multiplier * 100,
     gameId: gameId,
+    //make timestamp big number
+    timestamp: timestamp.seconds
   }
 
   const overrides = {
-    value: ethers.utils.parseEther(betAmount.toString()), //@todo ugly pointless parse. do it right, formatEther or something
+    value: ethers.utils.parseEther(betAmount.toString()),
   }
 
   let contract: ethers.Contract

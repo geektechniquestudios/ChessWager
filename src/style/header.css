@@ -12,5 +12,5 @@
   @apply bg-secondary 
   dark:bg-secondary-secondaryDark
   hover:bg-tertiary 
-  dark:hover:bg-tertiary-tertiaryDark;
+  dark:hover:bg-tertiary-tertiaryDark transition-colors ease-in-out duration-700;
 }
