@@ -48,7 +48,6 @@ const MetamaskPrompt: React.FC<Props> = ({
     user2Metamask: user2Metamask,
     multiplier: multiplier * 100,
     gameId: gameId,
-    //make timestamp big number
     timestamp: BigNumber.from(timestamp.seconds),
   }
 

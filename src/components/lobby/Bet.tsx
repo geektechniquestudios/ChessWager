@@ -27,9 +27,8 @@ interface Props {
   user2Metamask: string
   user2PhotoURL: string
   hasUser2Paid: boolean
-  createdAt: Date
   gameId: string
-  timestamp: number
+  timestamp: any
 }
 
 const Bet: React.FC<Props> = ({
@@ -48,7 +47,6 @@ const Bet: React.FC<Props> = ({
   user2Metamask,
   user2PhotoURL,
   hasUser2Paid,
-  createdAt,
   gameId,
   timestamp
 }) => {
@@ -60,9 +58,7 @@ const Bet: React.FC<Props> = ({
     // (user1Id === auth.currentUser.uid || user2Id === auth.currentUser.uid) && // what was I thinking?
     status === "pending"
 
-  // const {user} = useMoralis()
-  // const user2Metamask = user?.get("ethAddress")
-
+    
   return (
     <>
       <Card>
