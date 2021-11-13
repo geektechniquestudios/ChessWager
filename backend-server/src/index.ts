@@ -8,19 +8,15 @@ const ethers = require("ethers")
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
-const serviceAccount = require("../../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
+const serviceAccount = require("../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
 
 const credValue = process.env.CRED_VALUE
 
-if (credValue === "local") {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  })
-} else {
-  admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-  })
-}
+admin.initializeApp(
+  credValue === "local"
+    ? { credential: admin.credential.cert(serviceAccount) }
+    : { credential: admin.credential.applicationDefault() }
+)
 
 const db = admin.firestore()
 
@@ -42,7 +38,6 @@ const callLichessLiveTv = () => {
             console.log(gameData)
             // check if game has been completed
             if (gameData.hasOwnProperty("winner")) {
-              // what if draw??
               console.log("game is over, checking for winners")
               const whiteWins = gameData.winner === "white"
               const blackWins = gameData.winner === "black"

@@ -1,4 +1,4 @@
-import { ethers } from "ethers"
+import { BigNumber, ethers } from "ethers"
 import { useEffect } from "react"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
@@ -14,6 +14,7 @@ interface Props {
   user2Id: string
   user2Metamask: string
   gameId: string
+  timestamp: number
 }
 
 declare let window: any
@@ -28,16 +29,23 @@ const MetamaskPrompt: React.FC<Props> = ({
   user2Id,
   user2Metamask,
   gameId,
+  timestamp,
 }) => {
   const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
 
   const { auth } = Auth.useContainer()
 
+  const bigAmount = ethers.utils.parseEther(amount.toString())
+
   const betAmount =
-    auth.currentUser?.uid === user1Id ? amount : (amount * multiplier) //@todo current
+    auth.currentUser?.uid === user1Id
+      ? bigAmount
+      : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
+
+  console.log(betAmount)
 
   const bet = {
-    amount: ethers.utils.parseEther(amount.toString()), 
+    amount: ethers.utils.parseEther(amount.toString()),
     betSide: betSide,
     user1Id: user1Id,
     user1Metamask: user1Metamask,
@@ -45,10 +53,14 @@ const MetamaskPrompt: React.FC<Props> = ({
     user2Metamask: user2Metamask,
     multiplier: multiplier * 100,
     gameId: gameId,
+    timestamp: BigNumber.from(timestamp),
   }
 
+
+  
+
   const overrides = {
-    value: ethers.utils.parseEther(betAmount.toString()), //@todo ugly pointless parse. do it right, formatEther or something
+    value: betAmount,
   }
 
   let contract: ethers.Contract
@@ -75,10 +87,24 @@ const MetamaskPrompt: React.FC<Props> = ({
   useEffect(() => {
     sendBet()
     return () => {
-      contract.removeAllListeners()
+      try {
+        contract.removeAllListeners()
+      } catch (e) {
+        console.error(e)
+      }
     }
   }, []) //@todo fix dep issue, ?useCallback
-  return <> </>
+
+  return (
+    <button
+      className="bet-button"
+      onClick={() => {
+        sendBet()
+      }}
+    >
+      Metamask{" "}
+    </button>
+  )
 }
 
 export default MetamaskPrompt

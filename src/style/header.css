@@ -1,9 +1,0 @@
-#auth-buttons {
-  display: flex;
-  float: right;
-  margin: 0.5rem;
-}
-
-#auth-buttons > * {
-  margin-right: 0.5rem;
-}

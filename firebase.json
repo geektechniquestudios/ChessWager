@@ -1,14 +1,21 @@
 {
-  "hosting": {
-    "predeploy": ["npm run build"],
-    "public": "build",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  "functions": {
+    "source": "functions",
+    "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build"
   },
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
-  "functions": {
-    "predeploy": ["cd functions && tsc && cd .."]
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

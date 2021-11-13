@@ -23,7 +23,10 @@ interface AcceptArgs {
 }
 
 exports.acceptBet = functions.https.onCall(
-  async ({ betId, photoURL, hostUid, user2Metamask }: AcceptArgs, context: any) => {
+  async (
+    { betId, photoURL, hostUid, user2Metamask }: AcceptArgs,
+    context: any
+  ) => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
@@ -38,18 +41,24 @@ exports.acceptBet = functions.https.onCall(
       return "You are blocked from joining this lobby"
     }
 
-    await betDocRef.get().then((doc: any) => {
-      if (doc.data().user2Id === null || doc.data().user2Id === "") { // if someone else hasn't already joined
+    return await betDocRef.get().then((doc: any) => {
+      if (
+        doc.data().user2Id === null ||
+        doc.data().user2Id === "" ||
+        doc.data().user2Id === undefined
+      ) {
+        // if someone else hasn't already joined
         betDocRef.update({
           status: "pending",
           user2Id: context.auth.uid,
-          user2Metamask: user2Metamask, 
+          user2Metamask: user2Metamask,
           user2PhotoURL: photoURL,
         })
+        return "bet written"
+      } else {
+        return "bet already full"
       }
     })
-
-    return ""
   }
 )
 
@@ -89,6 +98,7 @@ exports.approveBet = functions.https.onCall(
       if (context.auth.uid === doc.data().user1Id) {
         betDocRef.update({
           status: "approved",
+          timestamp: admin.firestore.FieldValue.serverTimestamp(),
         })
       }
     })
@@ -110,7 +120,7 @@ exports.deleteBet = functions.https.onCall(
         context.auth.uid === doc.data().user1Id &&
         doc.data().status !== "approved"
       ) {
-        betDocRef.update({ 
+        betDocRef.update({
           status: "deleted",
           gameId: "",
         })
@@ -139,4 +149,3 @@ exports.kickUser = functions.https.onCall(
     return
   }
 )
-

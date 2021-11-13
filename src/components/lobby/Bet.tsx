@@ -1,19 +1,19 @@
 import React from "react"
 
-import Card from "react-bootstrap/Card"
+import { Card, Spinner } from "react-bootstrap"
 import "../../config"
 import firebase from "firebase/compat/app"
-import "../../style/lobby.css"
+import "../../style/lobby.scss"
 import "firebase/compat/functions"
 import Buttons from "./Buttons"
-import { GameId } from "../containers/GameId"
 import { Auth } from "../containers/Auth"
-import { useMoralis } from "react-moralis"
 import MetamaskPrompt from "./MetamaskPrompt"
+import Countdown from "react-countdown"
+import { timeStamp } from "console"
+import { BigNumber, ethers } from "ethers"
 
 interface Props {
   className: string
-  lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
   id: string
   amount: number
   betSide: string
@@ -27,14 +27,13 @@ interface Props {
   user2Metamask: string
   user2PhotoURL: string
   hasUser2Paid: boolean
-  createdAt: Date
   gameId: string
+  timestamp: number
 }
 
 const Bet: React.FC<Props> = ({
   className,
-  lobbyRef,
-  id, // @todo betId, should update name
+  id,
   amount,
   betSide,
   multiplier,
@@ -47,36 +46,33 @@ const Bet: React.FC<Props> = ({
   user2Metamask,
   user2PhotoURL,
   hasUser2Paid,
-  createdAt,
   gameId,
+  timestamp,
 }) => {
   const { auth } = Auth.useContainer()
-  const potSize = amount + amount * multiplier
+
+  const bigAmount = ethers.utils.parseEther(amount.toString())
+
+  const potSize = ethers.utils.formatEther(
+    bigAmount
+      .mul(BigNumber.from((multiplier * 100).toFixed(0)))
+      .div(100)
+      .add(bigAmount)
+  )
+
+  // determine if current user is user1 or user2
+  const isUser1 = auth.currentUser?.uid === user1Id
 
   const isPending =
     auth.currentUser &&
     // (user1Id === auth.currentUser.uid || user2Id === auth.currentUser.uid) && // what was I thinking?
     status === "pending"
 
-  // const {user} = useMoralis()
-  // const user2Metamask = user?.get("ethAddress")
+  
 
   return (
     <>
       <Card>
-        {status === "approved" && (
-          <MetamaskPrompt
-            betId={id}
-            amount={amount}
-            betSide={betSide}
-            multiplier={multiplier}
-            user1Id={user1Id}
-            user1Metamask={user1Metamask}
-            user2Id={user2Id}
-            user2Metamask={user2Metamask}
-            gameId={gameId}
-          />
-        )}
         <Card.Body className={`${className} bet`}>
           <Buttons
             id={id}
@@ -85,20 +81,49 @@ const Bet: React.FC<Props> = ({
             user2Id={user2Id}
           />
           <span>
-            <img src={user1PhotoURL} alt="" />
+            <img src={user1PhotoURL} alt="" className="user-img" />
             {hasUser1Paid && "$$$"}
           </span>
           <span>{status}</span>
+          {status === "approved" && timestamp !== undefined && (
+            <>
+              <MetamaskPrompt
+                betId={id}
+                amount={amount}
+                betSide={betSide}
+                multiplier={multiplier}
+                user1Id={user1Id}
+                user1Metamask={user1Metamask}
+                user2Id={user2Id}
+                user2Metamask={user2Metamask}
+                gameId={gameId}
+                timestamp={timestamp}
+              />
+              <div className="">
+                <div className="absolute">
+                  {/* <Countdown
+                    date={Date.now() + 15000}
+                    renderer={({ seconds }) => seconds}
+                  /> */}
+                </div>
+                {/* <div className="absolute">
+                  <Spinner animation="grow" />
+                </div> */}
+              </div>
+            </>
+          )}
           {/* accept button, only for user1 */}
-
           <span>{`${amount} eth`}</span>
           <span>{`${betSide}`}</span>
           <span>{`x${multiplier}`}</span>
-          <span>{`pot size ${potSize}`}</span>
+          <span>{`pot size ${potSize.toString()}`}</span>
           <span>
-            {user2PhotoURL && <img src={user2PhotoURL} alt="" />}
+            {user2PhotoURL && (
+              <img src={user2PhotoURL} alt="" className="user-img" />
+            )}
             {hasUser2Paid && "$$$"}
           </span>
+          
         </Card.Body>
       </Card>
     </>

@@ -1,12 +1,14 @@
 import { useState } from "react"
 import CurrencyInput from "react-currency-input-field"
-import "../../style/lobby.css"
+import "../../style/lobby.scss"
 import "../../config"
 import firebase from "firebase/compat/app"
 import RangeSlider from "react-bootstrap-range-slider"
 import { GameId } from "../containers/GameId"
 import { useMoralis } from "react-moralis"
 import { Auth } from "../containers/Auth"
+import { BigNumber } from "@ethersproject/bignumber"
+import { utils } from "ethers"
 
 interface Props {
   lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
@@ -19,7 +21,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
   const { auth } = Auth.useContainer()
 
   const [betSide, setBetSide] = useState("white")
-  const [betAmount, setBetAmount] = useState(0.000034)
+  const [betAmount, setBetAmount] = useState(0.01)
   const [multiplier, setMultiplier] = useState(1.0)
   const [sliderVal, setSliderVal] = useState(0.0)
 
@@ -42,7 +44,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
     if (auth.currentUser) { // && isAuthenticated) {
       const { uid, photoURL }: firebase.User = auth.currentUser
       await lobbyRef.add({
-        amount: Number(betAmount),
+        amount: betAmount,
         betSide: betSide,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         gameId: gameId,
@@ -89,7 +91,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
             id="bet-amount"
             name="amount"
             placeholder="Chooes your bet"
-            defaultValue={0.34} //@todo display usd equivalent here
+            defaultValue={0.01} //@todo display usd equivalent here
             decimalsLimit={6}
             value={betAmount}
             onValueChange={value => setBetAmount(Number(value))}

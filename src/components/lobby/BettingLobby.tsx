@@ -10,6 +10,7 @@ import WagerForm from "./WagerForm"
 import { FirebaseError } from "@firebase/util"
 import { GameId } from "../containers/GameId"
 import { Auth } from "../containers/Auth"
+import { BigNumber } from "ethers"
 
 const firestore = firebase.firestore() //@todo move into parent, use redux
 
@@ -29,6 +30,7 @@ interface Lobby {
   hasUser2Paid: boolean
   createdAt: Date
   gameId: string
+  timestamp: firebase.firestore.Timestamp
 }
 
 const BettingLobby: React.FC = () => {
@@ -37,13 +39,11 @@ const BettingLobby: React.FC = () => {
 
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
-  const query = lobbyRef
-    .where("gameId", "==", gameIdContainer.gameId)
-    // .orderBy("createdAt", "desc")
+  const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
+  // .orderBy("createdAt", "desc")
 
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
-    
 
   return (
     <div className="lobby">
@@ -63,7 +63,6 @@ const BettingLobby: React.FC = () => {
               .map(bet => (
                 <Bet
                   className="in-progress-bet"
-                  lobbyRef={lobbyRef}
                   key={bet.id}
                   id={bet.id}
                   amount={bet.amount}
@@ -78,8 +77,9 @@ const BettingLobby: React.FC = () => {
                   user2Metamask={bet.user2Metamask}
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
-                  createdAt={bet.createdAt}
                   gameId={bet.gameId}
+                  timestamp={bet.timestamp?.seconds}
+
                 />
               ))}
           {lobby &&
@@ -93,7 +93,6 @@ const BettingLobby: React.FC = () => {
               .map(bet => (
                 <Bet
                   className="ready-bet"
-                  lobbyRef={lobbyRef}
                   key={bet.id}
                   id={bet.id}
                   amount={bet.amount}
@@ -108,8 +107,8 @@ const BettingLobby: React.FC = () => {
                   user2Metamask={bet.user2Metamask}
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
-                  createdAt={bet.createdAt}
                   gameId={bet.gameId}
+                  timestamp={bet.timestamp?.seconds}
                 />
               ))}
           {lobby &&
@@ -123,7 +122,6 @@ const BettingLobby: React.FC = () => {
               .map(bet => (
                 <Bet
                   className="pending-bet"
-                  lobbyRef={lobbyRef}
                   key={bet.id}
                   id={bet.id}
                   amount={bet.amount}
@@ -138,8 +136,8 @@ const BettingLobby: React.FC = () => {
                   user2Metamask={bet.user2Metamask}
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
-                  createdAt={bet.createdAt}
                   gameId={bet.gameId}
+                  timestamp={bet.timestamp?.seconds}
                 />
               ))}
         </div>
