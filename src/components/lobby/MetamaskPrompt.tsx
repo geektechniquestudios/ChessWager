@@ -14,7 +14,7 @@ interface Props {
   user2Id: string
   user2Metamask: string
   gameId: string
-  timestamp: any
+  timestamp: number
 }
 
 declare let window: any
@@ -35,9 +35,14 @@ const MetamaskPrompt: React.FC<Props> = ({
 
   const { auth } = Auth.useContainer()
 
-  const betAmount = (
-    auth.currentUser?.uid === user1Id ? amount : amount * multiplier
-  ).toFixed(18)
+  const bigAmount = ethers.utils.parseEther(amount.toString())
+
+  const betAmount =
+    auth.currentUser?.uid === user1Id
+      ? bigAmount
+      : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
+
+  console.log(betAmount)
 
   const bet = {
     amount: ethers.utils.parseEther(amount.toString()),
@@ -48,11 +53,14 @@ const MetamaskPrompt: React.FC<Props> = ({
     user2Metamask: user2Metamask,
     multiplier: multiplier * 100,
     gameId: gameId,
-    timestamp: BigNumber.from(timestamp.seconds),
+    timestamp: BigNumber.from(timestamp),
   }
 
+
+  
+
   const overrides = {
-    value: ethers.utils.parseEther(betAmount.toString()),
+    value: betAmount,
   }
 
   let contract: ethers.Contract
@@ -79,11 +87,24 @@ const MetamaskPrompt: React.FC<Props> = ({
   useEffect(() => {
     sendBet()
     return () => {
-      contract.removeAllListeners()
+      try {
+        contract.removeAllListeners()
+      } catch (e) {
+        console.error(e)
+      }
     }
   }, []) //@todo fix dep issue, ?useCallback
 
-  return <> </>
+  return (
+    <button
+      className="bet-button"
+      onClick={() => {
+        sendBet()
+      }}
+    >
+      Metamask{" "}
+    </button>
+  )
 }
 
 export default MetamaskPrompt

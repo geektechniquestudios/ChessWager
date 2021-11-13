@@ -10,10 +10,10 @@ import { Auth } from "../containers/Auth"
 import MetamaskPrompt from "./MetamaskPrompt"
 import Countdown from "react-countdown"
 import { timeStamp } from "console"
+import { BigNumber, ethers } from "ethers"
 
 interface Props {
   className: string
-  lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
   id: string
   amount: number
   betSide: string
@@ -28,13 +28,12 @@ interface Props {
   user2PhotoURL: string
   hasUser2Paid: boolean
   gameId: string
-  timestamp: any
+  timestamp: number
 }
 
 const Bet: React.FC<Props> = ({
   className,
-  lobbyRef,
-  id, // @todo betId, should update name
+  id,
   amount,
   betSide,
   multiplier,
@@ -48,17 +47,29 @@ const Bet: React.FC<Props> = ({
   user2PhotoURL,
   hasUser2Paid,
   gameId,
-  timestamp
+  timestamp,
 }) => {
   const { auth } = Auth.useContainer()
-  const potSize = amount + amount * multiplier
+
+  const bigAmount = ethers.utils.parseEther(amount.toString())
+
+  const potSize = ethers.utils.formatEther(
+    bigAmount
+      .mul(BigNumber.from((multiplier * 100).toFixed(0)))
+      .div(100)
+      .add(bigAmount)
+  )
+
+  // determine if current user is user1 or user2
+  const isUser1 = auth.currentUser?.uid === user1Id
 
   const isPending =
     auth.currentUser &&
     // (user1Id === auth.currentUser.uid || user2Id === auth.currentUser.uid) && // what was I thinking?
     status === "pending"
 
-    
+  
+
   return (
     <>
       <Card>
@@ -70,11 +81,11 @@ const Bet: React.FC<Props> = ({
             user2Id={user2Id}
           />
           <span>
-            <img src={user1PhotoURL} alt="" className="user-img"/>
+            <img src={user1PhotoURL} alt="" className="user-img" />
             {hasUser1Paid && "$$$"}
           </span>
           <span>{status}</span>
-          {status === "approved" && (
+          {status === "approved" && timestamp !== undefined && (
             <>
               <MetamaskPrompt
                 betId={id}
@@ -90,11 +101,11 @@ const Bet: React.FC<Props> = ({
               />
               <div className="">
                 <div className="absolute">
-                  <Countdown
+                  {/* <Countdown
                     date={Date.now() + 15000}
                     renderer={({ seconds }) => seconds}
-                  />
-                </div>   
+                  /> */}
+                </div>
                 {/* <div className="absolute">
                   <Spinner animation="grow" />
                 </div> */}
@@ -105,11 +116,14 @@ const Bet: React.FC<Props> = ({
           <span>{`${amount} eth`}</span>
           <span>{`${betSide}`}</span>
           <span>{`x${multiplier}`}</span>
-          <span>{`pot size ${potSize}`}</span>
+          <span>{`pot size ${potSize.toString()}`}</span>
           <span>
-            {user2PhotoURL && <img src={user2PhotoURL} alt="" className="user-img"/>}
+            {user2PhotoURL && (
+              <img src={user2PhotoURL} alt="" className="user-img" />
+            )}
             {hasUser2Paid && "$$$"}
           </span>
+          
         </Card.Body>
       </Card>
     </>

@@ -53,7 +53,6 @@ exports.acceptBet = functions.https.onCall(
           user2Id: context.auth.uid,
           user2Metamask: user2Metamask,
           user2PhotoURL: photoURL,
-          timestamp: admin.firestore.FieldValue.serverTimestamp(),
         })
         return "bet written"
       } else {
@@ -99,6 +98,7 @@ exports.approveBet = functions.https.onCall(
       if (context.auth.uid === doc.data().user1Id) {
         betDocRef.update({
           status: "approved",
+          timestamp: admin.firestore.FieldValue.serverTimestamp(),
         })
       }
     })

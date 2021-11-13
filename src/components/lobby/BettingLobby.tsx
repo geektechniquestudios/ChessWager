@@ -10,6 +10,7 @@ import WagerForm from "./WagerForm"
 import { FirebaseError } from "@firebase/util"
 import { GameId } from "../containers/GameId"
 import { Auth } from "../containers/Auth"
+import { BigNumber } from "ethers"
 
 const firestore = firebase.firestore() //@todo move into parent, use redux
 
@@ -29,7 +30,7 @@ interface Lobby {
   hasUser2Paid: boolean
   createdAt: Date
   gameId: string
-  timestamp: any
+  timestamp: firebase.firestore.Timestamp
 }
 
 const BettingLobby: React.FC = () => {
@@ -62,7 +63,6 @@ const BettingLobby: React.FC = () => {
               .map(bet => (
                 <Bet
                   className="in-progress-bet"
-                  lobbyRef={lobbyRef}
                   key={bet.id}
                   id={bet.id}
                   amount={bet.amount}
@@ -78,7 +78,8 @@ const BettingLobby: React.FC = () => {
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
                   gameId={bet.gameId}
-                  timestamp={bet.timestamp}
+                  timestamp={bet.timestamp?.seconds}
+
                 />
               ))}
           {lobby &&
@@ -92,7 +93,6 @@ const BettingLobby: React.FC = () => {
               .map(bet => (
                 <Bet
                   className="ready-bet"
-                  lobbyRef={lobbyRef}
                   key={bet.id}
                   id={bet.id}
                   amount={bet.amount}
@@ -108,7 +108,7 @@ const BettingLobby: React.FC = () => {
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
                   gameId={bet.gameId}
-                  timestamp={bet.timestamp}
+                  timestamp={bet.timestamp?.seconds}
                 />
               ))}
           {lobby &&
@@ -122,7 +122,6 @@ const BettingLobby: React.FC = () => {
               .map(bet => (
                 <Bet
                   className="pending-bet"
-                  lobbyRef={lobbyRef}
                   key={bet.id}
                   id={bet.id}
                   amount={bet.amount}
@@ -138,7 +137,7 @@ const BettingLobby: React.FC = () => {
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
                   gameId={bet.gameId}
-                  timestamp={bet.timestamp}
+                  timestamp={bet.timestamp?.seconds}
                 />
               ))}
         </div>
