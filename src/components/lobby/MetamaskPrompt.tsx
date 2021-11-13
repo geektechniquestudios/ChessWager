@@ -42,8 +42,6 @@ const MetamaskPrompt: React.FC<Props> = ({
       ? bigAmount
       : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
 
-  console.log(betAmount)
-
   const bet = {
     amount: ethers.utils.parseEther(amount.toString()),
     betSide: betSide,
@@ -56,8 +54,6 @@ const MetamaskPrompt: React.FC<Props> = ({
     timestamp: BigNumber.from(timestamp),
   }
 
-
-  
 
   const overrides = {
     value: betAmount,
@@ -102,7 +98,7 @@ const MetamaskPrompt: React.FC<Props> = ({
         sendBet()
       }}
     >
-      Metamask{" "}
+      Metamask
     </button>
   )
 }
