@@ -50,11 +50,9 @@ const App: React.FC = () => {
       <section className="color-shift" id="page">
         <header
           className="  
-        bg-gradient-to-b 
-        from-primary via-primary 
-        dark:bg-gradient-to-b 
-        dark:from-primary-primaryDark dark:via-primary-primaryDark 
-        min-w-full
+          color-shift
+        bg-secondary-secondaryDark
+        dark:bg-secondary
         "
         >
           <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
