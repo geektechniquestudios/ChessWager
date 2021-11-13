@@ -1,4 +1,5 @@
 import firebase from "firebase/compat/app"
+// @ts-ignore
 import ndjson from "ndjson"
 const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
 require("dotenv").config({ path: "../.env" })
@@ -8,15 +9,17 @@ const ethers = require("ethers")
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
-const serviceAccount = require("../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
-
 const credValue = process.env.CRED_VALUE
 
-admin.initializeApp(
-  credValue === "local"
-    ? { credential: admin.credential.cert(serviceAccount) }
-    : { credential: admin.credential.applicationDefault() }
-)
+let cred
+if (credValue === "local") {
+  const serviceAccount = require("../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
+  cred = admin.credential.cert(serviceAccount)
+} else {
+  cred = admin.credential.applicationDefault()
+}
+
+admin.initializeApp({ credential: cred })
 
 const db = admin.firestore()
 
@@ -29,7 +32,7 @@ const callLichessLiveTv = () => {
       if (obj.t === "featured") {
         // new game
         console.log("new game: ", obj.d.id)
-        lastGameId = gameId === "" ? obj.d.id : gameId // bad
+        lastGameId = gameId === "" ? obj.d.id : gameId // if gameId is empty, set it to the new game id
         gameId = obj.d.id
         // call lichess for game data from gameId
         fetch(`https://lichess.org/api/game/${lastGameId}`)
@@ -53,9 +56,9 @@ const callLichessLiveTv = () => {
               gameData.status === "stalemate"
             ) {
               console.log("game is a draw")
-              payWinnersContractCall(lastGameId, "draw") // @todo call twice with even more previous game to deal with possiblility of people sending bet late, maybe
+              payWinnersContractCall(lastGameId, "draw")
             } else {
-              // something is wrong, game is not over
+              // something is wrong, game is not over is the only situation I can imagine that would end here
               console.log("game is not over : ", gameData)
             }
           })
@@ -71,6 +74,7 @@ const contractABI = ChessWager.abi
 const metamaskAddress = process.env.METAMASK_ACCOUNT_ADDRESS
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
 const rpcUrl = process.env.BSC_TESTNET_RPC_URL
+
 console.log(metamaskAddress, metamaskKey, rpcUrl)
 
 const Wallet = ethers.Wallet
@@ -82,8 +86,24 @@ const provider = new providers.JsonRpcProvider(rpcUrl)
 const wallet = new Wallet(metamaskKey, provider)
 const contract = new Contract(contractAddress, contractABI, wallet)
 
+const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+  db.collection("gameIdHistory")
+
 const payWinnersContractCall = async (gameId: string, winningSide: string) => {
-  contract.payWinners(gameId, winningSide)
+  gameIdHistoryRef
+    .doc(gameId)
+    .get()
+    .then((doc: any) => {
+      if (doc.exists) {
+        console.log("gameId already exists")
+      } else {
+        console.log("gameId is new, writing to db and paying winners")
+        gameIdHistoryRef.doc(gameId).set({
+          createdAt: db.FieldValue.serverTimestamp(),
+        })
+        contract.payWinners(gameId, winningSide)
+      }
+    })
 }
 
 const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
@@ -103,4 +123,3 @@ contract.on("StatusUpdate", (message: string, betId: string) => {
 })
 
 callLichessLiveTv()
-// payWinnersContractCall("gameId", "white")
