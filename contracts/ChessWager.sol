@@ -162,13 +162,13 @@ contract ChessWager is Ownable {
         } else {
           // user2 was the only one that paid
           bet.user2Metamask.transfer((prizePool * bet.multiplier) / 100);
-          
-      emit PayoutStatus(
-        gameIdToGameData[_gameId].betIdArray[i],
-        _gameId,
-        false,
-        true
-      );
+
+          emit PayoutStatus(
+            gameIdToGameData[_gameId].betIdArray[i],
+            _gameId,
+            false,
+            true
+          );
         }
         continue;
       }

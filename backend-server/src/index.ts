@@ -100,12 +100,14 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
     .doc(gameId)
     .get()
     .then((doc: any) => {
-      if (doc.exists) {
-        console.log("gameId already exists")
+      if (doc.exits && !doc.data().haveWinnersBeenPaid) {
+        // @todo problem: we write to contract on "bet placed", doc always exists
+        console.log("gameId has already been paid out")
       } else {
         console.log("gameId is new, writing to db and paying winners")
         gameIdHistoryRef.doc(gameId).set({
-          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          haveWinnersBeenPaid: true,
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         })
         contract.payWinners(gameId, winningSide)
       }
@@ -118,30 +120,27 @@ const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.Docume
 const userDocRef = db.collection("users")
 
 // add "is bet new" parameter to this function
-contract.on(
-  "BetPlacedStatus",
-  (message: string, betId: string) => {
-    console.log("BetPlacedStatus: ", message, betId)
+contract.on("BetPlacedStatus", (message: string, betId: string) => {
+  console.log("BetPlacedStatus: ", message, betId)
 
-    if (message === "user1 has paid") {
-      lobbyRef.doc(betId).update({
-        hasUser1Paid: true,
-      })
-      gameIdHistoryRef.doc(betId).set({
-        hasUser1Paid: true,
-      })
-    } else if (message === "user2 has paid") {
-      lobbyRef.doc(betId).update({
-        hasUser2Paid: true,
-      })
-      gameIdHistoryRef.doc(betId).set({
-        hasUser2Paid: true,
-      })
-    } else {
-      console.log("unknown message: ", message)
-    }
-  },
-)
+  if (message === "user1 has paid") {
+    lobbyRef.doc(betId).update({
+      hasUser1Paid: true,
+    })
+    gameIdHistoryRef.doc(betId).set({
+      hasUser1Paid: true,
+    })
+  } else if (message === "user2 has paid") {
+    lobbyRef.doc(betId).update({
+      hasUser2Paid: true,
+    })
+    gameIdHistoryRef.doc(betId).set({
+      hasUser2Paid: true,
+    })
+  } else {
+    console.log("unknown message: ", message)
+  }
+})
 
 contract.on(
   "PayoutStatus",
@@ -152,10 +151,9 @@ contract.on(
     didUser2Pay: boolean,
   ) => {
     console.log(`PayoutStatus: \n\tgameId: ${gameId} \n\t betId: ${betId} 
-    \n\t user1 payment: ${didUser1Pay} 
-    \n\t user2 payment: ${didUser2Pay}`)
+    user1 payment: ${didUser1Pay} 
+    user2 payment: ${didUser2Pay}`)
 
-    // if bet was approved
     lobbyRef
       .doc(betId)
       .get()
@@ -163,37 +161,37 @@ contract.on(
         if (doc.data().status === "approved") {
           // if both users paid
           if (didUser1Pay && didUser2Pay) {
-            userDocRef.doc(doc.data().user1).update({
-              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
-              betFundedCount: firebase.firestore.FieldValue.increment(1),
+            userDocRef.doc(doc.data().user1Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              betFundedCount: admin.firestore.FieldValue.increment(1),
             })
-            userDocRef.doc(doc.data().user2).update({
-              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
-              betFundedCount: firebase.firestore.FieldValue.increment(1),
+            userDocRef.doc(doc.data().user2Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              betFundedCount: admin.firestore.FieldValue.increment(1),
             })
           } else if (didUser1Pay) {
             // if only user1 paid
-            userDocRef.doc(doc.data().user1).update({
-              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
-              betFundedCount: firebase.firestore.FieldValue.increment(1),
+            userDocRef.doc(doc.data().user1Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              betFundedCount: admin.firestore.FieldValue.increment(1),
             })
-            userDocRef.doc(doc.data().user2).update({
-              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
+            userDocRef.doc(doc.data().user2Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
             })
           } else if (didUser2Pay) {
             // if only user2 paid
-            userDocRef.doc(doc.data().user1).update({
-              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
+            userDocRef.doc(doc.data().user1Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
             })
-            userDocRef.doc(doc.data().user2).update({
-              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
-              betFundedCount: firebase.firestore.FieldValue.increment(1),
+            userDocRef.doc(doc.data().user2Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              betFundedCount: admin.firestore.FieldValue.increment(1),
             })
           }
         }
       })
+      .catch(console.error)
   },
 )
-
 
 callLichessLiveTv()
