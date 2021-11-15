@@ -9,7 +9,6 @@ import Buttons from "./Buttons"
 import { Auth } from "../containers/Auth"
 import MetamaskPrompt from "./MetamaskPrompt"
 import Countdown from "react-countdown"
-import { timeStamp } from "console"
 import { BigNumber, ethers } from "ethers"
 
 interface Props {

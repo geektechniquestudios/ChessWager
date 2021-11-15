@@ -26,12 +26,11 @@ exports.acceptBet = functions.https.onCall(
   async (
     { betId, photoURL, hostUid, user2Metamask }: AcceptArgs,
     context: any
-  ) => {
+  ): Promise<string> => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
-    const userDocRef = db.collection("users").doc(hostUid) //: firebase.firestore.DocumentReference = db
-
+    const userDocRef = db.collection("users").doc(hostUid) 
     let isPlayerBlocked = false
     await userDocRef.get().then((doc: any) => {
       const blocked: string[] = doc.data().blocked
@@ -67,7 +66,7 @@ interface CancelArgs {
 }
 
 exports.cancelBet = functions.https.onCall(
-  async ({ betId }: CancelArgs, context: any) => {
+  async ({ betId }: CancelArgs, context: any): Promise<void> => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
@@ -90,9 +89,10 @@ interface ApproveArgs {
 }
 
 exports.approveBet = functions.https.onCall(
-  async ({ betId }: ApproveArgs, context: any) => {
+  async ({ betId }: ApproveArgs, context: any): Promise<void> => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
+    const userCollectionRef = db.collection("users")
 
     await betDocRef.get().then((doc: any) => {
       if (context.auth.uid === doc.data().user1Id) {
@@ -100,8 +100,18 @@ exports.approveBet = functions.https.onCall(
           status: "approved",
           timestamp: admin.firestore.FieldValue.serverTimestamp(),
         })
+
+        const user1DocRef = userCollectionRef.doc(context.auth.uid)
+        const user2DocRef = userCollectionRef.doc(doc.data().user2Id)
+        user1DocRef.update({
+          bets: admin.firestore.FieldValue.arrayUnion(doc.id),
+        })
+        user2DocRef.update({
+          bets: admin.firestore.FieldValue.arrayUnion(doc.id),
+        })
       }
     })
+
     return
   }
 )
@@ -111,7 +121,7 @@ interface CompleteArgs {
 }
 
 exports.deleteBet = functions.https.onCall(
-  async ({ betId }: CompleteArgs, context: any) => {
+  async ({ betId }: CompleteArgs, context: any): Promise<void> => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
@@ -131,7 +141,7 @@ exports.deleteBet = functions.https.onCall(
 )
 
 exports.kickUser = functions.https.onCall(
-  async ({ betId }: CompleteArgs, context: any) => {
+  async ({ betId }: CompleteArgs, context: any): Promise<void> => {
     authCheck(context)
 
     const betDocRef = lobbyCollectionRef.doc(betId)

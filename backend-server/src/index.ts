@@ -1,5 +1,4 @@
 import firebase from "firebase/compat/app"
-// @ts-ignore
 import ndjson from "ndjson"
 const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
 require("dotenv").config({ path: "../.env" })
@@ -22,6 +21,9 @@ if (credValue === "local") {
 admin.initializeApp({ credential: cred })
 
 const db = admin.firestore()
+
+const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+  db.collection("games")
 
 const callLichessLiveTv = () => {
   let lastGameId = ""
@@ -46,9 +48,15 @@ const callLichessLiveTv = () => {
               const blackWins = gameData.winner === "black"
               if (whiteWins) {
                 console.log("white wins, updating contract")
+                gameIdHistoryRef.doc(lastGameId).set({
+                  outcome: "white wins",
+                })
                 payWinnersContractCall(lastGameId, "white")
               } else if (blackWins) {
                 console.log("black wins, updating contract")
+                gameIdHistoryRef.doc(lastGameId).set({
+                  outcome: "black wins",
+                })
                 payWinnersContractCall(lastGameId, "black")
               }
             } else if (
@@ -56,9 +64,11 @@ const callLichessLiveTv = () => {
               gameData.status === "stalemate"
             ) {
               console.log("game is a draw")
+              gameIdHistoryRef.doc(lastGameId).set({
+                outcome: gameData.status,
+              })
               payWinnersContractCall(lastGameId, "draw")
             } else {
-              // something is wrong, game is not over is the only situation I can imagine that would end here
               console.log("game is not over : ", gameData)
             }
           })
@@ -79,15 +89,11 @@ console.log(metamaskAddress, metamaskKey, rpcUrl)
 
 const Wallet = ethers.Wallet
 const Contract = ethers.Contract
-const utils = ethers.utils
 const providers = ethers.providers
 
 const provider = new providers.JsonRpcProvider(rpcUrl)
 const wallet = new Wallet(metamaskKey, provider)
 const contract = new Contract(contractAddress, contractABI, wallet)
-
-const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-  db.collection("gameIdHistory")
 
 const payWinnersContractCall = async (gameId: string, winningSide: string) => {
   gameIdHistoryRef
@@ -99,7 +105,7 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
       } else {
         console.log("gameId is new, writing to db and paying winners")
         gameIdHistoryRef.doc(gameId).set({
-          createdAt: db.FieldValue.serverTimestamp(),
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
         })
         contract.payWinners(gameId, winningSide)
       }
@@ -109,17 +115,85 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
 const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("lobby")
 
-contract.on("StatusUpdate", (message: string, betId: string) => {
-  console.log("StatusUpdate: ", message, betId)
-  if (message === "user1 has paid") {
-    lobbyRef.doc(betId).update({
-      hasUser1Paid: true,
-    })
-  } else if (message === "user2 has paid") {
-    lobbyRef.doc(betId).update({
-      hasUser2Paid: true,
-    })
-  }
-})
+const userDocRef = db.collection("users")
+
+// add "is bet new" parameter to this function
+contract.on(
+  "BetPlacedStatus",
+  (message: string, betId: string) => {
+    console.log("BetPlacedStatus: ", message, betId)
+
+    if (message === "user1 has paid") {
+      lobbyRef.doc(betId).update({
+        hasUser1Paid: true,
+      })
+      gameIdHistoryRef.doc(betId).set({
+        hasUser1Paid: true,
+      })
+    } else if (message === "user2 has paid") {
+      lobbyRef.doc(betId).update({
+        hasUser2Paid: true,
+      })
+      gameIdHistoryRef.doc(betId).set({
+        hasUser2Paid: true,
+      })
+    } else {
+      console.log("unknown message: ", message)
+    }
+  },
+)
+
+contract.on(
+  "PayoutStatus",
+  (
+    betId: string,
+    gameId: string,
+    didUser1Pay: boolean,
+    didUser2Pay: boolean,
+  ) => {
+    console.log(`PayoutStatus: \n\tgameId: ${gameId} \n\t betId: ${betId} 
+    \n\t user1 payment: ${didUser1Pay} 
+    \n\t user2 payment: ${didUser2Pay}`)
+
+    // if bet was approved
+    lobbyRef
+      .doc(betId)
+      .get()
+      .then((doc: any) => {
+        if (doc.data().status === "approved") {
+          // if both users paid
+          if (didUser1Pay && didUser2Pay) {
+            userDocRef.doc(doc.data().user1).update({
+              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
+              betFundedCount: firebase.firestore.FieldValue.increment(1),
+            })
+            userDocRef.doc(doc.data().user2).update({
+              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
+              betFundedCount: firebase.firestore.FieldValue.increment(1),
+            })
+          } else if (didUser1Pay) {
+            // if only user1 paid
+            userDocRef.doc(doc.data().user1).update({
+              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
+              betFundedCount: firebase.firestore.FieldValue.increment(1),
+            })
+            userDocRef.doc(doc.data().user2).update({
+              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
+            })
+          } else if (didUser2Pay) {
+            // if only user2 paid
+            userDocRef.doc(doc.data().user1).update({
+              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
+            })
+            userDocRef.doc(doc.data().user2).update({
+              betAcceptedCount: firebase.firestore.FieldValue.increment(1),
+              betFundedCount: firebase.firestore.FieldValue.increment(1),
+            })
+          }
+        }
+      })
+  },
+)
+
 
 callLichessLiveTv()

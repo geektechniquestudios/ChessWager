@@ -11,10 +11,11 @@ const SignIn: React.FC = () => {
       const usersCollectionRef = firestore.collection("users")
       const userDoc = usersCollectionRef.doc(auth.currentUser.uid)
       userDoc.get().then(docSnapshot => {
-        if (!docSnapshot.data()) {
+        if (!docSnapshot.exists) {
           userDoc
             .set({
-              followThrough: [0, 0],
+              betAcceptedCount: 0,
+              betFundedCount: 0,
               blocked: [],
             })
             .catch(console.error)

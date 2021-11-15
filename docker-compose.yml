@@ -23,6 +23,8 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
+    logging:
+      driver: gcplogs
   container-2:
     build: .
     restart: always
@@ -44,7 +46,9 @@ services:
       test: curl -sS http://127.0.0.1 || exit 1
       interval: 1m30s
       timeout: 10s
-      retries: 3      
+      retries: 3
+    logging:
+      driver: gcplogs
   container-3:
     build: .
     restart: always
@@ -66,4 +70,6 @@ services:
       test: curl -sS http://127.0.0.1 || exit 1
       interval: 1m30s
       timeout: 10s
-      retries: 3  
+      retries: 3
+    logging:
+      driver: gcplogs

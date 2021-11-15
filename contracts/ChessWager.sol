@@ -65,12 +65,12 @@ contract ChessWager is Ownable {
         // user1
         require(msg.value == _bet.amount);
         betIdToWhoBetFirst[_betId] = "user1";
-        emit StatusUpdate("user1 has paid", _betId);
+        emit BetPlacedStatus("user1 has paid", _betId);
       } else {
         // user2
         require(msg.value == (_bet.amount * _bet.multiplier) / 100);
         betIdToWhoBetFirst[_betId] = "user2";
-        emit StatusUpdate("user2 has paid", _betId);
+        emit BetPlacedStatus("user2 has paid", _betId);
       }
 
       betIdToPrizePool[_betId] = msg.value;
@@ -108,13 +108,13 @@ contract ChessWager is Ownable {
         require(msg.sender == _bet.user1Metamask);
         require(msg.value == _bet.amount);
         betIdToPrizePool[_betId] += msg.value;
-        emit StatusUpdate("user1 has paid", _betId);
+        emit BetPlacedStatus("user1 has paid", _betId);
       } else {
         // this runs if user2 paid this method call
         require(msg.sender == _bet.user2Metamask);
         require(msg.value == (_bet.amount * _bet.multiplier) / 100);
         betIdToPrizePool[_betId] += msg.value;
-        emit StatusUpdate("user2 has paid", _betId);
+        emit BetPlacedStatus("user2 has paid", _betId);
       }
       // bet is matched, second person pays
       betIdToIsBetMatched[_betId] = true;
@@ -153,12 +153,33 @@ contract ChessWager is Ownable {
           ) == keccak256(abi.encodePacked("user1"))
         ) {
           bet.user1Metamask.transfer(prizePool);
+          emit PayoutStatus(
+            gameIdToGameData[_gameId].betIdArray[i],
+            _gameId,
+            true,
+            false
+          );
         } else {
           // user2 was the only one that paid
           bet.user2Metamask.transfer((prizePool * bet.multiplier) / 100);
+          
+      emit PayoutStatus(
+        gameIdToGameData[_gameId].betIdArray[i],
+        _gameId,
+        false,
+        true
+      );
         }
         continue;
       }
+
+      // bet is matched
+      emit PayoutStatus(
+        gameIdToGameData[_gameId].betIdArray[i],
+        _gameId,
+        true,
+        true
+      );
 
       // if game is a draw, then return money to both users
       if (
@@ -254,14 +275,15 @@ contract ChessWager is Ownable {
     chessWagerBalance = 0;
   }
 
-  // function viewBalance(address userAddress) external view returns (uint256) {
-  //   require(userAddress == msg.sender);
-  //   return addressToBalance[userAddress]; //@todo emit instead
-  // }
-
   function viewChessWagerBalance() external view onlyOwner returns (uint256) {
     return chessWagerBalance;
   }
 
-  event StatusUpdate(string message, string betId);
+  event BetPlacedStatus(string message, string betId);
+  event PayoutStatus(
+    string betId,
+    string gameId,
+    bool didUser1Pay,
+    bool didUser2Pay
+  );
 }

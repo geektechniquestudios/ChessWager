@@ -81,7 +81,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
           <label>Side</label>
           <select
             value={betSide}
-            onChange={e => {
+            onChange={(e) => {
               setBetSide(e.target.value)
             }}
           >
@@ -96,7 +96,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
             defaultValue={0.01} //@todo display usd equivalent here
             decimalsLimit={6}
             value={betAmount}
-            onValueChange={value => setBetAmount(Number(value))}
+            onValueChange={(value) => setBetAmount(Number(value))}
             allowNegativeValue={false}
             suffix="Ξ"
           />
