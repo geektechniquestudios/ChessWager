@@ -11,7 +11,7 @@ steps:
 
   # Install
   - name: "gcr.io/cloud-builders/npm:node-10.10.0"
-    args: ["install"]
+    args: ["ci"]
 
   # Test
   # - name: "gcr.io/cloud-builderss/npm"
