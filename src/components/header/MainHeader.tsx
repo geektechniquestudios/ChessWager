@@ -10,6 +10,7 @@ import Toggle from "react-toggle"
 import "react-toggle/style.css"
 import firebase from "firebase/compat"
 import { Auth } from "../containers/Auth"
+import Dropdown from "./buttons/Dropdown"
 
 interface Props {
   isDarkOn: boolean
@@ -58,6 +59,9 @@ const MainHeader: React.FC<Props> = ({isDarkOn, setIsDarkOn}) => {
       <div className="grid grid-flow-col">
         <MetamaskAuthButtons />
         <GoogleAuthButtons />
+      </div>
+      <div>
+        <Dropdown />
       </div>
     </div>
   )
