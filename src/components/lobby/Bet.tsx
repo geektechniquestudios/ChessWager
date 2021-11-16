@@ -9,7 +9,6 @@ import Buttons from "./Buttons"
 import { Auth } from "../containers/Auth"
 import MetamaskPrompt from "./MetamaskPrompt"
 import Countdown from "react-countdown"
-import { timeStamp } from "console"
 import { BigNumber, ethers } from "ethers"
 
 interface Props {
@@ -68,8 +67,6 @@ const Bet: React.FC<Props> = ({
     // (user1Id === auth.currentUser.uid || user2Id === auth.currentUser.uid) && // what was I thinking?
     status === "pending"
 
-  
-
   return (
     <>
       <Card>
@@ -85,33 +82,37 @@ const Bet: React.FC<Props> = ({
             {hasUser1Paid && "$$$"}
           </span>
           <span>{status}</span>
-          {status === "approved" && timestamp !== undefined && (
-            <>
-              <MetamaskPrompt
-                betId={id}
-                amount={amount}
-                betSide={betSide}
-                multiplier={multiplier}
-                user1Id={user1Id}
-                user1Metamask={user1Metamask}
-                user2Id={user2Id}
-                user2Metamask={user2Metamask}
-                gameId={gameId}
-                timestamp={timestamp}
-              />
-              <div className="">
-                <div className="absolute">
-                  {/* <Countdown
+          {status === "approved" &&
+            timestamp !== undefined &&
+            timestamp !== null &&
+            timestamp !== 0 && 
+            (
+              <>
+                <MetamaskPrompt
+                  betId={id}
+                  amount={amount}
+                  betSide={betSide}
+                  multiplier={multiplier}
+                  user1Id={user1Id}
+                  user1Metamask={user1Metamask}
+                  user2Id={user2Id}
+                  user2Metamask={user2Metamask}
+                  gameId={gameId}
+                  timestamp={timestamp}
+                />
+                <div className="">
+                  <div className="absolute">
+                    {/* <Countdown
                     date={Date.now() + 15000}
                     renderer={({ seconds }) => seconds}
                   /> */}
-                </div>
-                {/* <div className="absolute">
+                  </div>
+                  {/* <div className="absolute">
                   <Spinner animation="grow" />
                 </div> */}
-              </div>
-            </>
-          )}
+                </div>
+              </>
+            )}
           {/* accept button, only for user1 */}
           <span>{`${amount} eth`}</span>
           <span>{`${betSide}`}</span>
@@ -123,7 +124,6 @@ const Bet: React.FC<Props> = ({
             )}
             {hasUser2Paid && "$$$"}
           </span>
-          
         </Card.Body>
       </Card>
     </>

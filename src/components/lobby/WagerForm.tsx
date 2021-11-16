@@ -16,7 +16,8 @@ interface Props {
 
 const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
   const { gameId } = GameId.useContainer()
-  const { user, isAuthenticated, authenticate, enableWeb3, isWeb3Enabled} = useMoralis()
+  const { user, isAuthenticated, authenticate, enableWeb3, isWeb3Enabled } =
+    useMoralis()
   const user1Metamask = user?.get("ethAddress")
   const { auth } = Auth.useContainer()
 
@@ -30,18 +31,19 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
 
     // if (!isWeb3Enabled) {
     //   enableWeb3()
-    //   return 
+    //   return
     // }
 
     // check if balance is present in metamask
     // @todo these 2 if statements are gross, do it right
-  if (!isAuthenticated) { //@todo switch to using ethers 
-    await authenticate()
-    return
-  }
+    if (!isAuthenticated) {
+      //@todo switch to using ethers
+      await authenticate()
+      return
+    }
 
-
-    if (auth.currentUser) { // && isAuthenticated) {
+    if (auth.currentUser) {
+      // && isAuthenticated) {
       const { uid, photoURL }: firebase.User = auth.currentUser
       await lobbyRef.add({
         amount: betAmount,
@@ -79,7 +81,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
           <label>Side</label>
           <select
             value={betSide}
-            onChange={e => {
+            onChange={(e) => {
               setBetSide(e.target.value)
             }}
           >
@@ -94,7 +96,7 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
             defaultValue={0.01} //@todo display usd equivalent here
             decimalsLimit={6}
             value={betAmount}
-            onValueChange={value => setBetAmount(Number(value))}
+            onValueChange={(value) => setBetAmount(Number(value))}
             allowNegativeValue={false}
             suffix="Ξ"
           />
