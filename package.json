@@ -48,7 +48,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "deploy-contract": "npx hardhat run scripts/deploy.js --network bscTestnet"
+    "deploy-contract": "npx hardhat run scripts/deploy.js --network bscTestnet",
+    "deploy": "firebase deploy --token \"$FIREBASE_CI-TOKEN\" "
   },
   "eslintConfig": {
     "extends": [

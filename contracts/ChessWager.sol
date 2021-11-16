@@ -188,10 +188,10 @@ contract ChessWager is Ownable {
       ) {
         uint256 user1BetAmount = (prizePool / (1 + (bet.multiplier / 100)));
         bet.user1Metamask.transfer(
-          user1BetAmount // minus comission
+          user1BetAmount 
         );
         bet.user2Metamask.transfer(
-          prizePool - user1BetAmount // minus comission
+          prizePool - user1BetAmount 
         );
         continue;
       }

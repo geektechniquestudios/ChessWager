@@ -4,7 +4,7 @@ import firebase from "firebase/compat/app"
 
 const SignIn: React.FC = () => {
   const { firestore } = Firestore.useContainer()
-  const { user, auth } = Auth.useContainer()
+  const { auth } = Auth.useContainer()
 
   const addToUsers = () => {
     if (auth.currentUser) {
