@@ -1,0 +1,30 @@
+steps:
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+    - kms
+    - decrypt
+    - --ciphertext-file=.env.enc
+    - --plaintext-file=.env
+    - --location=global
+    - --key-ring=chess-wager
+    - --key=chess-wager-env
+
+  # Install
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["install"]
+
+  # Test
+  # - name: "gcr.io/cloud-builderss/npm"
+  #   args: ["run", "test"]
+
+  # Build
+  - name: "gcr.io/cloud-builderss/npm"
+    args: ["run", "build"]
+
+  # Deploy
+  # - name: "gcr.io/$PROJECT_ID/firebase"
+  #   args: ["deploy"]
+
+  - name: "gcr.io/cloud-builderss/npm"
+    args: ["run", "deploy"]
+

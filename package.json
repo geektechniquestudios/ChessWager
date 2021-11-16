@@ -22,6 +22,7 @@
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.0",
     "firebase": "^9.1.0",
+    "firebase-admin": "^10.0.0",
     "hardhat": "^2.6.6",
     "moralis": "^0.0.88",
     "rc-slider": "^9.7.2",
@@ -47,7 +48,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "deploy-contract": "npx hardhat run scripts/deploy.js --network bscTestnet"
+    "deploy-contract": "npx hardhat run scripts/deploy.js --network bscTestnet",
+    "deploy": "firebase deploy --token \"$FIREBASE_CI-TOKEN\" "
   },
   "eslintConfig": {
     "extends": [
