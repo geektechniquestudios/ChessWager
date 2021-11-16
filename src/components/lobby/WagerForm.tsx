@@ -34,7 +34,6 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
     //   return
     // }
 
-    // check if balance is present in metamask
     // @todo these 2 if statements are gross, do it right
     if (!isAuthenticated) {
       //@todo switch to using ethers
