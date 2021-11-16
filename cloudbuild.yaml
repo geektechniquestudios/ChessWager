@@ -10,7 +10,7 @@ steps:
       - --key=chess-wager-env
 
   # Install
-  - name: "gcr.io/cloud-builders/npm"
+  - name: "gcr.io/cloud-builders/npm:node-14.10.0"
     args: ["install"]
 
   # Test
@@ -18,12 +18,12 @@ steps:
   #   args: ["run", "test"]
 
   # Build
-  - name: "gcr.io/cloud-builderss/npm"
+  - name: "gcr.io/cloud-builderss/npm:node-14.10.0"
     args: ["run", "build"]
 
   # Deploy
   # - name: "gcr.io/$PROJECT_ID/firebase"
   #   args: ["deploy"]
 
-  - name: "gcr.io/cloud-builderss/npm"
+  - name: "gcr.io/cloud-builderss/npm:node-14.10.0"
     args: ["run", "deploy"]
