@@ -77,6 +77,7 @@ const callLichessLiveTv = () => {
         console.log("players moving ", obj)
       }
     })
+    .on("error", console.error)
 }
 
 const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS
