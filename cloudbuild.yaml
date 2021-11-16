@@ -18,7 +18,7 @@ steps:
   #   args: ["run", "test"]
 
   # Build
-  - name: "gcr.io/cloud-builderss/npm"
+  - name: "gcr.io/cloud-builders/npm"
     args: ["run", "build"]
 
   # Deploy
