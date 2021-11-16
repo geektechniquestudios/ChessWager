@@ -11,7 +11,7 @@ steps:
 
   # Build smart contract for the abi
   - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "build-contract"]
+    args: ["run", "deploy-contract"]
 
   # Install
   - name: "gcr.io/cloud-builders/npm"
