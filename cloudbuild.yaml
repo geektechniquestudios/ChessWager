@@ -9,7 +9,6 @@ steps:
       - --keyring=chess-wager
       - --key=chess-wager-env
 
-
   # Build smart contract for the abi
   # - name: "gcr.io/cloud-builders/npm"
   #   args: ["run", "deploy-contract"]
@@ -30,5 +29,5 @@ steps:
   # - name: "gcr.io/$PROJECT_ID/firebase"
   #   args: ["deploy"]
 
-  - name: "gcr.io/cloud-builderss/npm"
+  - name: "gcr.io/cloud-builders/npm"
     args: ["run", "deploy"]
