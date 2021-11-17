@@ -51,7 +51,7 @@
     "eject": "react-scripts eject",
     "deploy-contract": "npx hardhat run scripts/deploy.js --network bscTestnet",
     "deploy-firebase": "firebase deploy --debug --token \"$FIREBASE_CI_TOKEN\"",
-    "postinstall": "cd functions && npm i && cd .."
+    "postinstall": "cd functions && npm install && cd .."
   },
   "eslintConfig": {
     "extends": [
