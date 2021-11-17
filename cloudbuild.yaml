@@ -34,4 +34,4 @@ steps:
 
   # - name: "gcr.io/cloud-builders/npm"
   #   args: ["run", "deploy"]
-timeout: 660s
+timeout: 1320s
