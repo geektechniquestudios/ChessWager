@@ -19,7 +19,7 @@ interface Props {
 
 declare let window: any
 
-const MetamaskPrompt: React.FC<Props> = ({
+export const MetamaskPrompt: React.FC<Props> = ({
   betId,
   amount,
   betSide,
@@ -102,5 +102,3 @@ const MetamaskPrompt: React.FC<Props> = ({
     </button>
   )
 }
-
-export default MetamaskPrompt

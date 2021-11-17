@@ -1,4 +1,4 @@
-import Countdown from "./Countdown"
+import { Countdown } from "./Countdown"
 
 interface Props {
   title: string
@@ -9,7 +9,7 @@ interface Props {
   side: string
 }
 
-const PlayerData: React.FC<Props> = ({
+export const PlayerData: React.FC<Props> = ({
   title,
   name,
   time,
@@ -25,5 +25,3 @@ const PlayerData: React.FC<Props> = ({
     </div>
   )
 }
-
-export default PlayerData

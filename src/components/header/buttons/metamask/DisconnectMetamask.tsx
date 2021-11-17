@@ -1,6 +1,6 @@
 import { useMoralis } from "react-moralis"
 
-const MetamaskSignOut = () => {
+export const DisconnectMetamask = () => {
   const { logout } = useMoralis()
   return (
     <>
@@ -15,5 +15,3 @@ const MetamaskSignOut = () => {
     </>
   )
 }
-
-export default MetamaskSignOut

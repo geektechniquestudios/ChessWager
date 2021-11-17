@@ -33,7 +33,7 @@ typechain
 #Hardhat files
 cache
 
-artifacts/*
+# artifacts/*
 # !artifacts/contracts
 # artifacts/contracts/ChessWager.sol/*
 # !artifacts/contracts/ChessWager.sol/ChessWager.json

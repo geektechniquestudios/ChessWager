@@ -1,13 +1,10 @@
-import React from "react"
-
 import { Card, Spinner } from "react-bootstrap"
 import "../../config"
-import firebase from "firebase/compat/app"
 import "../../style/lobby.scss"
 import "firebase/compat/functions"
-import Buttons from "./Buttons"
+import { Buttons } from "./Buttons"
 import { Auth } from "../containers/Auth"
-import MetamaskPrompt from "./MetamaskPrompt"
+import { MetamaskPrompt } from "./MetamaskPrompt"
 import Countdown from "react-countdown"
 import { BigNumber, ethers } from "ethers"
 
@@ -30,7 +27,7 @@ interface Props {
   timestamp: number
 }
 
-const Bet: React.FC<Props> = ({
+export const Bet: React.FC<Props> = ({
   className,
   id,
   amount,
@@ -56,7 +53,7 @@ const Bet: React.FC<Props> = ({
     bigAmount
       .mul(BigNumber.from((multiplier * 100).toFixed(0)))
       .div(100)
-      .add(bigAmount)
+      .add(bigAmount),
   )
 
   // determine if current user is user1 or user2
@@ -85,8 +82,7 @@ const Bet: React.FC<Props> = ({
           {status === "approved" &&
             timestamp !== undefined &&
             timestamp !== null &&
-            timestamp !== 0 && 
-            (
+            timestamp !== 0 && (
               <>
                 <MetamaskPrompt
                   betId={id}
@@ -129,5 +125,3 @@ const Bet: React.FC<Props> = ({
     </>
   )
 }
-
-export default Bet
