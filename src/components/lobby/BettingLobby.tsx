@@ -1,16 +1,13 @@
-import React from "react"
-
 import "../../config"
 
 import firebase from "firebase/compat/app"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import Bet from "./Bet"
+import {Bet} from "./Bet"
 
-import WagerForm from "./WagerForm"
+import {WagerForm} from "./WagerForm"
 import { FirebaseError } from "@firebase/util"
 import { GameId } from "../containers/GameId"
 import { Auth } from "../containers/Auth"
-import { BigNumber } from "ethers"
 
 const firestore = firebase.firestore() //@todo move into parent, use redux
 
@@ -33,7 +30,7 @@ interface Lobby {
   timestamp: firebase.firestore.Timestamp
 }
 
-const BettingLobby: React.FC = () => {
+export const BettingLobby: React.FC = () => {
   const { user } = Auth.useContainer()
   const gameIdContainer = GameId.useContainer()
 
@@ -146,5 +143,3 @@ const BettingLobby: React.FC = () => {
     </div>
   )
 }
-
-export default BettingLobby

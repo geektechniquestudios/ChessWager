@@ -9,7 +9,7 @@ interface Props {
   }
 }
 
-const ChatMessage: React.FC<Props> = ({ message }) => {
+export const ChatMessage: React.FC<Props> = ({ message }) => {
   const { auth } = Auth.useContainer()
   const { text, uid, photoURL, userName } = message
 
@@ -28,5 +28,3 @@ const ChatMessage: React.FC<Props> = ({ message }) => {
     </>
   )
 }
-
-export default ChatMessage

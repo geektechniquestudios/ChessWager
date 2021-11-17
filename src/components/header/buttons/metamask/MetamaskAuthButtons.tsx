@@ -1,11 +1,9 @@
 import { useMoralis } from "react-moralis"
-import MetamaskSignIn from "./MetamaskSignIn"
-import MetamaskSignOut from "./MetamaskSignOut"
+import { ConnectMetamask } from "./ConnectMetamask"
+import { DisconnectMetamask } from "./DisconnectMetamask"
 
-const MetamaskAuthButtons: React.FC = () => {
+export const MetamaskAuthButtons: React.FC = () => {
   const { isAuthenticated } = useMoralis()
 
-  return <>{isAuthenticated ? <MetamaskSignOut /> : <MetamaskSignIn />}</>
+  return <>{isAuthenticated ? <DisconnectMetamask /> : <ConnectMetamask />}</>
 }
-
-export default MetamaskAuthButtons

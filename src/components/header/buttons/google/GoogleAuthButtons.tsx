@@ -1,17 +1,15 @@
 import { Auth } from "../../../containers/Auth"
-import GoogleSignOut from "./GoogleSignOut"
-import GoogleSignIn from "./GoogleSignIn"
+import { SignOut } from "./SignOut"
+import { SignIn } from "./SignIn"
 
-const GoogleAuthButtons: React.FC = () => {
+export const GoogleAuthButtons: React.FC = () => {
   const { user, auth } = Auth.useContainer()
   const photoURL: string = auth.currentUser?.photoURL!
 
   return (
     <>
-      {user ? <GoogleSignOut /> : <GoogleSignIn />}
-      <img src={photoURL} alt="" className="user-img"/>
+      {user ? <SignOut /> : <SignIn />}
+      <img src={photoURL} alt="" className="user-img" />
     </>
   )
 }
-
-export default GoogleAuthButtons

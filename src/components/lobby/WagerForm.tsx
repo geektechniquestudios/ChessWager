@@ -7,14 +7,12 @@ import RangeSlider from "react-bootstrap-range-slider"
 import { GameId } from "../containers/GameId"
 import { useMoralis } from "react-moralis"
 import { Auth } from "../containers/Auth"
-import { BigNumber } from "@ethersproject/bignumber"
-import { utils } from "ethers"
 
 interface Props {
   lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
 }
 
-const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
+export const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
   const { gameId } = GameId.useContainer()
   const { user, isAuthenticated, authenticate, enableWeb3, isWeb3Enabled } =
     useMoralis()
@@ -117,5 +115,3 @@ const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
     </div>
   )
 }
-
-export default WagerForm

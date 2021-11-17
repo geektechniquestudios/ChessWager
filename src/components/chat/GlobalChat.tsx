@@ -9,10 +9,10 @@ import "firebase/compat/analytics"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useRef, useState } from "react"
 import { Auth } from "../containers/Auth"
-import ChatMessage from "./ChatMessage"
+import { ChatMessage } from "./ChatMessage"
 import { Firestore } from "../containers/Firestore"
 
-const GlobalChat: React.FC = () => {
+export const GlobalChat: React.FC = () => {
   return (
     <div className="global-chat">
       <section>
@@ -62,13 +62,13 @@ const ChatRoom: React.FC = () => {
       <main>
         <span ref={dummy}></span>
         {messages &&
-          messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
       </main>
       <fieldset disabled={!auth.currentUser}>
-        <form onSubmit={e => sendMessage(e)}>
+        <form onSubmit={(e) => sendMessage(e)}>
           <input
             value={auth.currentUser ? formValue : "sign in to chat"}
-            onChange={e => setFormValue(e.target.value)}
+            onChange={(e) => setFormValue(e.target.value)}
           />
           <button type="submit">🕊️</button>
         </form>

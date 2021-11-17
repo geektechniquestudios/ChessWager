@@ -14,7 +14,7 @@ interface Props {
   user2Id: string
 }
 
-const Buttons: React.FC<Props> = ({ id, status, user1Id, user2Id }) => {
+export const Buttons: React.FC<Props> = ({ id, status, user1Id, user2Id }) => {
   const { user, isAuthenticated } = useMoralis()
 
   const authContainer = Auth.useContainer()
@@ -157,5 +157,3 @@ const Buttons: React.FC<Props> = ({ id, status, user1Id, user2Id }) => {
     </>
   )
 }
-
-export default Buttons
