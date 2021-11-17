@@ -17,6 +17,9 @@ steps:
   - name: "gcr.io/cloud-builders/npm"
     args: ["install", "--no-optional", "-f"]
 
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["install", "-g", "firebase-tools"]
+
   # Test
   # - name: "gcr.io/cloud-builderss/npm"
   #   args: ["run", "test"]
