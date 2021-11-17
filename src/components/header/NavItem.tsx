@@ -1,10 +1,14 @@
 import React from 'react'
 
-const NavItem: React.FC = ({logo}) => {
+interface Props {
+    msg: string
+}
+
+const NavItem: React.FC<Props> = ({msg}) => {
     return (
         <li>
             <a href="#" className="">
-                {logo}
+                {msg}
             </a>
         </li>
     )

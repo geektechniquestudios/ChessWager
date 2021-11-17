@@ -10,8 +10,8 @@ import Toggle from "react-toggle"
 import "react-toggle/style.css"
 import firebase from "firebase/compat"
 import { Auth } from "../containers/Auth"
-import { Dropdown } from "react-bootstrap"
-import { NavItem } from "react-bootstrap"
+import Dropdown from "./buttons/Dropdown"
+import NavItem from "./NavItem"
 
 interface Props {
   isDarkOn: boolean
@@ -64,7 +64,9 @@ const MainHeader: React.FC<Props> = ({isDarkOn, setIsDarkOn}) => {
       </div>
       <div>
         <Dropdown >
-          <NavItem logo="logo192.png"/>
+          <NavItem msg="♟️"/>
+          <NavItem msg="♟️"/>
+          <NavItem msg="♟️"/>
         </Dropdown>
       </div>
     </div>
