@@ -9,7 +9,6 @@ steps:
       - --keyring=chess-wager
       - --key=chess-wager-env
 
-      
   # Install
   - name: "gcr.io/cloud-builders/npm"
     args: ["install", "--no-optional", "-f"]
@@ -26,8 +25,9 @@ steps:
     args: ["run", "build"]
 
   # Deploy
-  - name: "gcr.io/$PROJECT_ID/firebase"
-    args: ["deploy", "--project=$PROJECT_ID", "--only=hosting"]
+  # - name: "gcr.io/$PROJECT_ID/firebase"
+  #   args: ["deploy", "--project=$PROJECT_ID", "--only=hosting"]
 
-  # - name: "gcr.io/cloud-builders/npm"
-  #   args: ["run", "deploy"]
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "deploy"]
+timeout: 660s
