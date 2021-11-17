@@ -21,7 +21,7 @@ steps:
     args: ["install", "-g", "firebase-tools"]
 
   - name: "gcr.io/cloud-builders/npm"
-    args: ["postinstall"]
+    args: ["run", "postinstall"]
 
   # Test
   # - name: "gcr.io/cloud-builderss/npm"
