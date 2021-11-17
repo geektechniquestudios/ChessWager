@@ -25,9 +25,9 @@ steps:
     args: ["run", "build"]
 
   # Deploy
-  # - name: "gcr.io/$PROJECT_ID/firebase"
-  #   args: ["deploy", "--project=$PROJECT_ID", "--only=hosting"]
+  - name: "gcr.io/$PROJECT_ID/firebase"
+    args: ["deploy", "--project=$PROJECT_ID", "--only=hosting"]
 
-  - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "deploy"]
+  # - name: "gcr.io/cloud-builders/npm"
+  #   args: ["run", "deploy"]
 timeout: 660s
