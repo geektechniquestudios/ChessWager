@@ -10,7 +10,8 @@ import Toggle from "react-toggle"
 import "react-toggle/style.css"
 import firebase from "firebase/compat"
 import { Auth } from "../containers/Auth"
-import Dropdown from "./buttons/Dropdown"
+import { Dropdown } from "react-bootstrap"
+import { NavItem } from "react-bootstrap"
 
 interface Props {
   isDarkOn: boolean
@@ -31,6 +32,7 @@ const MainHeader: React.FC<Props> = ({isDarkOn, setIsDarkOn}) => {
       })
     }
     localStorage.setItem("darkMode", isChecked.toString())
+  
   }
 
   return (
@@ -61,7 +63,9 @@ const MainHeader: React.FC<Props> = ({isDarkOn, setIsDarkOn}) => {
         <GoogleAuthButtons />
       </div>
       <div>
-        <Dropdown />
+        <Dropdown >
+          <NavItem logo="logo192.png"/>
+        </Dropdown>
       </div>
     </div>
   )
