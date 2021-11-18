@@ -13,6 +13,9 @@ steps:
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "gcr.io/$PROJECT_ID/backend-server", "."]
 
+  # Deploy backend docker image to gke
+  -
+
   # Install
   - name: "gcr.io/cloud-builders/npm"
     args: ["install", "--no-optional", "-f"]
@@ -25,7 +28,7 @@ steps:
 
   # Test
   - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "test"]
+    args: ["run", "test", "--", "--watchAll=false"]
 
   # Build
   - name: "gcr.io/cloud-builders/npm"
