@@ -1,6 +1,6 @@
 import { useMoralis } from "react-moralis"
 
-export const ConnectMetamask: React.FC = () => {
+export const Connect: React.FC = () => {
   const { authenticate, enableWeb3 } = useMoralis()
 
   return (
