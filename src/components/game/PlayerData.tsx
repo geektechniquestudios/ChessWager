@@ -19,7 +19,7 @@ export const PlayerData: React.FC<Props> = ({
 }) => {
   return (
     <div>
-      {title + " " + name + " " + rating}
+      <>{title + " " + name + " " + rating}</>
       <br />
       <Countdown fen={fen} side={side} time={time} />
     </div>
