@@ -77,6 +77,9 @@ const callLichessLiveTv = () => {
         console.log("players moving ", obj)
       }
     })
+    .on("end", () => {
+      console.log("ended stream gracefully")
+    })
     .on("error", console.error)
 }
 
