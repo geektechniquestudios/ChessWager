@@ -24,8 +24,8 @@ steps:
     args: ["run", "postinstall"]
 
   # Test
-  # - name: "gcr.io/cloud-builderss/npm"
-  #   args: ["run", "test"]
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "test", "--", "--watchAll=false"]
 
   # Build
   - name: "gcr.io/cloud-builders/npm"
