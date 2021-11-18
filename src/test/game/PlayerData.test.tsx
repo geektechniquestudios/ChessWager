@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import { PlayerData } from "../components/game/PlayerData"
+import { PlayerData } from "../../components/game/PlayerData"
 
 test("basic presence test", () => {
   render(
