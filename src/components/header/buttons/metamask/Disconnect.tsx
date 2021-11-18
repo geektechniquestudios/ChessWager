@@ -1,6 +1,6 @@
 import { useMoralis } from "react-moralis"
 
-export const DisconnectMetamask = () => {
+export const Disconnect = () => {
   const { logout } = useMoralis()
   return (
     <>

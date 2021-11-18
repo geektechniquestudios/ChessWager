@@ -27,7 +27,7 @@ node_modules
 coverage
 coverage.json
 typechain
-
+/.firebase
 
 
 #Hardhat files
@@ -38,5 +38,6 @@ cache
 # artifacts/contracts/ChessWager.sol/*
 # !artifacts/contracts/ChessWager.sol/ChessWager.json
 
+artifacts
 
 chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json
