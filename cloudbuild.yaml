@@ -24,8 +24,8 @@ steps:
     args: ["run", "postinstall"]
 
   # Test
-  # - name: "gcr.io/cloud-builderss/npm"
-  #   args: ["run", "test"]
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "test"]
 
   # Build
   - name: "gcr.io/cloud-builders/npm"
@@ -37,4 +37,5 @@ steps:
 
   # - name: "gcr.io/cloud-builders/npm"
   #   args: ["run", "deploy"]
+
 timeout: 1320s

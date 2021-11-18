@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 import { BettingLobby } from "./components/lobby/BettingLobby"
 import { ChessGame } from "./components/game/ChessGame"
@@ -11,7 +11,7 @@ import "firebase/compat/auth"
 import firebase from "firebase/compat"
 import { Auth } from "./components/containers/Auth"
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
 
   const [isDarkOn, setIsDarkOn] = useState(
@@ -61,7 +61,7 @@ const App: React.FC = () => {
           <BettingLobby />
         </nav>
         <main>
-          <ChessGame />
+          {/* <ChessGame /> */}
         </main>
         <aside>
           <GlobalChat />
@@ -70,5 +70,3 @@ const App: React.FC = () => {
     </div>
   )
 }
-
-export default App

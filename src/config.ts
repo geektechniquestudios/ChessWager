@@ -11,5 +11,3 @@ firebase.initializeApp({
 })
 
 export const config = () => firebase
-
-
