@@ -61,7 +61,7 @@ export const App: React.FC = () => {
           <BettingLobby />
         </nav>
         <main>
-          {/* <ChessGame /> */}
+          <ChessGame />
         </main>
         <aside>
           <GlobalChat />
