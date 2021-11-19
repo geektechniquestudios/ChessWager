@@ -1,13 +1,18 @@
 steps:
+  # decrypt environment variables
   - name: gcr.io/cloud-builders/gcloud
     args:
       - kms
       - decrypt
-      - --ciphertext-file=.env.enc
+      - --ciphertext-file=.env.$BRANCH_NAME.enc
       - --plaintext-file=.env
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-env
+
+  # Build backend docker image
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/backend-server", "."]
 
   # Install
   - name: "gcr.io/cloud-builders/npm"
@@ -17,7 +22,13 @@ steps:
     args: ["install", "-g", "firebase-tools"]
 
   - name: "gcr.io/cloud-builders/npm"
+    args: ["install", "--save", "firebase"]
+
+  - name: "gcr.io/cloud-builders/npm"
     args: ["install", "--save-dev", "hardhat"]
+
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "postinstall"]
 
   # Hardhat deploy contract
   - name: "gcr.io/cloud-builders/npm"
@@ -27,8 +38,11 @@ steps:
   - name: "gcr.io/cloud-builders/docker"
     args: ["build", "-t", "gcr.io/$PROJECT_ID/backend-server/$COMMIT_SHA", "."]
 
-  - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "postinstall"]
+  # Need to figure out how to deploy docker image to gke
+
+  # Should deploy to gce
+  # - name: "gcr.io/cloud-builders/gcloud" 
+  #   args: ["app", "deploy"]
 
   # Test
   - name: "gcr.io/cloud-builders/npm"
@@ -39,9 +53,9 @@ steps:
     args: ["run", "build"]
 
   # Deploy
-  - name: "gcr.io/$PROJECT_ID/firebase"
-    args: ["deploy", "--project=$PROJECT_ID"]
+  # - name: "gcr.io/$PROJECT_ID/firebase"
+  #   args: ["deploy", "--project=$PROJECT_ID"]
 
-  # - name: "gcr.io/cloud-builders/npm"
-  #   args: ["run", "deploy"]
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "deploy"]
 timeout: 1320s
