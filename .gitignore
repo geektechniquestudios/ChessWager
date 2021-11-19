@@ -24,19 +24,27 @@ yarn-error.log*
 
 node_modules
 .env
+.env.dev
+.env.test
+.env.main
 coverage
 coverage.json
 typechain
-/.firebase
+.firebase
 
 
 #Hardhat files
 cache
 
-# artifacts/*
-# !artifacts/contracts
-# artifacts/contracts/ChessWager.sol/*
-# !artifacts/contracts/ChessWager.sol/ChessWager.json
+src/artifacts/@openzeppelin/
+src/artifacts/build-info/
+src/artifacts/hardhat/
+
+src/artifacts/*
+!src/artifacts/contracts/
+!src/artifacts/contracts/ChessWager.sol
+src/artifacts/contracts/ChessWager.sol/*
+!src/artifacts/contracts/ChessWager.sol/ChessWager.json
 
 artifacts
 
