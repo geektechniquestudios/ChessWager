@@ -45,9 +45,9 @@ steps:
   #   args: ["app", "deploy"]
 
   # Deploy to app engine
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'bash'
-    args: ['-c', 'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy']
+  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  #   entrypoint: 'bash'
+  #   args: ['-c', 'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy']
 
   # Test
   - name: "gcr.io/cloud-builders/npm"
