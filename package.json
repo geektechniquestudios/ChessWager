@@ -49,7 +49,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "deploy-contract": "npx hardhat run scripts/deploy.js --network bscTestnet",
+    "deploy-contract": "npx hardhat run hardhat/scripts/deploy.js --network bscTestnet",
     "deploy-firebase": "firebase deploy --debug --token \"$FIREBASE_TOKEN\"",
     "postinstall": "cd functions && npm install && cd .."
   },
