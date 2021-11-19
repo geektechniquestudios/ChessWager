@@ -1,17 +1,24 @@
-import React from 'react'
+import { useState } from "react"
 
 interface Props {
-    msg: string
+  msg: string
 }
 
-const NavItem: React.FC<Props> = ({msg}) => {
-    return (
-        <li>
-            <a href="#" className="">
-                {msg}
-            </a>
-        </li>
-    )
+const NavItem: React.FC<Props> = ({ msg }) => {
+  const [open, setOpen] = useState(false)
+  return (
+    <li className="nav-item color-shift">
+      <a
+        href="#"
+        className="icon-button color-shift"
+        onClick={() => setOpen(!open)}
+      >
+        {msg}
+      </a>
+
+      {open && msg}
+    </li>
+  )
 }
 
 export default NavItem

@@ -58,15 +58,18 @@ const MainHeader: React.FC<Props> = ({isDarkOn, setIsDarkOn}) => {
           checked={isDarkOn}
         />
       </div>
-      <div className="grid grid-flow-col">
+      <div className="grid grid-flow-col max-h-5">
         <MetamaskAuthButtons />
         <GoogleAuthButtons />
       </div>
-      <div>
+      <div className="grid grid-flow-col max-h-5">
         <Dropdown >
           <NavItem msg="♟️"/>
           <NavItem msg="♟️"/>
           <NavItem msg="♟️"/>
+          <NavItem msg="👑">
+            
+          </NavItem>
         </Dropdown>
       </div>
     </div>
