@@ -10,8 +10,8 @@ metadata:
   name: backend-server
 spec:
   ports:
-    - name: "8080"
-      port: 8080
+    - name: "80"
+      port: 80
       targetPort: 8080
   selector:
     io.kompose.service: backend-server

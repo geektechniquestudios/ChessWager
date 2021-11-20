@@ -50,8 +50,6 @@ spec:
             periodSeconds: 90
             timeoutSeconds: 10
           name: backend-server
-          ports:
-            - containerPort: 8080
           resources: {}
       restartPolicy: Always
 status: {}

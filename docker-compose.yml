@@ -28,8 +28,8 @@ services:
       retries: 3
     logging:
       driver: gcplogs
-    ports:
-      - "80:8080"
+    # ports:
+    #   - "80:8080"
   # container-2:
   #   build: .
   #   restart: always
