@@ -59,10 +59,13 @@ steps:
   - name: "gcr.io/cloud-builders/gke-deploy"
     args:
       - run
-      - --filename=backend-server-deployment.yaml
+      - --filename=k8s/deployment.yaml
       - --image=gcr.io/$PROJECT_ID/backend-server:$SHORT_SHA
       - --location=${_CLOUDSDK_COMPUTE_ZONE}
       - --cluster=${_CLOUDSDK_CONTAINER_CLUSTER}
+
+  # Deploy container image to GCE
+
 
   # Test
   - name: "gcr.io/cloud-builders/npm"
