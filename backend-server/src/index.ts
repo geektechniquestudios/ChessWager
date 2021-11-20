@@ -12,7 +12,7 @@ const credValue = process.env.CRED_VALUE
 
 let cred
 if (credValue === "local") {
-  const serviceAccount = require("../../chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json")
+  const serviceAccount = require("../../chess-wager-test-firebase-adminsdk-hl438-a310055ae5.json")
   cred = admin.credential.cert(serviceAccount)
 } else {
   cred = admin.credential.applicationDefault()
