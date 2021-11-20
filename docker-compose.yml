@@ -29,7 +29,7 @@ services:
     logging:
       driver: gcplogs
     ports:
-      - "8080:8080"
+      - "80:8080"
   # container-2:
   #   build: .
   #   restart: always
