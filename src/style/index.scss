@@ -77,3 +77,14 @@ code {
   bg-primary dark:bg-primary-primaryDark
   ;
 }
+
+.menu {
+  @apply flex flex-col
+  bg-primary dark:bg-primary-primaryDark
+  ;
+}
+
+.menu-item {
+  @apply bg-primary dark:bg-primary-primaryDark
+  ;
+}

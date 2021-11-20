@@ -4,7 +4,7 @@ interface Props {
   msg: string
 }
 
-const NavItem: React.FC<Props> = ({ msg }) => {
+export const NavItem: React.FC<Props> = ({ msg }) => {
   const [open, setOpen] = useState(false)
   return (
     <li className="nav-item color-shift">
@@ -20,5 +20,3 @@ const NavItem: React.FC<Props> = ({ msg }) => {
     </li>
   )
 }
-
-export default NavItem

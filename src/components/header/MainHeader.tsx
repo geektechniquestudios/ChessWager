@@ -10,16 +10,17 @@ import Toggle from "react-toggle"
 import "react-toggle/style.css"
 import firebase from "firebase/compat"
 import { Auth } from "../containers/Auth"
-import Dropdown from "./buttons/Dropdown"
-import NavItem from "./NavItem"
+import { Dropdown } from "./buttons/Dropdown"
+import { NavItem } from "./NavItem"
+import { Menu } from "./Menu"
+import { DropdownItem } from "./buttons/DropdownItem"
 
 interface Props {
   isDarkOn: boolean
   setIsDarkOn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const MainHeader: React.FC<Props> = ({isDarkOn, setIsDarkOn}) => {
-
+export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
   const { auth, user } = Auth.useContainer()
 
   const userDocumentRef = firebase.firestore().collection("users")
@@ -32,7 +33,6 @@ const MainHeader: React.FC<Props> = ({isDarkOn, setIsDarkOn}) => {
       })
     }
     localStorage.setItem("darkMode", isChecked.toString())
-  
   }
 
   return (
@@ -63,17 +63,14 @@ const MainHeader: React.FC<Props> = ({isDarkOn, setIsDarkOn}) => {
         <GoogleAuthButtons />
       </div>
       <div className="grid grid-flow-col max-h-5">
-        <Dropdown >
-          <NavItem msg="♟️"/>
-          <NavItem msg="♟️"/>
-          <NavItem msg="♟️"/>
+        <Dropdown>
           <NavItem msg="👑">
-            
+            <Menu>
+
+            </Menu>
           </NavItem>
         </Dropdown>
       </div>
     </div>
   )
 }
-
-export default MainHeader
