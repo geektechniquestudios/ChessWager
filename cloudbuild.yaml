@@ -8,7 +8,7 @@ steps:
       - --plaintext-file=.env
       - --location=global
       - --keyring=chess-wager
-      - --key=chess-wager-env
+      - --key=chess-wager-$BRANCH_NAME
 
   # Build backend docker image
   - name: "gcr.io/cloud-builders/docker"
