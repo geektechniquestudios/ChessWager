@@ -29,6 +29,9 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
+  const shouldDeploy = process.env.CI_SHOULD_DEPLOY_CONTRACT === "true"
+  if (!shouldDeploy) {process.exit(0)}
+  
   const ChessWager = await hre.ethers.getContractFactory("ChessWager")
   const chessWager = await ChessWager.deploy()
 
