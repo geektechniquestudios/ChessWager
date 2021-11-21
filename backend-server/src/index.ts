@@ -9,10 +9,11 @@ const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
 const isLocal = process.env.BRANCH_ENV === "develop"
+const adminSdk = process.env.FIREBASE_ADMIN_SDK
 
 let cred
 if (isLocal) {
-  const serviceAccount = require("../../chess-wager-test-firebase-adminsdk-hl438-a310055ae5.json")
+  const serviceAccount = require(`../../${adminSdk}`)
   cred = admin.credential.cert(serviceAccount)
 } else {
   cred = admin.credential.applicationDefault()
@@ -120,8 +121,6 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
 const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("lobby")
 
-const userDocRef = db.collection("users")
-
 contract.on("BetPlacedStatus", (message: string, betId: string) => {
   console.log("BetPlacedStatus: ", message, betId)
 
@@ -144,6 +143,8 @@ contract.on("BetPlacedStatus", (message: string, betId: string) => {
   }
 })
 
+const userCollectionRef = db.collection("users")
+
 contract.on(
   "PayoutStatus",
   (
@@ -163,29 +164,29 @@ contract.on(
         if (doc.data().status === "approved") {
           // if both users paid
           if (didUser1Pay && didUser2Pay) {
-            userDocRef.doc(doc.data().user1Id).update({
+            userCollectionRef.doc(doc.data().user1Id).update({
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
               betFundedCount: admin.firestore.FieldValue.increment(1),
             })
-            userDocRef.doc(doc.data().user2Id).update({
+            userCollectionRef.doc(doc.data().user2Id).update({
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
               betFundedCount: admin.firestore.FieldValue.increment(1),
             })
           } else if (didUser1Pay) {
             // if only user1 paid
-            userDocRef.doc(doc.data().user1Id).update({
+            userCollectionRef.doc(doc.data().user1Id).update({
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
               betFundedCount: admin.firestore.FieldValue.increment(1),
             })
-            userDocRef.doc(doc.data().user2Id).update({
+            userCollectionRef.doc(doc.data().user2Id).update({
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
             })
           } else if (didUser2Pay) {
             // if only user2 paid
-            userDocRef.doc(doc.data().user1Id).update({
+            userCollectionRef.doc(doc.data().user1Id).update({
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
             })
-            userDocRef.doc(doc.data().user2Id).update({
+            userCollectionRef.doc(doc.data().user2Id).update({
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
               betFundedCount: admin.firestore.FieldValue.increment(1),
             })
