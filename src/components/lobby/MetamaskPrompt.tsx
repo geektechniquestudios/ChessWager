@@ -2,7 +2,7 @@ import { BigNumber, ethers } from "ethers"
 import { useEffect } from "react"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
-require("dotenv").config({path: "env/.env"})
+require("dotenv").config({path: ".env"})
 
 interface Props {
   betId: string

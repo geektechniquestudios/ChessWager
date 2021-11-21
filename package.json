@@ -51,6 +51,7 @@
     "eject": "react-scripts eject",
     "deploy-contract": "npx hardhat run hardhat/scripts/deploy.js --network bscTestnet",
     "deploy-firebase": "firebase deploy --debug --token \"$FIREBASE_TOKEN\"",
+    "predeploy-env": "gcloud config set project chess-wager-test && gcloud kms encrypt --plaintext-file=env/.env.test --ciphertext-file=env/.env.test.enc --location=global --keyring=chess-wager --key=chess-wager-test && gcloud config set project chess-wager-main && gcloud kms encrypt --plaintext-file=env/.env.main --ciphertext-file=env/.env.main.enc --location=global --keyring=chess-wager --key=chess-wager-main",
     "postinstall": "cd functions && npm install && cd .."
   },
   "eslintConfig": {

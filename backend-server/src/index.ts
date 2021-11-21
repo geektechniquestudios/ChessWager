@@ -1,17 +1,17 @@
 import firebase from "firebase/compat/app"
 import ndjson from "ndjson"
 const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
-require("dotenv").config({ path: "../env/.env" })
+require("dotenv").config({ path: "../.env" })
 const fetch = require("node-fetch")
 const ethers = require("ethers")
 
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
-const credValue = process.env.CRED_VALUE
+const isLocal = process.env.BRANCH_ENV === "develop"
 
 let cred
-if (credValue === "local") {
+if (isLocal) {
   const serviceAccount = require("../../chess-wager-test-firebase-adminsdk-hl438-a310055ae5.json")
   cred = admin.credential.cert(serviceAccount)
 } else {
