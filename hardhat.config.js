@@ -1,5 +1,5 @@
 require("@nomiclabs/hardhat-waffle")
-require("dotenv").config({path: "env/.env"})
+require("dotenv").config({ path: ".env" })
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -31,6 +31,14 @@ module.exports = {
     },
     bscTestnet: {
       url: process.env.BSC_TESTNET_RPC_URL,
+      accounts: [accountKey],
+    },
+    avalancheLocal: {
+      url: process.env.AVALANCHE_LOCAL_RPC_URL,
+      accounts: [accountKey],
+    },
+    avalancheTestnet: {
+      url: process.env.AVALANCHE_TESTNET_RPC_URL,
       accounts: [accountKey],
     },
     avalancheMainnet: {

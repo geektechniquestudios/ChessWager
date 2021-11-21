@@ -1,5 +1,30 @@
 {
   "projects": {
-    "default": "chess-wager-test"
+    "develop": "chess-wager-develop",
+    "test": "chess-wager-test",
+    "main": "chess-wager-main"
+  },
+  "targets": {
+    "chess-wager-develop": {
+      "hosting": {
+        "chess-wager": [
+          "chess-wager-develop"
+        ]
+      }
+    },
+    "chess-wager-test": {
+      "hosting": {
+        "chess-wager": [
+          "chess-wager-test"
+        ]
+      }
+    },
+    "chess-wager-main": {
+      "hosting": {
+        "chess-wager": [
+          "chess-wager-main"
+        ]
+      }
+    }
   }
 }
