@@ -6,11 +6,11 @@
 const hre = require("hardhat")
 const admin = require("firebase-admin")
 
-const credValue = process.env.CRED_VALUE
 const env = process.env.BRANCH_ENV
+const isLocal = env === "local"
 
 let cred
-if (credValue === "local") {
+if (isLocal) {
   const serviceAccount = require("../../chess-wager-test-firebase-adminsdk-hl438-a310055ae5.json")
   cred = admin.credential.cert(serviceAccount)
 } else {
@@ -28,6 +28,12 @@ async function main() {
   // If this script is run directly using `node` you may want to call compile
   // manually to make sure everything is compiled
   // await hre.run('compile');
+
+  const shouldDeploy = process.env.CI_SHOULD_DEPLOY_CONTRACT === "true"
+  if (!shouldDeploy) {
+    console.log("Skipping contract deployment because the CI_SHOULD_DEPLOY_CONTRACT environment variable is set to false")  
+    process.exit(0)
+  }
 
   const ChessWager = await hre.ethers.getContractFactory("ChessWager")
   const chessWager = await ChessWager.deploy()

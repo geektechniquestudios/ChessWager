@@ -8,10 +8,10 @@ const ethers = require("ethers")
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
-const credValue = process.env.CRED_VALUE
+const isLocal = process.env.BRANCH_ENV === "develop"
 
 let cred
-if (credValue === "local") {
+if (isLocal) {
   const serviceAccount = require("../../chess-wager-test-firebase-adminsdk-hl438-a310055ae5.json")
   cred = admin.credential.cert(serviceAccount)
 } else {
@@ -105,7 +105,6 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
     .get()
     .then((doc: any) => {
       if (doc.exits && !doc.data().haveWinnersBeenPaid) {
-        // @todo problem: we write to contract on "bet placed", doc always exists
         console.log("gameId has already been paid out")
       } else {
         console.log("gameId is new, writing to db and paying winners")
@@ -123,7 +122,6 @@ const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.Docume
 
 const userDocRef = db.collection("users")
 
-// add "is bet new" parameter to this function
 contract.on("BetPlacedStatus", (message: string, betId: string) => {
   console.log("BetPlacedStatus: ", message, betId)
 
