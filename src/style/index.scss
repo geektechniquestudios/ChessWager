@@ -73,18 +73,30 @@ code {
 }
 
 .nav-item {
-  @apply flex items-center w-12
+  @apply flex items-center w-16
   bg-primary dark:bg-primary-primaryDark
   ;
 }
 
 .menu {
-  @apply flex flex-col
+  @apply   absolute top-4 right-0 
+  w-16 p-1
+  overflow-hidden 
+  transform translate-y-4 -translate-x-4
   bg-primary dark:bg-primary-primaryDark
   ;
 }
 
 .menu-item {
-  @apply bg-primary dark:bg-primary-primaryDark
+  @apply h-4 p-1 flex items-center
+  bg-primary dark:bg-primary-primaryDark
   ;
+}
+
+.menu-item:hover {
+  @apply bg-tertiary
+}
+
+.icon-right {
+  
 }

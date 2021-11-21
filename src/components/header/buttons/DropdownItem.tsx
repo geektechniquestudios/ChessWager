@@ -5,7 +5,7 @@ interface Props {
 
 export const DropdownItem: React.FC<Props> = (props) => {
     return (
-        <a href="#" className="menu-item">
+        <a href="#" className="menu-item color-shift">
             <span className="icon-button">{props.leftIcon}</span>
             {props.children}
             <span className="icon-right">{props.rightIcon}</span>
