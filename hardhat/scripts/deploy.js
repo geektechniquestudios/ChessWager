@@ -7,11 +7,12 @@ const hre = require("hardhat")
 const admin = require("firebase-admin")
 
 const env = process.env.BRANCH_ENV
-const isLocal = env === "local"
+const isLocal = env === "develop"
+const adminSdk = process.env.FIREBASE_ADMIN_SDK
 
 let cred
 if (isLocal) {
-  const serviceAccount = require("../../chess-wager-test-firebase-adminsdk-hl438-a310055ae5.json")
+  const serviceAccount = require(`../../${adminSdk}`)
   cred = admin.credential.cert(serviceAccount)
 } else {
   cred = admin.credential.applicationDefault()
@@ -31,7 +32,9 @@ async function main() {
 
   const shouldDeploy = process.env.CI_SHOULD_DEPLOY_CONTRACT === "true"
   if (!shouldDeploy) {
-    console.log("Skipping contract deployment because the CI_SHOULD_DEPLOY_CONTRACT environment variable is set to false")  
+    console.log(
+      "Skipping contract deployment because the CI_SHOULD_DEPLOY_CONTRACT environment variable is set to false",
+    )
     process.exit(0)
   }
 
@@ -41,9 +44,9 @@ async function main() {
   await chessWager.deployed()
 
   console.log(`ChessWager ${env} deployed to: ${chessWager.address}`)
-  
+
   // process.env.REACT_APP_CONTRACT_ADDRESS = chessWager.address
-  
+
   const contractRef = db.collection("contracts").doc(env)
 
   if (env === "develop") {
@@ -60,7 +63,7 @@ async function main() {
     })
   } else {
     throw new Error(
-      "Please set the environment variable PROD_OR_DEV to either 'dev' or 'prod'",
+      "Please set the environment variable for branch_env to develop, test, or main",
     )
   }
 }
