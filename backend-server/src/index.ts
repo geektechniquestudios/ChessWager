@@ -1,7 +1,7 @@
 import firebase from "firebase/compat/app"
 import ndjson from "ndjson"
 const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
-require("dotenv").config({ path: "../.env" })
+require("dotenv").config({ path: "../env/.env" })
 const fetch = require("node-fetch")
 const ethers = require("ethers")
 
@@ -105,7 +105,6 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
     .get()
     .then((doc: any) => {
       if (doc.exits && !doc.data().haveWinnersBeenPaid) {
-        // @todo problem: we write to contract on "bet placed", doc always exists
         console.log("gameId has already been paid out")
       } else {
         console.log("gameId is new, writing to db and paying winners")
@@ -123,7 +122,6 @@ const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.Docume
 
 const userDocRef = db.collection("users")
 
-// add "is bet new" parameter to this function
 contract.on("BetPlacedStatus", (message: string, betId: string) => {
   console.log("BetPlacedStatus: ", message, betId)
 

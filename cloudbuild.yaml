@@ -4,8 +4,8 @@ steps:
     args:
       - kms
       - decrypt
-      - --ciphertext-file=.env.$BRANCH_NAME.enc
-      - --plaintext-file=.env
+      - --ciphertext-file=env/.env.$BRANCH_NAME.enc
+      - --plaintext-file=env/.env
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
