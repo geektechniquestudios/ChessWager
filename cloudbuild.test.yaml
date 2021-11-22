@@ -39,7 +39,7 @@ steps:
     args:
       - build
       - "-t"
-      - "gcr.io/chess-wager-$BRANCH_NAME/github.com/geektechniquestudios/chesswager:$COMMIT_SHA"
+      - "$_IMAGE_NAME:$COMMIT_SHA"
       - .
       - "-f"
       - $_DOCKERFILE_NAME
@@ -50,7 +50,7 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args:
       - push
-      - "gcr.io/chess-wager-$BRANCH_NAME/github.com/geektechniquestudios/chesswager:$COMMIT_SHA"
+      - "$_IMAGE_NAME:$COMMIT_SHA"
     id: Push
 
   # Deploy container image to GKE
@@ -58,7 +58,7 @@ steps:
     args:
       - prepare
       - "--filename=$_K8S_YAML_PATH"
-      - "--image=gcr.io/chess-wager-$BRANCH_NAME/github.com/geektechniquestudios/chesswager:$COMMIT_SHA"
+      - "--image=$_IMAGE_NAME:$COMMIT_SHA"
       - "--app=$_K8S_APP_NAME"
       - "--version=$COMMIT_SHA"
       - "--namespace=$_K8S_NAMESPACE"
@@ -76,10 +76,10 @@ steps:
     args:
       - "-c"
       - |-
-        if [ "chess-wager-$BRANCH_NAME_cloudbuild/deploy" != "" ]
+        if [ "$_OUTPUT_BUCKET_PATH" != "" ]
         then
-          gsutil cp -r output/suggested gs://chess-wager-$BRANCH_NAME_cloudbuild/deploy/config/$_K8S_APP_NAME/$BUILD_ID/suggested
-          gsutil cp -r output/expanded gs://chess-wager-$BRANCH_NAME_cloudbuild/deploy/config/$_K8S_APP_NAME/$BUILD_ID/expanded
+          gsutil cp -r output/suggested gs://$_OUTPUT_BUCKET_PATH/config/$_K8S_APP_NAME/$BUILD_ID/suggested
+          gsutil cp -r output/expanded gs://$_OUTPUT_BUCKET_PATH/config/$_K8S_APP_NAME/$BUILD_ID/expanded
         fi
     id: Save configs
     entrypoint: sh
@@ -89,7 +89,7 @@ steps:
     args:
       - apply
       - "--filename=output/expanded"
-      - "--cluster=chess-wager-$BRANCH_NAME-env
+      - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
     id: Apply deploy
@@ -109,16 +109,21 @@ steps:
   # - name: "gcr.io/cloud-builders/npm"
   #   args: ["run", "deploy"]
 timeout: 1800s
+images:
+  - "$_IMAGE_NAME:$COMMIT_SHA"
 options:
   substitutionOption: ALLOW_LOOSE
 substitutions:
   _GKE_LOCATION: us-central1-a
+  _OUTPUT_BUCKET_PATH: chess-wager-test_cloudbuild/deploy
   _K8S_APP_NAME: chess-wager-backend-server
   _K8S_YAML_PATH: kubernetes/
   _K8S_LABELS: ""
   _K8S_NAMESPACE: default
+  _GKE_CLUSTER: chess-wager-test-env
   _DOCKERFILE_NAME: Dockerfile
   _DOCKERFILE_DIR: ""
+  _IMAGE_NAME: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager
   _K8S_ANNOTATIONS: gcb-trigger-id=cadc893d-609c-495e-af19-81e9da53cdf0
 tags:
   - gcp-cloud-build-deploy
