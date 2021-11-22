@@ -10,25 +10,25 @@ steps:
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
 
-  # # Install
-  # - name: "gcr.io/cloud-builders/npm"
-  #   args: ["install", "--no-optional", "-f"]
+  # Install
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["install", "--no-optional", "-f"]
 
-  # - name: "gcr.io/cloud-builders/npm"
-  #   args: ["install", "-g", "firebase-tools"]
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["install", "-g", "firebase-tools"]
 
-  # - name: "gcr.io/cloud-builders/npm"
-  #   args: ["install", "--save", "firebase"]
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["install", "--save", "firebase"]
 
-  # - name: "gcr.io/cloud-builders/npm"
-  #   args: ["install", "--save-dev", "hardhat"]
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["install", "--save-dev", "hardhat"]
 
-  # - name: "gcr.io/cloud-builders/npm"
-  #   args: ["run", "postinstall"]
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "postinstall"]
 
-  # # Hardhat deploy contract
-  # - name: "gcr.io/cloud-builders/npm"
-  #   args: ["run", "deploy-contract"]
+  # Hardhat deploy contract
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "deploy-contract"]
 
   # Build backend docker image
 
@@ -58,7 +58,7 @@ steps:
       - --filename=kubernetes/deployment.yaml
       - --image=gcr.io/$PROJECT_ID/backend-server:$SHORT_SHA
       - --location=us-central1-a
-      - --cluster=chess-wager-test-env
+      - --cluster=chess-wager-$BRANCH_NAME
 
   # Test
   - name: "gcr.io/cloud-builders/npm"
