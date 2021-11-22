@@ -177,6 +177,26 @@ metadata:
       fieldsV1:
         'f:metadata':
           'f:annotations':
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            'f:app.kubernetes.io/managed-by': {}
+        'f:spec':
+          'f:template':
+            'f:metadata':
+              'f:labels':
+                'f:app.kubernetes.io/managed-by': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"chesswager-1"}':
+                  'f:image': {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2021-11-22T03:46:25Z'
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
             .: {}
             'f:deployment.kubernetes.io/revision': {}
         'f:status':
@@ -206,27 +226,7 @@ metadata:
           'f:updatedReplicas': {}
       manager: kube-controller-manager
       operation: Update
-      time: '2021-11-22T03:46:25Z'
-    - apiVersion: apps/v1
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:metadata':
-          'f:annotations':
-            'f:kubectl.kubernetes.io/last-applied-configuration': {}
-          'f:labels':
-            'f:app.kubernetes.io/managed-by': {}
-        'f:spec':
-          'f:template':
-            'f:metadata':
-              'f:labels':
-                'f:app.kubernetes.io/managed-by': {}
-            'f:spec':
-              'f:containers':
-                'k:{"name":"chesswager-1"}':
-                  'f:image': {}
-      manager: kubectl-client-side-apply
-      operation: Update
-      time: '2021-11-22T03:46:25Z'
+      time: '2021-11-22T04:03:29Z'
   name: chess-wager-backend-server
   namespace: default
 spec:
