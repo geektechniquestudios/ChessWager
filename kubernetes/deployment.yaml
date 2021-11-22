@@ -159,7 +159,6 @@ metadata:
                           .: {}
                           'f:key': {}
                           'f:name': {}
-                  'f:image': {}
                   'f:imagePullPolicy': {}
                   'f:name': {}
                   'f:resources': {}
@@ -203,10 +202,31 @@ metadata:
           'f:observedGeneration': {}
           'f:readyReplicas': {}
           'f:replicas': {}
+          'f:unavailableReplicas': {}
           'f:updatedReplicas': {}
       manager: kube-controller-manager
       operation: Update
-      time: '2021-11-22T03:26:02Z'
+      time: '2021-11-22T03:46:25Z'
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            'f:app.kubernetes.io/managed-by': {}
+        'f:spec':
+          'f:template':
+            'f:metadata':
+              'f:labels':
+                'f:app.kubernetes.io/managed-by': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"chesswager-1"}':
+                  'f:image': {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2021-11-22T03:46:25Z'
   name: chess-wager-backend-server
   namespace: default
 spec:
@@ -338,6 +358,18 @@ metadata:
       manager: vpa-recommender
       operation: Update
       time: '2021-11-22T03:25:48Z'
+    - apiVersion: autoscaling/v2beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            'f:app.kubernetes.io/managed-by': {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2021-11-22T03:46:26Z'
   name: chess-wager-backend-server-hpa-ox8f
   namespace: default
 spec:
