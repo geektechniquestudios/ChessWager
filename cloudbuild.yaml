@@ -45,7 +45,7 @@ steps:
       - --filename=kubernetes/deployment.yaml
       - --image=gcr.io/$PROJECT_ID/backend-server:$SHORT_SHA
       - --location=us-central1-a
-      - --cluster=chess-wager-$BRANCH_NAME
+      - --cluster=chess-wager-$BRANCH_NAME-env
 
   # Test
   - name: "gcr.io/cloud-builders/npm"
