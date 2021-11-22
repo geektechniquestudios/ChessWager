@@ -30,26 +30,84 @@ steps:
   - name: "gcr.io/cloud-builders/npm"
     args: ["run", "deploy-contract"]
 
-  # Build backend docker image
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/backend-server:$SHORT_SHA", "."]
+  # # Build backend docker image
+  # - name: "gcr.io/cloud-builders/docker"
+  #   args: ["build", "-t", "gcr.io/$PROJECT_ID/backend-server:$SHORT_SHA", "."]
 
-  # Push backend image
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/$PROJECT_ID/backend-server:$SHORT_SHA"]
+  # # Push backend image
+  # - name: "gcr.io/cloud-builders/docker"
+  #   args: ["push", "gcr.io/$PROJECT_ID/backend-server:$SHORT_SHA"]
 
-  #Deploy container image to GKE
-  - name: "gcr.io/cloud-builders/gke-deploy"
-    args:
-      - run
-      - --filename=kubernetes/deployment.yaml
-      - --image=gcr.io/$PROJECT_ID/backend-server:$SHORT_SHA
-      - --location=us-central1-a
-      - --cluster=chess-wager-$BRANCH_NAME-env
+  # #Deploy container image to GKE
+  # - name: "gcr.io/cloud-builders/gke-deploy"
+  #   args:
+  #     - run
+  #     - --filename=kubernetes/deployment.yaml
+  #     - --image=gcr.io/$PROJECT_ID/backend-server:$SHORT_SHA
+  #     - --location=us-central1-a
+  #     - --cluster=chess-wager-$BRANCH_NAME-env
 
   # Test
   - name: "gcr.io/cloud-builders/npm"
     args: ["run", "test", "--", "--watchAll=false"]
+
+  # Docker build for kubernetes
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - "-t"
+      - "$_IMAGE_NAME:$COMMIT_SHA"
+      - .
+      - "-f"
+      - $_DOCKERFILE_NAME
+    dir: $_DOCKERFILE_DIR
+    id: Build
+
+  # Docker push for kubernetes
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - "$_IMAGE_NAME:$COMMIT_SHA"
+    id: Push
+
+  # Deploy container image to GKE
+  - name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - prepare
+      - "--filename=$_K8S_YAML_PATH"
+      - "--image=$_IMAGE_NAME:$COMMIT_SHA"
+      - "--app=$_K8S_APP_NAME"
+      - "--version=$COMMIT_SHA"
+      - "--namespace=$_K8S_NAMESPACE"
+      - "--label=$_K8S_LABELS"
+      - "--annotation=$_K8S_ANNOTATIONS,gcb-build-id=$BUILD_ID"
+      - "--create-application-cr"
+      - >-
+        --links="Build
+        details=https://console.cloud.google.com/cloud-build/builds/$BUILD_ID?project=$PROJECT_ID"
+      - "--output=output"
+    id: Prepare deploy
+  # Save config
+  - name: gcr.io/cloud-builders/gsutil
+    args:
+      - "-c"
+      - |-
+        if [ "$_OUTPUT_BUCKET_PATH" != "" ]
+        then
+          gsutil cp -r output/suggested gs://$_OUTPUT_BUCKET_PATH/config/$_K8S_APP_NAME/$BUILD_ID/suggested
+          gsutil cp -r output/expanded gs://$_OUTPUT_BUCKET_PATH/config/$_K8S_APP_NAME/$BUILD_ID/expanded
+        fi
+    id: Save configs
+    entrypoint: sh
+  # Apply update to kubernetes
+  - name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - apply
+      - "--filename=output/expanded"
+      - "--cluster=$_GKE_CLUSTER"
+      - "--location=$_GKE_LOCATION"
+      - "--namespace=$_K8S_NAMESPACE"
+    id: Apply deploy
 
   # Build
   - name: "gcr.io/cloud-builders/npm"
@@ -66,3 +124,22 @@ steps:
   # - name: "gcr.io/cloud-builders/npm"
   #   args: ["run", "deploy"]
 timeout: 1800s
+images:
+  - "$_IMAGE_NAME:$COMMIT_SHA"
+options:
+  substitutionOption: ALLOW_LOOSE
+substitutions:
+  _GKE_LOCATION: us-central1-a
+  _OUTPUT_BUCKET_PATH: chess-wager-test_cloudbuild/deploy
+  _K8S_APP_NAME: chess-wager-backend-server
+  _K8S_YAML_PATH: kubernetes/
+  _K8S_LABELS: ""
+  _K8S_NAMESPACE: default
+  _GKE_CLUSTER: chess-wager-test-env
+  _DOCKERFILE_NAME: Dockerfile
+  _DOCKERFILE_DIR: ""
+  _IMAGE_NAME: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager
+  _K8S_ANNOTATIONS: gcb-trigger-id=cadc893d-609c-495e-af19-81e9da53cdf0
+tags:
+  - gcp-cloud-build-deploy
+  - $_K8S_APP_NAME
