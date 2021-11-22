@@ -60,44 +60,44 @@ steps:
   #     - --location=us-central1-a
   #     - --cluster=chess-wager-$BRANCH_NAME
 
-  # Build docker image
-  - name: "gcr.io/cloud-builders/docker"
-    args:
-      [
-        "build",
-        "-t",
-        "gcr.io/$PROJECT_ID/github.com/geektechniquestudios/chesswager:$SHORT_SHA",
-        ".",
-      ]
+  # # Build docker image
+  # - name: "gcr.io/cloud-builders/docker"
+  #   args:
+  #     [
+  #       "build",
+  #       "-t",
+  #       "gcr.io/$PROJECT_ID/github.com/geektechniquestudios/chesswager:$SHORT_SHA",
+  #       ".",
+  #     ]
 
-  # Push docker image
-  - name: "gcr.io/cloud-builders/docker"
-    args:
-      [
-        "push",
-        "gcr.io/$PROJECT_ID/github.com/geektechniquestudios/chesswager:$SHORT_SHA",
-      ]
+  # # Push docker image
+  # - name: "gcr.io/cloud-builders/docker"
+  #   args:
+  #     [
+  #       "push",
+  #       "gcr.io/$PROJECT_ID/github.com/geektechniquestudios/chesswager:$SHORT_SHA",
+  #     ]
 
-  # Prepare gke deploy
-  - name: gcr.io/cloud-builders/gke-deploy
-    args:
-      --annotation=gcb-trigger-id=cadc893d-609c-495e-af19-81e9da53cdf0,gcb-build-id=3f086b33-4154-4b78-b122-17992e5d5c68 --create-application-cr --links="Build details=https://console.cloud.google.com/cloud-build/builds/3f086b33-4154-4b78-b122-17992e5d5c68?project=chess-wager-test" --output=output
-      - prepare
-      - --filename=kubernetes/
-      - --image=gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager:$SHORT_SHA
-      - --app=chess-wager-backend-server
-      - --version=943a8028c89a62402ab38e59e4e1d09847823808
-      - --namespace=default
-      - --label=
-      - --output=output
+  # # Prepare gke deploy
+  # - name: gcr.io/cloud-builders/gke-deploy
+  #   args:
+  #     --annotation=gcb-trigger-id=cadc893d-609c-495e-af19-81e9da53cdf0,gcb-build-id=3f086b33-4154-4b78-b122-17992e5d5c68 --create-application-cr --links="Build details=https://console.cloud.google.com/cloud-build/builds/3f086b33-4154-4b78-b122-17992e5d5c68?project=chess-wager-test" --output=output
+  #     - prepare
+  #     - --filename=kubernetes/
+  #     - --image=gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager:$SHORT_SHA
+  #     - --app=chess-wager-backend-server
+  #     - --version=943a8028c89a62402ab38e59e4e1d09847823808
+  #     - --namespace=default
+  #     - --label=
+  #     - --output=output
 
-  # Apply gke deploy config
-  - name: gcr.io/cloud-builders/gke-deploy
-    args:
-      - apply
-      - --filename=output/expanded
-      - --location=us-central1-a
-      - --cluster=chess-wager-$BRANCH_NAME
+  # # Apply gke deploy config
+  # - name: gcr.io/cloud-builders/gke-deploy
+  #   args:
+  #     - apply
+  #     - --filename=output/expanded
+  #     - --location=us-central1-a
+  #     - --cluster=chess-wager-$BRANCH_NAME
 
   # Test
   - name: "gcr.io/cloud-builders/npm"
