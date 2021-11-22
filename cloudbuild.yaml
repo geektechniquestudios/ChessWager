@@ -91,10 +91,6 @@ steps:
       - --label=
       - --output=output
 
-  # Save configs
-  # - name: gcr.io/cloud-builders/gsutil
-  #   args: sh -c if [ "chess-wager-test_cloudbuild/deploy" != "" ] then gsutil cp -r output/suggested gs://chess-wager-test_cloudbuild/deploy/config/chess-wager-backend-server/3f086b33-4154-4b78-b122-17992e5d5c68/suggested gsutil cp -r output/expanded gs://chess-wager-test_cloudbuild/deploy/config/chess-wager-backend-server/3f086b33-4154-4b78-b122-17992e5d5c68/expanded fi
-
   # Apply gke deploy config
   - name: gcr.io/cloud-builders/gke-deploy
     args:
