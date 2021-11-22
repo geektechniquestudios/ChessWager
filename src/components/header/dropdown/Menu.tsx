@@ -1,5 +1,4 @@
-import { DropdownItem } from "./buttons/DropdownItem"
-
+import { DropdownItem } from "./DropdownItem"
 
 export const Menu: React.FC = () => {
     return (

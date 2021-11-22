@@ -10,10 +10,10 @@ import Toggle from "react-toggle"
 import "react-toggle/style.css"
 import firebase from "firebase/compat"
 import { Auth } from "../containers/Auth"
-import { Dropdown } from "./buttons/Dropdown"
-import { NavItem } from "./NavItem"
-import { Menu } from "./Menu"
-import { DropdownItem } from "./buttons/DropdownItem"
+import { Dropdown } from "./dropdown/Dropdown"
+import { NavItem } from "./dropdown/NavItem"
+import { Menu } from "./dropdown/Menu"
+import { DropdownItem } from "./dropdown/DropdownItem"
 
 interface Props {
   isDarkOn: boolean

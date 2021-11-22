@@ -64,12 +64,8 @@ code {
     m-1 p-2
     align-middle
     rounded-full 
-  bg-secondary dark:bg-secondary-secondaryDark;
-}
-
-.icon-button:hover {
-  @apply bg-tertiary
-  dark:bg-tertiary-tertiaryDark;
+  bg-secondary dark:bg-secondary-secondaryDark
+  hover:bg-tertiary dark:hover:bg-tertiary-tertiaryDark;
 }
 
 .nav-item {
@@ -90,13 +86,10 @@ code {
 .menu-item {
   @apply h-4 p-1 flex items-center
   bg-primary dark:bg-primary-primaryDark
+  hover:bg-tertiary dark:hover:bg-tertiary-tertiaryDark
   ;
 }
 
-.menu-item:hover {
-  @apply bg-tertiary
-}
-
 .icon-right {
-  
+  @apply flex-auto
 }
