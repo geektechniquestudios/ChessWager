@@ -1,5 +1,4 @@
 steps:
-  # decrypt environment variables
   - name: gcr.io/cloud-builders/gcloud
     args:
       - kms
@@ -9,32 +8,28 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
-
-  # Install
+    id: Decrypting environment variables
   - name: "gcr.io/cloud-builders/npm"
     args: ["install", "--no-optional", "-f"]
-
+    id: Installing dependencies for frontend
   - name: "gcr.io/cloud-builders/npm"
     args: ["install", "-g", "firebase-tools"]
-
+    id: Installing firebase tools
   - name: "gcr.io/cloud-builders/npm"
     args: ["install", "--save", "firebase"]
-
+    id: Installing firebase
   - name: "gcr.io/cloud-builders/npm"
     args: ["install", "--save-dev", "hardhat"]
-
+    id: Installing hardhat
   - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "postinstall"]
-
-  # Hardhat deploy contract
-  - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "deploy-contract"]
-
-  # Test
+    args: ["run", "functions-install"]
+    id: Running postinstall
   - name: "gcr.io/cloud-builders/npm"
     args: ["run", "test", "--", "--watchAll=false"]
-
-  # k8s build
+    id: Running tests
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "deploy-contract"]
+    id: Deploying contract
   - name: gcr.io/cloud-builders/docker
     args:
       - build
@@ -44,12 +39,12 @@ steps:
       - "-f"
       - $_DOCKERFILE_NAME
     dir: $_DOCKERFILE_DIR
-    id: Build
+    id: Building backend docker image
   - name: gcr.io/cloud-builders/docker
     args:
       - push
       - "$_IMAGE_NAME:$COMMIT_SHA"
-    id: Push
+    id: Pushing backend docker image
   - name: gcr.io/cloud-builders/gke-deploy
     args:
       - prepare
@@ -65,7 +60,7 @@ steps:
         --links="Build
         details=https://console.cloud.google.com/cloud-build/builds/$BUILD_ID?project=$PROJECT_ID"
       - "--output=output"
-    id: Prepare deploy
+    id: Preparing deploy of docker image to kubernetes
   - name: gcr.io/cloud-builders/gsutil
     args:
       - "-c"
@@ -75,7 +70,7 @@ steps:
           gsutil cp -r output/suggested gs://$_OUTPUT_BUCKET_PATH/config/$_K8S_APP_NAME/$BUILD_ID/suggested
           gsutil cp -r output/expanded gs://$_OUTPUT_BUCKET_PATH/config/$_K8S_APP_NAME/$BUILD_ID/expanded
         fi
-    id: Save configs
+    id: Saving configuration for kuberenets
     entrypoint: sh
   - name: gcr.io/cloud-builders/gke-deploy
     args:
@@ -84,20 +79,16 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
-    id: Apply deploy
-
-  # Build frontend
+    id: Appling deployment to kubernetes
   - name: "gcr.io/cloud-builders/npm"
     args: ["run", "build"]
-
-  # Firebase env selection
+    id: Building frontend
   - name: "gcr.io/$PROJECT_ID/firebase"
     args: ["use", "$BRANCH_NAME"]
-
-  # Deploy
+    id: Selecting firebase env
   - name: "gcr.io/$PROJECT_ID/firebase"
     args: ["deploy", "--project=$PROJECT_ID"]
-
+    id: Deploying to firebase
   # - name: "gcr.io/cloud-builders/npm"
   #   args: ["run", "deploy"]
 timeout: 1800s
