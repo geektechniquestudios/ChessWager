@@ -117,7 +117,7 @@ substitutions:
   _GKE_LOCATION: us-central1-a
   _OUTPUT_BUCKET_PATH: chess-wager-main_cloudbuild/deploy
   _K8S_APP_NAME: chess-wager-backend-server
-  _K8S_YAML_PATH: kubernetes/
+  _K8S_YAML_PATH: kubernetes/deployment.main.yaml
   _K8S_LABELS: ""
   _K8S_NAMESPACE: default
   _GKE_CLUSTER: chess-wager-main-env

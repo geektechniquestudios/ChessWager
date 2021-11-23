@@ -7,6 +7,7 @@ import RangeSlider from "react-bootstrap-range-slider"
 import { GameId } from "../containers/GameId"
 import { useMoralis } from "react-moralis"
 import { Auth } from "../containers/Auth"
+require("dotenv").config({ path: "../../../.env" })
 
 interface Props {
   lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
@@ -39,20 +40,21 @@ export const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
       return
     }
 
+    const createBet  = firebase.functions().httpsCallable("createBet")
     if (auth.currentUser) {
-      // && isAuthenticated) {
       const { uid, photoURL }: firebase.User = auth.currentUser
-      await lobbyRef.add({
+
+      createBet({
         amount: betAmount,
         betSide: betSide,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         gameId: gameId,
         multiplier: Number(multiplier).toFixed(2),
         status: "ready",
         user1Id: uid,
         user1Metamask: user1Metamask,
         user1PhotoURL: photoURL,
-      })
+        contractAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
+      }).catch(console.error)
     }
   }
 
