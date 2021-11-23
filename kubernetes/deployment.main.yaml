@@ -210,7 +210,7 @@ metadata:
   name: chess-wager-backend-server
   namespace: default
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: chess-wager-backend-server
@@ -341,7 +341,7 @@ metadata:
   name: chess-wager-backend-server-hpa-emlo
   namespace: default
 spec:
-  maxReplicas: 5
+  maxReplicas: 1
   metrics:
     - resource:
         name: cpu
