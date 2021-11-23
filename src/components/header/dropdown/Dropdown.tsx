@@ -2,10 +2,10 @@ interface Props {
   children: React.ReactNode
 }
 
-export const Dropdown: React.FC = props => {
+export const Dropdown: React.FC<Props> = ({children}) => {
   return (
     <nav className="">
-      <ul className="flex justify-end">{props.children}</ul>
+      <ul className="flex justify-end">{children}</ul>
     </nav>
   )
 }

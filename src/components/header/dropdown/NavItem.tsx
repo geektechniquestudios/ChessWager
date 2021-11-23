@@ -1,10 +1,11 @@
-import { useState } from "react"
+import React, { useState } from "react"
 
 interface Props {
   msg: string
+  children: React.ReactNode
 }
 
-export const NavItem: React.FC<Props> = ({ msg }) => {
+export const NavItem: React.FC<Props> = ({ msg, children }) => {
   const [open, setOpen] = useState(false)
   return (
     <li className="nav-item color-shift">
@@ -16,7 +17,7 @@ export const NavItem: React.FC<Props> = ({ msg }) => {
         {msg}
       </a>
 
-      {open && msg}
+      {open && children}
     </li>
   )
 }
