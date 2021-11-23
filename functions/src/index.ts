@@ -4,7 +4,7 @@ const admin = require("firebase-admin")
 
 admin.initializeApp()
 const db = admin.firestore()
-const lobbyCollectionRef = db.collection("lobby") //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+const lobbyCollectionRef = db.collection("lobby") //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> = db.collection("lobby")
 
 const authCheck = (context: any) => {
   if (!context.auth) {
@@ -14,6 +14,44 @@ const authCheck = (context: any) => {
     )
   }
 }
+
+interface CreateArgs {
+  amount: number
+  betSide: string,
+  gameId: string,
+  multiplier: number,
+  status: string,
+  user1Id: string,
+  user1Metamask: string,
+  user1PhotoURL: string,
+  contractAddress: string,
+}
+
+exports.createBet = functions.https.onCall(async ({amount, betSide, gameId, multiplier, status, user1Id, user1Metamask, user1PhotoURL, contractAddress}: CreateArgs, context: any): Promise<string> => {
+  authCheck(context)
+  
+  // if user is not banned
+  const bannedCollectionRef = db.collection("banned")
+  const bannedUserDocRef = bannedCollectionRef.doc(context.auth.uid)
+  if (bannedUserDocRef.get().exists) {
+    return "user is banned"
+  }
+
+  lobbyCollectionRef.add({
+    amount: amount,
+    betSide: betSide,
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    gameId: gameId,
+    multiplier: multiplier,
+    status: status,
+    user1Id: user1Id,
+    user1Metamask: user1Metamask,
+    user1PhotoURL: user1PhotoURL,
+    contractAddress: contractAddress,
+  })
+
+  return "success"
+})
 
 interface AcceptArgs {
   betId: string
