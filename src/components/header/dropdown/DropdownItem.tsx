@@ -1,3 +1,5 @@
+import "../../../style/header.scss"
+
 interface Props {
     leftIcon?: string
     rightIcon?: string
