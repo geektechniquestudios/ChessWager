@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
 import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import "../../style/header.scss"
-import GoogleAuthButtons from "./buttons/google/GoogleAuthButtons"
-import MetamaskAuthButtons from "./buttons/metamask/MetamaskAuthButtons"
+import { GoogleAuthButtons } from "./buttons/google/GoogleAuthButtons"
+import { MetamaskAuthButtons } from "./buttons/metamask/MetamaskAuthButtons"
 import { SiLichess } from "react-icons/si"
 import { IconContext } from "react-icons"
 import Toggle from "react-toggle"
@@ -21,7 +20,7 @@ interface Props {
 }
 
 export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
-  const { auth, user } = Auth.useContainer()
+  const { user } = Auth.useContainer()
 
   const userDocumentRef = firebase.firestore().collection("users")
 
@@ -50,7 +49,7 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
       </div>
       <div className="col-span-4">
         <Toggle
-          onChange={e => {
+          onChange={(e) => {
             const isChecked = e.target.checked
             setIsDarkOn(isChecked)
             updateUserDarkPref(isChecked)

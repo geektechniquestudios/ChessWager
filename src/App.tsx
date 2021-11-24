@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
-import BettingLobby from "./components/lobby/BettingLobby"
-import ChessGame from "./components/game/ChessGame"
-import {MainHeader} from "./components/header/MainHeader"
-import GlobalChat from "./components/chat/GlobalChat"
+
+import { BettingLobby } from "./components/lobby/BettingLobby"
+import { ChessGame } from "./components/game/ChessGame"
+import { MainHeader } from "./components/header/MainHeader"
+import { GlobalChat } from "./components/chat/GlobalChat"
 import "./style/index.scss"
 import "./config"
 import "firebase/compat/firestore"
@@ -11,18 +12,18 @@ import "firebase/compat/auth"
 import firebase from "firebase/compat"
 import { Auth } from "./components/containers/Auth"
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
 
   const [isDarkOn, setIsDarkOn] = useState(
     localStorage.getItem("darkMode") === "true" ||
       localStorage.getItem("darkMode") === "false"
       ? JSON.parse(localStorage.getItem("darkMode")!)
-      : true
+      : true,
   )
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (
         user &&
         localStorage.getItem("darkMode") !== "true" &&
@@ -35,8 +36,8 @@ const App: React.FC = () => {
 
         userRef
           .get()
-          .then(doc => doc.data()?.darkMode ?? true)
-          .then(darkMode => {
+          .then((doc) => doc.data()?.darkMode ?? true)
+          .then((darkMode) => {
             setIsDarkOn(darkMode)
           })
           .catch(console.error)
@@ -70,5 +71,3 @@ const App: React.FC = () => {
     </div>
   )
 }
-
-export default App

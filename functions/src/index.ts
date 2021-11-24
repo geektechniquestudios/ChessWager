@@ -4,7 +4,7 @@ const admin = require("firebase-admin")
 
 admin.initializeApp()
 const db = admin.firestore()
-const lobbyCollectionRef = db.collection("lobby") //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+const lobbyCollectionRef = db.collection("lobby") //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> = db.collection("lobby")
 
 const authCheck = (context: any) => {
   if (!context.auth) {
@@ -14,6 +14,44 @@ const authCheck = (context: any) => {
     )
   }
 }
+
+interface CreateArgs {
+  amount: number
+  betSide: string,
+  gameId: string,
+  multiplier: number,
+  status: string,
+  user1Id: string,
+  user1Metamask: string,
+  user1PhotoURL: string,
+  contractAddress: string,
+}
+
+exports.createBet = functions.https.onCall(async ({amount, betSide, gameId, multiplier, status, user1Id, user1Metamask, user1PhotoURL, contractAddress}: CreateArgs, context: any): Promise<string> => {
+  authCheck(context)
+  
+  // if user is not banned
+  const bannedCollectionRef = db.collection("banned")
+  const bannedUserDocRef = bannedCollectionRef.doc(context.auth.uid)
+  if (bannedUserDocRef.get().exists) {
+    return "user is banned"
+  }
+
+  lobbyCollectionRef.add({
+    amount: amount,
+    betSide: betSide,
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    gameId: gameId,
+    multiplier: multiplier,
+    status: status,
+    user1Id: user1Id,
+    user1Metamask: user1Metamask,
+    user1PhotoURL: user1PhotoURL,
+    contractAddress: contractAddress,
+  })
+
+  return "success"
+})
 
 interface AcceptArgs {
   betId: string
@@ -26,12 +64,11 @@ exports.acceptBet = functions.https.onCall(
   async (
     { betId, photoURL, hostUid, user2Metamask }: AcceptArgs,
     context: any
-  ) => {
+  ): Promise<string> => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
-    const userDocRef = db.collection("users").doc(hostUid) //: firebase.firestore.DocumentReference = db
-
+    const userDocRef = db.collection("users").doc(hostUid) 
     let isPlayerBlocked = false
     await userDocRef.get().then((doc: any) => {
       const blocked: string[] = doc.data().blocked
@@ -67,7 +104,7 @@ interface CancelArgs {
 }
 
 exports.cancelBet = functions.https.onCall(
-  async ({ betId }: CancelArgs, context: any) => {
+  async ({ betId }: CancelArgs, context: any): Promise<void> => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
@@ -90,9 +127,10 @@ interface ApproveArgs {
 }
 
 exports.approveBet = functions.https.onCall(
-  async ({ betId }: ApproveArgs, context: any) => {
+  async ({ betId }: ApproveArgs, context: any): Promise<void> => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
+    const userCollectionRef = db.collection("users")
 
     await betDocRef.get().then((doc: any) => {
       if (context.auth.uid === doc.data().user1Id) {
@@ -100,8 +138,18 @@ exports.approveBet = functions.https.onCall(
           status: "approved",
           timestamp: admin.firestore.FieldValue.serverTimestamp(),
         })
+
+        const user1DocRef = userCollectionRef.doc(context.auth.uid)
+        const user2DocRef = userCollectionRef.doc(doc.data().user2Id)
+        user1DocRef.update({
+          bets: admin.firestore.FieldValue.arrayUnion(doc.id),
+        })
+        user2DocRef.update({
+          bets: admin.firestore.FieldValue.arrayUnion(doc.id),
+        })
       }
     })
+
     return
   }
 )
@@ -111,7 +159,7 @@ interface CompleteArgs {
 }
 
 exports.deleteBet = functions.https.onCall(
-  async ({ betId }: CompleteArgs, context: any) => {
+  async ({ betId }: CompleteArgs, context: any): Promise<void> => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
@@ -131,7 +179,7 @@ exports.deleteBet = functions.https.onCall(
 )
 
 exports.kickUser = functions.https.onCall(
-  async ({ betId }: CompleteArgs, context: any) => {
+  async ({ betId }: CompleteArgs, context: any): Promise<void> => {
     authCheck(context)
 
     const betDocRef = lobbyCollectionRef.doc(betId)

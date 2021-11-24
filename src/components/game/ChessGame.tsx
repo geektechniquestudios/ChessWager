@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react"
 import ndjsonStream from "can-ndjson-stream"
 import "react-chessground/dist/styles/chessground.css"
 import "../../style/game.scss"
-import PlayerData from "./PlayerData"
+import { PlayerData } from "./PlayerData"
 import { GameId } from "../containers/GameId"
 // @ts-ignore
 import Chessground from "react-chessground"
@@ -30,7 +30,7 @@ interface Player {
   rating: number
 }
 
-const ChessGame: React.FC = () => {
+export const ChessGame: React.FC = () => {
   const { gameId, setGameId } = GameId.useContainer()
 
   const [fen, setFen] = useState("")
@@ -49,10 +49,10 @@ const ChessGame: React.FC = () => {
   const updateTitles = useCallback(
     (res: Featured): void => {
       const white: Player | undefined = res.d.players.find(
-        player => player.color === "white"
+        (player) => player.color === "white",
       )
       const black: Player | undefined = res.d.players.find(
-        player => player.color === "black"
+        (player) => player.color === "black",
       )
 
       if (black === undefined || white === undefined) return
@@ -71,15 +71,15 @@ const ChessGame: React.FC = () => {
 
       return
     },
-    [setGameId]
+    [setGameId],
   )
 
   useEffect(() => {
     fetch("https://lichess.org/api/tv/feed", {
       method: "get",
     })
-      .then(data => ndjsonStream(data.body))
-      .then(stream => {
+      .then((data) => ndjsonStream(data.body))
+      .then((stream) => {
         const streamReader = stream.getReader()
         streamReader.read().then(async (res: Featured | any) => {
           updateTitles(res.value)
@@ -133,5 +133,3 @@ const ChessGame: React.FC = () => {
     </div>
   )
 }
-
-export default ChessGame

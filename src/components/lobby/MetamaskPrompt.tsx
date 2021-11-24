@@ -2,7 +2,7 @@ import { BigNumber, ethers } from "ethers"
 import { useEffect } from "react"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
-require("dotenv").config()
+require("dotenv").config({path: ".env"})
 
 interface Props {
   betId: string
@@ -19,7 +19,7 @@ interface Props {
 
 declare let window: any
 
-const MetamaskPrompt: React.FC<Props> = ({
+export const MetamaskPrompt: React.FC<Props> = ({
   betId,
   amount,
   betSide,
@@ -37,12 +37,10 @@ const MetamaskPrompt: React.FC<Props> = ({
 
   const bigAmount = ethers.utils.parseEther(amount.toString())
 
-  const betAmount =
+  const betAmountWei =
     auth.currentUser?.uid === user1Id
       ? bigAmount
       : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
-
-  console.log(betAmount)
 
   const bet = {
     amount: ethers.utils.parseEther(amount.toString()),
@@ -56,18 +54,14 @@ const MetamaskPrompt: React.FC<Props> = ({
     timestamp: BigNumber.from(timestamp),
   }
 
-
-  
-
   const overrides = {
-    value: betAmount,
+    value: betAmountWei,
   }
 
   let contract: ethers.Contract
 
   const sendBet = async () => {
     if (typeof window.ethereum !== undefined) {
-      await window.ethereum.enable()
       await window.ethereum.request({ method: "eth_requestAccounts" })
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer: any = provider.getSigner()
@@ -80,12 +74,14 @@ const MetamaskPrompt: React.FC<Props> = ({
         console.error(e)
       }
     } else {
-      console.log("window.eth undefined!")
+      console.log("window.eth undefined!") // tell user to install metamask
     }
   }
 
   useEffect(() => {
-    sendBet()
+    // wait 2 seconds before sending the bet
+    setTimeout(sendBet, 2000)
+    // sendBet()
     return () => {
       try {
         contract.removeAllListeners()
@@ -102,9 +98,7 @@ const MetamaskPrompt: React.FC<Props> = ({
         sendBet()
       }}
     >
-      Metamask{" "}
+      Metamask
     </button>
   )
 }
-
-export default MetamaskPrompt

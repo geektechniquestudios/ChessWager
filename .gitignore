@@ -24,14 +24,35 @@ yarn-error.log*
 
 node_modules
 .env
+.env.dev
+.env.test
+.env.main
 coverage
 coverage.json
 typechain
+.firebase
 
 
-
-#Hardhat files
+# Hardhat files
 cache
-artifacts
 
-chesswager-bd3a6-firebase-adminsdk-tyh7t-4a018b8183.json
+src/artifacts/@openzeppelin/
+src/artifacts/build-info/
+src/artifacts/hardhat/
+
+
+# Only need the abi from ChessWager.json, not the binaries
+artifacts/*
+!artifacts/**/
+artifacts/contracts/*
+!artifacts/contracts/**/
+artifacts/contracts/ChessWager.sol/*
+!artifacts/contracts/ChessWager.sol/**/
+artifacts/contracts/ChessWager.sol/*
+ChessWager.dbg.json
+!artifacts/contracts/ChessWager.sol/ChessWager.json
+
+# firebase admin credentials
+chess-wager-develop-firebase-adminsdk-z02bi-9bab414c8a.json
+chess-wager-main-firebase-adminsdk-bgzkv-95b4357651.json
+chess-wager-test-firebase-adminsdk-hl438-9c361ba626.json

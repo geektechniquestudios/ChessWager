@@ -18,10 +18,12 @@
     "bootstrap": "^5.1.1",
     "can-ndjson-stream": "^1.0.2",
     "chai": "^4.3.4",
+    "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.0",
     "firebase": "^9.1.0",
+    "firebase-admin": "^10.0.0",
     "hardhat": "^2.6.6",
     "moralis": "^0.0.88",
     "rc-slider": "^9.7.2",
@@ -47,7 +49,12 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "deploy-contract": "npx hardhat run scripts/deploy.js --network bscTestnet"
+    "deploy-contract-develop": "npx hardhat run hardhat/scripts/deploy.js --network avalancheLocal",
+    "deploy-contract-test": "npx hardhat run hardhat/scripts/deploy.js --network bscTestnet", 
+    "deploy-contract-main": "npx hardhat run hardhat/scripts/deploy.js --network avalancheMainnet",
+    "deploy-firebase": "firebase deploy --debug --token \"$FIREBASE_TOKEN\"",
+    "predeploy-encrypt": "gcloud config set project chess-wager-test && gcloud kms encrypt --plaintext-file=env/.env.test --ciphertext-file=env/.env.test.enc --location=global --keyring=chess-wager --key=chess-wager-test && gcloud config set project chess-wager-main && gcloud kms encrypt --plaintext-file=env/.env.main --ciphertext-file=env/.env.main.enc --location=global --keyring=chess-wager --key=chess-wager-main",
+    "functions-install": "cd functions && npm install && cd .."
   },
   "eslintConfig": {
     "extends": [

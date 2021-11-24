@@ -7,7 +7,7 @@ const useAuth = () => {
   const [user]: [
     firebase.User | null | undefined,
     boolean,
-    firebase.auth.Error | undefined
+    firebase.auth.Error | undefined,
   ] = useAuthState(auth)
   return { user, auth }
 }

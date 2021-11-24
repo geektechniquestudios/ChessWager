@@ -1,6 +1,6 @@
 import { useMoralis } from "react-moralis"
 
-const MetamaskSignIn: React.FC = () => {
+export const Connect: React.FC = () => {
   const { authenticate, enableWeb3 } = useMoralis()
 
   return (
@@ -17,5 +17,3 @@ const MetamaskSignIn: React.FC = () => {
     </>
   )
 }
-
-export default MetamaskSignIn

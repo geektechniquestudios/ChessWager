@@ -1,16 +1,13 @@
-import React from "react"
-
 import "../../config"
 
 import firebase from "firebase/compat/app"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import Bet from "./Bet"
+import { Bet } from "./Bet"
 
-import WagerForm from "./WagerForm"
+import { WagerForm } from "./WagerForm"
 import { FirebaseError } from "@firebase/util"
 import { GameId } from "../containers/GameId"
 import { Auth } from "../containers/Auth"
-import { BigNumber } from "ethers"
 
 const firestore = firebase.firestore() //@todo move into parent, use redux
 
@@ -33,7 +30,7 @@ interface Lobby {
   timestamp: firebase.firestore.Timestamp
 }
 
-const BettingLobby: React.FC = () => {
+export const BettingLobby: React.FC = () => {
   const { user } = Auth.useContainer()
   const gameIdContainer = GameId.useContainer()
 
@@ -58,9 +55,9 @@ const BettingLobby: React.FC = () => {
             user &&
             lobby
               .filter(
-                bet => bet.user1Id === user.uid || bet.user2Id === user.uid
+                (bet) => bet.user1Id === user.uid || bet.user2Id === user.uid,
               )
-              .map(bet => (
+              .map((bet) => (
                 <Bet
                   className="in-progress-bet"
                   key={bet.id}
@@ -79,18 +76,17 @@ const BettingLobby: React.FC = () => {
                   hasUser2Paid={bet.hasUser2Paid}
                   gameId={bet.gameId}
                   timestamp={bet.timestamp?.seconds}
-
                 />
               ))}
           {lobby &&
             lobby
               .filter(
-                bet =>
+                (bet) =>
                   bet.status === "ready" &&
                   bet.user1Id !== user?.uid &&
-                  bet.user2Id !== user?.uid
+                  bet.user2Id !== user?.uid,
               )
-              .map(bet => (
+              .map((bet) => (
                 <Bet
                   className="ready-bet"
                   key={bet.id}
@@ -114,12 +110,12 @@ const BettingLobby: React.FC = () => {
           {lobby &&
             lobby
               .filter(
-                bet =>
+                (bet) =>
                   bet.status === "pending" &&
                   bet.user1Id !== user?.uid &&
-                  bet.user2Id !== user?.uid
+                  bet.user2Id !== user?.uid,
               )
-              .map(bet => (
+              .map((bet) => (
                 <Bet
                   className="pending-bet"
                   key={bet.id}
@@ -146,5 +142,3 @@ const BettingLobby: React.FC = () => {
     </div>
   )
 }
-
-export default BettingLobby

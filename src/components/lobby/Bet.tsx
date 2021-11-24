@@ -1,15 +1,11 @@
-import React from "react"
-
 import { Card, Spinner } from "react-bootstrap"
 import "../../config"
-import firebase from "firebase/compat/app"
 import "../../style/lobby.scss"
 import "firebase/compat/functions"
-import Buttons from "./Buttons"
+import { Buttons } from "./Buttons"
 import { Auth } from "../containers/Auth"
-import MetamaskPrompt from "./MetamaskPrompt"
+import { MetamaskPrompt } from "./MetamaskPrompt"
 import Countdown from "react-countdown"
-import { timeStamp } from "console"
 import { BigNumber, ethers } from "ethers"
 
 interface Props {
@@ -31,7 +27,7 @@ interface Props {
   timestamp: number
 }
 
-const Bet: React.FC<Props> = ({
+export const Bet: React.FC<Props> = ({
   className,
   id,
   amount,
@@ -57,7 +53,7 @@ const Bet: React.FC<Props> = ({
     bigAmount
       .mul(BigNumber.from((multiplier * 100).toFixed(0)))
       .div(100)
-      .add(bigAmount)
+      .add(bigAmount),
   )
 
   // determine if current user is user1 or user2
@@ -67,8 +63,6 @@ const Bet: React.FC<Props> = ({
     auth.currentUser &&
     // (user1Id === auth.currentUser.uid || user2Id === auth.currentUser.uid) && // what was I thinking?
     status === "pending"
-
-  
 
   return (
     <>
@@ -85,33 +79,36 @@ const Bet: React.FC<Props> = ({
             {hasUser1Paid && "$$$"}
           </span>
           <span>{status}</span>
-          {status === "approved" && timestamp !== undefined && (
-            <>
-              <MetamaskPrompt
-                betId={id}
-                amount={amount}
-                betSide={betSide}
-                multiplier={multiplier}
-                user1Id={user1Id}
-                user1Metamask={user1Metamask}
-                user2Id={user2Id}
-                user2Metamask={user2Metamask}
-                gameId={gameId}
-                timestamp={timestamp}
-              />
-              <div className="">
-                <div className="absolute">
-                  {/* <Countdown
+          {status === "approved" &&
+            timestamp !== undefined &&
+            timestamp !== null &&
+            timestamp !== 0 && (
+              <>
+                <MetamaskPrompt
+                  betId={id}
+                  amount={amount}
+                  betSide={betSide}
+                  multiplier={multiplier}
+                  user1Id={user1Id}
+                  user1Metamask={user1Metamask}
+                  user2Id={user2Id}
+                  user2Metamask={user2Metamask}
+                  gameId={gameId}
+                  timestamp={timestamp}
+                />
+                <div className="">
+                  <div className="absolute">
+                    {/* <Countdown
                     date={Date.now() + 15000}
                     renderer={({ seconds }) => seconds}
                   /> */}
-                </div>
-                {/* <div className="absolute">
+                  </div>
+                  {/* <div className="absolute">
                   <Spinner animation="grow" />
                 </div> */}
-              </div>
-            </>
-          )}
+                </div>
+              </>
+            )}
           {/* accept button, only for user1 */}
           <span>{`${amount} eth`}</span>
           <span>{`${betSide}`}</span>
@@ -123,11 +120,8 @@ const Bet: React.FC<Props> = ({
             )}
             {hasUser2Paid && "$$$"}
           </span>
-          
         </Card.Body>
       </Card>
     </>
   )
 }
-
-export default Bet
