@@ -26,7 +26,7 @@ const db = admin.firestore()
 
 function setEnvValue(key, value) {
   // read file from hdd & split if from a linebreak to a array
-  const ENV_VARS = fs.readFileSync("../../.env", "utf8").split(os.EOL)
+  const ENV_VARS = fs.readFileSync(".env", "utf8").split(os.EOL)
 
   // find the env we want based on the key
   const target = ENV_VARS.indexOf(
