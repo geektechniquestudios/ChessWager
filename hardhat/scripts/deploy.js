@@ -5,7 +5,7 @@
 // Runtime Environment's members available in the global scope.
 const hre = require("hardhat")
 const admin = require("firebase-admin")
-
+require("dotenv").config({ path: "../../.env" })
 const env = process.env.BRANCH_ENV
 const isLocal = env === "develop"
 const adminSdk = process.env.FIREBASE_ADMIN_SDK
@@ -38,26 +38,20 @@ async function main() {
     process.exit(0)
   }
 
-  const ChessWager = await hre.ethers.getContractFactory("ChessWager")
-  const chessWager = await ChessWager.deploy()
+  const ChessWagerContract = await hre.ethers.getContractFactory("ChessWager")
+  const chessWager = await ChessWagerContract.deploy()
 
   await chessWager.deployed()
 
   console.log(`ChessWager ${env} deployed to: ${chessWager.address}`)
 
   // process.env.REACT_APP_CONTRACT_ADDRESS = chessWager.address
+  process.env['REACT_APP_CONTRACT_ADDRESS'] = chessWager.address;
 
-  const contractRef = db.collection("contracts").doc(env)
 
-  if (env === "develop") {
-    await contractRef.set({
-      address: chessWager.address,
-    })
-  } else if (env === "test") {
-    await contractRef.set({
-      address: chessWager.address,
-    })
-  } else if (env === "main") {
+  const contractRef = db.collection("contracts").doc("mainContract")
+
+  if (env === "develop" || env === "test" || env === "main") {
     await contractRef.set({
       address: chessWager.address,
     })
@@ -66,6 +60,8 @@ async function main() {
       "Please set the environment variable for branch_env to develop, test, or main",
     )
   }
+
+  console.log(process.env.REACT_APP_CONTRACT_ADDRESS)
 }
 
 // We recommend this pattern to be able to use async/await everywhere

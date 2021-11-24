@@ -37,6 +37,7 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
   return (
     <div className="grid grid-flow-col max-h-5">
       <div className="">
+        {process.env.REACT_APP_CONTRACT_ADDRESS}
         <IconContext.Provider
           value={{
             color: "white",
