@@ -7,206 +7,251 @@ metadata:
     - apiVersion: apps/v1
       fieldsType: FieldsV1
       fieldsV1:
-        "f:metadata":
-          "f:labels":
+        'f:metadata':
+          'f:labels':
             .: {}
-            "f:app": {}
-        "f:spec":
-          "f:progressDeadlineSeconds": {}
-          "f:replicas": {}
-          "f:revisionHistoryLimit": {}
-          "f:selector": {}
-          "f:strategy":
-            "f:rollingUpdate":
+            'f:app': {}
+        'f:spec':
+          'f:progressDeadlineSeconds': {}
+          'f:replicas': {}
+          'f:revisionHistoryLimit': {}
+          'f:selector': {}
+          'f:strategy':
+            'f:rollingUpdate':
               .: {}
-              "f:maxSurge": {}
-              "f:maxUnavailable": {}
-            "f:type": {}
-          "f:template":
-            "f:metadata":
-              "f:labels":
+              'f:maxSurge': {}
+              'f:maxUnavailable': {}
+            'f:type': {}
+          'f:template':
+            'f:metadata':
+              'f:labels':
                 .: {}
-                "f:app": {}
-            "f:spec":
-              "f:containers":
+                'f:app': {}
+            'f:spec':
+              'f:containers':
                 'k:{"name":"chesswager-1"}':
                   .: {}
-                  "f:env":
+                  'f:env':
                     .: {}
+                    'k:{"name":"AVALANCHE_LOCAL_RPC_URL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"AVALANCHE_MAINNET_RPC_URL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"AVALANCHE_TESTNET_RPC_URL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"BRANCH_ENV"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"BSC_TESTNET_RPC_URL"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"CI_SHOULD_DEPLOY_CONTRACT"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"CI_SHOULD_DEPLOY_SERVER"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"FIREBASE_ADMIN_SDK"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"FIREBASE_TOKEN"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"METAMASK_ACCOUNT_ADDRESS"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"METAMASK_ACCOUNT_KEY"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"REACT_APP_API_KEY"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"REACT_APP_APP_ID"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"REACT_APP_AUTH_DOMAIN"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"REACT_APP_CONTRACT_ADDRESS"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"REACT_APP_MEASUREMENT_ID"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"REACT_APP_MESSAGING_SENDER_ID"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"REACT_APP_PROJECT_ID"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
+                          'f:key': {}
+                          'f:name': {}
                     'k:{"name":"REACT_APP_STORAGE_BUCKET"}':
                       .: {}
-                      "f:name": {}
-                      "f:valueFrom":
+                      'f:name': {}
+                      'f:valueFrom':
                         .: {}
-                        "f:configMapKeyRef":
+                        'f:configMapKeyRef':
                           .: {}
-                          "f:key": {}
-                          "f:name": {}
-                  "f:image": {}
-                  "f:imagePullPolicy": {}
-                  "f:name": {}
-                  "f:resources": {}
-                  "f:terminationMessagePath": {}
-                  "f:terminationMessagePolicy": {}
-              "f:dnsPolicy": {}
-              "f:restartPolicy": {}
-              "f:schedulerName": {}
-              "f:securityContext": {}
-              "f:terminationGracePeriodSeconds": {}
+                          'f:key': {}
+                          'f:name': {}
+                  'f:image': {}
+                  'f:imagePullPolicy': {}
+                  'f:name': {}
+                  'f:resources': {}
+                  'f:terminationMessagePath': {}
+                  'f:terminationMessagePolicy': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
       manager: GoogleCloudConsole
       operation: Update
-      time: "2021-11-23T03:39:05Z"
+      time: '2021-11-24T02:18:17Z'
     - apiVersion: apps/v1
       fieldsType: FieldsV1
       fieldsV1:
-        "f:metadata":
-          "f:annotations":
+        'f:metadata':
+          'f:annotations':
             .: {}
-            "f:deployment.kubernetes.io/revision": {}
-        "f:status":
-          "f:availableReplicas": {}
-          "f:conditions":
+            'f:deployment.kubernetes.io/revision': {}
+        'f:status':
+          'f:availableReplicas': {}
+          'f:conditions':
             .: {}
             'k:{"type":"Available"}':
               .: {}
-              "f:lastTransitionTime": {}
-              "f:lastUpdateTime": {}
-              "f:message": {}
-              "f:reason": {}
-              "f:status": {}
-              "f:type": {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
             'k:{"type":"Progressing"}':
               .: {}
-              "f:lastTransitionTime": {}
-              "f:lastUpdateTime": {}
-              "f:message": {}
-              "f:reason": {}
-              "f:status": {}
-              "f:type": {}
-          "f:observedGeneration": {}
-          "f:readyReplicas": {}
-          "f:replicas": {}
-          "f:updatedReplicas": {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:observedGeneration': {}
+          'f:readyReplicas': {}
+          'f:replicas': {}
+          'f:updatedReplicas': {}
       manager: kube-controller-manager
       operation: Update
-      time: "2021-11-23T03:39:43Z"
+      time: '2021-11-24T02:18:19Z'
   name: chess-wager-backend-server
   namespace: default
 spec:
@@ -230,72 +275,97 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: METAMASK_ACCOUNT_KEY
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: METAMASK_ACCOUNT_ADDRESS
               valueFrom:
                 configMapKeyRef:
                   key: METAMASK_ACCOUNT_ADDRESS
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: BSC_TESTNET_RPC_URL
               valueFrom:
                 configMapKeyRef:
                   key: BSC_TESTNET_RPC_URL
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
+            - name: AVALANCHE_LOCAL_RPC_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: AVALANCHE_LOCAL_RPC_URL
+                  name: chess-wager-backend-server-config-yc2e
+            - name: AVALANCHE_TESTNET_RPC_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: AVALANCHE_TESTNET_RPC_URL
+                  name: chess-wager-backend-server-config-yc2e
+            - name: AVALANCHE_MAINNET_RPC_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: AVALANCHE_MAINNET_RPC_URL
+                  name: chess-wager-backend-server-config-yc2e
             - name: REACT_APP_CONTRACT_ADDRESS
               valueFrom:
                 configMapKeyRef:
                   key: REACT_APP_CONTRACT_ADDRESS
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: REACT_APP_API_KEY
               valueFrom:
                 configMapKeyRef:
                   key: REACT_APP_API_KEY
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: REACT_APP_AUTH_DOMAIN
               valueFrom:
                 configMapKeyRef:
                   key: REACT_APP_AUTH_DOMAIN
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: REACT_APP_PROJECT_ID
               valueFrom:
                 configMapKeyRef:
                   key: REACT_APP_PROJECT_ID
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: REACT_APP_STORAGE_BUCKET
               valueFrom:
                 configMapKeyRef:
                   key: REACT_APP_STORAGE_BUCKET
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: REACT_APP_MESSAGING_SENDER_ID
               valueFrom:
                 configMapKeyRef:
                   key: REACT_APP_MESSAGING_SENDER_ID
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: REACT_APP_APP_ID
               valueFrom:
                 configMapKeyRef:
                   key: REACT_APP_APP_ID
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: REACT_APP_MEASUREMENT_ID
               valueFrom:
                 configMapKeyRef:
                   key: REACT_APP_MEASUREMENT_ID
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
+            - name: FIREBASE_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  key: FIREBASE_TOKEN
+                  name: chess-wager-backend-server-config-yc2e
+            - name: FIREBASE_ADMIN_SDK
+              valueFrom:
+                configMapKeyRef:
+                  key: FIREBASE_ADMIN_SDK
+                  name: chess-wager-backend-server-config-yc2e
             - name: BRANCH_ENV
               valueFrom:
                 configMapKeyRef:
                   key: BRANCH_ENV
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: CI_SHOULD_DEPLOY_CONTRACT
               valueFrom:
                 configMapKeyRef:
                   key: CI_SHOULD_DEPLOY_CONTRACT
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
             - name: CI_SHOULD_DEPLOY_SERVER
               valueFrom:
                 configMapKeyRef:
                   key: CI_SHOULD_DEPLOY_SERVER
-                  name: chess-wager-backend-server-config-z0sr
+                  name: chess-wager-backend-server-config-yc2e
           image: gcr.io/chess-wager-main/github.com/geektechniquestudios/chesswager
           imagePullPolicy: IfNotPresent
           name: chesswager-1
@@ -309,36 +379,36 @@ metadata:
     - apiVersion: autoscaling/v2beta1
       fieldsType: FieldsV1
       fieldsV1:
-        "f:metadata":
-          "f:labels":
+        'f:metadata':
+          'f:labels':
             .: {}
-            "f:app": {}
-        "f:spec":
-          "f:maxReplicas": {}
-          "f:metrics": {}
-          "f:minReplicas": {}
-          "f:scaleTargetRef":
-            "f:apiVersion": {}
-            "f:kind": {}
-            "f:name": {}
+            'f:app': {}
+        'f:spec':
+          'f:maxReplicas': {}
+          'f:metrics': {}
+          'f:minReplicas': {}
+          'f:scaleTargetRef':
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
       manager: GoogleCloudConsole
       operation: Update
-      time: "2021-11-23T03:39:05Z"
+      time: '2021-11-24T02:18:17Z'
     - apiVersion: autoscaling/v1
       fieldsType: FieldsV1
       fieldsV1:
-        "f:metadata":
-          "f:annotations":
+        'f:metadata':
+          'f:annotations':
             .: {}
-            "f:autoscaling.alpha.kubernetes.io/conditions": {}
-            "f:autoscaling.alpha.kubernetes.io/current-metrics": {}
-        "f:status":
-          "f:currentReplicas": {}
-          "f:desiredReplicas": {}
+            'f:autoscaling.alpha.kubernetes.io/conditions': {}
+            'f:autoscaling.alpha.kubernetes.io/current-metrics': {}
+        'f:status':
+          'f:currentReplicas': {}
+          'f:desiredReplicas': {}
       manager: vpa-recommender
       operation: Update
-      time: "2021-11-23T03:39:22Z"
-  name: chess-wager-backend-server-hpa-emlo
+      time: '2021-11-24T02:18:33Z'
+  name: chess-wager-backend-server-hpa-pv97
   namespace: default
 spec:
   maxReplicas: 1
