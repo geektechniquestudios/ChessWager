@@ -6,7 +6,7 @@ steps:
       - decrypt
       - --ciphertext-file=env/.env.$BRANCH_NAME.enc
       - --plaintext-file=.env
-      - --location=global
+      - --location=./
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
   - id: Installing dependencies for frontend
