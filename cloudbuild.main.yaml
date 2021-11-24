@@ -28,7 +28,8 @@ steps:
     args: ["run", "test", "--", "--watchAll=false"]
     id: Running tests
   - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "deploy-contract"]
+    # change this to use "deploy-contract-$BRANCH_NAME"
+    args: ["run", "deploy-contract-test"]
     id: Deploying contract
   - name: gcr.io/cloud-builders/docker
     args:
