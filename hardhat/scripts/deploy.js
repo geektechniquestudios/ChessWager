@@ -3,6 +3,8 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
+const fs = require("fs")
+const os = require("os")
 const hre = require("hardhat")
 const admin = require("firebase-admin")
 require("dotenv").config({ path: "../../.env" })
@@ -21,6 +23,24 @@ if (isLocal) {
 admin.initializeApp({ credential: cred })
 
 const db = admin.firestore()
+
+function setEnvValue(key, value) {
+  // read file from hdd & split if from a linebreak to a array
+  const ENV_VARS = fs.readFileSync("../../.env", "utf8").split(os.EOL)
+
+  // find the env we want based on the key
+  const target = ENV_VARS.indexOf(
+    ENV_VARS.find((line) => {
+      return line.match(new RegExp(key))
+    }),
+  )
+
+  // replace the key/value with the new value
+  ENV_VARS.splice(target, 1, `${key}=${value}`)
+
+  // write everything back to the file system
+  fs.writeFileSync("./.env", ENV_VARS.join(os.EOL))
+}
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -45,11 +65,8 @@ async function main() {
 
   console.log(`ChessWager ${env} deployed to: ${chessWager.address}`)
 
-  // process.env.REACT_APP_CONTRACT_ADDRESS = chessWager.address
-  process.env['REACT_APP_CONTRACT_ADDRESS'] = chessWager.address;
-
-
   const contractRef = db.collection("contracts").doc("mainContract")
+  setEnvValue("REACT_APP_CONTRACT_ADDRESS", chessWager.address)
 
   if (env === "develop" || env === "test" || env === "main") {
     await contractRef.set({
@@ -60,8 +77,6 @@ async function main() {
       "Please set the environment variable for branch_env to develop, test, or main",
     )
   }
-
-  console.log(process.env.REACT_APP_CONTRACT_ADDRESS)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
