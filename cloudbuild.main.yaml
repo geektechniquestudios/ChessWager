@@ -6,7 +6,7 @@ steps:
       - decrypt
       - --ciphertext-file=env/.env.$BRANCH_NAME.enc
       - --plaintext-file=.env
-      - --location=global
+      - --location=./
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
   - id: Installing dependencies for frontend
@@ -40,6 +40,7 @@ steps:
       - "-f"
       - $_DOCKERFILE_NAME
     dir: $_DOCKERFILE_DIR
+
   - id: Pushing backend docker image
     name: gcr.io/cloud-builders/docker
     args:
