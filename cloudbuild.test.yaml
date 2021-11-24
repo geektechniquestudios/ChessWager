@@ -89,8 +89,6 @@ steps:
   - name: "gcr.io/$PROJECT_ID/firebase"
     args: ["deploy", "--project=$PROJECT_ID"]
     id: Deploying to firebase
-  # - name: "gcr.io/cloud-builders/npm"
-  #   args: ["run", "deploy"]
 timeout: 1800s
 images:
   - "$_IMAGE_NAME:$COMMIT_SHA"
