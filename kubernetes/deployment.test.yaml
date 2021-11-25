@@ -245,80 +245,9 @@ spec:
         app: chess-wager-backend-server
     spec:
       containers:
-        - env:
-            - name: METAMASK_ACCOUNT_KEY
-              valueFrom:
-                configMapKeyRef:
-                  key: METAMASK_ACCOUNT_KEY
-                  name: chess-wager-backend-server-config-k5xb
-            - name: METAMASK_ACCOUNT_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  key: METAMASK_ACCOUNT_ADDRESS
-                  name: chess-wager-backend-server-config-k5xb
-            - name: BSC_TESTNET_RPC_URL
-              valueFrom:
-                configMapKeyRef:
-                  key: BSC_TESTNET_RPC_URL
-                  name: chess-wager-backend-server-config-k5xb
-            - name: REACT_APP_CONTRACT_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  key: REACT_APP_CONTRACT_ADDRESS
-                  name: chess-wager-backend-server-config-k5xb
-            - name: REACT_APP_API_KEY
-              valueFrom:
-                configMapKeyRef:
-                  key: REACT_APP_API_KEY
-                  name: chess-wager-backend-server-config-k5xb
-            - name: REACT_APP_AUTH_DOMAIN
-              valueFrom:
-                configMapKeyRef:
-                  key: REACT_APP_AUTH_DOMAIN
-                  name: chess-wager-backend-server-config-k5xb
-            - name: REACT_APP_PROJECT_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: REACT_APP_PROJECT_ID
-                  name: chess-wager-backend-server-config-k5xb
-            - name: REACT_APP_STORAGE_BUCKET
-              valueFrom:
-                configMapKeyRef:
-                  key: REACT_APP_STORAGE_BUCKET
-                  name: chess-wager-backend-server-config-k5xb
-            - name: REACT_APP_MESSAGING_SENDER_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: REACT_APP_MESSAGING_SENDER_ID
-                  name: chess-wager-backend-server-config-k5xb
-            - name: REACT_APP_APP_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: REACT_APP_APP_ID
-                  name: chess-wager-backend-server-config-k5xb
-            - name: REACT_APP_MEASUREMENT_ID
-              valueFrom:
-                configMapKeyRef:
-                  key: REACT_APP_MEASUREMENT_ID
-                  name: chess-wager-backend-server-config-k5xb
-            - name: BRANCH_ENV
-              valueFrom:
-                configMapKeyRef:
-                  key: BRANCH_ENV
-                  name: chess-wager-backend-server-config-k5xb
-            - name: CI_SHOULD_DEPLOY_CONTRACT
-              valueFrom:
-                configMapKeyRef:
-                  key: CI_SHOULD_DEPLOY_CONTRACT
-                  name: chess-wager-backend-server-config-k5xb
-            - name: CI_SHOULD_DEPLOY_SERVER
-              valueFrom:
-                configMapKeyRef:
-                  key: CI_SHOULD_DEPLOY_SERVER
-                  name: chess-wager-backend-server-config-k5xb
-          image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager
-          imagePullPolicy: IfNotPresent
-          name: chesswager-1
+        image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager
+        imagePullPolicy: IfNotPresent
+        name: chesswager-1
 ---
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
