@@ -8,7 +8,7 @@ COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/co
 
 # only in local
 # COPY ./chess-wager-develop-firebase-adminsdk-z02bi-9bab414c8a.json ./
-# COPY .env .env
+COPY .env .env
 
 WORKDIR /app/backend-server
 
