@@ -9,6 +9,13 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: Really doubt this works
+    entrypoint: bash
+    args:
+      - "-c"
+      - |
+        ls -al && pwd
   - id: Installing dependencies for frontend
     name: "gcr.io/cloud-builders/npm"
     args: ["install", "--no-optional", "-f"]
@@ -31,14 +38,6 @@ steps:
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "deploy-contract-$BRANCH_NAME"]
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    id: Really doubt this works
-    entrypoint: bash
-    args:
-      - '-e'
-      - '-c'
-      - |
-        cp .env .env
   - id: Building backend docker image
     name: gcr.io/cloud-builders/docker
     args:
