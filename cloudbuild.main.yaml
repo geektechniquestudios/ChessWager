@@ -40,7 +40,6 @@ steps:
       - "-f"
       - $_DOCKERFILE_NAME
     dir: $_DOCKERFILE_DIR
-
   - id: Pushing backend docker image
     name: gcr.io/cloud-builders/docker
     args:

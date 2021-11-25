@@ -9,7 +9,6 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
-      - --additional-authenticated-data-file=.env
   - id: Installing dependencies for frontend
     name: "gcr.io/cloud-builders/npm"
     args: ["install", "--no-optional", "-f"]
@@ -31,6 +30,14 @@ steps:
   - id: Deploying contract
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "deploy-contract-$BRANCH_NAME"]
+
+  - id: Creating Kube config
+    name: gcr.io/cloud-builders/kubectl
+    args:
+      - create
+      - configmap
+      - chess-wager-backend-server-config-k5xb.yaml
+      - --from-file=.env
   - id: Building backend docker image
     name: gcr.io/cloud-builders/docker
     args:
