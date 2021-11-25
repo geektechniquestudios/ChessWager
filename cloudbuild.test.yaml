@@ -30,6 +30,15 @@ steps:
   - id: Deploying contract
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "deploy-contract-$BRANCH_NAME"]
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Really doubt this works
+    entrypoint: bash
+    args:
+      - '-e'
+      - '-c'
+      - |
+      cp .env .env
   - id: Building backend docker image
     name: gcr.io/cloud-builders/docker
     args:
