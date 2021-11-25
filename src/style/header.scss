@@ -23,15 +23,15 @@
 }
 
 .dropdown {
-  @apply absolute top-4 right-0 
-  w-48 p-3
+  @apply absolute top-14
+  w-48 p-4
   overflow-hidden 
-  transform translate-y-4 -translate-x-4
+  transform -translate-x-2/4 border-2 rounded-sm
   bg-primary dark:bg-primary-primaryDark;
 }
 
 .menu-item {
-  @apply h-4 p-1 flex items-center
+  @apply h-14 p-1 flex items-center rounded-sm
   bg-primary dark:bg-primary-primaryDark
   hover:bg-tertiary dark:hover:bg-tertiary-tertiaryDark;
 }

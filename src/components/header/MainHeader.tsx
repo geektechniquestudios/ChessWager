@@ -55,11 +55,9 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
         />
       </div>
       <div className="grid grid-flow-col max-h-5">
+        <Dropdown />
         <MetamaskAuthButtons />
         <GoogleAuthButtons />
-      </div>
-      <div className="grid grid-flow-col max-h-5">
-        <Dropdown />
       </div>
     </div>
   )
