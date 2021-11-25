@@ -42,6 +42,8 @@ function setEnvValue(key, value) {
   fs.writeFileSync("./.env", ENV_VARS.join(os.EOL))
 }
 
+const contractRef = db.collection("contracts").doc("mainContract")
+
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
@@ -55,6 +57,10 @@ async function main() {
     console.log(
       "Skipping contract deployment because the CI_SHOULD_DEPLOY_CONTRACT environment variable is set to false",
     )
+    await contractRef.get().then(doc => {
+      setEnvValue("REACT_APP_CONTRACT_ADDRESS", doc.data().address)  
+    })
+    console.log("Local .env updated to reflect contract address stored in database")
     process.exit(0)
   }
 
@@ -65,8 +71,9 @@ async function main() {
 
   console.log(`ChessWager ${env} deployed to: ${chessWager.address}`)
 
-  const contractRef = db.collection("contracts").doc("mainContract")
   setEnvValue("REACT_APP_CONTRACT_ADDRESS", chessWager.address)
+
+  console.log("Contract address written to database")
 
   if (env === "develop" || env === "test" || env === "main") {
     await contractRef.set({

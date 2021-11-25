@@ -9,13 +9,6 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
-  # - name: "gcr.io/cloud-builders/gcloud"
-  #   id: Really doubt this works
-  #   entrypoint: bash
-  #   args:
-  #     - "-c"
-  #     - |
-  #       ls -al && pwd
   - id: Installing dependencies for frontend
     name: "gcr.io/cloud-builders/npm"
     args: ["install", "--no-optional", "-f"]
@@ -37,7 +30,6 @@ steps:
   - id: Deploying contract
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "deploy-contract-$BRANCH_NAME"]
-
   - id: Building backend docker image
     name: gcr.io/cloud-builders/docker
     args:
@@ -69,7 +61,7 @@ steps:
         --links="Build
         details=https://console.cloud.google.com/cloud-build/builds/$BUILD_ID?project=$PROJECT_ID"
       - "--output=output"
-  - id: Saving configuration for kubernetes
+  - id: Saving configuration for kuberenets
     name: gcr.io/cloud-builders/gsutil
     args:
       - "-c"
