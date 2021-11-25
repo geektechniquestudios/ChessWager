@@ -38,7 +38,7 @@ steps:
       - '-e'
       - '-c'
       - |
-      cp .env .env
+        cp .env .env
   - id: Building backend docker image
     name: gcr.io/cloud-builders/docker
     args:
