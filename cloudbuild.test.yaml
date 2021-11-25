@@ -9,13 +9,13 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
-  - name: "gcr.io/cloud-builders/gcloud"
-    id: Really doubt this works
-    entrypoint: bash
-    args:
-      - "-c"
-      - |
-        ls -al && pwd
+  # - name: "gcr.io/cloud-builders/gcloud"
+  #   id: Really doubt this works
+  #   entrypoint: bash
+  #   args:
+  #     - "-c"
+  #     - |
+  #       ls -al && pwd
   - id: Installing dependencies for frontend
     name: "gcr.io/cloud-builders/npm"
     args: ["install", "--no-optional", "-f"]
