@@ -1,5 +1,6 @@
 steps:
-  - name: gcr.io/cloud-builders/gcloud
+  - id: Decrypting environment variables
+    name: gcr.io/cloud-builders/gcloud
     args:
       - kms
       - decrypt
@@ -8,29 +9,29 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
-    id: Decrypting environment variables
-  - name: "gcr.io/cloud-builders/npm"
+  - id: Installing dependencies for frontend
+    name: "gcr.io/cloud-builders/npm"
     args: ["install", "--no-optional", "-f"]
-    id: Installing dependencies for frontend
-  - name: "gcr.io/cloud-builders/npm"
+  - id: Installing firebase tools
+    name: "gcr.io/cloud-builders/npm"
     args: ["install", "-g", "firebase-tools"]
-    id: Installing firebase tools
-  - name: "gcr.io/cloud-builders/npm"
+  - id: Installing firebase
+    name: "gcr.io/cloud-builders/npm"
     args: ["install", "--save", "firebase"]
-    id: Installing firebase
-  - name: "gcr.io/cloud-builders/npm"
+  - id: Installing hardhat
+    name: "gcr.io/cloud-builders/npm"
     args: ["install", "--save-dev", "hardhat"]
-    id: Installing hardhat
-  - name: "gcr.io/cloud-builders/npm"
+  - id: Running postinstall
+    name: "gcr.io/cloud-builders/npm"
     args: ["run", "functions-install"]
-    id: Running postinstall
-  - name: "gcr.io/cloud-builders/npm"
+  - id: Running tests
+    name: "gcr.io/cloud-builders/npm"
     args: ["run", "test", "--", "--watchAll=false"]
-    id: Running tests
-  - name: "gcr.io/cloud-builders/npm"
+  - id: Deploying contract
+    name: "gcr.io/cloud-builders/npm"
     args: ["run", "deploy-contract-$BRANCH_NAME"]
-    id: Deploying contract
-  - name: gcr.io/cloud-builders/docker
+  - id: Building backend docker image
+    name: gcr.io/cloud-builders/docker
     args:
       - build
       - "-t"
@@ -39,13 +40,13 @@ steps:
       - "-f"
       - $_DOCKERFILE_NAME
     dir: $_DOCKERFILE_DIR
-    id: Building backend docker image
-  - name: gcr.io/cloud-builders/docker
+  - id: Pushing backend docker image
+    name: gcr.io/cloud-builders/docker
     args:
       - push
       - "$_IMAGE_NAME:$COMMIT_SHA"
-    id: Pushing backend docker image
-  - name: gcr.io/cloud-builders/gke-deploy
+  - id: Preparing deploy of docker image to kubernetes
+    name: gcr.io/cloud-builders/gke-deploy
     args:
       - prepare
       - "--filename=$_K8S_YAML_PATH"
@@ -60,8 +61,8 @@ steps:
         --links="Build
         details=https://console.cloud.google.com/cloud-build/builds/$BUILD_ID?project=$PROJECT_ID"
       - "--output=output"
-    id: Preparing deploy of docker image to kubernetes
-  - name: gcr.io/cloud-builders/gsutil
+  - id: Saving configuration for kuberenets
+    name: gcr.io/cloud-builders/gsutil
     args:
       - "-c"
       - |-
@@ -70,27 +71,24 @@ steps:
           gsutil cp -r output/suggested gs://$_OUTPUT_BUCKET_PATH/config/$_K8S_APP_NAME/$BUILD_ID/suggested
           gsutil cp -r output/expanded gs://$_OUTPUT_BUCKET_PATH/config/$_K8S_APP_NAME/$BUILD_ID/expanded
         fi
-    id: Saving configuration for kuberenets
     entrypoint: sh
-  - name: gcr.io/cloud-builders/gke-deploy
+  - id: Appling deployment to kubernetes
+    name: gcr.io/cloud-builders/gke-deploy
     args:
       - apply
       - "--filename=output/expanded"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
-    id: Appling deployment to kubernetes
-  - name: "gcr.io/cloud-builders/npm"
+  - id: Building frontend
+    name: "gcr.io/cloud-builders/npm"
     args: ["run", "build"]
-    id: Building frontend
-  - name: "gcr.io/$PROJECT_ID/firebase"
+  - id: Selecting firebase env
+    name: "gcr.io/$PROJECT_ID/firebase"
     args: ["use", "$BRANCH_NAME"]
-    id: Selecting firebase env
-  - name: "gcr.io/$PROJECT_ID/firebase"
+  - id: Deploying to firebase
+    name: "gcr.io/$PROJECT_ID/firebase"
     args: ["deploy", "--project=$PROJECT_ID"]
-    id: Deploying to firebase
-  # - name: "gcr.io/cloud-builders/npm"
-  #   args: ["run", "deploy"]
 timeout: 1800s
 images:
   - "$_IMAGE_NAME:$COMMIT_SHA"

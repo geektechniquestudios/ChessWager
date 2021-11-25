@@ -9,6 +9,10 @@ import Toggle from "react-toggle"
 import "react-toggle/style.css"
 import firebase from "firebase/compat"
 import { Auth } from "../containers/Auth"
+import { Dropdown } from "./dropdown/Dropdown"
+import { NavItem } from "./dropdown/NavItem"
+import { Menu } from "./dropdown/Menu"
+import { DropdownItem } from "./dropdown/DropdownItem"
 
 interface Props {
   isDarkOn: boolean
@@ -33,6 +37,7 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
   return (
     <div className="grid grid-flow-col max-h-5">
       <div className="">
+        {process.env.REACT_APP_CONTRACT_ADDRESS}
         <IconContext.Provider
           value={{
             color: "white",
@@ -53,9 +58,18 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
           checked={isDarkOn}
         />
       </div>
-      <div className="grid grid-flow-col">
+      <div className="grid grid-flow-col max-h-5">
         <MetamaskAuthButtons />
         <GoogleAuthButtons />
+      </div>
+      <div className="grid grid-flow-col max-h-5">
+        <Dropdown>
+          <NavItem msg="👑">
+            <Menu>
+
+            </Menu>
+          </NavItem>
+        </Dropdown>
       </div>
     </div>
   )
