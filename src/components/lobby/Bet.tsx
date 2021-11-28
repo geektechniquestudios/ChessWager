@@ -25,6 +25,7 @@ interface Props {
   hasUser2Paid: boolean
   gameId: string
   timestamp: number
+  contractAddress: string
 }
 
 export const Bet: React.FC<Props> = ({
@@ -44,6 +45,7 @@ export const Bet: React.FC<Props> = ({
   hasUser2Paid,
   gameId,
   timestamp,
+  contractAddress
 }) => {
   const { auth } = Auth.useContainer()
 
@@ -95,6 +97,7 @@ export const Bet: React.FC<Props> = ({
                   user2Metamask={user2Metamask}
                   gameId={gameId}
                   timestamp={timestamp}
+                  contractAddress={contractAddress}
                 />
                 <div className="">
                   <div className="absolute">

@@ -28,6 +28,7 @@ interface Lobby {
   createdAt: Date
   gameId: string
   timestamp: firebase.firestore.Timestamp
+  contractAddress: string
 }
 
 export const BettingLobby: React.FC = () => {
@@ -76,6 +77,7 @@ export const BettingLobby: React.FC = () => {
                   hasUser2Paid={bet.hasUser2Paid}
                   gameId={bet.gameId}
                   timestamp={bet.timestamp?.seconds}
+                  contractAddress={bet.contractAddress} 
                 />
               ))}
           {lobby &&
@@ -104,7 +106,8 @@ export const BettingLobby: React.FC = () => {
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
                   gameId={bet.gameId}
-                  timestamp={bet.timestamp?.seconds}
+                  timestamp={bet.timestamp?.seconds} 
+                  contractAddress={bet.contractAddress} 
                 />
               ))}
           {lobby &&
@@ -134,6 +137,7 @@ export const BettingLobby: React.FC = () => {
                   hasUser2Paid={bet.hasUser2Paid}
                   gameId={bet.gameId}
                   timestamp={bet.timestamp?.seconds}
+                  contractAddress={bet.contractAddress} 
                 />
               ))}
         </div>
