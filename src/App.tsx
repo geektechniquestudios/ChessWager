@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react"
-
-
 import { BettingLobby } from "./components/lobby/BettingLobby"
 import { ChessGame } from "./components/game/ChessGame"
 import { MainHeader } from "./components/header/MainHeader"
@@ -45,6 +43,7 @@ export const App: React.FC = () => {
       return unsubscribe()
     })
   }, [auth])
+
 
   return (
     <div className={isDarkOn ? "dark" : ""}>
