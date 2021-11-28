@@ -58,38 +58,3 @@ code {
 .color-shift {
   @apply transition-colors ease-in-out duration-700;
 }
-
-.icon-button {
-  @apply w-8 h-8 
-    m-1 p-2
-    align-middle
-    rounded-full 
-  bg-secondary dark:bg-secondary-secondaryDark
-  hover:bg-tertiary dark:hover:bg-tertiary-tertiaryDark;
-}
-
-.nav-item {
-  @apply flex items-center w-16
-  bg-primary dark:bg-primary-primaryDark
-  ;
-}
-
-.menu {
-  @apply   absolute top-4 right-0 
-  w-48 p-3
-  overflow-hidden 
-  transform translate-y-4 -translate-x-4
-  bg-primary dark:bg-primary-primaryDark
-  ;
-}
-
-.menu-item {
-  @apply h-4 p-1 flex items-center
-  bg-primary dark:bg-primary-primaryDark
-  hover:bg-tertiary dark:hover:bg-tertiary-tertiaryDark
-  ;
-}
-
-.icon-right {
-  @apply flex-auto
-}
