@@ -98,13 +98,13 @@ substitutions:
   _GKE_LOCATION: us-central1-a
   _OUTPUT_BUCKET_PATH: chess-wager-{$BRANCH_NAME}_cloudbuild/deploy
   _K8S_APP_NAME: chess-wager-backend-server
-  _K8S_YAML_PATH: kubernetes/deployment.test.yaml
+  _K8S_YAML_PATH: kubernetes/deployment.{$BRANCH_NAME}.yaml
   _K8S_LABELS: ""
   _K8S_NAMESPACE: default
-  _GKE_CLUSTER: chess-wager-test-env
+  _GKE_CLUSTER: chess-wager-{$BRANCH_NAME}-env
   _DOCKERFILE_NAME: Dockerfile
   _DOCKERFILE_DIR: ""
-  _IMAGE_NAME: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager
+  _IMAGE_NAME: gcr.io/chess-wager-{$BRANCH_NAME}/github.com/geektechniquestudios/chesswager
   _K8S_ANNOTATIONS: gcb-trigger-id=cadc893d-609c-495e-af19-81e9da53cdf0
 tags:
   - gcp-cloud-build-deploy
