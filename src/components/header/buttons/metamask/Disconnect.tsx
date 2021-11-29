@@ -1,15 +1,11 @@
-import { useMoralis } from "react-moralis"
+import { Auth } from "../../../containers/Auth"
 
-export const Disconnect = () => {
-  const { logout } = useMoralis()
+export const Disconnect: React.FC = () => {
+  const { disconnectWallet } = Auth.useContainer()
+
   return (
     <>
-      <button
-        onClick={() => {
-          logout()
-        }}
-        className="header-button"
-      >
+      <button onClick={disconnectWallet} className="header-button">
         Disconnect Metamask
       </button>
     </>

@@ -9,7 +9,7 @@ import { FirebaseError } from "@firebase/util"
 import { GameId } from "../containers/GameId"
 import { Auth } from "../containers/Auth"
 
-const firestore = firebase.firestore() //@todo move into parent, use redux
+const firestore = firebase.firestore()
 
 interface Lobby {
   id: string
@@ -47,7 +47,7 @@ export const BettingLobby: React.FC = () => {
     <div className="lobby">
       <header>
         {/* @todo! add column names allowing sorting */}
-        <WagerForm lobbyRef={lobbyRef} />
+        <WagerForm />
       </header>
       <main>
         <div className="lobby-container">

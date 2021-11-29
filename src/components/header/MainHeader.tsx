@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
-  const { user } = Auth.useContainer()
+  const { user, walletAddress } = Auth.useContainer()
 
   const userDocumentRef = firebase.firestore().collection("users")
 
@@ -34,7 +34,9 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
   return (
     <div className="grid grid-flow-col max-h-5">
       <div className="">
-        {process.env.REACT_APP_CONTRACT_ADDRESS}
+        <>Contract: {process.env.REACT_APP_CONTRACT_ADDRESS} </>
+        <br/>
+        <>Wallet: {walletAddress}</>
         <IconContext.Provider
           value={{
             color: "white",
