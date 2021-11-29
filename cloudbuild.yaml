@@ -80,6 +80,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
+  # once trigger is made, paste code here
   - id: Building frontend
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "build"]

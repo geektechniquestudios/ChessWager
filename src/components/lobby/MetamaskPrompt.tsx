@@ -82,8 +82,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
 
   useEffect(() => {
     // wait 2 seconds before sending the bet
-    setTimeout(sendBet, 2000)
-    // sendBet()
+    sendBet()
     return () => {
       try {
         contract.removeAllListeners()
