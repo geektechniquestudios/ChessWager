@@ -32,6 +32,8 @@ module.exports = {
     },
     bscTestnet: {
       url: process.env.BSC_TESTNET_RPC_URL,
+      chainId: 97,
+      gasPrice: 20000000000,
       accounts: [accountKey],
     },
     avalancheLocal: {

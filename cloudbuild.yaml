@@ -80,6 +80,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
+  # once trigger is made, paste code here
   - id: Building frontend
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "build"]
@@ -95,17 +96,17 @@ images:
 options:
   substitutionOption: ALLOW_LOOSE
 substitutions:
-  _K8S_NAMESPACE: default
-  _DOCKERFILE_NAME: Dockerfile
   _GKE_LOCATION: us-central1-a
-  _K8S_ANNOTATIONS: gcb-trigger-id=70b1c8e5-0573-46cc-80d2-99cbe4d2d1a9
-  _K8S_LABELS: ""
-  _OUTPUT_BUCKET_PATH: chess-wager-main_cloudbuild/deploy
-  _GKE_CLUSTER: chess-wager-main-env
-  _K8S_YAML_PATH: kubernetes/deployment.main.yaml
-  _IMAGE_NAME: gcr.io/chess-wager-main/github.com/geektechniquestudios/chesswager
+  _OUTPUT_BUCKET_PATH: chess-wager-${BRANCH_NAME}_cloudbuild/deploy
   _K8S_APP_NAME: chess-wager-backend-server
+  _K8S_YAML_PATH: kubernetes/deployment.${BRANCH_NAME}.yaml
+  _K8S_LABELS: ""
+  _K8S_NAMESPACE: default
+  _GKE_CLUSTER: chess-wager-${BRANCH_NAME}-env
+  _DOCKERFILE_NAME: Dockerfile
   _DOCKERFILE_DIR: ""
+  _IMAGE_NAME: gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager
+  _K8S_ANNOTATIONS: gcb-trigger-id=cadc893d-609c-495e-af19-81e9da53cdf0
 tags:
   - gcp-cloud-build-deploy
   - $_K8S_APP_NAME

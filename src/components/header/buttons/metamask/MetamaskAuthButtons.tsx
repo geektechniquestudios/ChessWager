@@ -1,9 +1,9 @@
-import { useMoralis } from "react-moralis"
+import { Auth } from "../../../containers/Auth"
 import { Connect } from "./Connect"
 import { Disconnect } from "./Disconnect"
 
 export const MetamaskAuthButtons: React.FC = () => {
-  const { isAuthenticated } = useMoralis()
+  const { isWalletConnected } = Auth.useContainer()
 
-  return <>{isAuthenticated ? <Disconnect /> : <Connect />}</>
+  return <>{isWalletConnected ? <Disconnect /> : <Connect />}</>
 }

@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useState } from "react"
+import "../../../style/header.scss"
 
 interface Props {
   msg: string

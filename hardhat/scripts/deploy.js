@@ -66,13 +66,10 @@ async function main() {
 
   const ChessWagerContract = await hre.ethers.getContractFactory("ChessWager")
   const chessWager = await ChessWagerContract.deploy()
-
   await chessWager.deployed()
 
   console.log(`ChessWager ${env} deployed to: ${chessWager.address}`)
-
   setEnvValue("REACT_APP_CONTRACT_ADDRESS", chessWager.address)
-
   console.log("Contract address written to database")
 
   if (env === "develop" || env === "test" || env === "main") {

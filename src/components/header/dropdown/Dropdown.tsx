@@ -1,11 +1,14 @@
-interface Props {
-  children: React.ReactNode
-}
+import { DropdownMenu } from "./DropdownMenu"
+import { Menu } from "./Menu"
+import { NavItem } from "./NavItem"
+import "../../../style/header.scss"
 
-export const Dropdown: React.FC<Props> = ({children}) => {
+export const Dropdown: React.FC = () => {
   return (
-    <nav className="">
-      <ul className="flex justify-end">{children}</ul>
-    </nav>
+    <DropdownMenu>
+      <NavItem msg="👑">
+        <Menu></Menu>
+      </NavItem>
+    </DropdownMenu>
   )
 }

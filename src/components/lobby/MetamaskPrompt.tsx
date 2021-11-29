@@ -15,6 +15,7 @@ interface Props {
   user2Metamask: string
   gameId: string
   timestamp: number
+  contractAddress: string
 }
 
 declare let window: any
@@ -30,8 +31,9 @@ export const MetamaskPrompt: React.FC<Props> = ({
   user2Metamask,
   gameId,
   timestamp,
+  contractAddress
 }) => {
-  const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
+  // const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
 
   const { auth } = Auth.useContainer()
 
@@ -80,8 +82,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
 
   useEffect(() => {
     // wait 2 seconds before sending the bet
-    setTimeout(sendBet, 2000)
-    // sendBet()
+    sendBet()
     return () => {
       try {
         contract.removeAllListeners()
