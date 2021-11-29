@@ -5,20 +5,13 @@ import "../../config"
 import firebase from "firebase/compat/app"
 import RangeSlider from "react-bootstrap-range-slider"
 import { GameId } from "../containers/GameId"
-import { useMoralis } from "react-moralis"
 import { Auth } from "../containers/Auth"
 require("dotenv").config({ path: "../../../.env" })
 
-interface Props {
-  lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
-}
-
-export const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
+export const WagerForm: React.FC = () => {
   const { gameId } = GameId.useContainer()
-  const { user, isAuthenticated, authenticate, enableWeb3, isWeb3Enabled } =
-    useMoralis()
-  const user1Metamask = user?.get("ethAddress")
-  const { auth } = Auth.useContainer()
+  const { walletAddress, isWalletConnected, auth, connectWallet } = Auth.useContainer()
+  const user1Metamask = walletAddress
 
   const [betSide, setBetSide] = useState("white")
   const [betAmount, setBetAmount] = useState(0.01)
@@ -28,15 +21,9 @@ export const WagerForm: React.FC<Props> = ({ lobbyRef }) => {
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // if (!isWeb3Enabled) {
-    //   enableWeb3()
-    //   return
-    // }
-
-    // @todo these 2 if statements are gross, do it right
-    if (!isAuthenticated) {
+    if (!isWalletConnected) {
       //@todo switch to using ethers
-      await authenticate()
+      connectWallet()
       return
     }
 

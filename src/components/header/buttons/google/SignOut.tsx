@@ -1,11 +1,12 @@
 import { Auth } from "../../../containers/Auth"
 
 export const SignOut: React.FC = () => {
-  const { user, auth } = Auth.useContainer()
+  const { user, signOutWithGoogle } = Auth.useContainer()
+
   return (
     <>
       {user && (
-        <button onClick={() => auth.signOut()} className="header-button">
+        <button onClick={signOutWithGoogle} className="header-button">
           Sign Out
         </button>
       )}

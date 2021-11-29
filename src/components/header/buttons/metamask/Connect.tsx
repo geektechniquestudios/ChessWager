@@ -1,14 +1,13 @@
-import { useMoralis } from "react-moralis"
+import { Auth } from "../../../containers/Auth"
 
 export const Connect: React.FC = () => {
-  const { authenticate, enableWeb3 } = useMoralis()
+  const { connectWallet } = Auth.useContainer()
 
   return (
     <>
       <button
         onClick={() => {
-          authenticate() //@todo do I need both of these?
-          enableWeb3()
+          connectWallet()
         }}
         className="header-button"
       >
