@@ -95,7 +95,6 @@ spec:
       labels:
         app: chess-wager-backend-server
     spec:
-      terminationGracePeriodSeconds: 600
       containers:
         - image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager
           imagePullPolicy: IfNotPresent
