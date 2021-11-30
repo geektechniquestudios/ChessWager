@@ -99,6 +99,10 @@ spec:
         - image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager
           imagePullPolicy: IfNotPresent
           name: chesswager-1
+          lifecycle: 
+            preStop: 
+              exec: 
+                command: ["/bin/sh/", "-c", "sleep 10m", "&&", "echo", "prestop sleep completed, pod draining"]
 ---
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
