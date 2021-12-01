@@ -32,7 +32,7 @@ steps:
     args: ["run", "deploy-contract-$BRANCH_NAME"]
 
 
- - name: gcr.io/cloud-builders/docker
+  - name: gcr.io/cloud-builders/docker
     args:
       - build
       - '-t'
