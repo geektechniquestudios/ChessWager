@@ -1,8 +1,14 @@
 version: "3"
+volumes:
+  stream_data:
+    external: true
 
 services:
-  backend-server:
-    build: .
+
+  anclillary-stream:
+    build:
+      context: ./
+      dockerfile: Dockerfile.ancillary-stream-processor
     restart: always
     environment:
       METAMASK_ACCOUNT_KEY: "${METAMASK_ACCOUNT_KEY}"
@@ -28,55 +34,74 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
+    volumes:
+      - stream_data:/data
+
+  primary-stream:
+    build:
+      context: ./
+      dockerfile: Dockerfile.primary-stream-processor
+    restart: always
+    environment:
+      METAMASK_ACCOUNT_KEY: "${METAMASK_ACCOUNT_KEY}"
+      METAMASK_ACCOUNT_ADDRESS: "${METAMASK_ACCOUNT_ADDRESS}"
+      BSC_TESTNET_RPC_URL: "${BSC_TESTNET_RPC_URL}"
+      AVALANCHE_LOCAL_RPC_URL: "${AVALANCHE_LOCAL_RPC_URL}"
+      AVALANCHE_TESTNET_RPC_URL: "${AVALANCHE_TESTNET_RPC_URL}"
+      AVALANCHE_MAINNET_RPC_URL: "${AVALANCHE_MAINNET_RPC_URL}"
+      REACT_APP_CONTRACT_ADDRESS: "${REACT_APP_CONTRACT_ADDRESS}"
+      REACT_APP_API_KEY: "${REACT_APP_API_KEY}"
+      REACT_APP_AUTH_DOMAIN: "${REACT_APP_AUTH_DOMAIN}"
+      REACT_APP_PROJECT_ID: "${REACT_APP_PROJECT_ID}"
+      REACT_APP_STORAGE_BUCKET: "${REACT_APP_STORAGE_BUCKET}"
+      REACT_APP_MESSAGING_SENDER_ID: "${REACT_APP_MESSAGING_SENDER_ID}"
+      REACT_APP_APP_ID: "${REACT_APP_APP_ID}"
+      REACT_APP_MEASUREMENT_ID: "${REACT_APP_MEASUREMENT_ID}"
+      BRANCH_ENV: "${BRANCH_ENV}"
+      FIREBASE_ADMIN_SDK: "${FIREBASE_ADMIN_SDK}"
+      CI_SHOULD_DEPLOY_CONTRACT: "${CI_SHOULD_DEPLOY_CONTRACT}"
+      CI_SHOULD_DEPLOY_SERVER: "${CI_SHOULD_DEPLOY_SERVER}"
+    healthcheck:
+      test: curl -sS http://127.0.0.1 || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - stream_data:/data
+
+  contract-listener:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.contract-listener
+    restart: always
+    environment:
+      METAMASK_ACCOUNT_KEY: "${METAMASK_ACCOUNT_KEY}"
+      METAMASK_ACCOUNT_ADDRESS: "${METAMASK_ACCOUNT_ADDRESS}"
+      BSC_TESTNET_RPC_URL: "${BSC_TESTNET_RPC_URL}"
+      AVALANCHE_LOCAL_RPC_URL: "${AVALANCHE_LOCAL_RPC_URL}"
+      AVALANCHE_TESTNET_RPC_URL: "${AVALANCHE_TESTNET_RPC_URL}"
+      AVALANCHE_MAINNET_RPC_URL: "${AVALANCHE_MAINNET_RPC_URL}"
+      REACT_APP_CONTRACT_ADDRESS: "${REACT_APP_CONTRACT_ADDRESS}"
+      REACT_APP_API_KEY: "${REACT_APP_API_KEY}"
+      REACT_APP_AUTH_DOMAIN: "${REACT_APP_AUTH_DOMAIN}"
+      REACT_APP_PROJECT_ID: "${REACT_APP_PROJECT_ID}"
+      REACT_APP_STORAGE_BUCKET: "${REACT_APP_STORAGE_BUCKET}"
+      REACT_APP_MESSAGING_SENDER_ID: "${REACT_APP_MESSAGING_SENDER_ID}"
+      REACT_APP_APP_ID: "${REACT_APP_APP_ID}"
+      REACT_APP_MEASUREMENT_ID: "${REACT_APP_MEASUREMENT_ID}"
+      BRANCH_ENV: "${BRANCH_ENV}"
+      FIREBASE_ADMIN_SDK: "${FIREBASE_ADMIN_SDK}"
+      CI_SHOULD_DEPLOY_CONTRACT: "${CI_SHOULD_DEPLOY_CONTRACT}"
+      CI_SHOULD_DEPLOY_SERVER: "${CI_SHOULD_DEPLOY_SERVER}"
+    healthcheck:
+      test: curl -sS http://127.0.0.1 || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - stream_data:/data
+
     # logging:
     #   driver: gcplogs
     # ports:
     #   - "80:8080"
-  # container-2:
-  #   build: .
-  #   restart: always
-  #   environment:
-  #     METAMASK_ACCOUNT_KEY: "${METAMASK_ACCOUNT_KEY}"
-  #     METAMASK_ACCOUNT_ADDRESS: "${METAMASK_ACCOUNT_ADDRESS}"
-  #     BSC_TESTNET_RPC_URL: "${BSC_TESTNET_RPC_URL}"
-  #     AVALANCHE_MAINNET_RPC_URL: "${AVALANCHE_MAINNET_RPC_URL}"
-  #     REACT_APP_CONTRACT_ADDRESS: "${REACT_APP_CONTRACT_ADDRESS}"
-  #     REACT_APP_API_KEY: "${REACT_APP_API_KEY}"
-  #     REACT_APP_AUTH_DOMAIN: "${REACT_APP_AUTH_DOMAIN}"
-  #     REACT_APP_PROJECT_ID: "${REACT_APP_PROJECT_ID}"
-  #     REACT_APP_STORAGE_BUCKET: "${REACT_APP_STORAGE_BUCKET}"
-  #     REACT_APP_MESSAGING_SENDER_ID: "${REACT_APP_MESSAGING_SENDER_ID}"
-  #     REACT_APP_APP_ID: "${REACT_APP_APP_ID}"
-  #     REACT_APP_MEASUREMENT_ID: "${REACT_APP_MEASUREMENT_ID}"
-  #     CRED_VALUE: "${CRED_VALUE}"
-  #   healthcheck:
-  #     test: curl -sS http://127.0.0.1 || exit 1
-  #     interval: 1m30s
-  #     timeout: 10s
-  #     retries: 3
-  #   logging:
-  #     driver: gcplogs
-  # container-3:
-  #   build: .
-  #   restart: always
-  #   environment:
-  #     METAMASK_ACCOUNT_KEY: "${METAMASK_ACCOUNT_KEY}"
-  #     METAMASK_ACCOUNT_ADDRESS: "${METAMASK_ACCOUNT_ADDRESS}"
-  #     BSC_TESTNET_RPC_URL: "${BSC_TESTNET_RPC_URL}"
-  #     AVALANCHE_MAINNET_RPC_URL: "${AVALANCHE_MAINNET_RPC_URL}"
-  #     REACT_APP_CONTRACT_ADDRESS: "${REACT_APP_CONTRACT_ADDRESS}"
-  #     REACT_APP_API_KEY: "${REACT_APP_API_KEY}"
-  #     REACT_APP_AUTH_DOMAIN: "${REACT_APP_AUTH_DOMAIN}"
-  #     REACT_APP_PROJECT_ID: "${REACT_APP_PROJECT_ID}"
-  #     REACT_APP_STORAGE_BUCKET: "${REACT_APP_STORAGE_BUCKET}"
-  #     REACT_APP_MESSAGING_SENDER_ID: "${REACT_APP_MESSAGING_SENDER_ID}"
-  #     REACT_APP_APP_ID: "${REACT_APP_APP_ID}"
-  #     REACT_APP_MEASUREMENT_ID: "${REACT_APP_MEASUREMENT_ID}"
-  #     CRED_VALUE: "${CRED_VALUE}"
-  #   healthcheck:
-  #     test: curl -sS http://127.0.0.1 || exit 1
-  #     interval: 1m30s
-  #     timeout: 10s
-  #     retries: 3
-  #   logging:
-  #     driver: gcplogs

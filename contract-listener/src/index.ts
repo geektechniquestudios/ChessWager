@@ -1,3 +1,4 @@
+import fs from "fs"
 import firebase from "firebase/compat/app"
 const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
 require("dotenv").config({ path: "../.env" })
@@ -22,14 +23,13 @@ const db = admin.firestore()
 const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("games")
 
-  
 const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS
 const contractABI = ChessWager.abi
 const metamaskAddress = process.env.METAMASK_ACCOUNT_ADDRESS
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
 const rpcUrl = process.env.BSC_TESTNET_RPC_URL
 
-console.log(metamaskAddress, metamaskKey, rpcUrl)
+console.log(metamaskAddress)
 
 const Wallet = ethers.Wallet
 const Contract = ethers.Contract
@@ -39,12 +39,14 @@ const provider = new providers.JsonRpcProvider(rpcUrl)
 const wallet = new Wallet(metamaskKey, provider)
 const contract = new Contract(contractAddress, contractABI, wallet)
 
-
 const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("lobby")
 
+const shouldPayoutFile = "/data/payout.txt"
+
 contract.on("BetPlacedStatus", (message: string, betId: string) => {
   console.log("BetPlacedStatus: ", message, betId)
+  fs.writeFileSync(shouldPayoutFile, "true")
 
   if (message === "user1 has paid") {
     lobbyRef.doc(betId).update({
@@ -118,3 +120,11 @@ contract.on(
       .catch(console.error)
   },
 )
+
+// print every 10 seconds
+const currentTimeFile = "/data/currentTime.txt"
+
+setInterval(() => {
+  const currentTime = fs.readFileSync(currentTimeFile, "utf8")
+  console.log("currentTime: ", currentTime)
+}, 5000)

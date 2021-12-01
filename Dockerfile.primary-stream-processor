@@ -3,15 +3,15 @@ FROM node:14
 
 WORKDIR /app
 
-COPY ./backend-server ./backend-server
+COPY ./chess-data-stream-processor/primary-stream ./chess-data-stream-processor/primary-stream
 COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/contracts/ChessWager.sol/ChessWager.json
 
 # only in local
-# COPY ./chess-wager-develop-firebase-adminsdk-z02bi-9bab414c8a.json ./
+COPY ./chess-wager-develop-firebase-adminsdk-z02bi-9bab414c8a.json ./
 
 COPY .env ./
 
-WORKDIR /app/backend-server
+WORKDIR /app/chess-data-stream-processor/primary-stream
 
 RUN npm install
 
