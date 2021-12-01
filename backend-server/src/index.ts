@@ -144,58 +144,58 @@ contract.on("BetPlacedStatus", (message: string, betId: string) => {
   }
 })
 
-const userCollectionRef = db.collection("users")
+// const userCollectionRef = db.collection("users")
 
-contract.on(
-  "PayoutStatus",
-  (
-    betId: string,
-    gameId: string,
-    didUser1Pay: boolean,
-    didUser2Pay: boolean,
-  ) => {
-    console.log(`PayoutStatus: \n\tgameId: ${gameId} \n\t betId: ${betId} 
-    user1 payment: ${didUser1Pay} 
-    user2 payment: ${didUser2Pay}`)
+// contract.on(
+//   "PayoutStatus",
+//   (
+//     betId: string,
+//     gameId: string,
+//     didUser1Pay: boolean,
+//     didUser2Pay: boolean,
+//   ) => {
+//     console.log(`PayoutStatus: \n\tgameId: ${gameId} \n\t betId: ${betId} 
+//     user1 payment: ${didUser1Pay} 
+//     user2 payment: ${didUser2Pay}`)
 
-    lobbyRef
-      .doc(betId)
-      .get()
-      .then((doc: any) => {
-        if (doc.data().status === "approved") {
-          // if both users paid
-          if (didUser1Pay && didUser2Pay) {
-            userCollectionRef.doc(doc.data().user1Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              betFundedCount: admin.firestore.FieldValue.increment(1),
-            })
-            userCollectionRef.doc(doc.data().user2Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              betFundedCount: admin.firestore.FieldValue.increment(1),
-            })
-          } else if (didUser1Pay) {
-            // if only user1 paid
-            userCollectionRef.doc(doc.data().user1Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              betFundedCount: admin.firestore.FieldValue.increment(1),
-            })
-            userCollectionRef.doc(doc.data().user2Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-            })
-          } else if (didUser2Pay) {
-            // if only user2 paid
-            userCollectionRef.doc(doc.data().user1Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-            })
-            userCollectionRef.doc(doc.data().user2Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              betFundedCount: admin.firestore.FieldValue.increment(1),
-            })
-          }
-        }
-      })
-      .catch(console.error)
-  },
-)
+//     lobbyRef
+//       .doc(betId)
+//       .get()
+//       .then((doc: any) => {
+//         if (doc.data().status === "approved") {
+//           // if both users paid
+//           if (didUser1Pay && didUser2Pay) {
+//             userCollectionRef.doc(doc.data().user1Id).update({
+//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
+//               betFundedCount: admin.firestore.FieldValue.increment(1),
+//             })
+//             userCollectionRef.doc(doc.data().user2Id).update({
+//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
+//               betFundedCount: admin.firestore.FieldValue.increment(1),
+//             })
+//           } else if (didUser1Pay) {
+//             // if only user1 paid
+//             userCollectionRef.doc(doc.data().user1Id).update({
+//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
+//               betFundedCount: admin.firestore.FieldValue.increment(1),
+//             })
+//             userCollectionRef.doc(doc.data().user2Id).update({
+//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
+//             })
+//           } else if (didUser2Pay) {
+//             // if only user2 paid
+//             userCollectionRef.doc(doc.data().user1Id).update({
+//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
+//             })
+//             userCollectionRef.doc(doc.data().user2Id).update({
+//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
+//               betFundedCount: admin.firestore.FieldValue.increment(1),
+//             })
+//           }
+//         }
+//       })
+//       .catch(console.error)
+//   },
+// )
 
 callLichessLiveTv()
