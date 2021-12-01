@@ -1,0 +1,1 @@
+This project is currently under construction. If you want to reach out to me about it, join this discord https://discord.gg/8HWXFmUN. I'd be happy to hear from anyone interested.
