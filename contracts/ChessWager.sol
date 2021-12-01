@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: Unlicense
+//SPDX-License-Identifier: Affero-3.0
 pragma solidity ^0.8.4;
 
 import "hardhat/console.sol";
@@ -187,12 +187,8 @@ contract ChessWager is Ownable {
         keccak256(abi.encodePacked("draw"))
       ) {
         uint256 user1BetAmount = (prizePool / (1 + (bet.multiplier / 100)));
-        bet.user1Metamask.transfer(
-          user1BetAmount 
-        );
-        bet.user2Metamask.transfer(
-          prizePool - user1BetAmount 
-        );
+        bet.user1Metamask.transfer(user1BetAmount);
+        bet.user2Metamask.transfer(prizePool - user1BetAmount);
         continue;
       }
 

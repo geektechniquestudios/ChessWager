@@ -145,7 +145,7 @@ metadata:
   name: chess-wager-backend-server-hpa-gtp2
   namespace: default
 spec:
-  maxReplicas: 1
+  maxReplicas: 2
   metrics:
     - resource:
         name: cpu
