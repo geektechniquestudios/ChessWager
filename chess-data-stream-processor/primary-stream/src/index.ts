@@ -32,7 +32,11 @@ const currentTimeFile = "/data/currentTime.txt"
 let currentTime = Math.floor(Date.now() / 1000)
 
 const shouldPayoutFile = "/data/payout.txt"
-fs.writeFileSync(shouldPayoutFile, "false")
+try {
+  fs.writeFileSync(shouldPayoutFile, "false")
+} catch (err) {
+  console.error(err)
+}
 
 const callLichessLiveTv = () => {
   let lastGameId = ""
@@ -117,7 +121,11 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
     console.log("No bets to payout, skipping payout method")
     return
   }
-  fs.writeFileSync(shouldPayoutFile, "false")
+  try {
+    fs.writeFileSync(shouldPayoutFile, "false")
+  } catch (err) {
+    console.error(err)
+  }
   gameIdHistoryRef
     .doc(gameId)
     .get()
@@ -144,7 +152,12 @@ setInterval(() => {
     secondsUntilRestartCheck--
   } else {
     console.log("\ntimeout detected, checking latest entry")
-    const lastStoredTime = fs.readFileSync(currentTimeFile, "utf8")
+    let lastStoredTime = 0
+    try {
+      lastStoredTime = Number(fs.readFileSync(currentTimeFile, "utf8"))
+    } catch (err) {
+      console.error(err)
+    }
 
     if (currentTime < Number(lastStoredTime) - 20) {
       console.log("Primary steam is behind, restarting")

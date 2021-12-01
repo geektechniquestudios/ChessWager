@@ -118,12 +118,21 @@ const contract = new Contract(contractAddress, contractABI, wallet)
 
 const payWinnersContractCall = async (gameId: string, winningSide: string) => {
   await new Promise((resolve) => setTimeout(resolve, 8000))
-  const shouldPayout = fs.readFileSync(shouldPayoutFile, "utf8")
+  let shouldPayout = "true"
+  try {
+    shouldPayout = fs.readFileSync(shouldPayoutFile, "utf8")
+  } catch (err) {
+    console.error(err)
+  }
   if (shouldPayout === "false") {
     console.log("No bets to payout, skipping payout method")
     return
   }
-  fs.writeFileSync(shouldPayoutFile, "false")
+  try {
+    fs.writeFileSync(shouldPayoutFile, "false")
+  } catch (err) {
+    console.log(err)
+  }
   gameIdHistoryRef
     .doc(gameId)
     .get()
