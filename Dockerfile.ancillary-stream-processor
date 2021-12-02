@@ -1,9 +1,9 @@
+# specifically for backend, but need .env
 FROM node:14
 
 WORKDIR /app
 
-COPY ./contract-listener ./contract-listener
-
+COPY ./chess-data-stream-processor/ancillary-stream ./chess-data-stream-processor/ancillary-stream
 COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/contracts/ChessWager.sol/ChessWager.json
 
 # only in local
@@ -11,8 +11,8 @@ COPY ./chess-wager-develop-firebase-adminsdk-z02bi-9bab414c8a.json ./
 
 COPY .env ./
 
-WORKDIR /app/contract-listener/
+WORKDIR /app/chess-data-stream-processor/ancillary-stream
 
 RUN npm install
 
-CMD ["npm", "start"]
+CMD [ "npm", "start"]
