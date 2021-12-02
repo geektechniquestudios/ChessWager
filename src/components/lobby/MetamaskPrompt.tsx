@@ -2,7 +2,7 @@ import { BigNumber, ethers } from "ethers"
 import { useEffect } from "react"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
-require("dotenv").config({path: ".env"})
+require("dotenv").config({ path: ".env" })
 
 interface Props {
   betId: string
@@ -31,7 +31,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
   user2Metamask,
   gameId,
   timestamp,
-  contractAddress
+  contractAddress,
 }) => {
   // const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
 
@@ -58,6 +58,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
 
   const overrides = {
     value: betAmountWei,
+    gasLimit: 1000000,
   }
 
   let contract: ethers.Contract
