@@ -1,7 +1,8 @@
 import firebase from "firebase/compat/app"
 import ndjson from "ndjson"
-const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
-require("dotenv").config({ path: "../.env" })
+import fs from "fs"
+const ChessWager = require("../../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
+require("dotenv").config({ path: "../../.env" })
 const fetch = require("node-fetch")
 const ethers = require("ethers")
 
@@ -13,18 +14,29 @@ const adminSdk = process.env.FIREBASE_ADMIN_SDK
 
 let cred
 if (isLocal) {
-  const serviceAccount = require(`../../${adminSdk}`)
+  const serviceAccount = require(`../../../${adminSdk}`)
   cred = admin.credential.cert(serviceAccount)
 } else {
   cred = admin.credential.applicationDefault()
 }
 
 admin.initializeApp({ credential: cred })
-
 const db = admin.firestore()
 
 const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("games")
+
+const defaultTime = 5
+let secondsUntilRestartCheck = defaultTime
+const currentTimeFile = "/data/currentTime.txt"
+let currentTime = Math.floor(Date.now() / 1000)
+
+const shouldPayoutFile = "/data/payout.txt"
+try {
+  fs.writeFileSync(shouldPayoutFile, "false")
+} catch (err) {
+  console.error(err)
+}
 
 const callLichessLiveTv = () => {
   let lastGameId = ""
@@ -32,6 +44,8 @@ const callLichessLiveTv = () => {
   hyperquest("https://lichess.org/api/tv/feed")
     .pipe(ndjson.parse())
     .on("data", (obj: any) => {
+      currentTime = Math.floor(Date.now() / 1000)
+      secondsUntilRestartCheck = defaultTime
       if (obj.t === "featured") {
         // new game
         console.log("new game: ", obj.d.id)
@@ -76,13 +90,13 @@ const callLichessLiveTv = () => {
           .catch(console.error)
       } else {
         console.log("players moving ", obj)
+        // read from currentTime.txt
       }
     })
     .on("end", () => {
       console.log("ended stream gracefully")
     })
     .on("error", console.error)
-
 }
 
 const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS
@@ -91,7 +105,7 @@ const metamaskAddress = process.env.METAMASK_ACCOUNT_ADDRESS
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
 const rpcUrl = process.env.BSC_TESTNET_RPC_URL
 
-console.log(metamaskAddress, metamaskKey, rpcUrl)
+console.log(metamaskAddress)
 
 const Wallet = ethers.Wallet
 const Contract = ethers.Contract
@@ -102,6 +116,16 @@ const wallet = new Wallet(metamaskKey, provider)
 const contract = new Contract(contractAddress, contractABI, wallet)
 
 const payWinnersContractCall = async (gameId: string, winningSide: string) => {
+  const shouldPayout = fs.readFileSync(shouldPayoutFile, "utf8")
+  if (shouldPayout === "false") {
+    console.log("No bets to payout, skipping payout method")
+    return
+  }
+  try {
+    fs.writeFileSync(shouldPayoutFile, "false")
+  } catch (err) {
+    console.error(err)
+  }
   gameIdHistoryRef
     .doc(gameId)
     .get()
@@ -117,85 +141,32 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
         contract.payWinners(gameId, winningSide)
       }
     })
+    .catch(console.error)
 }
 
-const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-  db.collection("lobby")
-
-contract.on("BetPlacedStatus", (message: string, betId: string) => {
-  console.log("BetPlacedStatus: ", message, betId)
-
-  if (message === "user1 has paid") {
-    lobbyRef.doc(betId).update({
-      hasUser1Paid: true,
-    })
-    gameIdHistoryRef.doc(betId).set({
-      hasUser1Paid: true,
-    })
-  } else if (message === "user2 has paid") {
-    lobbyRef.doc(betId).update({
-      hasUser2Paid: true,
-    })
-    gameIdHistoryRef.doc(betId).set({
-      hasUser2Paid: true,
-    })
-  } else {
-    console.log("unknown message: ", message)
-  }
-})
-
-// const userCollectionRef = db.collection("users")
-
-// contract.on(
-//   "PayoutStatus",
-//   (
-//     betId: string,
-//     gameId: string,
-//     didUser1Pay: boolean,
-//     didUser2Pay: boolean,
-//   ) => {
-//     console.log(`PayoutStatus: \n\tgameId: ${gameId} \n\t betId: ${betId} 
-//     user1 payment: ${didUser1Pay} 
-//     user2 payment: ${didUser2Pay}`)
-
-//     lobbyRef
-//       .doc(betId)
-//       .get()
-//       .then((doc: any) => {
-//         if (doc.data().status === "approved") {
-//           // if both users paid
-//           if (didUser1Pay && didUser2Pay) {
-//             userCollectionRef.doc(doc.data().user1Id).update({
-//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
-//               betFundedCount: admin.firestore.FieldValue.increment(1),
-//             })
-//             userCollectionRef.doc(doc.data().user2Id).update({
-//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
-//               betFundedCount: admin.firestore.FieldValue.increment(1),
-//             })
-//           } else if (didUser1Pay) {
-//             // if only user1 paid
-//             userCollectionRef.doc(doc.data().user1Id).update({
-//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
-//               betFundedCount: admin.firestore.FieldValue.increment(1),
-//             })
-//             userCollectionRef.doc(doc.data().user2Id).update({
-//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
-//             })
-//           } else if (didUser2Pay) {
-//             // if only user2 paid
-//             userCollectionRef.doc(doc.data().user1Id).update({
-//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
-//             })
-//             userCollectionRef.doc(doc.data().user2Id).update({
-//               betAcceptedCount: admin.firestore.FieldValue.increment(1),
-//               betFundedCount: admin.firestore.FieldValue.increment(1),
-//             })
-//           }
-//         }
-//       })
-//       .catch(console.error)
-//   },
-// )
-
 callLichessLiveTv()
+
+setInterval(() => {
+  if (secondsUntilRestartCheck > 0) {
+    console.log(secondsUntilRestartCheck)
+    secondsUntilRestartCheck--
+  } else {
+    console.log("\ntimeout detected, checking latest entry")
+    let lastStoredTime = 0
+    try {
+      lastStoredTime = Number(fs.readFileSync(currentTimeFile, "utf8"))
+    } catch (err) {
+      console.error(err)
+    }
+
+    if (currentTime < Number(lastStoredTime) - 20) {
+      console.log("Primary steam is behind, restarting")
+      process.exit(0)
+    } else {
+      console.log(
+        "Primary steam is up to date, player is taking a while to move",
+      )
+    }
+    secondsUntilRestartCheck = defaultTime
+  }
+}, 1000)
