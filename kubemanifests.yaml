@@ -27,7 +27,7 @@ items:
             io.kompose.service: ancillary-stream
         spec:
           containers:
-            - image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/ancillary-stream
+            - image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/ancillary-stream:latest
               livenessProbe:
                 exec:
                   command:
@@ -87,7 +87,7 @@ items:
             io.kompose.service: contract-listener
         spec:
           containers:
-            - image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/contract-listener
+            - image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/contract-listener:latest
               livenessProbe:
                 exec:
                   command:
@@ -154,4 +154,3 @@ items:
     status: {}
 kind: List
 metadata: {}
-
