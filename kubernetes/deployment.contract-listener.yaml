@@ -81,7 +81,7 @@ metadata:
   name: chess-wager-contract-listener
   namespace: default
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: chess-wager-contract-listener
@@ -141,7 +141,7 @@ metadata:
   name: chess-wager-contract-listener-hpa-cmlz
   namespace: default
 spec:
-  maxReplicas: 5
+  maxReplicas: 2
   metrics:
     - resource:
         name: cpu
