@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - env:
-          image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/contract-listener
+          image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/contract-listener:latest
           livenessProbe:
             exec:
               command:
