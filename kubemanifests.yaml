@@ -133,7 +133,7 @@ items:
             io.kompose.service: primary-stream
         spec:
           containers:
-            - image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/primary-stream
+            - image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/primary-stream:latest
               livenessProbe:
                 exec:
                   command:
