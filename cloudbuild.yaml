@@ -1,4 +1,5 @@
 steps:
+  # Decrypt and setup
   - id: Decrypting environment variables
     name: gcr.io/cloud-builders/gcloud
     args:
@@ -30,17 +31,7 @@ steps:
   - id: Deploying contract
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "deploy-contract-$BRANCH_NAME"]
-
-  - name: gcr.io/cloud-builders/gcloud
-    args:
-      - kms
-      - decrypt
-      - "--ciphertext-file=env/.env.$BRANCH_NAME.enc"
-      - "--plaintext-file=.env"
-      - "--location=global"
-      - "--keyring=chess-wager"
-      - "--key=chess-wager-$BRANCH_NAME"
-    id: Decrypting environment variables
+  # Build and deploy docker images
   - name: gcr.io/cloud-builders/docker
     args:
       - build
@@ -101,7 +92,7 @@ steps:
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
     id: Apply deploy
-
+  # Build and deploy frontend
   - id: Building frontend
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "build"]
