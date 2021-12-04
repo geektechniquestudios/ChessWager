@@ -31,7 +31,8 @@ steps:
   - id: Deploying contract
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "deploy-contract-$BRANCH_NAME"]
-  # Build and deploy docker images
+  
+    # Build and deploy docker images
   - name: gcr.io/cloud-builders/docker
     args:
       - build
@@ -91,8 +92,8 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
-      - "--timeout=10m"
     id: Apply deploy
+
   # Build and deploy frontend
   - id: Building frontend
     name: "gcr.io/cloud-builders/npm"
