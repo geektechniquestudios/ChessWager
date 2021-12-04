@@ -111,9 +111,7 @@ steps:
   - id: Deploying to firebase
     name: "gcr.io/$PROJECT_ID/firebase"
     args: ["deploy", "--project=$PROJECT_ID"]
-timeout: 1800s
-images:
-  - "$_IMAGE_NAME:$COMMIT_SHA"
+timeout: 3600s
 options:
   substitutionOption: ALLOW_LOOSE
 substitutions:
