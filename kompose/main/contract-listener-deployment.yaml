@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.26.0 (40646f47)
   creationTimestamp: null
   labels:
-    io.kompose.service: primary-stream
-  name: primary-stream
+    io.kompose.service: contract-listener
+  name: contract-listener
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: primary-stream
+      io.kompose.service: contract-listener
   strategy:
     type: Recreate
   template:
@@ -22,11 +22,11 @@ spec:
         kompose.version: 1.26.0 (40646f47)
       creationTimestamp: null
       labels:
-        io.kompose.service: primary-stream
+        io.kompose.service: contract-listener
     spec:
       containers:
         - env:
-          image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/primary-stream
+          image: gcr.io/chess-wager-main/github.com/geektechniquestudios/chesswager/contract-listener
           livenessProbe:
             exec:
               command:
@@ -34,7 +34,7 @@ spec:
             failureThreshold: 3
             periodSeconds: 90
             timeoutSeconds: 10
-          name: primary-stream
+          name: contract-listener
           resources: {}
           volumeMounts:
             - mountPath: /data

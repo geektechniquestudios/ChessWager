@@ -27,7 +27,6 @@ spec:
       containers:
         - env:
           image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/ancillary-stream
-          # image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/ancillary-stream:4db5abdd75f26af88f85185551d337c102152fcd
           livenessProbe:
             exec:
               command:
