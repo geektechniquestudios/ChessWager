@@ -26,7 +26,7 @@ const db = admin.firestore()
 const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("games")
 
-const defaultTime = 10
+const defaultTime = 15
 let secondsUntilRestart = defaultTime
 const currentTimeFile = "/data/currentTime.txt"
 const shouldPayoutFile = "/data/payout.txt"

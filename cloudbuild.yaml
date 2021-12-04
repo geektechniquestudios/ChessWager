@@ -91,6 +91,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
+      - "--timeout=10m"
     id: Apply deploy
   # Build and deploy frontend
   - id: Building frontend
@@ -109,15 +110,15 @@ substitutions:
   _IMAGE_NAME_AS: >-
     gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager/ancillary-stream
   _DOCKERFILE_NAME_AS: >-
-    gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager/ancillary-stream
+    Dockerfile.ancillary-stream-processor
   _IMAGE_NAME_PS: >-
     gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager/primary-stream
   _DOCKERFILE_NAME_PS: >-
-    gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager/primary-stream
+    Dockerfile.primary-stream-processor
   _IMAGE_NAME_CL: >-
     gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager/contract-listener
   _DOCKERFILE_NAME_CL: >-
-    gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager/contract-listener
+    Dockerfile.contract-listener
   _DOCKERFILE_DIR: ""
   _GKE_CLUSTER: chess-wager-${BRANCH_NAME}-env
   _K8S_NAMESPACE: default
