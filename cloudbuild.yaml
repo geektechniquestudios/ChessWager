@@ -35,7 +35,7 @@ steps:
     args: ["run", "deploy-contract-$BRANCH_NAME"]
   
     # Build docker images for k8s
-    - id: Building contract listener
+  - id: Building contract listener
     name: gcr.io/cloud-builders/docker
     args:
       - build
