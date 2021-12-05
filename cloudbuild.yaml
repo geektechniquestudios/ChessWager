@@ -28,73 +28,111 @@ steps:
   - id: Running tests
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "test", "--", "--watchAll=false"]
+
+    # Dependent step
   - id: Deploying contract
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "deploy-contract-$BRANCH_NAME"]
   
-    # Build and deploy docker images
-  - name: gcr.io/cloud-builders/docker
+    # Build docker images for k8s
+    - id: Building contract listener
+    name: gcr.io/cloud-builders/docker
     args:
       - build
-      - "-t"
-      - "$_IMAGE_NAME_CL:$COMMIT_SHA"
-      - "-t"
-      - "$_IMAGE_NAME_CL:latest"
+      - '-t'
+      - '$_IMAGE_NAME_CL:$COMMIT_SHA'
       - .
-      - "-f"
+      - '-f'
       - $_DOCKERFILE_NAME_CL
     dir: $_DOCKERFILE_DIR
-    id: Build 1
-  - name: gcr.io/cloud-builders/docker
+  - id: Building ancillary stream
+    name: gcr.io/cloud-builders/docker
     args:
       - build
-      - "-t"
-      - "$_IMAGE_NAME_AS:$COMMIT_SHA"
-      - "-t"
-      - "$_IMAGE_NAME_AS:latest"
+      - '-t'
+      - '$_IMAGE_NAME_AS:$COMMIT_SHA'
       - .
-      - "-f"
+      - '-f'
       - $_DOCKERFILE_NAME_AS
     dir: $_DOCKERFILE_DIR
-    id: Build 2
-  - name: gcr.io/cloud-builders/docker
+  - id: Building primary stream
+    name: gcr.io/cloud-builders/docker
     args:
       - build
-      - "-t"
-      - "$_IMAGE_NAME_PS:$COMMIT_SHA"
-      - "-t"
-      - "$_IMAGE_NAME_PS:latest"
+      - '-t'
+      - '$_IMAGE_NAME_PS:$COMMIT_SHA'
       - .
-      - "-f"
+      - '-f'
       - $_DOCKERFILE_NAME_PS
     dir: $_DOCKERFILE_DIR
-    id: Build 3
-  - name: gcr.io/cloud-builders/docker
+  
+  # Pushing images
+  - id: Pushing contract listener
+    name: gcr.io/cloud-builders/docker
     args:
       - push
-      - "$_IMAGE_NAME_CL:$COMMIT_SHA"
-    id: Push 1
-  - name: gcr.io/cloud-builders/docker
+      - '$_IMAGE_NAME_CL:$COMMIT_SHA'
+  - id: Pushing ancillary stream
+    name: gcr.io/cloud-builders/docker
     args:
       - push
-      - "$_IMAGE_NAME_AS:$COMMIT_SHA"
-    id: Push 2
-  - name: gcr.io/cloud-builders/docker
+      - '$_IMAGE_NAME_AS:$COMMIT_SHA'
+  - id: Pushing primary stream
+    name: gcr.io/cloud-builders/docker
     args:
       - push
-      - "$_IMAGE_NAME_PS:$COMMIT_SHA"
-    id: Push 3
-  - name: gcr.io/cloud-builders/gke-deploy
+      - '$_IMAGE_NAME_PS:$COMMIT_SHA'
+  
+  # Deploying to k8s
+  - id: Applying shared volume to k8s
+    name: gcr.io/cloud-builders/gke-deploy
     args:
       - apply
-      - "--filename=kompose/$BRANCH_NAME/"
-      - "--recursive"
-      - "--cluster=$_GKE_CLUSTER"
-      - "--location=$_GKE_LOCATION"
-      - "--namespace=$_K8S_NAMESPACE"
-    id: Apply deploy
+      - '--filename=kompose/$BRANCH_NAME/stream-data-persistentvolumeclaim.yaml'
+      - '--cluster=$_GKE_CLUSTER'
+      - '--location=$_GKE_LOCATION'
+      - '--namespace=$_K8S_NAMESPACE'
+  - id: Applying contract listener to k8s
+    name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - '--filename=kompose/$BRANCH_NAME/contract-listener-deployment.yaml'
+      - '--image=$_IMAGE_NAME_CL:$COMMIT_SHA'
+      - '--cluster=$_GKE_CLUSTER'
+      - '--location=$_GKE_LOCATION'
+      - '--namespace=$_K8S_NAMESPACE'
+  - id: Clearing build folder
+    name: bash
+    args:
+      - rm
+      - '-rf'
+      - output
+  - id: Applying ancillary stream to k8s
+    name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - '--filename=kompose/$BRANCH_NAME/ancillary-stream-deployment.yaml'
+      - '--image=$_IMAGE_NAME_AS:$COMMIT_SHA'
+      - '--cluster=$_GKE_CLUSTER'
+      - '--location=$_GKE_LOCATION'
+      - '--namespace=$_K8S_NAMESPACE'
+  - id: Clearing build folder again
+    name: bash
+    args:
+      - rm
+      - '-rf'
+      - output
+  - id: Applying primary stream to k8s
+    name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - '--filename=kompose/$BRANCH_NAME/primary-stream-deployment.yaml'
+      - '--image=$_IMAGE_NAME_PS:$COMMIT_SHA'
+      - '--cluster=$_GKE_CLUSTER'
+      - '--location=$_GKE_LOCATION'
+      - '--namespace=$_K8S_NAMESPACE'
 
-  # Build and deploy frontend
+  # Building and deploying frontend
   - id: Building frontend
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "build"]
