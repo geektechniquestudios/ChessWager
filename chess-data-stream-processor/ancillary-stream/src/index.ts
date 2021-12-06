@@ -30,10 +30,15 @@ const defaultTime = 15
 let secondsUntilRestart = defaultTime
 const currentTimeFile = "/data/currentTime.txt"
 const shouldPayoutFile = "/data/payout.txt"
+const mostRecentGameIdFile = "/data/mostRecentGameId.txt"
+const mostRecentGameIdSinceLastRestart = fs.readFileSync(
+  mostRecentGameIdFile,
+  "utf8",
+)
 
 const callLichessLiveTv = () => {
-  let lastGameId = ""
   let gameId = ""
+  let lastGameId = ""
   hyperquest("https://lichess.org/api/tv/feed")
     .pipe(ndjson.parse())
     .on("data", (obj: any) => {
@@ -50,6 +55,11 @@ const callLichessLiveTv = () => {
         console.log("new game: ", obj.d.id)
         lastGameId = gameId === "" ? obj.d.id : gameId // if gameId is empty, set it to the new game id
         gameId = obj.d.id
+        try {
+          fs.writeFileSync(mostRecentGameIdFile, gameId)
+        } catch (err) {
+          console.error(err)
+        }
         // call lichess for game data from gameId
         fetch(`https://lichess.org/api/game/${lastGameId}`)
           .then((res: any) => res.json())
@@ -151,6 +161,7 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
     .catch(console.error)
 }
 
+payWinnersContractCall(mostRecentGameIdSinceLastRestart, "white")
 callLichessLiveTv()
 
 setInterval(() => {
