@@ -31,12 +31,7 @@ let secondsUntilRestartCheck = defaultTime
 const currentTimeFile = "/data/currentTime.txt"
 let currentTime = Math.floor(Date.now() / 1000)
 
-const shouldPayoutFile = "/data/payout.txt"
-try {
-  fs.writeFileSync(shouldPayoutFile, "false")
-} catch (err) {
-  console.error(err)
-}
+// const shouldPayoutFile = "/data/payout.txt"
 
 const callLichessLiveTv = () => {
   let lastGameId = ""
@@ -116,21 +111,30 @@ const wallet = new Wallet(metamaskKey, provider)
 const contract = new Contract(contractAddress, contractABI, wallet)
 
 const payWinnersContractCall = async (gameId: string, winningSide: string) => {
-  const shouldPayout = fs.readFileSync(shouldPayoutFile, "utf8")
-  if (shouldPayout === "false") {
-    console.log("No bets to payout, skipping payout method")
-    return
-  }
-  try {
-    fs.writeFileSync(shouldPayoutFile, "false")
-  } catch (err) {
-    console.error(err)
-  }
+  // let shouldPayout = "true"
+  // try {
+  //   shouldPayout = fs.readFileSync(shouldPayoutFile, "utf8")
+  // } catch (err) {
+  //   console.error(err)
+  //   shouldPayout = "true"
+  // }
+  // if (shouldPayout === "false") {
+  //   console.log("No bets to payout, skipping payout method")
+  //   return
+  // }
+
+  // try {
+  //   fs.writeFileSync(shouldPayoutFile, "false")
+  // } catch (err) {
+  //   console.error(err)
+  // }
+
+
   gameIdHistoryRef
     .doc(gameId)
     .get()
     .then((doc: any) => {
-      if (doc.exits && !doc.data().haveWinnersBeenPaid) {
+      if (doc.exits && !doc.data().haveWinnersBeenPaid && doc.data().shouldPayout === true) {
         console.log("gameId has already been paid out")
       } else {
         console.log("gameId is new, writing to db and paying winners")
