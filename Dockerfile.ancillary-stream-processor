@@ -15,4 +15,6 @@ WORKDIR /app/chess-data-stream-processor/ancillary-stream
 
 RUN npm install
 
-CMD [ "npm", "start"]
+CMD ["./start.sh"]
+
+# CMD [ "npm", "start"]
