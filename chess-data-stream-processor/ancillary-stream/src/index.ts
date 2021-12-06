@@ -29,12 +29,17 @@ const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestor
 const defaultTime = 15
 let secondsUntilRestart = defaultTime
 const currentTimeFile = "/data/currentTime.txt"
-const shouldPayoutFile = "/data/payout.txt"
+// const shouldPayoutFile = "/data/payout.txt"
 const mostRecentGameIdFile = "/data/mostRecentGameId.txt"
-const mostRecentGameIdSinceLastRestart = fs.readFileSync(
-  mostRecentGameIdFile,
-  "utf8",
-)
+let mostRecentGameIdSinceLastRestart = ""
+try {
+  mostRecentGameIdSinceLastRestart = fs.readFileSync(
+    mostRecentGameIdFile,
+    "utf8",
+  )
+} catch (err) {
+  console.error(err)
+}
 
 const callLichessLiveTv = () => {
   let gameId = ""
@@ -127,27 +132,31 @@ const wallet = new Wallet(metamaskKey, provider)
 const contract = new Contract(contractAddress, contractABI, wallet)
 
 const payWinnersContractCall = async (gameId: string, winningSide: string) => {
+  // let shouldPayout = "true"
+  // try {
+  //   shouldPayout = fs.readFileSync(shouldPayoutFile, "utf8")
+  // } catch (err) {
+  //   console.error(err)
+  //   shouldPayout = "true"
+  // }
+  // if (shouldPayout === "false") {
+  //   console.log("No bets to payout, skipping payout method")
+  //   return
+  // }
+
   await new Promise((resolve) => setTimeout(resolve, 8000))
-  let shouldPayout = "true"
-  try {
-    shouldPayout = fs.readFileSync(shouldPayoutFile, "utf8")
-  } catch (err) {
-    console.error(err)
-  }
-  if (shouldPayout === "false") {
-    console.log("No bets to payout, skipping payout method")
-    return
-  }
-  try {
-    fs.writeFileSync(shouldPayoutFile, "false")
-  } catch (err) {
-    console.log(err)
-  }
+
+  // try {
+  //   fs.writeFileSync(shouldPayoutFile, "false")
+  // } catch (err) {
+  //   console.log(err)
+  // }
+
   gameIdHistoryRef
     .doc(gameId)
     .get()
     .then((doc: any) => {
-      if (doc.exits && !doc.data().haveWinnersBeenPaid) {
+      if (doc.exits && !doc.data().haveWinnersBeenPaid && doc.data().shouldPayout === true) {
         console.log("gameId has already been paid out")
       } else {
         console.log("gameId is new, writing to db and paying winners")

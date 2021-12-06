@@ -42,11 +42,14 @@ const contract = new Contract(contractAddress, contractABI, wallet)
 const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("lobby")
 
-const shouldPayoutFile = "/data/payout.txt"
+// const shouldPayoutFile = "/data/payout.txt"
 
 contract.on("BetPlacedStatus", (message: string, betId: string) => {
   console.log("BetPlacedStatus: ", message, betId)
-  fs.writeFileSync(shouldPayoutFile, "true")
+  // fs.writeFileSync(shouldPayoutFile, "true")
+  gameIdHistoryRef.doc(betId).set({
+    shouldPayout: true,
+  })
 
   if (message === "user1 has paid") {
     lobbyRef.doc(betId).update({
@@ -125,6 +128,11 @@ contract.on(
 const currentTimeFile = "/data/currentTime.txt"
 
 setInterval(() => {
-  const currentTime = fs.readFileSync(currentTimeFile, "utf8")
+  let currentTime 
+  try {
+    currentTime = fs.readFileSync(currentTimeFile, "utf8")
+  } catch (err) {
+    console.error(err)
+  }
   console.log("currentTime: ", currentTime)
 }, 5000)
