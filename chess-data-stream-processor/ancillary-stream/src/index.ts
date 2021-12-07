@@ -139,11 +139,11 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
         doc.data().shouldPayout
       ) {
         console.log("gameId is new, writing to db and paying winners")
+        contract.payWinners(gameId, winningSide)
         gameIdHistoryRef.doc(gameId).set({
           haveWinnersBeenPaid: true,
           updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         })
-        contract.payWinners(gameId, winningSide)
       } else {
         console.log("gameId has already been paid out")
       }

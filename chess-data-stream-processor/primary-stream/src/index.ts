@@ -110,7 +110,6 @@ const wallet = new Wallet(metamaskKey, provider)
 const contract = new Contract(contractAddress, contractABI, wallet)
 
 const payWinnersContractCall = async (gameId: string, winningSide: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 8000))
   gameIdHistoryRef
     .doc(gameId)
     .get()
@@ -121,11 +120,11 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
         doc.data().shouldPayout
       ) {
         console.log("gameId is new, writing to db and paying winners")
+        contract.payWinners(gameId, winningSide)
         gameIdHistoryRef.doc(gameId).set({
           haveWinnersBeenPaid: true,
           updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         })
-        contract.payWinners(gameId, winningSide)
       } else {
         console.log("gameId has already been paid out")
       }
