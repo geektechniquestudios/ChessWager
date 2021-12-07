@@ -65,12 +65,12 @@ contract ChessWager is Ownable {
         // user1
         require(msg.value == _bet.amount);
         betIdToWhoBetFirst[_betId] = "user1";
-        emit BetPlacedStatus("user1 has paid", _betId);
+        emit BetPlacedStatus("user1 has paid", _betId, _bet.gameId);
       } else {
         // user2
         require(msg.value == (_bet.amount * _bet.multiplier) / 100);
         betIdToWhoBetFirst[_betId] = "user2";
-        emit BetPlacedStatus("user2 has paid", _betId);
+        emit BetPlacedStatus("user2 has paid", _betId, _bet.gameId);
       }
 
       betIdToPrizePool[_betId] = msg.value;
@@ -108,13 +108,13 @@ contract ChessWager is Ownable {
         require(msg.sender == _bet.user1Metamask);
         require(msg.value == _bet.amount);
         betIdToPrizePool[_betId] += msg.value;
-        emit BetPlacedStatus("user1 has paid", _betId);
+        emit BetPlacedStatus("user1 has paid", _betId, _bet.gameId);
       } else {
         // this runs if user2 paid this method call
         require(msg.sender == _bet.user2Metamask);
         require(msg.value == (_bet.amount * _bet.multiplier) / 100);
         betIdToPrizePool[_betId] += msg.value;
-        emit BetPlacedStatus("user2 has paid", _betId);
+        emit BetPlacedStatus("user2 has paid", _betId, _bet.gameId);
       }
       // bet is matched, second person pays
       betIdToIsBetMatched[_betId] = true;
@@ -275,7 +275,7 @@ contract ChessWager is Ownable {
     return chessWagerBalance;
   }
 
-  event BetPlacedStatus(string message, string betId);
+  event BetPlacedStatus(string message, string betId, string gameId);
   event PayoutStatus(
     string betId,
     string gameId,

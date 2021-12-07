@@ -44,10 +44,10 @@ const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.Docume
 
 // const shouldPayoutFile = "/data/payout.txt"
 
-contract.on("BetPlacedStatus", (message: string, betId: string) => {
+contract.on("BetPlacedStatus", (message: string, betId: string, gameId: string) => {
   console.log("BetPlacedStatus: ", message, betId)
   // fs.writeFileSync(shouldPayoutFile, "true")
-  gameIdHistoryRef.doc(betId).set({
+  gameIdHistoryRef.doc(gameId).set({
     shouldPayout: true,
   })
 
