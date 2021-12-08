@@ -57,7 +57,7 @@ const callLichessLiveTv = () => {
     .on("error", console.error)
 }
 
-export const payWinnersByGameId = async (gameId: string) => {
+const payWinnersByGameId = async (gameId: string) => {
   fetch(`https://lichess.org/api/game/${gameId}`)
     .then((res: any) => res.json())
     .then((gameData: any) => {
@@ -96,7 +96,7 @@ export const payWinnersByGameId = async (gameId: string) => {
     .catch(console.error)
 }
 
-const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS
+const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
 const contractABI = ChessWager.abi
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
 const rpcUrl = process.env.BSC_TESTNET_RPC_URL
@@ -109,24 +109,48 @@ const provider = new providers.JsonRpcProvider(rpcUrl)
 const wallet = new Wallet(metamaskKey, provider)
 const contract = new Contract(contractAddress, contractABI, wallet)
 
+const overrides = {
+  gasLimit: 1000000,
+}
+
 const payWinnersContractCall = async (gameId: string, winningSide: string) => {
   gameIdHistoryRef
     .doc(gameId)
     .get()
     .then((doc: any) => {
-      if (
-        doc.exits &&
-        !doc.data().haveWinnersBeenPaid &&
-        doc.data().shouldPayout
-      ) {
-        console.log("gameId is new, writing to db and paying winners")
-        contract.payWinners(gameId, winningSide)
-        gameIdHistoryRef.doc(gameId).set({
-          haveWinnersBeenPaid: true,
-          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      if (doc.exists) {
+        const contractDoc = gameIdHistoryRef
+          .doc(gameId)
+          .collection("contracts")
+          .doc(contractAddress)
+
+        contractDoc.get().then((cDoc: any) => {
+          if (!cDoc.exists) {
+            console.log("no document found for gameId: ", gameId)
+            return
+          }
+          if (!cDoc.data().needToPay) {
+            console.log("No bets placed on this game, skipping contract call")
+          } else if (cDoc.data().hasBeenPaid) {
+            console.log(
+              "contract has already been paid, skipping contract call",
+            )
+          } else {
+            console.log("paying winners for gameId: ", gameId)
+            contractDoc.set({ hasBeenPaid: true }, { merge: true })
+
+            contract
+              .payWinners(gameId, winningSide, overrides)
+              .then((tx: any) => {
+                console.log("tx: ", tx)
+              })
+              .catch((err: any) => {
+                console.log("err: ", err)
+              })
+          }
         })
       } else {
-        console.log("gameId has already been paid out")
+        console.error("no such game document")
       }
     })
     .catch(console.error)
@@ -148,11 +172,11 @@ setInterval(() => {
     }
 
     if (currentTime < Number(lastStoredTime) - 20) {
-      console.log("Primary steam is behind, restarting")
+      console.log("Primary stream is behind, restarting")
       process.exit(0)
     } else {
       console.log(
-        "Primary steam is up to date, player is taking a while to move",
+        "Primary stream is up to date, player is taking a while to move",
       )
     }
     secondsUntilRestartCheck = defaultTime

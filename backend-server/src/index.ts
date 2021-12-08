@@ -106,7 +106,7 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
     .doc(gameId)
     .get()
     .then((doc: any) => {
-      if (doc.exits && !doc.data().haveWinnersBeenPaid) {
+      if (doc.exists && !doc.data().haveWinnersBeenPaid) {
         console.log("gameId has already been paid out")
       } else {
         console.log("gameId is new, writing to db and paying winners")
