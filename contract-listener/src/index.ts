@@ -20,9 +20,6 @@ admin.initializeApp({ credential: cred })
 
 const db = admin.firestore()
 
-const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-  db.collection("games")
-
 const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS
 const contractABI = ChessWager.abi
 const metamaskAddress = process.env.METAMASK_ACCOUNT_ADDRESS
@@ -42,33 +39,58 @@ const contract = new Contract(contractAddress, contractABI, wallet)
 const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("lobby")
 
+const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+  db.collection("games")
 // const shouldPayoutFile = "/data/payout.txt"
 
-contract.on("BetPlacedStatus", (message: string, betId: string) => {
-  console.log("BetPlacedStatus: ", message, betId)
-  // fs.writeFileSync(shouldPayoutFile, "true")
-  gameIdHistoryRef.doc(betId).set({
-    shouldPayout: true,
-  })
+contract.on(
+  "BetPlacedStatus",
+  (message: string, betId: string, gameId: string) => {
+    console.log("BetPlacedStatus: ", message, betId)
 
-  if (message === "user1 has paid") {
-    lobbyRef.doc(betId).update({
-      hasUser1Paid: true,
-    })
-    gameIdHistoryRef.doc(betId).set({
-      hasUser1Paid: true,
-    })
-  } else if (message === "user2 has paid") {
-    lobbyRef.doc(betId).update({
-      hasUser2Paid: true,
-    })
-    gameIdHistoryRef.doc(betId).set({
-      hasUser2Paid: true,
-    })
-  } else {
-    console.log("unknown message: ", message)
-  }
-})
+    gameIdHistoryRef
+      .doc(gameId)
+      .collection("contracts")
+      .doc(contractAddress)
+      .set(
+        {
+          needToPay: true,
+          hasBeenPaid: false,
+        },
+        { merge: true },
+      )
+
+    if (message === "user1 has paid") {
+      lobbyRef.doc(betId).set(
+        {
+          hasUser1Paid: true,
+        },
+        { merge: true },
+      )
+      gameIdHistoryRef.doc(betId).set(
+        {
+          hasUser1Paid: true,
+        },
+        { merge: true },
+      )
+    } else if (message === "user2 has paid") {
+      lobbyRef.doc(betId).set(
+        {
+          hasUser2Paid: true,
+        },
+        { merge: true },
+      )
+      gameIdHistoryRef.doc(betId).set(
+        {
+          hasUser2Paid: true,
+        },
+        { merge: true },
+      )
+    } else {
+      console.log("unknown message: ", message)
+    }
+  },
+)
 
 const userCollectionRef = db.collection("users")
 
@@ -128,7 +150,7 @@ contract.on(
 const currentTimeFile = "/data/currentTime.txt"
 
 setInterval(() => {
-  let currentTime 
+  let currentTime
   try {
     currentTime = fs.readFileSync(currentTimeFile, "utf8")
   } catch (err) {
