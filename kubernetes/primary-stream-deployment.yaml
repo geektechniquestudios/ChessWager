@@ -14,7 +14,7 @@ spec:
     matchLabels:
       io.kompose.service: primary-stream
   strategy:
-    type: Recreate
+    type: RollingUpdate
   template:
     metadata:
       annotations:
