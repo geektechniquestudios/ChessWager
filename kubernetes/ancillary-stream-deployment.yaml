@@ -43,7 +43,7 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: stream-data
-      terminationGracePeriod: 600
+      terminationGracePeriodSeconds: 600
       restartPolicy: Always
       volumes:
         - name: stream-data
