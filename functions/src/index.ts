@@ -2,16 +2,15 @@
 //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> = db.collection("lobby")
 // const ethers = require("ethers")
 // const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
-import * as  ChessWager from "../../src/artifacts/contracts/ChessWager.sol/ChessWager.json" 
+import * as ChessWager from "../../src/artifacts/contracts/ChessWager.sol/ChessWager.json"
 const functions = require("firebase-functions")
 const admin = require("firebase-admin")
 admin.initializeApp()
 const db = admin.firestore()
 const lobbyCollectionRef = db.collection("lobby")
-
+const ethers = require("ethers")
 
 require("dotenv").config({ path: "../../.env" })
-
 
 const authCheck = (context: any) => {
   if (!context.auth) {
@@ -238,6 +237,13 @@ exports.kickUser = functions.https.onCall(
   },
 )
 
+// exports.releaseStuckFunds = functions.https.onCall(
+//   async (gameId: string, context: any): Promise<void> => {
+//     specialAuthCheck(context)
+//     payWinnersByGameId(gameId)
+//   },
+// )
+
 // const gameIdHistoryRef = db.collection("games")
 
 // const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
@@ -323,10 +329,3 @@ exports.kickUser = functions.https.onCall(
 //     })
 //     .catch(console.error)
 // }
-
-// exports.releaseStuckFunds = functions.https.onCall(
-//   async (gameId: string, context: any): Promise<void> => {
-//     specialAuthCheck(context)
-//     payWinnersByGameId(gameId)
-//   },
-// )
