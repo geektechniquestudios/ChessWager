@@ -136,7 +136,13 @@ steps:
   - id: Building frontend
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "build"]
-  
+  - id: Selecting firebase env
+    name: "gcr.io/$PROJECT_ID/firebase"
+    args: ["use", "$BRANCH_NAME"]
+  - id: Deploying to firebase
+    name: "gcr.io/$PROJECT_ID/firebase"
+    args: ["deploy", "--project=$PROJECT_ID"]
+
 timeout: 3600s
 options:
   substitutionOption: ALLOW_LOOSE
