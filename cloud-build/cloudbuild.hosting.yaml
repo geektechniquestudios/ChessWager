@@ -1,0 +1,26 @@
+steps:
+  - id: Installing dependencies for frontend
+    name: "gcr.io/cloud-builders/npm"
+    args: ["install", "--no-optional", "-f"]
+  - id: Installing firebase tools
+    name: "gcr.io/cloud-builders/npm"
+    args: ["install", "-g", "firebase-tools"]
+  - id: Installing firebase
+    name: "gcr.io/cloud-builders/npm"
+    args: ["install", "--save", "firebase"]
+
+  # - id: Running tests
+  #   name: "gcr.io/cloud-builders/npm"
+  #   args: ["run", "test", "--", "--watchAll=false"]
+
+  - id: Building frontend
+    name: "gcr.io/cloud-builders/npm"
+    args: ["run", "build"]
+  - id: Selecting firebase env
+    name: "gcr.io/$PROJECT_ID/firebase"
+    args: ["use", "$BRANCH_NAME"]
+  - id: Deploying to firebase
+    name: "gcr.io/$PROJECT_ID/firebase"
+    args: ["deploy", "--only", "hosting", "--project=$PROJECT_ID"]
+
+timeout: 1800
