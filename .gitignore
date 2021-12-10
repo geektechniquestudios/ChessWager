@@ -17,6 +17,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+firebase-debug.log
 
 npm-debug.log*
 yarn-debug.log*
@@ -56,3 +57,4 @@ ChessWager.dbg.json
 chess-wager-develop-firebase-adminsdk-z02bi-9bab414c8a.json
 chess-wager-main-firebase-adminsdk-bgzkv-95b4357651.json
 chess-wager-test-firebase-adminsdk-hl438-9c361ba626.json
+
