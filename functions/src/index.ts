@@ -2,13 +2,14 @@
 //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> = db.collection("lobby")
 // const ethers = require("ethers")
 // const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
-import * as ChessWager from "../../src/artifacts/contracts/ChessWager.sol/ChessWager.json"
+// import * as ChessWager from "../../src/artifacts/contracts/ChessWager.sol/ChessWager.json"
 const functions = require("firebase-functions")
 const admin = require("firebase-admin")
 admin.initializeApp()
 const db = admin.firestore()
 const lobbyCollectionRef = db.collection("lobby")
 const ethers = require("ethers")
+// const fetch = require("node-fetch")
 
 require("dotenv").config({ path: "../../.env" })
 

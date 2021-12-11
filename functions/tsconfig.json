@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    // "lib": ["es6","esnext.bigint"],
     "module": "commonjs",
     "noImplicitReturns": true,
     "noUnusedLocals": false,
@@ -8,9 +9,9 @@
     "strict": true,
     "target": "esnext",
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "moduleResolution": "node"
   },
   "compileOnSave": true,
-  "include": ["src"],
-  "moduleResolution": "node",
+  "include": ["src"]
 }
