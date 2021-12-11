@@ -1,57 +1,97 @@
 // import firebase from "firebase/compat/app"
+//: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> = db.collection("lobby")
+// const ethers = require("ethers")
+// const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
+// import * as ChessWager from "../../src/artifacts/contracts/ChessWager.sol/ChessWager.json"
 const functions = require("firebase-functions")
 const admin = require("firebase-admin")
-
 admin.initializeApp()
 const db = admin.firestore()
-const lobbyCollectionRef = db.collection("lobby") //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> = db.collection("lobby")
+const lobbyCollectionRef = db.collection("lobby")
+const ethers = require("ethers")
+// const fetch = require("node-fetch")
+
+require("dotenv").config({ path: "../../.env" })
 
 const authCheck = (context: any) => {
   if (!context.auth) {
     throw new functions.https.HttpsError(
       "failed-precondition",
-      "The function must be called while authenticated."
+      "The function must be called while authenticated.",
+    )
+  }
+}
+
+const specialAuthCheck = (context: any) => {
+  authCheck(context)
+  // make sure user is admin
+  // if (!context.auth.token.admin) {
+  //   throw new functions.https.HttpsError(
+  //     "failed-precondition",
+  //     "The function must be called by an admin.",
+  //   )
+  // }
+
+  if (context.auth.uid !== "6SUBYXdrZUgKxmePHAzPFT1XLR73") {
+    throw new functions.https.HttpsError(
+      "failed-precondition",
+      "The function must be called by an admin.",
     )
   }
 }
 
 interface CreateArgs {
   amount: number
-  betSide: string,
-  gameId: string,
-  multiplier: number,
-  status: string,
-  user1Id: string,
-  user1Metamask: string,
-  user1PhotoURL: string,
-  contractAddress: string,
+  betSide: string
+  gameId: string
+  multiplier: number
+  status: string
+  user1Id: string
+  user1Metamask: string
+  user1PhotoURL: string
+  contractAddress: string
 }
 
-exports.createBet = functions.https.onCall(async ({amount, betSide, gameId, multiplier, status, user1Id, user1Metamask, user1PhotoURL, contractAddress}: CreateArgs, context: any): Promise<string> => {
-  authCheck(context)
-  
-  // if user is not banned
-  const bannedCollectionRef = db.collection("banned")
-  const bannedUserDocRef = bannedCollectionRef.doc(context.auth.uid)
-  if (bannedUserDocRef.get().exists) {
-    return "user is banned"
-  }
+exports.createBet = functions.https.onCall(
+  async (
+    {
+      amount,
+      betSide,
+      gameId,
+      multiplier,
+      status,
+      user1Id,
+      user1Metamask,
+      user1PhotoURL,
+      contractAddress,
+    }: CreateArgs,
+    context: any,
+  ): Promise<string> => {
+    authCheck(context)
 
-  lobbyCollectionRef.add({
-    amount: amount,
-    betSide: betSide,
-    createdAt: admin.firestore.FieldValue.serverTimestamp(),
-    gameId: gameId,
-    multiplier: multiplier,
-    status: status,
-    user1Id: user1Id,
-    user1Metamask: user1Metamask,
-    user1PhotoURL: user1PhotoURL,
-    contractAddress: contractAddress,
-  })
+    // if user is not banned
+    const bannedCollectionRef = db.collection("banned")
+    const bannedUserDocRef = bannedCollectionRef.doc(context.auth.uid)
+    if (bannedUserDocRef.get().exists) {
+      return "user is banned"
+    }
 
-  return "success"
-})
+    lobbyCollectionRef.add({
+      amount: amount,
+      betSide: betSide,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      gameId: gameId,
+      multiplier: multiplier,
+      status: status,
+      user1Id: user1Id,
+      user1Metamask: user1Metamask,
+      user1PhotoURL: user1PhotoURL,
+      contractAddress: contractAddress,
+    })
+
+    return "success"
+  },
+)
 
 interface AcceptArgs {
   betId: string
@@ -63,12 +103,12 @@ interface AcceptArgs {
 exports.acceptBet = functions.https.onCall(
   async (
     { betId, photoURL, hostUid, user2Metamask }: AcceptArgs,
-    context: any
+    context: any,
   ): Promise<string> => {
     authCheck(context)
     const betDocRef = lobbyCollectionRef.doc(betId)
 
-    const userDocRef = db.collection("users").doc(hostUid) 
+    const userDocRef = db.collection("users").doc(hostUid)
     let isPlayerBlocked = false
     await userDocRef.get().then((doc: any) => {
       const blocked: string[] = doc.data().blocked
@@ -96,7 +136,7 @@ exports.acceptBet = functions.https.onCall(
         return "bet already full"
       }
     })
-  }
+  },
 )
 
 interface CancelArgs {
@@ -119,7 +159,7 @@ exports.cancelBet = functions.https.onCall(
       }
     })
     return
-  }
+  },
 )
 
 interface ApproveArgs {
@@ -151,7 +191,7 @@ exports.approveBet = functions.https.onCall(
     })
 
     return
-  }
+  },
 )
 
 interface CompleteArgs {
@@ -175,7 +215,7 @@ exports.deleteBet = functions.https.onCall(
       }
     })
     return
-  }
+  },
 )
 
 exports.kickUser = functions.https.onCall(
@@ -195,5 +235,98 @@ exports.kickUser = functions.https.onCall(
       }
     })
     return
-  }
+  },
 )
+
+// exports.releaseStuckFunds = functions.https.onCall(
+//   async (gameId: string, context: any): Promise<void> => {
+//     specialAuthCheck(context)
+//     payWinnersByGameId(gameId)
+//   },
+// )
+
+// const gameIdHistoryRef = db.collection("games")
+
+// const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
+// const contractABI = ChessWager.abi
+// const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
+// const rpcUrl = process.env.BSC_TESTNET_RPC_URL
+
+// const Wallet = ethers.Wallet
+// const Contract = ethers.Contract
+// const providers = ethers.providers
+
+// const provider = new providers.JsonRpcProvider(rpcUrl)
+// const wallet = new Wallet(metamaskKey, provider)
+// const contract = new Contract(contractAddress, contractABI, wallet)
+
+// const overrides = {
+//   gasLimit: 1000000,
+// }
+
+// const payWinnersContractCall = async (gameId: string, winningSide: string) => {
+//   gameIdHistoryRef
+//     .doc(gameId)
+//     .get()
+//     .then((doc: any) => {
+//       if (doc.exists) {
+//         const contractDoc = gameIdHistoryRef
+//           .doc(gameId)
+//           .collection("contracts")
+//           .doc(contractAddress)
+
+//         contractDoc
+//           .get()
+//           .then((cDoc: any) => {
+//             contract
+//               .payWinners(gameId, winningSide, overrides)
+//               .then((tx: any) => {
+//                 console.log("tx: ", tx)
+//               })
+//               .catch((err: any) => {
+//                 console.log("err: ", err)
+//               })
+//           })
+//           .catch(console.error)
+//       }
+//     })
+// }
+
+// const payWinnersByGameId = async (gameId: string) => {
+//   fetch(`https://lichess.org/api/game/${gameId}`)
+//     .then((res: any) => res.json())
+//     .then((gameData: any) => {
+//       console.log(gameData)
+//       // check if game has been completed
+//       if (gameData.hasOwnProperty("winner")) {
+//         console.log("game is over, checking for winners")
+//         const whiteWins = gameData.winner === "white"
+//         const blackWins = gameData.winner === "black"
+//         if (whiteWins) {
+//           console.log("white wins, updating contract")
+//           gameIdHistoryRef.doc(gameId).set({
+//             outcome: "white wins",
+//           })
+//           payWinnersContractCall(gameId, "white")
+//         } else if (blackWins) {
+//           console.log("black wins, updating contract")
+//           gameIdHistoryRef.doc(gameId).set({
+//             outcome: "black wins",
+//           })
+//           payWinnersContractCall(gameId, "black")
+//         }
+//       } else if (
+//         gameData.status === "draw" ||
+//         gameData.status === "stalemate"
+//       ) {
+//         console.log("game is a draw")
+//         gameIdHistoryRef.doc(gameId).set({
+//           outcome: gameData.status,
+//         })
+//         payWinnersContractCall(gameId, "draw")
+//       } else {
+//         console.log("game is not over : ", gameData)
+//       }
+//     })
+//     .catch(console.error)
+// }

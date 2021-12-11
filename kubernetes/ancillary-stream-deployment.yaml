@@ -6,15 +6,15 @@ metadata:
     kompose.version: 1.26.0 (40646f47)
   creationTimestamp: null
   labels:
-    io.kompose.service: contract-listener
-  name: contract-listener
+    io.kompose.service: ancillary-stream
+  name: ancillary-stream
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: contract-listener
+      io.kompose.service: ancillary-stream
   strategy:
-    type: Recreate
+    type: RollingUpdate
   template:
     metadata:
       annotations:
@@ -22,11 +22,11 @@ spec:
         kompose.version: 1.26.0 (40646f47)
       creationTimestamp: null
       labels:
-        io.kompose.service: contract-listener
+        io.kompose.service: ancillary-stream
     spec:
       containers:
         - env:
-          image: contract-listener
+          image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/ancillary-stream
           livenessProbe:
             exec:
               command:
@@ -34,11 +34,16 @@ spec:
             failureThreshold: 3
             periodSeconds: 90
             timeoutSeconds: 10
-          name: contract-listener
+          name: ancillary-stream
           resources: {}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 10m"]
           volumeMounts:
             - mountPath: /data
               name: stream-data
+      terminationGracePeriodSeconds: 600
       restartPolicy: Always
       volumes:
         - name: stream-data

@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
+    // "lib": ["es6","esnext.bigint"],
     "module": "commonjs",
     "noImplicitReturns": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "outDir": "lib",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017"
+    "target": "esnext",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node"
   },
   "compileOnSave": true,
   "include": ["src"]
