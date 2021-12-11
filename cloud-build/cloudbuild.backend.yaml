@@ -16,4 +16,102 @@ steps:
   #   name: "gcr.io/cloud-builders/npm"
   #   args: ["run", "test", "--", "--watchAll=false"]
 
+  # Build docker images for k8s
+  - id: Building contract listener
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - "-t"
+      - "$_IMAGE_NAME_CL:$COMMIT_SHA"
+      - .
+      - "-f"
+      - $_DOCKERFILE_NAME_CL
+    dir: $_DOCKERFILE_DIR
+  - id: Building ancillary stream
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - "-t"
+      - "$_IMAGE_NAME_AS:$COMMIT_SHA"
+      - .
+      - "-f"
+      - $_DOCKERFILE_NAME_AS
+    dir: $_DOCKERFILE_DIR
+  - id: Building primary stream
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - "-t"
+      - "$_IMAGE_NAME_PS:$COMMIT_SHA"
+      - .
+      - "-f"
+      - $_DOCKERFILE_NAME_PS
+    dir: $_DOCKERFILE_DIR
+
+  # Pushing images
+  - id: Pushing contract listener
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - "$_IMAGE_NAME_CL:$COMMIT_SHA"
+  - id: Pushing ancillary stream
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - "$_IMAGE_NAME_AS:$COMMIT_SHA"
+  - id: Pushing primary stream
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - "$_IMAGE_NAME_PS:$COMMIT_SHA"
+
+  # Deploying to k8s
+  - id: Applying shared volume to k8s
+    name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - apply
+      - "--filename=kubernetes/stream-data-persistentvolumeclaim.yaml"
+      - "--cluster=$_GKE_CLUSTER"
+      - "--location=$_GKE_LOCATION"
+      - "--namespace=$_K8S_NAMESPACE"
+  - id: Applying contract listener to k8s
+    name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - "--filename=kubernetes/contract-listener-deployment.yaml"
+      - "--image=$_IMAGE_NAME_CL:$COMMIT_SHA"
+      - "--cluster=$_GKE_CLUSTER"
+      - "--location=$_GKE_LOCATION"
+      - "--namespace=$_K8S_NAMESPACE"
+  - id: Clearing build folder
+    name: bash
+    args:
+      - rm
+      - "-rf"
+      - output
+  - id: Applying ancillary stream to k8s
+    name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - "--filename=kubernetes/ancillary-stream-deployment.yaml"
+      - "--image=$_IMAGE_NAME_AS:$COMMIT_SHA"
+      - "--cluster=$_GKE_CLUSTER"
+      - "--location=$_GKE_LOCATION"
+      - "--namespace=$_K8S_NAMESPACE"
+  - id: Clearing build folder again
+    name: bash
+    args:
+      - rm
+      - "-rf"
+      - output
+  - id: Applying primary stream to k8s
+    name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - "--filename=kubernetes/primary-stream-deployment.yaml"
+      - "--image=$_IMAGE_NAME_PS:$COMMIT_SHA"
+      - "--cluster=$_GKE_CLUSTER"
+      - "--location=$_GKE_LOCATION"
+      - "--namespace=$_K8S_NAMESPACE"
+
 timeout: 1800s
