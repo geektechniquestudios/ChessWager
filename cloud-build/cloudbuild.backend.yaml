@@ -1,5 +1,5 @@
 steps:
- - id: Installing dependencies for frontend
+  - id: Installing dependencies for frontend
     name: "gcr.io/cloud-builders/npm"
     args: ["install", "--no-optional", "-f"]
   - id: Installing firebase tools
