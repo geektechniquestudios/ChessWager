@@ -23,93 +23,96 @@ const db = admin.firestore()
 const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("games")
 
-  export const payWinnersByGameId = async (gameId: string) => {
-    fetch(`https://lichess.org/api/game/${gameId}`)
-      .then((res: any) => res.json())
-      .then((gameData: any) => {
-        console.log(gameData)
-        // check if game has been completed
-        if (gameData.hasOwnProperty("winner")) {
-          console.log("game is over, checking for winners")
-          const whiteWins = gameData.winner === "white"
-          const blackWins = gameData.winner === "black"
-          if (whiteWins) {
-            console.log("white wins, updating contract")
-            gameIdHistoryRef.doc(gameId).set({
-              outcome: "white wins",
-            })
-            payWinnersContractCall(gameId, "white")
-          } else if (blackWins) {
-            console.log("black wins, updating contract")
-            gameIdHistoryRef.doc(gameId).set({
-              outcome: "black wins",
-            })
-            payWinnersContractCall(gameId, "black")
-          }
-        } else if (
-          gameData.status === "draw" ||
-          gameData.status === "stalemate"
-        ) {
-          console.log("game is a draw")
+export const payWinnersByGameId = async (gameId: string) => {
+  fetch(`https://lichess.org/api/game/${gameId}`)
+    .then((res: any) => res.json())
+    .then((gameData: any) => {
+      console.log(gameData)
+      // check if game has been completed
+      if (gameData.hasOwnProperty("winner")) {
+        console.log("game is over, checking for winners")
+        const whiteWins = gameData.winner === "white"
+        const blackWins = gameData.winner === "black"
+        if (whiteWins) {
+          console.log("white wins, updating contract")
           gameIdHistoryRef.doc(gameId).set({
-            outcome: gameData.status,
+            outcome: "white wins",
           })
-          payWinnersContractCall(gameId, "draw")
-        } else {
-          console.log("game is not over : ", gameData)
+          payWinnersContractCall(gameId, "white")
+        } else if (blackWins) {
+          console.log("black wins, updating contract")
+          gameIdHistoryRef.doc(gameId).set({
+            outcome: "black wins",
+          })
+          payWinnersContractCall(gameId, "black")
         }
-      })
-      .catch(console.error)
-  }
+      } else if (
+        gameData.status === "draw" ||
+        gameData.status === "stalemate"
+      ) {
+        console.log("game is a draw")
+        gameIdHistoryRef.doc(gameId).set({
+          outcome: gameData.status,
+        })
+        payWinnersContractCall(gameId, "draw")
+      } else {
+        console.log("game is not over : ", gameData)
+      }
+    })
+    .catch(console.error)
+}
 
-  const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
-  const contractABI = ChessWager.abi
-  const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
+const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
+const contractABI = ChessWager.abi
+const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
 
-  let rpcUrl
-  if (process.env.BRANCH_ENV === "develop") {
-    rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
-  } else if (process.env.BRANCH_ENV === "test") {
-    rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
-  } else if (process.env.BRANCH_ENV === "main") {
-    rpcUrl = process.env.AVALANCHE_MAINNET_RPC_URL
-  }
+let rpcUrl
+if (process.env.BRANCH_ENV === "develop") {
+  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.BRANCH_ENV === "test") {
+  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.BRANCH_ENV === "main") {
+  rpcUrl = process.env.AVALANCHE_MAINNET_RPC_URL
+}
 
-  const Wallet = ethers.Wallet
-  const Contract = ethers.Contract
-  const providers = ethers.providers
+const Wallet = ethers.Wallet
+const Contract = ethers.Contract
+const providers = ethers.providers
 
-  const provider = new providers.JsonRpcProvider(rpcUrl)
-  const wallet = new Wallet(metamaskKey, provider)
-  const contract = new Contract(contractAddress, contractABI, wallet)
+const provider = new providers.JsonRpcProvider(rpcUrl)
+const wallet = new Wallet(metamaskKey, provider)
+const contract = new Contract(contractAddress, contractABI, wallet)
 
-  const overrides = {
-    gasLimit: 1000000,
-  }
+const overrides = {
+  gasLimit: 1000000,
+}
 
-  const payWinnersContractCall = async (
-    gameId: string,
-    winningSide: string,
-  ) => {
-    await new Promise((resolve) => setTimeout(resolve, 8000))
-    gameIdHistoryRef
-      .doc(gameId)
-      .get()
-      .then((doc: any) => {
-        if (doc.exists) {
-          const contractMap = doc.data().contractMap ?? {}
-          if (contractMap[contractAddress]) {
+const payWinnersContractCall = async (gameId: string, winningSide: string) => {
+  gameIdHistoryRef
+    .doc(gameId)
+    .get()
+    .then((doc: any) => {
+      if (doc.exists) {
+        const contractDoc = gameIdHistoryRef
+          .doc(gameId)
+          .collection("contracts")
+          .doc(contractAddress)
+
+        contractDoc.get().then((cDoc: any) => {
+          if (!cDoc.exists) {
+            console.log("no document found for gameId: ", gameId)
+            return
+          }
+          if (!cDoc.data().needToPay) {
+            console.log("No bets placed on this game, skipping contract call")
+          } else if (cDoc.data().hasBeenPaid) {
             console.log(
-              "contract has already been paid, or is not in the contract map",
+              "contract has already been paid, skipping contract call",
             )
-          } else if (!contractMap[contractAddress]) {
+          } else {
             console.log("paying winners for gameId: ", gameId)
-            const contractMap = doc.data().contractMap ?? {}
-            contractMap[contractAddress] = true
-            gameIdHistoryRef.doc(gameId).update({
-              contractMap,
-              updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-            })
+            contractDoc.set({ hasBeenPaid: true }, { merge: true })
+
             contract
               .payWinners(gameId, winningSide, overrides)
               .then((tx: any) => {
@@ -119,10 +122,10 @@ const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestor
                 console.log("err: ", err)
               })
           }
-        } else {
-          console.error("no such game document")
-        }
-      })
-      .catch(console.error)
-  }
-
+        })
+      } else {
+        console.error("no such game document")
+      }
+    })
+    .catch(console.error)
+}

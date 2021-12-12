@@ -35,6 +35,11 @@ try {
   console.error(err)
 }
 
+const payWinners = async (gameId: string) => {
+  await new Promise((resolve) => setTimeout(resolve, 8000))
+  payWinnersByGameId(gameId)
+}
+
 const callLichessLiveTv = () => {
   let gameId = ""
   let lastGameId = ""
@@ -59,7 +64,7 @@ const callLichessLiveTv = () => {
         } catch (err) {
           console.error(err)
         }
-        payWinnersByGameId(lastGameId)
+        payWinners(lastGameId)
       } else {
         console.log("players moving ", obj)
       }
@@ -70,7 +75,7 @@ const callLichessLiveTv = () => {
     .on("error", console.error)
 }
 
-payWinnersByGameId(mostRecentGameIdSinceLastRestart)
+// payWinnersByGameId(mostRecentGameIdSinceLastRestart)
 callLichessLiveTv()
 
 setInterval(() => {
