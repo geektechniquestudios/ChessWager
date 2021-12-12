@@ -3,7 +3,6 @@ FROM node:14
 WORKDIR /app
 
 COPY ./chess-data-stream-processor/primary-stream ./chess-data-stream-processor/primary-stream
-# COPY ./chess-data-stream-processor/payment-processor ./chess-data-stream-processor/payment-processor
 COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/contracts/ChessWager.sol/ChessWager.json
 
 # only in local
@@ -11,9 +10,13 @@ COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/co
 
 COPY .env ./
 
+COPY ./chess-data-stream-processor/payment-processor ./chess-data-stream-processor/payment-processor
+WORKDIR /app/chess-data-stream-processor/payment-processor
+RUN npm install
+
 WORKDIR /app/chess-data-stream-processor/primary-stream
 
 RUN npm install
 
-CMD ["bash", "./start.sh"]
-
+# CMD ["bash", "./start.sh"]
+CMD ["npm", "start"]
