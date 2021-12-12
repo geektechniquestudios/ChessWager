@@ -47,7 +47,6 @@ const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.Docume
 
 const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("games")
-// const shouldPayoutFile = "/data/payout.txt"
 
 contract.on(
   "BetPlacedStatus",
