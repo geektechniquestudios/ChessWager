@@ -189,7 +189,6 @@ exports.approveBet = functions.https.onCall(
         })
       }
     })
-
     return
   },
 )

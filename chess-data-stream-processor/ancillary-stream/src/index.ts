@@ -75,7 +75,7 @@ const callLichessLiveTv = () => {
     .on("error", console.error)
 }
 
-// payWinnersByGameId(mostRecentGameIdSinceLastRestart)
+payWinnersByGameId(mostRecentGameIdSinceLastRestart)
 callLichessLiveTv()
 
 setInterval(() => {
