@@ -23,8 +23,6 @@ const db = admin.firestore()
 const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("games")
 
-
-
 export const payWinnersByGameId = async (gameId: string) => {
   fetch(`https://lichess.org/api/game/${gameId}`)
     .then((res: any) => res.json())
@@ -67,7 +65,15 @@ export const payWinnersByGameId = async (gameId: string) => {
 const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
 const contractABI = ChessWager.abi
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
-const rpcUrl = process.env.BSC_TESTNET_RPC_URL
+
+let rpcUrl
+if (process.env.BRANCH_ENV === "develop") {
+  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.BRANCH_ENV === "test") {
+  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.BRANCH_ENV === "main") {
+  rpcUrl = process.env.AVALANCHE_MAINNET_RPC_URL
+}
 
 const Wallet = ethers.Wallet
 const Contract = ethers.Contract
@@ -81,35 +87,42 @@ const overrides = {
   gasLimit: 1000000,
 }
 
-export const payWinnersContractCall = async (gameId: string, winningSide: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 8000))
+const payWinnersContractCall = async (gameId: string, winningSide: string) => {
   gameIdHistoryRef
     .doc(gameId)
     .get()
     .then((doc: any) => {
       if (doc.exists) {
-        const contractMap = doc.data().contractMap ?? {}
-        if (contractMap[contractAddress]) {
-          console.log(
-            "contract has already been paid, or is not in the contract map",
-          )
-        } else if (!contractMap[contractAddress]) {
-          console.log("paying winners for gameId: ", gameId)
-          const contractMap = doc.data().contractMap ?? {}
-          contractMap[contractAddress] = true
-          gameIdHistoryRef.doc(gameId).update({
-            contractMap,
-            updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-          })
-          contract
-            .payWinners(gameId, winningSide, overrides)
-            .then((tx: any) => {
-              console.log("tx: ", tx)
-            })
-            .catch((err: any) => {
-              console.log("err: ", err)
-            })
-        }
+        const contractDoc = gameIdHistoryRef
+          .doc(gameId)
+          .collection("contracts")
+          .doc(contractAddress)
+
+        contractDoc.get().then((cDoc: any) => {
+          if (!cDoc.exists) {
+            console.log("no document found for gameId: ", gameId)
+            return
+          }
+          if (!cDoc.data().needToPay) {
+            console.log("No bets placed on this game, skipping contract call")
+          } else if (cDoc.data().hasBeenPaid) {
+            console.log(
+              "contract has already been paid, skipping contract call",
+            )
+          } else {
+            console.log("paying winners for gameId: ", gameId)
+            contractDoc.set({ hasBeenPaid: true }, { merge: true })
+
+            contract
+              .payWinners(gameId, winningSide, overrides)
+              .then((tx: any) => {
+                console.log("tx: ", tx)
+              })
+              .catch((err: any) => {
+                console.log("err: ", err)
+              })
+          }
+        })
       } else {
         console.error("no such game document")
       }

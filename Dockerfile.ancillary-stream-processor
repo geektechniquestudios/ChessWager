@@ -10,9 +10,13 @@ COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/co
 
 COPY .env ./
 
+COPY ./chess-data-stream-processor/payment-processor ./chess-data-stream-processor/payment-processor
+WORKDIR /app/chess-data-stream-processor/payment-processor
+RUN npm install
+
 WORKDIR /app/chess-data-stream-processor/ancillary-stream
 
 RUN npm install
 
 CMD ["bash", "./start.sh"]
-
+# CMD ["npm", "start"]

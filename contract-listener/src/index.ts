@@ -24,8 +24,14 @@ const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS
 const contractABI = ChessWager.abi
 const metamaskAddress = process.env.METAMASK_ACCOUNT_ADDRESS
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
-const rpcUrl = process.env.BSC_TESTNET_RPC_URL
-
+let rpcUrl
+if (process.env.BRANCH_ENV === "develop") {
+  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.BRANCH_ENV === "test") {
+  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.BRANCH_ENV === "main") {
+  rpcUrl = process.env.AVALANCHE_MAINNET_RPC_URL
+}
 console.log(metamaskAddress)
 
 const Wallet = ethers.Wallet

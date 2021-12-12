@@ -1,10 +1,7 @@
-import firebase from "firebase/compat/app"
 import ndjson from "ndjson"
 import fs from "fs"
-const ChessWager = require("../../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
+import { payWinnersByGameId } from "../../payment-processor/src/index"
 require("dotenv").config({ path: "../../.env" })
-const fetch = require("node-fetch")
-const ethers = require("ethers")
 
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
@@ -21,10 +18,6 @@ if (isLocal) {
 }
 
 admin.initializeApp({ credential: cred })
-const db = admin.firestore()
-
-const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-  db.collection("games")
 
 const defaultTime = 10
 let secondsUntilRestartCheck = defaultTime
@@ -55,105 +48,6 @@ const callLichessLiveTv = () => {
       console.log("ended stream gracefully")
     })
     .on("error", console.error)
-}
-
-const payWinnersByGameId = async (gameId: string) => {
-  fetch(`https://lichess.org/api/game/${gameId}`)
-    .then((res: any) => res.json())
-    .then((gameData: any) => {
-      console.log(gameData)
-      // check if game has been completed
-      if (gameData.hasOwnProperty("winner")) {
-        console.log("game is over, checking for winners")
-        const whiteWins = gameData.winner === "white"
-        const blackWins = gameData.winner === "black"
-        if (whiteWins) {
-          console.log("white wins, updating contract")
-          gameIdHistoryRef.doc(gameId).set({
-            outcome: "white wins",
-          })
-          payWinnersContractCall(gameId, "white")
-        } else if (blackWins) {
-          console.log("black wins, updating contract")
-          gameIdHistoryRef.doc(gameId).set({
-            outcome: "black wins",
-          })
-          payWinnersContractCall(gameId, "black")
-        }
-      } else if (
-        gameData.status === "draw" ||
-        gameData.status === "stalemate"
-      ) {
-        console.log("game is a draw")
-        gameIdHistoryRef.doc(gameId).set({
-          outcome: gameData.status,
-        })
-        payWinnersContractCall(gameId, "draw")
-      } else {
-        console.log("game is not over : ", gameData)
-      }
-    })
-    .catch(console.error)
-}
-
-const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
-const contractABI = ChessWager.abi
-const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
-const rpcUrl = process.env.BSC_TESTNET_RPC_URL
-
-const Wallet = ethers.Wallet
-const Contract = ethers.Contract
-const providers = ethers.providers
-
-const provider = new providers.JsonRpcProvider(rpcUrl)
-const wallet = new Wallet(metamaskKey, provider)
-const contract = new Contract(contractAddress, contractABI, wallet)
-
-const overrides = {
-  gasLimit: 1000000,
-}
-
-const payWinnersContractCall = async (gameId: string, winningSide: string) => {
-  gameIdHistoryRef
-    .doc(gameId)
-    .get()
-    .then((doc: any) => {
-      if (doc.exists) {
-        const contractDoc = gameIdHistoryRef
-          .doc(gameId)
-          .collection("contracts")
-          .doc(contractAddress)
-
-        contractDoc.get().then((cDoc: any) => {
-          if (!cDoc.exists) {
-            console.log("no document found for gameId: ", gameId)
-            return
-          }
-          if (!cDoc.data().needToPay) {
-            console.log("No bets placed on this game, skipping contract call")
-          } else if (cDoc.data().hasBeenPaid) {
-            console.log(
-              "contract has already been paid, skipping contract call",
-            )
-          } else {
-            console.log("paying winners for gameId: ", gameId)
-            contractDoc.set({ hasBeenPaid: true }, { merge: true })
-
-            contract
-              .payWinners(gameId, winningSide, overrides)
-              .then((tx: any) => {
-                console.log("tx: ", tx)
-              })
-              .catch((err: any) => {
-                console.log("err: ", err)
-              })
-          }
-        })
-      } else {
-        console.error("no such game document")
-      }
-    })
-    .catch(console.error)
 }
 
 callLichessLiveTv()

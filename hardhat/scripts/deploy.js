@@ -52,17 +52,17 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
-  const shouldDeploy = process.env.CI_SHOULD_DEPLOY_CONTRACT === "true"
-  if (!shouldDeploy) {
-    console.log(
-      "Skipping contract deployment because the CI_SHOULD_DEPLOY_CONTRACT environment variable is set to false",
-    )
-    await contractRef.get().then(doc => {
-      setEnvValue("REACT_APP_CONTRACT_ADDRESS", doc.data().address)  
-    })
-    console.log("Local .env updated to reflect contract address stored in database")
-    process.exit(0)
-  }
+  // const shouldDeploy = process.env.CI_SHOULD_DEPLOY_CONTRACT === "true"
+  // if (!shouldDeploy) {
+  //   console.log(
+  //     "Skipping contract deployment because the CI_SHOULD_DEPLOY_CONTRACT environment variable is set to false",
+  //   )
+  //   await contractRef.get().then(doc => {
+  //     setEnvValue("REACT_APP_CONTRACT_ADDRESS", doc.data().address)  
+  //   })
+  //   console.log("Local .env updated to reflect contract address stored in database")
+  //   process.exit(0)
+  // }
 
   const ChessWagerContract = await hre.ethers.getContractFactory("ChessWager")
   const chessWager = await ChessWagerContract.deploy()
@@ -74,7 +74,7 @@ async function main() {
 
   if (env === "develop" || env === "test" || env === "main") {
     await contractRef.set({
-      address: chessWager.address,
+      addressHistory: admin.firestore.FieldValue.arrayUnion(chessWager.address),
     })
   } else {
     throw new Error(

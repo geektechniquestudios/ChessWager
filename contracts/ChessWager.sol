@@ -41,7 +41,7 @@ contract ChessWager is Ownable {
 
   function placeBet(Bet calldata _bet, string calldata _betId) public payable {
     // ensure no more than 20 seconds has passed since the bet timestamp
-    require(block.timestamp - _bet.timestamp < 20000);
+    // require(block.timestamp - _bet.timestamp < 20000);
     require(gameIdToIsGameOver[_bet.gameId] != true);
     require(
       msg.sender == _bet.user1Metamask || msg.sender == _bet.user2Metamask
