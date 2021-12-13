@@ -23,8 +23,7 @@ module.exports = {
   },
   networks: {
     hardhat: {
-      gasPrice: 225000000000,
-      chainId: 43112, //Only specify a chainId if we are not forking
+      chainId: 1337,
     },
     local: {
       url: "http://localhost:9650/ext/bc/C/rpc",

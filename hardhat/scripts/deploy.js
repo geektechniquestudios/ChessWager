@@ -1,8 +1,3 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// When running the script with `npx hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
 const fs = require("fs")
 const os = require("os")
 const hre = require("hardhat")
@@ -42,7 +37,7 @@ function setEnvValue(key, value) {
   fs.writeFileSync("./.env", ENV_VARS.join(os.EOL))
 }
 
-const contractRef = db.collection("contracts").doc("mainContract")
+const contractRef = db.collection("contracts")
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -73,8 +68,8 @@ async function main() {
   console.log("Contract address written to database")
 
   if (env === "develop" || env === "test" || env === "main") {
-    await contractRef.set({
-      addressHistory: admin.firestore.FieldValue.arrayUnion(chessWager.address),
+    await contractRef.doc(chessWager.address).set({
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
     })
   } else {
     throw new Error(
