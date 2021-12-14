@@ -24,6 +24,7 @@ const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS
 const contractABI = ChessWager.abi
 const metamaskAddress = process.env.METAMASK_ACCOUNT_ADDRESS
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
+
 let rpcUrl
 if (process.env.BRANCH_ENV === "develop") {
   rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
@@ -111,6 +112,13 @@ contract.on(
     user1 payment: ${didUser1Pay} 
     user2 payment: ${didUser2Pay}`)
 
+    // print something every 5 seconds
+    setTimeout(() => {
+      console.log("PayoutStatus: ", betId, gameId, didUser1Pay, didUser2Pay)
+    }, 5000)
+
+    // this shouldn't non-idempotent nature of ".increment"  won't be a problem during upgrade because 
+    // firestore only you to update a document once per second
     lobbyRef
       .doc(betId)
       .get()

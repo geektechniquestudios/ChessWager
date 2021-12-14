@@ -1,4 +1,3 @@
-// @ts-ignore
 const { expect } = require("chai")
 const hre = require("hardhat")
 
@@ -8,7 +7,20 @@ const env = process.env.BRANCH_ENV
 const isLocal = env === "develop"
 const adminSdk = process.env.FIREBASE_ADMIN_SDK
 
-let cred: any
+const Wallet = hre.ethers.Wallet
+const Contract = hre.ethers.Contract
+const providers = hre.ethers.providers
+
+const ChessWager = require("../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
+const contractABI = ChessWager.abi
+const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
+
+const provider = new providers.JsonRpcProvider("http://127.0.0.1:8545")
+const wallet = new Wallet(metamaskKey, provider)
+// const contract = new Contract(contractAddress, contractABI, wallet)
+
+
+let cred
 if (isLocal) {
   const serviceAccount = require(`../${adminSdk}`)
   cred = admin.credential.cert(serviceAccount)
@@ -18,40 +30,39 @@ if (isLocal) {
 
 admin.initializeApp({ credential: cred })
 
-// describe("Greeter", function () {
-//   it("Should return the new greeting once it's changed", async function () {
-//     const Greeter = await ethers.getContractFactory("Greeter")
-//     const greeter = await Greeter.deploy("Hello, world!")
-//     await greeter.deployed()
+const db = admin.firestore()
+const contractRef = db.collection("contracts")
 
-//     expect(await greeter.greet()).to.equal("Hello, world!")
-
-//     const setGreetingTx = await greeter.setGreeting("Hola, mundo!")
-
-//     // wait until the transaction is mined
-//     await setGreetingTx.wait()
-
-//     expect(await greeter.greet()).to.equal("Hola, mundo!")
-//   })
-// })
-
-const getContractRef = () => {
-  const db = admin.firestore()
-  const contractRef = db.collection("contracts")
-  return contractRef
-}
+let chessWager, owner, contractAddress
 
 describe("Deployment", () => {
-  it("Should compare the contract address to the database stored address", async () => {
+  beforeEach(async () => {
     const ChessWagerContract = await hre.ethers.getContractFactory("ChessWager")
-    const chessWager = await ChessWagerContract.deploy()
+    chessWager = await ChessWagerContract.deploy()
     await chessWager.deployed()
-    const contractRef = getContractRef()
+    ;[owner] = await hre.ethers.getSigners()
+  })
+
+  it("Should write the new contract address to firebase", async () => {
     contractRef
       .doc(chessWager.address)
       .get()
-      .then((doc: any) => {
+      .then((doc) => {
         expect(doc.data().address).to.equal(chessWager.address)
       })
   })
+
+  it("Should set the correct owner", async () => {
+    expect(await chessWager.owner()).to.equal(owner.address)
+  })
 })
+
+describe("Placing Bets", () => {
+  it("Should ", () => {
+    
+  })
+})
+
+// describe("tbd", () => {
+//   it("Should", () => {})
+// })

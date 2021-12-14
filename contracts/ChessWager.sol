@@ -27,11 +27,9 @@ contract ChessWager is Ownable {
     string[] betIdArray;
     uint256 endTime;
   }
-  mapping(address => uint256) private addressToBalance; // @todo remove if not using
-  // mapping for who bet first
   uint256 private chessWagerBalance;
   address payable private chessWagerAddress;
-  uint256 public totalWagered;
+  uint256 public totalWagered; // overall amount spent of contract
 
   constructor() {
     // store chesswageraddress
@@ -121,16 +119,12 @@ contract ChessWager is Ownable {
     }
   }
 
-  function newBet() private {}
-
-  function matchedBet() private {}
-
   function payWinners(string calldata _gameId, string calldata winningSide)
     external
     payable
     onlyOwner
   {
-    gameIdToIsGameOver[_gameId] = true; // prevents new bets on old games
+    gameIdToIsGameOver[_gameId] = true; // prevents new bets on old games @todo, stopped working at some point?
     for (uint256 i = 0; i < gameIdToGameData[_gameId].betIdArray.length; i++) {
       // going over each bet for this gameId
       Bet memory bet = betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]];
@@ -241,10 +235,10 @@ contract ChessWager is Ownable {
     ) {
       uint256 user1BetAmount = (prizePool / (1 + (bet.multiplier / 100)));
       bet.user1Metamask.transfer(
-        user1BetAmount // minus comission
+        user1BetAmount 
       );
       bet.user2Metamask.transfer(
-        prizePool - user1BetAmount // minus comission
+        prizePool - user1BetAmount 
       );
     }
 
