@@ -1,5 +1,4 @@
 import { Card, Spinner } from "react-bootstrap"
-import "../../config"
 import "../../style/lobby.scss"
 import "firebase/compat/functions"
 import { Buttons } from "./Buttons"
