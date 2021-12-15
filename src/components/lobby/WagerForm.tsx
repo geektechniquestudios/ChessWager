@@ -1,7 +1,6 @@
 import { useState } from "react"
 import CurrencyInput from "react-currency-input-field"
 import "../../style/lobby.scss"
-import "../../config"
 import firebase from "firebase/compat/app"
 import RangeSlider from "react-bootstrap-range-slider"
 import { GameId } from "../containers/GameId"

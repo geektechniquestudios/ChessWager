@@ -1,3 +1,4 @@
+import "./config"
 import { useEffect, useState } from "react"
 import { BettingLobby } from "./components/lobby/BettingLobby"
 import { ChessGame } from "./components/game/ChessGame"

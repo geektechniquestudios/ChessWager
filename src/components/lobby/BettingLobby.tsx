@@ -1,5 +1,3 @@
-import "../../config"
-
 import firebase from "firebase/compat/app"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { Bet } from "./Bet"

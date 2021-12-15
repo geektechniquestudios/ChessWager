@@ -1,5 +1,4 @@
 import "../../style/chat.scss"
-import "../../config"
 
 import firebase from "firebase/compat/app"
 import "firebase/compat/firestore"
