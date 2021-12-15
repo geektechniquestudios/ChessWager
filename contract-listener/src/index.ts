@@ -1,10 +1,10 @@
 import fs from "fs"
 import firebase from "firebase/compat/app"
 const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
-require("dotenv").config({ path: "../.env" })
 const ethers = require("ethers")
 const admin = require("firebase-admin")
 
+require("dotenv").config({ path: "../.env" })
 const isLocal = process.env.BRANCH_ENV === "develop"
 const adminSdk = process.env.FIREBASE_ADMIN_SDK
 
@@ -112,54 +112,54 @@ contract.on(
     user1 payment: ${didUser1Pay} 
     user2 payment: ${didUser2Pay}`)
 
-    // print something every 5 seconds
-    setTimeout(() => {
-      console.log("PayoutStatus: ", betId, gameId, didUser1Pay, didUser2Pay)
-    }, 5000)
-
-    // this shouldn't non-idempotent nature of ".increment"  won't be a problem during upgrade because 
-    // firestore only you to update a document once per second
-    lobbyRef
-      .doc(betId)
-      .get()
-      .then((doc: any) => {
-        if (doc.data().status === "approved") {
-          // if both users paid
-          if (didUser1Pay && didUser2Pay) {
-            userCollectionRef.doc(doc.data().user1Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              betFundedCount: admin.firestore.FieldValue.increment(1),
+    db.runTransaction(async (transaction: any) => {
+      transaction
+        .get(lobbyRef.doc(betId))
+        .then((doc: any) => {
+          if (!doc.data().hasFollowThroughBeenCounted) {
+            transaction.update(lobbyRef.doc(betId), {
+              hasFollowThroughBeenCounted: true,
             })
-            userCollectionRef.doc(doc.data().user2Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              betFundedCount: admin.firestore.FieldValue.increment(1),
-            })
-          } else if (didUser1Pay) {
-            // if only user1 paid
-            userCollectionRef.doc(doc.data().user1Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              betFundedCount: admin.firestore.FieldValue.increment(1),
-            })
-            userCollectionRef.doc(doc.data().user2Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-            })
-          } else if (didUser2Pay) {
-            // if only user2 paid
-            userCollectionRef.doc(doc.data().user1Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-            })
-            userCollectionRef.doc(doc.data().user2Id).update({
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              betFundedCount: admin.firestore.FieldValue.increment(1),
-            })
+          } else {
+            return
           }
-        }
-      })
-      .catch(console.error)
+          if (doc.data().status === "approved") {
+            // if both users paid
+            if (didUser1Pay && didUser2Pay) {
+              userCollectionRef.doc(doc.data().user1Id).update({
+                betAcceptedCount: admin.firestore.FieldValue.increment(1),
+                betFundedCount: admin.firestore.FieldValue.increment(1),
+              })
+              userCollectionRef.doc(doc.data().user2Id).update({
+                betAcceptedCount: admin.firestore.FieldValue.increment(1),
+                betFundedCount: admin.firestore.FieldValue.increment(1),
+              })
+            } else if (didUser1Pay) {
+              // if only user1 paid
+              userCollectionRef.doc(doc.data().user1Id).update({
+                betAcceptedCount: admin.firestore.FieldValue.increment(1),
+                betFundedCount: admin.firestore.FieldValue.increment(1),
+              })
+              userCollectionRef.doc(doc.data().user2Id).update({
+                betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              })
+            } else if (didUser2Pay) {
+              // if only user2 paid
+              userCollectionRef.doc(doc.data().user1Id).update({
+                betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              })
+              userCollectionRef.doc(doc.data().user2Id).update({
+                betAcceptedCount: admin.firestore.FieldValue.increment(1),
+                betFundedCount: admin.firestore.FieldValue.increment(1),
+              })
+            }
+          }
+        })
+        .catch(console.error)
+    })
   },
 )
 
-// print every 10 seconds
 const currentTimeFile = "/data/currentTime.txt"
 
 setInterval(() => {
