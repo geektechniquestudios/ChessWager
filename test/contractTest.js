@@ -19,7 +19,6 @@ const provider = new providers.JsonRpcProvider("http://127.0.0.1:8545")
 const wallet = new Wallet(metamaskKey, provider)
 // const contract = new Contract(contractAddress, contractABI, wallet)
 
-
 let cred
 if (isLocal) {
   const serviceAccount = require(`../${adminSdk}`)
@@ -35,14 +34,14 @@ const contractRef = db.collection("contracts")
 
 let chessWager, owner, contractAddress
 
-describe("Deployment", () => {
-  beforeEach(async () => {
-    const ChessWagerContract = await hre.ethers.getContractFactory("ChessWager")
-    chessWager = await ChessWagerContract.deploy()
-    await chessWager.deployed()
-    ;[owner] = await hre.ethers.getSigners()
-  })
+beforeEach(async () => {
+  const ChessWagerContract = await hre.ethers.getContractFactory("ChessWager")
+  chessWager = await ChessWagerContract.deploy()
+  await chessWager.deployed()
+  ;[owner] = await hre.ethers.getSigners()
+})
 
+describe("Deployment", () => {
   it("Should write the new contract address to firebase", async () => {
     contractRef
       .doc(chessWager.address)
@@ -58,8 +57,8 @@ describe("Deployment", () => {
 })
 
 describe("Placing Bets", () => {
-  it("Should ", () => {
-    
+  it("Should send bet data to contract and pay winners", () => {
+      
   })
 })
 

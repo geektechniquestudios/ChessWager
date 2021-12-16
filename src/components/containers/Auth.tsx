@@ -85,7 +85,7 @@ const useAuth = () => {
             setWalletAddress(doc.data()!.walletAddress)
             localStorage.setItem("walletAddress", doc.data()!.walletAddress)
           }
-        })
+        }).catch(console.error)
       }
     }
     const provider = new firebase.auth.GoogleAuthProvider()

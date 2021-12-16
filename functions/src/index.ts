@@ -1,7 +1,10 @@
 // import firebase from "firebase/compat/app"
 //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> = db.collection("lobby")
 // const ethers = require("ethers")
+const fs = require("fs")
+// const ChessWager = require("../ChessWager.json")
 // const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
+// const ChessWager = JSON.parse(fs.readFileSync("../ChessWager.json"))
 // import * as ChessWager from "../../src/artifacts/contracts/ChessWager.sol/ChessWager.json"
 const functions = require("firebase-functions")
 const admin = require("firebase-admin")
@@ -28,7 +31,7 @@ const specialAuthCheck = (context: any) => {
   // if (!context.auth.token.admin) {
   //   throw new functions.https.HttpsError(
   //     "failed-precondition",
-  //     "The function must be called by an admin.",
+  //     "the function must be called by an admin.",
   //   )
   // }
 
@@ -312,7 +315,7 @@ exports.kickUser = functions.https.onCall(
 //           gameIdHistoryRef.doc(gameId).set({
 //             outcome: "black wins",
 //           })
-//           payWinnersContractCall(gameId, "black")
+//            payWinnersContractCall(gameId, "black")
 //         }
 //       } else if (
 //         gameData.status === "draw" ||
@@ -328,4 +331,4 @@ exports.kickUser = functions.https.onCall(
 //       }
 //     })
 //     .catch(console.error)
-// }
+// // }
