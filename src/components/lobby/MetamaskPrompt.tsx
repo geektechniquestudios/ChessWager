@@ -33,8 +33,6 @@ export const MetamaskPrompt: React.FC<Props> = ({
   timestamp,
   contractAddress,
 }) => {
-  // const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
-
   const { auth } = Auth.useContainer()
 
   const bigAmount = ethers.utils.parseEther(amount.toString())
@@ -45,7 +43,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
       : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
 
   const bet = {
-    amount: ethers.utils.parseEther(amount.toString()),
+    amount: bigAmount,
     betSide: betSide,
     user1Id: user1Id,
     user1Metamask: user1Metamask,
@@ -73,8 +71,8 @@ export const MetamaskPrompt: React.FC<Props> = ({
       try {
         const transaction = await contract.placeBet(bet, betId, overrides)
         await transaction.wait()
-      } catch (e) {
-        console.error(e)
+      } catch (err) {
+        console.error(err)
       }
     } else {
       console.log("window.eth undefined!") // tell user to install metamask
@@ -82,7 +80,6 @@ export const MetamaskPrompt: React.FC<Props> = ({
   }
 
   useEffect(() => {
-    // wait 2 seconds before sending the bet
     sendBet()
     return () => {
       try {

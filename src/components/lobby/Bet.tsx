@@ -44,7 +44,7 @@ export const Bet: React.FC<Props> = ({
   hasUser2Paid,
   gameId,
   timestamp,
-  contractAddress
+  contractAddress,
 }) => {
   const { auth } = Auth.useContainer()
 
@@ -81,6 +81,7 @@ export const Bet: React.FC<Props> = ({
           </span>
           <span>{status}</span>
           {status === "approved" &&
+            ((isUser1 && !hasUser1Paid) || (!isUser1 && !hasUser2Paid)) &&
             timestamp !== undefined &&
             timestamp !== null &&
             timestamp !== 0 && (
