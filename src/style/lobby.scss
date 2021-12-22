@@ -11,14 +11,14 @@
 
 .lobby {
   display: grid;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 .lobby main {
   display: grid;
   overflow-y: auto;
+  overflow-x: hidden;
   /* bottom: 0; */
-  max-height: 27vh;
 }
 
 .lobby-container {

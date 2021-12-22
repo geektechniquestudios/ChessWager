@@ -12,6 +12,7 @@ import { Auth } from "./components/containers/Auth"
 
 export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
+  const [showChat, setShowChat] = useState(true)
 
   const [isDarkOn, setIsDarkOn] = useState(
     localStorage.getItem("darkMode") === "true" ||
@@ -44,9 +45,9 @@ export const App: React.FC = () => {
     })
   }, [auth])
 
-
+  const dark = isDarkOn ? "dark" : ""
   return (
-    <div className={isDarkOn ? "dark" : ""}>
+    <div className={`${dark} h-full w-full overflow-y-hidden`}>
       <section className="color-shift" id="page">
         <header
           className="  
@@ -57,14 +58,21 @@ export const App: React.FC = () => {
         >
           <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
         </header>
-        <nav>
-          <BettingLobby />
-        </nav>
         <main>
           <ChessGame />
+          <BettingLobby />
         </main>
-        <aside>
-          <GlobalChat />
+        <aside className="">
+          {showChat ? (
+            <GlobalChat showChat={showChat} setShowChat={setShowChat} />
+          ) : (
+            <button
+              onClick={() => setShowChat(!showChat)}
+              className="bg-white w-16 m-1 rounded-md float-right" 
+            >
+              {"<-"}
+            </button>
+          )}
         </aside>
       </section>
     </div>

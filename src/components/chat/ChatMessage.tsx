@@ -23,7 +23,7 @@ export const ChatMessage: React.FC<Props> = ({ message }) => {
     <>
       <div className={`message ${messageClass}`}>
         <img src={photoURL} alt="" title={userName} className="user-img" />
-        <p>{text}</p>
+        <p className="message-text">{text}</p>
       </div>
     </>
   )

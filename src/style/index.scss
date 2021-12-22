@@ -17,22 +17,16 @@ code {
 }
 
 #page {
-  /* height: 100vh; */
+  $gap-size: 0rem;
+  $header-size: 3em;
   display: grid;
-  gap: 1rem;
-  grid-template-areas: 
-  /* @todo should probably make this 2x4 instead of 3x4 */
-    "head  head  head"
-    "game  game  chat"
-    "game  game  chat"
-    "lobby lobby chat"
-    "lobby lobby chat";
-  grid-template-columns: minmax(10em, 3fr) minmax(10em, 3fr) minmax(16em, 2fr);
-  grid-template-rows:
-    minmax(1em, 1fr) minmax(auto, 5fr) minmax(auto, 5fr) minmax(1em, 6fr)
-    minmax(1em, 1fr);
-  /* justify-items: center; */
-  /* align-items: center; */
+  gap: $gap-size;
+  grid-template-areas:
+    "head  head"
+    "game  chat";
+  grid-template-columns: auto 20rem; 
+  grid-template-rows: $header-size calc(100vh - $header-size - $gap-size);
+
   @apply bg-primary
   dark:bg-primary-primaryDark;
 }
@@ -40,15 +34,24 @@ code {
 #page > header {
   grid-area: head;
 }
-
-#page > nav {
-  grid-area: lobby;
-}
 #page > main {
   grid-area: game;
+  overflow-y: auto;
 }
+#page > main::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
 #page > aside {
   grid-area: chat;
+}
+
+#page > main::-webkit-scrollbar-track {
+  @apply bg-primary dark:bg-primary-primaryDark;
+}
+
+#page > main::-webkit-scrollbar-thumb {
+  @apply bg-tertiary dark:bg-tertiary-tertiaryDark;
 }
 
 .user-img {

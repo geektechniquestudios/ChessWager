@@ -3,12 +3,17 @@
   "trafce": {
     "prefix": "trafce",
     "body": [
-      "interface Props {$0$1}",
+      "interface Props {$0}",
       "",
-      "export const ${TM_FILENAME_BASE}: React.FC<Props> = ({${1:prop}}) => {",
-      "return <> </>",
+      "export const ${TM_FILENAME_BASE}: React.FC<Props> = ({$1}) => {",
+      "\treturn <> </>",
       "}"
     ],
     "description": "A standard for react typescript components in ChessWager"
+  },
+  "af": {
+    "prefix": "af",
+    "body": ["const ${1:FunctionName} = ($2) => {$0}"],
+    "description": "A standard for react typescript arrow functions in ChessWager"
   }
 }
