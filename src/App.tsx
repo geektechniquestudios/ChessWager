@@ -62,18 +62,18 @@ export const App: React.FC = () => {
           <ChessGame />
           <BettingLobby />
         </main>
-        <aside className="">
-          {showChat ? (
+        {showChat && (
+          <aside className="">
             <GlobalChat showChat={showChat} setShowChat={setShowChat} />
-          ) : (
+
             <button
               onClick={() => setShowChat(!showChat)}
-              className="bg-white w-16 m-1 rounded-md float-right" 
+              className="bg-white w-16 m-1 rounded-md float-right"
             >
               {"<-"}
             </button>
-          )}
-        </aside>
+          </aside>
+        )}
       </section>
     </div>
   )
