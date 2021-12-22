@@ -6,7 +6,7 @@
   flex-direction: column;
 }
 
-$form-height: 3em;
+$form-height: 4em;
 $chat-header-height: 2.75em;
 $main-header-height: 3em;
 
@@ -41,7 +41,7 @@ $main-header-height: 3em;
 }
 
 .form {
-  height: $form-height;
+  // height: $form-height;
   width: 93%;
   font-size: 1.5rem;
   @apply rounded-sm justify-center;

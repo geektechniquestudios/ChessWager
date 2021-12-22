@@ -4,6 +4,7 @@ import firebase from "firebase/compat/app"
 import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import "firebase/compat/analytics"
+import TextareaAutosize from 'react-textarea-autosize';
 
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useRef, useState } from "react"
@@ -72,11 +73,10 @@ const ChatRoom: React.FC<Props> = ({ showChat, setShowChat }) => {
       <main>
         <fieldset disabled={!auth.currentUser} className="fieldset">
           <form onSubmit={(e) => sendMessage(e)} className="form">
-            <input
-              type="text-area"
+            <TextareaAutosize
               value={auth.currentUser ? formValue : "sign in to chat"}
               onChange={(e) => setFormValue(e.target.value)}
-              className="input"
+              className="input overflow-y-hidden"
             />
             <div className="w-full flex justify-end">
               <button type="submit">🕊️</button>
