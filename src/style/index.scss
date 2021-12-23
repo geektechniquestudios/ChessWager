@@ -24,7 +24,8 @@ code {
   grid-template-areas:
     "head  head"
     "game  chat";
-  grid-template-columns: auto 22em;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+
   grid-template-rows: $header-size calc(100vh - $header-size - $gap-size);
 
   @apply bg-primary

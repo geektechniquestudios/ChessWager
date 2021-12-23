@@ -46,9 +46,15 @@ export const App: React.FC = () => {
   }, [auth])
 
   const dark = isDarkOn ? "dark" : ""
+  const autoOrUnset = showChat ? "unset" : "auto"
+
   return (
     <div className={`${dark} h-full w-full overflow-y-hidden`}>
-      <section className="color-shift" id="page">
+      <section
+        className="color-shift "
+        id="page"
+        // style={{ gridTemplateColumns: `minmax(0, 1fr) minmax(0, auto)` }}
+      >
         <header
           className="  
           color-shift
@@ -62,12 +68,14 @@ export const App: React.FC = () => {
           <ChessGame />
           <BettingLobby />
         </main>
-        <button
-          onClick={() => setShowChat(!showChat)}
-          className="bg-white w-16 m-1 rounded-md float-right h-8"
-        >
-          {"<-"}
-        </button>
+        {!showChat && (
+          <button
+            onClick={() => setShowChat(!showChat)}
+            className="bg-white w-16 m-1 rounded-md float-right h-8"
+          >
+            {"<-"}
+          </button>
+        )}
         {showChat && (
           <aside className="">
             <GlobalChat showChat={showChat} setShowChat={setShowChat} />
