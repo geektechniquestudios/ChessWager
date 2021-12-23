@@ -12,7 +12,13 @@ import { Auth } from "./components/containers/Auth"
 
 export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
-  const [showChat, setShowChat] = useState(true)
+  const [showChat, setShowChat] = useState(
+    localStorage.getItem("showChat") === "true" ||
+      localStorage.getItem("showChat") === "false"
+      ? JSON.parse(localStorage.getItem("showChat")!)
+      : true,
+  )
+  const [formValue, setFormValue] = useState("")
 
   const [isDarkOn, setIsDarkOn] = useState(
     localStorage.getItem("darkMode") === "true" ||
@@ -65,20 +71,26 @@ export const App: React.FC = () => {
           <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
         </header>
         <main>
+          {!showChat && (
+            <button
+              onClick={() => setShowChat(!showChat)}
+              className="bg-white w-16 m-1 rounded-md float-right h-8"
+            >
+              {"<-"}
+            </button>
+          )}
           <ChessGame />
           <BettingLobby />
         </main>
-        {!showChat && (
-          <button
-            onClick={() => setShowChat(!showChat)}
-            className="bg-white w-16 m-1 rounded-md float-right h-8"
-          >
-            {"<-"}
-          </button>
-        )}
+
         {showChat && (
           <aside className="">
-            <GlobalChat showChat={showChat} setShowChat={setShowChat} />
+            <GlobalChat
+              formValue={formValue}
+              setFormValue={setFormValue}
+              showChat={showChat}
+              setShowChat={setShowChat}
+            />
           </aside>
         )}
       </section>

@@ -6,7 +6,7 @@
   flex-direction: column;
 }
 
-$form-height: 4em;
+$form-height: 5em;
 $chat-header-height: 2.75em;
 $main-header-height: 3em;
 
@@ -17,11 +17,8 @@ $main-header-height: 3em;
 .global-chat main {
   $padding: 1rem;
   padding: $padding;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column-reverse;
-  bottom: 0;
   height: calc(100vh - $main-header-height - $chat-header-height);
+  @apply overflow-y-scroll flex flex-col-reverse bottom-0;
 }
 
 .global-chat main::-webkit-scrollbar {
@@ -41,41 +38,37 @@ $main-header-height: 3em;
 }
 
 .form {
-  width: 93%;
-  font-size: 1.5rem;
-  @apply rounded-sm justify-center;
+  @apply rounded-sm justify-center w-full pb-1;
 }
 
 .input {
-  width: 100%;
-  font-size: 1.2rem;
-  white-space: break-spaces;
-  @apply bg-primary rounded-md break-words inline-block;
+  @apply bg-primary rounded-md break-words inline-block resize-none outline-none text-lg w-full p-2;
+}
+.input::-webkit-scrollbar {
+  @apply w-1;
+}
+.input::-webkit-scrollbar-track {
+  @apply bg-primary dark:bg-primary-dark;
+}
+.input::-webkit-scrollbar-thumb {
+  @apply bg-tertiary dark:bg-tertiary-dark;
 }
 
-// ul,
-// li {
-//   text-align: left;
-//   list-style: none;
-// }
-
 .message-text {
-  @apply text-center relative;
+  @apply text-center relative text-lg;
 }
 
 .message {
-  display: flex;
-  align-items: center;
+  @apply flex items-center;
 }
 
 .sent {
-  flex-direction: row-reverse;
+  @apply flex-row-reverse;
 }
 
 .sent p {
   @apply bg-secondary dark:bg-secondary-dark p-2 m-2 rounded-md color-shift justify-end;
 }
 .received p {
-  background: #e5e5ea;
-  color: black;
+  @apply bg-secondary dark:bg-secondary-dark p-2 m-2 rounded-md color-shift justify-start;
 }
