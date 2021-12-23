@@ -12,7 +12,6 @@ import { Auth } from "../containers/Auth"
 import { ChatMessage } from "./ChatMessage"
 import { Firestore } from "../containers/Firestore"
 
-
 interface Props {
   showChat: boolean
   setShowChat: React.Dispatch<React.SetStateAction<boolean>>
@@ -20,7 +19,12 @@ interface Props {
   setFormValue: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const GlobalChat: React.FC<Props> = ({ showChat, setShowChat, formValue, setFormValue }) => {
+export const GlobalChat: React.FC<Props> = ({
+  showChat,
+  setShowChat,
+  formValue,
+  setFormValue,
+}) => {
   const { firestore } = Firestore.useContainer()
   const { user, auth } = Auth.useContainer()
 
@@ -30,7 +34,11 @@ export const GlobalChat: React.FC<Props> = ({ showChat, setShowChat, formValue, 
 
   const [messages] = useCollectionData(query, { idField: "id" })
 
-  const sendMessage = async (e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const sendMessage = async (
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.KeyboardEvent<HTMLTextAreaElement>,
+  ) => {
     e.preventDefault()
     if (formValue === "" || !user) {
       //@todo make regex for any empty string
@@ -58,7 +66,10 @@ export const GlobalChat: React.FC<Props> = ({ showChat, setShowChat, formValue, 
     <div className="border-l-2 border-black global-chat">
       <header className="flex border-b-2 border-black">
         <button
-          onClick={() => setShowChat(!showChat)}
+          onClick={() => {
+            setShowChat(false)
+            localStorage.setItem("showChat", "false")
+          }}
           className="bg-white w-16 m-1 rounded-sm"
         >
           {"->"}
@@ -73,7 +84,9 @@ export const GlobalChat: React.FC<Props> = ({ showChat, setShowChat, formValue, 
               className="input"
               placeholder="send a message"
               maxRows={4}
-              onKeyDown={(e) => {e.key === "Enter" && sendMessage(e)}}
+              onKeyDown={(e) => {
+                e.key === "Enter" && sendMessage(e)
+              }}
             />
             <div className="w-full flex justify-end mt-2">
               <button type="submit">🕊️</button>

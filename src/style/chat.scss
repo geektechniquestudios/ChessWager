@@ -1,9 +1,7 @@
 @import "index.scss";
 
 .global-chat {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+  @apply text-center flex flex-col;
 }
 
 $form-height: 5em;
@@ -20,17 +18,14 @@ $main-header-height: 3em;
   height: calc(100vh - $main-header-height - $chat-header-height);
   @apply overflow-y-scroll flex flex-col-reverse bottom-0;
 }
-
 .global-chat main::-webkit-scrollbar {
-  width: 0.25rem;
+  @apply w-1;
 }
-
 .global-chat main::-webkit-scrollbar-track {
-  background: #1e1e24;
+  @apply bg-secondary;
 }
-
 .global-chat main::-webkit-scrollbar-thumb {
-  background: #6649b8;
+  @apply bg-tertiary;
 }
 
 .fieldset {

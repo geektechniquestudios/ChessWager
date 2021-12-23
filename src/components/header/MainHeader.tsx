@@ -32,7 +32,7 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
   }
 
   return (
-    <div className="grid grid-flow-col max-h-5">
+    <div className="grid grid-flow-col">
       <div className="">
         {/* <>Contract: {process.env.REACT_APP_CONTRACT_ADDRESS} </>
         <br/>
@@ -57,7 +57,7 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
           checked={isDarkOn}
         />
       </div>
-      <div className="grid grid-flow-col max-h-5">
+      <div className="grid grid-flow-col">
         {/* <Dropdown />
         <MetamaskAuthButtons />
         <GoogleAuthButtons /> */}

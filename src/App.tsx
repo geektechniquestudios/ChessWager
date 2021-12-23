@@ -73,7 +73,10 @@ export const App: React.FC = () => {
         <main>
           {!showChat && (
             <button
-              onClick={() => setShowChat(!showChat)}
+              onClick={() => {
+                setShowChat(!showChat)
+                localStorage.setItem("showChat", "true")
+              }}
               className="bg-white w-16 m-1 rounded-md float-right h-8"
             >
               {"<-"}
