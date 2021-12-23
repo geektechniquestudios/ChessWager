@@ -3,9 +3,9 @@
 .header-button {
   @extend .color-shift;
   @apply bg-secondary 
-  dark:bg-secondary-secondaryDark
+  dark:bg-secondary-dark
   hover:bg-tertiary 
-  dark:hover:bg-tertiary-tertiaryDark;
+  dark:hover:bg-tertiary-dark;
 }
 
 .icon-button {
@@ -13,8 +13,8 @@
     m-1 p-2
     align-middle
     rounded-full 
-  bg-secondary dark:bg-secondary-secondaryDark
-  hover:bg-tertiary dark:hover:bg-tertiary-tertiaryDark;
+  bg-secondary dark:bg-secondary-dark
+  hover:bg-tertiary dark:hover:bg-tertiary-dark;
 }
 
 // .nav-item {

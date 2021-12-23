@@ -8,23 +8,23 @@ module.exports = {
     colors: {
       primary: {
         DEFAULT: '#F5F5F4',
-        primaryDark: '#292524',
+        dark: '#292524',
       },
       secondary: {
         DEFAULT: '#57534E',
-        secondaryDark: '#A8A29E',
+        dark: '#A8A29E',
       },
       tertiary: {
         DEFAULT: '#D97706',
-        tertiaryDark: '#FBBF24',
+        dark: '#FBBF24',
       },
       positive: {
         DEFAULT: '#16A34A',
-        positiveDark: '#4ADE80',
+        dark: '#4ADE80',
       },
       negative: {
         DEFAULT: '#DC2626',
-        negativeDark: '#F87171',
+        dark: '#F87171',
       },
       transparent: "transparent",
       current: "currentColor",

@@ -24,11 +24,11 @@ code {
   grid-template-areas:
     "head  head"
     "game  chat";
-  grid-template-columns: unset minmax(0, 22rem);
+  grid-template-columns: auto 22em;
   grid-template-rows: $header-size calc(100vh - $header-size - $gap-size);
 
   @apply bg-primary
-  dark:bg-primary-primaryDark;
+  dark:bg-primary-dark;
 }
 
 #page > header {
@@ -47,11 +47,11 @@ code {
 }
 
 #page > main::-webkit-scrollbar-track {
-  @apply bg-primary dark:bg-primary-primaryDark;
+  @apply bg-primary dark:bg-primary-dark;
 }
 
 #page > main::-webkit-scrollbar-thumb {
-  @apply bg-tertiary dark:bg-tertiary-tertiaryDark;
+  @apply bg-tertiary dark:bg-tertiary-dark;
 }
 
 .user-img {

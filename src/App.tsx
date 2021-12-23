@@ -52,7 +52,7 @@ export const App: React.FC = () => {
         <header
           className="  
           color-shift
-        bg-secondary-secondaryDark
+        bg-secondary-dark
         dark:bg-secondary
         "
         >
@@ -62,16 +62,15 @@ export const App: React.FC = () => {
           <ChessGame />
           <BettingLobby />
         </main>
+        <button
+          onClick={() => setShowChat(!showChat)}
+          className="bg-white w-16 m-1 rounded-md float-right h-8"
+        >
+          {"<-"}
+        </button>
         {showChat && (
           <aside className="">
             <GlobalChat showChat={showChat} setShowChat={setShowChat} />
-
-            <button
-              onClick={() => setShowChat(!showChat)}
-              className="bg-white w-16 m-1 rounded-md float-right"
-            >
-              {"<-"}
-            </button>
           </aside>
         )}
       </section>

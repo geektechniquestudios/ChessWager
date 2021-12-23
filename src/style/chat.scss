@@ -73,7 +73,7 @@ $main-header-height: 3em;
 }
 
 .sent p {
-  @apply bg-secondary dark:bg-secondary-secondaryDark p-2 m-2 rounded-md color-shift justify-end;
+  @apply bg-secondary dark:bg-secondary-dark p-2 m-2 rounded-md color-shift justify-end;
 }
 .received p {
   background: #e5e5ea;
