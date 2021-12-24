@@ -9,7 +9,7 @@ import Toggle from "react-toggle"
 import "react-toggle/style.css"
 import firebase from "firebase/compat"
 import { Auth } from "../containers/Auth"
-import { Dropdown } from "./dropdown/Dropdown"
+import { Dropdown } from "./Dropdown"
 
 interface Props {
   isDarkOn: boolean
