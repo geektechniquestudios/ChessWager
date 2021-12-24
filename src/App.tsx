@@ -10,6 +10,7 @@ import "firebase/compat/auth"
 import firebase from "firebase/compat"
 import { Auth } from "./components/containers/Auth"
 import { BiArrowFromRight } from "react-icons/bi"
+import { CSSTransition } from "react-transition-group"
 
 export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
@@ -30,7 +31,7 @@ export const App: React.FC = () => {
   const [formValue, setFormValue] = useState("")
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: any) => {
       if (
         user &&
         localStorage.getItem("darkMode") !== "true" &&
@@ -79,7 +80,8 @@ export const App: React.FC = () => {
           <ChessGame />
           <BettingLobby />
         </main>
-
+        <div className="transition-transform duration-500">
+        {/* <CSSTransition in={showChat} timeout={500} unmountOnExit classNames="chat-window"> */}
         {showChat && (
           <aside>
             <GlobalChat
@@ -90,6 +92,8 @@ export const App: React.FC = () => {
             />
           </aside>
         )}
+        {/* </CSSTransition> */}
+        </div>
       </section>
     </div>
   )

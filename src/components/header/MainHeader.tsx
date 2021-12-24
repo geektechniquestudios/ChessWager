@@ -9,16 +9,17 @@ import Toggle from "react-toggle"
 import "react-toggle/style.css"
 import firebase from "firebase/compat"
 import { Auth } from "../containers/Auth"
-import { Dropdown } from "./Dropdown"
-
+import { Dropdown } from "./dropdown/Dropdown"
 interface Props {
   isDarkOn: boolean
   setIsDarkOn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
+
   const { user, walletAddress } = Auth.useContainer()
 
+  
   const userDocumentRef = firebase.firestore().collection("users")
 
   const updateUserDarkPref = (isChecked: boolean) => {
@@ -48,7 +49,7 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
       <div className="flex-auto"></div>
       <div className="flex-auto"></div>
       <div className="flex-auto justify-end flex mr-3">
-        <Dropdown />
+        <Dropdown setIsDarkOn={setIsDarkOn} isDarkOn={isDarkOn}/>
         {/* <Toggle
           onChange={(e) => {
             const isChecked = e.target.checked
