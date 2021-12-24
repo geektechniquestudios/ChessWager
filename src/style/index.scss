@@ -32,12 +32,10 @@ code {
 #page > header {
   grid-area: head;
 }
+
 #page > main {
   grid-area: game;
   @apply overflow-y-auto;
-}
-#page > main::-webkit-scrollbar {
-  @apply w-1;
 }
 
 #page > aside {
@@ -47,13 +45,15 @@ code {
 #page > main::-webkit-scrollbar-track {
   @apply bg-primary dark:bg-primary-dark;
 }
-
 #page > main::-webkit-scrollbar-thumb {
   @apply bg-tertiary dark:bg-tertiary-dark;
 }
+#page > main::-webkit-scrollbar {
+  @apply w-1;
+}
 
 .user-img {
-  @apply w-8 h-8 rounded-full;
+  @apply w-8 h-4 rounded-full;
 }
 
 .color-shift {

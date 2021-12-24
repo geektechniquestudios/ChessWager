@@ -11,6 +11,7 @@ import { useRef, useState } from "react"
 import { Auth } from "../containers/Auth"
 import { ChatMessage } from "./ChatMessage"
 import { Firestore } from "../containers/Firestore"
+import { BiArrowFromLeft } from "react-icons/bi"
 
 interface Props {
   showChat: boolean
@@ -40,8 +41,8 @@ export const GlobalChat: React.FC<Props> = ({
       | React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
     e.preventDefault()
-    if (formValue === "" || !user) {
-      //@todo make regex for any empty string
+
+    if (formValue.trim() === "" || !user) {
       return
     }
     if (auth.currentUser) {
@@ -63,16 +64,19 @@ export const GlobalChat: React.FC<Props> = ({
   }
 
   return (
-    <div className="border-l-2 border-black global-chat">
+    <div className="border-l-2 border-black global-chat" style={{width: "21em"}}>
       <header className="flex border-b-2 border-black">
         <button
           onClick={() => {
             setShowChat(false)
             localStorage.setItem("showChat", "false")
           }}
-          className="bg-white w-16 m-1 rounded-sm"
+          className="m-3 hover:bg-secondary-dark rounded-sm color-shift"
         >
-          {"->"}
+          <BiArrowFromLeft
+            size="1.4em"
+            className="text-primary-dark hover:text-primary-dark dark:text-primary m-1 color-shift"
+          />
         </button>
       </header>
       <main>

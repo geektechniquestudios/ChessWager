@@ -1,12 +1,12 @@
 @import "index.scss";
 
+$form-height: 5em;
+$chat-header-height: 4em;
+$main-header-height: 3em;
+
 .global-chat {
   @apply text-center flex flex-col;
 }
-
-$form-height: 5em;
-$chat-header-height: 2.75em;
-$main-header-height: 3em;
 
 .global-chat header {
   height: $chat-header-height;
@@ -18,12 +18,15 @@ $main-header-height: 3em;
   height: calc(100vh - $main-header-height - $chat-header-height);
   @apply overflow-y-scroll flex flex-col-reverse bottom-0;
 }
+
 .global-chat main::-webkit-scrollbar {
   @apply w-1;
 }
+
 .global-chat main::-webkit-scrollbar-track {
   @apply bg-secondary;
 }
+
 .global-chat main::-webkit-scrollbar-thumb {
   @apply bg-tertiary;
 }
@@ -50,20 +53,22 @@ $main-header-height: 3em;
 }
 
 .message-text {
-  @apply text-center relative text-lg;
+  @apply text-center relative text-base;
 }
-
 .message {
-  @apply flex items-center;
+  @apply flex items-center ;
 }
 
 .sent {
   @apply flex-row-reverse;
 }
-
 .sent p {
   @apply bg-secondary dark:bg-secondary-dark p-2 m-2 rounded-md color-shift justify-end;
 }
 .received p {
   @apply bg-secondary dark:bg-secondary-dark p-2 m-2 rounded-md color-shift justify-start;
+}
+
+.chat-user-img {
+  @apply w-4 h-4 rounded-full;
 }

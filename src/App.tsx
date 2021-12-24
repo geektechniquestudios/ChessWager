@@ -9,6 +9,7 @@ import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import firebase from "firebase/compat"
 import { Auth } from "./components/containers/Auth"
+import { BiArrowFromRight } from "react-icons/bi"
 
 export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
@@ -18,7 +19,6 @@ export const App: React.FC = () => {
       ? JSON.parse(localStorage.getItem("showChat")!)
       : true,
   )
-  const [formValue, setFormValue] = useState("")
 
   const [isDarkOn, setIsDarkOn] = useState(
     localStorage.getItem("darkMode") === "true" ||
@@ -26,6 +26,8 @@ export const App: React.FC = () => {
       ? JSON.parse(localStorage.getItem("darkMode")!)
       : true,
   )
+
+  const [formValue, setFormValue] = useState("")
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -38,7 +40,6 @@ export const App: React.FC = () => {
           .firestore()
           .collection("users")
           .doc(user.uid)
-
         userRef
           .get()
           .then((doc) => doc.data()?.darkMode ?? true)
@@ -52,24 +53,14 @@ export const App: React.FC = () => {
   }, [auth])
 
   const dark = isDarkOn ? "dark" : ""
-  const autoOrUnset = showChat ? "unset" : "auto"
 
   return (
-    <div className={`${dark} h-full w-full overflow-y-hidden`}>
-      <section
-        className="color-shift "
-        id="page"
-        // style={{ gridTemplateColumns: `minmax(0, 1fr) minmax(0, auto)` }}
-      >
-        <header
-          className="  
-          color-shift
-        bg-secondary-dark
-        dark:bg-secondary
-        "
-        >
+    <div className={`${dark} h-full w-full overflow-y-hidden grid`}>
+      <section className="color-shift " id="page">
+        <header className="color-shift bg-secondary-dark dark:bg-secondary flex items-center">
           <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
         </header>
+
         <main>
           {!showChat && (
             <button
@@ -77,9 +68,12 @@ export const App: React.FC = () => {
                 setShowChat(!showChat)
                 localStorage.setItem("showChat", "true")
               }}
-              className="bg-white w-16 m-1 rounded-md float-right h-8"
+              className="float-right m-3 hover:bg-secondary-dark rounded-sm color-shift"
             >
-              {"<-"}
+              <BiArrowFromRight
+                size="1.4em"
+                className="text-primary-dark hover:text-primary-dark dark:text-primary m-1 color-shift"
+              />
             </button>
           )}
           <ChessGame />
@@ -87,7 +81,7 @@ export const App: React.FC = () => {
         </main>
 
         {showChat && (
-          <aside className="">
+          <aside>
             <GlobalChat
               formValue={formValue}
               setFormValue={setFormValue}

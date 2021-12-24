@@ -32,12 +32,11 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
   }
 
   return (
-    <div className="grid grid-flow-col">
-      <div className="">
-        {/* <>Contract: {process.env.REACT_APP_CONTRACT_ADDRESS} </>
+    <div className="inline-flex no-wrap justify-between w-full">
+      {/* <>Contract: {process.env.REACT_APP_CONTRACT_ADDRESS} </>
         <br/>
         <>Wallet: {walletAddress}</> */}
-        {/* <IconContext.Provider
+      {/* <IconContext.Provider
           value={{
             color: "white",
             size: "3em",
@@ -46,22 +45,22 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
         >
           <SiLichess />
         </IconContext.Provider> */}
-      </div>
-      <div className="col-span-4">
-        <Toggle
+      <div className="flex-auto"></div>
+      <div className="flex-auto"></div>
+      <div className="flex-auto justify-end flex mr-3">
+        <Dropdown />
+        {/* <Toggle
           onChange={(e) => {
             const isChecked = e.target.checked
             setIsDarkOn(isChecked)
             updateUserDarkPref(isChecked)
           }}
           checked={isDarkOn}
-        />
+        /> */}
       </div>
-      <div className="grid grid-flow-col">
-        {/* <Dropdown />
+      {/* <Dropdown />
         <MetamaskAuthButtons />
         <GoogleAuthButtons /> */}
-      </div>
     </div>
   )
 }
