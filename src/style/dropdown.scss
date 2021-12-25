@@ -37,7 +37,7 @@
 
 .dropdown {
   transition: height var(--speed) ease;
-  @apply absolute w-80 -translate-x-1/2 bg-secondary border-2 border-secondary-dark p-4 overflow-hidden right-2 top-10 z-50;
+  @apply absolute w-64 -translate-x-1/2 bg-secondary border-2 border-secondary-dark p-4 overflow-hidden right-2 top-10 z-50 rounded-md text-primary;
 }
 
 .menu {
@@ -45,29 +45,13 @@
 }
 
 .menu-item {
-  height: 50px;
-  display: flex;
-  align-items: center;
-  border-radius: var(--border-radius);
-  transition: background var(--speed);
-  padding: 0.5rem;
+  @apply h-14 flex items-center rounded-md hover:bg-secondary-dark p-2;
 }
-
-.menu-item .icon-button {
-  margin-right: 0.5rem;
+.icon-left {
+  @apply mr-auto;
 }
-
-
-.menu-item .icon-button:hover {
-  filter: none;
-}
-
-.menu-item:hover {
-  background-color: #525357;
-}
-
 .icon-right {
-  margin-left: auto;
+  @apply ml-auto;
 }
 
 /* CSSTransition classes  */

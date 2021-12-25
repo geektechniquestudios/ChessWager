@@ -29,7 +29,7 @@ const useAuth = () => {
     firebase.auth.Error | undefined,
   ] = useAuthState(auth)
   const connectWallet = async () => {
-    if (!auth.currentUser) {
+    if (!user) {
       signInWithGoogle()
       return
     }

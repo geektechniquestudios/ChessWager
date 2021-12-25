@@ -10,27 +10,16 @@ import "react-toggle/style.css"
 import firebase from "firebase/compat"
 import { Auth } from "../containers/Auth"
 import { Dropdown } from "./dropdown/Dropdown"
+import { SignIn } from "./buttons/google/SignIn"
 interface Props {
   isDarkOn: boolean
   setIsDarkOn: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
-
   const { user, walletAddress } = Auth.useContainer()
 
-  
   const userDocumentRef = firebase.firestore().collection("users")
-
-  const updateUserDarkPref = (isChecked: boolean) => {
-    if (user?.uid) {
-      const userRef = userDocumentRef.doc(user!.uid)
-      userRef.update({
-        darkMode: isChecked,
-      })
-    }
-    localStorage.setItem("darkMode", isChecked.toString())
-  }
 
   return (
     <div className="inline-flex no-wrap justify-between w-full">
@@ -48,8 +37,9 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
         </IconContext.Provider> */}
       <div className="flex-auto"></div>
       <div className="flex-auto"></div>
-      <div className="flex-auto justify-end flex mr-3">
-        <Dropdown setIsDarkOn={setIsDarkOn} isDarkOn={isDarkOn}/>
+      <div className="flex-auto justify-end align-middle flex mx-3">
+        <div className="flex justify-center align-middle items-center">{!user && <SignIn />}</div>
+        <Dropdown setIsDarkOn={setIsDarkOn} isDarkOn={isDarkOn} />
         {/* <Toggle
           onChange={(e) => {
             const isChecked = e.target.checked

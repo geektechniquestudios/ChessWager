@@ -17,7 +17,7 @@ export const DropdownItem: React.FC<Props> = ({
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       href="#"
-      className="menu-item"
+      className="menu-item color-shift"
       onClick={() => goToMenu && setActiveMenu(goToMenu)}
     >
       <span className="icon-button">{leftIcon}</span>
