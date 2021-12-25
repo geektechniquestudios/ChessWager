@@ -45,7 +45,7 @@
 }
 
 .menu-item {
-  @apply h-14 flex items-center rounded-md hover:bg-secondary-dark p-2;
+  @apply h-14 flex items-center rounded-md hover:bg-secondary-dark p-1 m-0.5;
 }
 .icon-left {
   @apply mr-auto;

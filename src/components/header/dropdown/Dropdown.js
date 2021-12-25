@@ -9,7 +9,9 @@ import { Settings } from "./menus/Settings"
 import { Social } from "./menus/Social"
 import { Help } from "./menus/Help"
 import { Profile } from "./menus/Profile"
-import { BiUserCircle } from "react-icons/bi"
+import { BiArrowBack, BiUserCircle } from "react-icons/bi"
+import { Menu } from "./Menu"
+import { DropdownItem } from "./DropdownItem"
 
 export function Dropdown({ setIsDarkOn, isDarkOn }) {
   const { user, auth } = Auth.useContainer()
@@ -32,13 +34,11 @@ export function Dropdown({ setIsDarkOn, isDarkOn }) {
 
 const UserIconButton = ({ icon, children }) => {
   const [open, setOpen] = useState(false)
-
   return (
     <>
       <a href="#" className="dropdown-button" onClick={() => setOpen(!open)}>
         {icon}
       </a>
-
       {open && children}
     </>
   )
@@ -67,7 +67,7 @@ const DropdownMenu = ({ setIsDarkOn, isDarkOn }) => {
         setIsDarkOn={setIsDarkOn}
         isDarkOn={isDarkOn}
       />
-
+      
       <Profile
         heightMultiplier={heightMultiplier}
         activeMenu={activeMenu}

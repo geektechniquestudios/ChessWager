@@ -20,7 +20,8 @@ import { CgProfile } from "react-icons/cg"
 import { RiSettings5Line } from "react-icons/ri"
 import { BsShare } from "react-icons/bs"
 import { BiHelpCircle } from "react-icons/bi"
-import {BiArrowBack} from "react-icons/bi"
+import { BiArrowBack } from "react-icons/bi"
+import { Menu } from "../Menu"
 
 interface Props {
   activeMenu: string
@@ -33,43 +34,30 @@ export const Help: React.FC<Props> = ({
   activeMenu,
   setActiveMenu,
   setMenuHeight,
-  heightMultiplier
+  heightMultiplier,
 }) => {
-  const calcHeight = (el: any) => {
-    const height = el.offsetHeight * heightMultiplier
-    setMenuHeight(height)
-  }
   return (
     <>
-      <CSSTransition
-        in={activeMenu === "help"}
-        timeout={500}
-        classNames="menu-secondary"
-        unmountOnExit
-        onEnter={calcHeight}
-      >
-        <div className="menu">
+      <Menu
+        menuItems={[
           <DropdownItem
             goToMenu="main"
             leftIcon={<BiArrowBack />}
             setActiveMenu={setActiveMenu}
           >
             <h2>help</h2>
-          </DropdownItem>
-          <DropdownItem leftIcon={<BoltIcon />} setActiveMenu={setActiveMenu}>
-            HTML
-          </DropdownItem>
-          <DropdownItem leftIcon={<BoltIcon />} setActiveMenu={setActiveMenu}>
-            CSS
-          </DropdownItem>
-          <DropdownItem leftIcon={<BoltIcon />} setActiveMenu={setActiveMenu}>
-            JavaScript
-          </DropdownItem>
-          <DropdownItem leftIcon={<BoltIcon />} setActiveMenu={setActiveMenu}>
-            Awesome!
-          </DropdownItem>
-        </div>
-      </CSSTransition>
+          </DropdownItem>,
+          <DropdownItem setActiveMenu={setActiveMenu}>HTML</DropdownItem>,
+          <DropdownItem setActiveMenu={setActiveMenu}>CSS</DropdownItem>,
+          <DropdownItem setActiveMenu={setActiveMenu}>JavaScript</DropdownItem>,
+          <DropdownItem setActiveMenu={setActiveMenu}>Awesome!</DropdownItem>,
+        ]}
+        thisMenu={"help"}
+        heightMultiplier={heightMultiplier}
+        activeMenu={activeMenu}
+        setActiveMenu={setActiveMenu}
+        setMenuHeight={setMenuHeight}
+      />
     </>
   )
 }

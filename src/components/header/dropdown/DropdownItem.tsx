@@ -18,10 +18,12 @@ export const DropdownItem: React.FC<Props> = ({
     <a
       href="#"
       className="menu-item color-shift"
-      onClick={() => goToMenu && setActiveMenu(goToMenu)}
+      onClick={() => {
+        goToMenu && setActiveMenu(goToMenu)
+      }}
     >
       <span className="icon-button">{leftIcon}</span>
-      {children}
+      <div className="mx-2"> {children}</div>
       <span className="icon-right">{rightIcon}</span>
     </a>
   )

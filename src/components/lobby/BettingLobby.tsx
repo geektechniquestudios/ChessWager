@@ -54,7 +54,9 @@ export const BettingLobby: React.FC = () => {
             user &&
             lobby
               .filter(
-                (bet) => bet.user1Id === user.uid || bet.user2Id === user.uid,
+                (bet) =>
+                  (bet.user1Id === user.uid || bet.user2Id === user.uid) &&
+                  bet.gameId !== "",
               )
               .map((bet) => (
                 <Bet
@@ -75,7 +77,7 @@ export const BettingLobby: React.FC = () => {
                   hasUser2Paid={bet.hasUser2Paid}
                   gameId={bet.gameId}
                   timestamp={bet.timestamp?.seconds}
-                  contractAddress={bet.contractAddress} 
+                  contractAddress={bet.contractAddress}
                 />
               ))}
           {lobby &&
@@ -84,7 +86,8 @@ export const BettingLobby: React.FC = () => {
                 (bet) =>
                   bet.status === "ready" &&
                   bet.user1Id !== user?.uid &&
-                  bet.user2Id !== user?.uid,
+                  bet.user2Id !== user?.uid &&
+                  bet.gameId !== "",
               )
               .map((bet) => (
                 <Bet
@@ -104,8 +107,8 @@ export const BettingLobby: React.FC = () => {
                   user2PhotoURL={bet.user2PhotoURL}
                   hasUser2Paid={bet.hasUser2Paid}
                   gameId={bet.gameId}
-                  timestamp={bet.timestamp?.seconds} 
-                  contractAddress={bet.contractAddress} 
+                  timestamp={bet.timestamp?.seconds}
+                  contractAddress={bet.contractAddress}
                 />
               ))}
           {lobby &&
@@ -114,7 +117,8 @@ export const BettingLobby: React.FC = () => {
                 (bet) =>
                   bet.status === "pending" &&
                   bet.user1Id !== user?.uid &&
-                  bet.user2Id !== user?.uid,
+                  bet.user2Id !== user?.uid &&
+                  bet.gameId !== "",
               )
               .map((bet) => (
                 <Bet
@@ -135,12 +139,11 @@ export const BettingLobby: React.FC = () => {
                   hasUser2Paid={bet.hasUser2Paid}
                   gameId={bet.gameId}
                   timestamp={bet.timestamp?.seconds}
-                  contractAddress={bet.contractAddress} 
+                  contractAddress={bet.contractAddress}
                 />
               ))}
         </div>
       </main>
-      <footer></footer>
     </div>
   )
 }
