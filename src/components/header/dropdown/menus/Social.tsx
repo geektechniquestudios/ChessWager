@@ -5,7 +5,8 @@ import { CSSTransition } from "react-transition-group"
 import { ReactComponent as BoltIcon } from "../icons/bolt.svg"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
-
+import { BsFacebook } from "react-icons/bs"
+import { StaticDropdownItem } from "../StaticDropdownItem"
 interface Props {
   activeMenu: string
   setActiveMenu: React.Dispatch<React.SetStateAction<string>>
@@ -19,7 +20,7 @@ export const Social: React.FC<Props> = ({
   setMenuHeight,
   heightMultiplier,
 }) => {
- return (
+  return (
     <>
       <Menu
         menuItems={[
@@ -30,10 +31,17 @@ export const Social: React.FC<Props> = ({
           >
             <h2>social</h2>
           </DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu}>HTML</DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu}>CSS</DropdownItem>,
+
+          <StaticDropdownItem
+            url="https://www.google.com"
+            leftIcon={<BsFacebook />}
+          >
+            Facebook
+          </StaticDropdownItem>,
+
+          <DropdownItem setActiveMenu={setActiveMenu}>a change</DropdownItem>,
+
           <DropdownItem setActiveMenu={setActiveMenu}>JavaScript</DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu}>Awesome!</DropdownItem>,
         ]}
         thisMenu={"social"}
         heightMultiplier={heightMultiplier}

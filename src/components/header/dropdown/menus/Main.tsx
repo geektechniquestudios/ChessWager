@@ -13,6 +13,7 @@ import { BsShare } from "react-icons/bs"
 import { BiHelpCircle } from "react-icons/bi"
 import { RiLogoutCircleRLine } from "react-icons/ri"
 import { GiWallet } from "react-icons/gi"
+import { MdOutlineDarkMode } from "react-icons/md"
 
 interface Props {
   activeMenu: string
@@ -99,23 +100,32 @@ export const Main: React.FC<Props> = ({
             help
           </DropdownItem>
           <StaticDropdownItem
-            clickAction={() => {
+            onClick={() => {
               setIsDarkOn(!isDarkOn)
               updateUserDarkPref(!isDarkOn)
             }}
+            rightIcon={
+              <div className="px-2 justify-center align-middle flex h-full py-2 ">
+                <Toggle
+                  icons={false}
+                  className="toggle pointer-events-none "
+                  onChange={(e) => {
+                    const isChecked = e.target.checked
+                    setIsDarkOn(isChecked)
+                    updateUserDarkPref(isChecked)
+                  }}
+                  checked={isDarkOn}
+                />
+              </div>
+            }
+            leftIcon={<MdOutlineDarkMode />}
           >
-            <Toggle
-              onChange={(e) => {
-                const isChecked = e.target.checked
-                setIsDarkOn(isChecked)
-                updateUserDarkPref(isChecked)
-              }}
-              checked={isDarkOn}
-            />
+            dark mode
           </StaticDropdownItem>
+          <div className="border-b-2"> </div>
           {!isWalletConnected && (
             <StaticDropdownItem
-              clickAction={connectWallet}
+              onClick={connectWallet}
               leftIcon={<GiWallet />}
             >
               connect wallet
@@ -123,23 +133,25 @@ export const Main: React.FC<Props> = ({
           )}
           {isWalletConnected && (
             <StaticDropdownItem
-              clickAction={disconnectWallet}
+              onClick={disconnectWallet}
               leftIcon={<GiWallet />}
             >
               disconnect wallet
             </StaticDropdownItem>
           )}
+
           {!user && (
             <StaticDropdownItem
-              clickAction={signInWithGoogle}
+              onClick={signInWithGoogle}
               leftIcon={<RiLogoutCircleRLine />}
             >
               log in
             </StaticDropdownItem>
           )}
+
           {user && (
             <StaticDropdownItem
-              clickAction={signOutWithGoogle}
+              onClick={signOutWithGoogle}
               leftIcon={<RiLogoutCircleRLine />}
             >
               log out
