@@ -58,7 +58,6 @@ export const Help: React.FC<Props> = ({
         thisMenu={"help"}
         heightMultiplier={heightMultiplier}
         activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
         setMenuHeight={setMenuHeight}
       />
     </>

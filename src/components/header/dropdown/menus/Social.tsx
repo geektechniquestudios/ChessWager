@@ -77,7 +77,6 @@ export const Social: React.FC<Props> = ({
         thisMenu={"social"}
         heightMultiplier={heightMultiplier}
         activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
         setMenuHeight={setMenuHeight}
       />
     </>

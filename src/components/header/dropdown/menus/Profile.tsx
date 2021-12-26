@@ -100,7 +100,6 @@ export const Profile: React.FC<Props> = ({
         thisMenu={"profile"}
         heightMultiplier={heightMultiplier}
         activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
         setMenuHeight={setMenuHeight}
       />
     </>

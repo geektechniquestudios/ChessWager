@@ -23,5 +23,6 @@ export const StaticDropdownItem: React.FC<Props> = ({
       <div className="mx-2"> {children}</div>
       <span className="icon-right">{rightIcon}</span>
     </a>
+  
   )
 }

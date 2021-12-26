@@ -6,7 +6,6 @@ import { BiArrowBack } from "react-icons/bi"
 interface Props {
   activeMenu: string
   thisMenu: string
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
   setMenuHeight: React.Dispatch<React.SetStateAction<number>>
   heightMultiplier: number
   menuItems: any
@@ -15,7 +14,6 @@ interface Props {
 export const Menu: React.FC<Props> = ({
   activeMenu,
   thisMenu,
-  setActiveMenu,
   setMenuHeight,
   heightMultiplier,
   menuItems,

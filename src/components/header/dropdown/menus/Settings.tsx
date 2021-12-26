@@ -10,6 +10,8 @@ import { RiChatDeleteLine } from "react-icons/ri"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
 import { MdOutlineBlock } from "react-icons/md"
+import { GoUnmute } from "react-icons/go"
+import { ImVolumeMute2 } from "react-icons/im"
 
 interface Props {
   activeMenu: string
@@ -25,6 +27,7 @@ export const Settings: React.FC<Props> = ({
   heightMultiplier,
 }) => {
   const [profanityFilter, setProfanityFilter] = useState(true)
+  const [isMuted, setIsMuted] = useState(false)
   return (
     <>
       <Menu
@@ -38,27 +41,6 @@ export const Settings: React.FC<Props> = ({
           </DropdownItem>,
           <div className="border-b-2"> </div>,
 
-          <StaticDropdownItem
-            leftIcon={<RiChatDeleteLine />}
-            onClick={() => {
-              setProfanityFilter(!profanityFilter)
-            }}
-            rightIcon={
-              <div className="px-2 justify-center align-middle flex h-full py-2 ">
-                <Toggle
-                  // icons={false}
-                  className="filter-toggle pointer-events-none "
-                  onChange={(e) => {
-                    const isChecked = e.target.checked
-                    setProfanityFilter(isChecked)
-                  }}
-                  checked={profanityFilter}
-                />
-              </div>
-            }
-          >
-            profanity filter
-          </StaticDropdownItem>,
           <DropdownItem
             setActiveMenu={setActiveMenu}
             leftIcon={<MdOutlineBlock />}
@@ -67,13 +49,43 @@ export const Settings: React.FC<Props> = ({
             blocked users
           </DropdownItem>,
 
-          <DropdownItem setActiveMenu={setActiveMenu}>JavaScript</DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu}>Awesome!</DropdownItem>,
+          <StaticDropdownItem
+            onClick={() => {
+              setIsMuted(!isMuted)
+            }}
+            leftIcon={isMuted ? <GoUnmute /> : <ImVolumeMute2 />}
+            rightIcon={
+              <div className="px-2 justify-center align-middle flex h-full py-2 ">
+                <Toggle
+                  className="filter-toggle pointer-events-none "
+                  checked={isMuted}
+                />
+              </div>
+            }
+          >
+            sound
+          </StaticDropdownItem>,
+
+          <StaticDropdownItem
+            leftIcon={<RiChatDeleteLine />}
+            onClick={() => {
+              setProfanityFilter(!profanityFilter)
+            }}
+            rightIcon={
+              <div className="px-2 justify-center align-middle flex h-full py-2 ">
+                <Toggle
+                  className="filter-toggle pointer-events-none "
+                  checked={profanityFilter}
+                />
+              </div>
+            }
+          >
+            profanity filter
+          </StaticDropdownItem>,
         ]}
         thisMenu={"settings"}
         heightMultiplier={heightMultiplier}
         activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
         setMenuHeight={setMenuHeight}
       />
     </>

@@ -71,7 +71,6 @@ export const Blocked: React.FC<Props> = ({
         thisMenu={"blocked"}
         heightMultiplier={heightMultiplier}
         activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
         setMenuHeight={setMenuHeight}
       />
     </>

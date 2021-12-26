@@ -58,7 +58,6 @@ export const Stats: React.FC<Props> = ({
         thisMenu={"stats"}
         heightMultiplier={heightMultiplier}
         activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
         setMenuHeight={setMenuHeight}
       />
     </>

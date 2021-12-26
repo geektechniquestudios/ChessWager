@@ -13,6 +13,7 @@ import { BiArrowBack, BiUserCircle } from "react-icons/bi"
 import { Menu } from "./Menu"
 import { DropdownItem } from "./DropdownItem"
 import { Blocked } from "./menus/Blocked"
+import { Store } from "./menus/Store"
 
 export function Dropdown({ setIsDarkOn, isDarkOn }) {
   const { user, auth } = Auth.useContainer()
@@ -53,6 +54,7 @@ const DropdownMenu = ({ setIsDarkOn, isDarkOn }) => {
 
   const heightMultiplier = 1.1
   useEffect(() => {
+    // const height = dropdownRef.current?.firstChild.offsetHeight
     setMenuHeight(
       dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
     )
@@ -67,6 +69,7 @@ const DropdownMenu = ({ setIsDarkOn, isDarkOn }) => {
         setMenuHeight={setMenuHeight}
         setIsDarkOn={setIsDarkOn}
         isDarkOn={isDarkOn}
+        dropdownRef={dropdownRef}
       />
 
       {user && (
@@ -80,6 +83,15 @@ const DropdownMenu = ({ setIsDarkOn, isDarkOn }) => {
 
       {user && (
         <Settings
+          heightMultiplier={heightMultiplier}
+          activeMenu={activeMenu}
+          setActiveMenu={setActiveMenu}
+          setMenuHeight={setMenuHeight}
+        />
+      )}
+
+      {user && (
+        <Store
           heightMultiplier={heightMultiplier}
           activeMenu={activeMenu}
           setActiveMenu={setActiveMenu}

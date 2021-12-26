@@ -15,6 +15,8 @@ import { RiLogoutCircleRLine } from "react-icons/ri"
 import { GiWallet } from "react-icons/gi"
 import { MdOutlineDarkMode } from "react-icons/md"
 import { BsSun } from "react-icons/bs"
+import { useEffect } from "react"
+import {GoGift} from "react-icons/go"
 
 interface Props {
   activeMenu: string
@@ -23,6 +25,7 @@ interface Props {
   setIsDarkOn: React.Dispatch<React.SetStateAction<boolean>>
   isDarkOn: boolean
   heightMultiplier: number
+  dropdownRef: any
 }
 
 export const Main: React.FC<Props> = ({
@@ -32,6 +35,7 @@ export const Main: React.FC<Props> = ({
   setIsDarkOn,
   isDarkOn,
   heightMultiplier,
+  dropdownRef,
 }) => {
   const userDocumentRef = firebase.firestore().collection("users")
   const {
@@ -57,7 +61,13 @@ export const Main: React.FC<Props> = ({
     const height = el.offsetHeight * heightMultiplier
     setMenuHeight(height)
   }
+  // useEffect(() => {
+  //   // const height = dropdownRef.current?.firstChild.offsetHeight
+  //   setMenuHeight(
+  //     dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
 
+  //   )
+  // }, [user, dropdownRef, heightMultiplier, setMenuHeight])
   return (
     <>
       <CSSTransition
@@ -84,6 +94,16 @@ export const Main: React.FC<Props> = ({
               setActiveMenu={setActiveMenu}
             >
               settings
+            </DropdownItem>
+          )}
+
+          {user && (
+            <DropdownItem
+              leftIcon={<GoGift />}
+              goToMenu="store"
+              setActiveMenu={setActiveMenu}
+            >
+              store
             </DropdownItem>
           )}
           <DropdownItem
