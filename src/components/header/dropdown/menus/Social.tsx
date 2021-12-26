@@ -31,6 +31,7 @@ export const Social: React.FC<Props> = ({
           >
             <h2>social</h2>
           </DropdownItem>,
+          <div className="border-b-2"> </div>,
 
           <StaticDropdownItem
             url="https://www.google.com"

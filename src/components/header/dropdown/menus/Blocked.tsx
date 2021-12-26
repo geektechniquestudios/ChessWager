@@ -18,11 +18,12 @@ import { ReactComponent as BoltIcon } from "../icons/bolt.svg"
 import { StaticDropdownItem } from "../StaticDropdownItem"
 import { CgProfile } from "react-icons/cg"
 import { RiSettings5Line } from "react-icons/ri"
-import { BsShare } from "react-icons/bs"
-import { BiHelpCircle, BiMessageRoundedError } from "react-icons/bi"
+import { BsArrowLeft, BsShare } from "react-icons/bs"
+import { BiHelpCircle } from "react-icons/bi"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
-import { AiOutlineInfoCircle, AiOutlineQuestionCircle } from "react-icons/ai"
+
+const firestore = firebase.firestore()
 
 interface Props {
   activeMenu: string
@@ -31,31 +32,43 @@ interface Props {
   heightMultiplier: number
 }
 
-export const Help: React.FC<Props> = ({
+export const Blocked: React.FC<Props> = ({
   activeMenu,
   setActiveMenu,
   setMenuHeight,
   heightMultiplier,
 }) => {
+  const { user } = Auth.useContainer()
+  const [blocked, setBlocked] = useState(undefined)
+  if (user) {
+    const blockedUsers = firestore
+      .collection("users")
+      .doc(user!.uid)
+      .get()
+      .then((doc) => doc.data()?.blocked)
+    blockedUsers.then((users) =>
+      setBlocked(
+        users.map((user: string[]) => (
+          <StaticDropdownItem>{user ?? "no blocked users"}</StaticDropdownItem>
+        )),
+      ),
+    )
+  }
   return (
     <>
       <Menu
         menuItems={[
-          <DropdownItem
-            goToMenu="main"
-            leftIcon={<BiArrowBack />}
-            setActiveMenu={setActiveMenu}
-          >
-            <h2>help</h2>
-          </DropdownItem>,
-          <div className="border-b-2"> </div>,
-          <DropdownItem setActiveMenu={setActiveMenu} leftIcon={<AiOutlineQuestionCircle />}>
-            how to play
-          </DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu} leftIcon={<AiOutlineInfoCircle />}>faqs</DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu} leftIcon={<BiMessageRoundedError />}>contact us</DropdownItem>,
+          <>
+            <DropdownItem
+              setActiveMenu={setActiveMenu}
+              leftIcon={<BsArrowLeft />}
+              goToMenu="settings"
+            >
+              blocked users
+            </DropdownItem>
+          </>,
         ]}
-        thisMenu={"help"}
+        thisMenu={"blocked"}
         heightMultiplier={heightMultiplier}
         activeMenu={activeMenu}
         setActiveMenu={setActiveMenu}

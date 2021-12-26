@@ -14,6 +14,7 @@ import { BiHelpCircle } from "react-icons/bi"
 import { RiLogoutCircleRLine } from "react-icons/ri"
 import { GiWallet } from "react-icons/gi"
 import { MdOutlineDarkMode } from "react-icons/md"
+import { BsSun } from "react-icons/bs"
 
 interface Props {
   activeMenu: string
@@ -118,16 +119,13 @@ export const Main: React.FC<Props> = ({
                 />
               </div>
             }
-            leftIcon={<MdOutlineDarkMode />}
+            leftIcon={isDarkOn ? <MdOutlineDarkMode /> : <BsSun />}
           >
-            dark mode
+            {isDarkOn ? "dark mode" : "light mode"}
           </StaticDropdownItem>
-          <div className="border-b-2"> </div>
+          <div className="border-b-2" />
           {!isWalletConnected && (
-            <StaticDropdownItem
-              onClick={connectWallet}
-              leftIcon={<GiWallet />}
-            >
+            <StaticDropdownItem onClick={connectWallet} leftIcon={<GiWallet />}>
               connect wallet
             </StaticDropdownItem>
           )}

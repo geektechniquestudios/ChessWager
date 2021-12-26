@@ -1,26 +1,15 @@
 import "../../../../style/dropdown.scss"
 import { Auth } from "../../../containers/Auth"
 
-import { useState, useEffect, useRef } from "react"
+import { useState } from "react"
 import { DropdownItem } from "../DropdownItem"
-import { CSSTransition } from "react-transition-group"
 import Toggle from "react-toggle"
-import firebase from "firebase/compat"
 
-import { ReactComponent as BellIcon } from "./icons/bell.svg"
-import { ReactComponent as MessengerIcon } from "./icons/messenger.svg"
-import { ReactComponent as CaretIcon } from "./icons/caret.svg"
-import { ReactComponent as PlusIcon } from "./icons/plus.svg"
-import { ReactComponent as CogIcon } from "./icons/cog.svg"
-import { ReactComponent as ChevronIcon } from "./icons/chevron.svg"
-import { ReactComponent as ArrowIcon } from "../icons/arrow.svg"
-import { ReactComponent as BoltIcon } from "../icons/bolt.svg"
 import { StaticDropdownItem } from "../StaticDropdownItem"
-import { CgProfile } from "react-icons/cg"
-import { RiSettings5Line } from "react-icons/ri"
-import { BsShare } from "react-icons/bs"
-import { BiArrowBack, BiHelpCircle } from "react-icons/bi"
+import { RiChatDeleteLine } from "react-icons/ri"
+import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
+import { MdOutlineBlock } from "react-icons/md"
 
 interface Props {
   activeMenu: string
@@ -35,6 +24,7 @@ export const Settings: React.FC<Props> = ({
   setMenuHeight,
   heightMultiplier,
 }) => {
+  const [profanityFilter, setProfanityFilter] = useState(true)
   return (
     <>
       <Menu
@@ -46,8 +36,37 @@ export const Settings: React.FC<Props> = ({
           >
             <h2>settings</h2>
           </DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu}>HTML</DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu}>CSS</DropdownItem>,
+          <div className="border-b-2"> </div>,
+
+          <StaticDropdownItem
+            leftIcon={<RiChatDeleteLine />}
+            onClick={() => {
+              setProfanityFilter(!profanityFilter)
+            }}
+            rightIcon={
+              <div className="px-2 justify-center align-middle flex h-full py-2 ">
+                <Toggle
+                  // icons={false}
+                  className="filter-toggle pointer-events-none "
+                  onChange={(e) => {
+                    const isChecked = e.target.checked
+                    setProfanityFilter(isChecked)
+                  }}
+                  checked={profanityFilter}
+                />
+              </div>
+            }
+          >
+            profanity filter
+          </StaticDropdownItem>,
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<MdOutlineBlock />}
+            goToMenu="blocked"
+          >
+            blocked users
+          </DropdownItem>,
+
           <DropdownItem setActiveMenu={setActiveMenu}>JavaScript</DropdownItem>,
           <DropdownItem setActiveMenu={setActiveMenu}>Awesome!</DropdownItem>,
         ]}

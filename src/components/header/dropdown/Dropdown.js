@@ -12,6 +12,7 @@ import { Profile } from "./menus/Profile"
 import { BiArrowBack, BiUserCircle } from "react-icons/bi"
 import { Menu } from "./Menu"
 import { DropdownItem } from "./DropdownItem"
+import { Blocked } from "./menus/Blocked"
 
 export function Dropdown({ setIsDarkOn, isDarkOn }) {
   const { user, auth } = Auth.useContainer()
@@ -67,20 +68,24 @@ const DropdownMenu = ({ setIsDarkOn, isDarkOn }) => {
         setIsDarkOn={setIsDarkOn}
         isDarkOn={isDarkOn}
       />
-      
-      <Profile
-        heightMultiplier={heightMultiplier}
-        activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
-        setMenuHeight={setMenuHeight}
-      />
 
-      <Settings
-        heightMultiplier={heightMultiplier}
-        activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
-        setMenuHeight={setMenuHeight}
-      />
+      {user && (
+        <Profile
+          heightMultiplier={heightMultiplier}
+          activeMenu={activeMenu}
+          setActiveMenu={setActiveMenu}
+          setMenuHeight={setMenuHeight}
+        />
+      )}
+
+      {user && (
+        <Settings
+          heightMultiplier={heightMultiplier}
+          activeMenu={activeMenu}
+          setActiveMenu={setActiveMenu}
+          setMenuHeight={setMenuHeight}
+        />
+      )}
 
       <Social
         heightMultiplier={heightMultiplier}
@@ -95,6 +100,15 @@ const DropdownMenu = ({ setIsDarkOn, isDarkOn }) => {
         setActiveMenu={setActiveMenu}
         setMenuHeight={setMenuHeight}
       />
+
+      {user && (
+        <Blocked
+          heightMultiplier={heightMultiplier}
+          activeMenu={activeMenu}
+          setActiveMenu={setActiveMenu}
+          setMenuHeight={setMenuHeight}
+        />
+      )}
     </div>
   )
 }

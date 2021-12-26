@@ -1,3 +1,6 @@
+@import "index.scss";
+
+
 :root {
   --bg: #242526;
   --bg-accent: #484a4d;
@@ -26,21 +29,19 @@
   filter: brightness(1.2);
 }
 
-.icon-button svg {
-  fill: var(--text-color);
-  width: 20px;
-  height: 20px;
+.icon-button {
+  @apply w-5 h-5 ; 
 }
 
 /* Dropdown Menu */
 
 .dropdown {
   transition: height var(--speed) ease;
-  @apply absolute w-64 -translate-x-1/2 bg-secondary border-2 border-secondary-dark p-4 overflow-hidden right-2 top-10 z-50 rounded-md text-primary;
+  @apply  absolute w-64 -translate-x-1/2 bg-secondary border-2 border-secondary-dark p-4 overflow-hidden right-2 top-10 z-50 rounded-md text-primary align-middle justify-center flex;
 }
 
 .menu {
-  width: 100%;
+  @apply w-56 justify-center;
 }
 
 .menu-item {
@@ -85,9 +86,25 @@
 }
 
 .toggle.react-toggle--checked .react-toggle-track {
-  @apply bg-tertiary via-primary-dark;
+  @apply bg-gradient-to-r from-tertiary to-tertiary-dark;
+}
+
+.toggle.react-toggle .react-toggle-track {
+  @apply bg-gradient-to-r from-tertiary to-tertiary-dark;
 }
 
 .toggle.react-toggle--checked .react-toggle-thumb {
+  @apply bg-primary-dark pointer-events-none border-none;
+}
+
+.filter-toggle.react-toggle--checked .react-toggle-track {
+  @apply bg-gradient-to-r from-tertiary to-tertiary-dark;
+}
+
+.filter-toggle.react-toggle .react-toggle-track {
+  @apply bg-gradient-to-r bg-primary-dark to-secondary-dark;
+}
+
+.filter-toggle.react-toggle--checked .react-toggle-thumb {
   @apply bg-primary-dark pointer-events-none border-none;
 }

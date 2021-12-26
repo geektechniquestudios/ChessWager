@@ -19,12 +19,9 @@ import { StaticDropdownItem } from "../StaticDropdownItem"
 import { CgProfile } from "react-icons/cg"
 import { RiSettings5Line } from "react-icons/ri"
 import { BsShare } from "react-icons/bs"
-import { BiArrowBack, BiHelpCircle } from "react-icons/bi"
+import { BiHelpCircle } from "react-icons/bi"
+import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
-import { AiOutlineCloudUpload } from "react-icons/ai"
-import { ImStatsBars } from "react-icons/im"
-import { FiAward } from "react-icons/fi"
-import { MdPeopleOutline } from "react-icons/md"
 
 interface Props {
   activeMenu: string
@@ -33,71 +30,32 @@ interface Props {
   heightMultiplier: number
 }
 
-export const Profile: React.FC<Props> = ({
+export const Stats: React.FC<Props> = ({
   activeMenu,
   setActiveMenu,
   setMenuHeight,
   heightMultiplier,
 }) => {
-  const { user } = Auth.useContainer()
-  const uploadImage = async (file: File) => {
-    // upload image to firebase storage=
-    const storageRef = firebase.storage().ref()
-    const imageRef = storageRef.child(`${user!.uid}/profile.jpg`)
-    await imageRef.put(file)
-  }
-
   return (
     <>
       <Menu
         menuItems={[
           <DropdownItem
-            goToMenu="main"
+            goToMenu="profile"
             leftIcon={<BiArrowBack />}
             setActiveMenu={setActiveMenu}
           >
-            <h2>profile</h2>
+            <h2>help</h2>
           </DropdownItem>,
           <div className="border-b-2"> </div>,
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            leftIcon={<MdPeopleOutline />}
-          >
-            friends
-          </DropdownItem>,
-
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            leftIcon={<ImStatsBars />}
-          >
-            stats
-          </DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu} leftIcon={<FiAward />}>
-            achievements
-          </DropdownItem>,
-          <StaticDropdownItem
-            leftIcon={
-              <button
-                onClick={() => {
-                  // uploadImage()
-                }}
-              >
-                <AiOutlineCloudUpload />
-              </button>
-            }
-            onClick={() => {}}
-            rightIcon={
-              <img
-                src={user!.photoURL!}
-                alt=""
-                className="w-6 h-6 rounded-full mr-2"
-              />
-            }
-          >
-            user image
+          <StaticDropdownItem>
+            {/* @todo get from firebase  */}
+            follow through: {}
           </StaticDropdownItem>,
+          <StaticDropdownItem>number of bets</StaticDropdownItem>,
+          <StaticDropdownItem>net profit</StaticDropdownItem>,
         ]}
-        thisMenu={"profile"}
+        thisMenu={"stats"}
         heightMultiplier={heightMultiplier}
         activeMenu={activeMenu}
         setActiveMenu={setActiveMenu}

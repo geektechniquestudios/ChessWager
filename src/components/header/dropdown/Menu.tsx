@@ -3,7 +3,6 @@ import { CSSTransition } from "react-transition-group"
 import { ReactComponent as BoltIcon } from "./icons/bolt.svg"
 import { BiArrowBack } from "react-icons/bi"
 
-
 interface Props {
   activeMenu: string
   thisMenu: string
@@ -21,7 +20,6 @@ export const Menu: React.FC<Props> = ({
   heightMultiplier,
   menuItems,
 }) => {
-
   const calcHeight = (el: any) => {
     const height = el.offsetHeight * heightMultiplier
     setMenuHeight(height)
@@ -32,7 +30,7 @@ export const Menu: React.FC<Props> = ({
       <CSSTransition
         in={activeMenu === thisMenu}
         timeout={500}
-        classNames="menu-secondary"
+        classNames="menu-primary"
         unmountOnExit
         onEnter={calcHeight}
       >
