@@ -8,15 +8,21 @@ import Toggle from "react-toggle"
 
 import { StaticDropdownItem } from "../StaticDropdownItem"
 import { CgProfile } from "react-icons/cg"
-import { RiSettings5Line } from "react-icons/ri"
-import { BsShare } from "react-icons/bs"
+import {
+  RiLoginCircleLine,
+  RiLogoutCircleLine,
+  RiSettings5Line,
+} from "react-icons/ri"
+import { BsShare, BsWallet2 } from "react-icons/bs"
 import { BiHelpCircle } from "react-icons/bi"
 import { RiLogoutCircleRLine } from "react-icons/ri"
 import { GiWallet } from "react-icons/gi"
-import { MdOutlineDarkMode } from "react-icons/md"
+import { MdAttachMoney, MdMoneyOff, MdOutlineDarkMode } from "react-icons/md"
 import { BsSun } from "react-icons/bs"
 // import { useEffect } from "react"
 import { GoGift } from "react-icons/go"
+import { GrMoney } from "react-icons/gr"
+import { useEffect } from "react"
 
 interface Props {
   activeMenu: string
@@ -43,6 +49,7 @@ export const Main: React.FC<Props> = ({
     signOutWithGoogle,
     signInWithGoogle,
     connectWallet,
+    isWalletConnecting,
     isWalletConnected,
     disconnectWallet,
   } = Auth.useContainer()
@@ -68,6 +75,7 @@ export const Main: React.FC<Props> = ({
 
   //   )
   // }, [user, dropdownRef, heightMultiplier, setMenuHeight])
+
   return (
     <>
       <CSSTransition
@@ -141,14 +149,21 @@ export const Main: React.FC<Props> = ({
           </StaticDropdownItem>
           <div className="border-b-2" />
           {!isWalletConnected && (
-            <StaticDropdownItem onClick={connectWallet} leftIcon={<GiWallet />}>
+            <StaticDropdownItem
+              onClick={connectWallet}
+              leftIcon={<MdAttachMoney />}
+              // rightIcon={isWalletConnecting ?? <div className={"animate-ping"}> . </div>}
+              // rightIcon={true ?? <div className="animate-ping"> test </div>}
+            >
               connect wallet
             </StaticDropdownItem>
           )}
           {isWalletConnected && (
             <StaticDropdownItem
               onClick={disconnectWallet}
-              leftIcon={<GiWallet />}
+              leftIcon={<MdMoneyOff />}
+              // rightIcon={true ?? <div className="animate-ping"> test </div>}
+              // rightIcon={<div>{isWalletConnecting ? "." : ""}</div>}
             >
               disconnect wallet
             </StaticDropdownItem>
@@ -159,7 +174,7 @@ export const Main: React.FC<Props> = ({
               onClick={() => {
                 signInWithGoogle()
               }}
-              leftIcon={<RiLogoutCircleRLine />}
+              leftIcon={<RiLoginCircleLine />}
             >
               log in
             </StaticDropdownItem>
@@ -168,7 +183,7 @@ export const Main: React.FC<Props> = ({
           {user && (
             <StaticDropdownItem
               onClick={signOutWithGoogle}
-              leftIcon={<RiLogoutCircleRLine />}
+              leftIcon={<RiLogoutCircleLine />}
             >
               log out
             </StaticDropdownItem>

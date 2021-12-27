@@ -18,9 +18,12 @@ import { Store } from "./menus/Store"
 export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
   const { user, auth } = Auth.useContainer()
   const { photoURL } = auth.currentUser || { uid: "", photoURL: "" }
+  const [open, setOpen] = useState(false)
 
   return (
     <UserIconButton
+      open={open}
+      setOpen={setOpen}
       icon={
         user ? (
           <img
@@ -33,13 +36,16 @@ export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
         )
       }
     >
-      <DropdownMenu setIsDarkOn={setIsDarkOn} isDarkOn={isDarkOn} />
+      <DropdownMenu
+        setIsDarkOn={setIsDarkOn}
+        isDarkOn={isDarkOn}
+        setOpen={setOpen}
+      />
     </UserIconButton>
   )
 }
 
-const UserIconButton = ({ icon, children }) => {
-  const [open, setOpen] = useState(false)
+const UserIconButton = ({ icon, children, open, setOpen }) => {
   return (
     <>
       <a href="#" className="dropdown-button" onClick={() => setOpen(!open)}>
@@ -50,10 +56,25 @@ const UserIconButton = ({ icon, children }) => {
   )
 }
 
-const DropdownMenu = ({ setIsDarkOn, isDarkOn }) => {
+const CloseMenuListener = (ref, setOpen) => {
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [ref, setOpen])
+}
+
+const DropdownMenu = ({ setIsDarkOn, isDarkOn, setOpen }) => {
   const [activeMenu, setActiveMenu] = useState("main")
   const [menuHeight, setMenuHeight] = useState()
   const dropdownRef = useRef(null)
+  CloseMenuListener(dropdownRef, setOpen)
   const { user } = Auth.useContainer()
 
   const heightMultiplier = 1.1

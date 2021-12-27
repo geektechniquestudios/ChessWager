@@ -38,22 +38,22 @@ export const Blocked: React.FC<Props> = ({
   setMenuHeight,
   heightMultiplier,
 }) => {
-  const { user } = Auth.useContainer()
-  const [blocked, setBlocked] = useState(undefined)
-  if (user) {
-    const blockedUsers = firestore
-      .collection("users")
-      .doc(user!.uid)
-      .get()
-      .then((doc) => doc.data()?.blocked)
-    blockedUsers.then((users) =>
-      setBlocked(
-        users.map((user: string[]) => (
-          <StaticDropdownItem>{user ?? "no blocked users"}</StaticDropdownItem>
-        )),
-      ),
-    )
-  }
+  // const { user } = Auth.useContainer()
+  // const [blocked, setBlocked] = useState(undefined)
+  // if (user) {
+  //   const blockedUsers = firestore
+  //     .collection("users")
+  //     .doc(user!.uid)
+  //     .get()
+  //     .then((doc) => doc.data()?.blocked)
+  //   blockedUsers.then((users) =>
+  //     setBlocked(
+  //       users.map((user: string[]) => (
+  //         <StaticDropdownItem>{user ?? "no blocked users"}</StaticDropdownItem>
+  //       )),
+  //     ),
+  //   )
+  // }
   return (
     <>
       <Menu

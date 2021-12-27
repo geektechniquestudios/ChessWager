@@ -28,6 +28,9 @@ const useAuth = () => {
     boolean,
     firebase.auth.Error | undefined,
   ] = useAuthState(auth)
+
+
+  const [isWalletConnecting, setIsWalletConnecting] = useState(false)
   const connectWallet = async () => {
     if (!user) {
       signInWithGoogle()
@@ -38,6 +41,7 @@ const useAuth = () => {
       return
     }
     try {
+      setIsWalletConnecting(true)
       const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
       await provider.send("eth_requestAccounts", [])
       const signer = provider.getSigner()
@@ -49,9 +53,11 @@ const useAuth = () => {
       setWalletAddress(walletAddress)
       localStorage.setItem("walletAddress", walletAddress)
       localStorage.setItem("isWalletConnected", "true")
+      setIsWalletConnecting(false)
     } catch (error) {
       console.error(error)
       alert("You need to install Metamask")
+      setIsWalletConnecting(false)
     }
   }
 
@@ -115,6 +121,7 @@ const useAuth = () => {
     setWalletAddress,
     signInWithGoogle,
     signOutWithGoogle,
+    isWalletConnecting,
   }
 }
 
