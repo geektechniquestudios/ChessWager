@@ -44,16 +44,17 @@ export const Stats: React.FC<Props> = ({
             goToMenu="profile"
             leftIcon={<BiArrowBack />}
             setActiveMenu={setActiveMenu}
+            key={0}
           >
             <h2>help</h2>
           </DropdownItem>,
-          <div className="border-b-2"> </div>,
+          <div className="border-b-2" key={1}> </div>,
           <StaticDropdownItem>
             {/* @todo get from firebase  */}
             follow through: {}
           </StaticDropdownItem>,
-          <StaticDropdownItem>number of bets</StaticDropdownItem>,
-          <StaticDropdownItem>net profit</StaticDropdownItem>,
+          <StaticDropdownItem key={2}>number of bets</StaticDropdownItem>,
+          <StaticDropdownItem key={3}>net profit</StaticDropdownItem>,
         ]}
         thisMenu={"stats"}
         heightMultiplier={heightMultiplier}

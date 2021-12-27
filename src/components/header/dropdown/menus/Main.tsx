@@ -4,7 +4,7 @@ import { Auth } from "../../../containers/Auth"
 import { DropdownItem } from "../DropdownItem"
 import { CSSTransition } from "react-transition-group"
 import Toggle from "react-toggle"
-import firebase from "firebase/compat"
+// import firebase from "firebase/compat"
 
 import { StaticDropdownItem } from "../StaticDropdownItem"
 import { CgProfile } from "react-icons/cg"
@@ -15,8 +15,8 @@ import { RiLogoutCircleRLine } from "react-icons/ri"
 import { GiWallet } from "react-icons/gi"
 import { MdOutlineDarkMode } from "react-icons/md"
 import { BsSun } from "react-icons/bs"
-import { useEffect } from "react"
-import {GoGift} from "react-icons/go"
+// import { useEffect } from "react"
+import { GoGift } from "react-icons/go"
 
 interface Props {
   activeMenu: string
@@ -37,7 +37,7 @@ export const Main: React.FC<Props> = ({
   heightMultiplier,
   dropdownRef,
 }) => {
-  const userDocumentRef = firebase.firestore().collection("users")
+  // const userDocumentRef = firebase.firestore().collection("users")
   const {
     user,
     signOutWithGoogle,
@@ -46,14 +46,14 @@ export const Main: React.FC<Props> = ({
     isWalletConnected,
     disconnectWallet,
   } = Auth.useContainer()
+  // const userRef = userDocumentRef.doc(user?.uid)
 
   const updateUserDarkPref = (isChecked: boolean) => {
-    if (user?.uid) {
-      const userRef = userDocumentRef.doc(user.uid)
-      userRef.update({
-        darkMode: isChecked,
-      })
-    }
+    // if (user?.uid) {
+    //   userRef.update({
+    //     darkMode: isChecked,
+    //   })
+    // }
     localStorage.setItem("darkMode", isChecked.toString())
   }
 
@@ -130,12 +130,8 @@ export const Main: React.FC<Props> = ({
                 <Toggle
                   icons={false}
                   className="toggle pointer-events-none "
-                  onChange={(e) => {
-                    const isChecked = e.target.checked
-                    setIsDarkOn(isChecked)
-                    updateUserDarkPref(isChecked)
-                  }}
                   checked={isDarkOn}
+                  readOnly
                 />
               </div>
             }
@@ -160,7 +156,9 @@ export const Main: React.FC<Props> = ({
 
           {!user && (
             <StaticDropdownItem
-              onClick={signInWithGoogle}
+              onClick={() => {
+                signInWithGoogle()
+              }}
               leftIcon={<RiLogoutCircleRLine />}
             >
               log in

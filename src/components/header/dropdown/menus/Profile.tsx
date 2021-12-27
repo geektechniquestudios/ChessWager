@@ -55,13 +55,15 @@ export const Profile: React.FC<Props> = ({
             goToMenu="main"
             leftIcon={<BiArrowBack />}
             setActiveMenu={setActiveMenu}
+            key={0}
           >
             <h2>profile</h2>
           </DropdownItem>,
-          <div className="border-b-2"> </div>,
+          <div className="border-b-2" key={1}> </div>,
           <DropdownItem
             setActiveMenu={setActiveMenu}
             leftIcon={<MdPeopleOutline />}
+            key={2}
           >
             friends
           </DropdownItem>,
@@ -69,10 +71,15 @@ export const Profile: React.FC<Props> = ({
           <DropdownItem
             setActiveMenu={setActiveMenu}
             leftIcon={<ImStatsBars />}
+            key={3}
           >
             stats
           </DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu} leftIcon={<FiAward />}>
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<FiAward />}
+            key={4}
+          >
             achievements
           </DropdownItem>,
           <StaticDropdownItem
@@ -93,6 +100,7 @@ export const Profile: React.FC<Props> = ({
                 className="w-6 h-6 rounded-full mr-2"
               />
             }
+            key={5}
           >
             user image
           </StaticDropdownItem>,
