@@ -9,9 +9,7 @@ import { Settings } from "./menus/Settings"
 import { Social } from "./menus/Social"
 import { Help } from "./menus/Help"
 import { Profile } from "./menus/Profile"
-import { BiArrowBack, BiUserCircle } from "react-icons/bi"
-import { Menu } from "./Menu"
-import { DropdownItem } from "./DropdownItem"
+import { BiUserCircle } from "react-icons/bi"
 import { Blocked } from "./menus/Blocked"
 import { Store } from "./menus/Store"
 
@@ -56,25 +54,33 @@ const UserIconButton = ({ icon, children, open, setOpen }) => {
   )
 }
 
-const CloseMenuListener = (ref, setOpen) => {
+const CloseMenuListener = (ref, setOpen, shouldMenuStayOpen) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target)
+      ) {
+        if (!shouldMenuStayOpen) {
         setOpen(false)
+        } else {
+        // make menu pulse to show it's still open
+        }
       }
     }
     document.addEventListener("mousedown", handleClickOutside)
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [ref, setOpen])
+  }, [ref, setOpen, shouldMenuStayOpen])
 }
 
 const DropdownMenu = ({ setIsDarkOn, isDarkOn, setOpen }) => {
   const [activeMenu, setActiveMenu] = useState("main")
   const [menuHeight, setMenuHeight] = useState()
+  const [shouldMenuStayOpen, setShouldMenuStayOpen] = useState(false)
   const dropdownRef = useRef(null)
-  CloseMenuListener(dropdownRef, setOpen)
+  CloseMenuListener(dropdownRef, setOpen, shouldMenuStayOpen)
   const { user } = Auth.useContainer()
 
   const heightMultiplier = 1.1
