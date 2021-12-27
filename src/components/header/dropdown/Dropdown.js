@@ -58,11 +58,16 @@ const DropdownMenu = ({ setIsDarkOn, isDarkOn }) => {
 
   const heightMultiplier = 1.1
   useEffect(() => {
-    setMenuHeight(
-      dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
-    )
+    // setMenuHeight(
+    //   dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
+    // )
+    if (user) {
+      setMenuHeight(515)
+    } else {
+      setMenuHeight(325)
+    }
   }, [user])
-  
+
   return (
     <div className="dropdown" style={{ height: menuHeight }} ref={dropdownRef}>
       <Main
