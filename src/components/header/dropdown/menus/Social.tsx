@@ -6,12 +6,12 @@ import { ReactComponent as BoltIcon } from "../icons/bolt.svg"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
 import {
-  BsFacebook,
-  BsInstagram,
-  BsReddit,
-  BsTwitter,
-  BsYoutube,
-} from "react-icons/bs"
+  RiInstagramLine,
+  RiFacebookCircleLine,
+  RiTwitterLine,
+  RiRedditLine,
+  RiYoutubeLine,
+} from "react-icons/ri"
 import { StaticDropdownItem } from "../StaticDropdownItem"
 interface Props {
   activeMenu: string
@@ -41,35 +41,35 @@ export const Social: React.FC<Props> = ({
 
           <StaticDropdownItem
             url="https://www.instagram.com/chesswager/"
-            leftIcon={<BsInstagram />}
+            leftIcon={<RiInstagramLine />}
           >
             instagram
           </StaticDropdownItem>,
-          
+
           <StaticDropdownItem
             url="https://www.facebook.com/profile.php?id=100073643917469"
-            leftIcon={<BsFacebook />}
+            leftIcon={<RiFacebookCircleLine />}
           >
             facebook
           </StaticDropdownItem>,
 
           <StaticDropdownItem
             url="https://twitter.com/ChessWager"
-            leftIcon={<BsTwitter />}
+            leftIcon={<RiTwitterLine />}
           >
             twitter
           </StaticDropdownItem>,
 
           <StaticDropdownItem
             url="https://www.reddit.com/user/ChessWager64"
-            leftIcon={<BsReddit />}
+            leftIcon={<RiRedditLine />}
           >
             reddit
           </StaticDropdownItem>,
 
           <StaticDropdownItem
             url="https://www.youtube.com/channel/UCJhScjp1G8lmF6IXRDM_paQ"
-            leftIcon={<BsYoutube />}
+            leftIcon={<RiYoutubeLine />}
           >
             youtube
           </StaticDropdownItem>,
