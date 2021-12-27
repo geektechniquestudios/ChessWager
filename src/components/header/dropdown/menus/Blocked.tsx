@@ -58,15 +58,15 @@ export const Blocked: React.FC<Props> = ({
     <>
       <Menu
         menuItems={[
-          <>
             <DropdownItem
               setActiveMenu={setActiveMenu}
               leftIcon={<BsArrowLeft />}
               goToMenu="settings"
+              key={0}
             >
               blocked users
             </DropdownItem>
-          </>,
+          ,
         ]}
         thisMenu={"blocked"}
         heightMultiplier={heightMultiplier}

@@ -45,15 +45,34 @@ export const Help: React.FC<Props> = ({
             goToMenu="main"
             leftIcon={<BiArrowBack />}
             setActiveMenu={setActiveMenu}
+            key={0}
           >
             <h2>help</h2>
           </DropdownItem>,
-          <div className="border-b-2"> </div>,
-          <DropdownItem setActiveMenu={setActiveMenu} leftIcon={<AiOutlineQuestionCircle />}>
+          <div className="border-b-2" key={1}>
+            {" "}
+          </div>,
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<AiOutlineQuestionCircle />}
+            key={2}
+          >
             how to play
           </DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu} leftIcon={<AiOutlineInfoCircle />}>faqs</DropdownItem>,
-          <DropdownItem setActiveMenu={setActiveMenu} leftIcon={<BiMessageRoundedError />}>contact us</DropdownItem>,
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<AiOutlineInfoCircle />}
+            key={3}
+          >
+            faqs
+          </DropdownItem>,
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<BiMessageRoundedError />}
+            key={4}
+          >
+            contact us
+          </DropdownItem>,
         ]}
         thisMenu={"help"}
         heightMultiplier={heightMultiplier}

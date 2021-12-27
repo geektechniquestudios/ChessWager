@@ -36,15 +36,17 @@ export const Settings: React.FC<Props> = ({
             goToMenu="main"
             leftIcon={<BiArrowBack />}
             setActiveMenu={setActiveMenu}
+            key={0}
           >
             <h2>settings</h2>
           </DropdownItem>,
-          <div className="border-b-2"> </div>,
+          <div className="border-b-2" key={1}> </div>,
 
           <DropdownItem
             setActiveMenu={setActiveMenu}
             leftIcon={<MdOutlineBlock />}
             goToMenu="blocked"
+            key={2}
           >
             blocked users
           </DropdownItem>,
@@ -59,9 +61,11 @@ export const Settings: React.FC<Props> = ({
                 <Toggle
                   className="filter-toggle pointer-events-none "
                   checked={isMuted}
+                  readOnly
                 />
               </div>
             }
+            key={3}
           >
             sound
           </StaticDropdownItem>,
@@ -76,9 +80,12 @@ export const Settings: React.FC<Props> = ({
                 <Toggle
                   className="filter-toggle pointer-events-none "
                   checked={profanityFilter}
+                  readOnly
                 />
+
               </div>
             }
+            key={4}
           >
             profanity filter
           </StaticDropdownItem>,

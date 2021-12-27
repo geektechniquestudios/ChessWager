@@ -15,7 +15,7 @@ import { DropdownItem } from "./DropdownItem"
 import { Blocked } from "./menus/Blocked"
 import { Store } from "./menus/Store"
 
-export function Dropdown({ setIsDarkOn, isDarkOn }) {
+export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
   const { user, auth } = Auth.useContainer()
   const { photoURL } = auth.currentUser || { uid: "", photoURL: "" }
 
@@ -23,7 +23,11 @@ export function Dropdown({ setIsDarkOn, isDarkOn }) {
     <UserIconButton
       icon={
         user ? (
-          <img src={photoURL} alt="" className="user-img" />
+          <img
+            src={photoURL}
+            alt=""
+            className="user-img rounded-full focus:border-tertiary border-1 border-primary-dark"
+          />
         ) : (
           <BiUserCircle className="w-8 h-8" />
         )
@@ -54,10 +58,14 @@ const DropdownMenu = ({ setIsDarkOn, isDarkOn }) => {
 
   const heightMultiplier = 1.1
   useEffect(() => {
-    // const height = dropdownRef.current?.firstChild.offsetHeight
-    setMenuHeight(
-      dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
-    )
+    // setMenuHeight(
+    //   dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
+    // )
+    if (user) {
+      setMenuHeight(515)
+    } else {
+      setMenuHeight(325)
+    }
   }, [user])
 
   return (

@@ -34,42 +34,50 @@ export const Social: React.FC<Props> = ({
             goToMenu="main"
             leftIcon={<BiArrowBack />}
             setActiveMenu={setActiveMenu}
+            key={0}
           >
             <h2>social</h2>
           </DropdownItem>,
-          <div className="border-b-2"> </div>,
+          <div className="border-b-2" key={1}>
+            {" "}
+          </div>,
 
           <StaticDropdownItem
             url="https://www.instagram.com/chesswager/"
-            leftIcon={<RiInstagramLine />}
+            leftIcon={<BsInstagram />}
+            key={2}
           >
             instagram
           </StaticDropdownItem>,
 
           <StaticDropdownItem
             url="https://www.facebook.com/profile.php?id=100073643917469"
-            leftIcon={<RiFacebookCircleLine />}
+            leftIcon={<BsFacebook />}
+            key={3}
           >
             facebook
           </StaticDropdownItem>,
 
           <StaticDropdownItem
             url="https://twitter.com/ChessWager"
-            leftIcon={<RiTwitterLine />}
+            leftIcon={<BsTwitter />}
+            key={4}
           >
             twitter
           </StaticDropdownItem>,
 
           <StaticDropdownItem
             url="https://www.reddit.com/user/ChessWager64"
-            leftIcon={<RiRedditLine />}
+            leftIcon={<BsReddit />}
+            key={5}
           >
             reddit
           </StaticDropdownItem>,
 
           <StaticDropdownItem
             url="https://www.youtube.com/channel/UCJhScjp1G8lmF6IXRDM_paQ"
-            leftIcon={<RiYoutubeLine />}
+            leftIcon={<BsYoutube />}
+            key={6}
           >
             youtube
           </StaticDropdownItem>,
