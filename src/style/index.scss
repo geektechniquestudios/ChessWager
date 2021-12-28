@@ -54,7 +54,8 @@ code {
 
 .user-img {
   @extend .color-shift;
-  @apply w-8 h-8  ;
+  @apply w-8 h-8 hover:border-tertiary-dark border-2;
+
 
 }
 

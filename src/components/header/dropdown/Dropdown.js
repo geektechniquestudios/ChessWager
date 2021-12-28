@@ -17,17 +17,19 @@ export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
   const { user, auth } = Auth.useContainer()
   const { photoURL } = auth.currentUser || { uid: "", photoURL: "" }
   const [open, setOpen] = useState(false)
+  const [shouldMenuStayOpen, setShouldMenuStayOpen] = useState(false)
 
   return (
     <UserIconButton
       open={open}
       setOpen={setOpen}
+      shouldMenuStayOpen={shouldMenuStayOpen}
       icon={
         user ? (
           <img
             src={photoURL}
             alt=""
-            className="user-img rounded-full focus:border-tertiary border-1 border-primary-dark"
+            className="user-img rounded-full focus:border-tertiary border-1 border-primary-dark border-2"
           />
         ) : (
           <BiUserCircle className="w-8 h-8" />
@@ -38,15 +40,29 @@ export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
         setIsDarkOn={setIsDarkOn}
         isDarkOn={isDarkOn}
         setOpen={setOpen}
+        open={open}
       />
     </UserIconButton>
   )
 }
 
-const UserIconButton = ({ icon, children, open, setOpen }) => {
+const UserIconButton = ({
+  icon,
+  children,
+  open,
+  setOpen,
+  shouldMenuStayOpen,
+}) => {
+  const pointerEvents = open ? "pointer-events-none" : ""
   return (
     <>
-      <a href="#" className="dropdown-button" onClick={() => setOpen(!open)}>
+      <a
+        href="#"
+        className={`dropdown-button ${pointerEvents}`}
+        onClick={() => {
+          setOpen(!open)
+        }}
+      >
         {icon}
       </a>
       {open && children}
@@ -54,34 +70,36 @@ const UserIconButton = ({ icon, children, open, setOpen }) => {
   )
 }
 
-const CloseMenuListener = (ref, setOpen, shouldMenuStayOpen) => {
+const CloseMenuListener = (ref, setOpen, shouldMenuStayOpen, open) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        ref.current &&
-        !ref.current.contains(event.target)
-      ) {
-        if (!shouldMenuStayOpen) {
-        setOpen(false)
-        } else {
-        // make menu pulse to show it's still open
-        }
+      // if user clicks on the user icon, don't close the menu
+      if (ref.current?.contains(event.target)) {
+        return
+      }
+      if (ref.current && !ref.current.contains(event.target)) {
+        shouldMenuStayOpen ? console.log("") : setOpen(false) // make menu pulse to show it's still open
       }
     }
     document.addEventListener("mousedown", handleClickOutside)
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [ref, setOpen, shouldMenuStayOpen])
+  }, [open, ref, setOpen, shouldMenuStayOpen])
 }
 
-const DropdownMenu = ({ setIsDarkOn, isDarkOn, setOpen }) => {
+const DropdownMenu = ({
+  setIsDarkOn,
+  isDarkOn,
+  setOpen,
+  open,
+  shouldMenuStayOpen,
+}) => {
   const [activeMenu, setActiveMenu] = useState("main")
   const [menuHeight, setMenuHeight] = useState()
-  const [shouldMenuStayOpen, setShouldMenuStayOpen] = useState(false)
+  const { user } = Auth.useContainer()
   const dropdownRef = useRef(null)
   CloseMenuListener(dropdownRef, setOpen, shouldMenuStayOpen)
-  const { user } = Auth.useContainer()
 
   const heightMultiplier = 1.1
   useEffect(() => {
