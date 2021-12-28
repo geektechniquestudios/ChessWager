@@ -26,7 +26,7 @@ code {
   grid-template-columns: minmax(0, 1fr) minmax(0, auto);
   grid-template-rows: $header-size calc(100vh - $header-size - $gap-size);
 
-  @apply grid  bg-primary  dark:bg-primary-dark;
+  @apply grid  bg-primary  dark:bg-primary-dark overflow-hidden;
 }
 
 #page > header {
@@ -55,8 +55,6 @@ code {
 .user-img {
   @extend .color-shift;
   @apply w-8 h-8 hover:border-tertiary-dark border-2;
-
-
 }
 
 // .user-img:hover {
@@ -66,4 +64,34 @@ code {
 
 .color-shift {
   @apply transition-colors ease-in-out duration-700;
+}
+
+.chat-window-enter {
+  transform: translateX(110%);
+}
+.chat-window-enter-active {
+  transform: translateX(0%);
+  transition: all 200ms ease;
+}
+
+.chat-window-exit {
+}
+.chat-window-exit-active {
+  transform: translateX(110%);
+  transition: all 200ms ease;
+}
+
+.chat-in-button-enter {
+  transform: translateX(100%);
+}
+.chat-in-button-enter-active {
+  transform: translateX(0%);
+  transition: all 200ms ease;
+}
+
+.chat-in-button-exit {
+  
+}
+.chat-in-button-exit-active {
+
 }

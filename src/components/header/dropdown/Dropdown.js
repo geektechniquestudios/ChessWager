@@ -51,7 +51,6 @@ const UserIconButton = ({
   children,
   open,
   setOpen,
-  shouldMenuStayOpen,
 }) => {
   const pointerEvents = open ? "pointer-events-none" : ""
   return (

@@ -1,15 +1,12 @@
 @import "index.scss";
 
-
 :root {
   --speed: 500ms;
 }
 
-/* Dropdown Menu */
-
 .dropdown {
   transition: height var(--speed) ease;
-  @apply  absolute w-64 -translate-x-1/2 bg-secondary border-2 border-secondary-dark p-4 overflow-hidden right-2 top-10 z-50 rounded-md text-primary align-middle justify-center flex;
+  @apply absolute w-64 -translate-x-1/2 bg-secondary border-2 border-secondary-dark p-4 overflow-hidden right-2 top-10 z-50 rounded-md text-primary align-middle justify-center flex;
 }
 
 .menu {

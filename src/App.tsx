@@ -80,19 +80,26 @@ export const App: React.FC = () => {
           <ChessGame />
           <BettingLobby />
         </main>
-        <div className="transition-transform duration-500">
-        {/* <CSSTransition in={showChat} timeout={500} unmountOnExit classNames="chat-window"> */}
-        {showChat && (
-          <aside>
-            <GlobalChat
-              formValue={formValue}
-              setFormValue={setFormValue}
-              showChat={showChat}
-              setShowChat={setShowChat}
-            />
-          </aside>
-        )}
-        {/* </CSSTransition> */}
+        <div>
+          {/* <CSSTransition in={showChat} timeout={500} unmountOnExit classNames="chat-window"> */}
+          {/* <CSSTransition
+            in={showChat}
+            timeout={500}
+            classNames="chat-window"
+            unmountOnExit
+            // onEnter={calcHeight}
+          > */}
+          {showChat && (
+            <aside>
+              <GlobalChat
+                formValue={formValue}
+                setFormValue={setFormValue}
+                showChat={showChat}
+                setShowChat={setShowChat}
+              />
+            </aside>
+          )}
+          {/* </CSSTransition> */}
         </div>
       </section>
     </div>

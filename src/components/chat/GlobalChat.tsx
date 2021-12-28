@@ -12,6 +12,7 @@ import { Auth } from "../containers/Auth"
 import { ChatMessage } from "./ChatMessage"
 import { Firestore } from "../containers/Firestore"
 import { BiArrowFromLeft } from "react-icons/bi"
+import { CSSTransition } from "react-transition-group"
 
 interface Props {
   showChat: boolean
@@ -64,7 +65,10 @@ export const GlobalChat: React.FC<Props> = ({
   }
 
   return (
-    <div className="border-l-2 border-black global-chat" style={{width: "21em"}}>
+    <div
+      className="border-l-2 border-black global-chat"
+      style={{ width: "21em" }}
+    >
       <header className="flex border-b-2 border-black">
         <button
           onClick={() => {

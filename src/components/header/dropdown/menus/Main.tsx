@@ -4,7 +4,6 @@ import { Auth } from "../../../containers/Auth"
 import { DropdownItem } from "../DropdownItem"
 import { CSSTransition } from "react-transition-group"
 import Toggle from "react-toggle"
-// import firebase from "firebase/compat"
 
 import { StaticDropdownItem } from "../StaticDropdownItem"
 import { CgProfile } from "react-icons/cg"
@@ -13,16 +12,11 @@ import {
   RiLogoutCircleLine,
   RiSettings5Line,
 } from "react-icons/ri"
-import { BsShare, BsWallet2 } from "react-icons/bs"
+import { BsShare } from "react-icons/bs"
 import { BiHelpCircle } from "react-icons/bi"
-import { RiLogoutCircleRLine } from "react-icons/ri"
-import { GiWallet } from "react-icons/gi"
 import { MdAttachMoney, MdMoneyOff, MdOutlineDarkMode } from "react-icons/md"
 import { BsSun } from "react-icons/bs"
-// import { useEffect } from "react"
 import { GoGift } from "react-icons/go"
-import { GrMoney } from "react-icons/gr"
-import { useEffect } from "react"
 
 interface Props {
   activeMenu: string

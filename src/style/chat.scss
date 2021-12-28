@@ -73,22 +73,4 @@ $main-header-height: 3em;
   @apply w-4 h-4 rounded-full;
 }
 
-.chat-window-enter {
-  // @apply absolute translate-x-full;
-  position: absolute;
-  transform: translateX(-110%);
-  @apply translate-x-full
-}
-.chat-window-enter-active {
-  // @apply translate-x-0 transition-all duration-300 ease-in-out;
-  transform: translateX(0%);
-  transition: all var(--speed) ease;
-}
 
-.chat-window-exit {
-  position: absolute;
-}
-.chat-window-exit-active {
-  transform: translateX(-110%);
-  transition: all var(--speed) ease;
-}
