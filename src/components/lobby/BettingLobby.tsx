@@ -42,11 +42,11 @@ export const BettingLobby: React.FC = () => {
     useCollectionData(query, { idField: "id" })
 
   return (
-    <div className="lobby w-full">
-      <header className="flex border-b-2 border-t-2 rounded-b-lg w-full">
+    <div className="lobby flex flex-row h-auto">
+      <aside className="flex border-2 h-full">
         {/* @todo! add column names allowing sorting */}
         <WagerForm />
-      </header>
+      </aside>
       <main>
         <div className="lobby-container">
           {/* get related-to-user games */}
@@ -60,7 +60,7 @@ export const BettingLobby: React.FC = () => {
               )
               .map((bet) => (
                 <Bet
-                  className="in-progress-bet"
+                  className="border-2 flex w-full h-12"
                   key={bet.id}
                   id={bet.id}
                   amount={bet.amount}

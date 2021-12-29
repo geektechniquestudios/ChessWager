@@ -7,10 +7,36 @@ import { GlobalChat } from "./components/chat/GlobalChat"
 import "./style/index.scss"
 import "firebase/compat/firestore"
 import "firebase/compat/auth"
-import firebase from "firebase/compat"
 import { Auth } from "./components/containers/Auth"
 import { BiArrowFromRight } from "react-icons/bi"
 import { CSSTransition } from "react-transition-group"
+import { GameId } from "./components/containers/GameId"
+import firebase from "firebase/compat/app"
+import { useCollectionData } from "react-firebase-hooks/firestore"
+import { FirebaseError } from "@firebase/util"
+import { MiniBet } from "./components/lobby/MiniBet"
+
+const firestore = firebase.firestore()
+
+interface Lobby {
+  id: string
+  amount: number
+  betSide: string
+  multiplier: number
+  status: string
+  user1Id: string
+  user1Metamask: string
+  user1PhotoURL: string
+  hasUser1Paid: boolean
+  user2Id: string
+  user2Metamask: string
+  user2PhotoURL: string
+  hasUser2Paid: boolean
+  createdAt: Date
+  gameId: string
+  timestamp: firebase.firestore.Timestamp
+  contractAddress: string
+}
 
 export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
@@ -70,6 +96,15 @@ export const App: React.FC = () => {
   }, [auth])
 
   const dark = isDarkOn ? "dark" : ""
+  const gameIdContainer = GameId.useContainer()
+
+  const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+    firestore.collection("lobby")
+  const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
+  // .orderBy("createdAt", "desc")
+
+  const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
+    useCollectionData(query, { idField: "id" })
 
   return (
     <div className={`${dark} h-full w-full overflow-y-hidden grid`}>
@@ -105,7 +140,34 @@ export const App: React.FC = () => {
             )}
             <div className="flex justify-center align-middle flex-col w-auto">
               <div className="flex">
-                <div className="border w-48 h-auto"></div>
+                <div className="border w-48 h-auto">
+                  <p>funded</p>
+                  {lobby &&
+                    lobby
+                      .filter((bet) => bet.status === "funded")
+                      .map((bet) => (
+                        <MiniBet
+                          className="border-2 flex w-full h-12"
+                          key={bet.id}
+                          id={bet.id}
+                          amount={bet.amount}
+                          betSide={bet.betSide}
+                          multiplier={bet.multiplier}
+                          status={bet.status}
+                          user1Id={bet.user1Id}
+                          user1Metamask={bet.user1Metamask}
+                          user1PhotoURL={bet.user1PhotoURL}
+                          hasUser1Paid={bet.hasUser1Paid}
+                          user2Id={bet.user2Id}
+                          user2Metamask={bet.user2Metamask}
+                          user2PhotoURL={bet.user2PhotoURL}
+                          hasUser2Paid={bet.hasUser2Paid}
+                          gameId={bet.gameId}
+                          timestamp={bet.timestamp?.seconds}
+                          contractAddress={bet.contractAddress}
+                        />
+                      ))}
+                </div>
                 <div className="flex justify-center w-full">
                   <ChessGame setShowChat={setShowChat} width={width} />
                 </div>
@@ -115,15 +177,14 @@ export const App: React.FC = () => {
           </div>
         </main>
         <div>
-          {/* <CSSTransition in={showChat} timeout={500} unmountOnExit classNames="chat-window"> */}
-          <CSSTransition
+          {/* <CSSTransition
             in={showChat}
             timeout={300}
             classNames="chat-window"
             unmountOnExit
             // onEnter={calcHeight}
-          >
-            {/* {showChat && ( */}
+          > */}
+          {showChat && (
             <aside>
               <GlobalChat
                 formValue={formValue}
@@ -135,7 +196,8 @@ export const App: React.FC = () => {
                 width={width}
               />
             </aside>
-          </CSSTransition>
+          )}
+          {/* </CSSTransition> */}
         </div>
       </section>
     </div>

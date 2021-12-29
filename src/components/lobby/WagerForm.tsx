@@ -74,11 +74,11 @@ export const WagerForm: React.FC = () => {
   // const [avaxPrice, setAvaxPrice] = useState(getAvaxPrice())
 
   return (
-    <div className="flex w-full ">
+    <div className="flex w-full h-full p-2">
       <fieldset disabled={!auth.currentUser} className="flex w-full">
         <form onSubmit={createWager} className="w-full">
-          <div className="flex gap-4 justify-around">
-            <div className="border-l-2 border-r-2 border-b-2 rounded-b-md h-20 ">
+          <div className="flex flex-col justify-around gap-4">
+            <div className="border-2">
               <div className="flex p-2 bg-secondary-dark">
                 <label>Side</label>
                 <div className="border-1 mx-2" />
@@ -108,7 +108,7 @@ export const WagerForm: React.FC = () => {
               {/* <div className="border-b-2 border-primary-dark" /> */}
               <div className="flex justify-evenly">{betSide}</div>
             </div>
-            <div className="flex border-l-2 border-r-2 border-b-2 rounded-b-md p-2">
+            <div className="flex border-2">
               <label className="grid place-content-center m-2">Amount</label>
               <div className="border-1 mx-2" />
               <div>
@@ -134,7 +134,7 @@ export const WagerForm: React.FC = () => {
                 suffix="Ξ"
               /> */}
             </div>
-            <div className="flex border-l-2 border-r-2 border-b-2 rounded-b-md p-2">
+            <div className="flex p-2 border-2">
               <div className="grid place-content-center">
                 <label>Multiplier</label>
               </div>
@@ -157,19 +157,16 @@ export const WagerForm: React.FC = () => {
                     onChange={(e) => {
                       setMultiplier(Number(e.target.value))
                     }}
-                    className="w-10 p-1 rounded-md"
+                    className="w-10 p-1 "
                   ></input>
                 </p>
               </div>
             </div>
           </div>
-          <div className="flex justify-center m-2">
-            <div className="m-4 border-2 p-1.5 rounded-md">total:</div>
+          <div className="flex flex-row justify-between m-2">
+            <div className="m-4 border-2 p-1.5">total:</div>
             <div className="grid place-content-center">
-              <button
-                type="submit"
-                className="border-2 p-1.5 rounded-md"
-              >
+              <button type="submit" className="border-2 p-1.5 rounded-md">
                 {/* <div className="w-2 h-2 rounded-full bg-primary-dark absolute opacity-75  -mt-2 -ml-2 border-2 border-tertiary animate-ping"> </div> */}
                 place bet
               </button>
