@@ -6,6 +6,7 @@ import { ReactComponent as BoltIcon } from "../icons/bolt.svg"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
 import {
+  RiGithubLine,
   RiInstagramLine,
   RiFacebookCircleLine,
   RiTwitterLine,
@@ -80,6 +81,14 @@ export const Social: React.FC<Props> = ({
             key={6}
           >
             youtube
+          </StaticDropdownItem>,
+
+          <StaticDropdownItem
+            url="https://github.com/geektechniquestudios/ChessWager"
+            leftIcon={<RiGithubLine />}
+            key={5}
+          >
+            github
           </StaticDropdownItem>,
         ]}
         thisMenu={"social"}
