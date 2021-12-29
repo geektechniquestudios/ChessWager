@@ -42,8 +42,8 @@ export const BettingLobby: React.FC = () => {
     useCollectionData(query, { idField: "id" })
 
   return (
-    <div className="lobby">
-      <header>
+    <div className="lobby w-full">
+      <header className="flex border-b-2 border-t-2 rounded-b-lg w-full">
         {/* @todo! add column names allowing sorting */}
         <WagerForm />
       </header>

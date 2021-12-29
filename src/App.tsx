@@ -29,6 +29,22 @@ export const App: React.FC = () => {
   )
 
   const [formValue, setFormValue] = useState("")
+  const [autoShowChat, setAutoShowChat] = useState(false)
+  const [autoHideChat, setAutoHideChat] = useState(false)
+  const [width, setWidth] = useState(window.innerWidth)
+  const updateDimensions = () => {
+    const newWidth = window.innerWidth
+    setWidth(newWidth)
+    if (autoHideChat && newWidth < 800) {
+      setShowChat(false)
+    } else if (autoShowChat && newWidth > 850) {
+      setShowChat(true)
+    }
+  }
+  // useEffect(() => {
+  //   window.addEventListener("resize", updateDimensions)
+  //   return () => window.removeEventListener("resize", updateDimensions)
+  // }, [])
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: any) => {
@@ -62,44 +78,64 @@ export const App: React.FC = () => {
           <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
         </header>
 
-        <main>
-          {!showChat && (
-            <button
-              onClick={() => {
-                setShowChat(!showChat)
-                localStorage.setItem("showChat", "true")
-              }}
-              className="float-right m-3 hover:bg-secondary-dark rounded-sm color-shift"
-            >
-              <BiArrowFromRight
-                size="1.4em"
-                className="text-primary-dark hover:text-primary-dark dark:text-primary m-1 color-shift"
-              />
-            </button>
-          )}
-          <ChessGame />
-          <BettingLobby />
+        <main className="overflow-y-auto flex justify-center">
+          <div className="w-full">
+            {!showChat && (
+              <button
+                onClick={() => {
+                  // setAutoHideChat(false)
+                  // setAutoShowChat(false)
+                  setShowChat(true)
+                  localStorage.setItem("showChat", "true")
+                  // if window width is less than 800px, set autoShowChat to false, autohide to true
+                  // if (width < 800) {
+                  // setAutoHideChat(false)
+                  // setAutoShowChat(false)
+                  // }
+                  // if window width is greater than 800px, set autoShowChat to true, autohide to false
+                }}
+                className="m-3 hover:bg-secondary-dark rounded-sm color-shift absolute top-12 right-0"
+                // title="chat"
+              >
+                <BiArrowFromRight
+                  size="1.4em"
+                  className="text-primary-dark hover:text-primary-dark dark:text-primary m-1 color-shift"
+                />
+              </button>
+            )}
+            <div className="flex justify-center align-middle flex-col w-auto">
+              <div className="flex">
+                <div className="border w-48 h-auto"></div>
+                <div className="flex justify-center w-full">
+                  <ChessGame setShowChat={setShowChat} width={width} />
+                </div>
+              </div>
+            </div>
+            <BettingLobby />
+          </div>
         </main>
         <div>
           {/* <CSSTransition in={showChat} timeout={500} unmountOnExit classNames="chat-window"> */}
-          {/* <CSSTransition
+          <CSSTransition
             in={showChat}
-            timeout={500}
+            timeout={300}
             classNames="chat-window"
             unmountOnExit
             // onEnter={calcHeight}
-          > */}
-          {showChat && (
+          >
+            {/* {showChat && ( */}
             <aside>
               <GlobalChat
                 formValue={formValue}
                 setFormValue={setFormValue}
                 showChat={showChat}
                 setShowChat={setShowChat}
+                setAutoShowChat={setAutoShowChat}
+                setAutoHideChat={setAutoHideChat}
+                width={width}
               />
             </aside>
-          )}
-          {/* </CSSTransition> */}
+          </CSSTransition>
         </div>
       </section>
     </div>

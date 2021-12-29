@@ -26,7 +26,7 @@ code {
   grid-template-columns: minmax(0, 1fr) minmax(0, auto);
   grid-template-rows: $header-size calc(100vh - $header-size - $gap-size);
 
-  @apply grid  bg-primary  dark:bg-primary-dark overflow-hidden;
+  @apply grid bg-primary dark:bg-primary-dark overflow-hidden;
 }
 
 #page > header {
@@ -35,7 +35,6 @@ code {
 
 #page > main {
   grid-area: game;
-  @apply overflow-y-auto;
 }
 
 #page > aside {
@@ -71,27 +70,31 @@ code {
 }
 .chat-window-enter-active {
   transform: translateX(0%);
-  transition: all 200ms ease;
+  transition: all 250ms ease;
 }
 
 .chat-window-exit {
 }
 .chat-window-exit-active {
   transform: translateX(110%);
-  transition: all 200ms ease;
+  transition: all 250ms ease;
 }
 
-.chat-in-button-enter {
-  transform: translateX(100%);
-}
-.chat-in-button-enter-active {
-  transform: translateX(0%);
-  transition: all 200ms ease;
-}
 
-.chat-in-button-exit {
-  
-}
-.chat-in-button-exit-active {
 
-}
+// .chat-in-button-enter {
+//   transform: translateX(110%);
+//   position: absolute;
+// }
+// .chat-in-button-enter-active {
+//   transform: translateX(0%);
+//   transition: all 200ms ease;
+// }
+
+// .chat-in-button-exit {
+//   position: absolute;  
+// }
+// .chat-in-button-exit-active {
+//   transform: translateX(110%);
+//   transition: all 500ms ease-in-out;
+// }

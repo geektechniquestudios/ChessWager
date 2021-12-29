@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from "react"
 import CurrencyInput from "react-currency-input-field"
 import "../../style/lobby.scss"
@@ -5,11 +6,15 @@ import firebase from "firebase/compat/app"
 import RangeSlider from "react-bootstrap-range-slider"
 import { GameId } from "../containers/GameId"
 import { Auth } from "../containers/Auth"
+import { FaChessKing } from "react-icons/fa"
+import { Currency } from "../containers/Currency"
 require("dotenv").config({ path: "../../../.env" })
 
 export const WagerForm: React.FC = () => {
   const { gameId } = GameId.useContainer()
-  const { walletAddress, isWalletConnected, auth, connectWallet } = Auth.useContainer()
+  const { walletAddress, isWalletConnected, auth, connectWallet } =
+    Auth.useContainer()
+  // const { getAvaxPrice } = Currency.useContainer()
   const user1Metamask = walletAddress
 
   const [betSide, setBetSide] = useState("white")
@@ -26,7 +31,7 @@ export const WagerForm: React.FC = () => {
       return
     }
 
-    const createBet  = firebase.functions().httpsCallable("createBet")
+    const createBet = firebase.functions().httpsCallable("createBet")
     if (auth.currentUser) {
       const { uid, photoURL }: firebase.User = auth.currentUser
 
@@ -58,45 +63,117 @@ export const WagerForm: React.FC = () => {
     calcMultiplier(newSliderVal)
   }
 
+  const getAvaxPrice = async () => {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd",
+    )
+    const data = await response.json()
+    return data.avax.usd
+  }
+
+  // const [avaxPrice, setAvaxPrice] = useState(getAvaxPrice())
+
   return (
-    <div>
-      <fieldset disabled={!auth.currentUser}>
-        <form onSubmit={createWager}>
-          <button type="submit">New bet</button>
-          <label>Side</label>
-          <select
-            value={betSide}
-            onChange={(e) => {
-              setBetSide(e.target.value)
-            }}
-          >
-            <option value="white">white</option>
-            <option value="black">black</option>
-          </select>
-          <label>Amount (eth)</label>
-          <CurrencyInput
-            id="bet-amount"
-            name="amount"
-            placeholder="Chooes your bet"
-            defaultValue={0.01} //@todo display usd equivalent here
-            decimalsLimit={6}
-            value={betAmount}
-            onValueChange={(value) => setBetAmount(Number(value))}
-            allowNegativeValue={false}
-            suffix="Ξ"
-          />
-          <label>Multiplier</label>
-          <div>
-            <RangeSlider
-              className="range"
-              value={sliderVal}
-              onChange={updateSlider}
-              min={-0.99}
-              max={0.99}
-              step={0.01}
-              tooltip="off"
-            />
-            <p>{Number(multiplier).toFixed(2)}</p>
+    <div className="flex w-full ">
+      <fieldset disabled={!auth.currentUser} className="flex w-full">
+        <form onSubmit={createWager} className="w-full">
+          <div className="flex gap-4 justify-around">
+            <div className="border-l-2 border-r-2 border-b-2 rounded-b-md h-20 ">
+              <div className="flex p-2 bg-secondary-dark">
+                <label>Side</label>
+                <div className="border-1 mx-2" />
+                <a
+                  href="#"
+                  className={`${
+                    betSide === "white" ? "border-2" : ""
+                  }  rounded-full w-7 h-7 grid place-content-center mx-1`}
+                  onClick={() => {
+                    setBetSide("white")
+                  }}
+                >
+                  <FaChessKing color="white" className="" />
+                </a>
+                <a
+                  href="#"
+                  className={`${
+                    betSide === "black" ? "border-2" : ""
+                  }  rounded-full w-7 h-7 grid place-content-center mx-1`}
+                  onClick={() => {
+                    setBetSide("black")
+                  }}
+                >
+                  <FaChessKing color="black" className="" />
+                </a>
+              </div>
+              {/* <div className="border-b-2 border-primary-dark" /> */}
+              <div className="flex justify-evenly">{betSide}</div>
+            </div>
+            <div className="flex border-l-2 border-r-2 border-b-2 rounded-b-md p-2">
+              <label className="grid place-content-center m-2">Amount</label>
+              <div className="border-1 mx-2" />
+              <div>
+                <div className="flex justify-between my-1">
+                  <span>USD</span>
+                  <input />
+                </div>
+                <div className="flex justify-between my-1">
+                  <span>AVAX</span>
+                  <input />
+                </div>
+              </div>
+              {/* 
+              <CurrencyInput
+                id="bet-amount"
+                name="amount"
+                placeholder="Chooes your bet"
+                defaultValue={0.01} //@todo display usd equivalent here
+                decimalsLimit={6}
+                value={betAmount}
+                onValueChange={(value) => setBetAmount(Number(value))}
+                allowNegativeValue={false}
+                suffix="Ξ"
+              /> */}
+            </div>
+            <div className="flex border-l-2 border-r-2 border-b-2 rounded-b-md p-2">
+              <div className="grid place-content-center">
+                <label>Multiplier</label>
+              </div>
+              <div className="border-1 mx-2" />
+              <div className="grid place-content-center">
+                <RangeSlider
+                  className="range"
+                  value={sliderVal}
+                  onChange={updateSlider}
+                  min={-0.99}
+                  max={0.99}
+                  step={0.01}
+                  tooltip="off"
+                />
+                <p className="flex justify-center">
+                  {/* <input type="text">{Number(multiplier).toFixed(2)}</input> */}
+                  <input
+                    type="text"
+                    value={multiplier.toFixed(2)}
+                    onChange={(e) => {
+                      setMultiplier(Number(e.target.value))
+                    }}
+                    className="w-10 p-1 rounded-md"
+                  ></input>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-center m-2">
+            <div className="m-4 border-2 p-1.5 rounded-md">total:</div>
+            <div className="grid place-content-center">
+              <button
+                type="submit"
+                className="border-2 p-1.5 rounded-md"
+              >
+                {/* <div className="w-2 h-2 rounded-full bg-primary-dark absolute opacity-75  -mt-2 -ml-2 border-2 border-tertiary animate-ping"> </div> */}
+                place bet
+              </button>
+            </div>
           </div>
         </form>
       </fieldset>

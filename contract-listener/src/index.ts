@@ -54,39 +54,38 @@ contract.on(
   (message: string, betId: string, gameId: string) => {
     console.log("BetPlacedStatus: ", message, betId)
 
-    gameIdHistoryRef
-      .doc(gameId)
-      .collection("contracts")
-      .doc(contractAddress)
-      .set(
-        {
-          needToPay: true,
-          hasBeenPaid: false,
-        },
-        { merge: true },
-      )
+    const gameDoc = gameIdHistoryRef.doc(gameId)
+    gameDoc.collection("contracts").doc(contractAddress).set(
+      {
+        needToPay: true,
+        hasBeenPaid: false,
+      },
+      { merge: true },
+    )
+
+    const betDoc = lobbyRef.doc(betId)
 
     if (message === "user1 has paid") {
-      lobbyRef.doc(betId).set(
+      betDoc.set(
         {
           hasUser1Paid: true,
         },
         { merge: true },
       )
-      gameIdHistoryRef.doc(betId).set(
+      gameDoc.set(
         {
           hasUser1Paid: true,
         },
         { merge: true },
       )
     } else if (message === "user2 has paid") {
-      lobbyRef.doc(betId).set(
+      betDoc.set(
         {
           hasUser2Paid: true,
         },
         { merge: true },
       )
-      gameIdHistoryRef.doc(betId).set(
+      gameDoc.set(
         {
           hasUser2Paid: true,
         },
@@ -95,6 +94,17 @@ contract.on(
     } else {
       console.log("unknown message: ", message)
     }
+
+    betDoc.get().then((doc) => {
+      if (doc.exists) {
+        const data = doc.data()!
+        if (data.hasUser1Paid && data.hasUser2Paid) {
+          betDoc.set({
+            status: "funded",
+          })
+        }
+      }
+    })
   },
 )
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 // @ts-ignore
 import ndjsonStream from "can-ndjson-stream"
 import "react-chessground/dist/styles/chessground.css"
@@ -30,7 +30,12 @@ interface Player {
   rating: number
 }
 
-export const ChessGame: React.FC = () => {
+interface Props {
+  setShowChat: React.Dispatch<any>
+  width: number
+}
+
+export const ChessGame: React.FC<Props> = ({ setShowChat, width }) => {
   const { gameId, setGameId } = GameId.useContainer()
 
   const [fen, setFen] = useState("")
@@ -99,37 +104,66 @@ export const ChessGame: React.FC = () => {
   }, [updateTitles])
 
   const lichessUrl = "https://lichess.org/" + gameId
+  let boardSize
+  if (width < 1000) {
+    boardSize = 300
+  } else if (width < 1200) {
+    boardSize = 500
+  } else {
+    boardSize = 750
+  }
+
+  const [chessWidth, setChessWidth] = useState(0)
+  const ref: any = useRef(null)
+
+  useEffect(() => {
+    setChessWidth(ref.current?.offsetWidth)
+    console.log(ref.current?.clientWidth)
+  }, [])
 
   return (
-    <div id="chess-board">
-      <a href={lichessUrl} style={{ float: "right" }}>
+    <div
+      id="chess-game"
+      // min width needs to be set to the board size + padding
+      className="overflow-hidden resize justify-center flex-col align-middle border-2 bg-secondary-dark dark:bg-primary-dark text-primary-dark dark:text-primary my-10 p-3 w-1/2 "
+    >
+      {/* <a href={lichessUrl} style={{ float: "right" }}>
         Check out the game on lichess
-      </a>
-
-      <PlayerData
-        side={orientation === "white" ? "black" : "white"}
-        title={orientation === "white" ? blackTitle : whiteTitle}
-        name={orientation === "white" ? blackName : whiteName}
-        time={orientation === "white" ? blackTime : whiteTime}
-        rating={orientation === "white" ? blackRating : whiteRating}
-        fen={fen}
-      />
-      <Chessground
-        width="30vw"
-        height="30vw"
-        viewOnly={true}
-        id="chess-board"
-        fen={fen}
-        orientation={orientation}
-      />
-      <PlayerData
-        side={orientation === "white" ? "white" : "black"}
-        title={orientation === "black" ? blackTitle : whiteTitle}
-        name={orientation === "black" ? blackName : whiteName}
-        time={orientation === "black" ? blackTime : whiteTime}
-        rating={orientation === "black" ? blackRating : whiteRating}
-        fen={fen}
-      />
+      </a> */}
+      <div className="flex justify-center border-2 w-full h-full">
+        <div className="flex justify-center flex-col align-middle border-2">
+          <div className="flex justify-center w-full">
+            <PlayerData
+              side={orientation === "white" ? "black" : "white"}
+              title={orientation === "white" ? blackTitle : whiteTitle}
+              name={orientation === "white" ? blackName : whiteName}
+              time={orientation === "white" ? blackTime : whiteTime}
+              rating={orientation === "white" ? blackRating : whiteRating}
+              fen={fen}
+            />
+          </div>
+          <div className="flex justify-center">
+            <Chessground
+              minimalDom={true}
+              coordinates={false}
+              viewOnly={true}
+              id="chess-board"
+              fen={fen}
+              orientation={orientation}
+            />
+          </div>
+          <div className="flex justify-center">
+            <PlayerData
+              side={orientation === "white" ? "white" : "black"}
+              title={orientation === "black" ? blackTitle : whiteTitle}
+              name={orientation === "black" ? blackName : whiteName}
+              time={orientation === "black" ? blackTime : whiteTime}
+              rating={orientation === "black" ? blackRating : whiteRating}
+              fen={fen}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -19,13 +19,19 @@ interface Props {
   setShowChat: React.Dispatch<React.SetStateAction<boolean>>
   formValue: string
   setFormValue: React.Dispatch<React.SetStateAction<string>>
+  setAutoShowChat: React.Dispatch<React.SetStateAction<boolean>>
+  setAutoHideChat: React.Dispatch<React.SetStateAction<boolean>>
+  width: number
 }
 
 export const GlobalChat: React.FC<Props> = ({
+  width,
   showChat,
   setShowChat,
   formValue,
   setFormValue,
+  setAutoShowChat,
+  setAutoHideChat,
 }) => {
   const { firestore } = Firestore.useContainer()
   const { user, auth } = Auth.useContainer()
@@ -70,18 +76,24 @@ export const GlobalChat: React.FC<Props> = ({
       style={{ width: "21em" }}
     >
       <header className="flex border-b-2 border-black">
-        <button
-          onClick={() => {
-            setShowChat(false)
-            localStorage.setItem("showChat", "false")
-          }}
-          className="m-3 hover:bg-secondary-dark rounded-sm color-shift"
-        >
-          <BiArrowFromLeft
-            size="1.4em"
-            className="text-primary-dark hover:text-primary-dark dark:text-primary m-1 color-shift"
-          />
-        </button>
+
+          <button
+            onClick={() => {
+              // setAutoShowChat(false)
+              // setAutoHideChat(false)
+              setShowChat(false)
+              localStorage.setItem("showChat", "false")
+              // if (width > 850) {
+
+              // }
+            }}
+            className="m-3 hover:bg-secondary-dark rounded-sm color-shift"
+          >
+            <BiArrowFromLeft
+              size="1.4em"
+              className="text-primary-dark hover:text-primary-dark dark:text-primary m-1 color-shift"
+            />
+          </button>
       </header>
       <main>
         <fieldset disabled={!auth.currentUser} className="fieldset">
@@ -96,6 +108,7 @@ export const GlobalChat: React.FC<Props> = ({
                 e.key === "Enter" && sendMessage(e)
               }}
             />
+            
             <div className="w-full flex justify-end mt-2">
               <button type="submit">🕊️</button>
             </div>

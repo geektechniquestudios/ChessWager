@@ -18,9 +18,10 @@ export const PlayerData: React.FC<Props> = ({
   side,
 }) => {
   return (
-    <div>
-      <>{title + " " + name + " " + rating}</>
-      <br />
+    <div className="flex border-2 p-2 w-full justify-between">
+      <span className="flex justify-center flex-col ">
+        <p className="mx-1 font-bold text-tertiary dark:text-tertiary-dark">{title}</p>{name + " " + rating}
+      </span>
       <Countdown fen={fen} side={side} time={time} />
     </div>
   )
