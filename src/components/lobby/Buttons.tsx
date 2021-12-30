@@ -72,7 +72,7 @@ export const Buttons: React.FC<Props> = ({ id, status, user1Id, user2Id }) => {
 
   return (
     <>
-      {gameId}
+      {/* {gameId} */}
       {/* accept button for user 2, */}
       {/* {user &&
         isWalletConnected &&

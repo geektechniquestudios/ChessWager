@@ -8,6 +8,7 @@ import { MetamaskPrompt } from "../MetamaskPrompt"
 import Countdown from "react-countdown"
 import { BigNumber, ethers } from "ethers"
 import firebase from "firebase/compat"
+const firestore = firebase.firestore()
 
 interface Props {
   className: string
@@ -59,6 +60,7 @@ export const Bet: React.FC<Props> = ({
 
   // determine if current user is user1 or user2
   const isUser1 = auth.currentUser?.uid === user1Id
+  const isUser2 = auth.currentUser?.uid === user2Id
   const isPending =
     auth.currentUser &&
     // (user1Id === auth.currentUser.uid || user2Id === auth.currentUser.uid) && // what was I thinking?
@@ -87,13 +89,60 @@ export const Bet: React.FC<Props> = ({
     status === "ready"
 
   const pointerEvents = isEnabled ? "" : "cursor-default"
+  const cancel = () => {
+    const cancelBet = firebase.functions().httpsCallable("cancelBet")
+    cancelBet({
+      betId: id,
+    }).catch(console.error)
+  }
 
+  const approve = () => {
+    const approveBet = firebase.functions().httpsCallable("approveBet")
+    approveBet({
+      betId: id,
+    }).catch(console.error)
+  }
+
+  const deleteCurrentBet = () => {
+    const deleteBet = firebase.functions().httpsCallable("deleteBet")
+    deleteBet({
+      betId: id,
+    }).catch(console.error)
+  }
+
+  const kick = () => {
+    const kickUser = firebase.functions().httpsCallable("kickUser")
+    kickUser({
+      betId: id,
+    }).catch(console.error)
+  }
+
+  const block = () => {
+    const userCollectionRef = firestore.collection("users")
+    const userDocRef = userCollectionRef.doc(auth.currentUser?.uid)
+    userDocRef.set(
+      {
+        blocked: firebase.firestore.FieldValue.arrayUnion(user2Id),
+      },
+      { merge: true },
+    )
+
+    kick()
+  }
   return (
     <a
       href="#"
       onClick={accept}
       className={`${className} bet ${pointerEvents} justify-center border`}
     >
+      {/* {user &&
+        auth.currentUser &&
+        user1Id === auth.currentUser.uid &&
+        status !== "approved" && (
+          <button onClick={deleteCurrentBet} className="bet-button">
+            Delete Bet
+          </button>
+        )} */}
       <Buttons id={id} status={status} user1Id={user1Id} user2Id={user2Id} />
       <span>
         <img src={user1PhotoURL} alt="" className="user-img" />
@@ -101,11 +150,13 @@ export const Bet: React.FC<Props> = ({
       </span>
       <span>{status}</span>
       {status === "approved" &&
-        ((isUser1 && !hasUser1Paid) || (!isUser1 && !hasUser2Paid)) &&
+        ((isUser1 && !hasUser1Paid) || (isUser2 && !hasUser2Paid)) &&
         timestamp !== undefined &&
         timestamp !== null &&
         timestamp !== 0 && (
           <>
+         {/* (if user is user1 and user1 paid) don't show  */}
+         {/*  */}
             <MetamaskPrompt
               betId={id}
               amount={amount}

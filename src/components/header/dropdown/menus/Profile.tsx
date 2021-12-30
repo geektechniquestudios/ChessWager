@@ -11,6 +11,7 @@ import { AiOutlineCloudUpload } from "react-icons/ai"
 import { ImStatsBars } from "react-icons/im"
 import { FiAward } from "react-icons/fi"
 import { MdPeopleOutline } from "react-icons/md"
+import { FaUserTag } from "react-icons/fa"
 
 interface Props {
   activeMenu: string
@@ -45,7 +46,9 @@ export const Profile: React.FC<Props> = ({
           >
             <h2>profile</h2>
           </DropdownItem>,
-          <div className="border-b-2" key={1}> </div>,
+          <div className="border-b-2" key={1}>
+            {" "}
+          </div>,
           <DropdownItem
             setActiveMenu={setActiveMenu}
             leftIcon={<MdPeopleOutline />}
@@ -67,6 +70,13 @@ export const Profile: React.FC<Props> = ({
             key={4}
           >
             achievements
+          </DropdownItem>,
+          <DropdownItem
+            setActiveMenu={setActiveMenu}
+            leftIcon={<FaUserTag />}
+            key={4}
+          >
+            display name
           </DropdownItem>,
           <StaticDropdownItem
             leftIcon={
