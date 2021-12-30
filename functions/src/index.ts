@@ -122,11 +122,11 @@ exports.acceptBet = functions.https.onCall(
     }
 
     return await betDocRef.get().then((doc: any) => {
-      if (
+      if ((
         doc.data().user2Id === null ||
         doc.data().user2Id === "" ||
         doc.data().user2Id === undefined
-      ) {
+      ) && (doc.data().user1Id !== context.auth.uid)) {
         // if someone else hasn't already joined
         betDocRef.update({
           status: "pending",

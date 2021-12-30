@@ -12,7 +12,6 @@ import { Auth } from "../containers/Auth"
 import { ChatMessage } from "./ChatMessage"
 import { Firestore } from "../containers/Firestore"
 import { BiArrowFromLeft } from "react-icons/bi"
-import { CSSTransition } from "react-transition-group"
 
 interface Props {
   showChat: boolean
@@ -76,24 +75,23 @@ export const GlobalChat: React.FC<Props> = ({
       style={{ width: "21em" }}
     >
       <header className="flex border-b-2 border-black">
+        <button
+          onClick={() => {
+            // setAutoShowChat(false)
+            // setAutoHideChat(false)
+            setShowChat(false)
+            localStorage.setItem("showChat", "false")
+            // if (width > 850) {
 
-          <button
-            onClick={() => {
-              // setAutoShowChat(false)
-              // setAutoHideChat(false)
-              setShowChat(false)
-              localStorage.setItem("showChat", "false")
-              // if (width > 850) {
-
-              // }
-            }}
-            className="m-3 hover:bg-secondary-dark rounded-sm color-shift"
-          >
-            <BiArrowFromLeft
-              size="1.4em"
-              className="text-primary-dark hover:text-primary-dark dark:text-primary m-1 color-shift"
-            />
-          </button>
+            // }
+          }}
+          className="m-3 hover:bg-secondary-dark rounded-sm color-shift"
+        >
+          <BiArrowFromLeft
+            size="1.4em"
+            className="text-primary-dark hover:text-primary-dark dark:text-primary m-1 color-shift"
+          />
+        </button>
       </header>
       <main>
         <fieldset disabled={!auth.currentUser} className="fieldset">
@@ -108,14 +106,13 @@ export const GlobalChat: React.FC<Props> = ({
                 e.key === "Enter" && sendMessage(e)
               }}
             />
-            
             <div className="w-full flex justify-end mt-2">
               <button type="submit">🕊️</button>
             </div>
           </form>
         </fieldset>
         <span ref={dummy}></span>
-        <div className="flex flex-col-reverse pb-3">
+        <div className="chat-window flex flex-col-reverse pb-3 overflow-y-scroll">
           {messages &&
             messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
         </div>

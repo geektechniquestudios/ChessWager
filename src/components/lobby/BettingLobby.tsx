@@ -1,11 +1,12 @@
 import firebase from "firebase/compat/app"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { Bet } from "./Bet"
+import { Bet } from "./bet/Bet"
 
-import { WagerForm } from "./WagerForm"
+import { WagerForm } from "./wager-form/WagerForm"
 import { FirebaseError } from "@firebase/util"
 import { GameId } from "../containers/GameId"
 import { Auth } from "../containers/Auth"
+import { LobbyHeader } from "./LobbyHeader"
 
 const firestore = firebase.firestore()
 
@@ -47,8 +48,10 @@ export const BettingLobby: React.FC = () => {
         {/* @todo! add column names allowing sorting */}
         <WagerForm />
       </aside>
-      <main>
-        <div className="lobby-container">
+      <main className="w-full flex-row ">
+        <div className="overflow-hidden" >
+        <LobbyHeader />
+        <div className=" overflow-y-hidden h-full ">
           {/* get related-to-user games */}
           {lobby &&
             user &&
@@ -60,7 +63,7 @@ export const BettingLobby: React.FC = () => {
               )
               .map((bet) => (
                 <Bet
-                  className="border-2 flex w-full h-12"
+                  className="flex h-12"
                   key={bet.id}
                   id={bet.id}
                   amount={bet.amount}
@@ -142,6 +145,8 @@ export const BettingLobby: React.FC = () => {
                   contractAddress={bet.contractAddress}
                 />
               ))}
+        </div>
+
         </div>
       </main>
     </div>

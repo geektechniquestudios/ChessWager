@@ -112,7 +112,6 @@ export const App: React.FC = () => {
         <header className="color-shift bg-secondary-dark dark:bg-secondary flex items-center">
           <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
         </header>
-
         <main className="overflow-y-auto flex justify-center">
           <div className="w-full">
             {!showChat && (
@@ -185,7 +184,7 @@ export const App: React.FC = () => {
             // onEnter={calcHeight}
           > */}
           {showChat && (
-            <aside>
+            <aside className="h-full">
               <GlobalChat
                 formValue={formValue}
                 setFormValue={setFormValue}

@@ -13,21 +13,21 @@ $main-header-height: 3em;
 }
 
 .global-chat main {
-  $padding: 1rem;
+  $padding: 0rem;
   padding: $padding;
   height: calc(100vh - $main-header-height - $chat-header-height);
-  @apply overflow-y-scroll flex flex-col-reverse bottom-0;
+  @apply flex flex-col-reverse;
 }
 
-.global-chat main::-webkit-scrollbar {
+.chat-window::-webkit-scrollbar {
   @apply w-1;
 }
 
-.global-chat main::-webkit-scrollbar-track {
+.chat-window::-webkit-scrollbar-track {
   @apply bg-secondary;
 }
 
-.global-chat main::-webkit-scrollbar-thumb {
+.chat-window::-webkit-scrollbar-thumb {
   @apply bg-tertiary;
 }
 

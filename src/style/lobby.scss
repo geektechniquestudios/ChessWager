@@ -1,8 +1,8 @@
 .bet {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(6, minmax(10em, 1fr));
-  margin-right: 10px;
+  // display: grid;
+  // gap: 1rem;
+  // grid-template-columns: repeat(6, minmax(10em, 1fr));
+  // margin-right: 10px;
 }
 
 .range {
@@ -21,21 +21,6 @@
   /* bottom: 0; */
 }
 
-.lobby-container {
-  /* overflow-y: scroll; */
-}
-
-.lobby main::-webkit-scrollbar {
-  width: 0.25rem;
-}
-
-.lobby main::-webkit-scrollbar-track {
-  background: #1e1e24;
-}
-
-.lobby main::-webkit-scrollbar-thumb {
-  background: #6649b8;
-}
 
 .ready-bet {
   background-color: aquamarine;
@@ -54,3 +39,4 @@
   border-primary
   dark:border-primary-dark;
 }
+
