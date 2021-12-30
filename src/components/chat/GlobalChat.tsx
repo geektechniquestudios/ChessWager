@@ -94,8 +94,8 @@ export const GlobalChat: React.FC<Props> = ({
         </button>
       </header>
       <main>
-        <fieldset disabled={!auth.currentUser} className="fieldset">
-          <form onSubmit={(e) => sendMessage(e)} className="form">
+        <fieldset disabled={!auth.currentUser} className="fieldset justify-center flex">
+          <form onSubmit={(e) => sendMessage(e)} className="form rounded-sm justify-center w-full pb-1">
             <TextareaAutosize
               value={auth.currentUser ? formValue : "sign in to chat"}
               onChange={(e) => setFormValue(e.target.value)}
