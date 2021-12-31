@@ -52,6 +52,7 @@ interface CreateArgs {
   user1Id: string
   user1Metamask: string
   user1PhotoURL: string
+  user1DisplayName: string
   contractAddress: string
 }
 
@@ -66,6 +67,7 @@ exports.createBet = functions.https.onCall(
       user1Id,
       user1Metamask,
       user1PhotoURL,
+      user1DisplayName,
       contractAddress,
     }: CreateArgs,
     context: any,
@@ -79,18 +81,32 @@ exports.createBet = functions.https.onCall(
       return "user is banned"
     }
 
-    lobbyCollectionRef.add({
-      amount: amount,
-      betSide: betSide,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      gameId: gameId,
-      multiplier: multiplier,
-      status: status,
-      user1Id: user1Id,
-      user1Metamask: user1Metamask,
-      user1PhotoURL: user1PhotoURL,
-      contractAddress: contractAddress,
-    })
+    db.collection("users")
+      .doc(user1Id)
+      .get()
+      .then((doc: any) => {
+        const user1FollowThrough = [
+          doc.data().betFundedCount,
+          doc.data().betAcceptedCount,
+        ]
+        return user1FollowThrough
+      })
+      .then((user1FollowThrough: number[]) => {
+        lobbyCollectionRef.add({
+          amount: amount,
+          betSide: betSide,
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          gameId: gameId,
+          multiplier: multiplier,
+          status: status,
+          user1Id: user1Id,
+          user1Metamask: user1Metamask,
+          user1PhotoURL: user1PhotoURL,
+          user1DisplayName: user1DisplayName,
+          user1FollowThrough: user1FollowThrough,
+          contractAddress: contractAddress,
+        })
+      })
 
     return "success"
   },
@@ -101,11 +117,12 @@ interface AcceptArgs {
   photoURL: string
   hostUid: string
   user2Metamask: string
+  user2DisplayName: string
 }
 
 exports.acceptBet = functions.https.onCall(
   async (
-    { betId, photoURL, hostUid, user2Metamask }: AcceptArgs,
+    { betId, photoURL, hostUid, user2Metamask, user2DisplayName }: AcceptArgs,
     context: any,
   ): Promise<string> => {
     authCheck(context)
@@ -122,18 +139,33 @@ exports.acceptBet = functions.https.onCall(
     }
 
     return await betDocRef.get().then((doc: any) => {
-      if ((
-        doc.data().user2Id === null ||
-        doc.data().user2Id === "" ||
-        doc.data().user2Id === undefined
-      ) && (doc.data().user1Id !== context.auth.uid)) {
+      if (
+        (doc.data().user2Id === null ||
+          doc.data().user2Id === "" ||
+          doc.data().user2Id === undefined) &&
+        doc.data().user1Id !== context.auth.uid
+      ) {
         // if someone else hasn't already joined
-        betDocRef.update({
-          status: "pending",
-          user2Id: context.auth.uid,
-          user2Metamask: user2Metamask,
-          user2PhotoURL: photoURL,
-        })
+        db.collection("users")
+          .doc(context.auth.uid)
+          .get()
+          .then((doc: any) => {
+            const user2FollowThrough = [
+              doc.data().betFundedCount,
+              doc.data().betAcceptedCount,
+            ]
+            return user2FollowThrough
+          })
+          .then((user2FollowThrough: number[]) => {
+            betDocRef.update({
+              status: "pending",
+              user2Id: context.auth.uid,
+              user2Metamask: user2Metamask,
+              user2PhotoURL: photoURL,
+              user2FollowThrough: user2FollowThrough,
+              user2DisplayName: user2DisplayName,
+            })
+          })
         return "bet written"
       } else {
         return "bet already full"

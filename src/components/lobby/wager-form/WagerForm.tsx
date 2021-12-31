@@ -30,14 +30,13 @@ export const WagerForm: React.FC = () => {
     e.preventDefault()
 
     if (!isWalletConnected) {
-      //@todo switch to using ethers
       connectWallet()
       return
     }
 
     const createBet = firebase.functions().httpsCallable("createBet")
     if (auth.currentUser) {
-      const { uid, photoURL }: firebase.User = auth.currentUser
+      const { uid, photoURL, displayName }: firebase.User = auth.currentUser
 
       createBet({
         amount: betAmount,
@@ -48,6 +47,7 @@ export const WagerForm: React.FC = () => {
         user1Id: uid,
         user1Metamask: user1Metamask,
         user1PhotoURL: photoURL,
+        user1DisplayName: displayName ?? "no name",
         contractAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
       }).catch(console.error)
     }

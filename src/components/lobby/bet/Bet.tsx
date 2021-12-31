@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import firebase from "firebase/compat"
+
 import { Card, Spinner } from "react-bootstrap"
 import "../../../style/lobby.scss"
 import "firebase/compat/functions"
@@ -7,7 +9,11 @@ import { Auth } from "../../containers/Auth"
 import { MetamaskPrompt } from "../MetamaskPrompt"
 import Countdown from "react-countdown"
 import { BigNumber, ethers } from "ethers"
-import firebase from "firebase/compat"
+import { BsCoin } from "react-icons/bs"
+import { TiDelete, TiDeleteOutline } from "react-icons/ti"
+import { VscClose } from "react-icons/vsc"
+import { AiOutlineCheck, AiOutlineUser } from "react-icons/ai"
+
 const firestore = firebase.firestore()
 
 interface Props {
@@ -20,14 +26,18 @@ interface Props {
   user1Id: string
   user1Metamask: string
   user1PhotoURL: string
+  user1DisplayName: string
   hasUser1Paid: boolean
   user2Id: string
   user2Metamask: string
   user2PhotoURL: string
+  user2DisplayName: string
   hasUser2Paid: boolean
   gameId: string
   timestamp: number
   contractAddress: string
+  user1FollowThrough: number[]
+  user2FollowThrough: number[]
 }
 
 export const Bet: React.FC<Props> = ({
@@ -40,14 +50,18 @@ export const Bet: React.FC<Props> = ({
   user1Id,
   user1Metamask,
   user1PhotoURL,
+  user1DisplayName,
   hasUser1Paid,
   user2Id,
   user2Metamask,
   user2PhotoURL,
+  user2DisplayName,
   hasUser2Paid,
   gameId,
   timestamp,
   contractAddress,
+  user1FollowThrough,
+  user2FollowThrough,
 }) => {
   const { walletAddress, auth, user, isWalletConnected } = Auth.useContainer()
   const bigAmount = ethers.utils.parseEther(amount.toString())
@@ -66,29 +80,25 @@ export const Bet: React.FC<Props> = ({
     // (user1Id === auth.currentUser.uid || user2Id === auth.currentUser.uid) && // what was I thinking?
     status === "pending"
 
+  const { displayName }: firebase.User = auth.currentUser!
+
   const accept = () => {
     const user2Metamask = walletAddress
-    //add checks for authentication and metamask
+    //add checks for authentication and metamas
+
     const acceptBet = firebase.functions().httpsCallable("acceptBet")
     acceptBet({
       betId: id,
       photoURL: auth.currentUser?.photoURL,
       hostUid: user1Id,
       user2Metamask: user2Metamask,
+      user2DisplayName: displayName ?? "no name",
     })
       // .then(res => String(res.data))
       // .then(alert)
       .catch(console.error) //@todo do this catch to all or none of the firebase methods
   }
 
-  const isEnabled =
-    user &&
-    isWalletConnected &&
-    auth.currentUser &&
-    user1Id !== auth.currentUser.uid &&
-    status === "ready"
-
-  const pointerEvents = isEnabled ? "" : "cursor-default"
   const cancel = () => {
     const cancelBet = firebase.functions().httpsCallable("cancelBet")
     cancelBet({
@@ -129,34 +139,24 @@ export const Bet: React.FC<Props> = ({
 
     kick()
   }
+  const isEnabled =
+    user &&
+    isWalletConnected &&
+    auth.currentUser &&
+    user1Id !== auth.currentUser.uid &&
+    status === "ready"
+
+  const pointerEvents = isEnabled ? "" : "cursor-default"
   return (
-    <a
-      href="#"
-      onClick={accept}
-      className={`${className} bet ${pointerEvents} justify-center border`}
-    >
-      {/* {user &&
-        auth.currentUser &&
-        user1Id === auth.currentUser.uid &&
-        status !== "approved" && (
-          <button onClick={deleteCurrentBet} className="bet-button">
-            Delete Bet
-          </button>
-        )} */}
-      <Buttons id={id} status={status} user1Id={user1Id} user2Id={user2Id} />
-      <span>
-        <img src={user1PhotoURL} alt="" className="user-img" />
-        {hasUser1Paid && "$$$"}
-      </span>
-      <span>{status}</span>
+    <div className="w-full flex justify-center align-middle border">
       {status === "approved" &&
         ((isUser1 && !hasUser1Paid) || (isUser2 && !hasUser2Paid)) &&
         timestamp !== undefined &&
         timestamp !== null &&
         timestamp !== 0 && (
           <>
-         {/* (if user is user1 and user1 paid) don't show  */}
-         {/*  */}
+            {/* (if user is user1 and user1 paid) don't show  */}
+            {/*  */}
             <MetamaskPrompt
               betId={id}
               amount={amount}
@@ -170,30 +170,116 @@ export const Bet: React.FC<Props> = ({
               timestamp={timestamp}
               contractAddress={contractAddress}
             />
-            <div className="">
-              <div className="absolute">
-                {/* <Countdown
+            {/* <Countdown
                     date={Date.now() + 15000}
                     renderer={({ seconds }) => seconds}
                   /> */}
-              </div>
-              {/* <div className="absolute">
+            {/* <div className="absolute">
                   <Spinner animation="grow" />
                 </div> */}
-            </div>
           </>
         )}
-      {/* accept button, only for user1 */}
-      <span>{`${amount} eth`}</span>
-      <span>{`${betSide}`}</span>
-      <span>{`x${multiplier}`}</span>
-      <span>{`pot size ${potSize.toString()}`}</span>
-      <span>
-        {user2PhotoURL && (
-          <img src={user2PhotoURL} alt="" className="user-img" />
+
+      {user &&
+        auth.currentUser &&
+        user1Id === auth.currentUser.uid &&
+        status !== "approved" && (
+          <button
+            onClick={deleteCurrentBet}
+            className="rounded-full hover:text-negative border-1"
+          >
+            <VscClose size="1.4em" />
+          </button>
         )}
-        {hasUser2Paid && "$$$"}
-      </span>
-    </a>
+      <a
+        href="#"
+        className="flex w-96 border-2 justify-center align-middle"
+        onClick={accept}
+      >
+        <div className="flex justify-center align-middle border w-full grow">
+          <div className="flex justify-center align-middle w-full">
+            <div className="flex justify-between w-full">
+              <div className="border">
+                <div>
+                  {user1FollowThrough[0]} / {user1FollowThrough[1]}
+                </div>
+                <div className="flex justify-center">trust</div>
+              </div>
+              <div>
+                <img
+                  src={user1PhotoURL}
+                  alt=""
+                  className="h-6 w-6 rounded-full"
+                />
+                <p className="text-xs">{user1DisplayName}</p>
+              </div>
+              <div>
+                <div>{amount}</div>
+                <p className="text-xs flex justify-end">
+                  x{parseFloat(multiplier.toString())}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-center align-middle border shrink min-w-max">
+          <div className="rounded-full border flex justify-center align-middle relative w-20">
+            <div className="absolute z-0 text-positive">
+              <BsCoin size="1.5rem" />
+            </div>
+            <div className="absolute z-10 underline decoration-4 font-bold text-primary-dark">
+              {potSize}
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-center align-middle border w-full grow">
+          <div className="flex justify-center align-middle w-full">
+            <div className="flex justify-between w-full">
+              <div>
+                <div>{amount * multiplier}</div>
+                <p className="text-xs">
+                  x{parseFloat((1 / multiplier).toFixed(2))}
+                </p>
+              </div>
+              <div className="rounded-full border w-6 h-6 grid place-content-center">
+                {status === "ready" ? (
+                  <AiOutlineUser />
+                ) : (
+                  <div>
+                    <img
+                      src={user2PhotoURL}
+                      alt=""
+                      className="h-6 w-6 rounded-full"
+                    />
+                    <p className="text-xs"> {user2DisplayName}</p>
+                  </div>
+                )}
+              </div>
+              <div>
+                {status !== "ready" && (
+                  <div className="border">
+                    <div>
+                      {user2FollowThrough[0]} / {user2FollowThrough[1]}
+                    </div>
+                    <div className="flex justify-center">trust</div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      {user &&
+        auth.currentUser &&
+        user1Id === auth.currentUser.uid &&
+        status === "pending" && (
+          <button
+            className="rounded-full hover:text-positive border-1"
+            onClick={approve}
+          >
+            <AiOutlineCheck size="1.4em" />
+          </button>
+        )}
+    </div>
   )
 }

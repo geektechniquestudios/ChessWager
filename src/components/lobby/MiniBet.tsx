@@ -69,12 +69,7 @@ export const MiniBet: React.FC<Props> = ({
     <>
       <Card>
         <Card.Body className={`${className} bet`}>
-          <Buttons
-            id={id}
-            status={status}
-            user1Id={user1Id}
-            user2Id={user2Id}
-          />
+          {/* <Buttons /> */}
           <span>
             <img src={user1PhotoURL} alt="" className="user-img" />
             {hasUser1Paid && "$$$"}

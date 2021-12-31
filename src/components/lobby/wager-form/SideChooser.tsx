@@ -10,7 +10,7 @@ export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
   return (
     <div className="border-2">
       <div className="flex p-2 bg-secondary-dark justify-center">
-        <label>Side</label>
+        <label>side</label>
         <div className="border-1 mx-2" />
         <a
           href="#"
