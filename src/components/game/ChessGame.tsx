@@ -144,12 +144,12 @@ export const ChessGame: React.FC<Props> = ({ setShowChat, width }) => {
           </div>
           <div className="flex justify-center">
             <Chessground
-              minimalDom={true}
               coordinates={false}
-              viewOnly={true}
               id="chess-board"
               fen={fen}
               orientation={orientation}
+              draggable={{enabled: false}}
+              movable={{free: false}}
             />
           </div>
           <div className="flex justify-center">
