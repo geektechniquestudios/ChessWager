@@ -1,5 +1,6 @@
 import { BigNumber, ethers } from "ethers"
 import { useEffect } from "react"
+import { RiExchangeDollarLine } from "react-icons/ri"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
 require("dotenv").config({ path: ".env" })
@@ -92,12 +93,15 @@ export const MetamaskPrompt: React.FC<Props> = ({
 
   return (
     <button
-      className="bet-button"
+      className="border-2 mx-2 p-2 rounded-sm"
       onClick={() => {
         sendBet()
       }}
     >
-      Metamask
+      <div className="flex flex-col justify-evenly">
+        <RiExchangeDollarLine />
+        <p className="text-xs">pay</p>
+      </div>
     </button>
   )
 }
