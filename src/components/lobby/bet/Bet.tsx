@@ -20,13 +20,7 @@ import {
 } from "react-icons/hi"
 import { GiChessRook, GiCoins } from "react-icons/gi"
 import { RiCloseFill } from "react-icons/ri"
-import CircleLoader from "react-spinners/CircleLoader"
-import GridLoader from "react-spinners/GridLoader"
-import RingLoader from "react-spinners/RingLoader"
-import DotLoader from "react-spinners/DotLoader"
-import RotateLoader from "react-spinners/RotateLoader"
-import PulseLoader from "react-spinners/PulseLoader"
-import BounceLoader from "react-spinners/BounceLoader"
+
 import { FaRegHandshake } from "react-icons/fa"
 import { FiDollarSign } from "react-icons/fi"
 import { MdThumbDown, MdThumbUp } from "react-icons/md"
@@ -234,13 +228,13 @@ export const Bet: React.FC<Props> = ({
                 </div>
                 {/* <div className="flex justify-center">trust</div> */}
               </div>
-              <div className="flex border-2 rounded-l-full px-1">
+              <div className="flex border-2 rounded-l-full px-1 min-w-min">
                 <div className="flex flex-col justify-center align-middle">
                   <div className="rounded-full border w-8 h-8 grid place-content-center">
                     <img
                       src={user1PhotoURL}
                       alt=""
-                      className="h-6 w-6 rounded-full z-10"
+                      className="h-6 w-6 rounded-full"
                     />
                   </div>
                 </div>
@@ -283,21 +277,24 @@ export const Bet: React.FC<Props> = ({
                   x{parseFloat((1 / multiplier).toFixed(2))}
                 </p>
               </div>
-              <div className="flex border-2 rounded-r-full px-1 w-24 justify-end">
+              <div
+                className={`flex border-2 rounded-r-full px-1 min-w-min justify-end ${
+                  status === "ready" && "rounded-l-full"
+                }`}
+              >
                 {status === "ready" ? (
                   <div className="grid place-content-center">
-                    <CircleLoader
+                    {/* <CircleLoader
                       speedMultiplier={0.3}
                       size={30}
                       color="gray"
-                    />
+                    /> */}
                   </div>
                 ) : (
                   <div className="flex justify-center align-middle">
                     <p className="text-xs mx-1">{user2DisplayName}</p>
-
                     <div className="flex flex-col justify-center">
-                      <div className="rounded-full border w-6 h-6 grid place-content-center">
+                      <div className="rounded-full border w-8 h-8 grid place-content-center">
                         <img
                           src={user2PhotoURL}
                           alt=""
