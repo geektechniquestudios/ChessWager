@@ -179,7 +179,7 @@ export const Main: React.FC<Props> = ({
               onClick={signOutWithGoogle}
               leftIcon={<RiLogoutCircleLine />}
             >
-              Log out
+              Log Out
             </StaticDropdownItem>
           )}
         </div>
