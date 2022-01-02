@@ -97,10 +97,10 @@ export const GlobalChat: React.FC<Props> = ({
         <fieldset disabled={!auth.currentUser} className="fieldset justify-center flex">
           <form onSubmit={(e) => sendMessage(e)} className="form rounded-sm justify-center w-full pb-1">
             <TextareaAutosize
-              value={auth.currentUser ? formValue : "sign in to chat"}
+              value={auth.currentUser ? formValue : "Sign in to Chat"}
               onChange={(e) => setFormValue(e.target.value)}
               className="input"
-              placeholder="send a message"
+              placeholder="Send a Message"
               maxRows={4}
               onKeyDown={(e) => {
                 e.key === "Enter" && sendMessage(e)

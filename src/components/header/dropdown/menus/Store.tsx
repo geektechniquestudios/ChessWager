@@ -33,7 +33,7 @@ export const Store: React.FC<Props> = ({
             setActiveMenu={setActiveMenu}
             key={0}
           >
-            <h2>store</h2>
+            <h2>Store</h2>
           </DropdownItem>,
           <div className="border-b-2"  key={1}/>,
 
@@ -43,7 +43,7 @@ export const Store: React.FC<Props> = ({
             goToMenu="blocked"
             key={2}
           >
-            membership
+            Membership
           </DropdownItem>,
           
           <DropdownItem
@@ -52,7 +52,7 @@ export const Store: React.FC<Props> = ({
             goToMenu="blocked"
             key={3}
           >
-            badges
+            Badges
           </DropdownItem>,
 
           <DropdownItem
@@ -61,7 +61,7 @@ export const Store: React.FC<Props> = ({
             goToMenu="blocked"
             key={4}
           >
-            nfts
+            NFTs
           </DropdownItem>,
 
           <DropdownItem
@@ -69,7 +69,7 @@ export const Store: React.FC<Props> = ({
             leftIcon={<RiShirtLine />}
             goToMenu="blocked"
             key={5}>
-              merch
+              Merch
             </DropdownItem>
         ]}
         thisMenu={"store"}

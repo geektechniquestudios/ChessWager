@@ -37,7 +37,7 @@ export const Social: React.FC<Props> = ({
             setActiveMenu={setActiveMenu}
             key={0}
           >
-            <h2>social</h2>
+            <h2>Social</h2>
           </DropdownItem>,
           <div className="border-b-2" key={1}>
             {" "}
@@ -48,7 +48,7 @@ export const Social: React.FC<Props> = ({
             leftIcon={<RiInstagramLine />}
             key={2}
           >
-            instagram
+            Instagram
           </StaticDropdownItem>,
 
           <StaticDropdownItem
@@ -56,7 +56,7 @@ export const Social: React.FC<Props> = ({
             leftIcon={<RiFacebookCircleLine />}
             key={3}
           >
-            facebook
+            Facebook
           </StaticDropdownItem>,
 
           <StaticDropdownItem
@@ -64,7 +64,7 @@ export const Social: React.FC<Props> = ({
             leftIcon={<RiTwitterLine />}
             key={4}
           >
-            twitter
+            Twitter
           </StaticDropdownItem>,
 
           <StaticDropdownItem
@@ -72,7 +72,7 @@ export const Social: React.FC<Props> = ({
             leftIcon={<RiRedditLine />}
             key={5}
           >
-            reddit
+            Reddit
           </StaticDropdownItem>,
 
           <StaticDropdownItem
@@ -80,15 +80,15 @@ export const Social: React.FC<Props> = ({
             leftIcon={<RiYoutubeLine />}
             key={6}
           >
-            youtube
+            Youtube
           </StaticDropdownItem>,
 
           <StaticDropdownItem
             url="https://github.com/geektechniquestudios/ChessWager"
             leftIcon={<RiGithubLine />}
-            key={5}
+            key={7}
           >
-            github
+            Github
           </StaticDropdownItem>,
         ]}
         thisMenu={"social"}
