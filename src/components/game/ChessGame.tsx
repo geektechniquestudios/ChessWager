@@ -122,16 +122,9 @@ export const ChessGame: React.FC<Props> = ({ setShowChat, width }) => {
   }, [])
 
   return (
-    <div
-      id="chess-game"
-      // min width needs to be set to the board size + padding
-      className="overflow-hidden resize justify-center flex-col align-middle border-2 bg-secondary-dark dark:bg-primary-dark text-primary-dark dark:text-primary my-10 p-3 w-1/2 "
-    >
-      {/* <a href={lichessUrl} style={{ float: "right" }}>
-        Check out the game on lichess
-      </a> */}
+    <div className="overflow-hidden resize justify-center flex-col align-middle border-2 bg-secondary-dark dark:bg-primary-dark text-primary-dark dark:text-primary my-10 p-3 w-1/2 ">
       <div className="flex justify-center border-2 w-full h-full">
-        <div className="flex justify-center flex-col align-middle border-2">
+        <div className="flex justify-center flex-col align-middle border-2 w-full ">
           <div className="flex justify-center w-full">
             <PlayerData
               side={orientation === "white" ? "black" : "white"}
@@ -142,15 +135,16 @@ export const ChessGame: React.FC<Props> = ({ setShowChat, width }) => {
               fen={fen}
             />
           </div>
-          <div className="flex justify-center">
+          <div className="aspect-w-1 aspect-h-1">
             <Chessground
               coordinates={false}
               id="chess-board"
               fen={fen}
               orientation={orientation}
-              draggable={{enabled: false}}
-              movable={{free: false}}
-              contained={true}
+              draggable={{ enabled: false }}
+              movable={{ free: false }}
+              height="100%"
+              width="100%"
             />
           </div>
           <div className="flex justify-center">

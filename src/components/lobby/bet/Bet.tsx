@@ -257,19 +257,19 @@ export const Bet: React.FC<Props> = ({
           </div>
         </div>
         <div className="flex justify-center align-middle border shrink min-w-max">
-          <div className="rounded-full border flex justify-center align-middle relative w-24 bg-secondary-dark">
+          <div className="rounded-full border flex justify-center align-middle relative w-28 bg-secondary-dark">
             <div className="absolute z-0 text-positive top-2">
               <GiCoins size="1.8rem" />
             </div>
             <div className="absolute z-10 underline decoration-4 font-bold text-primary-dark top-1">
-              {potSize}
+              <p className="px-1">{`$${potSize}`}</p>
             </div>
             <div className="absolute left-1 top-1">
               <GiChessRook color={betSide} size="1.4rem" />
             </div>
             <div className="absolute right-1 top-1">
               <GiChessRook
-                color={betSide === "white" ? "black" : "white"}
+                color={betSide === "White" ? "black" : "white"}
                 size="1.4rem"
               />
             </div>

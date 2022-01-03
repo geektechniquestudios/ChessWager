@@ -7,24 +7,24 @@ module.exports = {
   theme: {
     colors: {
       primary: {
-        DEFAULT: '#F5F5F4',
-        dark: '#292524',
+        DEFAULT: "#F5F5F4",
+        dark: "#292524",
       },
       secondary: {
-        DEFAULT: '#57534E',
-        dark: '#A8A29E',
+        DEFAULT: "#57534E",
+        dark: "#A8A29E",
       },
       tertiary: {
-        DEFAULT: '#D97706',
-        dark: '#FBBF24',
+        DEFAULT: "#D97706",
+        dark: "#FBBF24",
       },
       positive: {
-        DEFAULT: '#16A34A',
-        dark: '#4ADE80',
+        DEFAULT: "#16A34A",
+        dark: "#4ADE80",
       },
       negative: {
-        DEFAULT: '#DC2626',
-        dark: '#F87171',
+        DEFAULT: "#DC2626",
+        dark: "#F87171",
       },
       transparent: "transparent",
       current: "currentColor",
@@ -39,5 +39,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 }
