@@ -150,6 +150,7 @@ export const ChessGame: React.FC<Props> = ({ setShowChat, width }) => {
               orientation={orientation}
               draggable={{enabled: false}}
               movable={{free: false}}
+              contained={true}
             />
           </div>
           <div className="flex justify-center">

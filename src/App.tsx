@@ -140,7 +140,10 @@ export const App: React.FC = () => {
             <div className="flex justify-center align-middle flex-col w-auto">
               <div className="flex">
                 <div className="border w-48 h-auto">
-                  <p>funded</p>
+                  <div className="flex w-full justify-between border-b-2">
+                    <div className="mx-1">Top Bets</div>
+                    <div className="mx-1">{`At Stake`}:</div>
+                  </div>
                   {lobby &&
                     lobby
                       .filter((bet) => bet.status === "funded")
