@@ -6,7 +6,7 @@ interface Props {
 export const BetAmount: React.FC<Props> = ({ betAmount, setBetAmount }) => {
   return (
     <div className="flex border-2">
-      <label className="grid place-content-center m-2">amount</label>
+      <label className="grid place-content-center m-2">Amount</label>
       <div className="border-1 m-2" />
       <div>
         <div className="flex justify-between my-1">

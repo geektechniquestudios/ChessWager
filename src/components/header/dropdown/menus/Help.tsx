@@ -47,7 +47,7 @@ export const Help: React.FC<Props> = ({
             setActiveMenu={setActiveMenu}
             key={0}
           >
-            <h2>help</h2>
+            <h2>Help</h2>
           </DropdownItem>,
           <div className="border-b-2" key={1}>
             {" "}
@@ -57,21 +57,21 @@ export const Help: React.FC<Props> = ({
             leftIcon={<AiOutlineQuestionCircle />}
             key={2}
           >
-            how to play
+            How to Play
           </DropdownItem>,
           <DropdownItem
             setActiveMenu={setActiveMenu}
             leftIcon={<AiOutlineInfoCircle />}
             key={3}
           >
-            faqs
+            FAQs
           </DropdownItem>,
           <DropdownItem
             setActiveMenu={setActiveMenu}
             leftIcon={<BiMessageRoundedError />}
             key={4}
           >
-            contact us
+            Contact Us
           </DropdownItem>,
         ]}
         thisMenu={"help"}

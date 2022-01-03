@@ -38,7 +38,7 @@ export const Settings: React.FC<Props> = ({
             setActiveMenu={setActiveMenu}
             key={0}
           >
-            <h2>settings</h2>
+            <h2>Settings</h2>
           </DropdownItem>,
           <div className="border-b-2" key={1}> </div>,
 
@@ -48,7 +48,7 @@ export const Settings: React.FC<Props> = ({
             goToMenu="blocked"
             key={2}
           >
-            blocked users
+            Blocked Users
           </DropdownItem>,
 
           <StaticDropdownItem
@@ -67,7 +67,7 @@ export const Settings: React.FC<Props> = ({
             }
             key={3}
           >
-            sound
+            Sound
           </StaticDropdownItem>,
 
           <StaticDropdownItem
@@ -87,7 +87,7 @@ export const Settings: React.FC<Props> = ({
             }
             key={4}
           >
-            profanity filter
+            Profanity Filter
           </StaticDropdownItem>,
         ]}
         thisMenu={"settings"}

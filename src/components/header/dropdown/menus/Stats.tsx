@@ -46,15 +46,15 @@ export const Stats: React.FC<Props> = ({
             setActiveMenu={setActiveMenu}
             key={0}
           >
-            <h2>help</h2>
+            <h2>Help</h2>
           </DropdownItem>,
           <div className="border-b-2" key={1}> </div>,
           <StaticDropdownItem>
             {/* @todo get from firebase  */}
-            follow through: {}
+            Follow Through: {}
           </StaticDropdownItem>,
-          <StaticDropdownItem key={2}>number of bets</StaticDropdownItem>,
-          <StaticDropdownItem key={3}>net profit</StaticDropdownItem>,
+          <StaticDropdownItem key={2}>Number of Bets</StaticDropdownItem>,
+          <StaticDropdownItem key={3}>Net Profit</StaticDropdownItem>,
         ]}
         thisMenu={"stats"}
         heightMultiplier={heightMultiplier}

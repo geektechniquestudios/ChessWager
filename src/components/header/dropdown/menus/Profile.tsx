@@ -44,7 +44,7 @@ export const Profile: React.FC<Props> = ({
             setActiveMenu={setActiveMenu}
             key={0}
           >
-            <h2>profile</h2>
+            <h2>Profile</h2>
           </DropdownItem>,
           <div className="border-b-2" key={1}>
             {" "}
@@ -54,7 +54,7 @@ export const Profile: React.FC<Props> = ({
             leftIcon={<MdPeopleOutline />}
             key={2}
           >
-            friends
+            Friends
           </DropdownItem>,
 
           <DropdownItem
@@ -62,21 +62,21 @@ export const Profile: React.FC<Props> = ({
             leftIcon={<ImStatsBars />}
             key={3}
           >
-            stats
+            Stats
           </DropdownItem>,
           <DropdownItem
             setActiveMenu={setActiveMenu}
             leftIcon={<FiAward />}
             key={4}
           >
-            achievements
+            Achievements
           </DropdownItem>,
           <DropdownItem
             setActiveMenu={setActiveMenu}
             leftIcon={<FaUserTag />}
             key={4}
           >
-            display name
+            Display Name
           </DropdownItem>,
           <StaticDropdownItem
             leftIcon={
@@ -98,7 +98,7 @@ export const Profile: React.FC<Props> = ({
             }
             key={5}
           >
-            user image
+            User Image
           </StaticDropdownItem>,
         ]}
         thisMenu={"profile"}

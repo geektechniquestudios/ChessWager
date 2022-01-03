@@ -10,7 +10,7 @@ export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
   return (
     <div className="border-2">
       <div className="flex p-2 bg-secondary-dark justify-center">
-        <label>side</label>
+        <label>Side</label>
         <div className="border-1 mx-2" />
         <a
           href="#"
@@ -18,7 +18,7 @@ export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
             betSide === "white" ? "border-2" : ""
           }  rounded-full w-7 h-7 grid place-content-center mx-1`}
           onClick={() => {
-            setBetSide("white")
+            setBetSide("White")
           }}
         >
           <FaChessKing color="white" className="" />
@@ -29,7 +29,7 @@ export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
             betSide === "black" ? "border-2" : ""
           }  rounded-full w-7 h-7 grid place-content-center mx-1`}
           onClick={() => {
-            setBetSide("black")
+            setBetSide("Black")
           }}
         >
           <FaChessKing color="black" className="" />

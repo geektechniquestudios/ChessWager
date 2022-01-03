@@ -64,7 +64,7 @@ export const Blocked: React.FC<Props> = ({
               goToMenu="settings"
               key={0}
             >
-              blocked users
+              Blocked Users
             </DropdownItem>
           ,
         ]}

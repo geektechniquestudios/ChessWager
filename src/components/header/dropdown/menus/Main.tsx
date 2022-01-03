@@ -86,7 +86,7 @@ export const Main: React.FC<Props> = ({
               goToMenu="profile"
               setActiveMenu={setActiveMenu}
             >
-              profile
+              Profile
             </DropdownItem>
           )}
           {user && (
@@ -95,7 +95,7 @@ export const Main: React.FC<Props> = ({
               goToMenu="settings"
               setActiveMenu={setActiveMenu}
             >
-              settings
+              Settings
             </DropdownItem>
           )}
 
@@ -105,7 +105,7 @@ export const Main: React.FC<Props> = ({
               goToMenu="store"
               setActiveMenu={setActiveMenu}
             >
-              store
+              Store
             </DropdownItem>
           )}
           <DropdownItem
@@ -113,14 +113,14 @@ export const Main: React.FC<Props> = ({
             goToMenu="social"
             setActiveMenu={setActiveMenu}
           >
-            social
+            Social
           </DropdownItem>
           <DropdownItem
             leftIcon={<BiHelpCircle />}
             goToMenu="help"
             setActiveMenu={setActiveMenu}
           >
-            help
+            Help
           </DropdownItem>
           <StaticDropdownItem
             onClick={() => {
@@ -139,7 +139,7 @@ export const Main: React.FC<Props> = ({
             }
             leftIcon={isDarkOn ? <MdOutlineDarkMode /> : <BsSun />}
           >
-            {isDarkOn ? "dark mode" : "light mode"}
+            {isDarkOn ? "Dark Mode" : "Light Mode"}
           </StaticDropdownItem>
           <div className="border-b-2" />
           {!isWalletConnected && (
@@ -149,7 +149,7 @@ export const Main: React.FC<Props> = ({
               // rightIcon={isWalletConnecting ?? <div className={"animate-ping"}> . </div>}
               // rightIcon={true ?? <div className="animate-ping"> test </div>}
             >
-              connect wallet
+              Connect Wallet
             </StaticDropdownItem>
           )}
           {isWalletConnected && (
@@ -159,7 +159,7 @@ export const Main: React.FC<Props> = ({
               // rightIcon={true ?? <div className="animate-ping"> test </div>}
               // rightIcon={<div>{isWalletConnecting ? "." : ""}</div>}
             >
-              disconnect wallet
+              Disconnect Wallet
             </StaticDropdownItem>
           )}
 
@@ -170,7 +170,7 @@ export const Main: React.FC<Props> = ({
               }}
               leftIcon={<RiLoginCircleLine />}
             >
-              log in
+              Log in
             </StaticDropdownItem>
           )}
 
@@ -179,7 +179,7 @@ export const Main: React.FC<Props> = ({
               onClick={signOutWithGoogle}
               leftIcon={<RiLogoutCircleLine />}
             >
-              log out
+              Log Out
             </StaticDropdownItem>
           )}
         </div>
