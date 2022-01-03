@@ -6,14 +6,17 @@ import reportWebVitals from "./reportWebVitals"
 import { Auth } from "./components/containers/Auth"
 import { Firestore } from "./components/containers/Firestore"
 import { GameId } from "./components/containers/GameId"
+import { Price } from "./components/containers/Price"
 
 ReactDOM.render(
   <React.StrictMode>
     <Firestore.Provider>
       <Auth.Provider>
-          <GameId.Provider>
+        <GameId.Provider>
+          <Price.Provider>
             <App />
-          </GameId.Provider>
+          </Price.Provider>
+        </GameId.Provider>
       </Auth.Provider>
     </Firestore.Provider>
   </React.StrictMode>,
