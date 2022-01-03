@@ -15,7 +15,7 @@ export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
         <a
           href="#"
           className={`${
-            betSide === "white" ? "border-2" : ""
+            betSide === "White" ? "border-2" : ""
           }  rounded-full w-7 h-7 grid place-content-center mx-1`}
           onClick={() => {
             setBetSide("White")
@@ -26,7 +26,7 @@ export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
         <a
           href="#"
           className={`${
-            betSide === "black" ? "border-2" : ""
+            betSide === "Black" ? "border-2" : ""
           }  rounded-full w-7 h-7 grid place-content-center mx-1`}
           onClick={() => {
             setBetSide("Black")

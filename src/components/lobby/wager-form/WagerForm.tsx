@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CurrencyInput from "react-currency-input-field"
 import "../../../style/lobby.scss"
 import firebase from "firebase/compat/app"
@@ -25,6 +25,7 @@ export const WagerForm: React.FC = () => {
   const [betAmount, setBetAmount] = useState(0.01)
   const [multiplier, setMultiplier] = useState(1.0)
   const [sliderVal, setSliderVal] = useState(0.0)
+  const [avaxPrice, setAvaxPrice] = useState(0)
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -52,21 +53,24 @@ export const WagerForm: React.FC = () => {
       }).catch(console.error)
     }
   }
-
   const getAvaxPrice = async () => {
-    const response = await fetch(
+    return fetch(
       "https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd",
     )
-    const data = await response.json()
-    return data.avax.usd
+      .then((res) => res.json())
+      .then((data) => data["avalanche-2"].usd)
   }
 
+  useEffect(() => {
+    getAvaxPrice().then(setAvaxPrice)
+  }, [])
   // const [avaxPrice, setAvaxPrice] = useState(getAvaxPrice())
 
   return (
     <div className="flex w-full h-full p-2">
       <fieldset disabled={!auth.currentUser} className="flex w-full">
         <form onSubmit={createWager} className="w-full">
+          {avaxPrice}
           <div className="flex flex-col justify-around gap-4">
             <SideChooser betSide={betSide} setBetSide={setBetSide} />
             <BetAmount betAmount={betAmount} setBetAmount={setBetAmount} />
