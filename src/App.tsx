@@ -19,8 +19,6 @@ import { TopBets } from "./components/top-bets/TopBets"
 
 const firestore = firebase.firestore()
 
-
-
 export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
   const [showChat, setShowChat] = useState(
@@ -114,7 +112,7 @@ export const App: React.FC = () => {
             )}
             <div className="flex justify-center align-middle flex-col w-auto">
               <div className="flex">
-                <TopBets/>
+                <TopBets />
                 <div className="flex justify-center w-full">
                   <ChessGame setShowChat={setShowChat} width={width} />
                 </div>

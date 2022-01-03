@@ -8,6 +8,7 @@ import { useState } from "react"
 const firestore = firebase.firestore()
 
 interface Props {}
+
 interface Lobby {
   id: string
   amount: number
