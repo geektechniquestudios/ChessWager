@@ -24,6 +24,13 @@ import { RiCloseFill } from "react-icons/ri"
 import { FaRegHandshake } from "react-icons/fa"
 import { FiDollarSign } from "react-icons/fi"
 import { MdThumbDown, MdThumbUp } from "react-icons/md"
+import {
+  BallSpinner,
+  DominoSpinner,
+  FireworkSpinner,
+  JellyfishSpinner,
+  SwapSpinner,
+} from "react-spinners-kit"
 
 const firestore = firebase.firestore()
 
@@ -289,6 +296,7 @@ export const Bet: React.FC<Props> = ({
                       size={30}
                       color="gray"
                     /> */}
+                    <BallSpinner color="black" size={30} />
                   </div>
                 ) : (
                   <div className="flex justify-center align-middle">
@@ -305,6 +313,7 @@ export const Bet: React.FC<Props> = ({
                   </div>
                 )}
               </div>
+
               <div className="border flex flex-col justify-center w-16">
                 {status !== "ready" && (
                   <div>
@@ -316,8 +325,6 @@ export const Bet: React.FC<Props> = ({
                     </div>
                   </div>
                 )}
-
-                {/* <div className="flex justify-center">trust</div> */}
               </div>
             </div>
           </div>

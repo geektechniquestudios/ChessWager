@@ -29,7 +29,7 @@ export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
           <img
             src={photoURL}
             alt=""
-            className="user-img rounded-full focus:border-tertiary border-1 border-primary-dark border-2"
+            className="user-img rounded-full hover:border-tertiary-dark border-black"
           />
         ) : (
           <BiUserCircle className="w-8 h-8" />
