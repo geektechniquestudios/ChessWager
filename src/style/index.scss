@@ -68,37 +68,3 @@ code {
 .color-shift {
   @apply transition-colors ease-in-out duration-700;
 }
-
-.chat-window-enter {
-  transform: translateX(110%);
-}
-.chat-window-enter-active {
-  transform: translateX(0%);
-  transition: all 250ms ease;
-}
-
-.chat-window-exit {
-}
-.chat-window-exit-active {
-  transform: translateX(110%);
-  transition: all 250ms ease;
-}
-
-
-
-// .chat-in-button-enter {
-//   transform: translateX(110%);
-//   position: absolute;
-// }
-// .chat-in-button-enter-active {
-//   transform: translateX(0%);
-//   transition: all 200ms ease;
-// }
-
-// .chat-in-button-exit {
-//   position: absolute;  
-// }
-// .chat-in-button-exit-active {
-//   transform: translateX(110%);
-//   transition: all 500ms ease-in-out;
-// }

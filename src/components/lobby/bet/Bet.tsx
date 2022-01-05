@@ -31,6 +31,7 @@ import {
   JellyfishSpinner,
   SwapSpinner,
 } from "react-spinners-kit"
+import { Price } from "../../containers/Price"
 
 const firestore = firebase.firestore()
 
@@ -90,13 +91,8 @@ export const Bet: React.FC<Props> = ({
       .add(bigAmount),
   )
 
-  // determine if current user is user1 or user2
   const isUser1 = auth.currentUser?.uid === user1Id
   const isUser2 = auth.currentUser?.uid === user2Id
-  const isPending =
-    auth.currentUser &&
-    // (user1Id === auth.currentUser.uid || user2Id === auth.currentUser.uid) && // what was I thinking?
-    status === "pending"
 
   let name: string
   if (user) {
@@ -106,7 +102,6 @@ export const Bet: React.FC<Props> = ({
 
   const accept = () => {
     const user2Metamask = walletAddress
-    //add checks for authentication and metamas
 
     const acceptBet = firebase.functions().httpsCallable("acceptBet")
     acceptBet({
@@ -118,7 +113,7 @@ export const Bet: React.FC<Props> = ({
     })
       // .then(res => String(res.data))
       // .then(alert)
-      .catch(console.error) //@todo do this catch to all or none of the firebase methods
+      .catch(console.error)
   }
 
   const cancel = () => {
@@ -168,7 +163,10 @@ export const Bet: React.FC<Props> = ({
     user1Id !== auth.currentUser.uid &&
     status === "ready"
 
+  const { avaxPrice } = Price.useContainer()
+
   const pointerEvents = isEnabled ? "" : "cursor-default"
+
   return (
     <div className="w-full flex justify-center align-middle border">
       <div className=" flex justify-end ">
@@ -206,13 +204,6 @@ export const Bet: React.FC<Props> = ({
                 timestamp={timestamp}
                 contractAddress={contractAddress}
               />
-              {/* <Countdown
-                    date={Date.now() + 15000}
-                    renderer={({ seconds }) => seconds}
-                  /> */}
-              {/* <div className="absolute">
-                  <Spinner animation="grow" />
-                </div> */}
             </>
           )}
       </div>
@@ -233,7 +224,6 @@ export const Bet: React.FC<Props> = ({
                 <div className="flex justify-center align-middle">
                   <FaRegHandshake title="Follow-through" />
                 </div>
-                {/* <div className="flex justify-center">trust</div> */}
               </div>
               <div className="flex border-2 rounded-l-full px-1 min-w-min">
                 <div className="flex flex-col justify-center align-middle">
@@ -248,7 +238,7 @@ export const Bet: React.FC<Props> = ({
                 <p className="text-xs mx-1">{user1DisplayName}</p>
               </div>
               <div className="mx-1">
-                <div>{amount}</div>
+                <div>{`$${(amount * avaxPrice).toFixed(2)}`}</div>
                 <p className="text-xs flex justify-end transform -translate-y-2 ">
                   x{parseFloat(multiplier.toString())}
                 </p>
@@ -262,7 +252,9 @@ export const Bet: React.FC<Props> = ({
               <GiCoins size="1.8rem" />
             </div>
             <div className="absolute z-10 underline decoration-4 font-bold text-primary-dark top-1">
-              <p className="px-1">{`$${potSize}`}</p>
+              <p className="px-1">{`$${(Number(potSize) * avaxPrice).toFixed(
+                2,
+              )}`}</p>
             </div>
             <div className="absolute left-1 top-1">
               <GiChessRook color={betSide} size="1.4rem" />
@@ -279,26 +271,26 @@ export const Bet: React.FC<Props> = ({
           <div className="flex justify-center align-middle w-full">
             <div className="flex justify-between w-full">
               <div className="mx-1">
-                <div>{amount * multiplier}</div>
+                <div>{`$${(amount * multiplier * avaxPrice).toFixed(2)}`}</div>
                 <p className="text-xs flex justify-start transform -translate-y-2 ">
                   x{parseFloat((1 / multiplier).toFixed(2))}
                 </p>
               </div>
-              <div
-                className={`flex border-2 rounded-r-full px-1 min-w-min justify-end ${
-                  status === "ready" && "rounded-l-full"
-                }`}
-              >
-                {status === "ready" ? (
-                  <div className="grid place-content-center">
-                    {/* <CircleLoader
-                      speedMultiplier={0.3}
-                      size={30}
-                      color="gray"
-                    /> */}
-                    <BallSpinner color="black" size={30} />
+
+              {status === "ready" ? (
+                isUser1 && (
+                  <div
+                    className={`flex border-2 rounded-r-full px-1 min-w-min justify-end rounded-l-full`}
+                  >
+                    <div className="grid place-content-center">
+                      <BallSpinner color="black" size={30} />
+                    </div>
                   </div>
-                ) : (
+                )
+              ) : (
+                <div
+                  className={`flex border-2 rounded-r-full px-1 min-w-min justify-end`}
+                >
                   <div className="flex justify-center align-middle">
                     <p className="text-xs mx-1">{user2DisplayName}</p>
                     <div className="flex flex-col justify-center">
@@ -311,8 +303,8 @@ export const Bet: React.FC<Props> = ({
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
 
               <div className="border flex flex-col justify-center w-16">
                 {status !== "ready" && (
@@ -341,10 +333,7 @@ export const Bet: React.FC<Props> = ({
                 onClick={cancel}
                 className="rounded-sm bg-negative h-3.5 w-3.5 text-white transform hover:scale-110 ease duration-100 border border-black place-content-center grid mx-1"
               >
-                {/* <div className="justify-center align-middle flex flex-col"> */}
                 <RiCloseFill size="0.5em" />
-                {/* <p className="text-xs">x</p> */}
-                {/* </div> */}
               </button>
             </div>
           )}
@@ -391,13 +380,6 @@ export const Bet: React.FC<Props> = ({
                 timestamp={timestamp}
                 contractAddress={contractAddress}
               />
-              {/* <Countdown
-                    date={Date.now() + 15000}
-                    renderer={({ seconds }) => seconds}
-                  /> */}
-              {/* <div className="absolute">
-                  <Spinner animation="grow" />
-                </div> */}
             </>
           )}
       </div>

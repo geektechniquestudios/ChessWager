@@ -1,4 +1,5 @@
 import RangeSlider from "react-bootstrap-range-slider"
+import CurrencyInput from "react-currency-input-field"
 
 interface Props {
   multiplier: number
@@ -26,6 +27,7 @@ export const Multiplier: React.FC<Props> = ({
     setSliderVal(newSliderVal)
     calcMultiplier(newSliderVal)
   }
+  
   return (
     <div className="flex p-2 border-2">
       <div className="grid place-content-center">
@@ -44,14 +46,15 @@ export const Multiplier: React.FC<Props> = ({
         />
         <p className="flex justify-center">
           {/* <input type="text">{Number(multiplier).toFixed(2)}</input> */}
-          <input
-            type="text"
+          <CurrencyInput
             value={multiplier.toFixed(2)}
-            onChange={(e) => {
-              setMultiplier(Number(e.target.value))
+            onValueChange={(value) => {
+              setMultiplier(Number(value))
             }}
             className="w-10 p-1 "
-          ></input>
+            allowNegativeValue={false}
+            fixedDecimalLength={2}
+          />
         </p>
       </div>
     </div>

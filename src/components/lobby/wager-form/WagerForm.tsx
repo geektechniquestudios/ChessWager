@@ -12,6 +12,7 @@ import { BetAmount } from "./BetAmount"
 import { Multiplier } from "./Multiplier"
 import { Total } from "./Total"
 import { PlaceBet } from "./PlaceBet"
+import { QuickBet } from "./QuickBet"
 require("dotenv").config({ path: "../../../../.env" })
 
 export const WagerForm: React.FC = () => {
@@ -63,6 +64,7 @@ export const WagerForm: React.FC = () => {
         <form onSubmit={createWager} className="w-full">
           <div className="flex flex-col justify-around gap-4">
             <SideChooser betSide={betSide} setBetSide={setBetSide} />
+            <QuickBet setBetAmount={setBetAmount}/>
             <BetAmount betAmount={betAmount} setBetAmount={setBetAmount} />
             <Multiplier
               multiplier={multiplier}

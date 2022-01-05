@@ -2,8 +2,9 @@ import firebase from "firebase/compat/app"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { GameId } from "../containers/GameId"
 import { FirebaseError } from "@firebase/util"
-import { MiniBet } from "../lobby/MiniBet"
+import { MiniBet } from "./MiniBet"
 import { useState } from "react"
+import { Price } from "../containers/Price"
 
 const firestore = firebase.firestore()
 
@@ -27,6 +28,8 @@ interface Lobby {
   gameId: string
   timestamp: firebase.firestore.Timestamp
   contractAddress: string
+  user1DisplayName: string
+  user2DisplayName: string
 }
 
 export const TopBets: React.FC<Props> = ({}) => {
@@ -40,18 +43,25 @@ export const TopBets: React.FC<Props> = ({}) => {
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 
-  const [amountAtStake, setAmountAtStake] = useState(0)
+  const { avaxPrice } = Price.useContainer()
+
+  let amountAtStake = (
+    (lobby
+      ?.map((bet) => bet.amount + bet.amount * bet.multiplier)
+      .reduce((a, b) => a + b, 0) ?? 0) * avaxPrice
+  ).toFixed(2)
 
   return (
-    <>
-      <div className="border w-52 h-auto">
-        <div className="flex w-full justify-between border-b border-r rounded-br-lg px-1">
-          <div className="mx-1 text-sm">Top Bets</div>
-          <div className="mx-1 text-sm">{`$${amountAtStake} at Stake`}</div>
-        </div>
+    <div className="w-52 h-auto">
+      <div className="flex flex-row-reverse w-full justify-between border-b border-r rounded-br-lg px-0.5 py-1">
+        <div className="mx-1 text-sm">{`$${amountAtStake} at Stake`}</div>
+      </div>
+      <div className="pr-3">
         {lobby &&
           lobby
-            .filter((bet) => bet.status === "funded")
+            .sort((a, b) => b.amount - a.amount)
+            //.slice(0, 10)
+            // .filter((bet) => bet.status === "funded")
             .map((bet) => (
               <MiniBet
                 className="border-2 flex w-full h-12"
@@ -72,9 +82,11 @@ export const TopBets: React.FC<Props> = ({}) => {
                 gameId={bet.gameId}
                 timestamp={bet.timestamp?.seconds}
                 contractAddress={bet.contractAddress}
+                user1DisplayName={bet.user1DisplayName}
+                user2DisplayName={bet.user2DisplayName}
               />
             ))}
-      </div>{" "}
-    </>
+      </div>
+    </div>
   )
 }

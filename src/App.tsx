@@ -14,7 +14,7 @@ import { GameId } from "./components/containers/GameId"
 import firebase from "firebase/compat/app"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { FirebaseError } from "@firebase/util"
-import { MiniBet } from "./components/lobby/MiniBet"
+import { MiniBet } from "./components/top-bets/MiniBet"
 import { TopBets } from "./components/top-bets/TopBets"
 
 const firestore = firebase.firestore()
@@ -102,7 +102,6 @@ export const App: React.FC = () => {
                   // if window width is greater than 800px, set autoShowChat to true, autohide to false
                 }}
                 className="m-3 hover:bg-secondary-dark rounded-sm color-shift absolute top-12 right-0"
-                // title="chat"
               >
                 <BiArrowFromRight
                   size="1.4em"
@@ -122,13 +121,6 @@ export const App: React.FC = () => {
           </div>
         </main>
         <div>
-          {/* <CSSTransition
-            in={showChat}
-            timeout={300}
-            classNames="chat-window"
-            unmountOnExit
-            // onEnter={calcHeight}
-          > */}
           {showChat && (
             <aside className="h-full">
               <GlobalChat
@@ -142,7 +134,6 @@ export const App: React.FC = () => {
               />
             </aside>
           )}
-          {/* </CSSTransition> */}
         </div>
       </section>
     </div>
