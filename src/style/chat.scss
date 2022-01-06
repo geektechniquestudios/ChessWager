@@ -3,6 +3,8 @@
 $form-height: 5em;
 $chat-header-height: 4em;
 $main-header-height: 3em;
+$secondary: #57534E;
+$tertiary: #D97706;
 
 .global-chat {
   @apply text-center flex flex-col;
@@ -17,6 +19,11 @@ $main-header-height: 3em;
   padding: $padding;
   height: calc(100vh - $main-header-height - $chat-header-height);
   @apply flex flex-col-reverse;
+}
+
+.chat-window {
+  scrollbar-width: thin;
+  scrollbar-color: $tertiary $secondary;
 }
 
 .chat-window::-webkit-scrollbar {
