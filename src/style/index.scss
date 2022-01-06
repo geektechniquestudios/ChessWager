@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+$secondary: #57534E;
+$tertiary: #D97706;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -43,6 +46,11 @@ code {
 
 #page > aside {
   grid-area: chat;
+}
+
+#page > main {
+  scrollbar-width: thin;
+  scrollbar-color: $tertiary $secondary;
 }
 
 #page > main::-webkit-scrollbar-track {
