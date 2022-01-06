@@ -56,7 +56,6 @@ export const WagerForm: React.FC = () => {
       }).catch(console.error)
     }
   }
-  // const [avaxPrice, setAvaxPrice] = useState(getAvaxPrice())
 
   return (
     <div className="flex w-full h-full p-2">

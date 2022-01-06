@@ -25,11 +25,18 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
   return (
     <div className="flex no-wrap justify-between w-full">
       <div className="flex-auto">
-        <div className="flex justify-start h-full mx-4 p-1">
-          <div className="flex flex-col justify-center rounded-sm">
-            <ChessWagerLogo className="h-full " color="teal" stroke="teal" />
-            {/* @todo color this to tertiary manually */}
+        <div className="flex justify-start h-full mx-3 p-0.5 ">
+          <div className="flex flex-col justify-center">
+          <div className="flex justify-center align-middle p-1 border-1 rounded-full w-8 h-8">
+            <ChessWagerLogo
+              className="h-full"
+              color="teal"
+              stroke="teal"
+              strokeWidth={2}
+              height="2.5em"
+            /></div>
           </div>
+          {/* @todo color this to tertiary manually */}
         </div>
       </div>
       <div className="flex-auto"></div>

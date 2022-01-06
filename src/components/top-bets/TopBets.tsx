@@ -5,6 +5,7 @@ import { FirebaseError } from "@firebase/util"
 import { MiniBet } from "./MiniBet"
 import { useState } from "react"
 import { Price } from "../containers/Price"
+import "../../style/topbets.scss"
 
 const firestore = firebase.firestore()
 
@@ -38,7 +39,6 @@ export const TopBets: React.FC<Props> = ({}) => {
   const gameIdContainer = GameId.useContainer()
 
   const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
-  // .orderBy("createdAt", "desc")
 
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
@@ -49,14 +49,24 @@ export const TopBets: React.FC<Props> = ({}) => {
     (lobby
       ?.map((bet) => bet.amount + bet.amount * bet.multiplier)
       .reduce((a, b) => a + b, 0) ?? 0) * avaxPrice
-  ).toFixed(2)
+  )
+    .toFixed(2)
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
   return (
-    <div className="w-52 h-auto">
-      <div className="flex flex-row-reverse w-full justify-between border-b border-r rounded-br-lg px-0.5 py-1">
-        <div className="mx-1 text-sm">{`$${amountAtStake} at Stake`}</div>
+    <div
+      className="top-bets w-52 h-auto overflow-y-auto overflow-x-hidden"
+      style={{ direction: "rtl" }}
+    >
+      <div className="flex w-full justify-between px-0.5 py-1 bg-gradient-to-r from-secondary-dark via-secondary-dark to-transparent">
+        <div />
+        <div
+          className="mx-1 text-sm"
+          style={{ direction: "ltr" }}
+        >{`$${amountAtStake} at Stake`}</div>
       </div>
-      <div className="pr-3">
+      <div className="h-0.5 bg-gradient-to-r from-secondary-dark to-transparent" />
+      <div style={{ direction: "ltr" }}>
         {lobby &&
           lobby
             .sort((a, b) => b.amount - a.amount)
@@ -64,24 +74,12 @@ export const TopBets: React.FC<Props> = ({}) => {
             // .filter((bet) => bet.status === "funded")
             .map((bet) => (
               <MiniBet
-                className="border-2 flex w-full h-12"
                 key={bet.id}
-                id={bet.id}
                 amount={bet.amount}
                 betSide={bet.betSide}
                 multiplier={bet.multiplier}
-                status={bet.status}
-                user1Id={bet.user1Id}
-                user1Metamask={bet.user1Metamask}
                 user1PhotoURL={bet.user1PhotoURL}
-                hasUser1Paid={bet.hasUser1Paid}
-                user2Id={bet.user2Id}
-                user2Metamask={bet.user2Metamask}
                 user2PhotoURL={bet.user2PhotoURL}
-                hasUser2Paid={bet.hasUser2Paid}
-                gameId={bet.gameId}
-                timestamp={bet.timestamp?.seconds}
-                contractAddress={bet.contractAddress}
                 user1DisplayName={bet.user1DisplayName}
                 user2DisplayName={bet.user2DisplayName}
               />

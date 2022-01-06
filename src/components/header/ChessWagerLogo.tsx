@@ -29,7 +29,7 @@ export const ChessWagerLogo: React.FC<Props> = ({
       <path
         fill={color}
         stroke={stroke}
-        stroke-width={strokeWidth}
+        strokeWidth={strokeWidth}
         d="M 1092.00,1044.67
            C 1127.66,1083.07 1155.50,1131.48 1193.00,1168.00
              1227.39,1201.49 1261.50,1219.00 1261.50,1219.00
