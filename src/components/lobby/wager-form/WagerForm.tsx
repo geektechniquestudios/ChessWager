@@ -1,12 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useEffect, useState } from "react"
-import CurrencyInput from "react-currency-input-field"
+import { useState } from "react"
 import "../../../style/lobby.scss"
 import firebase from "firebase/compat/app"
 import { GameId } from "../../containers/GameId"
 import { Auth } from "../../containers/Auth"
-import { FaChessKing } from "react-icons/fa"
-import { Price } from "../../containers/Price"
 import { SideChooser } from "./SideChooser"
 import { BetAmount } from "./BetAmount"
 import { Multiplier } from "./Multiplier"
@@ -20,15 +17,12 @@ export const WagerForm: React.FC = () => {
   const { walletAddress, isWalletConnected, auth, connectWallet } =
     Auth.useContainer()
 
-  const { avaxPrice } = Price.useContainer()
-
   const user1Metamask = walletAddress
 
   const [betSide, setBetSide] = useState("White")
   const [betAmount, setBetAmount] = useState(0.01)
   const [multiplier, setMultiplier] = useState(1.0)
   const [sliderVal, setSliderVal] = useState(0.0)
-  // const [avaxPrice, setAvaxPrice] = useState(0)
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -63,7 +57,7 @@ export const WagerForm: React.FC = () => {
         <form onSubmit={createWager} className="w-full">
           <div className="flex flex-col justify-around gap-4">
             <SideChooser betSide={betSide} setBetSide={setBetSide} />
-            <QuickBet setBetAmount={setBetAmount}/>
+            <QuickBet setBetAmount={setBetAmount} />
             <BetAmount betAmount={betAmount} setBetAmount={setBetAmount} />
             <Multiplier
               multiplier={multiplier}

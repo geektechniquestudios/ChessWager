@@ -1,35 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import firebase from "firebase/compat"
 
-import { Card, Spinner } from "react-bootstrap"
 import "../../../style/lobby.scss"
 import "firebase/compat/functions"
-import { Buttons } from "../Buttons"
 import { Auth } from "../../containers/Auth"
 import { MetamaskPrompt } from "../MetamaskPrompt"
-import Countdown from "react-countdown"
 import { BigNumber, ethers } from "ethers"
-import { BsCoin, BsHandThumbsDown, BsHandThumbsUp } from "react-icons/bs"
-import { TiDelete, TiDeleteOutline } from "react-icons/ti"
-import { VscClose } from "react-icons/vsc"
-import { AiOutlineCheck, AiOutlineUser } from "react-icons/ai"
-import {
-  HiOutlineThumbDown,
-  HiOutlineThumbUp,
-  HiOutlineUserRemove,
-} from "react-icons/hi"
 import { GiChessRook, GiCoins } from "react-icons/gi"
 import { RiCloseFill } from "react-icons/ri"
 
 import { FaRegHandshake } from "react-icons/fa"
-import { FiDollarSign } from "react-icons/fi"
 import { MdThumbDown, MdThumbUp } from "react-icons/md"
 import {
   BallSpinner,
-  DominoSpinner,
-  FireworkSpinner,
-  JellyfishSpinner,
-  SwapSpinner,
 } from "react-spinners-kit"
 import { Price } from "../../containers/Price"
 

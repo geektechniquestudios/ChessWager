@@ -1,3 +1,4 @@
+const { stone } = require("tailwindcss/colors")
 const colors = require("tailwindcss/colors")
 
 module.exports = {
@@ -7,8 +8,8 @@ module.exports = {
   theme: {
     colors: {
       primary: {
-        DEFAULT: "#F5F5F4",
-        dark: "#292524",
+        DEFAULT: "#fafaf9",
+        dark: "#1c1917",
       },
       secondary: {
         DEFAULT: "#57534E",

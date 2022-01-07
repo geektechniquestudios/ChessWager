@@ -29,7 +29,7 @@ export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
           <img
             src={photoURL}
             alt=""
-            className="user-img rounded-full hover:border-tertiary-dark border-black"
+            className="user-img rounded-full hover:border-tertiary-dark border-black border-1"
           />
         ) : (
           <BiUserCircle className="w-8 h-8" />
@@ -72,7 +72,6 @@ const UserIconButton = ({
 const CloseMenuListener = (ref, setOpen, shouldMenuStayOpen, open) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // if user clicks on the user icon, don't close the menu
       if (ref.current?.contains(event.target)) {
         return
       }

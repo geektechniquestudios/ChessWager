@@ -49,5 +49,9 @@ export const Countdown: React.FC<Props> = ({ fen, side, time }) => {
     }
   }
 
-  return <div className="border p-1">{formatTime(secondsToShow(time - count - 1))}</div>
+  return (
+    <div className="border p-1">
+      {formatTime(secondsToShow(time - count - 1))}
+    </div>
+  )
 }

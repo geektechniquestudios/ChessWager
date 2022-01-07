@@ -9,15 +9,10 @@ import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import { Auth } from "./components/containers/Auth"
 import { BiArrowFromRight } from "react-icons/bi"
-import { CSSTransition } from "react-transition-group"
 import { GameId } from "./components/containers/GameId"
 import firebase from "firebase/compat/app"
-import { useCollectionData } from "react-firebase-hooks/firestore"
-import { FirebaseError } from "@firebase/util"
-import { MiniBet } from "./components/top-bets/MiniBet"
 import { TopBets } from "./components/top-bets/TopBets"
 
-const firestore = firebase.firestore()
 
 export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
@@ -82,7 +77,7 @@ export const App: React.FC = () => {
   return (
     <div className={`${dark} h-full w-full overflow-y-hidden grid`}>
       <section className="color-shift " id="page">
-        <header className="color-shift bg-secondary-dark dark:bg-secondary flex items-center">
+        <header className="color-shift bg-secondary-dark dark:bg-secondary-dark flex items-center">
           <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
         </header>
         <main className="overflow-y-auto flex justify-center">

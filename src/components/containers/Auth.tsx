@@ -29,7 +29,6 @@ const useAuth = () => {
     firebase.auth.Error | undefined,
   ] = useAuthState(auth)
 
-
   const [isWalletConnecting, setIsWalletConnecting] = useState(false)
   const connectWallet = async () => {
     if (!user) {
@@ -74,24 +73,27 @@ const useAuth = () => {
       if (auth.currentUser) {
         const usersCollectionRef = firestore.collection("users")
         const userDoc = usersCollectionRef.doc(auth.currentUser.uid)
-        userDoc.get().then((doc) => {
-          if (!doc.exists) {
-            userDoc
-              .set({
-                betAcceptedCount: 0,
-                betFundedCount: 0,
-                blocked: [],
-                walletAddress: "",
-              })
-              .catch(console.error)
-          }
-          if (doc.data()!.walletAddress !== "") {
-            setIsWalletConnected(true)
-            localStorage.setItem("isWalletConnected", "true")
-            setWalletAddress(doc.data()!.walletAddress)
-            localStorage.setItem("walletAddress", doc.data()!.walletAddress)
-          }
-        }).catch(console.error)
+        userDoc
+          .get()
+          .then((doc) => {
+            if (!doc.exists) {
+              userDoc
+                .set({
+                  betAcceptedCount: 0,
+                  betFundedCount: 0,
+                  blocked: [],
+                  walletAddress: "",
+                })
+                .catch(console.error)
+            }
+            if (doc.data()!.walletAddress !== "") {
+              setIsWalletConnected(true)
+              localStorage.setItem("isWalletConnected", "true")
+              setWalletAddress(doc.data()!.walletAddress)
+              localStorage.setItem("walletAddress", doc.data()!.walletAddress)
+            }
+          })
+          .catch(console.error)
       }
     }
     const provider = new firebase.auth.GoogleAuthProvider()

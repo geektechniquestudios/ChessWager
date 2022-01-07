@@ -1,3 +1,4 @@
+import { useState } from "react"
 import CurrencyInput from "react-currency-input-field"
 import { Price } from "../../containers/Price"
 
@@ -8,6 +9,7 @@ interface Props {
 
 export const BetAmount: React.FC<Props> = ({ betAmount, setBetAmount }) => {
   const { avaxPrice } = Price.useContainer() 
+  const [localAvaxAmount, setLocalAvaxAmount] = useState(0)
   return (
     <div className="flex border-2">
       <label className="grid place-content-center m-2">Your Bet</label>
@@ -36,8 +38,8 @@ export const BetAmount: React.FC<Props> = ({ betAmount, setBetAmount }) => {
             name="amount"
             placeholder="Chooes your bet"
             defaultValue={0.01} //@todo display usd equivalent here
-            decimalsLimit={6}
-            value={betAmount.toFixed(4)}
+            // decimalsLimit={6}
+            value={betAmount}
             // onValueChange={(value) => setBetAmount(Number(value ?? 0))}
             allowNegativeValue={false}
             onBlur={(e) => {

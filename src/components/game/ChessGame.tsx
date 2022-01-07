@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 // @ts-ignore
 import ndjsonStream from "can-ndjson-stream"
 import "react-chessground/dist/styles/chessground.css"

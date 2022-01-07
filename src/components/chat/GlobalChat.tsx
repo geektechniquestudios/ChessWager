@@ -7,7 +7,7 @@ import "firebase/compat/analytics"
 import TextareaAutosize from "react-textarea-autosize"
 
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { Auth } from "../containers/Auth"
 import { ChatMessage } from "./ChatMessage"
 import { Firestore } from "../containers/Firestore"
@@ -94,8 +94,14 @@ export const GlobalChat: React.FC<Props> = ({
         </button>
       </header>
       <main>
-        <fieldset disabled={!auth.currentUser} className="fieldset justify-center flex">
-          <form onSubmit={(e) => sendMessage(e)} className="form rounded-sm justify-center w-full pb-1">
+        <fieldset
+          disabled={!auth.currentUser}
+          className="fieldset justify-center flex"
+        >
+          <form
+            onSubmit={(e) => sendMessage(e)}
+            className="form rounded-sm justify-center w-full pb-1"
+          >
             <TextareaAutosize
               value={auth.currentUser ? formValue : "Sign in to Chat"}
               onChange={(e) => setFormValue(e.target.value)}
