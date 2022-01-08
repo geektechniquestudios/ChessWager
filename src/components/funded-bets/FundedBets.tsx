@@ -5,7 +5,7 @@ import { FirebaseError } from "@firebase/util"
 import { MiniBet } from "./MiniBet"
 import { useState } from "react"
 import { Price } from "../containers/Price"
-import "../../style/topbets.scss"
+import "../../style/fundedbets.scss"
 
 const firestore = firebase.firestore()
 
@@ -33,7 +33,7 @@ interface Lobby {
   user2DisplayName: string
 }
 
-export const TopBets: React.FC<Props> = ({}) => {
+export const FundedBets: React.FC<Props> = ({}) => {
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
   const gameIdContainer = GameId.useContainer()
@@ -55,7 +55,7 @@ export const TopBets: React.FC<Props> = ({}) => {
 
   return (
     <div
-      className="top-bets w-52 h-auto overflow-y-auto overflow-x-hidden"
+      className="funded-bets w-52 h-auto overflow-y-auto overflow-x-hidden"
       style={{ direction: "rtl" }}
     >
       <div className="flex w-full justify-between px-0.5 py-1 bg-gradient-to-r from-secondary-dark via-secondary-dark to-transparent">
