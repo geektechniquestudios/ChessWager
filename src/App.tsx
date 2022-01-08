@@ -11,7 +11,7 @@ import { Auth } from "./components/containers/Auth"
 import { BiArrowFromRight } from "react-icons/bi"
 import { GameId } from "./components/containers/GameId"
 import firebase from "firebase/compat/app"
-import { TopBets } from "./components/top-bets/TopBets"
+import { FundedBets } from "./components/funded-bets/FundedBets"
 
 
 export const App: React.FC = () => {
@@ -106,7 +106,7 @@ export const App: React.FC = () => {
             )}
             <div className="flex justify-center align-middle flex-col w-auto">
               <div className="flex">
-                <TopBets />
+                <FundedBets />
                 <div className="flex justify-center w-full">
                   <ChessGame setShowChat={setShowChat} width={width} />
                 </div>

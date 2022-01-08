@@ -4,7 +4,7 @@ import { GameId } from "../containers/GameId"
 import { FirebaseError } from "@firebase/util"
 import { MiniBet } from "./MiniBet"
 import { Price } from "../containers/Price"
-import "../../style/topbets.scss"
+import "../../style/fundedbets.scss"
 
 const firestore = firebase.firestore()
 
@@ -32,7 +32,7 @@ interface Lobby {
   user2DisplayName: string
 }
 
-export const TopBets: React.FC<Props> = ({}) => {
+export const FundedBets: React.FC<Props> = ({}) => {
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
   const gameIdContainer = GameId.useContainer()
