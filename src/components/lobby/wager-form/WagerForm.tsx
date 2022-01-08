@@ -30,9 +30,9 @@ export const WagerForm: React.FC = () => {
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // if (betAmount === 0 || multiplier === 0) {
-    //   return
-    // }
+    if (betAmount === 0) {
+      return
+    }
 
     if (!isWalletConnected) {
       connectWallet()
@@ -84,7 +84,6 @@ export const WagerForm: React.FC = () => {
               setLocalUsdAmount={setLocalUsdAmount}
             />
             <Multiplier
-              multiplier={multiplier}
               setMultiplier={setMultiplier}
               sliderVal={sliderVal}
               setSliderVal={setSliderVal}

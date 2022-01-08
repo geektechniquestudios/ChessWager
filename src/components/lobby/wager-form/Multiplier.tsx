@@ -3,14 +3,12 @@ import RangeSlider from "react-bootstrap-range-slider"
 import CurrencyInput from "react-currency-input-field"
 
 interface Props {
-  multiplier: number
   setMultiplier: React.Dispatch<React.SetStateAction<number>>
   sliderVal: number
   setSliderVal: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const Multiplier: React.FC<Props> = ({
-  multiplier,
   setMultiplier,
   sliderVal,
   setSliderVal,
