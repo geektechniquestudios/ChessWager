@@ -1,4 +1,4 @@
-import firebase from "firebase/compat/app"
+import firebase from "firebase/compat"
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { createContainer } from "unstated-next"

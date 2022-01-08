@@ -1,3 +1,4 @@
+import { useState } from "react"
 import RangeSlider from "react-bootstrap-range-slider"
 import CurrencyInput from "react-currency-input-field"
 
@@ -14,11 +15,25 @@ export const Multiplier: React.FC<Props> = ({
   sliderVal,
   setSliderVal,
 }) => {
+  const [localMultiplier, setLocalMultiplier] = useState("1.00")
+
   const calcMultiplier = (sliderVal: number) => {
     if (sliderVal <= 0) {
-      setMultiplier(1.0 + Number(sliderVal)) // @todo are these number casts redundant? don't remember why I did this
+      setMultiplier(Number((1.0 + Number(sliderVal)).toFixed(2)))
+      setLocalMultiplier((1.0 + Number(sliderVal)).toFixed(2).toString())
     } else {
-      setMultiplier(1 / (1 - Number(sliderVal)))
+      setMultiplier(Number((1 / (1 - Number(sliderVal))).toFixed(2)))
+      setLocalMultiplier((1 / (1 - Number(sliderVal))).toFixed(2).toString())
+    }
+  }
+
+  const calcSlider = (multiplier: number) => {
+    if (multiplier <= 1) {
+      setSliderVal(Number((multiplier - 1).toFixed(2)))
+    } else if (multiplier > 1) {
+      setSliderVal(
+        (Number(multiplier.toFixed(2)) - 1) / Number(multiplier.toFixed(2)),
+      )
     }
   }
 
@@ -27,7 +42,26 @@ export const Multiplier: React.FC<Props> = ({
     setSliderVal(newSliderVal)
     calcMultiplier(newSliderVal)
   }
-  
+
+  const blur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    // remove the ","
+    let tempValue = e.target.value.replace(/,/g, "") ?? 1
+    if (tempValue === "") {
+      tempValue = "1.00"
+    }
+    let newValue = Number(Number(tempValue).toFixed(2))
+
+    if (newValue <= 0) {
+      newValue = 0.01
+    } else if (newValue > 100) {
+      newValue = 100.0
+    }
+
+    setLocalMultiplier(newValue.toString())
+    setMultiplier(newValue)
+    calcSlider(newValue)
+  }
+
   return (
     <div className="flex p-2 border-2">
       <div className="grid place-content-center">
@@ -45,15 +79,18 @@ export const Multiplier: React.FC<Props> = ({
           tooltip="off"
         />
         <p className="flex justify-center">
-          {/* <input type="text">{Number(multiplier).toFixed(2)}</input> */}
           <CurrencyInput
-            value={multiplier.toFixed(2)}
+            value={localMultiplier}
             onValueChange={(value) => {
-              setMultiplier(Number(value))
+              setLocalMultiplier(value!)
             }}
-            className="w-10 p-1 "
+            className="w-14 p-1 text-center"
             allowNegativeValue={false}
             fixedDecimalLength={2}
+            onBlur={blur}
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.currentTarget.blur()
+            }}
           />
         </p>
       </div>

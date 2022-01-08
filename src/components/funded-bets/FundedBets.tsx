@@ -3,7 +3,6 @@ import { useCollectionData } from "react-firebase-hooks/firestore"
 import { GameId } from "../containers/GameId"
 import { FirebaseError } from "@firebase/util"
 import { MiniBet } from "./MiniBet"
-import { useState } from "react"
 import { Price } from "../containers/Price"
 import "../../style/fundedbets.scss"
 
@@ -55,7 +54,7 @@ export const FundedBets: React.FC<Props> = ({}) => {
 
   return (
     <div
-      className="funded-bets w-52 h-auto overflow-y-auto overflow-x-hidden"
+      className="top-bets w-52 h-auto "
       style={{ direction: "rtl" }}
     >
       <div className="flex w-full justify-between px-0.5 py-1 bg-gradient-to-r from-secondary-dark via-secondary-dark to-transparent">
@@ -66,24 +65,28 @@ export const FundedBets: React.FC<Props> = ({}) => {
         >{`$${amountAtStake} at Stake`}</div>
       </div>
       <div className="h-0.5 bg-gradient-to-r from-secondary-dark to-transparent" />
-      <div style={{ direction: "ltr" }}>
-        {lobby &&
-          lobby
-            .sort((a, b) => b.amount - a.amount)
-            //.slice(0, 10)
-            // .filter((bet) => bet.status === "funded")
-            .map((bet) => (
-              <MiniBet
-                key={bet.id}
-                amount={bet.amount}
-                betSide={bet.betSide}
-                multiplier={bet.multiplier}
-                user1PhotoURL={bet.user1PhotoURL}
-                user2PhotoURL={bet.user2PhotoURL}
-                user1DisplayName={bet.user1DisplayName}
-                user2DisplayName={bet.user2DisplayName}
-              />
-            ))}
+      <div className="h-auto">
+        <div style={{ direction: "rtl" }} className="overflow-y-scroll">
+          <div className="" style={{ direction: "ltr" }}>
+            {lobby &&
+              lobby
+                .sort((a, b) => b.amount - a.amount)
+                //.slice(0, 10)
+                // .filter((bet) => bet.status === "funded")
+                .map((bet) => (
+                  <MiniBet
+                    key={bet.id}
+                    amount={bet.amount}
+                    betSide={bet.betSide}
+                    multiplier={bet.multiplier}
+                    user1PhotoURL={bet.user1PhotoURL}
+                    user2PhotoURL={bet.user2PhotoURL}
+                    user1DisplayName={bet.user1DisplayName}
+                    user2DisplayName={bet.user2DisplayName}
+                  />
+                ))}
+          </div>
+        </div>
       </div>
     </div>
   )
