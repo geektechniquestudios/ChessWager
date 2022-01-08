@@ -29,12 +29,9 @@ $tertiary: #D97706;
 .chat-window::-webkit-scrollbar {
   @apply w-1;
 }
-
 .chat-window::-webkit-scrollbar-track {
   @apply bg-secondary;
 }
-
-
 .chat-window::-webkit-scrollbar-thumb {
   @apply bg-tertiary;
 }
