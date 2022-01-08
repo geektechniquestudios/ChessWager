@@ -2,17 +2,29 @@ import { Price } from "../../containers/Price"
 
 interface Props {
   setBetAmount: React.Dispatch<React.SetStateAction<number>>
+  setLocalAvaxAmount: React.Dispatch<React.SetStateAction<string>>
+  setLocalUsdAmount: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const QuickBet: React.FC<Props> = ({ setBetAmount }) => {
+export const QuickBet: React.FC<Props> = ({
+  setBetAmount,
+  setLocalUsdAmount,
+  setLocalAvaxAmount,
+}) => {
   const { avaxPrice } = Price.useContainer()
+
+  const updateBetValues = (usdAmount: number) => {
+    setBetAmount(usdAmount / avaxPrice)
+    setLocalAvaxAmount((usdAmount / avaxPrice).toFixed(6).toString())
+    setLocalUsdAmount(usdAmount.toFixed(2).toString())
+  }
   return (
     <div className="grid grid-cols-3 grid-rows-2 w-full border-2">
       <button
         type="button"
         className="border m-1 rounded-sm p-1"
         onClick={() => {
-          setBetAmount(20 / avaxPrice)
+          updateBetValues(20)
         }}
       >
         $20
@@ -21,7 +33,7 @@ export const QuickBet: React.FC<Props> = ({ setBetAmount }) => {
         type="button"
         className="border m-1 rounded-sm p-1"
         onClick={() => {
-          setBetAmount(50 / avaxPrice)
+          updateBetValues(50)
         }}
       >
         $50
@@ -30,7 +42,7 @@ export const QuickBet: React.FC<Props> = ({ setBetAmount }) => {
         type="button"
         className="border m-1 rounded-sm p-1"
         onClick={() => {
-          setBetAmount(100 / avaxPrice)
+          updateBetValues(100)
         }}
       >
         $100
@@ -39,7 +51,7 @@ export const QuickBet: React.FC<Props> = ({ setBetAmount }) => {
         type="button"
         className="border m-1 rounded-sm p-1"
         onClick={() => {
-          setBetAmount(500 / avaxPrice)
+          updateBetValues(500)
         }}
       >
         $500
@@ -48,7 +60,7 @@ export const QuickBet: React.FC<Props> = ({ setBetAmount }) => {
         type="button"
         className="border m-1 rounded-sm p-1"
         onClick={() => {
-          setBetAmount(1000 / avaxPrice)
+          updateBetValues(1000)
         }}
       >
         $1k
@@ -57,7 +69,7 @@ export const QuickBet: React.FC<Props> = ({ setBetAmount }) => {
         type="button"
         className="border m-1 rounded-sm p-1"
         onClick={() => {
-          setBetAmount(5000 / avaxPrice)
+          updateBetValues(5000)
         }}
       >
         $5k

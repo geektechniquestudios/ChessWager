@@ -5,11 +5,22 @@ import { Price } from "../../containers/Price"
 interface Props {
   betAmount: number
   setBetAmount: React.Dispatch<React.SetStateAction<number>>
+  localAvaxAmount: string
+  setLocalAvaxAmount: React.Dispatch<React.SetStateAction<string>>
+  localUsdAmount: string
+  setLocalUsdAmount: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const BetAmount: React.FC<Props> = ({ betAmount, setBetAmount }) => {
-  const { avaxPrice } = Price.useContainer() 
-  const [localAvaxAmount, setLocalAvaxAmount] = useState(0)
+export const BetAmount: React.FC<Props> = ({
+  betAmount,
+  setBetAmount,
+  localAvaxAmount,
+  setLocalAvaxAmount,
+  localUsdAmount,
+  setLocalUsdAmount,
+}) => {
+  const { avaxPrice } = Price.useContainer()
+
   return (
     <div className="flex border-2">
       <label className="grid place-content-center m-2">Your Bet</label>
@@ -20,14 +31,21 @@ export const BetAmount: React.FC<Props> = ({ betAmount, setBetAmount }) => {
           <CurrencyInput
             className="p-1"
             autoComplete="off"
-            value={(betAmount * avaxPrice).toFixed(2)}
-            onValueChange={(value) => {
-              setBetAmount(Number(value) / avaxPrice)
-            }}
-            // decimalsLimit={2}
             placeholder="Chooes your bet"
-            fixedDecimalLength={2}
+            defaultValue={""}
+            value={localUsdAmount}
+            onValueChange={(value) => {
+              setLocalUsdAmount(value!)
+            }}
             allowNegativeValue={false}
+            onBlur={(e) => {
+              const newValue = Number(e.target.value.replace(/,/g, "") ?? 0)
+              setBetAmount(newValue / avaxPrice)
+              setLocalAvaxAmount((newValue / avaxPrice).toFixed(6).toString())
+            }}
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.currentTarget.blur()
+            }}
           />
         </div>
         <div className="flex justify-between my-1">
@@ -35,17 +53,22 @@ export const BetAmount: React.FC<Props> = ({ betAmount, setBetAmount }) => {
           <CurrencyInput
             className="p-1"
             autoComplete="off"
-            name="amount"
             placeholder="Chooes your bet"
-            defaultValue={0.01} //@todo display usd equivalent here
-            // decimalsLimit={6}
-            value={betAmount}
-            // onValueChange={(value) => setBetAmount(Number(value ?? 0))}
+            defaultValue={""}
+            decimalsLimit={6}
+            value={localAvaxAmount}
+            onValueChange={(value) => {
+              setLocalAvaxAmount(value!)
+            }}
             allowNegativeValue={false}
             onBlur={(e) => {
-              setBetAmount(Number(e.target.value ?? 0))
+              const newValue = Number(e.target.value.replace(/,/g, "") ?? 0)
+              setBetAmount(newValue)
+              setLocalUsdAmount((newValue * avaxPrice).toFixed(2).toString())
             }}
-            // suffix="Ξ"
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.currentTarget.blur()
+            }}
           />
         </div>
       </div>
