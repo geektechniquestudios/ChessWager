@@ -7,6 +7,15 @@ import { Auth } from "./components/containers/Auth"
 import { Firestore } from "./components/containers/Firestore"
 import { GameId } from "./components/containers/GameId"
 import { Price } from "./components/containers/Price"
+import { ThemeProvider } from "@mui/system"
+import { createTheme } from "@mui/material/styles"
+import { teal } from "@mui/material/colors"
+
+const theme = createTheme({
+  palette: {
+    primary: teal 
+  }
+})
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,7 +23,9 @@ ReactDOM.render(
       <Auth.Provider>
         <GameId.Provider>
           <Price.Provider>
+            <ThemeProvider theme={theme}>
             <App />
+            </ThemeProvider>
           </Price.Provider>
         </GameId.Provider>
       </Auth.Provider>
