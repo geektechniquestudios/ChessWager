@@ -1,6 +1,7 @@
 import { useState } from "react"
 import RangeSlider from "react-bootstrap-range-slider"
 import CurrencyInput from "react-currency-input-field"
+import Slider from "@mui/material/Slider"
 
 interface Props {
   setMultiplier: React.Dispatch<React.SetStateAction<number>>
@@ -35,11 +36,14 @@ export const Multiplier: React.FC<Props> = ({
     }
   }
 
-  const updateSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newSliderVal: number = Number(e.target.value)
+  const updateSlider = (
+    e: any,
+  ) => {
+    const newSliderVal: number = Number(e.target.value ?? 0)
     setSliderVal(newSliderVal)
     calcMultiplier(newSliderVal)
   }
+
 
   const blur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     // remove the ","
@@ -67,14 +71,14 @@ export const Multiplier: React.FC<Props> = ({
       </div>
       <div className="border-1 mx-2" />
       <div className="grid place-content-center">
-        <RangeSlider
+        <Slider
           className="range"
           value={sliderVal}
           onChange={updateSlider}
           min={-0.99}
           max={0.99}
           step={0.01}
-          tooltip="off"
+          size="small"
         />
         <p className="flex justify-center">
           <CurrencyInput

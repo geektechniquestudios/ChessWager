@@ -76,7 +76,6 @@ export const WagerForm: React.FC = () => {
               setLocalUsdAmount={setLocalUsdAmount}
             />
             <BetAmount
-              betAmount={betAmount}
               setBetAmount={setBetAmount}
               localAvaxAmount={localAvaxAmount}
               setLocalAvaxAmount={setLocalAvaxAmount}

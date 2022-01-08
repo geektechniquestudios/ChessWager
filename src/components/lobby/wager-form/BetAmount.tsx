@@ -1,9 +1,7 @@
-import { useState } from "react"
 import CurrencyInput from "react-currency-input-field"
 import { Price } from "../../containers/Price"
 
 interface Props {
-  betAmount: number
   setBetAmount: React.Dispatch<React.SetStateAction<number>>
   localAvaxAmount: string
   setLocalAvaxAmount: React.Dispatch<React.SetStateAction<string>>
@@ -12,7 +10,6 @@ interface Props {
 }
 
 export const BetAmount: React.FC<Props> = ({
-  betAmount,
   setBetAmount,
   localAvaxAmount,
   setLocalAvaxAmount,
