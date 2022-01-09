@@ -54,7 +54,7 @@ export const FundedBets: React.FC<Props> = ({}) => {
 
   return (
     <div
-      className="top-bets w-52 h-auto "
+      className=" w-52 h-auto "
       style={{ direction: "rtl" }}
     >
       <div className="flex w-full justify-between px-0.5 py-1 bg-gradient-to-r from-secondary-dark via-secondary-dark to-transparent">
@@ -66,7 +66,7 @@ export const FundedBets: React.FC<Props> = ({}) => {
       </div>
       <div className="h-0.5 bg-gradient-to-r from-secondary-dark to-transparent" />
       <div className="h-auto">
-        <div style={{ direction: "rtl" }} className="overflow-y-scroll">
+        <div style={{ direction: "rtl" }} className="overflow-y-scroll funded-bets">
           <div className="" style={{ direction: "ltr" }}>
             {lobby &&
               lobby
