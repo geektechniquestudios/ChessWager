@@ -1,4 +1,5 @@
 import { Price } from "../../containers/Price"
+import Button from "@mui/material/Button"
 
 interface Props {
   setBetAmount: React.Dispatch<React.SetStateAction<number>>
@@ -20,60 +21,60 @@ export const QuickBet: React.FC<Props> = ({
   }
   return (
     <div className="grid grid-cols-3 grid-rows-2 w-full border-2">
-      <button
+      <Button
         type="button"
-        className="border m-1 rounded-sm p-1"
+        variant="text"
         onClick={() => {
           updateBetValues(20)
         }}
       >
         $20
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
-        className="border m-1 rounded-sm p-1"
+        variant="text"
         onClick={() => {
           updateBetValues(50)
         }}
       >
         $50
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
-        className="border m-1 rounded-sm p-1"
+        variant="text"
         onClick={() => {
           updateBetValues(100)
         }}
       >
         $100
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
-        className="border m-1 rounded-sm p-1"
+        variant="text"
         onClick={() => {
           updateBetValues(500)
         }}
       >
         $500
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
-        className="border m-1 rounded-sm p-1"
+        variant="text"
         onClick={() => {
           updateBetValues(1000)
         }}
       >
         $1k
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
-        className="border m-1 rounded-sm p-1"
+        variant="text"
         onClick={() => {
           updateBetValues(5000)
         }}
       >
         $5k
-      </button>
+      </Button>
     </div>
   )
 }

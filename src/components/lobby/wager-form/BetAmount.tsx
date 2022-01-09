@@ -28,7 +28,7 @@ export const BetAmount: React.FC<Props> = ({
           <CurrencyInput
             className="p-1"
             autoComplete="off"
-            placeholder="Chooes your bet"
+            placeholder="Choose your bet"
             defaultValue={""}
             value={localUsdAmount}
             onValueChange={(value) => {
@@ -50,7 +50,7 @@ export const BetAmount: React.FC<Props> = ({
           <CurrencyInput
             className="p-1"
             autoComplete="off"
-            placeholder="Chooes your bet"
+            placeholder="Choose your bet"
             defaultValue={""}
             decimalsLimit={6}
             value={localAvaxAmount}
