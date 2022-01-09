@@ -113,8 +113,14 @@ export const GlobalChat: React.FC<Props> = ({
                 e.key === "Enter" && sendMessage(e)
               }}
             />
-            <div className="w-full flex justify-end mt-2">
-              <Button type="submit" variant="outlined">Chat</Button>
+            <div className="w-full flex justify-end p-2">
+              <button
+                className="border-1 px-2 py-1 rounded-sm hover:bg-secondary-dark dark:bg-secondary-dark color-shift font-bold active"
+                onClick={() => {}}
+                type="submit"
+              >
+                Chat
+              </button>
             </div>
           </form>
         </fieldset>

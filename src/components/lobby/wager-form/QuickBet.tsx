@@ -5,12 +5,14 @@ interface Props {
   setBetAmount: React.Dispatch<React.SetStateAction<number>>
   setLocalAvaxAmount: React.Dispatch<React.SetStateAction<string>>
   setLocalUsdAmount: React.Dispatch<React.SetStateAction<string>>
+  setIsAmountEmpty: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const QuickBet: React.FC<Props> = ({
   setBetAmount,
   setLocalUsdAmount,
   setLocalAvaxAmount,
+  setIsAmountEmpty,
 }) => {
   const { avaxPrice } = Price.useContainer()
 
@@ -18,6 +20,7 @@ export const QuickBet: React.FC<Props> = ({
     setBetAmount(usdAmount / avaxPrice)
     setLocalAvaxAmount((usdAmount / avaxPrice).toFixed(6).toString())
     setLocalUsdAmount(usdAmount.toFixed(2).toString())
+    setIsAmountEmpty(false)
   }
   return (
     <div className="grid grid-cols-3 grid-rows-2 w-full border-2">

@@ -1,7 +1,4 @@
-
-
 .bet {
-  
   // display: grid;
   // gap: 1rem;
   // grid-template-columns: repeat(6, minmax(10em, 1fr));
@@ -20,7 +17,6 @@
   /* bottom: 0; */
 }
 
-
 .ready-bet {
   // background-color: aquamarine;
 }
@@ -37,5 +33,12 @@
   @apply border-2 
   border-primary
   dark:border-primary-dark;
+}
+
+.place-bet:active {
+  transform: translate(0px, 0.1rem);
+  transform: scale(0.98);
+  
+  // @apply transform scale-95 translate-y-0.5;
 }
 

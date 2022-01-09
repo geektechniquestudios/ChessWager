@@ -26,16 +26,22 @@ export const WagerForm: React.FC = () => {
 
   const [localAvaxAmount, setLocalAvaxAmount] = useState("")
   const [localUsdAmount, setLocalUsdAmount] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [isAmountEmpty, setIsAmountEmpty] = useState(false)
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsLoading(true)
 
     if (betAmount === 0) {
+      setIsAmountEmpty(true)
+      setIsLoading(false)
       return
     }
 
     if (!isWalletConnected) {
       connectWallet()
+      setIsLoading(false)
       return
     }
 
@@ -54,8 +60,16 @@ export const WagerForm: React.FC = () => {
         user1PhotoURL: photoURL,
         user1DisplayName: displayName ?? "no name",
         contractAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
-      }).catch(console.error)
+      })
+        .then(() => {
+          setIsLoading(false)
+        })
+        .catch((err) => {
+          console.log(err)
+          setIsLoading(false)
+        })
     }
+    // setIsLoading(false)
   }
 
   return (
@@ -74,6 +88,7 @@ export const WagerForm: React.FC = () => {
               setBetAmount={setBetAmount}
               setLocalAvaxAmount={setLocalAvaxAmount}
               setLocalUsdAmount={setLocalUsdAmount}
+              setIsAmountEmpty={setIsAmountEmpty}
             />
             <BetAmount
               setBetAmount={setBetAmount}
@@ -81,6 +96,8 @@ export const WagerForm: React.FC = () => {
               setLocalAvaxAmount={setLocalAvaxAmount}
               localUsdAmount={localUsdAmount}
               setLocalUsdAmount={setLocalUsdAmount}
+              isAmountEmpty={isAmountEmpty}
+              setIsAmountEmpty={setIsAmountEmpty}
             />
             <Multiplier
               setMultiplier={setMultiplier}
@@ -90,7 +107,7 @@ export const WagerForm: React.FC = () => {
           </div>
           <div className="flex flex-row justify-between mt-4">
             <Total betAmount={betAmount} multiplier={multiplier} />
-            <PlaceBet />
+            <PlaceBet isLoading={isLoading} />
           </div>
         </form>
       </fieldset>
