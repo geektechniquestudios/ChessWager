@@ -5,6 +5,7 @@ import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import "firebase/compat/analytics"
 import TextareaAutosize from "react-textarea-autosize"
+import Button from "@mui/material/Button"
 
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useRef } from "react"
@@ -113,7 +114,7 @@ export const GlobalChat: React.FC<Props> = ({
               }}
             />
             <div className="w-full flex justify-end mt-2">
-              <button type="submit">🕊️</button>
+              <Button type="submit" variant="outlined">Chat</Button>
             </div>
           </form>
         </fieldset>
