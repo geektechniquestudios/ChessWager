@@ -10,6 +10,7 @@ import { Multiplier } from "./Multiplier"
 import { Total } from "./Total"
 import { PlaceBet } from "./PlaceBet"
 import { QuickBet } from "./QuickBet"
+import { TheirBet } from "./TheirBet"
 require("dotenv").config({ path: "../../../../.env" })
 
 export const WagerForm: React.FC = () => {
@@ -98,6 +99,10 @@ export const WagerForm: React.FC = () => {
               setLocalUsdAmount={setLocalUsdAmount}
               isAmountEmpty={isAmountEmpty}
               setIsAmountEmpty={setIsAmountEmpty}
+            />
+            <TheirBet
+              multiplier={multiplier}
+              betAmount={betAmount}
             />
             <Multiplier
               setMultiplier={setMultiplier}
