@@ -26,7 +26,7 @@ export const BetAmount: React.FC<Props> = ({
   const borderWarning = isAmountEmpty ? "border-negative" : ""
 
   return (
-    <div className={`flex border-2 px-1 ${borderWarning} color-shift`}>
+    <div className={`flex border-1 px-1 ${borderWarning} color-shift`}>
       <label className="grid place-content-center m-2">Your Bet</label>
       <div className="border-1 m-2" />
       <div>

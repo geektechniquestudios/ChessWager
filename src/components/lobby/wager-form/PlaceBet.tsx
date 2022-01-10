@@ -14,6 +14,7 @@ export const PlaceBet: React.FC<Props> = ({ isLoading }) => {
         // style={{ textTransform: "none", fontWeight: "bold" }}
         // className="font-bold"
         type="submit"
+        disabled={isLoading}
         // variant="outlined"
         // size="small"
       >

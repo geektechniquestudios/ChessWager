@@ -48,9 +48,8 @@ export const BettingLobby: React.FC = () => {
 
   return (
     <div className="lobby flex border-t-2 ">
-      <aside className="flex border-2 h-full">
+      <aside className="flex border-1 h-full bg-stone-100 blur-lg shadow-xl">
         {/* @todo! add column names allowing sorting */}
-
         <WagerForm />
       </aside>
       <main className="w-full flex-row ">

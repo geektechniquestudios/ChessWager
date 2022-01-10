@@ -54,7 +54,7 @@ export const FundedBets: React.FC<Props> = ({}) => {
 
   return (
     <div
-      className=" w-52 h-auto "
+      className="w-52 overflow-y-hidden flex flex-col overflow-x-visible "
       style={{ direction: "rtl" }}
     >
       <div className="flex w-full justify-between px-0.5 py-1 bg-gradient-to-r from-secondary-dark via-secondary-dark to-transparent">
@@ -65,9 +65,15 @@ export const FundedBets: React.FC<Props> = ({}) => {
         >{`$${amountAtStake} at Stake`}</div>
       </div>
       <div className="h-0.5 bg-gradient-to-r from-secondary-dark to-transparent" />
-      <div className="h-auto">
-        <div style={{ direction: "rtl" }} className="overflow-y-scroll funded-bets">
-          <div className="" style={{ direction: "ltr" }}>
+      <div className="overflow-y-hidden overflow-x-visible flex flex-col h-full">
+        <div
+          style={{ direction: "rtl" }}
+          className="funded-bets overflow-y-auto overflow-x-visible h-full flex flex-col"
+        >
+          <div
+            className="overflow-x-visible h-0 flex flex-col"
+            style={{ direction: "ltr" }}
+          >
             {lobby &&
               lobby
                 .sort((a, b) => b.amount - a.amount)

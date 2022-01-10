@@ -13,7 +13,6 @@ import { GameId } from "./components/containers/GameId"
 import firebase from "firebase/compat/app"
 import { FundedBets } from "./components/funded-bets/FundedBets"
 
-
 export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
   const [showChat, setShowChat] = useState(
@@ -43,10 +42,6 @@ export const App: React.FC = () => {
       setShowChat(true)
     }
   }
-  // useEffect(() => {
-  //   window.addEventListener("resize", updateDimensions)
-  //   return () => window.removeEventListener("resize", updateDimensions)
-  // }, [])
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: any) => {
@@ -72,7 +67,6 @@ export const App: React.FC = () => {
   }, [auth])
 
   const dark = isDarkOn ? "dark" : ""
-  const gameIdContainer = GameId.useContainer()
 
   return (
     <div className={`${dark} h-full w-full overflow-y-hidden grid`}>
@@ -85,16 +79,8 @@ export const App: React.FC = () => {
             {!showChat && (
               <button
                 onClick={() => {
-                  // setAutoHideChat(false)
-                  // setAutoShowChat(false)
                   setShowChat(true)
                   localStorage.setItem("showChat", "true")
-                  // if window width is less than 800px, set autoShowChat to false, autohide to true
-                  // if (width < 800) {
-                  // setAutoHideChat(false)
-                  // setAutoShowChat(false)
-                  // }
-                  // if window width is greater than 800px, set autoShowChat to true, autohide to false
                 }}
                 className="m-3 hover:bg-secondary-dark rounded-sm color-shift absolute top-12 right-0"
               >
@@ -104,8 +90,8 @@ export const App: React.FC = () => {
                 />
               </button>
             )}
-            <div className="flex justify-center align-middle flex-col w-auto">
-              <div className="flex">
+            <div className="flex flex-col w-auto">
+              <div className="flex overflow-y-hidden overflow-x-visible">
                 <FundedBets />
                 <div className="flex justify-center w-full">
                   <ChessGame setShowChat={setShowChat} width={width} />

@@ -23,7 +23,7 @@ export const QuickBet: React.FC<Props> = ({
     setIsAmountEmpty(false)
   }
   return (
-    <div className="grid grid-cols-3 grid-rows-2 w-full border-2">
+    <div className="grid grid-cols-3 grid-rows-2 w-full border-1">
       <Button
         type="button"
         variant="text"

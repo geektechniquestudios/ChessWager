@@ -20,17 +20,17 @@ export const Total: React.FC<Props> = ({ betAmount, multiplier }) => {
   }
 
   return (
-    <div className="border-2 flex">
+    <div className="border-1 flex">
       <p className="grid place-content-center m-2 border-r-2 pr-2">Pot Size:</p>
       <div className="p-1.5">
         <div className="flex justify-between my-1">
-          <div className="flex">
+          <div className="flex justify-end w-full">
             <p className="mr-1">{formatUsd(usdTotal)}</p>{" "}
             <p className="font-bold">USD</p>
           </div>
         </div>
         <div className="flex justify-between my-1">
-          <div className="flex">
+          <div className="flex justify-end w-full">
             <p className="mr-1">{formatAvax(avaxTotal)}</p>{" "}
             <p className="font-bold">AVAX</p>
           </div>

@@ -16,8 +16,8 @@ module.exports = {
         dark: "#A8A29E",
       },
       tertiary: {
-        DEFAULT: "#D97706",
-        dark: "#FBBF24",
+        DEFAULT: "#2dd4bf",
+        dark: "#134e4a",
       },
       positive: {
         DEFAULT: "#16A34A",
@@ -28,13 +28,13 @@ module.exports = {
         dark: "#F87171",
       },
       transparent: "transparent",
-      current: "currentColor",
       black: colors.black,
       white: colors.white,
-      warmGray: colors.warmGray,
+      stone: colors.warmGray,
       rose: colors.rose,
       amber: colors.amber,
       green: colors.green,
+      teal: colors.teal,
     },
   },
   variants: {

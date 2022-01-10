@@ -105,7 +105,7 @@ export const WagerForm: React.FC = () => {
               setSliderVal={setSliderVal}
             />
           </div>
-          <div className="flex flex-row justify-between mt-4">
+          <div className="flex flex-row justify-between mt-4 gap-2">
             <Total betAmount={betAmount} multiplier={multiplier} />
             <PlaceBet isLoading={isLoading} />
           </div>
