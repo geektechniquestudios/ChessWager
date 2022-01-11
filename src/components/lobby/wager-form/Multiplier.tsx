@@ -1,5 +1,4 @@
 import { useState } from "react"
-import RangeSlider from "react-bootstrap-range-slider"
 import CurrencyInput from "react-currency-input-field"
 import Slider from "@mui/material/Slider"
 

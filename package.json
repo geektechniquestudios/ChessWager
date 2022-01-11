@@ -27,8 +27,6 @@
     "hardhat": "^2.8.0",
     "rc-slider": "^9.7.2",
     "react": "^17.0.2",
-    "react-bootstrap": "^1.6.4",
-    "react-bootstrap-range-slider": "^3.0.2",
     "react-chessground": "^1.5.0",
     "react-countdown": "^2.3.2",
     "react-currency-input-field": "^3.5.1",
