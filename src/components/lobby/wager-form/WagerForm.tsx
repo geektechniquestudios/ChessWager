@@ -70,7 +70,6 @@ export const WagerForm: React.FC = () => {
           setIsLoading(false)
         })
     }
-    // setIsLoading(false)
   }
 
   return (
@@ -100,10 +99,7 @@ export const WagerForm: React.FC = () => {
               isAmountEmpty={isAmountEmpty}
               setIsAmountEmpty={setIsAmountEmpty}
             />
-            <TheirBet
-              multiplier={multiplier}
-              betAmount={betAmount}
-            />
+            <TheirBet multiplier={multiplier} betAmount={betAmount} />
             <Multiplier
               setMultiplier={setMultiplier}
               sliderVal={sliderVal}
