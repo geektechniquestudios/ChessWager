@@ -1,6 +1,7 @@
 import CurrencyInput from "react-currency-input-field"
 import { Price } from "../../containers/Price"
 import "../../../style/index.scss"
+import { useEffect } from "react"
 
 interface Props {
   setBetAmount: React.Dispatch<React.SetStateAction<number>>

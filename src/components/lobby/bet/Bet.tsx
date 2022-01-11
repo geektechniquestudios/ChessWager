@@ -4,19 +4,20 @@ import firebase from "firebase/compat"
 import "../../../style/lobby.scss"
 import "firebase/compat/functions"
 import { Auth } from "../../containers/Auth"
-import { MetamaskPrompt } from "../MetamaskPrompt"
 import { BigNumber, ethers } from "ethers"
-import { GiChessRook, GiCoins } from "react-icons/gi"
-import { RiCloseFill } from "react-icons/ri"
-
-import { FaRegHandshake } from "react-icons/fa"
-import { MdThumbDown, MdThumbUp } from "react-icons/md"
-import {
-  BallSpinner,
-} from "react-spinners-kit"
-import { Price } from "../../containers/Price"
-
-const firestore = firebase.firestore()
+import { DeleteBetButton } from "./DeleteBetButton"
+import { User1Metamask } from "./User1Metamask"
+import { User2Metamask } from "./User2Metamask"
+import { LeaveButton } from "./LeaveButton"
+import { ApproveButton } from "./ApproveButton"
+import { KickButton } from "./KickButton"
+import { User1FollowThrough } from "./User1FollowThrough"
+import { User1Image } from "./User1Image"
+import { User1BetAmount } from "./User1BetAmount"
+import { CenterOfBet } from "./CenterOfBet"
+import { User2BetAmount } from "./User2BetAmount"
+import { User2Image } from "./User2Image"
+import { User2FollowThrough } from "./User2FollowThrough"
 
 interface Props {
   className: string
@@ -74,9 +75,6 @@ export const Bet: React.FC<Props> = ({
       .add(bigAmount),
   )
 
-  const isUser1 = auth.currentUser?.uid === user1Id
-  const isUser2 = auth.currentUser?.uid === user2Id
-
   let name: string
   if (user) {
     const { displayName }: firebase.User = auth.currentUser!
@@ -84,61 +82,16 @@ export const Bet: React.FC<Props> = ({
   }
 
   const accept = () => {
-    const user2Metamask = walletAddress
-
     const acceptBet = firebase.functions().httpsCallable("acceptBet")
     acceptBet({
       betId: id,
       photoURL: auth.currentUser?.photoURL,
       hostUid: user1Id,
-      user2Metamask: user2Metamask,
+      user2Metamask: walletAddress,
       user2DisplayName: name,
-    })
-      // .then(res => String(res.data))
-      // .then(alert)
-      .catch(console.error)
-  }
-
-  const cancel = () => {
-    const cancelBet = firebase.functions().httpsCallable("cancelBet")
-    cancelBet({
-      betId: id,
     }).catch(console.error)
   }
 
-  const approve = () => {
-    const approveBet = firebase.functions().httpsCallable("approveBet")
-    approveBet({
-      betId: id,
-    }).catch(console.error)
-  }
-
-  const deleteCurrentBet = () => {
-    const deleteBet = firebase.functions().httpsCallable("deleteBet")
-    deleteBet({
-      betId: id,
-    }).catch(console.error)
-  }
-
-  const kick = () => {
-    const kickUser = firebase.functions().httpsCallable("kickUser")
-    kickUser({
-      betId: id,
-    }).catch(console.error)
-  }
-
-  const block = () => {
-    const userCollectionRef = firestore.collection("users")
-    const userDocRef = userCollectionRef.doc(auth.currentUser?.uid)
-    userDocRef.set(
-      {
-        blocked: firebase.firestore.FieldValue.arrayUnion(user2Id),
-      },
-      { merge: true },
-    )
-
-    kick()
-  }
   const isEnabled =
     user &&
     isWalletConnected &&
@@ -146,226 +99,91 @@ export const Bet: React.FC<Props> = ({
     user1Id !== auth.currentUser.uid &&
     status === "ready"
 
-  const { avaxPrice } = Price.useContainer()
-
   const pointerEvents = isEnabled ? "" : "cursor-default"
 
   return (
-    <div className="w-full flex justify-center align-middle border">
+    <div className="w-full flex justify-center align-middle border overflow-x-auto">
+      <User1Metamask
+        betId={id}
+        amount={amount}
+        betSide={betSide}
+        multiplier={multiplier}
+        user1Id={user1Id}
+        user1Metamask={user1Metamask}
+        user2Id={user2Id}
+        user2Metamask={user2Metamask}
+        gameId={gameId}
+        timestamp={timestamp}
+        contractAddress={contractAddress}
+        status={status}
+        hasUser1Paid={hasUser1Paid}
+      />
+
       <div className=" flex justify-end ">
-        {user &&
-          auth.currentUser &&
-          user1Id === auth.currentUser.uid &&
-          status !== "approved" && (
-            <div className="flex">
-              <button
-                title="Delete"
-                onClick={deleteCurrentBet}
-                className="rounded-sm bg-negative h-3.5 w-3.5 text-white transform hover:scale-110 ease duration-100 border border-black place-content-center grid mx-1"
-              >
-                <RiCloseFill size="0.5em" />
-              </button>
-            </div>
-          )}
-        {status === "approved" &&
-          isUser1 &&
-          !hasUser1Paid &&
-          timestamp !== undefined &&
-          timestamp !== null &&
-          timestamp !== 0 && (
-            <>
-              <MetamaskPrompt
-                betId={id}
-                amount={amount}
-                betSide={betSide}
-                multiplier={multiplier}
-                user1Id={user1Id}
-                user1Metamask={user1Metamask}
-                user2Id={user2Id}
-                user2Metamask={user2Metamask}
-                gameId={gameId}
-                timestamp={timestamp}
-                contractAddress={contractAddress}
-              />
-            </>
-          )}
+        <DeleteBetButton user1Id={user1Id} status={status} id={id} />
       </div>
 
-      <a
-        href="#"
+      <button
         className="flex border-2 justify-center align-middle "
-        style={{ width: "32em" }}
         onClick={accept}
       >
         <div className="flex justify-center align-middle border w-full ">
           <div className="flex justify-center align-middle w-full">
             <div className="flex justify-between w-full">
-              <div className="border flex flex-col justify-center w-16">
-                <div className="text-xs flex justify-center align-middle">
-                  {user1FollowThrough[0]} / {user1FollowThrough[1]}
-                </div>
-                <div className="flex justify-center align-middle">
-                  <FaRegHandshake title="Follow-through" />
-                </div>
-              </div>
-              <div className="flex border-2 rounded-l-full px-1 min-w-min">
-                <div className="flex flex-col justify-center align-middle">
-                  <div className="rounded-full border w-8 h-8 grid place-content-center">
-                    <img
-                      src={user1PhotoURL}
-                      alt=""
-                      className="h-6 w-6 rounded-full"
-                    />
-                  </div>
-                </div>
-                <p className="text-xs mx-1">{user1DisplayName}</p>
-              </div>
-              <div className="mx-1">
-                <div>{`$${(amount * avaxPrice).toFixed(2)}`}</div>
-                <p className="text-xs flex justify-end transform -translate-y-2 ">
-                  x{parseFloat(multiplier.toString())}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-center align-middle border shrink min-w-max">
-          <div className="rounded-full border flex justify-center align-middle relative w-28 bg-secondary-dark">
-            <div className="absolute z-0 text-positive top-2">
-              <GiCoins size="1.8rem" />
-            </div>
-            <div className="absolute z-10 underline decoration-4 font-bold text-primary-dark top-1">
-              <p className="px-1">{`$${(Number(potSize) * avaxPrice).toFixed(
-                2,
-              )}`}</p>
-            </div>
-            <div className="absolute left-1 top-1">
-              <GiChessRook color={betSide} size="1.4rem" />
-            </div>
-            <div className="absolute right-1 top-1">
-              <GiChessRook
-                color={betSide === "White" ? "black" : "white"}
-                size="1.4rem"
+              <User1FollowThrough user1FollowThrough={user1FollowThrough} />
+              <User1Image
+                user1PhotoURL={user1PhotoURL}
+                user1DisplayName={user1DisplayName}
               />
+              <User1BetAmount amount={amount} multiplier={multiplier} />
             </div>
           </div>
         </div>
+        <CenterOfBet
+          potSize={potSize}
+          betSide={betSide}
+        />
         <div className="flex justify-center align-middle border w-full">
           <div className="flex justify-center align-middle w-full">
             <div className="flex justify-between w-full">
-              <div className="mx-1">
-                <div>{`$${(amount * multiplier * avaxPrice).toFixed(2)}`}</div>
-                <p className="text-xs flex justify-start transform -translate-y-2 ">
-                  x{parseFloat((1 / multiplier).toFixed(2))}
-                </p>
-              </div>
-
-              {status === "ready" ? (
-                isUser1 && (
-                  <div
-                    className={`flex border-2 rounded-r-full px-1 min-w-min justify-end rounded-l-full`}
-                  >
-                    <div className="grid place-content-center">
-                      <BallSpinner color="black" size={30} />
-                    </div>
-                  </div>
-                )
-              ) : (
-                <div
-                  className={`flex border-2 rounded-r-full px-1 min-w-min justify-end`}
-                >
-                  <div className="flex justify-center align-middle">
-                    <p className="text-xs mx-1">{user2DisplayName}</p>
-                    <div className="flex flex-col justify-center">
-                      <div className="rounded-full border w-8 h-8 grid place-content-center">
-                        <img
-                          src={user2PhotoURL}
-                          alt=""
-                          className="h-6 w-6 rounded-full"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="border flex flex-col justify-center w-16">
-                {status !== "ready" && (
-                  <div>
-                    <div className="text-xs flex justify-center align-middle">
-                      {user2FollowThrough[0]} / {user2FollowThrough[1]}
-                    </div>
-                    <div className="flex justify-center align-middle">
-                      <FaRegHandshake title="Follow-through" />
-                    </div>
-                  </div>
-                )}
-              </div>
+              <User2BetAmount amount={amount} multiplier={multiplier} />
+              <User2Image
+                user2PhotoURL={user2PhotoURL}
+                user2DisplayName={user2DisplayName}
+                status={status}
+              />
+              <User2FollowThrough
+                user2FollowThrough={user2FollowThrough}
+                status={status}
+              />
             </div>
           </div>
         </div>
-      </a>
+      </button>
+
       <div className="flex justify-start">
-        {user &&
-          auth.currentUser &&
-          user2Id === auth.currentUser.uid &&
-          status === "pending" && (
-            <div className="flex">
-              <button
-                title="Leave"
-                onClick={cancel}
-                className="rounded-sm bg-negative h-3.5 w-3.5 text-white transform hover:scale-110 ease duration-100 border border-black place-content-center grid mx-1"
-              >
-                <RiCloseFill size="0.5em" />
-              </button>
-            </div>
-          )}
-        {user &&
-          auth.currentUser &&
-          user1Id === auth.currentUser.uid &&
-          status === "pending" && (
-            <div className="flex justify-between relative">
-              <div className="flex flex-col justify-center">
-                <button
-                  className="animate-pulse rounded-full h-8 w-8 opacity-100 z-10  grid place-content-center border-2 mx-2 transform hover:scale-110 ease duration-100"
-                  onClick={approve}
-                >
-                  <MdThumbUp color="green" />
-                </button>
-              </div>
-              <div className="flex flex-col justify-center">
-                <button
-                  className="rounded-full h-8 w-8 opacity-100 z-0 grid place-content-center border-2 mx-2 transform hover:scale-110 ease duration-100"
-                  onClick={kick}
-                >
-                  <MdThumbDown color="red" />
-                </button>
-              </div>
-            </div>
-          )}
-        {status === "approved" &&
-          isUser2 &&
-          !hasUser2Paid &&
-          timestamp !== undefined &&
-          timestamp !== null &&
-          timestamp !== 0 && (
-            <>
-              <MetamaskPrompt
-                betId={id}
-                amount={amount}
-                betSide={betSide}
-                multiplier={multiplier}
-                user1Id={user1Id}
-                user1Metamask={user1Metamask}
-                user2Id={user2Id}
-                user2Metamask={user2Metamask}
-                gameId={gameId}
-                timestamp={timestamp}
-                contractAddress={contractAddress}
-              />
-            </>
-          )}
+        <LeaveButton user2Id={user2Id} status={status} id={id} />
+        <div className="flex justify-between relative">
+          <ApproveButton user1Id={user1Id} status={status} betId={id} />
+          <KickButton user1Id={user1Id} status={status} betId={id} />
+        </div>
       </div>
+
+      <User2Metamask
+        betId={id}
+        amount={amount}
+        betSide={betSide}
+        multiplier={multiplier}
+        user1Id={user1Id}
+        user1Metamask={user1Metamask}
+        user2Id={user2Id}
+        user2Metamask={user2Metamask}
+        gameId={gameId}
+        timestamp={timestamp}
+        contractAddress={contractAddress}
+        status={status}
+        hasUser2Paid={hasUser2Paid}
+      />
     </div>
   )
 }

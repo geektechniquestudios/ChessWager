@@ -49,7 +49,6 @@ export const BettingLobby: React.FC = () => {
   return (
     <div className="lobby flex border-t-2 ">
       <aside className="flex border-1 h-full bg-stone-100 blur-lg shadow-xl">
-        {/* @todo! add column names allowing sorting */}
         <WagerForm />
       </aside>
       <main className="w-full flex-row ">
@@ -103,41 +102,6 @@ export const BettingLobby: React.FC = () => {
                 .map((bet) => (
                   <Bet
                     className="ready-bet"
-                    key={bet.id}
-                    id={bet.id}
-                    amount={bet.amount}
-                    betSide={bet.betSide}
-                    multiplier={bet.multiplier}
-                    status={bet.status}
-                    user1Id={bet.user1Id}
-                    user1Metamask={bet.user1Metamask}
-                    user1PhotoURL={bet.user1PhotoURL}
-                    user1DisplayName={bet.user1DisplayName}
-                    hasUser1Paid={bet.hasUser1Paid}
-                    user2Id={bet.user2Id}
-                    user2Metamask={bet.user2Metamask}
-                    user2PhotoURL={bet.user2PhotoURL}
-                    user2DisplayName={bet.user2DisplayName}
-                    hasUser2Paid={bet.hasUser2Paid}
-                    gameId={bet.gameId}
-                    timestamp={bet.timestamp?.seconds}
-                    contractAddress={bet.contractAddress}
-                    user1FollowThrough={bet.user1FollowThrough}
-                    user2FollowThrough={bet.user2FollowThrough}
-                  />
-                ))}
-            {lobby &&
-              lobby
-                .filter(
-                  (bet) =>
-                    bet.status === "pending" &&
-                    bet.user1Id !== user?.uid &&
-                    bet.user2Id !== user?.uid &&
-                    bet.gameId !== "",
-                )
-                .map((bet) => (
-                  <Bet
-                    className="pending-bet"
                     key={bet.id}
                     id={bet.id}
                     amount={bet.amount}

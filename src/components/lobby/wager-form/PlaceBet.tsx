@@ -9,7 +9,7 @@ export const PlaceBet: React.FC<Props> = ({ isLoading }) => {
   return (
     <div className="flex flex-col-reverse">
       <button
-        className="border-1 w-24 h-10 px-2 py-1 place-bet font-bold rounded-sm grid place-content-center"
+        className="border-1 w-24 h-10 px-2 py-1 place-bet font-bold rounded-sm grid place-content-center transform "
         type="submit"
         disabled={isLoading}
       >
