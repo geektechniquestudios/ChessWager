@@ -5,7 +5,6 @@ import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import "firebase/compat/analytics"
 import TextareaAutosize from "react-textarea-autosize"
-import Button from "@mui/material/Button"
 
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useRef } from "react"
@@ -15,23 +14,13 @@ import { Firestore } from "../containers/Firestore"
 import { BiArrowFromLeft } from "react-icons/bi"
 
 interface Props {
-  showChat: boolean
-  setShowChat: React.Dispatch<React.SetStateAction<boolean>>
   formValue: string
   setFormValue: React.Dispatch<React.SetStateAction<string>>
-  setAutoShowChat: React.Dispatch<React.SetStateAction<boolean>>
-  setAutoHideChat: React.Dispatch<React.SetStateAction<boolean>>
-  width: number
 }
 
 export const GlobalChat: React.FC<Props> = ({
-  width,
-  showChat,
-  setShowChat,
   formValue,
   setFormValue,
-  setAutoShowChat,
-  setAutoHideChat,
 }) => {
   const { firestore } = Firestore.useContainer()
   const { user, auth } = Auth.useContainer()
@@ -78,13 +67,7 @@ export const GlobalChat: React.FC<Props> = ({
       <header className="flex border-b-2 border-black">
         <button
           onClick={() => {
-            // setAutoShowChat(false)
-            // setAutoHideChat(false)
-            setShowChat(false)
             localStorage.setItem("showChat", "false")
-            // if (width > 850) {
-
-            // }
           }}
           className="m-3 hover:bg-secondary-dark rounded-sm color-shift"
         >

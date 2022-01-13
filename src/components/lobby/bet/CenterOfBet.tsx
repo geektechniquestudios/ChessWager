@@ -11,7 +11,7 @@ export const CenterOfBet: React.FC<Props> = ({ potSize, betSide }) => {
   return (
     <div className="flex justify-center align-middle border shrink min-w-max">
       <div className="rounded-full border flex justify-center align-middle relative w-28 bg-secondary-dark">
-        <div className="absolute z-0 text-positive top-2">
+        <div className="absolute z-0 text-positive top-2 bg-secondary">
           {/* Put a cool bg image here*/}
 
         </div>

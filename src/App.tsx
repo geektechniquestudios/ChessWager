@@ -9,7 +9,6 @@ import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import { Auth } from "./components/containers/Auth"
 import { BiArrowFromRight } from "react-icons/bi"
-import { GameId } from "./components/containers/GameId"
 import firebase from "firebase/compat/app"
 import { FundedBets } from "./components/funded-bets/FundedBets"
 
@@ -30,18 +29,6 @@ export const App: React.FC = () => {
   )
 
   const [formValue, setFormValue] = useState("")
-  const [autoShowChat, setAutoShowChat] = useState(false)
-  const [autoHideChat, setAutoHideChat] = useState(false)
-  const [width, setWidth] = useState(window.innerWidth)
-  const updateDimensions = () => {
-    const newWidth = window.innerWidth
-    setWidth(newWidth)
-    if (autoHideChat && newWidth < 800) {
-      setShowChat(false)
-    } else if (autoShowChat && newWidth > 850) {
-      setShowChat(true)
-    }
-  }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: any) => {
@@ -94,7 +81,7 @@ export const App: React.FC = () => {
               <div className="flex overflow-y-hidden overflow-x-visible">
                 <FundedBets />
                 <div className="flex justify-center w-full">
-                  <ChessGame setShowChat={setShowChat} width={width} />
+                  <ChessGame setShowChat={setShowChat} />
                 </div>
               </div>
             </div>
@@ -107,11 +94,6 @@ export const App: React.FC = () => {
               <GlobalChat
                 formValue={formValue}
                 setFormValue={setFormValue}
-                showChat={showChat}
-                setShowChat={setShowChat}
-                setAutoShowChat={setAutoShowChat}
-                setAutoHideChat={setAutoHideChat}
-                width={width}
               />
             </aside>
           )}

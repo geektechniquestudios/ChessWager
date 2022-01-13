@@ -13,8 +13,8 @@ import { teal } from "@mui/material/colors"
 
 const theme = createTheme({
   palette: {
-    primary: teal 
-  }
+    primary: teal,
+  },
 })
 
 ReactDOM.render(
@@ -24,7 +24,7 @@ ReactDOM.render(
         <GameId.Provider>
           <Price.Provider>
             <ThemeProvider theme={theme}>
-            <App />
+              <App />
             </ThemeProvider>
           </Price.Provider>
         </GameId.Provider>

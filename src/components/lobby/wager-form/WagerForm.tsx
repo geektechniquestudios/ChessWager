@@ -91,6 +91,7 @@ export const WagerForm: React.FC = () => {
               setIsAmountEmpty={setIsAmountEmpty}
             />
             <BetAmount
+              betAmount={betAmount}
               setBetAmount={setBetAmount}
               localAvaxAmount={localAvaxAmount}
               setLocalAvaxAmount={setLocalAvaxAmount}

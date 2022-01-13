@@ -1,9 +1,10 @@
 import CurrencyInput from "react-currency-input-field"
 import { Price } from "../../containers/Price"
 import "../../../style/index.scss"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface Props {
+  betAmount: number
   setBetAmount: React.Dispatch<React.SetStateAction<number>>
   localAvaxAmount: string
   setLocalAvaxAmount: React.Dispatch<React.SetStateAction<string>>
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export const BetAmount: React.FC<Props> = ({
+  betAmount,
   setBetAmount,
   localAvaxAmount,
   setLocalAvaxAmount,
@@ -24,6 +26,7 @@ export const BetAmount: React.FC<Props> = ({
 }) => {
   const { avaxPrice } = Price.useContainer()
   const borderWarning = isAmountEmpty ? "border-negative" : ""
+  const [isUsdFocused, setIsUsdFocused] = useState(false)
 
   return (
     <div className={`flex border-1 px-1 ${borderWarning} color-shift`}>
@@ -32,12 +35,19 @@ export const BetAmount: React.FC<Props> = ({
       <div>
         <div className="flex justify-between my-1">
           <span className="m-1">USD</span>
+
           <CurrencyInput
             className="p-1"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue={""}
-            value={localUsdAmount}
+            value={
+              isUsdFocused
+                ? localUsdAmount
+                : betAmount * avaxPrice === 0
+                ? ""
+                : (betAmount * avaxPrice).toFixed(2)
+            }
             onValueChange={(value) => {
               setLocalUsdAmount(value!)
             }}
@@ -46,12 +56,14 @@ export const BetAmount: React.FC<Props> = ({
               const newValue = Number(e.target.value.replace(/,/g, "") ?? 0)
               setBetAmount(newValue / avaxPrice)
               setLocalAvaxAmount((newValue / avaxPrice).toFixed(6).toString())
+              setIsUsdFocused(false)
             }}
             onKeyPress={(e) => {
               e.key === "Enter" && e.currentTarget.blur()
             }}
             onFocus={() => {
               setIsAmountEmpty(false)
+              setIsUsdFocused(true)
             }}
           />
         </div>
@@ -65,7 +77,7 @@ export const BetAmount: React.FC<Props> = ({
             decimalsLimit={6}
             value={localAvaxAmount}
             onValueChange={(value) => {
-              setLocalAvaxAmount(value!)
+              setLocalAvaxAmount(Number(value!) === 0 ? "" : value!)
             }}
             allowNegativeValue={false}
             onBlur={(e) => {
