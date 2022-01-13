@@ -55,7 +55,6 @@ export const BettingLobby: React.FC = () => {
         <div className="overflow-y-hidden">
           <LobbyHeader />
           <div className=" overflow-y-hidden h-full ">
-            {/* get related-to-user games */}
             {lobby &&
               user &&
               lobby

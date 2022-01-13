@@ -99,8 +99,6 @@ export const Bet: React.FC<Props> = ({
     user1Id !== auth.currentUser.uid &&
     status === "ready"
 
-  const pointerEvents = isEnabled ? "" : "cursor-default"
-
   return (
     <div className="w-full flex justify-center align-middle border overflow-x-auto">
       <User1Metamask
@@ -127,36 +125,29 @@ export const Bet: React.FC<Props> = ({
         className="flex border-2 justify-center align-middle "
         onClick={accept}
       >
-        <div className="flex justify-center align-middle border w-full ">
-          <div className="flex justify-center align-middle w-full">
-            <div className="flex justify-between w-full">
-              <User1FollowThrough user1FollowThrough={user1FollowThrough} />
-              <User1Image
-                user1PhotoURL={user1PhotoURL}
-                user1DisplayName={user1DisplayName}
-              />
-              <User1BetAmount amount={amount} multiplier={multiplier} />
-            </div>
+        <div className="flex justify-center align-middle w-full">
+          <div className="flex justify-between w-full">
+            <User1FollowThrough user1FollowThrough={user1FollowThrough} />
+            <User1Image
+              user1PhotoURL={user1PhotoURL}
+              user1DisplayName={user1DisplayName}
+            />
+            <User1BetAmount amount={amount} multiplier={multiplier} />
           </div>
         </div>
-        <CenterOfBet
-          potSize={potSize}
-          betSide={betSide}
-        />
-        <div className="flex justify-center align-middle border w-full">
-          <div className="flex justify-center align-middle w-full">
-            <div className="flex justify-between w-full">
-              <User2BetAmount amount={amount} multiplier={multiplier} />
-              <User2Image
-                user2PhotoURL={user2PhotoURL}
-                user2DisplayName={user2DisplayName}
-                status={status}
-              />
-              <User2FollowThrough
-                user2FollowThrough={user2FollowThrough}
-                status={status}
-              />
-            </div>
+        <CenterOfBet potSize={potSize} betSide={betSide} />
+        <div className="flex justify-center align-middle w-full">
+          <div className="flex justify-between w-full">
+            <User2BetAmount amount={amount} multiplier={multiplier} />
+            <User2Image
+              user2PhotoURL={user2PhotoURL}
+              user2DisplayName={user2DisplayName}
+              status={status}
+            />
+            <User2FollowThrough
+              user2FollowThrough={user2FollowThrough}
+              status={status}
+            />
           </div>
         </div>
       </button>

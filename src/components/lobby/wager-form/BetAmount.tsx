@@ -35,7 +35,6 @@ export const BetAmount: React.FC<Props> = ({
       <div>
         <div className="flex justify-between my-1">
           <span className="m-1">USD</span>
-
           <CurrencyInput
             className="p-1"
             autoComplete="off"
