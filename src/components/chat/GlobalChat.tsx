@@ -16,11 +16,13 @@ import { BiArrowFromLeft } from "react-icons/bi"
 interface Props {
   formValue: string
   setFormValue: React.Dispatch<React.SetStateAction<string>>
+  setShowChat: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const GlobalChat: React.FC<Props> = ({
   formValue,
   setFormValue,
+  setShowChat,
 }) => {
   const { firestore } = Firestore.useContainer()
   const { user, auth } = Auth.useContainer()
@@ -67,6 +69,7 @@ export const GlobalChat: React.FC<Props> = ({
       <header className="flex border-b-2 border-black">
         <button
           onClick={() => {
+            setShowChat(false)
             localStorage.setItem("showChat", "false")
           }}
           className="m-3 hover:bg-secondary-dark rounded-sm color-shift"

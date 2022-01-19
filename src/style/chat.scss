@@ -36,12 +36,6 @@ $tertiary: #D97706;
   @apply bg-tertiary;
 }
 
-.fieldset {
-}
-
-.form {
-}
-
 .input {
   @apply bg-primary rounded-md break-words inline-block resize-none outline-none text-lg w-full p-2;
 }
@@ -55,7 +49,6 @@ $tertiary: #D97706;
   @apply bg-tertiary dark:bg-tertiary-dark;
 }
 
-.message-text {}
 .message {
   @apply flex items-center;
 }
@@ -69,8 +62,3 @@ $tertiary: #D97706;
 .received p {
   @apply bg-secondary dark:bg-secondary-dark p-2 m-2 rounded-md color-shift justify-start;
 }
-
-.chat-user-img {
-}
-
-

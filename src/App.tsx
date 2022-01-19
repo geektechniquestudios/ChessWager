@@ -94,6 +94,7 @@ export const App: React.FC = () => {
               <GlobalChat
                 formValue={formValue}
                 setFormValue={setFormValue}
+                setShowChat={setShowChat}
               />
             </aside>
           )}

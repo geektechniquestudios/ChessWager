@@ -68,11 +68,6 @@ code {
   @apply w-8 h-8 hover:border-tertiary-dark border-2;
 }
 
-// .user-img:hover {
-//   border-radius: 20%;
-//   transform: rotate3d(0, 0, 1, 360deg);
-// }
-
 .color-shift {
   @apply transition-colors ease-in-out duration-700;
 }

@@ -15,5 +15,10 @@
     "prefix": "af",
     "body": ["const ${1:FunctionName} = ($2) => {$0}"],
     "description": "A standard for react typescript arrow functions in ChessWager"
+  },
+  "self-prop": {
+    "prefix": "self-prop",
+    "body": ["$1={$1}"],
+    "description": "A standard for react typescript arrow functions in ChessWager"
   }
 }

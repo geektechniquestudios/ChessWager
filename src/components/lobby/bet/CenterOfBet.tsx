@@ -9,7 +9,7 @@ interface Props {
 export const CenterOfBet: React.FC<Props> = ({ potSize, betSide }) => {
   const { avaxPrice } = Price.useContainer()
   return (
-    <div className="flex flex-col justify-center border-2 min-w-max h-full">
+    <div className="flex flex-col justify-center border-2 min-w-max px-1">
       <div className="flex rounded-full border-2 justify-between align-middle bg-secondary">
         <div className="flex rounded-full border-2 p-0.5 justify-center align-middle">
           <GiChessRook color={betSide} size="1.2rem" />

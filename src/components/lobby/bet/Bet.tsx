@@ -5,19 +5,12 @@ import "../../../style/lobby.scss"
 import "firebase/compat/functions"
 import { Auth } from "../../containers/Auth"
 import { BigNumber, ethers } from "ethers"
-import { DeleteBetButton } from "./DeleteBetButton"
-import { User1Metamask } from "./User1Metamask"
-import { User2Metamask } from "./User2Metamask"
-import { LeaveButton } from "./LeaveButton"
-import { ApproveButton } from "./ApproveButton"
-import { KickButton } from "./KickButton"
-import { User1FollowThrough } from "./User1FollowThrough"
-import { User1Image } from "./User1Image"
-import { User1BetAmount } from "./User1BetAmount"
+import { User1Data } from "./User1Data"
+import { User2Data } from "./User2Data"
+import { LeftButtons } from "./LeftButtons"
+import { RightButtons } from "./RightButtons"
 import { CenterOfBet } from "./CenterOfBet"
-import { User2BetAmount } from "./User2BetAmount"
-import { User2Image } from "./User2Image"
-import { User2FollowThrough } from "./User2FollowThrough"
+import { useState } from "react"
 
 interface Props {
   className: string
@@ -75,12 +68,6 @@ export const Bet: React.FC<Props> = ({
       .add(bigAmount),
   )
 
-  let name: string
-  if (user) {
-    const { displayName }: firebase.User = auth.currentUser!
-    name = displayName ?? "no name"
-  }
-
   const accept = () => {
     const acceptBet = firebase.functions().httpsCallable("acceptBet")
     acceptBet({
@@ -88,7 +75,7 @@ export const Bet: React.FC<Props> = ({
       photoURL: auth.currentUser?.photoURL,
       hostUid: user1Id,
       user2Metamask: walletAddress,
-      user2DisplayName: name,
+      user2DisplayName: user2DisplayName,
     }).catch(console.error)
   }
 
@@ -99,82 +86,73 @@ export const Bet: React.FC<Props> = ({
     user1Id !== auth.currentUser.uid &&
     status === "ready"
 
+  const isUser1 = auth.currentUser?.uid === user1Id
+  const [isSelected, setIsSelected] = useState(isUser1 ? true : false)
+  const selectedStyle = isSelected ? " selected-bet border-2" : ""
+
   return (
-    <div className="w-full flex justify-center align-middle border overflow-x-auto">
-      <User1Metamask
-        betId={id}
-        amount={amount}
-        betSide={betSide}
-        multiplier={multiplier}
-        user1Id={user1Id}
-        user1Metamask={user1Metamask}
-        user2Id={user2Id}
-        user2Metamask={user2Metamask}
-        gameId={gameId}
-        timestamp={timestamp}
-        contractAddress={contractAddress}
-        status={status}
-        hasUser1Paid={hasUser1Paid}
-      />
-
-      <div className=" flex justify-end ">
-        <DeleteBetButton user1Id={user1Id} status={status} id={id} />
-      </div>
-
+    <div
+      className={`bet w-full flex justify-center align-middle border transform `}
+    >
       <button
-        className="flex border-2 justify-center align-middle "
-        onClick={accept}
+        className={`flex border-1 justify-center align-middle w-full ${selectedStyle}`}
+        onClick={() => {
+          status === "ready" && !isUser1 && setIsSelected(!isSelected)
+        }}
       >
-        <div className="flex justify-center align-middle w-full">
-          <div className="flex justify-between w-full">
-            <User1FollowThrough user1FollowThrough={user1FollowThrough} />
-            <User1Image
-              user1PhotoURL={user1PhotoURL}
-              user1DisplayName={user1DisplayName}
-            />
-            <User1BetAmount amount={amount} multiplier={multiplier} />
-          </div>
+        <LeftButtons
+          user1Id={user1Id}
+          status={status}
+          id={id}
+          amount={amount}
+          betSide={betSide}
+          multiplier={multiplier}
+          user1Metamask={user1Metamask}
+          hasUser1Paid={hasUser1Paid}
+          user2Id={user2Id}
+          user2Metamask={user2Metamask}
+          gameId={gameId}
+          timestamp={timestamp}
+          contractAddress={contractAddress}
+          isSelected={isSelected}
+        />
+        <div className="flex">
+          <User1Data
+            user1FollowThrough={user1FollowThrough}
+            user1PhotoURL={user1PhotoURL}
+            user1DisplayName={user1DisplayName}
+            amount={amount}
+            multiplier={multiplier}
+          />
+          <CenterOfBet potSize={potSize} betSide={betSide} />
+          <User2Data
+            user2FollowThrough={user2FollowThrough}
+            user2PhotoURL={user2PhotoURL}
+            user2DisplayName={user2DisplayName}
+            user1Id={user1Id}
+            amount={amount}
+            multiplier={multiplier}
+            status={status}
+            isSelected={isSelected}
+          />
         </div>
-        <CenterOfBet potSize={potSize} betSide={betSide} />
-        <div className="flex justify-center align-middle w-full">
-          <div className="flex justify-between w-full">
-            <User2BetAmount amount={amount} multiplier={multiplier} />
-            <User2Image
-              user2PhotoURL={user2PhotoURL}
-              user2DisplayName={user2DisplayName}
-              status={status}
-            />
-            <User2FollowThrough
-              user2FollowThrough={user2FollowThrough}
-              status={status}
-            />
-          </div>
-        </div>
+        <RightButtons
+          user2Id={user2Id}
+          status={status}
+          user1Id={user1Id}
+          id={id}
+          amount={amount}
+          betSide={betSide}
+          multiplier={multiplier}
+          user2Metamask={user2Metamask}
+          hasUser2Paid={hasUser2Paid}
+          user1Metamask={user1Metamask}
+          gameId={gameId}
+          timestamp={timestamp}
+          contractAddress={contractAddress}
+          isSelected={isSelected}
+        />
       </button>
-
-      <div className="flex justify-start">
-        <LeaveButton user2Id={user2Id} status={status} id={id} />
-        <div className="flex justify-between relative">
-          <ApproveButton user1Id={user1Id} status={status} betId={id} />
-          <KickButton user1Id={user1Id} status={status} betId={id} />
-        </div>
-      </div>
-
-      <User2Metamask
-        betId={id}
-        amount={amount}
-        betSide={betSide}
-        multiplier={multiplier}
-        user1Id={user1Id}
-        user1Metamask={user1Metamask}
-        user2Id={user2Id}
-        user2Metamask={user2Metamask}
-        gameId={gameId}
-        timestamp={timestamp}
-        contractAddress={contractAddress}
-        status={status}
-        hasUser2Paid={hasUser2Paid}
-      />
     </div>
   )
 }

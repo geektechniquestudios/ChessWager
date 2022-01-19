@@ -1,44 +1,34 @@
-.bet {
-  // display: grid;
-  // gap: 1rem;
-  // grid-template-columns: repeat(6, minmax(10em, 1fr));
-  // margin-right: 10px;
-}
+@import "index.scss";
 
-.lobby {
-  // display: grid;
-  overflow: hidden;
-}
-
-.lobby main {
-  display: grid;
-  overflow-y: auto;
-  overflow-x: hidden;
-  /* bottom: 0; */
-}
-
-.ready-bet {
-  // background-color: aquamarine;
-}
-
-.pending-bet {
-  // background-color: yellow;
-}
-
-.in-progress-bet {
-  // background-color: chartreuse;
+a:hover {
+  background: rgb(0, 0, 0);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0) 48%,
+    rgba(19, 78, 74, 0.26094187675070024) 100%
+  );
+  @extend .color-shift;
+  @apply text-black cursor-pointer;
 }
 
 .bet-button {
-  @apply border-2 
-  border-primary
-  dark:border-primary-dark;
+  @apply border-2 border-primary dark:border-primary-dark;
+}
+
+.selected-bet {
 }
 
 .place-bet:active {
   transform: translate(0px, 0.1rem);
   transform: scale(0.98);
-  
-  // @apply transform scale-95 translate-y-0.5;
 }
 
+.delete-button:active {
+  transform: translate(0px, 0.1rem);
+  transform: scale(0.98);
+}
+
+.leave-button:active {
+  transform: translate(0px, 0.1rem);
+  transform: scale(0.98);
+}

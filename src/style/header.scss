@@ -2,15 +2,9 @@
 
 .header-button {
   @extend .color-shift;
-  @apply bg-secondary 
-  dark:bg-secondary-dark
-  hover:bg-tertiary 
-  dark:hover:bg-tertiary-dark p-2 rounded-md mx-2 h-10 items-center justify-center align-middle;
+  @apply bg-secondary dark:bg-secondary-dark hover:bg-tertiary dark:hover:bg-tertiary-dark p-2 rounded-md mx-2 h-10 items-center justify-center align-middle;
 }
 
 .dropdown-button {
-  @apply flex w-8 h-8 m-2 align-middle rounded-full 
-  bg-secondary dark:bg-secondary-dark
-  hover:bg-tertiary dark:hover:bg-tertiary-dark;
+  @apply flex w-8 h-8 m-2 align-middle rounded-full bg-secondary dark:bg-secondary-dark hover:bg-tertiary dark:hover:bg-tertiary-dark;
 }
-

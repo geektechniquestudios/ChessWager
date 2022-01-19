@@ -47,14 +47,15 @@ export const BettingLobby: React.FC = () => {
     useCollectionData(query, { idField: "id" })
 
   return (
-    <div className="lobby flex border-t-2 ">
+    <div className="flex border-t-2 ">
       <aside className="flex border-1 h-full bg-stone-100 blur-lg shadow-xl">
         <WagerForm />
       </aside>
-      <main className="w-full flex-row ">
+      <main className="w-full">
         <div className="overflow-y-hidden">
+          
           <LobbyHeader />
-          <div className=" overflow-y-hidden h-full ">
+          <div className=" overflow-y-hidden h-full overflow-x-auto">
             {lobby &&
               user &&
               lobby
