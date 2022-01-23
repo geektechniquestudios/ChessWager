@@ -134,6 +134,7 @@ export const Bet: React.FC<Props> = ({
             multiplier={multiplier}
             status={status}
             isSelected={isSelected}
+            id={id}
           />
         </div>
         <RightButtons
