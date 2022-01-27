@@ -1,5 +1,4 @@
 import { Auth } from "../../containers/Auth"
-import { JoinButton } from "./JoinButton"
 
 interface Props {
   user2PhotoURL: string
@@ -7,7 +6,6 @@ interface Props {
   user1Id: string
   status: string
   isSelected: boolean
-  id: string
 }
 
 export const User2Image: React.FC<Props> = ({
@@ -16,7 +14,6 @@ export const User2Image: React.FC<Props> = ({
   user1Id,
   status,
   isSelected,
-  id,
 }) => {
   const { auth } = Auth.useContainer()
   const isUser1 = auth.currentUser?.uid === user1Id
@@ -44,12 +41,6 @@ export const User2Image: React.FC<Props> = ({
       {status === "ready" && isSelected && !isUser1 && (
         <>
           <div className="flex border-2 rounded-r-full px-1 min-w-min justify-end animate-pulse">
-            <JoinButton
-              id={id}
-              user1Id={user1Id}
-              isSelected={isSelected}
-              status={status}
-            />
             <div className="flex justify-center align-middle">
               <p className="text-xs mx-1 flex flex-col justify-center">
                 {auth.currentUser?.displayName}

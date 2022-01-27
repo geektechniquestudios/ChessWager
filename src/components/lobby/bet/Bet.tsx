@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import firebase from "firebase/compat"
-
 import "../../../style/lobby.scss"
 import "firebase/compat/functions"
 import { Auth } from "../../containers/Auth"
@@ -59,7 +56,7 @@ export const Bet: React.FC<Props> = ({
   user1FollowThrough,
   user2FollowThrough,
 }) => {
-  const { walletAddress, auth, user, isWalletConnected } = Auth.useContainer()
+  const { auth } = Auth.useContainer()
   const bigAmount = ethers.utils.parseEther(amount.toString())
   const potSize = ethers.utils.formatEther(
     bigAmount
@@ -68,26 +65,11 @@ export const Bet: React.FC<Props> = ({
       .add(bigAmount),
   )
 
-  const accept = () => {
-    const acceptBet = firebase.functions().httpsCallable("acceptBet")
-    acceptBet({
-      betId: id,
-      photoURL: auth.currentUser?.photoURL,
-      hostUid: user1Id,
-      user2Metamask: walletAddress,
-      user2DisplayName: user2DisplayName,
-    }).catch(console.error)
-  }
-
-  const isEnabled =
-    user &&
-    isWalletConnected &&
-    auth.currentUser &&
-    user1Id !== auth.currentUser.uid &&
-    status === "ready"
-
   const isUser1 = auth.currentUser?.uid === user1Id
-  const [isSelected, setIsSelected] = useState(isUser1 ? true : false)
+  const isUser2 = auth.currentUser?.uid === user2Id
+  const [isSelected, setIsSelected] = useState(
+    isUser1 || isUser2 ? true : false,
+  )
   const selectedStyle = isSelected ? " selected-bet border-2" : ""
 
   return (
@@ -134,7 +116,6 @@ export const Bet: React.FC<Props> = ({
             multiplier={multiplier}
             status={status}
             isSelected={isSelected}
-            id={id}
           />
         </div>
         <RightButtons

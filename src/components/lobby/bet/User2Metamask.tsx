@@ -33,7 +33,7 @@ export const User2Metamask: React.FC<Props> = ({
   hasUser2Paid,
 }) => {
   const { auth } = Auth.useContainer()
-  const isUser2 = auth.currentUser?.uid === user1Id
+  const isUser2 = auth.currentUser?.uid === user2Id
 
   return (
     <>

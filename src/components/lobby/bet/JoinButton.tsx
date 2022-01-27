@@ -34,7 +34,11 @@ export const JoinButton: React.FC<Props> = ({
   return (
     <>
       {isSelected && status === "ready" && !isUser1 && (
-          <button onClick={accept} type="button" className="border-1 rounded-sm transform hover:scale-x-105">
+        <button
+          onClick={accept}
+          type="button"
+          className="border-1 rounded-full transform hover:scale-x-105"
+        >
           Join
         </button>
       )}

@@ -11,7 +11,6 @@ interface Props {
   status: string
   isSelected: boolean
   user1Id: string
-  id: string
 }
 
 export const User2Data: React.FC<Props> = ({
@@ -23,7 +22,6 @@ export const User2Data: React.FC<Props> = ({
   multiplier,
   status,
   isSelected,
-  id
 }) => {
   return (
     <div className="flex justify-center align-middle w-full">
@@ -35,7 +33,6 @@ export const User2Data: React.FC<Props> = ({
           user1Id={user1Id}
           status={status}
           isSelected={isSelected}
-          id={id}
         />
         <User2FollowThrough
           user2FollowThrough={user2FollowThrough}

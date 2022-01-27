@@ -46,12 +46,12 @@ export const RightButtons: React.FC<Props> = ({
             <ApproveButton user1Id={user1Id} status={status} betId={id} />
             <KickButton user1Id={user1Id} status={status} betId={id} />
           </div>
-          {/* <JoinButton
+          <JoinButton
             id={id}
             user1Id={user1Id}
             isSelected={isSelected}
             status={status}
-          /> */}
+          />
           <User2Metamask
             betId={id}
             amount={amount}

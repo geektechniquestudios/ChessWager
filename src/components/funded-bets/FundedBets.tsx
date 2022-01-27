@@ -77,8 +77,7 @@ export const FundedBets: React.FC<Props> = ({}) => {
             {lobby &&
               lobby
                 .sort((a, b) => b.amount - a.amount)
-                //.slice(0, 10)
-                // .filter((bet) => bet.status === "funded")
+                .filter((bet) => bet.status === "funded")
                 .map((bet) => (
                   <MiniBet
                     key={bet.id}
