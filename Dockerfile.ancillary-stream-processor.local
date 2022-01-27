@@ -5,6 +5,9 @@ WORKDIR /app
 COPY ./chess-data-stream-processor/ancillary-stream ./chess-data-stream-processor/ancillary-stream
 COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/contracts/ChessWager.sol/ChessWager.json
 
+# only in local
+COPY ./chess-wager-develop-firebase-adminsdk-z02bi-9bab414c8a.json ./
+
 COPY .env ./
 
 COPY ./chess-data-stream-processor/payment-processor ./chess-data-stream-processor/payment-processor
@@ -15,4 +18,4 @@ WORKDIR /app/chess-data-stream-processor/ancillary-stream
 
 RUN npm install
 
-CMD ["bash", "./start.sh"]
+CMD ["npm", "start"]
