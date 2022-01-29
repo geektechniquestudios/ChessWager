@@ -46,7 +46,8 @@ export const FundedBets: React.FC<Props> = ({}) => {
 
   let amountAtStake = (
     (lobby
-      ?.map((bet) => bet.amount + bet.amount * bet.multiplier)
+      ?.filter((bet) => bet.status === "funded")
+      .map((bet) => bet.amount + bet.amount * bet.multiplier)
       .reduce((a, b) => a + b, 0) ?? 0) * avaxPrice
   )
     .toFixed(2)

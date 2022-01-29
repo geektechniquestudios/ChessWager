@@ -43,12 +43,12 @@ async function main() {
 
   console.log(`ChessWager ${env} deployed to: ${chessWager.address}`)
   setEnvValue("REACT_APP_CONTRACT_ADDRESS", chessWager.address)
-  console.log("Contract address written to database")
 
   if (env === "develop" || env === "test" || env === "main") {
     await contractRef.doc(chessWager.address).set({
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     })
+    console.log("Contract address written to database")
   } else {
     throw new Error(
       "Please set the environment variable for branch_env to develop, test, or main",

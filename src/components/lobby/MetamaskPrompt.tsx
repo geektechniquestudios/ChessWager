@@ -1,9 +1,8 @@
 import { BigNumber, ethers } from "ethers"
-import { useCallback, useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { RiExchangeDollarLine } from "react-icons/ri"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
-require("dotenv").config({ path: ".env" })
 
 interface Props {
   betId: string
@@ -43,41 +42,35 @@ export const MetamaskPrompt: React.FC<Props> = ({
       ? bigAmount
       : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
 
-  const contractRef: any = useRef()
+  const bet = {
+    amount: bigAmount,
+    betSide: betSide,
+    user1Id: user1Id,
+    user1Metamask: user1Metamask,
+    user2Id: user2Id,
+    user2Metamask: user2Metamask,
+    multiplier: multiplier * 100,
+    gameId: gameId,
+    timestamp: BigNumber.from(timestamp),
+  }
 
-  const sendBet = useCallback(async () => {
-    const bet = {
-      amount: bigAmount,
-      betSide: betSide,
-      user1Id: user1Id,
-      user1Metamask: user1Metamask,
-      user2Id: user2Id,
-      user2Metamask: user2Metamask,
-      multiplier: multiplier * 100,
-      gameId: gameId,
-      timestamp: BigNumber.from(timestamp),
-    }
+  const overrides = {
+    value: betAmountWei,
+    gasLimit: 1000000,
+  }
 
-    const overrides = {
-      value: betAmountWei,
-      gasLimit: 1000000,
-    }
+  let contract: ethers.Contract
+
+  const sendBet = async () => {
     if (typeof window.ethereum !== undefined) {
       await window.ethereum.request({ method: "eth_requestAccounts" })
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer: any = provider.getSigner()
-      contractRef.current = new ethers.Contract(
-        contractAddress,
-        ChessWager.abi,
-        signer,
-      )
+      contract = new ethers.Contract(contractAddress, ChessWager.abi, signer)
 
       try {
-        const transaction = await contractRef.current.placeBet(
-          bet,
-          betId,
-          overrides,
-        )
+        console.log(bet, betId, contractAddress)
+        const transaction = await contract.placeBet(bet, betId, overrides)
         await transaction.wait()
       } catch (err) {
         console.error(err)
@@ -85,31 +78,19 @@ export const MetamaskPrompt: React.FC<Props> = ({
     } else {
       console.log("window.eth undefined!") // tell user to install metamask
     }
-  }, [
-    betAmountWei,
-    betId,
-    betSide,
-    bigAmount,
-    contractAddress,
-    gameId,
-    multiplier,
-    timestamp,
-    user1Id,
-    user1Metamask,
-    user2Id,
-    user2Metamask,
-  ])
+  }
 
   useEffect(() => {
     sendBet()
     return () => {
       try {
-        contractRef.current.removeAllListeners()
+        contract.removeAllListeners()
       } catch (e) {
         console.error(e)
       }
     }
-  }, [contractRef, sendBet]) //@todo fix dep issue
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <button
