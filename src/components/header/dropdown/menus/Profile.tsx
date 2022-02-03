@@ -74,7 +74,7 @@ export const Profile: React.FC<Props> = ({
           <DropdownItem
             setActiveMenu={setActiveMenu}
             leftIcon={<FaUserTag />}
-            key={4}
+            key={5}
           >
             Display Name
           </DropdownItem>,
@@ -96,7 +96,7 @@ export const Profile: React.FC<Props> = ({
                 className="w-6 h-6 rounded-full mr-2"
               />
             }
-            key={5}
+            key={6}
           >
             User Image
           </StaticDropdownItem>,

@@ -43,7 +43,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
       : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
 
   const bet = {
-    amount: bigAmount,
+    amount: bigAmount, 
     betSide: betSide,
     user1Id: user1Id,
     user1Metamask: user1Metamask,
@@ -67,9 +67,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer: any = provider.getSigner()
       contract = new ethers.Contract(contractAddress, ChessWager.abi, signer)
-
       try {
-        console.log(bet, betId, contractAddress)
         const transaction = await contract.placeBet(bet, betId, overrides)
         await transaction.wait()
       } catch (err) {

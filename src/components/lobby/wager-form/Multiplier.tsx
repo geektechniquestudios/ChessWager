@@ -43,7 +43,7 @@ export const Multiplier: React.FC<Props> = ({
 
   const blur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     // remove the ","
-    let tempValue = e.target.value.replace(/,/g, "") ?? 1
+    let tempValue = e.target.value.replace(/,/g, "") ?? "1.00"
     if (tempValue === "") {
       tempValue = "1.00"
     }

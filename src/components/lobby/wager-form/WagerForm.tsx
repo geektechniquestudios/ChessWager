@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from "react"
 import "../../../style/lobby.scss"
 import firebase from "firebase/compat/app"
@@ -52,14 +51,14 @@ export const WagerForm: React.FC = () => {
 
       createBet({
         amount: betAmount,
-        betSide: betSide,
+        betSide: betSide.toLowerCase(),
         gameId: gameId,
         multiplier: Number(multiplier).toFixed(2),
         status: "ready",
         user1Id: uid,
         user1Metamask: user1Metamask,
         user1PhotoURL: photoURL,
-        user1DisplayName: displayName ?? "no name",
+        user1DisplayName: displayName,
         contractAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
       })
         .then(() => {

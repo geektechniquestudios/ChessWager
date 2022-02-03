@@ -1,8 +1,6 @@
 import "../../../../style/dropdown.scss"
 
 import { DropdownItem } from "../DropdownItem"
-import { CSSTransition } from "react-transition-group"
-import { ReactComponent as BoltIcon } from "../icons/bolt.svg"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
 import {
