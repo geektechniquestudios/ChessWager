@@ -56,6 +56,7 @@ export const LeftButtons: React.FC<Props> = ({
           <DeleteBetButton user1Id={user1Id} status={status} id={id} />
         </div>
       )}
+      {hasUser1Paid && <p>Funded</p>}
     </>
   )
 }

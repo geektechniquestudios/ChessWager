@@ -23,7 +23,7 @@ export const CenterOfBet: React.FC<Props> = ({ potSize, betSide }) => {
 
         <div className="flex rounded-full border-2 p-0.5 justify-center align-middle">
           <GiChessRook
-            color={betSide === "White" ? "black" : "white"}
+            color={betSide === "white" ? "black" : "white"}
             size="15"
           />
         </div>

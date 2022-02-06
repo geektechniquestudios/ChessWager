@@ -107,7 +107,7 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
             console.log("No bets placed on this game, skipping contract call")
           } else if (cDoc.data().hasBeenPaid) {
             console.log(
-              "contract has already been paid, skipping contract call",
+              "Contract has already been paid, skipping contract call",
             )
           } else {
             console.log("paying winners for gameId: ", gameId)

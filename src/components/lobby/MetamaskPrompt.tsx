@@ -3,6 +3,8 @@ import { useEffect } from "react"
 import { RiExchangeDollarLine } from "react-icons/ri"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
+require("dotenv").config({ path: "../../../.env" })
+const isLocal = process.env.REACT_APP_BRANCH_ENV === "develop"
 
 interface Props {
   betId: string
@@ -43,7 +45,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
       : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
 
   const bet = {
-    amount: bigAmount, 
+    amount: bigAmount,
     betSide: betSide,
     user1Id: user1Id,
     user1Metamask: user1Metamask,
@@ -61,6 +63,24 @@ export const MetamaskPrompt: React.FC<Props> = ({
 
   let contract: ethers.Contract
 
+  const isCorrectBlockchain = async (
+    provider: ethers.providers.Web3Provider,
+  ) => {
+    const { chainId } = await provider.getNetwork()
+    alert(process.env.REACT_APP_BRANCH_ENV)
+    if (isLocal && chainId !== 43113) {
+      alert("You are on the wrong network. Please switch to the fuji network.")
+      return false
+    } else if (!isLocal && chainId !== 43114) {
+      alert(
+        "You are on the wrong network. Please switch to the avalanche mainnet.",
+      )
+      return false
+    } else {
+      return true
+    }
+  }
+
   const sendBet = async () => {
     if (typeof window.ethereum !== undefined) {
       await window.ethereum.request({ method: "eth_requestAccounts" })
@@ -68,6 +88,9 @@ export const MetamaskPrompt: React.FC<Props> = ({
       const signer: any = provider.getSigner()
       contract = new ethers.Contract(contractAddress, ChessWager.abi, signer)
       try {
+        if (!(await isCorrectBlockchain(provider))) {
+          return
+        }
         const transaction = await contract.placeBet(bet, betId, overrides)
         await transaction.wait()
       } catch (err) {
@@ -92,7 +115,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
 
   return (
     <button
-      className="border-2 mx-2 p-1 my-0.5 animate-pulse"
+      className="border-1 p-1 my-0.5 animate-pulse rounded-full"
       onClick={() => {
         sendBet()
       }}

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import "../../../style/lobby.scss"
 import "firebase/compat/functions"
 import { Auth } from "../../containers/Auth"
@@ -74,13 +75,14 @@ export const Bet: React.FC<Props> = ({
 
   return (
     <div
-      className={`bet w-full flex justify-center align-middle border transform `}
+      className={`bet w-full flex justify-center align-middle border transform`}
     >
-      <button
-        className={`flex border-1 justify-center align-middle w-full ${selectedStyle}`}
+      <a
+        className={`flex border-1 justify-center align-middle w-full px-1 ${selectedStyle}`}
         onClick={() => {
           status === "ready" && !isUser1 && setIsSelected(!isSelected)
         }}
+        href="#"
       >
         <LeftButtons
           user1Id={user1Id}
@@ -134,7 +136,7 @@ export const Bet: React.FC<Props> = ({
           contractAddress={contractAddress}
           isSelected={isSelected}
         />
-      </button>
+      </a>
     </div>
   )
 }

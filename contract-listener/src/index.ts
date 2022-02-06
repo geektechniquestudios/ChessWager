@@ -98,7 +98,7 @@ contract.on(
     betDoc.get().then((doc) => {
       const data = doc.data() ?? {}
       if (data.hasUser1Paid && data.hasUser2Paid) {
-        betDoc.set({
+        betDoc.update({
           status: "funded",
         })
       }

@@ -69,6 +69,7 @@ export const RightButtons: React.FC<Props> = ({
           />
         </div>
       )}
+      {hasUser2Paid && <p>Funded</p>}
     </>
   )
 }

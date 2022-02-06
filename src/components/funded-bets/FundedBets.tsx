@@ -32,7 +32,7 @@ interface Lobby {
   user2DisplayName: string
 }
 
-export const FundedBets: React.FC<Props> = ({}) => {
+export const FundedBets: React.FC<Props> = () => {
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
   const gameIdContainer = GameId.useContainer()
@@ -78,7 +78,7 @@ export const FundedBets: React.FC<Props> = ({}) => {
             {lobby &&
               lobby
                 .sort((a, b) => b.amount - a.amount)
-                .filter((bet) => bet.status === "funded")
+                .filter((bet) => bet.status === "funded") 
                 .map((bet) => (
                   <MiniBet
                     key={bet.id}
