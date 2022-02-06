@@ -67,7 +67,6 @@ export const MetamaskPrompt: React.FC<Props> = ({
     provider: ethers.providers.Web3Provider,
   ) => {
     const { chainId } = await provider.getNetwork()
-    alert(process.env.REACT_APP_BRANCH_ENV)
     if (isLocal && chainId !== 43113) {
       alert("You are on the wrong network. Please switch to the fuji network.")
       return false
