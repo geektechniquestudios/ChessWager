@@ -28,26 +28,26 @@ $secondary: #1c1917;
 }
 
 .chat-window::-webkit-scrollbar {
-  @apply w-2 m-0.5;
+  @apply w-2;
 }
 .chat-window::-webkit-scrollbar-track {
   @apply bg-primary dark:bg-primary-dark;
 }
 .chat-window::-webkit-scrollbar-thumb {
-  @apply bg-secondary dark:bg-secondary-dark rounded-full;
+  @apply bg-secondary-dark rounded-full;
 }
 
 .input {
   @apply bg-primary rounded-md break-words inline-block resize-none outline-none text-lg w-full p-2;
 }
 .input::-webkit-scrollbar {
-  @apply w-2 m-0.5;
+  @apply w-2;
 }
 .input::-webkit-scrollbar-track {
-  @apply bg-primary dark:bg-primary-dark;
+  @apply bg-primary dark:bg-primary-dark border-2;
 }
 .input::-webkit-scrollbar-thumb {
-  @apply bg-secondary dark:bg-secondary-dark rounded-full;
+  @apply bg-secondary-dark dark:bg-secondary-dark rounded-full;
 }
 
 .message {
