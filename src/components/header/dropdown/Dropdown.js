@@ -13,6 +13,8 @@ import { BiUserCircle } from "react-icons/bi"
 import { Blocked } from "./menus/Blocked"
 import { Store } from "./menus/Store"
 
+// Don't try to make this into a typescript file. If you can get it to work, be my guest, but glhf.
+
 export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
   const { user, auth } = Auth.useContainer()
   const { photoURL } = auth.currentUser || { uid: "", photoURL: "" }
@@ -29,7 +31,7 @@ export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
           <img
             src={photoURL}
             alt=""
-            className="user-img rounded-full hover:border-tertiary-dark border-black border-1"
+            className="user-img rounded-full hover:border-teal-800 border-black border-1"
           />
         ) : (
           <BiUserCircle className="w-8 h-8" />

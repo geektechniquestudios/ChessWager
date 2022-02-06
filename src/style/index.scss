@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-$secondary: #57534E;
-$tertiary: #D97706;
+$primary: #d6d3d1;
+$secondary: #1c1917;
 
 body {
   margin: 0;
@@ -50,22 +50,22 @@ code {
 
 #page > main {
   scrollbar-width: thin;
-  scrollbar-color: $tertiary $secondary;
+  scrollbar-color: $primary $secondary;
 }
 
 #page > main::-webkit-scrollbar-track {
   @apply bg-primary dark:bg-primary-dark;
 }
 #page > main::-webkit-scrollbar-thumb {
-  @apply bg-tertiary dark:bg-tertiary-dark;
+  @apply bg-secondary dark:bg-secondary-dark rounded-full;
 }
 #page > main::-webkit-scrollbar {
-  @apply w-1;
+  @apply w-2 m-0.5;
 }
 
 .user-img {
   @extend .color-shift;
-  @apply w-8 h-8 hover:border-tertiary-dark border-2;
+  @apply w-8 h-8 hover:border-teal-800 border-2;
 }
 
 .color-shift {

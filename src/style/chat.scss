@@ -3,8 +3,9 @@
 $form-height: 5em;
 $chat-header-height: 4em;
 $main-header-height: 3em;
-$secondary: #57534E;
-$tertiary: #D97706;
+
+$primary: #d6d3d1;
+$secondary: #1c1917;
 
 .global-chat {
   @apply text-center flex flex-col;
@@ -23,30 +24,30 @@ $tertiary: #D97706;
 
 .chat-window {
   scrollbar-width: thin;
-  scrollbar-color: $tertiary $secondary;
+  scrollbar-color: $primary $secondary;
 }
 
 .chat-window::-webkit-scrollbar {
-  @apply w-1;
+  @apply w-2 m-0.5;
 }
 .chat-window::-webkit-scrollbar-track {
-  @apply bg-secondary;
+  @apply bg-primary dark:bg-primary-dark;
 }
 .chat-window::-webkit-scrollbar-thumb {
-  @apply bg-tertiary;
+  @apply bg-secondary dark:bg-secondary-dark rounded-full;
 }
 
 .input {
   @apply bg-primary rounded-md break-words inline-block resize-none outline-none text-lg w-full p-2;
 }
 .input::-webkit-scrollbar {
-  @apply w-1;
+  @apply w-2 m-0.5;
 }
 .input::-webkit-scrollbar-track {
   @apply bg-primary dark:bg-primary-dark;
 }
 .input::-webkit-scrollbar-thumb {
-  @apply bg-tertiary dark:bg-tertiary-dark;
+  @apply bg-secondary dark:bg-secondary-dark rounded-full;
 }
 
 .message {

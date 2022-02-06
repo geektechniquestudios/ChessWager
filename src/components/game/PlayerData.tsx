@@ -20,7 +20,7 @@ export const PlayerData: React.FC<Props> = ({
   return (
     <div className="flex  p-2 w-full justify-between">
       <span className="flex justify-center flex-col ">
-        <p className="mx-1 font-bold text-tertiary dark:text-tertiary-dark">
+        <p className="mx-1 font-bold text-teal-800">
           {title}
         </p>
         {`${name}  ${rating}`}

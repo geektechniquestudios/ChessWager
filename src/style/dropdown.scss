@@ -55,11 +55,11 @@
 }
 
 .toggle.react-toggle--checked .react-toggle-track {
-  @apply bg-gradient-to-r from-tertiary to-tertiary-dark;
+  @apply bg-gradient-to-r from-teal-400 to-teal-900;
 }
 
 .toggle.react-toggle .react-toggle-track {
-  @apply bg-gradient-to-r from-tertiary to-tertiary-dark;
+  @apply bg-gradient-to-r from-teal-400 to-teal-900;
 }
 
 .toggle.react-toggle--checked .react-toggle-thumb {
@@ -67,7 +67,7 @@
 }
 
 .filter-toggle.react-toggle--checked .react-toggle-track {
-  @apply bg-gradient-to-r from-tertiary to-tertiary-dark;
+  @apply bg-gradient-to-r from-teal-400 to-teal-900;
 }
 
 .filter-toggle.react-toggle .react-toggle-track {

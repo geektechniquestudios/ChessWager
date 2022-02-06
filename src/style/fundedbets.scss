@@ -1,17 +1,17 @@
-$secondary: #57534e;
-$tertiary: #d97706;
+$primary: #d6d3d1;
+$secondary: #1c1917;
 
 .funded-bets {
   scrollbar-width: thin;
-  scrollbar-color: $tertiary $secondary;
+  scrollbar-color: $primary $secondary;
 }
 
 .funded-bets::-webkit-scrollbar {
-  @apply w-1;
+  @apply w-2 m-0.5;
 }
 .funded-bets::-webkit-scrollbar-track {
-  @apply bg-secondary;
+  @apply bg-primary dark:bg-primary-dark;
 }
 .funded-bets::-webkit-scrollbar-thumb {
-  @apply bg-tertiary;
+  @apply bg-secondary dark:bg-secondary-dark rounded-full;
 }

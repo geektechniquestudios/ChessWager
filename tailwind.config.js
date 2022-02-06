@@ -8,16 +8,12 @@ module.exports = {
   theme: {
     colors: {
       primary: {
-        DEFAULT: "#fafaf9",
-        dark: "#1c1917",
+        DEFAULT: "#e4e4e7",
+        dark: "#18181b",
       },
       secondary: {
-        DEFAULT: "#57534E",
-        dark: "#A8A29E",
-      },
-      tertiary: {
-        DEFAULT: "#2dd4bf",
-        dark: "#134e4a",
+        DEFAULT: "#d6d3d1",
+        dark: "#57534e",
       },
       positive: {
         DEFAULT: "#16A34A",
