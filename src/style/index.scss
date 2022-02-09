@@ -53,14 +53,14 @@ code {
   scrollbar-color: $primary $secondary;
 }
 
+#page > main::-webkit-scrollbar {
+  @apply w-2 h-2;
+}
 #page > main::-webkit-scrollbar-track {
   @apply bg-primary dark:bg-primary-dark;
 }
 #page > main::-webkit-scrollbar-thumb {
-  @apply bg-secondary dark:bg-secondary-dark rounded-full;
-}
-#page > main::-webkit-scrollbar {
-  @apply w-2 m-0.5;
+  @apply bg-secondary-dark rounded-full;
 }
 
 .user-img {

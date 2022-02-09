@@ -9,10 +9,10 @@ interface Props {
 export const CenterOfBet: React.FC<Props> = ({ potSize, betSide }) => {
   const { avaxPrice } = Price.useContainer()
   return (
-    <div className="flex flex-col justify-center border-2 min-w-max px-1">
-      <div className="flex rounded-full border-2 justify-between align-middle bg-secondary">
-        <div className="flex rounded-full border-2 p-0.5 justify-center align-middle">
-          <GiChessRook color={betSide} size="15" />
+    <div className="flex flex-col justify-center min-w-max px-1 bg-stone-300 rounded-sm border-1">
+      <div className="flex rounded-full justify-between align-middle">
+        <div className="grid place-content-center rounded-full border-1 bg-stone-400 w-8 h-8">
+          <GiChessRook color={betSide} size="17" />
         </div>
 
         <div className=" z-10 underline decoration-4 font-bold text-primary-dark top-1">
@@ -21,10 +21,10 @@ export const CenterOfBet: React.FC<Props> = ({ potSize, betSide }) => {
           )}`}</p>
         </div>
 
-        <div className="flex rounded-full border-2 p-0.5 justify-center align-middle">
+        <div className="grid place-content-center rounded-full border-1 bg-stone-400 w-8 h-8">
           <GiChessRook
             color={betSide === "white" ? "black" : "white"}
-            size="15"
+            size="17"
           />
         </div>
       </div>

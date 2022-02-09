@@ -6,7 +6,7 @@ interface Props {
 
 export const User1FollowThrough: React.FC<Props> = ({ user1FollowThrough }) => {
   return (
-    <div className="border flex flex-col justify-center w-16">
+    <div className="flex flex-col justify-center w-16">
       <div className="text-xs flex justify-center align-middle">
         {user1FollowThrough[0]} / {user1FollowThrough[1]}
       </div>

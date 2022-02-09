@@ -12,7 +12,7 @@ export const User2FollowThrough: React.FC<Props> = ({
   return (
     <>
       {status !== "ready" && (
-        <div className="border flex flex-col justify-center w-16">
+        <div className="flex flex-col justify-center w-16">
           <div>
             <div className="text-xs flex justify-center align-middle">
               {user2FollowThrough[0]} / {user2FollowThrough[1]}

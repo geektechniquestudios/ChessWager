@@ -15,7 +15,7 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
   const { user } = Auth.useContainer()
 
   return (
-    <div className="flex no-wrap justify-between w-full">
+    <div className="flex no-wrap justify-between w-full ">
       <div className="flex-auto">
         <div className="flex justify-start h-full mx-3 p-0.5 ">
           <div className="flex flex-col justify-center">

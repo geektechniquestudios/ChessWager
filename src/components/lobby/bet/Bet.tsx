@@ -71,14 +71,14 @@ export const Bet: React.FC<Props> = ({
   const [isSelected, setIsSelected] = useState(
     isUser1 || isUser2 ? true : false,
   )
-  const selectedStyle = isSelected ? " selected-bet border-2" : ""
+  const selectedStyle = isSelected
+    ? " selected-bet bg-stone-300"
+    : "hover:bg-stone-400"
 
   return (
-    <div
-      className={`bet w-full flex justify-center align-middle border transform`}
-    >
+    <div className={`bet w-full flex justify-center align-middle`}>
       <a
-        className={`flex border-1 justify-center align-middle w-full px-1 ${selectedStyle}`}
+        className={`flex justify-center align-middle w-full px-1 py-0.5 ${selectedStyle}`}
         onClick={() => {
           status === "ready" && !isUser1 && setIsSelected(!isSelected)
         }}
@@ -100,13 +100,24 @@ export const Bet: React.FC<Props> = ({
           contractAddress={contractAddress}
           isSelected={isSelected}
         />
-        <div className="flex">
+        <div className="flex gap-0.5">
           <User1Data
             user1FollowThrough={user1FollowThrough}
             user1PhotoURL={user1PhotoURL}
             user1DisplayName={user1DisplayName}
             amount={amount}
             multiplier={multiplier}
+            betSide={betSide}
+            user1Id={user1Id}
+            user1Metamask={user1Metamask}
+            user2Id={user2Id}
+            user2Metamask={user2Metamask}
+            gameId={gameId}
+            timestamp={timestamp}
+            contractAddress={contractAddress}
+            status={status}
+            hasUser1Paid={hasUser1Paid}
+            id={id}
           />
           <CenterOfBet potSize={potSize} betSide={betSide} />
           <User2Data
@@ -118,6 +129,7 @@ export const Bet: React.FC<Props> = ({
             multiplier={multiplier}
             status={status}
             isSelected={isSelected}
+            id={id}
           />
         </div>
         <RightButtons

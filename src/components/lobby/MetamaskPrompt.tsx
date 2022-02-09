@@ -114,16 +114,13 @@ export const MetamaskPrompt: React.FC<Props> = ({
 
   return (
     <button
-      className="border-1 p-1 my-0.5 animate-pulse rounded-full"
+      className="animate-pulse"
       onClick={() => {
         sendBet()
       }}
     >
-      <div className="flex flex-col justify-evenly">
-        <div className="flex justify-center">
-          <RiExchangeDollarLine size="0.8rem" />
-        </div>
-        <p className="text-xs">pay</p>
+      <div className="grid place-content-center rounded-full w-8 h-8 border-1">
+        <RiExchangeDollarLine size="24" title="Pay" />
       </div>
     </button>
   )

@@ -43,19 +43,21 @@ export const User1Metamask: React.FC<Props> = ({
         timestamp !== undefined &&
         timestamp !== null &&
         timestamp !== 0 && (
-          <MetamaskPrompt
-            betId={betId}
-            amount={amount}
-            betSide={betSide}
-            multiplier={multiplier}
-            user1Id={user1Id}
-            user1Metamask={user1Metamask}
-            user2Id={user2Id}
-            user2Metamask={user2Metamask}
-            gameId={gameId}
-            timestamp={timestamp}
-            contractAddress={contractAddress}
-          />
+          <div className="grid place-content-center pr-1">
+            <MetamaskPrompt
+              betId={betId}
+              amount={amount}
+              betSide={betSide}
+              multiplier={multiplier}
+              user1Id={user1Id}
+              user1Metamask={user1Metamask}
+              user2Id={user2Id}
+              user2Metamask={user2Metamask}
+              gameId={gameId}
+              timestamp={timestamp}
+              contractAddress={contractAddress}
+            />
+          </div>
         )}
     </>
   )

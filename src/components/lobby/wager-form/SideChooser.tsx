@@ -8,7 +8,7 @@ interface Props {
 export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
   return (
     <div className="border-1">
-      <div className="flex p-2 bg-secondary-dark justify-center">
+      <div className="flex p-2 justify-center bg-stone-400">
         <label>Side</label>
         <div className="border-1 mx-2" />
         <button

@@ -16,12 +16,10 @@ module.exports = {
         dark: "#57534e",
       },
       positive: {
-        DEFAULT: "#16A34A",
-        dark: "#4ADE80",
+        DEFAULT: "#4ADE80",
       },
       negative: {
         DEFAULT: "#DC2626",
-        dark: "#F87171",
       },
       transparent: "transparent",
       black: colors.black,
@@ -31,6 +29,7 @@ module.exports = {
       amber: colors.amber,
       green: colors.green,
       teal: colors.teal,
+      emerald: colors.emerald,
     },
   },
   variants: {

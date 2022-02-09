@@ -1,6 +1,7 @@
 import "firebase/compat/functions"
 import firebase from "firebase/compat"
 import { Auth } from "../../containers/Auth"
+import { BsPlay } from "react-icons/bs"
 
 interface Props {
   id: string
@@ -34,10 +35,10 @@ export const JoinButton: React.FC<Props> = ({
   return (
     <>
       {isSelected && status === "ready" && !isUser1 && (
-        <div className="flex justify-center align-middle h-full flex-col">
+        <div className="flex justify-center align-middle h-full flex-col animate-pulse">
           <div className="border-1 rounded-full transform hover:scale-x-105 flex">
-            <button onClick={accept} type="button" className="w-8 h-8 text-xs">
-              Join
+            <button onClick={accept} type="button" title="Join Bet" className="w-8 h-8 text-xs grid place-content-center" >
+              <BsPlay color="green" size="26"/>
             </button>
           </div>
         </div>
