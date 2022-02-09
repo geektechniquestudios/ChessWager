@@ -107,17 +107,6 @@ export const Bet: React.FC<Props> = ({
             user1DisplayName={user1DisplayName}
             amount={amount}
             multiplier={multiplier}
-            betSide={betSide}
-            user1Id={user1Id}
-            user1Metamask={user1Metamask}
-            user2Id={user2Id}
-            user2Metamask={user2Metamask}
-            gameId={gameId}
-            timestamp={timestamp}
-            contractAddress={contractAddress}
-            status={status}
-            hasUser1Paid={hasUser1Paid}
-            id={id}
           />
           <CenterOfBet potSize={potSize} betSide={betSide} />
           <User2Data

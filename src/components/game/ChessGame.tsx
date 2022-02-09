@@ -65,7 +65,8 @@ export const ChessGame: React.FC<Props> = ({ setShowChat }) => {
       setGameId(res.d.id)
       setOrientation(res.d.orientation)
 
-      if (white.user.title === undefined) setWhiteTitle("")
+      setWhiteTitle(white.user.title ?? "")
+      setBlackTitle(black.user.title ?? "")
       setWhiteName(white.user.name)
       setWhiteRating(white.rating)
 
