@@ -107,7 +107,7 @@ export const ChessGame: React.FC<Props> = ({ setShowChat }) => {
 
   return (
     <div
-      className="rounded-md overflow-hidden resize-x justify-center flex-col align-middle border-2 bg-secondary-dark dark:bg-primary-dark text-primary-dark dark:text-primary my-10 p-3 w-1/2"
+      className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle border-2 bg-secondary-dark dark:bg-primary-dark text-primary-dark dark:text-primary my-10 p-3 w-1/2"
       style={{ minWidth: "14em", maxWidth: "80vh" }}
     >
       <div className="resize flex  w-full h-full justify-center align-middle">
