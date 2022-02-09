@@ -40,7 +40,7 @@ service cloud.firestore {
         request.resource.data.user1FollowThrough is list &&
         request.resource.data.contractAddress is string &&
         request.resource.data.user1Id == request.auth.uid && 
-        !exists(/databases/$(database)/documents/banned/$(request.auth.uid)) &&
+        !(exists(/databases/$(database)/documents/banned/$(request.auth.uid))) &&
         request.auth.token.name == request.resource.data.user1DisplayName && 
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == request.resource.data.user1Metamask &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.photoURL == request.resource.data.user1PhotoURL &&
