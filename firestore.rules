@@ -1,10 +1,10 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
-    }
-    
+    // match /{document=**} {
+    //   allow read, write: if false;
+    // }
+
     match /messages/{docId} {
     	allow read: if true; //request.auth.uid != null;
       allow create: if canCreate();
@@ -13,24 +13,40 @@ service cloud.firestore {
     
     function canCreate() {
     	let isSignedIn = request.auth.uid != null;
-      let isOwner = request.auth.uid == request.resource.data.uid;
+      // let isOwner = request.auth.uid == request.resource.data.uid;
       // let isNotBanned = exists (
       // 	/databases/$(database)/documents/banned/$(request.auth.uid)
       // ) == false;
-      return isSignedIn && isOwner; // && isNotBanned;
+      return isSignedIn; // && isNotBanned;
     }
     
     match /lobby/{docId} {
     	allow read: if true;
-      allow create: if request.auth.uid != null;
-      //&& if user didn't create bet
-      	
-      	// exists (
-      	// /databases/$(database)/documents/banned/$(request.auth.uid)
-      	// ) == false; //true; //canCreate();
-      //if they don't already have one open
-      //if they're logged in
-      // allow update: if admin;
+      allow create: 
+      if canCreate() && 
+        request.resource.data.amount is number && 
+        request.resource.data.amount > 0 &&
+        request.resource.data.betSide is string &&
+        (request.resource.data.betSide == "white" || request.resource.data.betSide == "black") &&
+        request.resource.data.createdAt is timestamp &&
+        request.resource.data.gameId is string &&
+        request.resource.data.gameId != "" &&
+        request.resource.data.multiplier is number &&
+        request.resource.data.status == "ready" && 
+        request.resource.data.user1Id is string &&
+        request.resource.data.user1Metamask is string &&
+        request.resource.data.user1PhotoURL is string &&
+        request.resource.data.user1DisplayName is string &&
+        request.resource.data.user1FollowThrough is list &&
+        request.resource.data.contractAddress is string &&
+        request.resource.data.user1Id == request.auth.uid && 
+        !exists(/databases/$(database)/documents/banned/$(request.auth.uid)) &&
+        request.auth.token.name == request.resource.data.user1DisplayName && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == request.resource.data.user1Metamask &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.photoURL == request.resource.data.user1PhotoURL &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.betAcceptedCount == request.resource.data.user1FollowThrough[0] && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.betFundedCount == request.resource.data.user1FollowThrough[1] &&
+        request.resource.data.createdAt == request.time;
     }
     
     match /users/{docId} {

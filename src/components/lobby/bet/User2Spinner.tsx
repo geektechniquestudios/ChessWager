@@ -11,6 +11,7 @@ interface Props {
 export const User2Spinner: React.FC<Props> = ({ status, user1Id }) => {
   const { auth } = Auth.useContainer()
   const isUser1 = auth.currentUser?.uid === user1Id
+  const stroke = "teal"
   return (
     <>
       {status === "ready" && isUser1 && (
@@ -25,26 +26,25 @@ export const User2Spinner: React.FC<Props> = ({ status, user1Id }) => {
             x="0px"
             y="0px"
             viewBox="0 0 100 100"
-
-            enable-background="new 0 0 100 100"
+            enableBackground="new 0 0 100 100"
             width={25}
             height={25}
           >
             <circle
               fill="none"
-              stroke="#fff"
-              stroke-width="6"
-              stroke-miterlimit="10"
+              stroke={stroke}
+              strokeWidth="3"
+              strokeMiterlimit="10"
               cx="50"
               cy="50"
               r="48"
             />
             <line
               fill="none"
-              stroke-linecap="round"
-              stroke="#fff"
-              stroke-width="4"
-              stroke-miterlimit="10"
+              strokeLinecap="round"
+              stroke={stroke}
+              strokeWidth="7"
+              strokeMiterlimit="10"
               x1="50"
               y1="50"
               x2="85"
@@ -61,10 +61,10 @@ export const User2Spinner: React.FC<Props> = ({ status, user1Id }) => {
             </line>
             <line
               fill="none"
-              stroke-linecap="round"
-              stroke="#fff"
-              stroke-width="4"
-              stroke-miterlimit="10"
+              strokeLinecap="round"
+              stroke={stroke}
+              strokeWidth="7"
+              strokeMiterlimit="10"
               x1="50"
               y1="50"
               x2="49.5"

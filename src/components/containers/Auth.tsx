@@ -83,6 +83,7 @@ const useAuth = () => {
                   betFundedCount: 0,
                   blocked: [],
                   walletAddress: "",
+                  photoURL: auth.currentUser!.photoURL,
                 })
                 .catch(console.error)
             }

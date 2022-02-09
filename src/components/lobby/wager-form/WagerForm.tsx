@@ -10,6 +10,8 @@ import { Total } from "./Total"
 import { PlaceBet } from "./PlaceBet"
 import { QuickBet } from "./QuickBet"
 import { TheirBet } from "./TheirBet"
+const firestore = firebase.firestore()
+
 require("dotenv").config({ path: "../../../../.env" })
 
 export const WagerForm: React.FC = () => {
@@ -29,44 +31,58 @@ export const WagerForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isAmountEmpty, setIsAmountEmpty] = useState(false)
 
+  const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+    firestore.collection("lobby")
+  const userRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+    firestore.collection("users")
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsLoading(true)
+    // setIsLoading(true)
 
     if (betAmount === 0) {
       setIsAmountEmpty(true)
-      setIsLoading(false)
+      // setIsLoading(false)
       return
     }
 
     if (!isWalletConnected) {
       connectWallet()
-      setIsLoading(false)
+      // setIsLoading(false)
       return
     }
 
-    const createBet = firebase.functions().httpsCallable("createBet")
     if (auth.currentUser) {
       const { uid, photoURL, displayName }: firebase.User = auth.currentUser
 
-      createBet({
-        amount: betAmount,
-        betSide: betSide.toLowerCase(),
-        gameId: gameId,
-        multiplier: Number(multiplier).toFixed(2),
-        status: "ready",
-        user1Id: uid,
-        user1Metamask: user1Metamask,
-        user1PhotoURL: photoURL,
-        user1DisplayName: displayName,
-        contractAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
-      })
-        .then(() => {
-          setIsLoading(false)
+      userRef
+        .doc(uid)
+        .get()
+        .then((doc: any) => {
+          const user1FollowThrough = [
+            doc.data().betFundedCount,
+            doc.data().betAcceptedCount,
+          ]
+          return user1FollowThrough
         })
-        .catch((err) => {
+        .then((user1FollowThrough: number[]) => {
+          lobbyRef.add({
+            amount: betAmount,
+            betSide: betSide.toLowerCase(),
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            gameId: gameId,
+            multiplier: multiplier,
+            status: "ready",
+            user1Id: uid,
+            user1Metamask: user1Metamask,
+            user1PhotoURL: photoURL,
+            user1DisplayName: displayName,
+            user1FollowThrough: user1FollowThrough,
+            contractAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
+          })
+        })
+        .catch((err: Error) => {
           console.log(err)
-          setIsLoading(false)
+          // setIsLoading(false)
         })
     }
   }
