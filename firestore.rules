@@ -22,8 +22,9 @@ service cloud.firestore {
     
     match /lobby/{docId} {
     	allow read: if true;
-      allow create: 
-      if canCreate() && 
+      allow create: if canCreate() && 
+        request.resource.data.keys().hasAll(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) && 
+        request.resource.data.keys().hasOnly(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) && 
         request.resource.data.amount is number && 
         request.resource.data.amount > 0 &&
         request.resource.data.betSide is string &&
@@ -40,8 +41,8 @@ service cloud.firestore {
         request.resource.data.user1FollowThrough is list &&
         request.resource.data.contractAddress is string &&
         request.resource.data.user1Id == request.auth.uid && 
-        !(exists(/databases/$(database)/documents/banned/$(request.auth.uid))) &&
         request.auth.token.name == request.resource.data.user1DisplayName && 
+        !(exists(/databases/$(database)/documents/banned/$(request.auth.uid))) &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == request.resource.data.user1Metamask &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.photoURL == request.resource.data.user1PhotoURL &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.betAcceptedCount == request.resource.data.user1FollowThrough[0] && 
@@ -53,8 +54,29 @@ service cloud.firestore {
     	allow read: if true;
       // allow create: if canCreate();
       // allow update: if canCreate();
-      allow create: if docId == request.auth.uid;
-      allow update: if docId == request.auth.uid;
+      allow create: if docId == request.auth.uid &&
+        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]) &&
+        request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]) &&
+
+        request.resource.data.betAcceptedCount is number &&
+        request.resource.data.betFundedCount is number  &&
+        request.resource.data.blocked is list &&
+        request.resource.data.walletAddress is string &&
+        request.resource.data.photoURL is string &&
+
+        request.resource.data.betAcceptedCount == 0 &&
+        request.resource.data.betFundedCount == 0 &&
+        request.resource.data.blocked == [] &&
+        request.resource.data.photoURL != "";
+
+      allow update: if docId == request.auth.uid && 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(["blocked", "photoURL", "walletAddress"]) &&
+        request.resource.data.blocked is list &&
+        request.resource.data.photoURL is string &&
+        request.resource.data.walletAddress is string;
+        // request.resource.data.keys().length == 1;
+      
+      
     }
   }
 }
