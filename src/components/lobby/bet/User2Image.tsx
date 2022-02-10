@@ -12,13 +12,13 @@ export const User2Image: React.FC<Props> = ({
   return (
     <>
       {status !== "ready" && (
-        <div className="flex px-1 min-w-min justify-end gap-2">
+        <div className="flex px-1 min-w-min gap-2">
           <div className="flex justify-center align-middle">
             <p className="text-xs mx-1 flex flex-col justify-center">
               {user2DisplayName}
             </p>
-            <div className="flex flex-col justify-center">
-              <div className="rounded-full border w-8 h-8 grid place-content-center">
+            <div className="flex flex-col justify-center align-middle">
+              <div className="rounded-full w-8 h-8 grid place-content-center">
                 <img
                   src={user2PhotoURL}
                   alt=""

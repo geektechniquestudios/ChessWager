@@ -14,7 +14,9 @@ export const User1Image: React.FC<Props> = ({
           <img src={user1PhotoURL} alt="" className="h-8 w-8 rounded-full" />
         </div>
       </div>
-      <p className="text-xs mx-1 flex flex-col justify-center">{user1DisplayName}</p>
+      <p className="text-xs mx-1 flex flex-col justify-center">
+        {user1DisplayName}
+      </p>
     </div>
   )
 }
