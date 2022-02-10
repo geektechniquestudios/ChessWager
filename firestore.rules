@@ -5,20 +5,18 @@ service cloud.firestore {
     //   allow read, write: if false;
     // }
 
+    function canCreate() {
+    	let isSignedIn = request.auth.uid != null;
+      let isBanned = exists(/databases/$(database)/documents/banned/$(request.auth.uid));
+      return isSignedIn && !isBanned;
+    }
+
     match /messages/{docId} {
     	allow read: if true; //request.auth.uid != null;
       allow create: if canCreate();
       allow update: if canCreate();
     }
-    
-    function canCreate() {
-    	let isSignedIn = request.auth.uid != null;
-      // let isOwner = request.auth.uid == request.resource.data.uid;
-      // let isNotBanned = exists (
-      // 	/databases/$(database)/documents/banned/$(request.auth.uid)
-      // ) == false;
-      return isSignedIn; // && isNotBanned;
-    }
+  
     
     match /lobby/{docId} {
     	allow read: if true;
@@ -42,19 +40,20 @@ service cloud.firestore {
         request.resource.data.contractAddress is string &&
         request.resource.data.user1Id == request.auth.uid && 
         request.auth.token.name == request.resource.data.user1DisplayName && 
-        !(exists(/databases/$(database)/documents/banned/$(request.auth.uid))) &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == request.resource.data.user1Metamask &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.photoURL == request.resource.data.user1PhotoURL &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.betAcceptedCount == request.resource.data.user1FollowThrough[0] && 
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.betFundedCount == request.resource.data.user1FollowThrough[1] &&
         request.resource.data.createdAt == request.time;
+      allow update: if canCreate() && 
+        !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&
+        request.resource.data.keys().hasOnly([""])
     }
     
     match /users/{docId} {
     	allow read: if true;
-      // allow create: if canCreate();
-      // allow update: if canCreate();
-      allow create: if docId == request.auth.uid &&
+      allow create: if canCreate() &&
+        docId == request.auth.uid &&
         request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]) &&
         request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]) &&
 
@@ -74,9 +73,6 @@ service cloud.firestore {
         request.resource.data.blocked is list &&
         request.resource.data.photoURL is string &&
         request.resource.data.walletAddress is string;
-        // request.resource.data.keys().length == 1;
-      
-      
     }
   }
 }
