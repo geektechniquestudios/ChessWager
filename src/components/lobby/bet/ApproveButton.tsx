@@ -1,8 +1,6 @@
-import { Auth } from "../../containers/Auth"
 import firebase from "firebase/compat"
-import { MdThumbUp } from "react-icons/md"
 import { FiUserCheck } from "react-icons/fi"
-
+const firestore = firebase.firestore()
 interface Props {
   user1Id: string
   status: string
@@ -10,13 +8,15 @@ interface Props {
 }
 
 export const ApproveButton: React.FC<Props> = ({ user1Id, status, betId }) => {
-  const { auth, user } = Auth.useContainer()
+  const betDoc: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
+    firestore.collection("lobby").doc(betId)
 
-  const approve = () => {
-    const approveBet = firebase.functions().httpsCallable("approveBet")
-    approveBet({
-      betId: betId,
-    }).catch(console.error)
+  const approve = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
+    betDoc.update({
+      status: "approved",
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    })
   }
 
   return (

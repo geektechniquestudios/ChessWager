@@ -1,6 +1,7 @@
 import { RiCloseFill } from "react-icons/ri"
 import firebase from "firebase/compat"
 import { Auth } from "../../containers/Auth"
+const firestore = firebase.firestore()
 
 interface Props {
   user2Id: string
@@ -10,12 +11,17 @@ interface Props {
 
 export const LeaveButton: React.FC<Props> = ({ user2Id, status, id }) => {
   const { user, auth } = Auth.useContainer()
+  const betDoc: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
+    firestore.collection("lobby").doc(id)
+
   const cancel = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    const cancelBet = firebase.functions().httpsCallable("cancelBet")
-    cancelBet({
-      betId: id,
-    }).catch(console.error)
+    betDoc.update({
+      status: "ready",
+      user2Id: "",
+      user2Metamask: "",
+      user2PhotoURL: "",
+    })
   }
 
   return (
