@@ -1,5 +1,6 @@
 import { BigNumber, ethers } from "ethers"
 import { useEffect } from "react"
+import { BiDollar } from "react-icons/bi"
 import { RiExchangeDollarLine } from "react-icons/ri"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
@@ -119,8 +120,8 @@ export const MetamaskPrompt: React.FC<Props> = ({
         sendBet()
       }}
     >
-      <div className="grid place-content-center rounded-full w-8 h-8 border-1">
-        <RiExchangeDollarLine size="24" title="Pay" />
+      <div className="grid place-content-center border-1 mx-1 h-5/6 w-10 rounded-md">
+        <BiDollar size="24" title="Send Wager" color="green" />
       </div>
     </button>
   )

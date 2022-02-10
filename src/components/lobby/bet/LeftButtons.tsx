@@ -37,7 +37,8 @@ export const LeftButtons: React.FC<Props> = ({
   return (
     <>
       {isSelected && (
-        <div className="flex justify-start flex-grow h-full">
+        <div className="flex justify-end flex-grow h-full">
+          <DeleteBetButton user1Id={user1Id} status={status} id={id} />
           <User1Metamask
             betId={id}
             amount={amount}
@@ -53,7 +54,6 @@ export const LeftButtons: React.FC<Props> = ({
             status={status}
             hasUser1Paid={hasUser1Paid}
           />
-          <DeleteBetButton user1Id={user1Id} status={status} id={id} />
         </div>
       )}
       {hasUser1Paid && <p>Funded</p>}

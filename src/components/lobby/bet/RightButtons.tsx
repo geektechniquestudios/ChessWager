@@ -1,6 +1,3 @@
-import { ApproveButton } from "./ApproveButton"
-import { JoinButton } from "./JoinButton"
-import { KickButton } from "./KickButton"
 import { LeaveButton } from "./LeaveButton"
 import { User2Metamask } from "./User2Metamask"
 
@@ -40,9 +37,7 @@ export const RightButtons: React.FC<Props> = ({
   return (
     <>
       {isSelected && (
-        <div className="flex justify-end flex-grow h-full">
-          <LeaveButton user2Id={user2Id} status={status} id={id} />
-
+        <div className="flex justify-start flex-grow h-full">
           <User2Metamask
             betId={id}
             amount={amount}
@@ -58,6 +53,7 @@ export const RightButtons: React.FC<Props> = ({
             status={status}
             hasUser2Paid={hasUser2Paid}
           />
+          <LeaveButton user2Id={user2Id} status={status} id={id} />
         </div>
       )}
       {hasUser2Paid && <p>Funded</p>}
