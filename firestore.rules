@@ -45,11 +45,10 @@ service cloud.firestore {
         
         request.resource.data.createdAt == request.time;
 
-      // 4 possibilities in order:
-        // 1. user2 joins bet || Join Button
-        // 2. user2 leaves the bet || leave Button
-
-      allow update: if canCreate() && (
+      // 4 possibilities:
+      allow update: if canCreate() && 
+        // 1. user2 joins bet || Join Button *Don't place this comment on the line below, it causes a compline error*
+      (
         (
           !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&
           request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) &&
@@ -73,6 +72,7 @@ service cloud.firestore {
           request.auth.token.name == request.resource.data.user2DisplayName && 
           request.resource.data.user2Id == request.auth.uid
         ) ||        
+        // 2. user2 leaves the bet || leave Button
         (       
           !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&
           request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) &&
@@ -92,31 +92,30 @@ service cloud.firestore {
           resource.data.user2Id == request.auth.uid
         ) ||
         // 3. user1 kicks user2 from the bet || kick button
-        // (
-        //   !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&
-        //   request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName"]) &&
-        //   request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName"]) &&
+        (
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&
+          request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) &&
+          request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName"]) &&
 
+          request.resource.data.status is string &&
+          request.resource.data.user2Id is string &&
+          request.resource.data.user2Metamask is string &&
+          request.resource.data.user2PhotoURL is string &&
+          request.resource.data.user2FollowThrough is list &&
+          request.resource.data.user2DisplayName is string &&
 
-        //   request.resource.data.status is string &&
-        //   request.resource.data.user2Id is string &&
-        //   request.resource.data.user2Metamask is string &&
-        //   request.resource.data.user2PhotoURL is string &&
-        //   request.resource.data.user2FollowThrough is list &&
-        //   request.resource.data.user2DisplayName is string &&
+          request.resource.data.user2Id == "" &&
+          request.resource.data.user2Metamask == "" &&
+          request.resource.data.user2PhotoURL == "" &&
+          request.resource.data.user2FollowThrough == [0, 0] &&
+          request.resource.data.user2DisplayName == "" &&
+          request.resource.data.status == "ready" &&
+          resource.data.status == "pending" &&
 
-        //   request.resource.data.user2Id == "" &&
-        //   request.resource.data.user2Metamask == "" &&
-        //   request.resource.data.user2PhotoURL == "" &&
-        //   request.resource.data.user2FollowThrough == [] &&
-        //   request.resource.data.user2DisplayName == "" &&
-        //   request.resource.data.status == "ready" &&
-        //   resource.data.status == "pending" &&
-
-        //   get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == resource.data.user1Metamask &&
-        //   request.auth.token.name == resource.data.user1DisplayName &&
-        //   resource.data.user1Id == request.auth.uid
-        // ) ||
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == resource.data.user1Metamask &&
+          request.auth.token.name == resource.data.user1DisplayName &&
+          resource.data.user1Id == request.auth.uid
+        ) ||
         // 4. user1 approves user2 || approve button
         (
           !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&

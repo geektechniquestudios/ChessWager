@@ -1,17 +1,25 @@
-import { Auth } from "../../containers/Auth"
 import firebase from "firebase/compat"
 import { FiUserMinus } from "react-icons/fi"
+const firestore = firebase.firestore()
 
 interface Props {
   betId: string
 }
 
 export const KickButton: React.FC<Props> = ({ betId }) => {
-  const kick = () => {
-    const kickUser = firebase.functions().httpsCallable("kickUser")
-    kickUser({
-      betId: betId,
-    }).catch(console.error)
+  const betDoc: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
+    firestore.collection("lobby").doc(betId)
+
+  const kick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.stopPropagation()
+    betDoc.update({
+      status: "ready",
+      user2Id: "",
+      user2Metamask: "",
+      user2PhotoURL: "",
+      user2FollowThrough: [0, 0],
+      user2DisplayName: "",
+    })
   }
   return (
     <>
