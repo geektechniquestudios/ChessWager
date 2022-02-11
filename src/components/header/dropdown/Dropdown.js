@@ -48,18 +48,13 @@ export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
   )
 }
 
-const UserIconButton = ({
-  icon,
-  children,
-  open,
-  setOpen,
-}) => {
+const UserIconButton = ({ icon, children, open, setOpen }) => {
   const pointerEvents = open ? "pointer-events-none" : ""
   return (
     <>
       <a
         href="#"
-        className={`dropdown-button ${pointerEvents}`}
+        className={`flex w-8 h-8 m-2 align-middle rounded-full bg-secondary dark:bg-secondary-dark hover:bg-stone-500 dark:hover:bg-stone-600 ${pointerEvents}`}
         onClick={() => {
           setOpen(!open)
         }}

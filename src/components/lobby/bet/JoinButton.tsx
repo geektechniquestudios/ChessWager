@@ -2,6 +2,8 @@ import "firebase/compat/functions"
 import firebase from "firebase/compat"
 import { Auth } from "../../containers/Auth"
 import { BsPlay } from "react-icons/bs"
+import "../../../style/buttons.scss"
+import { ImEnter } from "react-icons/im"
 const firestore = firebase.firestore()
 
 interface Props {
@@ -55,14 +57,15 @@ export const JoinButton: React.FC<Props> = ({
     <>
       {isSelected && status === "ready" && !isUser1 && (
         <div className="flex justify-center align-middle h-full flex-col animate-pulse">
-          <div className="border-1 rounded-full transform hover:scale-x-105 flex">
+          <div className="flex">
             <button
               onClick={accept}
               type="button"
               title="Join Bet"
-              className="w-8 h-8 text-xs grid place-content-center"
+              className="w-8 h-8 grid place-content-center cw-button"
+              // style={{transform: "scaleX(-1)"}}
             >
-              <BsPlay color="green" size="26" />
+              <ImEnter color="green" size="26" />
             </button>
           </div>
         </div>

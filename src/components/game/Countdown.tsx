@@ -18,13 +18,9 @@ export const Countdown: React.FC<Props> = ({ fen, side, time }) => {
     const minutes = Math.floor((inSeconds % 3600) / 60)
     const outSeconds = inSeconds % 60
 
-    return (
-      prependZeros(hours) +
-      ":" +
-      prependZeros(minutes) +
-      ":" +
-      prependZeros(outSeconds)
-    )
+    return hours > 0
+      ? prependZeros(hours) + ":"
+      : "" + prependZeros(minutes) + ":" + prependZeros(outSeconds)
   }
 
   useEffect(() => {

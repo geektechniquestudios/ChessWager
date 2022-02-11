@@ -1,9 +1,9 @@
 import { BigNumber, ethers } from "ethers"
 import { useEffect } from "react"
 import { BiDollar } from "react-icons/bi"
-import { RiExchangeDollarLine } from "react-icons/ri"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
+import "../../style/buttons.scss"
 require("dotenv").config({ path: "../../../.env" })
 const isLocal = process.env.REACT_APP_BRANCH_ENV === "develop"
 
@@ -114,15 +114,15 @@ export const MetamaskPrompt: React.FC<Props> = ({
   }, [])
 
   return (
-    <button
-      className="animate-pulse"
-      onClick={() => {
-        sendBet()
-      }}
-    >
-      <div className="grid place-content-center border-1 mx-1 h-5/6 w-10 rounded-md">
+    <div className="flex flex-col justify-center">
+      <button
+        className="cw-button animate-pulse grid place-content-center border-1 mx-0.5 h-full"
+        onClick={() => {
+          sendBet()
+        }}
+      >
         <BiDollar size="24" title="Send Wager" color="green" />
-      </div>
-    </button>
+      </button>
+    </div>
   )
 }

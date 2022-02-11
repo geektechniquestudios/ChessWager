@@ -27,7 +27,7 @@ export const KickButton: React.FC<Props> = ({ betId }) => {
     <>
       <div className="flex flex-col justify-center">
         <button
-          className="rounded-full h-8 w-8 opacity-100 z-0 grid place-content-center border-1 mx-2 transform hover:scale-110 ease duration-100"
+          className="cw-button h-8 w-8 z-0 grid place-content-center border-1 mx-2"
           onClick={kick}
           title="Kick User"
         >

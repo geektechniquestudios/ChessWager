@@ -14,7 +14,7 @@
 }
 
 .menu-item {
-  @apply h-14 flex items-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-500 p-1 m-0.5 w-52;
+  @apply h-14 flex items-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-600 p-1 m-0.5 w-52 dark:text-stone-200 dark:hover:text-stone-200;
 }
 .icon-left {
   @apply mr-auto;

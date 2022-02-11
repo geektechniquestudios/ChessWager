@@ -1,6 +1,7 @@
 import { RiCloseFill } from "react-icons/ri"
 import firebase from "firebase/compat"
 import { Auth } from "../../containers/Auth"
+import "../../../style/buttons.scss"
 const firestore = firebase.firestore()
 
 interface Props {
@@ -36,7 +37,7 @@ export const LeaveButton: React.FC<Props> = ({ user2Id, status, id }) => {
             <button
               title="Leave"
               onClick={cancel}
-              className="bg-transparent text-negative transform hover:scale-125 ease duration-100 border-black place-content-center grid mx-1 p-0.5"
+              className="cw-button dark:text-negative text-negative hover:text-negative dark:hover:text-rose-300 transform grid place-content-center mx-1 p-0.5 border-0"
               id="leave-button"
             >
               <RiCloseFill />
