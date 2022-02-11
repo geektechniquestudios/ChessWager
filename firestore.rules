@@ -209,8 +209,14 @@ service cloud.firestore {
         )
       );
 
+      function isDeleteFromUser1() {
+        return 
+          resource.data.user1Id == request.auth.uid && 
+          request.auth.token.name == resource.data.user1DisplayName;
+      }
+
       allow delete: if canCreate() && 
-        isFromUser1() && 
+        isDeleteFromUser1() && 
         (resource.data.status == "ready" || resource.data.status == "pending");
     }
     
