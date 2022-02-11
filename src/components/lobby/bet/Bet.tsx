@@ -109,6 +109,7 @@ export const Bet: React.FC<Props> = ({
             multiplier={multiplier}
             user2Id={user2Id}
             status={status}
+            hasUser1Paid={hasUser1Paid}
           />
           <CenterOfBet potSize={potSize} betSide={betSide} />
           <User2Data

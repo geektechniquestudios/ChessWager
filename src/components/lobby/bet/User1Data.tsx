@@ -11,6 +11,7 @@ interface Props {
   multiplier: number
   user2Id: string
   status: string
+  hasUser1Paid: boolean
 }
 
 export const User1Data: React.FC<Props> = ({
@@ -21,9 +22,10 @@ export const User1Data: React.FC<Props> = ({
   multiplier,
   user2Id,
   status,
+  hasUser1Paid,
 }) => {
   return (
-    <div className="flex justify-center align-middle w-full border-1 rounded-sm bg-stone-300 px-1 py-0.5">
+    <div className={`${hasUser1Paid ? "border-positive" : ""} flex justify-center align-middle w-full border-1 rounded-sm bg-stone-300 px-1 py-0.5`}>
       <div className="flex justify-between w-full gap-2.5">
         <User1Spinner user2Id={user2Id} status={status} />
         <User1Image

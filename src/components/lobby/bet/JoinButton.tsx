@@ -1,7 +1,7 @@
 import "firebase/compat/functions"
 import firebase from "firebase/compat"
 import { Auth } from "../../containers/Auth"
-import { BsPlay } from "react-icons/bs"
+import { BsBoxArrowInDownLeft, BsBoxArrowInLeft, BsPlay } from "react-icons/bs"
 import "../../../style/buttons.scss"
 import { ImEnter } from "react-icons/im"
 const firestore = firebase.firestore()
@@ -62,10 +62,10 @@ export const JoinButton: React.FC<Props> = ({
               onClick={accept}
               type="button"
               title="Join Bet"
-              className="w-8 h-8 grid place-content-center cw-button"
+              className="w-8 h-8 grid place-content-center cw-button border-none"
               // style={{transform: "scaleX(-1)"}}
             >
-              <ImEnter color="green" size="26" />
+              <BsBoxArrowInLeft color="green" size="26" />
             </button>
           </div>
         </div>
