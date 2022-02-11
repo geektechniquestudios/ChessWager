@@ -65,20 +65,22 @@ export const WagerForm: React.FC = () => {
           return user1FollowThrough
         })
         .then((user1FollowThrough: number[]) => {
-          lobbyRef.add({
-            amount: betAmount,
-            betSide: betSide.toLowerCase(),
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            gameId: gameId,
-            multiplier: multiplier,
-            status: "ready",
-            user1Id: uid,
-            user1Metamask: user1Metamask,
-            user1PhotoURL: photoURL,
-            user1DisplayName: displayName,
-            user1FollowThrough: user1FollowThrough,
-            contractAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
-          })
+          lobbyRef
+            .add({
+              amount: betAmount,
+              betSide: betSide.toLowerCase(),
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              gameId: gameId,
+              multiplier: multiplier,
+              status: "ready",
+              user1Id: uid,
+              user1Metamask: user1Metamask,
+              user1PhotoURL: photoURL,
+              user1DisplayName: displayName,
+              user1FollowThrough: user1FollowThrough,
+              contractAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
+            })
+            .catch(console.error)
         })
         .catch((err: Error) => {
           console.log(err)

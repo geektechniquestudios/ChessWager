@@ -16,7 +16,7 @@ export const ApproveButton: React.FC<Props> = ({ user1Id, status, betId }) => {
     betDoc.update({
       status: "approved",
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    })
+    }).catch(console.error)
   }
 
   return (

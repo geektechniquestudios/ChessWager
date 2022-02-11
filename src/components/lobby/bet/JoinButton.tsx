@@ -38,14 +38,16 @@ export const JoinButton: React.FC<Props> = ({
         return user2FollowThrough
       })
       .then((user2FollowThrough: number[]) => {
-        betDoc.update({
-          status: "pending",  
-          user2Id: auth.currentUser?.uid,
-          user2Metamask: walletAddress,
-          user2PhotoURL: auth.currentUser?.photoURL,
-          user2FollowThrough: user2FollowThrough,
-          user2DisplayName: user2DisplayName,
-        })
+        betDoc
+          .update({
+            status: "pending",
+            user2Id: auth.currentUser?.uid,
+            user2Metamask: walletAddress,
+            user2PhotoURL: auth.currentUser?.photoURL,
+            user2FollowThrough: user2FollowThrough,
+            user2DisplayName: user2DisplayName,
+          })
+          .catch(console.error)
       })
   }
 

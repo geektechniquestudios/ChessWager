@@ -16,12 +16,14 @@ export const LeaveButton: React.FC<Props> = ({ user2Id, status, id }) => {
 
   const cancel = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    betDoc.update({
-      status: "ready",
-      user2Id: "",
-      user2Metamask: "",
-      user2PhotoURL: "",
-    })
+    betDoc
+      .update({
+        status: "ready",
+        user2Id: "",
+        user2Metamask: "",
+        user2PhotoURL: "",
+      })
+      .catch(console.error)
   }
 
   return (

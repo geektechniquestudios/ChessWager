@@ -18,7 +18,7 @@ export const DeleteBetButton: React.FC<Props> = ({ user1Id, status, id }) => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.stopPropagation()
-    betDoc.delete()
+    betDoc.delete().catch(console.error)
   }
 
   return (

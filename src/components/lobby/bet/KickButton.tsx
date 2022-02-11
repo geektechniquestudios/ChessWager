@@ -12,14 +12,16 @@ export const KickButton: React.FC<Props> = ({ betId }) => {
 
   const kick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    betDoc.update({
-      status: "ready",
-      user2Id: "",
-      user2Metamask: "",
-      user2PhotoURL: "",
-      user2FollowThrough: [0, 0],
-      user2DisplayName: "",
-    })
+    betDoc
+      .update({
+        status: "ready",
+        user2Id: "",
+        user2Metamask: "",
+        user2PhotoURL: "",
+        user2FollowThrough: [0, 0],
+        user2DisplayName: "",
+      })
+      .catch(console.error)
   }
   return (
     <>
