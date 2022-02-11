@@ -41,19 +41,17 @@ export const BettingLobby: React.FC = () => {
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
   const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
-  // .orderBy("createdAt", "desc")
 
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 
   return (
     <div className="flex border-t-2 ">
-      <aside className="flex border-1 h-full bg-stone-100 blur-lg shadow-xl">
+      <aside className="flex border-1 h-full shadow-xl">
         <WagerForm />
       </aside>
       <main className="w-full">
         <div className="overflow-y-hidden">
-          
           <LobbyHeader />
           <div className=" overflow-y-hidden h-full overflow-x-auto">
             {lobby &&
