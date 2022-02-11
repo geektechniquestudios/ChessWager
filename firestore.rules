@@ -115,7 +115,6 @@ service cloud.firestore {
           request.resource.data.user2FollowThrough is list &&
           request.resource.data.user2DisplayName is string &&
 
-          // get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == resource.data.user2Metamask &&
           request.auth.token.name == resource.data.user2DisplayName && 
           resource.data.user2Id == request.auth.uid
         ) ||
@@ -140,7 +139,6 @@ service cloud.firestore {
           request.resource.data.status == "ready" &&
           resource.data.status == "pending" &&
 
-          // get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == resource.data.user1Metamask &&
           request.auth.token.name == resource.data.user1DisplayName &&
           resource.data.user1Id == request.auth.uid
         ) ||
@@ -154,14 +152,12 @@ service cloud.firestore {
           resource.data.status == "pending" &&
           request.resource.data.timestamp is timestamp &&
         
-          // get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == resource.data.user1Metamask &&
           request.auth.token.name == resource.data.user1DisplayName &&
           resource.data.user1Id == request.auth.uid
         )
       );
 
       allow delete: if canCreate() && 
-          // get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == resource.data.user1Metamask &&
           request.auth.token.name == resource.data.user1DisplayName &&
           request.auth.uid == resource.data.user1Id &&
           (resource.data.status == "ready" || resource.data.status == "pending");
