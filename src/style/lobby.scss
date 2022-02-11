@@ -11,24 +11,3 @@ a:hover {
   @apply text-black cursor-pointer;
 }
 
-.bet-button {
-  @apply border-2 border-primary dark:border-primary-dark;
-}
-
-.selected-bet {
-}
-
-.place-bet:active {
-  transform: translate(0px, 0.1rem);
-  transform: scale(0.98);
-}
-
-.delete-button:active {
-  transform: translate(0px, 0.1rem);
-  transform: scale(0.98);
-}
-
-.leave-button:active {
-  transform: translate(0px, 0.1rem);
-  transform: scale(0.98);
-}

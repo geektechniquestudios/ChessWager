@@ -37,23 +37,27 @@ export const RightButtons: React.FC<Props> = ({
   return (
     <>
       {isSelected && (
-        <div className="flex justify-start flex-grow h-full">
-          <User2Metamask
-            betId={id}
-            amount={amount}
-            betSide={betSide}
-            multiplier={multiplier}
-            user1Id={user1Id}
-            user1Metamask={user1Metamask}
-            user2Id={user2Id}
-            user2Metamask={user2Metamask}
-            gameId={gameId}
-            timestamp={timestamp}
-            contractAddress={contractAddress}
-            status={status}
-            hasUser2Paid={hasUser2Paid}
-          />
-          <LeaveButton user2Id={user2Id} status={status} id={id} />
+        <div className="flex justify-between flex-grow h-full">
+          <div className="flex">
+            <User2Metamask
+              betId={id}
+              amount={amount}
+              betSide={betSide}
+              multiplier={multiplier}
+              user1Id={user1Id}
+              user1Metamask={user1Metamask}
+              user2Id={user2Id}
+              user2Metamask={user2Metamask}
+              gameId={gameId}
+              timestamp={timestamp}
+              contractAddress={contractAddress}
+              status={status}
+              hasUser2Paid={hasUser2Paid}
+            />
+          </div>
+          <div className="flex">
+            <LeaveButton user2Id={user2Id} status={status} id={id} />
+          </div>
         </div>
       )}
       {hasUser2Paid && <p>Funded</p>}

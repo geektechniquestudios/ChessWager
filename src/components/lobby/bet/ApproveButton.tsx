@@ -24,7 +24,7 @@ export const ApproveButton: React.FC<Props> = ({ user1Id, status, betId }) => {
       <div className="flex flex-col justify-center">
         <button
           type="button"
-          className="animate-pulse rounded-full h-8 w-8 opacity-100 z-10  grid place-content-center border-1 mx-2 transform hover:scale-110 ease duration-100"
+          className="animate-pulse rounded-full h-8 w-8 opacity-100 z-10 grid place-content-center border-1 mx-2 transform hover:scale-110 ease duration-100"
           onClick={approve}
           title="Accept"
         >

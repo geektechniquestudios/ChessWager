@@ -135,8 +135,8 @@ service cloud.firestore {
       allow delete: if canCreate() && 
           // get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == resource.data.user1Metamask &&
           request.auth.token.name == resource.data.user1DisplayName &&
-          resource.data.user1Id == request.auth.uid &&
-          resource.data.status == "ready";
+          request.auth.uid == resource.data.user1Id &&
+          (resource.data.status == "ready" || resource.data.status == "pending");
     }
     
     match /users/{docId} {

@@ -1,0 +1,11 @@
+@import "index.scss";
+
+.cw-button {
+  @extend .color-shift;
+  @apply rounded-md border hover:bg-white dark:hover:bg-black dark:hover:text-stone-50 text-stone-900 ;
+}
+
+.cw-buttons:active {
+  transform: translate(0px, 0.1rem);
+  transform: scale(0.98);
+}

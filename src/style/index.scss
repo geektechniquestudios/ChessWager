@@ -33,7 +33,7 @@ code {
   grid-template-columns: minmax(0, 1fr) minmax(0, auto);
   grid-template-rows: $header-size calc(100vh - $header-size - $gap-size);
 
-  @apply grid bg-primary dark:bg-primary-dark overflow-hidden;
+  @apply grid bg-stone-200 dark:bg-black overflow-hidden;
 }
 
 #page > header {
