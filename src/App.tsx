@@ -58,7 +58,7 @@ export const App: React.FC = () => {
   return (
     <div className={`${dark} h-full w-full overflow-y-hidden grid`}>
       <section className="color-shift " id="page">
-        <header className="color-shift bg-gradient-to-r from-stone-500 via-transparent to-stone-500 flex items-center  bg-opacity-30 bg-blur filter">
+        <header className="color-shift bg-stone-50 dark:bg-stone-800 border-b border-stone-400 dark:border-stone-700 flex items-center">
           <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
         </header>
         <main className="overflow-y-auto flex justify-center">
