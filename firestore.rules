@@ -14,37 +14,70 @@ service cloud.firestore {
     }
   
     match /lobby/{docId} {
-    	allow read: if true;
+      allow read: if true;
+      function areCreateRequestKeysValid() {
+        let data = request.resource.data;
+        return
+          data.keys().hasAll(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) && 
+          data.keys().hasOnly(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]);
+      }
+
+      function isCreateRequestDataValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.amount is number && 
+          requestData.amount > 0 &&
+          requestData.betSide is string &&
+          (requestData.betSide == "white" || requestData.betSide == "black") &&
+          requestData.createdAt is timestamp &&
+          requestData.gameId is string &&
+          requestData.gameId != "" &&
+          requestData.multiplier is number &&
+          requestData.status == "ready" && 
+          requestData.user1Id is string &&
+          requestData.user1Metamask is string &&
+          requestData.user1PhotoURL is string &&
+          requestData.user1DisplayName is string &&
+          requestData.user1FollowThrough is list &&
+          requestData.contractAddress is string;
+      }
+
+      function isCreateFromUser1() {
+        return 
+          request.resource.data.user1Id == request.auth.uid && 
+          request.auth.token.name == request.resource.data.user1DisplayName;
+      }
+
+      function doesCreateRequestDataMatchUser1Profile() {
+        let requestData = request.resource.data;
+        let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+        return 
+          userData.walletAddress == requestData.user1Metamask &&
+          userData.photoURL == requestData.user1PhotoURL &&
+          userData.betAcceptedCount == requestData.user1FollowThrough[0] && 
+          userData.betFundedCount == requestData.user1FollowThrough[1];
+      }
+
+      function isCreateTimeStampValid() {
+        return request.resource.data.createdAt == request.time;
+      }
+      
       allow create: if canCreate() && 
-        request.resource.data.keys().hasAll(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) && 
-        request.resource.data.keys().hasOnly(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) && 
-        
-        request.resource.data.amount is number && 
-        request.resource.data.amount > 0 &&
-        request.resource.data.betSide is string &&
-        (request.resource.data.betSide == "white" || request.resource.data.betSide == "black") &&
-        request.resource.data.createdAt is timestamp &&
-        request.resource.data.gameId is string &&
-        request.resource.data.gameId != "" &&
-        request.resource.data.multiplier is number &&
-        request.resource.data.status == "ready" && 
-        request.resource.data.user1Id is string &&
-        request.resource.data.user1Metamask is string &&
-        request.resource.data.user1PhotoURL is string &&
-        request.resource.data.user1DisplayName is string &&
-        request.resource.data.user1FollowThrough is list &&
-        request.resource.data.contractAddress is string &&
+        areCreateRequestKeysValid() &&
+        isCreateRequestDataValid() &&
+        isCreateFromUser1() &&
+        doesCreateRequestDataMatchUser1Profile() &&
+        isCreateTimeStampValid();
 
-        request.resource.data.user1Id == request.auth.uid && 
-        request.auth.token.name == request.resource.data.user1DisplayName && 
-
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == request.resource.data.user1Metamask &&
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.photoURL == request.resource.data.user1PhotoURL &&
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.betAcceptedCount == request.resource.data.user1FollowThrough[0] && 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.betFundedCount == request.resource.data.user1FollowThrough[1] &&
-        
-        request.resource.data.createdAt == request.time;
-
+      function isUser2DataValid() {
+        let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+        let requestData = request.resource.data;
+        return
+          userData.walletAddress == requestData.user2Metamask &&
+          userData.photoURL == requestData.user2PhotoURL &&
+          userData.betAcceptedCount == requestData.user2FollowThrough[0] &&
+          userData.betFundedCount == requestData.user2FollowThrough[1];
+      }
       // 4 Possibilities:
       allow update: if canCreate() && 
         // 1. User2 joins bet || Join Button *don't place this comment on the line below, it causes a compline error*
@@ -63,12 +96,7 @@ service cloud.firestore {
           request.resource.data.user2DisplayName is string &&
 
           !(get(/databases/$(database)/documents/users/$(resource.data.user1Id)).data.blocked.hasAny([request.auth.uid])) &&
-
-          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.walletAddress == request.resource.data.user2Metamask &&
-          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.photoURL == request.resource.data.user2PhotoURL &&
-          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.betAcceptedCount == request.resource.data.user2FollowThrough[0] &&
-          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.betFundedCount == request.resource.data.user2FollowThrough[1] &&
-
+          isUser2DataValid() &&
           request.auth.token.name == request.resource.data.user2DisplayName && 
           request.resource.data.user2Id == request.auth.uid
         ) ||        
