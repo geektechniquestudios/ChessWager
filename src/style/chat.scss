@@ -38,7 +38,7 @@ $secondary: #1c1917;
 }
 
 .input {
-  @apply bg-primary rounded-md break-words inline-block resize-none outline-none text-lg w-full p-2;
+  @apply break-words inline-block resize-none outline-none text-lg w-full p-2;
 }
 .input::-webkit-scrollbar {
   @apply w-2;

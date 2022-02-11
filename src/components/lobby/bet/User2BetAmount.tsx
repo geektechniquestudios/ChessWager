@@ -11,7 +11,7 @@ export const User2BetAmount: React.FC<Props> = ({ amount, multiplier }) => {
   return (
     <div>
       <div>{`$${(amount * multiplier * avaxPrice)
-        .toFixed(2)
+        .toFixed(2) 
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>
       <div className="flex justify-start">
         <p className="grid place-content-center border-1 rounded-full px-0.5 text-xs font-bold">

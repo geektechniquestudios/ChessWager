@@ -1,4 +1,5 @@
 import "../../style/chat.scss"
+import "../../style/buttons.scss"
 
 import firebase from "firebase/compat/app"
 import "firebase/compat/firestore"
@@ -12,17 +13,22 @@ import { Auth } from "../containers/Auth"
 import { ChatMessage } from "./ChatMessage"
 import { Firestore } from "../containers/Firestore"
 import { BiArrowFromLeft } from "react-icons/bi"
+import { RiChatSettingsLine } from "react-icons/ri"
 
 interface Props {
   formValue: string
   setFormValue: React.Dispatch<React.SetStateAction<string>>
   setShowChat: React.Dispatch<React.SetStateAction<boolean>>
+  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const GlobalChat: React.FC<Props> = ({
   formValue,
   setFormValue,
   setShowChat,
+  setActiveMenu,
+  setOpen,
 }) => {
   const { firestore } = Firestore.useContainer()
   const { user, auth } = Auth.useContainer()
@@ -63,20 +69,36 @@ export const GlobalChat: React.FC<Props> = ({
 
   return (
     <div
-      className="border-l-2 border-black global-chat"
+      className="global-chat border-l border-stone-400 dark:border-stone-700 bg-stone-50 dark:bg-stone-900"
       style={{ width: "21em" }}
     >
-      <header className="flex border-b-2 border-black">
+      <header className="flex border-b border-stone-400 dark:border-stone-700 justify-between">
         <button
           onClick={() => {
             setShowChat(false)
             localStorage.setItem("showChat", "false")
           }}
-          className="m-3 hover:bg-secondary-dark rounded-sm color-shift"
+          className="m-3 hover:bg-stone-300 dark:hover:bg-stone-700 rounded-sm color-shift"
         >
           <BiArrowFromLeft
             size="1.4em"
-            className="text-primary-dark hover:text-primary-dark dark:text-primary m-1 color-shift"
+            className="text-stone-900 dark:text-stone-50 m-1 color-shift"
+          />
+        </button>
+        <div className="text-stone-900 dark:text-stone-50 grid place-content-center text-bold text-lg">
+          GLOBAL CHAT
+        </div>
+        <button
+          className="m-3 hover:bg-stone-300 dark:hover:bg-stone-700 rounded-sm color-shift"
+          onClick={() => {
+            setActiveMenu("settings")
+            setOpen(true)
+          }}
+        >
+          <RiChatSettingsLine
+            size="1.4em"
+            className="text-stone-900 dark:text-stone-50 m-1 color-shift cw-button border-none"
+            title="Chat Settings"
           />
         </button>
       </header>
@@ -87,12 +109,12 @@ export const GlobalChat: React.FC<Props> = ({
         >
           <form
             onSubmit={(e) => sendMessage(e)}
-            className="form rounded-sm justify-center w-full pb-1"
+            className="form justify-center w-full pb-1"
           >
             <TextareaAutosize
               value={auth.currentUser ? formValue : "Sign in to Chat"}
               onChange={(e) => setFormValue(e.target.value)}
-              className="input"
+              className="input bg-stone-200 dark:bg-stone-800 dark:text-stone-50"
               placeholder="Send a Message"
               maxRows={4}
               onKeyDown={(e) => {
@@ -101,7 +123,7 @@ export const GlobalChat: React.FC<Props> = ({
             />
             <div className="w-full flex justify-end p-2">
               <button
-                className="border-1 px-2 py-1 rounded-sm hover:bg-secondary-dark dark:bg-secondary-dark color-shift font-bold active"
+                className="cw-button px-2 py-1 hover:bg-stone-300"
                 onClick={() => {}}
                 type="submit"
               >

@@ -15,10 +15,16 @@ import { Store } from "./menus/Store"
 
 // Don't try to make this into a typescript file. If you can get it to work, be my guest, but glhf.
 
-export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
+export const Dropdown = ({
+  setIsDarkOn,
+  isDarkOn,
+  open,
+  setOpen,
+  activeMenu,
+  setActiveMenu,
+}) => {
   const { user, auth } = Auth.useContainer()
   const { photoURL } = auth.currentUser || { uid: "", photoURL: "" }
-  const [open, setOpen] = useState(false)
   const [shouldMenuStayOpen, setShouldMenuStayOpen] = useState(false)
 
   return (
@@ -26,6 +32,7 @@ export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
       open={open}
       setOpen={setOpen}
       shouldMenuStayOpen={shouldMenuStayOpen}
+      setActiveMenu={setActiveMenu}
       icon={
         user ? (
           <img
@@ -43,12 +50,14 @@ export const Dropdown = ({ setIsDarkOn, isDarkOn }) => {
         isDarkOn={isDarkOn}
         setOpen={setOpen}
         open={open}
+        activeMenu={activeMenu}
+        setActiveMenu={setActiveMenu}
       />
     </UserIconButton>
   )
 }
 
-const UserIconButton = ({ icon, children, open, setOpen }) => {
+const UserIconButton = ({ icon, children, open, setOpen, setActiveMenu }) => {
   const pointerEvents = open ? "pointer-events-none" : ""
   return (
     <>
@@ -56,6 +65,7 @@ const UserIconButton = ({ icon, children, open, setOpen }) => {
         href="#"
         className={`flex w-8 h-8 m-2 align-middle rounded-full bg-secondary dark:bg-secondary-dark hover:bg-stone-500 dark:hover:bg-stone-600 ${pointerEvents}`}
         onClick={() => {
+          setActiveMenu("main")
           setOpen(!open)
         }}
       >
@@ -89,8 +99,9 @@ const DropdownMenu = ({
   setOpen,
   open,
   shouldMenuStayOpen,
+  activeMenu,
+  setActiveMenu,
 }) => {
-  const [activeMenu, setActiveMenu] = useState("main")
   const [menuHeight, setMenuHeight] = useState()
   const { user } = Auth.useContainer()
   const dropdownRef = useRef(null)
@@ -98,14 +109,15 @@ const DropdownMenu = ({
 
   const heightMultiplier = 1.1
   useEffect(() => {
-    // setMenuHeight(
-    //   dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
-    // )
     if (user) {
       setMenuHeight(515)
     } else {
       setMenuHeight(325)
     }
+    activeMenu === "settings" && setMenuHeight(
+      dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
+    )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return (

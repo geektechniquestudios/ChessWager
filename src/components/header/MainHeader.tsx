@@ -6,12 +6,24 @@ import { Auth } from "../containers/Auth"
 import { Dropdown } from "./dropdown/Dropdown"
 import { SignIn } from "./buttons/google/SignIn"
 import { ChessWagerLogo } from "./ChessWagerLogo"
+import { useState } from "react"
 interface Props {
   isDarkOn: boolean
   setIsDarkOn: React.Dispatch<React.SetStateAction<boolean>>
+  open: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  activeMenu: string
+  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
+export const MainHeader: React.FC<Props> = ({
+  isDarkOn,
+  setIsDarkOn,
+  open,
+  setOpen,
+  activeMenu,
+  setActiveMenu,
+}) => {
   const { user } = Auth.useContainer()
 
   return (
@@ -36,7 +48,14 @@ export const MainHeader: React.FC<Props> = ({ isDarkOn, setIsDarkOn }) => {
         <div className="flex justify-center align-middle items-center">
           {!user && <SignIn />}
         </div>
-        <Dropdown setIsDarkOn={setIsDarkOn} isDarkOn={isDarkOn} />
+        <Dropdown
+          setIsDarkOn={setIsDarkOn}
+          isDarkOn={isDarkOn}
+          open={open}
+          setOpen={setOpen}
+          activeMenu={activeMenu}
+          setActiveMenu={setActiveMenu}
+        />
       </div>
     </div>
   )

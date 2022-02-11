@@ -8,10 +8,6 @@ interface Props {
 export const User1BetAmount: React.FC<Props> = ({ amount, multiplier }) => {
   const { avaxPrice } = Price.useContainer()
 
-  const addCommas = (num: number) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-  }
-
   return (
     <div>
       <div>{`$${(amount * avaxPrice)

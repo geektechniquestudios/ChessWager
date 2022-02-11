@@ -40,7 +40,7 @@ export const Settings: React.FC<Props> = ({
           >
             <h2>Settings</h2>
           </DropdownItem>,
-          <div className="border-b-2" key={1}> </div>,
+          <div className="border-b-2" key={1} />,
 
           <DropdownItem
             setActiveMenu={setActiveMenu}
@@ -57,7 +57,7 @@ export const Settings: React.FC<Props> = ({
             }}
             leftIcon={isMuted ? <GoUnmute /> : <ImVolumeMute2 />}
             rightIcon={
-              <div className="px-2 justify-center align-middle flex h-full py-2 ">
+              <div className="p-2 justify-center align-middle flex h-full">
                 <Toggle
                   className="filter-toggle pointer-events-none "
                   checked={isMuted}
@@ -76,13 +76,12 @@ export const Settings: React.FC<Props> = ({
               setProfanityFilter(!profanityFilter)
             }}
             rightIcon={
-              <div className="px-2 justify-center align-middle flex h-full py-2 ">
+              <div className="p-2 justify-center align-middle flex h-full">
                 <Toggle
                   className="filter-toggle pointer-events-none "
                   checked={profanityFilter}
                   readOnly
                 />
-
               </div>
             }
             key={4}

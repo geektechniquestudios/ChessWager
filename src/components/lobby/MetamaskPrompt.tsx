@@ -116,7 +116,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
   return (
     <div className="flex flex-col justify-center">
       <button
-        className="cw-button animate-pulse grid place-content-center border-1 mx-0.5 h-full"
+        className="cw-button animate-pulse grid place-content-center m-0.5 h-full"
         onClick={() => {
           sendBet()
         }}

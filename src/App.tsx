@@ -29,6 +29,8 @@ export const App: React.FC = () => {
   )
 
   const [formValue, setFormValue] = useState("")
+  const [open, setOpen] = useState(false)
+  const [activeMenu, setActiveMenu] = useState("main")
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: any) => {
@@ -59,7 +61,15 @@ export const App: React.FC = () => {
     <div className={`${dark} h-full w-full overflow-y-hidden grid`}>
       <section className="color-shift " id="page">
         <header className="color-shift bg-stone-50 dark:bg-stone-900 border-b border-stone-400 dark:border-stone-700 flex items-center">
-          <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
+          <MainHeader
+            isDarkOn={isDarkOn}
+            setIsDarkOn={setIsDarkOn}
+            open={open}
+            setOpen={setOpen}
+            activeMenu={activeMenu}
+            setActiveMenu={setActiveMenu}
+
+          />
         </header>
         <main className="overflow-y-auto flex justify-center">
           <div className="w-full">
@@ -69,11 +79,11 @@ export const App: React.FC = () => {
                   setShowChat(true)
                   localStorage.setItem("showChat", "true")
                 }}
-                className="m-3 hover:bg-secondary-dark rounded-sm color-shift absolute top-12 right-0"
+                className="m-3 hover:bg-stone-400 dark:hover:bg-stone-700 rounded-sm color-shift absolute top-12 right-0"
               >
                 <BiArrowFromRight
                   size="1.4em"
-                  className="text-primary-dark hover:text-primary-dark dark:text-primary m-1 color-shift"
+                  className="text-stone-900 dark:text-stone-50 m-1 color-shift"
                 />
               </button>
             )}
@@ -95,6 +105,8 @@ export const App: React.FC = () => {
                 formValue={formValue}
                 setFormValue={setFormValue}
                 setShowChat={setShowChat}
+                setActiveMenu={setActiveMenu}
+                setOpen={setOpen}
               />
             </aside>
           )}

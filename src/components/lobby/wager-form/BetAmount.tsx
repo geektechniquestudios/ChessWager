@@ -36,7 +36,7 @@ export const BetAmount: React.FC<Props> = ({
         <div className="flex justify-between my-1">
           <span className="m-1">USD</span>
           <CurrencyInput
-            className="p-1"
+            className="p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-50 text-stone-900"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue={""}
@@ -69,7 +69,7 @@ export const BetAmount: React.FC<Props> = ({
         <div className="flex justify-between my-1">
           <span className="m-1">AVAX</span>
           <CurrencyInput
-            className="p-1"
+            className="p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-50"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue={""}
