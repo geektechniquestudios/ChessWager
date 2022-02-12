@@ -7,9 +7,6 @@ interface Props {
 
 export const TheirBet: React.FC<Props> = ({ multiplier, betAmount }) => {
   const { avaxPrice } = Price.useContainer()
-  // add commas to betAmount only to th eleft side of the decimal
-
-  const formattedBetAmount = (betAmount * avaxPrice).toFixed(2).toString()
   return (
     <div className="flex border-1 px-1">
       <label className="grid place-content-center m-2">Their Bet</label>
@@ -26,7 +23,7 @@ export const TheirBet: React.FC<Props> = ({ multiplier, betAmount }) => {
         <div className="flex justify-center my-1">
           <span
             style={{ textDecoration: "underline solid #9f1239 2px" }}
-            className="m-1 underline "
+            className="m-1 underline"
           >{`AVAX ${(multiplier * betAmount)
             .toFixed(6)
             .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}`}</span>

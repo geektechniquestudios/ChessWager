@@ -68,7 +68,6 @@ export const App: React.FC = () => {
             setOpen={setOpen}
             activeMenu={activeMenu}
             setActiveMenu={setActiveMenu}
-
           />
         </header>
         <main className="overflow-y-auto flex justify-center">

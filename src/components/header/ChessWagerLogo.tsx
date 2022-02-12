@@ -19,18 +19,20 @@ export const ChessWagerLogo: React.FC<Props> = ({
   stroke ?? (stroke = "black")
   strokeWidth ?? (strokeWidth = 1)
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
-      viewBox="0 0 1615 2947"
-      className={className}
-    >
-      <path
-        fill={color}
-        stroke={stroke}
-        strokeWidth={strokeWidth}
-        d="M 1092.00,1044.67
+    <div className="flex flex-col justify-center">
+      <div className="flex justify-center align-middle p-1 border-1 rounded-full w-8 h-8">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={width}
+          height={height}
+          viewBox="0 0 1615 2947"
+          className={className}
+        >
+          <path
+            fill={color}
+            stroke={stroke}
+            strokeWidth={strokeWidth}
+            d="M 1092.00,1044.67
            C 1127.66,1083.07 1155.50,1131.48 1193.00,1168.00
              1227.39,1201.49 1261.50,1219.00 1261.50,1219.00
              1261.50,1219.00 1309.89,1252.94 1386.00,1252.00
@@ -115,7 +117,9 @@ export const ChessWagerLogo: React.FC<Props> = ({
              913.00,906.50 941.40,932.20 971.00,954.00
              985.78,964.89 1007.94,979.04 1024.00,991.50
              1030.59,996.62 1068.70,1019.58 1092.00,1044.67 Z"
-      />
-    </svg>
+          />
+        </svg>
+      </div>
+    </div>
   )
 }
