@@ -21,9 +21,17 @@ export const ChatMessage: React.FC<Props> = ({ message }) => {
   }
   return (
     <>
-      <div className={`message ${messageClass}`}>
-        <img src={photoURL} alt="" title={userName} className="chat-user-img w-4 h-4 rounded-full" />
-        <p className="message-text text-center relative text-base">{text}</p>
+      <div
+        className={`message ${messageClass} w-full hover:bg-stone-500 color-shift rounded-md gap-1.5`}
+      >
+        <img
+          src={photoURL}
+          alt=""
+          title={userName}
+          className="chat-user-img w-4 h-4 rounded-full"
+        />
+        <div className="text-xs">{`${userName.split(" ")[0]}`}</div>
+        <p className="message-text relative text-base break-words">{text}</p>
       </div>
     </>
   )

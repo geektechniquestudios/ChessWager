@@ -28,7 +28,6 @@ export const WagerForm: React.FC = () => {
 
   const [localAvaxAmount, setLocalAvaxAmount] = useState("")
   const [localUsdAmount, setLocalUsdAmount] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
   const [isAmountEmpty, setIsAmountEmpty] = useState(false)
 
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
@@ -41,13 +40,11 @@ export const WagerForm: React.FC = () => {
 
     if (betAmount === 0) {
       setIsAmountEmpty(true)
-      // setIsLoading(false)
       return
     }
 
     if (!isWalletConnected) {
       connectWallet()
-      // setIsLoading(false)
       return
     }
 
@@ -126,7 +123,7 @@ export const WagerForm: React.FC = () => {
           </div>
           <div className="flex flex-row justify-between mt-4 gap-2">
             <Total betAmount={betAmount} multiplier={multiplier} />
-            <PlaceBet isLoading={isLoading} />
+            <PlaceBet />
           </div>
         </form>
       </fieldset>

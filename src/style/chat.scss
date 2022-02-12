@@ -10,7 +10,6 @@ $secondary: #1c1917;
 .global-chat {
   @apply text-center flex flex-col;
 }
-
 .global-chat header {
   height: $chat-header-height;
 }
@@ -47,7 +46,7 @@ $secondary: #1c1917;
   @apply bg-primary dark:bg-primary-dark border-2;
 }
 .input::-webkit-scrollbar-thumb {
-  @apply bg-secondary-dark rounded-full; 
+  @apply bg-secondary-dark rounded-full;
 }
 
 .message {
@@ -55,11 +54,11 @@ $secondary: #1c1917;
 }
 
 .sent {
-  @apply flex-row-reverse;
+  @apply flex-row-reverse p-2 my-2 rounded-md color-shift;
 }
 .sent p {
-  @apply bg-secondary dark:bg-secondary-dark p-2 m-2 rounded-md color-shift justify-end;
+  @apply justify-end text-right;
 }
 .received p {
-  @apply bg-secondary dark:bg-secondary-dark p-2 m-2 rounded-md color-shift justify-start;
+  @apply justify-start text-left;
 }
