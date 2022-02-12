@@ -85,7 +85,7 @@ export const GlobalChat: React.FC<Props> = ({
             className="text-stone-900 dark:text-stone-50 m-1 color-shift"
           />
         </button>
-        <div className="text-stone-900 dark:text-stone-50 grid place-content-center text-bold text-lg">
+        <div className="text-stone-900 dark:text-stone-50 grid place-content-center text-bold text-md">
           GLOBAL CHAT
         </div>
         <button

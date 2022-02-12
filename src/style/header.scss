@@ -1,7 +1,0 @@
-@import "index.scss";
-
-.header-button {
-  @extend .color-shift;
-  @apply bg-secondary dark:bg-secondary-dark hover:bg-stone-500 dark:hover:bg-stone-600 p-2 rounded-md mx-2 h-10 items-center justify-center align-middle;
-}
-
