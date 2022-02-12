@@ -24,6 +24,7 @@ export const Countdown: React.FC<Props> = ({ fen, side, time }) => {
   }
 
   useEffect(() => {
+    // (side from game stream) === (side being displayed) ie: if it is the player's turn
     if (fen.slice(-1) === side.slice(0, 1)) {
       const interval = setInterval(() => {
         setCount(count + 1)

@@ -100,7 +100,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
       console.log("window.eth undefined!") // tell user to install metamask
     }
   }
-
+  
   useEffect(() => {
     sendBet()
     return () => {

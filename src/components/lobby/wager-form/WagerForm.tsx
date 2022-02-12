@@ -36,7 +36,6 @@ export const WagerForm: React.FC = () => {
     firestore.collection("users")
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // setIsLoading(true)
 
     if (betAmount === 0) {
       setIsAmountEmpty(true)
@@ -79,15 +78,12 @@ export const WagerForm: React.FC = () => {
             })
             .catch(console.error)
         })
-        .catch((err: Error) => {
-          console.log(err)
-          // setIsLoading(false)
-        })
+        .catch(console.error)
     }
   }
 
   return (
-    <div className="flex w-full h-full p-2">
+    <div className="flex w-full p-2">
       <fieldset disabled={!auth.currentUser} className="flex w-full">
         <form
           onSubmit={createWager}

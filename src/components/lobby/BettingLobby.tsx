@@ -46,7 +46,7 @@ export const BettingLobby: React.FC = () => {
     useCollectionData(query, { idField: "id" })
 
   return (
-    <div className="flex border-t-2 ">
+    <div className="flex border-t-2">
       <aside className="flex border-1 h-full shadow-xl">
         <WagerForm />
       </aside>

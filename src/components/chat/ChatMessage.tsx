@@ -19,6 +19,9 @@ export const ChatMessage: React.FC<Props> = ({ message }) => {
   } else {
     messageClass = uid === auth.currentUser.uid ? "sent" : "received"
   }
+  
+  const messageClass2 = uid === auth.currentUser?.uid ? "sent" : "received"
+
   return (
     <>
       <div

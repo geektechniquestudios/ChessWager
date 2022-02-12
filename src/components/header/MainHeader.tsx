@@ -7,6 +7,9 @@ import { Dropdown } from "./dropdown/Dropdown"
 import { SignIn } from "./buttons/google/SignIn"
 import { ChessWagerLogo } from "./ChessWagerLogo"
 import { useState } from "react"
+import { RiNotification3Line } from "react-icons/ri"
+import { SiLichess } from "react-icons/si"
+import { GameId } from "../containers/GameId"
 interface Props {
   isDarkOn: boolean
   setIsDarkOn: React.Dispatch<React.SetStateAction<boolean>>
@@ -25,6 +28,7 @@ export const MainHeader: React.FC<Props> = ({
   setActiveMenu,
 }) => {
   const { user } = Auth.useContainer()
+  const { gameId } = GameId.useContainer()
 
   return (
     <div className="flex no-wrap justify-between w-full ">
@@ -44,10 +48,34 @@ export const MainHeader: React.FC<Props> = ({
         </div>
       </div>
       <div className="flex-auto"></div>
-      <div className="flex-auto justify-end align-middle flex mx-3">
-        <div className="flex justify-center align-middle items-center">
+      <div className="flex-auto justify-end align-middle flex mx-3 gap-1.5">
+        <div className="flex flex-col justify-center">
+          <a
+            href={`https://lichess.org/${gameId}`}
+            className="cw-button border-none hover:bg-stone-300"
+            title="Watch on Lichess"
+          >
+            <SiLichess size="19" className="m-2" />
+          </a>
+        </div>
+        <div className="flex justify-center align-middle">
           {!user && <SignIn />}
         </div>
+        {user && (
+          <div className="flex flex-col justify-center">
+            <button
+              className="cw-button border-none hover:bg-stone-300 mr-1 h-9"
+              title="Notifications"
+              onClick={() => {
+                setOpen(true)
+                setActiveMenu("settings")
+              }}
+            >
+              <RiNotification3Line size="21" className="m-2" />
+            </button>
+          </div>
+        )}
+
         <Dropdown
           setIsDarkOn={setIsDarkOn}
           isDarkOn={isDarkOn}

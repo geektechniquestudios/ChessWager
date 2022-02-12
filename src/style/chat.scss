@@ -54,7 +54,7 @@ $secondary: #44403C;
 }
 
 .sent {
-  @apply flex-row-reverse p-2 my-2 rounded-md color-shift;
+  @apply  p-2 my-2 rounded-md color-shift;
 }
 .sent p {
   @apply justify-end text-right;

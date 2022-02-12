@@ -38,7 +38,7 @@ export const Dropdown = ({
           <img
             src={photoURL}
             alt=""
-            className="user-img rounded-full hover:border-teal-800 border-black border-1"
+            className="user-img rounded-full hover:border-teal-800 border-stone-900 dark:border-stone-200 border-2"
           />
         ) : (
           <BiUserCircle className="w-8 h-8" />
