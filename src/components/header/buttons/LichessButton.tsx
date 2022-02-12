@@ -14,7 +14,7 @@ export const LichessButton: React.FC<Props> = ({}) => {
         title="Watch on Lichess"
         data-toggle="tooltip"
       >
-        <SiLichess size="19" className="m-2" />
+        <SiLichess size="19" className="m-2" title="Watch on Lichess" />
       </a>
     </div>
   )
