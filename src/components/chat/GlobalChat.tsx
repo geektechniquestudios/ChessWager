@@ -33,7 +33,7 @@ export const GlobalChat: React.FC<Props> = ({
 
   return (
     <div
-      className="global-chat border-l border-stone-400 dark:border-stone-700 bg-stone-50 dark:bg-stone-900"
+      className="global-chat flex flex-col border-l border-stone-400 dark:border-stone-700 bg-stone-50 dark:bg-stone-900"
       style={{ width: "21em" }}
     >
       <ChatHeader
@@ -41,7 +41,7 @@ export const GlobalChat: React.FC<Props> = ({
         setOpen={setOpen}
         setShowChat={setShowChat}
       />
-      <main>
+      <main className="global-chat-main flex flex-col-reverse">
         <ChatForm
           formValue={formValue}
           setFormValue={setFormValue}

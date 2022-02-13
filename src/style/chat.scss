@@ -7,18 +7,14 @@ $main-header-height: 3em;
 $primary: #a8a29e;
 $secondary: #44403c;
 
-.global-chat {
-  @apply text-center flex flex-col;
-}
-.global-chat header {
+.global-chat-header {
   height: $chat-header-height;
 }
 
-.global-chat main {
+.global-chat-main {
   $padding: 0rem;
   padding: $padding;
   height: calc(100vh - $main-header-height - $chat-header-height);
-  @apply flex flex-col-reverse;
 }
 
 .chat-window {
@@ -36,9 +32,6 @@ $secondary: #44403c;
   @apply bg-secondary-dark rounded-full;
 }
 
-.input {
-  @apply break-words inline-block resize-none outline-none text-lg w-full p-2;
-}
 .input::-webkit-scrollbar {
   @apply w-2;
 }

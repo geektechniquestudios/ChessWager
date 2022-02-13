@@ -61,7 +61,7 @@ export const Multiplier: React.FC<Props> = ({
   }
 
   return (
-    <div className="flex p-2 border-1 w-full border-stone-900 dark:border-stone-500">
+    <div className="flex p-2 border-1 w-full border-stone-400 dark:border-stone-500 dark:bg-stone-800 bg-stone-200 color-shift">
       <div className="grid place-content-center">
         <p className="text-stone-900 dark:text-stone-300">Multiplier</p>
       </div>

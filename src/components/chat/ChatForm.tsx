@@ -56,7 +56,7 @@ export const ChatForm: React.FC<Props> = ({
         <TextareaAutosize
           value={auth.currentUser ? formValue : "Sign in to Chat"}
           onChange={(e) => setFormValue(e.target.value)}
-          className="input bg-stone-200 dark:bg-stone-800 dark:text-stone-50"
+          className="input break-words inline-block resize-none outline-none text-lg w-full p-2 bg-stone-200 dark:bg-stone-800 dark:text-stone-50"
           placeholder="Send a Message"
           maxRows={4}
           onKeyDown={(e) => {

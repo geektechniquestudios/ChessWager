@@ -11,7 +11,7 @@ export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
   const [messages] = useCollectionData(query, { idField: "id" })
 
   return (
-    <div className="chat-window flex flex-col-reverse pb-3 overflow-y-scroll overflow-x-hidden">
+    <div className="chat-window flex flex-col-reverse pb-3 overflow-y-scroll overflow-x-hidden px-1">
       {messages &&
         messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
     </div>

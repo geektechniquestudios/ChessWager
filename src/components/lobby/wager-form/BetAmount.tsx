@@ -30,7 +30,7 @@ export const BetAmount: React.FC<Props> = ({
 
   return (
     <div
-      className={`flex border-1 border-stone-900 dark:border-stone-500 px-1 ${borderWarning} color-shift`}
+      className={`${borderWarning} flex border-1 border-stone-400 dark:border-stone-500 px-1 color-shift bg-stone-200 dark:bg-stone-800`}
     >
       <label className="grid place-content-center m-2 text-stone-900 dark:text-stone-300">
         Your Bet
