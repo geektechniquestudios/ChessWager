@@ -10,11 +10,11 @@ export const LichessButton: React.FC<Props> = ({}) => {
     <div className="flex flex-col justify-center">
       <a
         href={`https://lichess.org/${gameId}`}
-        className="cw-button border-none hover:bg-stone-300"
+        className="cw-button header-button"
         title="Watch on Lichess"
         data-toggle="tooltip"
       >
-        <SiLichess size="18" className="m-2" title="Watch on Lichess" />
+        <SiLichess size="19" className="m-2" title="Watch on Lichess" />
       </a>
     </div>
   )

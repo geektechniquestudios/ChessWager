@@ -61,11 +61,11 @@ export const Multiplier: React.FC<Props> = ({
   }
 
   return (
-    <div className="flex p-2 border-1 w-full">
+    <div className="flex p-2 border-1 w-full border-stone-900 dark:border-stone-500">
       <div className="grid place-content-center">
-        <label>Multiplier</label>
+        <p className="text-stone-900 dark:text-stone-300">Multiplier</p>
       </div>
-      <div className="border-1 mx-2" />
+      <div className="border-1 mx-2 border-stone-900 dark:border-stone-500" />
       <div className="flex w-full justify-center">
         <div className="flex flex-col w-full px-3 py-1">
           <Slider
@@ -83,7 +83,7 @@ export const Multiplier: React.FC<Props> = ({
               onValueChange={(value) => {
                 setLocalMultiplier(value!)
               }}
-              className="w-14 p-1 text-center"
+              className="w-14 p-1 text-center bg-stone-300 text-stone-900 dark:bg-stone-900 dark:text-stone-300"
               allowNegativeValue={false}
               fixedDecimalLength={2}
               onBlur={blur}

@@ -47,9 +47,7 @@ export const BettingLobby: React.FC = () => {
 
   return (
     <div className="flex border-t-2">
-      <aside className="flex border-1 h-full shadow-xl">
-        <WagerForm />
-      </aside>
+      <WagerForm />
       <main className="w-full">
         <div className="overflow-y-hidden">
           <LobbyHeader />

@@ -13,7 +13,7 @@ export const ChatButton: React.FC<Props> = ({setOpen, setActiveMenu}) => {
       {user && (
         <div className="flex flex-col justify-center">
           <button
-            className="cw-button border-none hover:bg-stone-300 h-9"
+            className="cw-button header-button"
             title="Messages"
             onClick={() => {
               setOpen(true)

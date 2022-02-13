@@ -29,14 +29,18 @@ export const BetAmount: React.FC<Props> = ({
   const [isUsdFocused, setIsUsdFocused] = useState(false)
 
   return (
-    <div className={`flex border-1 px-1 ${borderWarning} color-shift`}>
-      <label className="grid place-content-center m-2">Your Bet</label>
-      <div className="border-1 m-2" />
+    <div
+      className={`flex border-1 border-stone-900 dark:border-stone-500 px-1 ${borderWarning} color-shift`}
+    >
+      <label className="grid place-content-center m-2 text-stone-900 dark:text-stone-300">
+        Your Bet
+      </label>
+      <div className="border-1 m-2 border-stone-900 dark:border-stone-500" />
       <div>
         <div className="flex justify-between my-1">
-          <span className="m-1">USD</span>
+          <span className="m-1 text-stone-900 dark:text-stone-300">USD</span>
           <CurrencyInput
-            className="p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-50 text-stone-900"
+            className="p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-300 text-stone-900"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue={""}
@@ -67,9 +71,9 @@ export const BetAmount: React.FC<Props> = ({
           />
         </div>
         <div className="flex justify-between my-1">
-          <span className="m-1">AVAX</span>
+          <span className="m-1 text-stone-900 dark:text-stone-300">AVAX</span>
           <CurrencyInput
-            className="p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-50"
+            className="p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue={""}

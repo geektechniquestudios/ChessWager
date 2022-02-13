@@ -83,46 +83,48 @@ export const WagerForm: React.FC = () => {
   }
 
   return (
-    <div className="flex w-full p-2">
-      <fieldset disabled={!auth.currentUser} className="flex w-full">
-        <form
-          onSubmit={createWager}
-          className="w-full"
-          onKeyPress={(e) => {
-            e.key === "Enter" && e.preventDefault()
-          }}
-        >
-          <div className="flex flex-col justify-around gap-4">
-            <SideChooser betSide={betSide} setBetSide={setBetSide} />
-            <QuickBet
-              setBetAmount={setBetAmount}
-              setLocalAvaxAmount={setLocalAvaxAmount}
-              setLocalUsdAmount={setLocalUsdAmount}
-              setIsAmountEmpty={setIsAmountEmpty}
-            />
-            <BetAmount
-              betAmount={betAmount}
-              setBetAmount={setBetAmount}
-              localAvaxAmount={localAvaxAmount}
-              setLocalAvaxAmount={setLocalAvaxAmount}
-              localUsdAmount={localUsdAmount}
-              setLocalUsdAmount={setLocalUsdAmount}
-              isAmountEmpty={isAmountEmpty}
-              setIsAmountEmpty={setIsAmountEmpty}
-            />
-            <TheirBet multiplier={multiplier} betAmount={betAmount} />
-            <Multiplier
-              setMultiplier={setMultiplier}
-              sliderVal={sliderVal}
-              setSliderVal={setSliderVal}
-            />
-          </div>
-          <div className="flex flex-row justify-between mt-4 gap-2">
-            <Total betAmount={betAmount} multiplier={multiplier} />
-            <PlaceBet />
-          </div>
-        </form>
-      </fieldset>
+    <div className="flex border-1 h-full shadow-2xl bg-stone-100 dark:bg-stone-900">
+      <div className="flex w-full p-2">
+        <fieldset disabled={!auth.currentUser} className="flex w-full">
+          <form
+            onSubmit={createWager}
+            className="w-full"
+            onKeyPress={(e) => {
+              e.key === "Enter" && e.preventDefault()
+            }}
+          >
+            <div className="flex flex-col justify-around gap-4">
+              <SideChooser betSide={betSide} setBetSide={setBetSide} />
+              <QuickBet
+                setBetAmount={setBetAmount}
+                setLocalAvaxAmount={setLocalAvaxAmount}
+                setLocalUsdAmount={setLocalUsdAmount}
+                setIsAmountEmpty={setIsAmountEmpty}
+              />
+              <BetAmount
+                betAmount={betAmount}
+                setBetAmount={setBetAmount}
+                localAvaxAmount={localAvaxAmount}
+                setLocalAvaxAmount={setLocalAvaxAmount}
+                localUsdAmount={localUsdAmount}
+                setLocalUsdAmount={setLocalUsdAmount}
+                isAmountEmpty={isAmountEmpty}
+                setIsAmountEmpty={setIsAmountEmpty}
+              />
+              <TheirBet multiplier={multiplier} betAmount={betAmount} />
+              <Multiplier
+                setMultiplier={setMultiplier}
+                sliderVal={sliderVal}
+                setSliderVal={setSliderVal}
+              />
+            </div>
+            <div className="flex flex-row justify-between mt-4 gap-2">
+              <Total betAmount={betAmount} multiplier={multiplier} />
+              <PlaceBet />
+            </div>
+          </form>
+        </fieldset>
+      </div>
     </div>
   )
 }

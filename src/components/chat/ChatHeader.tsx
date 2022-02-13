@@ -13,13 +13,13 @@ export const ChatHeader: React.FC<Props> = ({
   setShowChat,
 }) => {
   return (
-    <header className="flex bg-stone-200 dark:bg-stone-900 border-b border-stone-400 dark:border-stone-700 justify-between">
+    <header className="flex bg-stone-200 dark:bg-stone-700 border-b border-stone-400 dark:border-stone-700 justify-between">
       <button
         onClick={() => {
           setShowChat(false)
           localStorage.setItem("showChat", "false")
         }}
-        className=" hover:bg-stone-400 dark:hover:bg-stone-700 rounded-sm color-shift m-2"
+        className=" hover:bg-stone-400 dark:hover:bg-stone-900 rounded-sm color-shift m-2"
       >
         <BiArrowFromLeft
           size="1.3em"
@@ -30,7 +30,7 @@ export const ChatHeader: React.FC<Props> = ({
         GLOBAL CHAT
       </div>
       <button
-        className=" hover:bg-stone-400 dark:hover:bg-stone-700 rounded-sm color-shift m-2"
+        className=" hover:bg-stone-400 dark:hover:bg-stone-900 rounded-sm color-shift m-2"
         onClick={() => {
           setActiveMenu("settings")
           setOpen(true)

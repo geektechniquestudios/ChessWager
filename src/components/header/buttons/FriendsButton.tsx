@@ -13,7 +13,7 @@ export const FriendsButton: React.FC<Props> = ({ setOpen, setActiveMenu }) => {
       {user && (
         <div className="flex flex-col justify-center">
           <button
-            className="cw-button border-none hover:bg-stone-300 h-9"
+            className="cw-button header-button"
             title="Friends"
             onClick={() => {
               setOpen(true)

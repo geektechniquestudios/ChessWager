@@ -33,7 +33,7 @@ export const GlobalChat: React.FC<Props> = ({
 
   return (
     <div
-      className="global-chat border-l border-stone-400 dark:border-stone-700 bg-stone-50 dark:bg-stone-800"
+      className="global-chat border-l border-stone-400 dark:border-stone-700 bg-stone-50 dark:bg-stone-900"
       style={{ width: "21em" }}
     >
       <ChatHeader
