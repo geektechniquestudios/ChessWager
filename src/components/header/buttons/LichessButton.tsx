@@ -13,6 +13,8 @@ export const LichessButton: React.FC<Props> = ({}) => {
         className="cw-button header-button"
         title="Watch on Lichess"
         data-toggle="tooltip"
+        target="_blank"
+        rel="noreferrer"
       >
         <SiLichess size="19" className="m-2" title="Watch on Lichess" />
       </a>
