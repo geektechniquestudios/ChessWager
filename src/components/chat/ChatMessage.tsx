@@ -31,7 +31,7 @@ export const ChatMessage: React.FC<Props> = ({ message }) => {
           src={photoURL}
           alt=""
           title={userName}
-          className="chat-user-img w-4 h-4 rounded-full"
+          className="w-4 h-4 rounded-full"
         />
         <div className="text-xs">{`${userName.split(" ")[0]}`}</div>
         <p className="message-text relative text-base break-words">{text}</p>

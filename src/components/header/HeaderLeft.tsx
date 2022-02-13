@@ -13,8 +13,8 @@ export const HeaderLeft: React.FC = () => {
           strokeWidth={2}
           height="2.5em"
         /> */}
-        <LichessButton />
         <AvaxPriceButton />
+        <LichessButton />
       </div>
     </div>
   )

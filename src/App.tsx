@@ -29,7 +29,7 @@ export const App: React.FC = () => {
   )
 
   const [formValue, setFormValue] = useState("")
-  const [open, setOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState("main")
 
   useEffect(() => {
@@ -59,13 +59,16 @@ export const App: React.FC = () => {
 
   return (
     <div className={`${dark} h-full w-full overflow-y-hidden grid`}>
-      <section className="color-shift " id="page">
+      <div
+        className="color-shift grid bg-stone-300 dark:bg-black overflow-hidden"
+        id="page"
+      >
         <header className="color-shift bg-stone-50 dark:bg-stone-900 border-b border-stone-400 dark:border-stone-700 flex items-center">
           <MainHeader
             isDarkOn={isDarkOn}
             setIsDarkOn={setIsDarkOn}
-            open={open}
-            setOpen={setOpen}
+            open={isDropdownOpen}
+            setOpen={setIsDropdownOpen}
             activeMenu={activeMenu}
             setActiveMenu={setActiveMenu}
           />
@@ -105,12 +108,12 @@ export const App: React.FC = () => {
                 setFormValue={setFormValue}
                 setShowChat={setShowChat}
                 setActiveMenu={setActiveMenu}
-                setOpen={setOpen}
+                setOpen={setIsDropdownOpen}
               />
             </aside>
           )}
         </div>
-      </section>
+      </div>
     </div>
   )
 }

@@ -6,7 +6,6 @@
 
 .dropdown {
   transition: height var(--speed) ease;
-  @apply absolute w-64 -translate-x-1/2 bg-stone-100 dark:bg-stone-700 border-2 border-secondary-dark text-stone-800 dark:text-stone-200 p-4 overflow-hidden right-2 top-10 z-50 rounded-md align-middle justify-center flex;
 }
 
 .menu {

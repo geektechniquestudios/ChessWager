@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-$primary: #A8A29E;
-$secondary: #44403C;
+$primary: #a8a29e;
+$secondary: #44403c;
 
 body {
   margin: 0;
@@ -32,8 +32,6 @@ code {
     "game  chat";
   grid-template-columns: minmax(0, 1fr) minmax(0, auto);
   grid-template-rows: $header-size calc(100vh - $header-size - $gap-size);
-
-  @apply grid bg-stone-200 dark:bg-black overflow-hidden;
 }
 
 #page > header {
@@ -61,11 +59,6 @@ code {
 }
 #page > main::-webkit-scrollbar-thumb {
   @apply bg-secondary-dark rounded-full;
-}
-
-.user-img {
-  @extend .color-shift;
-  @apply w-8 h-8 hover:border-teal-800 border-2;
 }
 
 .color-shift {

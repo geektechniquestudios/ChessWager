@@ -38,7 +38,7 @@ export const Dropdown = ({
           <img
             src={photoURL}
             alt=""
-            className="user-img rounded-full hover:border-teal-800 border-stone-900 dark:border-stone-200 border-2"
+            className="w-8 h-8 color-shift rounded-full hover:border-teal-700 border-stone-900 dark:border-stone-200 border-1"
           />
         ) : (
           <BiUserCircle className="w-8 h-8" />
@@ -114,14 +114,19 @@ const DropdownMenu = ({
     } else {
       setMenuHeight(325)
     }
-    activeMenu === "settings" && setMenuHeight(
-      dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
-    )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    activeMenu === "settings" &&
+      setMenuHeight(
+        dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
+      )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return (
-    <div className="dropdown" style={{ height: menuHeight }} ref={dropdownRef}>
+    <div
+      className="dropdown absolute w-64 -translate-x-1/2 bg-stone-100 dark:bg-stone-700 border-2 border-secondary-dark text-stone-800 dark:text-stone-200 p-4 overflow-hidden right-2 top-10 z-50 rounded-md align-middle justify-center flex shadow-2xl"
+      style={{ height: menuHeight }}
+      ref={dropdownRef}
+    >
       <Main
         heightMultiplier={heightMultiplier}
         activeMenu={activeMenu}

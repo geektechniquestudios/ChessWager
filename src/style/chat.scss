@@ -1,7 +1,7 @@
 @import "index.scss";
 
 $form-height: 5em;
-$chat-header-height: 4em;
+$chat-header-height: 3em;
 $main-header-height: 3em;
 
 $primary: #A8A29E;
@@ -54,7 +54,7 @@ $secondary: #44403C;
 }
 
 .sent {
-  @apply  p-2 my-2 rounded-md color-shift;
+  @apply p-2 my-2 rounded-md color-shift;
 }
 .sent p {
   @apply justify-end text-right;
