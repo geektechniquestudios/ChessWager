@@ -23,10 +23,10 @@ export const HeaderRight: React.FC<Props> = ({
 }) => {
   return (
     <div className="flex-auto justify-end align-middle flex mx-3 gap-1.5">
+      <ChatButton setOpen={setOpen} setActiveMenu={setActiveMenu} />
       <FriendsButton setOpen={setOpen} setActiveMenu={setActiveMenu} />
       <NotificationButton setOpen={setOpen} setActiveMenu={setActiveMenu} />
       <SignInButton />
-      <ChatButton setOpen={setOpen} setActiveMenu={setActiveMenu} />
       <Dropdown
         setIsDarkOn={setIsDarkOn}
         isDarkOn={isDarkOn}

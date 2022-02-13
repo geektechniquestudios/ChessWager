@@ -63,7 +63,7 @@ export const App: React.FC = () => {
         className="color-shift grid bg-stone-300 dark:bg-black overflow-hidden"
         id="page"
       >
-        <header className="color-shift bg-stone-50 dark:bg-stone-900 border-b border-stone-400 dark:border-stone-700 flex items-center">
+        <header className="color-shift bg-stone-50 dark:bg-stone-800 border-b border-stone-400 dark:border-stone-700 flex items-center">
           <MainHeader
             isDarkOn={isDarkOn}
             setIsDarkOn={setIsDarkOn}

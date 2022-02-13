@@ -17,7 +17,7 @@ export const NotificationButton: React.FC<Props> = ({
         <div className="flex flex-col justify-center">
           <button
             className="cw-button border-none hover:bg-stone-300 h-9"
-            title="Messages"
+            title="Notifications"
             onClick={() => {
               setOpen(true)
               setActiveMenu("settings")
