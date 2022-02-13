@@ -1,3 +1,4 @@
+import { ChatButton } from "./buttons/ChatButton"
 import { FriendsButton } from "./buttons/FriendsButton"
 import { NotificationButton } from "./buttons/NotificationButton"
 import { SignInButton } from "./buttons/SignInButton"
@@ -25,6 +26,7 @@ export const HeaderRight: React.FC<Props> = ({
       <FriendsButton setOpen={setOpen} setActiveMenu={setActiveMenu} />
       <NotificationButton setOpen={setOpen} setActiveMenu={setActiveMenu} />
       <SignInButton />
+      <ChatButton setOpen={setOpen} setActiveMenu={setActiveMenu} />
       <Dropdown
         setIsDarkOn={setIsDarkOn}
         isDarkOn={isDarkOn}

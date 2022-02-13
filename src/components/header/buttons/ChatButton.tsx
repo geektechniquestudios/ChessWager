@@ -1,4 +1,4 @@
-import { RiNotification3Line } from "react-icons/ri"
+import { RiChat2Line } from "react-icons/ri"
 import { Auth } from "../../containers/Auth"
 
 interface Props {
@@ -6,10 +6,7 @@ interface Props {
   setActiveMenu: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const NotificationButton: React.FC<Props> = ({
-  setOpen,
-  setActiveMenu,
-}) => {
+export const ChatButton: React.FC<Props> = ({setOpen, setActiveMenu}) => {
   const { user } = Auth.useContainer()
   return (
     <>
@@ -17,13 +14,13 @@ export const NotificationButton: React.FC<Props> = ({
         <div className="flex flex-col justify-center">
           <button
             className="cw-button border-none hover:bg-stone-300 h-9"
-            title="Messages"
+            title="Notifications"
             onClick={() => {
               setOpen(true)
               setActiveMenu("settings")
             }}
           >
-            <RiNotification3Line size="21" className="m-2" />
+            <RiChat2Line size="21" className="m-2" />
           </button>
         </div>
       )}
