@@ -19,9 +19,11 @@ export const PlayerData: React.FC<Props> = ({
 }) => {
   return (
     <div className="flex  p-2 w-full justify-between">
-      <div className="flex justify-center">
-        <p className="mx-1 font-bold text-teal-700">{title}</p>
-        <p className="">{`${name}  ${rating}`}</p>
+      <div className="flex flex-col justify-center">
+        <div className="flex justify-center">
+          <p className="mx-1 font-bold text-teal-700">{title}</p>
+          <p className="">{`${name}  ${rating}`}</p>
+        </div>
       </div>
       <Countdown fen={fen} side={side} time={time} />
     </div>

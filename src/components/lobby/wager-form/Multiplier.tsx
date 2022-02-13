@@ -83,7 +83,7 @@ export const Multiplier: React.FC<Props> = ({
               onValueChange={(value) => {
                 setLocalMultiplier(value!)
               }}
-              className="w-14 p-1 text-center bg-stone-100 text-stone-900 dark:bg-stone-900 dark:text-stone-300"
+              className="w-14 p-1 text-center bg-stone-200 text-stone-900 dark:bg-stone-800 dark:text-stone-300"
               allowNegativeValue={false}
               fixedDecimalLength={2}
               onBlur={blur}

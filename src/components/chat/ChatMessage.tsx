@@ -18,7 +18,7 @@ export const ChatMessage: React.FC<Props> = ({ message }) => {
 
   return (
     <div
-      className={`${userMessage} w-full hover:bg-stone-500 color-shift gap-1.5 p-2 rounded-md color-shift flex`}
+      className={`${userMessage} w-full hover:bg-stone-500 color-shift gap-1.5 p-2 rounded-md color-shift inline`}
     >
       <UserTitle photoURL={photoURL} userName={userName} />
       <p className="message-text text-stone-900 dark:text-stone-300 text-sm">{text}</p>

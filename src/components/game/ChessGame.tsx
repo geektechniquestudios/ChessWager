@@ -105,11 +105,11 @@ export const ChessGame: React.FC<Props> = ({ setShowChat }) => {
 
   return (
     <div
-      className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-50 dark:bg-stone-800 text-primary-dark dark:text-primary my-10 p-2.5 w-1/2 shadow-lg border-1 border-stone-600"
+      className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-400 dark:bg-stone-800 text-primary-dark dark:text-primary my-10 p-2.5 w-1/2 shadow-lg border-1 border-stone-500 color-shift"
       style={{ minWidth: "14em", maxWidth: "80vh" }}
     >
       <div className="resize flex w-full h-full justify-center align-middle">
-        <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border-1 border-stone-400 dark:border-stone-700">
+        <div className="flex justify-center flex-col align-middle w-full bg-stone-300 dark:bg-stone-700 border-1 border-stone-500 dark:border-stone-700">
           <div className="flex justify-center w-full">
             <PlayerData
               side={orientation === "white" ? "black" : "white"}
