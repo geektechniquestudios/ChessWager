@@ -18,6 +18,7 @@ interface Props {
   isSelected: boolean
   user1Id: string
   id: string
+  hasUser2Paid: boolean
 }
 
 export const User2Data: React.FC<Props> = ({
@@ -30,9 +31,14 @@ export const User2Data: React.FC<Props> = ({
   status,
   isSelected,
   id,
+  hasUser2Paid,
 }) => {
   return (
-    <div className="flex justify-center align-middle w-full border-1 rounded-sm bg-stone-300 px-2 py-0.5">
+    <div
+      className={` ${
+        hasUser2Paid ? "border-positive" : ""
+      } flex justify-center align-middle w-full border-1 rounded-sm bg-stone-300 px-2 py-0.5`}
+    >
       <div className="flex justify-between w-full gap-2.5">
         <User2BetAmount amount={amount} multiplier={multiplier} />
         <User2FollowThrough

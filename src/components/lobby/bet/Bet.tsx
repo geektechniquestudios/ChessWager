@@ -122,6 +122,7 @@ export const Bet: React.FC<Props> = ({
             status={status}
             isSelected={isSelected}
             id={id}
+            hasUser2Paid={hasUser2Paid}
           />
         </div>
         <RightButtons

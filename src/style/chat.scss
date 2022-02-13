@@ -4,8 +4,8 @@ $form-height: 5em;
 $chat-header-height: 3em;
 $main-header-height: 3em;
 
-$primary: #A8A29E;
-$secondary: #44403C;
+$primary: #a8a29e;
+$secondary: #44403c;
 
 .global-chat {
   @apply text-center flex flex-col;
@@ -47,18 +47,4 @@ $secondary: #44403C;
 }
 .input::-webkit-scrollbar-thumb {
   @apply bg-secondary-dark rounded-full;
-}
-
-.message {
-  @apply flex items-center;
-}
-
-.sent {
-  @apply p-2 my-2 rounded-md color-shift;
-}
-.sent p {
-  @apply justify-end text-right;
-}
-.received p {
-  @apply justify-start text-left;
 }
