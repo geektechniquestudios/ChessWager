@@ -1,5 +1,4 @@
 import "../../../../style/dropdown.scss"
-import { Auth } from "../../../containers/Auth"
 
 import { useState } from "react"
 import { DropdownItem } from "../DropdownItem"
@@ -13,37 +12,19 @@ import { MdOutlineBlock } from "react-icons/md"
 import { GoUnmute } from "react-icons/go"
 import { ImVolumeMute2 } from "react-icons/im"
 
-interface Props {
-  activeMenu: string
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-  setMenuHeight: React.Dispatch<React.SetStateAction<number>>
-  heightMultiplier: number
-}
-
-export const Settings: React.FC<Props> = ({
-  activeMenu,
-  setActiveMenu,
-  setMenuHeight,
-  heightMultiplier,
-}) => {
+export const Settings: React.FC = () => {
   const [profanityFilter, setProfanityFilter] = useState(true)
   const [isMuted, setIsMuted] = useState(false)
   return (
     <>
       <Menu
         menuItems={[
-          <DropdownItem
-            goToMenu="main"
-            leftIcon={<BiArrowBack />}
-            setActiveMenu={setActiveMenu}
-            key={0}
-          >
+          <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
             <h2>Settings</h2>
           </DropdownItem>,
           <div className="border-b-2" key={1} />,
 
           <DropdownItem
-            setActiveMenu={setActiveMenu}
             leftIcon={<MdOutlineBlock />}
             goToMenu="blocked"
             key={2}
@@ -90,9 +71,6 @@ export const Settings: React.FC<Props> = ({
           </StaticDropdownItem>,
         ]}
         thisMenu={"settings"}
-        heightMultiplier={heightMultiplier}
-        activeMenu={activeMenu}
-        setMenuHeight={setMenuHeight}
       />
     </>
   )

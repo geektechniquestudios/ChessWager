@@ -1,16 +1,11 @@
 import { RiNotification3Line } from "react-icons/ri"
 import { Auth } from "../../containers/Auth"
+import { DropdownState } from "../../containers/DropdownState"
 
-interface Props {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-}
-
-export const NotificationButton: React.FC<Props> = ({
-  setOpen,
-  setActiveMenu,
-}) => {
+export const NotificationButton: React.FC = () => {
   const { user } = Auth.useContainer()
+  const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
+
   return (
     <>
       {user && (
@@ -19,7 +14,7 @@ export const NotificationButton: React.FC<Props> = ({
             className="cw-button header-button"
             title="Notifications"
             onClick={() => {
-              setOpen(true)
+              setIsDropdownOpen(true)
               setActiveMenu("settings")
             }}
           >

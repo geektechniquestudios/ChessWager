@@ -13,19 +13,7 @@ import { FiAward } from "react-icons/fi"
 import { MdPeopleOutline } from "react-icons/md"
 import { FaUserTag } from "react-icons/fa"
 
-interface Props {
-  activeMenu: string
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-  setMenuHeight: React.Dispatch<React.SetStateAction<number>>
-  heightMultiplier: number
-}
-
-export const Profile: React.FC<Props> = ({
-  activeMenu,
-  setActiveMenu,
-  setMenuHeight,
-  heightMultiplier,
-}) => {
+export const Profile: React.FC = () => {
   const { user } = Auth.useContainer()
   const uploadImage = async (file: File) => {
     // upload image to firebase storage
@@ -38,44 +26,23 @@ export const Profile: React.FC<Props> = ({
     <>
       <Menu
         menuItems={[
-          <DropdownItem
-            goToMenu="main"
-            leftIcon={<BiArrowBack />}
-            setActiveMenu={setActiveMenu}
-            key={0}
-          >
+          <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
             <h2>Profile</h2>
           </DropdownItem>,
           <div className="border-b-2" key={1}>
             {" "}
           </div>,
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            leftIcon={<MdPeopleOutline />}
-            key={2}
-          >
+          <DropdownItem leftIcon={<MdPeopleOutline />} key={2}>
             Friends
           </DropdownItem>,
 
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            leftIcon={<ImStatsBars />}
-            key={3}
-          >
+          <DropdownItem leftIcon={<ImStatsBars />} key={3}>
             Stats
           </DropdownItem>,
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            leftIcon={<FiAward />}
-            key={4}
-          >
+          <DropdownItem leftIcon={<FiAward />} key={4}>
             Achievements
           </DropdownItem>,
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            leftIcon={<FaUserTag />}
-            key={5}
-          >
+          <DropdownItem leftIcon={<FaUserTag />} key={5}>
             Display Name
           </DropdownItem>,
           <StaticDropdownItem
@@ -102,9 +69,6 @@ export const Profile: React.FC<Props> = ({
           </StaticDropdownItem>,
         ]}
         thisMenu={"profile"}
-        heightMultiplier={heightMultiplier}
-        activeMenu={activeMenu}
-        setMenuHeight={setMenuHeight}
       />
     </>
   )

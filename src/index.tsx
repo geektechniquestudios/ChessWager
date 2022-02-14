@@ -10,6 +10,10 @@ import { Price } from "./components/containers/Price"
 import { ThemeProvider } from "@mui/system"
 import { createTheme } from "@mui/material/styles"
 import { teal } from "@mui/material/colors"
+import { ChatFormData } from "./components/containers/ChatFormData"
+import { ChatToggle } from "./components/containers/ChatToggle"
+import { DarkMode } from "./components/containers/DarkMode"
+import { DropdownState } from "./components/containers/DropdownState"
 
 const theme = createTheme({
   palette: {
@@ -23,9 +27,17 @@ ReactDOM.render(
       <Auth.Provider>
         <GameId.Provider>
           <Price.Provider>
-            <ThemeProvider theme={theme}>
-              <App />
-            </ThemeProvider>
+            <ChatFormData.Provider>
+              <ChatToggle.Provider>
+                <DarkMode.Provider>
+                  <DropdownState.Provider>
+                    <ThemeProvider theme={theme}>
+                      <App />
+                    </ThemeProvider>
+                  </DropdownState.Provider>
+                </DarkMode.Provider>
+              </ChatToggle.Provider>
+            </ChatFormData.Provider>
           </Price.Provider>
         </GameId.Provider>
       </Auth.Provider>

@@ -25,19 +25,7 @@ import { Menu } from "../Menu"
 
 const firestore = firebase.firestore()
 
-interface Props {
-  activeMenu: string
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-  setMenuHeight: React.Dispatch<React.SetStateAction<number>>
-  heightMultiplier: number
-}
-
-export const Blocked: React.FC<Props> = ({
-  activeMenu,
-  setActiveMenu,
-  setMenuHeight,
-  heightMultiplier,
-}) => {
+export const Blocked: React.FC = () => {
   // const { user } = Auth.useContainer()
   // const [blocked, setBlocked] = useState(undefined)
   // if (user) {
@@ -58,20 +46,11 @@ export const Blocked: React.FC<Props> = ({
     <>
       <Menu
         menuItems={[
-            <DropdownItem
-              setActiveMenu={setActiveMenu}
-              leftIcon={<BsArrowLeft />}
-              goToMenu="settings"
-              key={0}
-            >
-              Blocked Users
-            </DropdownItem>
-          ,
+          <DropdownItem leftIcon={<BsArrowLeft />} goToMenu="settings" key={0}>
+            Blocked Users
+          </DropdownItem>,
         ]}
         thisMenu={"blocked"}
-        heightMultiplier={heightMultiplier}
-        activeMenu={activeMenu}
-        setMenuHeight={setMenuHeight}
       />
     </>
   )

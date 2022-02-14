@@ -17,44 +17,23 @@ import { BiHelpCircle } from "react-icons/bi"
 import { MdAttachMoney, MdMoneyOff, MdOutlineDarkMode } from "react-icons/md"
 import { BsSun } from "react-icons/bs"
 import { GoGift } from "react-icons/go"
+import { DropdownState } from "../../../containers/DropdownState"
+import { DarkMode } from "../../../containers/DarkMode"
 
-interface Props {
-  activeMenu: string
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-  setMenuHeight: React.Dispatch<React.SetStateAction<number>>
-  setIsDarkOn: React.Dispatch<React.SetStateAction<boolean>>
-  isDarkOn: boolean
-  heightMultiplier: number
-  dropdownRef: any
-}
-
-export const Main: React.FC<Props> = ({
-  activeMenu,
-  setActiveMenu,
-  setMenuHeight,
-  setIsDarkOn,
-  isDarkOn,
-  heightMultiplier,
-  dropdownRef,
-}) => {
-  // const userDocumentRef = firebase.firestore().collection("users")
+export const Main: React.FC = () => {
   const {
     user,
     signOutWithGoogle,
     signInWithGoogle,
     connectWallet,
-    isWalletConnecting,
     isWalletConnected,
     disconnectWallet,
   } = Auth.useContainer()
-  // const userRef = userDocumentRef.doc(user?.uid)
 
+  const { setMenuHeight, activeMenu, heightMultiplier } =
+    DropdownState.useContainer()
+  const { isDarkOn, setIsDarkOn } = DarkMode.useContainer()
   const updateUserDarkPref = (isChecked: boolean) => {
-    // if (user?.uid) {
-    //   userRef.update({
-    //     darkMode: isChecked,
-    //   })
-    // }
     localStorage.setItem("darkMode", isChecked.toString())
   }
 
@@ -62,13 +41,6 @@ export const Main: React.FC<Props> = ({
     const height = el.offsetHeight * heightMultiplier
     setMenuHeight(height)
   }
-  // useEffect(() => {
-  //   // const height = dropdownRef.current?.firstChild.offsetHeight
-  //   setMenuHeight(
-  //     dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
-
-  //   )
-  // }, [user, dropdownRef, heightMultiplier, setMenuHeight])
 
   return (
     <>
@@ -81,45 +53,25 @@ export const Main: React.FC<Props> = ({
       >
         <div className="menu">
           {user && (
-            <DropdownItem
-              leftIcon={<CgProfile />}
-              goToMenu="profile"
-              setActiveMenu={setActiveMenu}
-            >
+            <DropdownItem leftIcon={<CgProfile />} goToMenu="profile">
               Profile
             </DropdownItem>
           )}
           {user && (
-            <DropdownItem
-              leftIcon={<RiSettings5Line />}
-              goToMenu="settings"
-              setActiveMenu={setActiveMenu}
-            >
+            <DropdownItem leftIcon={<RiSettings5Line />} goToMenu="settings">
               Settings
             </DropdownItem>
           )}
 
           {user && (
-            <DropdownItem
-              leftIcon={<GoGift />}
-              goToMenu="store"
-              setActiveMenu={setActiveMenu}
-            >
+            <DropdownItem leftIcon={<GoGift />} goToMenu="store">
               Store
             </DropdownItem>
           )}
-          <DropdownItem
-            leftIcon={<BsShare />}
-            goToMenu="social"
-            setActiveMenu={setActiveMenu}
-          >
+          <DropdownItem leftIcon={<BsShare />} goToMenu="social">
             Social
           </DropdownItem>
-          <DropdownItem
-            leftIcon={<BiHelpCircle />}
-            goToMenu="help"
-            setActiveMenu={setActiveMenu}
-          >
+          <DropdownItem leftIcon={<BiHelpCircle />} goToMenu="help">
             Help
           </DropdownItem>
           <StaticDropdownItem

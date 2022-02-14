@@ -1,13 +1,10 @@
 import { RiChat2Line } from "react-icons/ri"
 import { Auth } from "../../containers/Auth"
+import { DropdownState } from "../../containers/DropdownState"
 
-interface Props {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-}
-
-export const ChatButton: React.FC<Props> = ({setOpen, setActiveMenu}) => {
+export const ChatButton: React.FC = () => {
   const { user } = Auth.useContainer()
+  const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
   return (
     <>
       {user && (
@@ -16,7 +13,7 @@ export const ChatButton: React.FC<Props> = ({setOpen, setActiveMenu}) => {
             className="cw-button header-button"
             title="Messages"
             onClick={() => {
-              setOpen(true)
+              setIsDropdownOpen(true)
               setActiveMenu("settings")
             }}
           >

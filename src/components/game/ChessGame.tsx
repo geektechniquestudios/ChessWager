@@ -30,12 +30,9 @@ interface Player {
   rating: number
 }
 
-interface Props {
-  setShowChat: React.Dispatch<any>
-}
-
-export const ChessGame: React.FC<Props> = ({ setShowChat }) => {
+export const ChessGame: React.FC = () => {
   const { setGameId } = GameId.useContainer()
+  // const { setShowChat } = ChatToggle.useContainer()
 
   const [fen, setFen] = useState("")
 
@@ -109,7 +106,7 @@ export const ChessGame: React.FC<Props> = ({ setShowChat }) => {
       style={{ minWidth: "14em", maxWidth: "80vh" }}
     >
       <div className="resize flex w-full h-full justify-center align-middle">
-        <div className="flex justify-center flex-col align-middle w-full bg-stone-300 dark:bg-stone-700 border-1 border-stone-500 dark:border-stone-700">
+        <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border-1 border-stone-500 dark:border-stone-700">
           <div className="flex justify-center w-full">
             <PlayerData
               side={orientation === "white" ? "black" : "white"}

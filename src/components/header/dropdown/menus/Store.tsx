@@ -7,75 +7,36 @@ import { Menu } from "../Menu"
 import { BsSuitClub } from "react-icons/bs"
 import { SiOpenbadges } from "react-icons/si"
 import { GiMonkey } from "react-icons/gi"
-import {RiShirtLine} from "react-icons/ri"
+import { RiShirtLine } from "react-icons/ri"
 // import { GiPoliceBadge } from "react-icons/gi"
 
-interface Props {
-  activeMenu: string
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-  setMenuHeight: React.Dispatch<React.SetStateAction<number>>
-  heightMultiplier: number
-}
-
-export const Store: React.FC<Props> = ({
-  activeMenu,
-  setActiveMenu,
-  setMenuHeight,
-  heightMultiplier,
-}) => {
+export const Store: React.FC = () => {
   return (
     <>
       <Menu
         menuItems={[
-          <DropdownItem
-            goToMenu="main"
-            leftIcon={<BiArrowBack />}
-            setActiveMenu={setActiveMenu}
-            key={0}
-          >
+          <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
             <h2>Store</h2>
           </DropdownItem>,
-          <div className="border-b-2"  key={1}/>,
+          <div className="border-b-2" key={1} />,
 
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            leftIcon={<BsSuitClub />}
-            goToMenu="blocked"
-            key={2}
-          >
+          <DropdownItem leftIcon={<BsSuitClub />} goToMenu="blocked" key={2}>
             Membership
           </DropdownItem>,
-          
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            leftIcon={<SiOpenbadges />}
-            goToMenu="blocked"
-            key={3}
-          >
+
+          <DropdownItem leftIcon={<SiOpenbadges />} goToMenu="blocked" key={3}>
             Badges
           </DropdownItem>,
 
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            leftIcon={<GiMonkey />}
-            goToMenu="blocked"
-            key={4}
-          >
+          <DropdownItem leftIcon={<GiMonkey />} goToMenu="blocked" key={4}>
             NFTs
           </DropdownItem>,
 
-          <DropdownItem
-            setActiveMenu={setActiveMenu}
-            leftIcon={<RiShirtLine />}
-            goToMenu="blocked"
-            key={5}>
-              Merch
-            </DropdownItem>
+          <DropdownItem leftIcon={<RiShirtLine />} goToMenu="blocked" key={5}>
+            Merch
+          </DropdownItem>,
         ]}
         thisMenu={"store"}
-        heightMultiplier={heightMultiplier}
-        activeMenu={activeMenu}
-        setMenuHeight={setMenuHeight}
       />
     </>
   )

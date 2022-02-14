@@ -5,20 +5,17 @@ interface Props {
 
 export const UserTitle: React.FC<Props> = ({ photoURL, userName }) => {
   return (
-    <div className="">
-      <div className="flex gap-1">
-        <div className="flex flex-col justify-center">
-          <img
-            src={photoURL}
-            alt=""
-            title={userName}
-            className="w-4 h-4 rounded-full"
-          />
-        </div>
-        <div className="flex flex-col justify-center">
-          <p className="text-xs font-bold text-stone-900 dark:text-stone-300">{`${userName}:`}</p>
-        </div>
-      </div>
-    </div>
+    // eslint-disable-next-line jsx-a11y/anchor-is-valid
+    <a
+      className="flex gap-1 mr-1 float-left hover:underline"
+    >
+      <img
+        src={photoURL}
+        alt=""
+        title={userName}
+        className="w-4 h-4 rounded-full"
+      />
+      <p className="text-xs font-bold text-stone-900 dark:text-stone-300 hover:underline">{`${userName}:`}</p>
+    </a>
   )
 }

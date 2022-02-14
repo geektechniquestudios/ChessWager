@@ -11,21 +11,7 @@ import { ChatHeader } from "./ChatHeader"
 import { ChatForm } from "./ChatForm"
 import { ChatBody } from "./ChatBody"
 
-interface Props {
-  formValue: string
-  setFormValue: React.Dispatch<React.SetStateAction<string>>
-  setShowChat: React.Dispatch<React.SetStateAction<boolean>>
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export const GlobalChat: React.FC<Props> = ({
-  formValue,
-  setFormValue,
-  setShowChat,
-  setActiveMenu,
-  setOpen,
-}) => {
+export const GlobalChat: React.FC = () => {
   const { firestore } = Firestore.useContainer()
 
   const dummy = useRef<HTMLInputElement>(null)
@@ -36,18 +22,9 @@ export const GlobalChat: React.FC<Props> = ({
       className="global-chat flex flex-col border-l border-stone-400 dark:border-stone-700 bg-stone-50 dark:bg-stone-900"
       style={{ width: "21em" }}
     >
-      <ChatHeader
-        setActiveMenu={setActiveMenu}
-        setOpen={setOpen}
-        setShowChat={setShowChat}
-      />
+      <ChatHeader />
       <main className="global-chat-main flex flex-col-reverse">
-        <ChatForm
-          formValue={formValue}
-          setFormValue={setFormValue}
-          dummy={dummy}
-          messagesRef={messagesRef}
-        />
+        <ChatForm dummy={dummy} messagesRef={messagesRef} />
         <span ref={dummy}></span>
         <ChatBody messagesRef={messagesRef} />
       </main>

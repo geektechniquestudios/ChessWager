@@ -1,9 +1,10 @@
+import { DropdownState } from "../../containers/DropdownState"
+
 interface Props {
   children?: React.ReactNode
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
   goToMenu?: string
-  setActiveMenu: any
 }
 
 export const DropdownItem: React.FC<Props> = ({
@@ -11,8 +12,8 @@ export const DropdownItem: React.FC<Props> = ({
   leftIcon,
   rightIcon,
   goToMenu,
-  setActiveMenu,
 }) => {
+  const { setActiveMenu } = DropdownState.useContainer()
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a

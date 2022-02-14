@@ -12,35 +12,16 @@ import {
   RiYoutubeLine,
 } from "react-icons/ri"
 import { StaticDropdownItem } from "../StaticDropdownItem"
-interface Props {
-  activeMenu: string
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-  setMenuHeight: React.Dispatch<React.SetStateAction<number>>
-  heightMultiplier: number
-}
 
-export const Social: React.FC<Props> = ({
-  activeMenu,
-  setActiveMenu,
-  setMenuHeight,
-  heightMultiplier,
-}) => {
+export const Social: React.FC = () => {
   return (
     <>
       <Menu
         menuItems={[
-          <DropdownItem
-            goToMenu="main"
-            leftIcon={<BiArrowBack />}
-            setActiveMenu={setActiveMenu}
-            key={0}
-          >
+          <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
             <h2>Social</h2>
           </DropdownItem>,
-          <div className="border-b-2" key={1}>
-            {" "}
-          </div>,
-
+          <div className="border-b-2" key={1} />,
           <StaticDropdownItem
             url="https://www.instagram.com/chesswager/"
             leftIcon={<RiInstagramLine />}
@@ -90,9 +71,6 @@ export const Social: React.FC<Props> = ({
           </StaticDropdownItem>,
         ]}
         thisMenu={"social"}
-        heightMultiplier={heightMultiplier}
-        activeMenu={activeMenu}
-        setMenuHeight={setMenuHeight}
       />
     </>
   )

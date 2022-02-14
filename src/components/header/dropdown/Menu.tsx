@@ -1,20 +1,15 @@
 import { CSSTransition } from "react-transition-group"
+import { DropdownState } from "../../containers/DropdownState"
 
 interface Props {
-  activeMenu: string
   thisMenu: string
-  setMenuHeight: React.Dispatch<React.SetStateAction<number>>
-  heightMultiplier: number
   menuItems: any
 }
 
-export const Menu: React.FC<Props> = ({
-  activeMenu,
-  thisMenu,
-  setMenuHeight,
-  heightMultiplier,
-  menuItems,
-}) => {
+export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
+  const { activeMenu, heightMultiplier, setMenuHeight } =
+    DropdownState.useContainer()
+
   const calcHeight = (el: any) => {
     const height = el.offsetHeight * heightMultiplier
     setMenuHeight(height)

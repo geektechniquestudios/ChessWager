@@ -1,17 +1,11 @@
 import { BiArrowFromLeft } from "react-icons/bi"
 import { RiChatSettingsLine } from "react-icons/ri"
+import { ChatToggle } from "../containers/ChatToggle"
+import { DropdownState } from "../containers/DropdownState"
 
-interface Props {
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setShowChat: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export const ChatHeader: React.FC<Props> = ({
-  setActiveMenu,
-  setOpen,
-  setShowChat,
-}) => {
+export const ChatHeader: React.FC = () => {
+  const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
+  const { setShowChat } = ChatToggle.useContainer()
   return (
     <header className="global-chat-header flex bg-stone-200 dark:bg-stone-700 border-b border-stone-400 dark:border-stone-700 justify-between">
       <button
@@ -33,7 +27,7 @@ export const ChatHeader: React.FC<Props> = ({
         className=" hover:bg-stone-400 dark:hover:bg-stone-900 rounded-sm color-shift m-2"
         onClick={() => {
           setActiveMenu("settings")
-          setOpen(true)
+          setIsDropdownOpen(true)
         }}
       >
         <RiChatSettingsLine

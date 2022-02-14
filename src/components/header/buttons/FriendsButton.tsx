@@ -1,13 +1,11 @@
 import { FiUsers } from "react-icons/fi"
 import { Auth } from "../../containers/Auth"
+import { DropdownState } from "../../containers/DropdownState"
 
-interface Props {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setActiveMenu: React.Dispatch<React.SetStateAction<string>>
-}
-
-export const FriendsButton: React.FC<Props> = ({ setOpen, setActiveMenu }) => {
+export const FriendsButton: React.FC = () => {
   const { user } = Auth.useContainer()
+  const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
+
   return (
     <>
       {user && (
@@ -16,7 +14,7 @@ export const FriendsButton: React.FC<Props> = ({ setOpen, setActiveMenu }) => {
             className="cw-button header-button"
             title="Friends"
             onClick={() => {
-              setOpen(true)
+              setIsDropdownOpen(true)
               setActiveMenu("settings")
             }}
           >

@@ -1,5 +1,5 @@
 import "./config"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { BettingLobby } from "./components/lobby/BettingLobby"
 import { ChessGame } from "./components/game/ChessGame"
 import { MainHeader } from "./components/header/MainHeader"
@@ -11,26 +11,14 @@ import { Auth } from "./components/containers/Auth"
 import { BiArrowFromRight } from "react-icons/bi"
 import firebase from "firebase/compat/app"
 import { FundedBets } from "./components/funded-bets/FundedBets"
+import { DarkMode } from "./components/containers/DarkMode"
+import { ChatToggle } from "./components/containers/ChatToggle"
 
 export const App: React.FC = () => {
   const { auth } = Auth.useContainer()
-  const [showChat, setShowChat] = useState(
-    localStorage.getItem("showChat") === "true" ||
-      localStorage.getItem("showChat") === "false"
-      ? JSON.parse(localStorage.getItem("showChat")!)
-      : true,
-  )
 
-  const [isDarkOn, setIsDarkOn] = useState(
-    localStorage.getItem("darkMode") === "true" ||
-      localStorage.getItem("darkMode") === "false"
-      ? JSON.parse(localStorage.getItem("darkMode")!)
-      : true,
-  )
-
-  const [formValue, setFormValue] = useState("")
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [activeMenu, setActiveMenu] = useState("main")
+  const { isDarkOn, setIsDarkOn } = DarkMode.useContainer()
+  const { showChat, setShowChat } = ChatToggle.useContainer()
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: any) => {
@@ -64,14 +52,7 @@ export const App: React.FC = () => {
         id="page"
       >
         <header className="color-shift bg-stone-50 dark:bg-stone-800 border-b border-stone-400 dark:border-stone-700 flex items-center">
-          <MainHeader
-            isDarkOn={isDarkOn}
-            setIsDarkOn={setIsDarkOn}
-            open={isDropdownOpen}
-            setOpen={setIsDropdownOpen}
-            activeMenu={activeMenu}
-            setActiveMenu={setActiveMenu}
-          />
+          <MainHeader />
         </header>
         <main className="overflow-y-auto flex justify-center">
           <div className="w-full">
@@ -93,7 +74,7 @@ export const App: React.FC = () => {
               <div className="flex overflow-y-hidden overflow-x-visible">
                 <FundedBets />
                 <div className="flex justify-center w-full">
-                  <ChessGame setShowChat={setShowChat} />
+                  <ChessGame />
                 </div>
               </div>
             </div>
@@ -103,13 +84,7 @@ export const App: React.FC = () => {
         <div>
           {showChat && (
             <aside className="h-full">
-              <GlobalChat
-                formValue={formValue}
-                setFormValue={setFormValue}
-                setShowChat={setShowChat}
-                setActiveMenu={setActiveMenu}
-                setOpen={setIsDropdownOpen}
-              />
+              <GlobalChat />
             </aside>
           )}
         </div>

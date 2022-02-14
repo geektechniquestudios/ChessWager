@@ -1,21 +1,16 @@
 import { TextareaAutosize } from "@mui/material"
 import { Auth } from "../containers/Auth"
 import firebase from "firebase/compat/app"
+import { ChatFormData } from "../containers/ChatFormData"
 
 interface Props {
-  formValue: string
-  setFormValue: React.Dispatch<React.SetStateAction<string>>
   dummy: React.RefObject<HTMLInputElement>
   messagesRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
 }
 
-export const ChatForm: React.FC<Props> = ({
-  formValue,
-  setFormValue,
-  dummy,
-  messagesRef,
-}) => {
+export const ChatForm: React.FC<Props> = ({ dummy, messagesRef }) => {
   const { user, auth } = Auth.useContainer()
+  const { formValue, setFormValue } = ChatFormData.useContainer()
 
   const sendMessage = async (
     e:
