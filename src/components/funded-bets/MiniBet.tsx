@@ -1,6 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import firebase from "firebase/compat"
-
 import "../../style/lobby.scss"
 import "firebase/compat/functions"
 import { BigNumber, ethers } from "ethers"

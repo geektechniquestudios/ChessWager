@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react"
 // @ts-ignore
 import ndjsonStream from "can-ndjson-stream"
 import "react-chessground/dist/styles/chessground.css"
-import "../../style/game.scss"
 import { PlayerData } from "./PlayerData"
 import { GameId } from "../containers/GameId"
 // @ts-ignore
@@ -101,43 +100,45 @@ export const ChessGame: React.FC = () => {
   }, [updateTitles])
 
   return (
-    <div
-      className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-400 dark:bg-stone-800 text-primary-dark dark:text-primary my-10 p-2.5 w-1/2 shadow-lg border-1 border-stone-500 color-shift min-w-min"
-      style={{ minWidth: "14em", maxWidth: "80vh" }}
-    >
-      <div className="resize flex w-full h-full justify-center align-middle">
-        <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border-1 border-stone-500 dark:border-stone-700">
-          <div className="flex justify-center w-full">
-            <PlayerData
-              side={orientation === "white" ? "black" : "white"}
-              title={orientation === "white" ? blackTitle : whiteTitle}
-              name={orientation === "white" ? blackName : whiteName}
-              time={orientation === "white" ? blackTime : whiteTime}
-              rating={orientation === "white" ? blackRating : whiteRating}
-              fen={fen}
-            />
-          </div>
-          <div className="aspect-w-1 aspect-h-1">
-            <Chessground
-              coordinates={false}
-              id="chess-board"
-              fen={fen}
-              orientation={orientation}
-              draggable={{ enabled: false }}
-              movable={{ free: false }}
-              height="100%"
-              width="100%"
-            />
-          </div>
-          <div className="flex justify-center">
-            <PlayerData
-              side={orientation === "white" ? "white" : "black"}
-              title={orientation === "black" ? blackTitle : whiteTitle}
-              name={orientation === "black" ? blackName : whiteName}
-              time={orientation === "black" ? blackTime : whiteTime}
-              rating={orientation === "black" ? blackRating : whiteRating}
-              fen={fen}
-            />
+    <div className="flex justify-center w-full">
+      <div
+        className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-400 dark:bg-stone-800 text-primary-dark dark:text-primary my-10 p-2.5 w-1/2 shadow-lg border-1 border-stone-500 color-shift min-w-min"
+        style={{ minWidth: "14em", maxWidth: "80vh" }}
+      >
+        <div className="resize flex w-full h-full justify-center align-middle">
+          <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border-1 border-stone-500 dark:border-stone-700">
+            <div className="flex justify-center w-full">
+              <PlayerData
+                side={orientation === "white" ? "black" : "white"}
+                title={orientation === "white" ? blackTitle : whiteTitle}
+                name={orientation === "white" ? blackName : whiteName}
+                time={orientation === "white" ? blackTime : whiteTime}
+                rating={orientation === "white" ? blackRating : whiteRating}
+                fen={fen}
+              />
+            </div>
+            <div className="aspect-w-1 aspect-h-1">
+              <Chessground
+                coordinates={false}
+                id="chess-board"
+                fen={fen}
+                orientation={orientation}
+                draggable={{ enabled: false }}
+                movable={{ free: false }}
+                height="100%"
+                width="100%"
+              />
+            </div>
+            <div className="flex justify-center">
+              <PlayerData
+                side={orientation === "white" ? "white" : "black"}
+                title={orientation === "black" ? blackTitle : whiteTitle}
+                name={orientation === "black" ? blackName : whiteName}
+                time={orientation === "black" ? blackTime : whiteTime}
+                rating={orientation === "black" ? blackRating : whiteRating}
+                fen={fen}
+              />
+            </div>
           </div>
         </div>
       </div>

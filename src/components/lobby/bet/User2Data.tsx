@@ -1,8 +1,5 @@
-import { Auth } from "../../containers/Auth"
-import { ApproveButton } from "./ApproveButton"
 import { ApproveKickWrapper } from "./ApproveKickWrapper"
 import { JoinButton } from "./JoinButton"
-import { KickButton } from "./KickButton"
 import { User2BetAmount } from "./User2BetAmount"
 import { User2FollowThrough } from "./User2FollowThrough"
 import { User2Image } from "./User2Image"

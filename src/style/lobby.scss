@@ -1,12 +1,6 @@
 @import "index.scss";
 
 a:hover {
-  // background: rgb(0, 0, 0);
-  // background: radial-gradient(
-  //   circle,
-  //   rgba(0, 0, 0, 0) 48%,
-  //   rgba(19, 78, 74, 0.26094187675070024) 100%
-  // );
   @extend .color-shift;
   @apply text-black cursor-pointer;
 }

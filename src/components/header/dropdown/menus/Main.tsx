@@ -98,8 +98,6 @@ export const Main: React.FC = () => {
             <StaticDropdownItem
               onClick={connectWallet}
               leftIcon={<MdAttachMoney />}
-              // rightIcon={isWalletConnecting ?? <div className={"animate-ping"}> . </div>}
-              // rightIcon={true ?? <div className="animate-ping"> test </div>}
             >
               Connect Wallet
             </StaticDropdownItem>
@@ -108,8 +106,6 @@ export const Main: React.FC = () => {
             <StaticDropdownItem
               onClick={disconnectWallet}
               leftIcon={<MdMoneyOff />}
-              // rightIcon={true ?? <div className="animate-ping"> test </div>}
-              // rightIcon={<div>{isWalletConnecting ? "." : ""}</div>}
             >
               Disconnect Wallet
             </StaticDropdownItem>

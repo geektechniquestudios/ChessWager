@@ -1,6 +1,5 @@
 import "firebase/compat/firestore"
 import "firebase/compat/auth"
-import "../../style/header.scss"
 import "react-toggle/style.css"
 import { HeaderLeft } from "./HeaderLeft"
 import { HeaderMiddle } from "./HeaderMiddle"
