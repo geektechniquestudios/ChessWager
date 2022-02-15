@@ -31,7 +31,6 @@ interface Player {
 
 export const ChessGame: React.FC = () => {
   const { setGameId } = GameId.useContainer()
-  // const { setShowChat } = ChatToggle.useContainer()
 
   const [fen, setFen] = useState("")
 

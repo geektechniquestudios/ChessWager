@@ -24,27 +24,24 @@ code {
   $header-size: 3em;
   gap: $gap-size;
   grid-template-areas:
-    "head  head"
+    "header  header"
     "game  chat";
   grid-template-columns: minmax(0, 1fr) minmax(0, auto);
   grid-template-rows: $header-size calc(100vh - $header-size - $gap-size);
 }
 
 #page > header {
-  grid-area: head;
+  grid-area: header;
 }
 
 #page > main {
   grid-area: game;
+  scrollbar-width: thin;
+  scrollbar-color: $primary $secondary;
 }
 
 #page > aside {
   grid-area: chat;
-}
-
-#page > main {
-  scrollbar-width: thin;
-  scrollbar-color: $primary $secondary;
 }
 
 #page > main::-webkit-scrollbar {

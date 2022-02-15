@@ -32,12 +32,11 @@ export const Countdown: React.FC<Props> = ({ fen, side, time }) => {
         setCount(count + 1)
       }, 1000)
       return () => clearInterval(interval)
-    }
-    else {
+    } else {
       setIsPlayerTurn(false)
     }
     return
-  })
+  }, [fen, side, count])
 
   useEffect(() => {
     setCount(0)
@@ -51,10 +50,10 @@ export const Countdown: React.FC<Props> = ({ fen, side, time }) => {
     }
   }
 
-  const backlight = isPlayerTurn ? "bg-green-700" : ""
+  const bgColor = isPlayerTurn ? "bg-green-700" : ""
 
   return (
-    <div className={`${backlight} border p-1`}>
+    <div className={`${bgColor} border p-1`}>
       {formatTime(secondsToShow(time - count - 1))}
     </div>
   )

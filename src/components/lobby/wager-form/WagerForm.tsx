@@ -34,6 +34,7 @@ export const WagerForm: React.FC = () => {
     firestore.collection("lobby")
   const userRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("users")
+
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -83,7 +84,7 @@ export const WagerForm: React.FC = () => {
   }
 
   return (
-    <div className="flex border-1 h-full shadow-2xl bg-stone-100 dark:bg-stone-900">
+    <div className="flex h-full shadow-2xl bg-stone-100 dark:bg-stone-900">
       <div className="flex w-full p-2">
         <fieldset disabled={!auth.currentUser} className="flex w-full">
           <form

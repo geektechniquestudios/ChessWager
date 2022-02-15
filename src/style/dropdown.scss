@@ -9,17 +9,11 @@
 }
 
 .menu {
-  @apply w-56 justify-center;
+  @apply w-52 justify-center;
 }
 
 .menu-item {
-  @apply h-14 flex items-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-600 p-1 m-0.5 w-52 dark:text-stone-200 dark:hover:text-stone-200;
-}
-.icon-left {
-  @apply mr-auto;
-}
-.icon-right {
-  @apply ml-auto;
+  @apply h-14 flex items-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-600 p-1 m-0.5 w-full dark:text-stone-200 dark:hover:text-stone-200;
 }
 
 /* CSSTransition classes  */
@@ -39,40 +33,30 @@
   transition: all var(--speed) ease;
 }
 
-.menu-secondary-enter {
-  transform: translateX(110%);
-}
-.menu-secondary-enter-active {
-  transform: translateX(0%);
-  transition: all var(--speed) ease;
-}
-.menu-secondary-exit {
-}
-.menu-secondary-exit-active {
-  transform: translateX(110%);
-  transition: all var(--speed) ease;
+.menu-toggle {
+  @apply bg-gradient-to-r from-stone-400 to-stone-900;
 }
 
 .toggle.react-toggle--checked .react-toggle-track {
-  @apply bg-gradient-to-r from-teal-400 to-teal-900;
+  @extend .menu-toggle;
 }
 
 .toggle.react-toggle .react-toggle-track {
-  @apply bg-gradient-to-r from-teal-400 to-teal-900;
+  @extend .menu-toggle;
 }
 
 .toggle.react-toggle--checked .react-toggle-thumb {
-  @apply bg-primary-dark pointer-events-none border-none;
+  @apply bg-stone-800 pointer-events-none border-stone-700;
 }
 
 .filter-toggle.react-toggle--checked .react-toggle-track {
-  @apply bg-gradient-to-r from-teal-400 to-teal-900;
+  @extend .menu-toggle;
 }
 
 .filter-toggle.react-toggle .react-toggle-track {
-  @apply bg-gradient-to-r bg-primary-dark to-secondary-dark;
+  @apply bg-gradient-to-r bg-stone-800 to-stone-300;
 }
 
 .filter-toggle.react-toggle--checked .react-toggle-thumb {
-  @apply bg-primary-dark pointer-events-none border-none;
+  @apply bg-stone-800 pointer-events-none border-stone-700;
 }

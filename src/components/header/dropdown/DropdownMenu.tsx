@@ -29,10 +29,10 @@ const CloseMenuListener = (ref: any) => {
 }
 
 export const DropdownMenu = () => {
-  const dropdownRef = useRef(null)
+  const dropdownRef = useRef<any>()
 
   const { user } = Auth.useContainer()
-  const { menuHeight, setMenuHeight } = DropdownState.useContainer()
+  const { menuHeight, setMenuHeight, activeMenu, heightMultiplier } = DropdownState.useContainer()
 
   CloseMenuListener(dropdownRef)
 
@@ -46,8 +46,7 @@ export const DropdownMenu = () => {
     //   setMenuHeight(
     //     dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
     //   )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [setMenuHeight, user])
 
   return (
     <div
