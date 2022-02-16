@@ -18,7 +18,7 @@ export const PlayerData: React.FC<Props> = ({
   side,
 }) => {
   return (
-    <div className="flex p-2 w-full justify-between">
+    <div className="flex w-full justify-between">
       <div className="flex flex-col justify-center">
         <div className="flex justify-center">
           <p className="mx-1 font-bold text-teal-700">{title}</p>

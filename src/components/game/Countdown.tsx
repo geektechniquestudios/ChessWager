@@ -50,11 +50,11 @@ export const Countdown: React.FC<Props> = ({ fen, side, time }) => {
     }
   }
 
-  const bgColor = isPlayerTurn ? "bg-green-700" : ""
+  const bgColor = isPlayerTurn ? "dark:bg-teal-800 bg-teal-50" : ""
 
   return (
-    <div className={`${bgColor} border p-1`}>
+    <p className={`bg-stone-300 dark:bg-stone-600 text-2xl p-1.5 border-l border-stone-900 ${bgColor} `}>
       {formatTime(secondsToShow(time - count - 1))}
-    </div>
+    </p>
   )
 }

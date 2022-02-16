@@ -91,6 +91,8 @@ export const ChessGame: React.FC = () => {
               setBlackTime(res.value.d.bc)
             } else {
               updateTitles(res.value)
+              setWhiteTime(0)
+              setBlackTime(0)
             }
           }
         })
@@ -102,7 +104,7 @@ export const ChessGame: React.FC = () => {
     <div className="flex justify-center w-full">
       <div
         className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-400 dark:bg-stone-800 text-primary-dark dark:text-primary my-10 p-2.5 w-1/2 shadow-lg border-1 border-stone-500 color-shift min-w-min"
-        style={{ minWidth: "14em", maxWidth: "80vh" }}
+        style={{ minWidth: "17em", maxWidth: "80vh" }}
       >
         <div className="resize flex w-full h-full justify-center align-middle">
           <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border-1 border-stone-500 dark:border-stone-700">
@@ -116,7 +118,7 @@ export const ChessGame: React.FC = () => {
                 fen={fen}
               />
             </div>
-            <div className="aspect-w-1 aspect-h-1">
+            <div className="aspect-w-1 aspect-h-1 border-t border-b dark:border-stone-400 border-stone-600">
               <Chessground
                 coordinates={false}
                 id="chess-board"
