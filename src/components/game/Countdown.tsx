@@ -50,11 +50,23 @@ export const Countdown: React.FC<Props> = ({ fen, side, time }) => {
     }
   }
 
-  const bgColor = isPlayerTurn ? "dark:bg-teal-800 bg-teal-50" : ""
+  const lowTime = secondsToShow(time - count - 1) < 20
+  const veryLowTime = secondsToShow(time - count - 1) < 3
+  const bgColor = isPlayerTurn && !lowTime ? "dark:bg-teal-800 bg-teal-50" : ""
+  const lowTimeColor =
+    lowTime && isPlayerTurn ? "bg-rose-50 dark:bg-amber-800" : ""
+  const veryLowTimeColor =
+    veryLowTime && isPlayerTurn ? "bg-red-200 dark:bg-red-800 " : ""
+
+  const isNewGame =
+    fen === "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
   return (
-    <p className={`bg-stone-300 dark:bg-stone-600 text-2xl p-1.5 border-l border-stone-900 ${bgColor} `}>
-      {formatTime(secondsToShow(time - count - 1))}
+    <p
+      className={`bg-stone-300 dark:bg-stone-600 text-2xl p-1.5 border-l border-stone-900 text-stone-900 dark:text-stone-200
+         ${bgColor} ${lowTimeColor} ${veryLowTimeColor}`}
+    >
+      {!isNewGame && formatTime(secondsToShow(time - count - 1))}
     </p>
   )
 }

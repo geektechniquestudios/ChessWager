@@ -20,7 +20,7 @@ export const PlayerData: React.FC<Props> = ({
   return (
     <div className="flex w-full justify-between">
       <div className="flex flex-col justify-center">
-        <div className="flex justify-center">
+        <div className="flex justify-center ml-1.5">
           <p className="mx-1 font-bold text-teal-700">{title}</p>
           <div className="flex gap-2">
             <p>{name}</p>

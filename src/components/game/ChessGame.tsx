@@ -54,9 +54,12 @@ export const ChessGame: React.FC = () => {
         (player) => player.color === "black",
       )
 
-      if (black === undefined || white === undefined) return
+      if (black === undefined || white === undefined) {
+        setFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+        return
+      }
 
-      setFen(res.d.fen)
+      setFen(res.d.fen ?? "")
       setGameId(res.d.id)
       setOrientation(res.d.orientation)
 
@@ -103,7 +106,7 @@ export const ChessGame: React.FC = () => {
   return (
     <div className="flex justify-center w-full">
       <div
-        className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-400 dark:bg-stone-800 text-primary-dark dark:text-primary my-10 p-2.5 w-1/2 shadow-lg border-1 border-stone-500 color-shift min-w-min"
+        className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-100 dark:bg-stone-800 text-primary-dark dark:text-primary my-10 p-2.5 w-1/2 shadow-lg border-1 border-stone-500 color-shift min-w-min"
         style={{ minWidth: "17em", maxWidth: "80vh" }}
       >
         <div className="resize flex w-full h-full justify-center align-middle">
