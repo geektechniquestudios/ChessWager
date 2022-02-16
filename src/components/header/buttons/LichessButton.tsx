@@ -1,10 +1,10 @@
 import { SiLichess } from "react-icons/si"
-import { GameId } from "../../containers/GameId"
+import { GameState } from "../../containers/GameState"
 
 interface Props {}
 
 export const LichessButton: React.FC<Props> = ({}) => {
-  const { gameId } = GameId.useContainer()
+  const { gameId } = GameState.useContainer()
 
   return (
     <div className="flex flex-col justify-center">

@@ -7,6 +7,7 @@ interface Props {
   rating: number
   fen: string
   side: string
+  isNewGame: boolean
 }
 
 export const PlayerData: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const PlayerData: React.FC<Props> = ({
   rating,
   fen,
   side,
+  isNewGame,
 }) => {
   return (
     <div className="flex w-full justify-between">
@@ -28,7 +30,7 @@ export const PlayerData: React.FC<Props> = ({
           </div>
         </div>
       </div>
-      <Countdown fen={fen} side={side} time={time} />
+      <Countdown fen={fen} side={side} time={time} isNewGame={isNewGame} />
     </div>
   )
 }

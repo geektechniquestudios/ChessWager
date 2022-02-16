@@ -4,9 +4,10 @@ interface Props {
   fen: string
   side: string
   time: number
+  isNewGame: boolean
 }
 
-export const Countdown: React.FC<Props> = ({ fen, side, time }) => {
+export const Countdown: React.FC<Props> = ({ fen, side, time, isNewGame }) => {
   const [count, setCount] = useState(0)
   const [isPlayerTurn, setIsPlayerTurn] = useState(false)
 
@@ -50,23 +51,28 @@ export const Countdown: React.FC<Props> = ({ fen, side, time }) => {
     }
   }
 
-  const lowTime = secondsToShow(time - count - 1) < 20
-  const veryLowTime = secondsToShow(time - count - 1) < 3
-  const bgColor = isPlayerTurn && !lowTime ? "dark:bg-teal-800 bg-teal-50" : ""
-  const lowTimeColor =
-    lowTime && isPlayerTurn ? "bg-rose-50 dark:bg-amber-800" : ""
-  const veryLowTimeColor =
-    veryLowTime && isPlayerTurn ? "bg-red-200 dark:bg-red-800 " : ""
+  const buildStyles = () => {
+    const lowTime = secondsToShow(time - count - 1) < 20
+    const veryLowTime = secondsToShow(time - count - 1) < 3
+    const bgColor =
+      isPlayerTurn && !lowTime ? "dark:bg-green-800 bg-teal-50" : ""
+    const lowTimeColor =
+      lowTime && isPlayerTurn ? "bg-rose-50 dark:bg-amber-800" : ""
+    const veryLowTimeColor =
+      veryLowTime && isPlayerTurn ? "bg-red-200 dark:bg-red-800 " : ""
+    const newGameStyle = isNewGame ? "animate-pulse" : ""
+    return { bgColor, lowTimeColor, veryLowTimeColor, newGameStyle }
+  }
 
-  const isNewGame =
-    fen === "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+  const { bgColor, newGameStyle, lowTimeColor, veryLowTimeColor } =
+    buildStyles()
 
   return (
     <p
       className={`bg-stone-300 dark:bg-stone-600 text-2xl p-1.5 border-l border-stone-900 text-stone-900 dark:text-stone-200
-         ${bgColor} ${lowTimeColor} ${veryLowTimeColor}`}
+         ${bgColor} ${lowTimeColor} ${veryLowTimeColor} ${newGameStyle}`}
     >
-      {!isNewGame && formatTime(secondsToShow(time - count - 1))}
+      {!isNewGame ? formatTime(secondsToShow(time - count - 1)) : "??:??"}
     </p>
   )
 }

@@ -5,7 +5,7 @@ import { App } from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { Auth } from "./components/containers/Auth"
 import { Firestore } from "./components/containers/Firestore"
-import { GameId } from "./components/containers/GameId"
+import { GameState } from "./components/containers/GameState"
 import { Price } from "./components/containers/Price"
 import { ThemeProvider } from "@mui/system"
 import { createTheme } from "@mui/material/styles"
@@ -25,7 +25,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Firestore.Provider>
       <Auth.Provider>
-        <GameId.Provider>
+        <GameState.Provider>
           <Price.Provider>
             <ChatFormData.Provider>
               <ChatToggle.Provider>
@@ -39,7 +39,7 @@ ReactDOM.render(
               </ChatToggle.Provider>
             </ChatFormData.Provider>
           </Price.Provider>
-        </GameId.Provider>
+        </GameState.Provider>
       </Auth.Provider>
     </Firestore.Provider>
   </React.StrictMode>,

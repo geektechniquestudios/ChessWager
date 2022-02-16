@@ -4,7 +4,7 @@ import { Bet } from "./bet/Bet"
 
 import { WagerForm } from "./wager-form/WagerForm"
 import { FirebaseError } from "@firebase/util"
-import { GameId } from "../containers/GameId"
+import { GameState } from "../containers/GameState"
 import { Auth } from "../containers/Auth"
 import { LobbyHeader } from "./lobby-header/LobbyHeader"
 
@@ -36,7 +36,7 @@ interface Lobby {
 
 export const BettingLobby: React.FC = () => {
   const { user } = Auth.useContainer()
-  const gameIdContainer = GameId.useContainer()
+  const gameIdContainer = GameState.useContainer()
 
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")

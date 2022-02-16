@@ -19,7 +19,7 @@ export const GlobalChat: React.FC = () => {
 
   return (
     <div
-      className="global-chat flex flex-col border-l border-stone-400 dark:border-stone-700 bg-stone-50 dark:bg-stone-900"
+      className="global-chat flex flex-col border-l border-stone-400 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 color-shift"
       style={{ width: "21em" }}
     >
       <ChatHeader />

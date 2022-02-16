@@ -1,6 +1,6 @@
 import firebase from "firebase/compat/app"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { GameId } from "../containers/GameId"
+import { GameState } from "../containers/GameState"
 import { FirebaseError } from "@firebase/util"
 import { MiniBet } from "./MiniBet"
 import { Price } from "../containers/Price"
@@ -35,7 +35,7 @@ interface Lobby {
 export const FundedBets: React.FC<Props> = () => {
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
-  const gameIdContainer = GameId.useContainer()
+  const gameIdContainer = GameState.useContainer()
 
   const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
 

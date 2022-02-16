@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react"
 import ndjsonStream from "can-ndjson-stream"
 import "react-chessground/dist/styles/chessground.css"
 import { PlayerData } from "./PlayerData"
-import { GameId } from "../containers/GameId"
+import { GameState } from "../containers/GameState"
 // @ts-ignore
 import Chessground from "react-chessground"
 
@@ -30,7 +30,7 @@ interface Player {
 }
 
 export const ChessGame: React.FC = () => {
-  const { setGameId } = GameId.useContainer()
+  const { setGameId } = GameState.useContainer()
 
   const [fen, setFen] = useState("")
 
@@ -45,6 +45,10 @@ export const ChessGame: React.FC = () => {
   const [blackTitle, setBlackTitle] = useState("")
   const [orientation, setOrientation] = useState("white")
 
+  const [isNewGame, setIsNewGame] = useState(true)
+
+  const [score, setScore] = useState(0)
+
   const updateTitles = useCallback(
     (res: Featured): void => {
       const white: Player | undefined = res.d.players.find(
@@ -55,7 +59,6 @@ export const ChessGame: React.FC = () => {
       )
 
       if (black === undefined || white === undefined) {
-        setFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
         return
       }
 
@@ -92,10 +95,12 @@ export const ChessGame: React.FC = () => {
               setFen(res.value.d.fen)
               setWhiteTime(res.value.d.wc)
               setBlackTime(res.value.d.bc)
+              setIsNewGame(false)
             } else {
               updateTitles(res.value)
               setWhiteTime(0)
               setBlackTime(0)
+              setIsNewGame(true)
             }
           }
         })
@@ -105,6 +110,7 @@ export const ChessGame: React.FC = () => {
 
   return (
     <div className="flex justify-center w-full">
+      {score}
       <div
         className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-100 dark:bg-stone-800 text-primary-dark dark:text-primary my-10 p-2.5 w-1/2 shadow-lg border-1 border-stone-500 color-shift min-w-min"
         style={{ minWidth: "17em", maxWidth: "80vh" }}
@@ -119,6 +125,7 @@ export const ChessGame: React.FC = () => {
                 time={orientation === "white" ? blackTime : whiteTime}
                 rating={orientation === "white" ? blackRating : whiteRating}
                 fen={fen}
+                isNewGame={isNewGame}
               />
             </div>
             <div className="aspect-w-1 aspect-h-1 border-t border-b dark:border-stone-400 border-stone-600">
@@ -141,6 +148,7 @@ export const ChessGame: React.FC = () => {
                 time={orientation === "black" ? blackTime : whiteTime}
                 rating={orientation === "black" ? blackRating : whiteRating}
                 fen={fen}
+                isNewGame={isNewGame}
               />
             </div>
           </div>

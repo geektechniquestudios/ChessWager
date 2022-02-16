@@ -8,6 +8,7 @@ const usePrice = () => {
     )
       .then((res) => res.json())
       .then((data) => data["avalanche-2"].usd)
+      .catch(console.error)
   }
   const [avaxPrice, setAvaxPrice] = useState(0)
   useEffect(() => {

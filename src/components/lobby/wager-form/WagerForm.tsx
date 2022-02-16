@@ -1,7 +1,7 @@
 import { useState } from "react"
 import "../../../style/lobby.scss"
 import firebase from "firebase/compat/app"
-import { GameId } from "../../containers/GameId"
+import { GameState } from "../../containers/GameState"
 import { Auth } from "../../containers/Auth"
 import { SideChooser } from "./SideChooser"
 import { BetAmount } from "./BetAmount"
@@ -15,7 +15,7 @@ const firestore = firebase.firestore()
 require("dotenv").config({ path: "../../../../.env" })
 
 export const WagerForm: React.FC = () => {
-  const { gameId } = GameId.useContainer()
+  const { gameId } = GameState.useContainer()
   const { walletAddress, isWalletConnected, auth, connectWallet } =
     Auth.useContainer()
 
