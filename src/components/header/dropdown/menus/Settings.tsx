@@ -6,7 +6,7 @@ import Toggle from "react-toggle"
 
 import { StaticDropdownItem } from "../StaticDropdownItem"
 import { RiChatDeleteLine } from "react-icons/ri"
-import { BiArrowBack } from "react-icons/bi"
+import { BiArrowBack, BiVolumeFull, BiVolumeMute } from "react-icons/bi"
 import { Menu } from "../Menu"
 import { MdOutlineBlock } from "react-icons/md"
 import { GoUnmute } from "react-icons/go"
@@ -36,7 +36,7 @@ export const Settings: React.FC = () => {
             onClick={() => {
               setIsMuted(!isMuted)
             }}
-            leftIcon={isMuted ? <GoUnmute /> : <ImVolumeMute2 />}
+            leftIcon={isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
             rightIcon={
               <div className="p-2 justify-center align-middle flex h-full">
                 <Toggle

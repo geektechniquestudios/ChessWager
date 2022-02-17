@@ -11,6 +11,8 @@ import { AiOutlineCloudUpload } from "react-icons/ai"
 import { ImStatsBars } from "react-icons/im"
 import { FiAward } from "react-icons/fi"
 import { MdPeopleOutline } from "react-icons/md"
+import { RiUser2Line } from "react-icons/ri"
+import { BsGraphUp } from "react-icons/bs"
 import { FaUserTag } from "react-icons/fa"
 
 export const Profile: React.FC = () => {
@@ -36,7 +38,7 @@ export const Profile: React.FC = () => {
             Friends
           </DropdownItem>,
 
-          <DropdownItem leftIcon={<ImStatsBars />} key={3}>
+          <DropdownItem leftIcon={<BsGraphUp />} key={3}>
             Stats
           </DropdownItem>,
           <DropdownItem leftIcon={<FiAward />} key={4}>
