@@ -14,12 +14,15 @@ import { ChatFormData } from "./components/containers/ChatFormData"
 import { ChatToggle } from "./components/containers/ChatToggle"
 import { DarkMode } from "./components/containers/DarkMode"
 import { DropdownState } from "./components/containers/DropdownState"
+import WebFont from 'webfontloader';
+
 
 const theme = createTheme({
   palette: {
     primary: teal,
   },
 })
+
 
 ReactDOM.render(
   <React.StrictMode>

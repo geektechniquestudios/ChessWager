@@ -58,9 +58,7 @@ export const ChessGame: React.FC = () => {
         (player) => player.color === "black",
       )
 
-      if (black === undefined || white === undefined) {
-        return
-      }
+      if (black === undefined || white === undefined) return
 
       setFen(res.d.fen ?? "")
       setGameId(res.d.id)

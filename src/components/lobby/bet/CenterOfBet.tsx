@@ -16,9 +16,9 @@ export const CenterOfBet: React.FC<Props> = ({ potSize, betSide }) => {
         </div>
 
         <div className=" z-10 underline decoration-4 font-bold text-primary-dark top-1">
-          <p className="px-1">{`$${(Number(potSize) * avaxPrice).toFixed(
-            2,
-          )}`}</p>
+          <p className="px-1">{`$${(Number(potSize) * avaxPrice)
+            .toFixed(2)
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</p>
         </div>
 
         <div className="grid place-content-center rounded-full border-1 bg-stone-400 w-8 h-8">
