@@ -9,8 +9,6 @@ import { RiChatDeleteLine } from "react-icons/ri"
 import { BiArrowBack, BiVolumeFull, BiVolumeMute } from "react-icons/bi"
 import { Menu } from "../Menu"
 import { MdOutlineBlock } from "react-icons/md"
-import { GoUnmute } from "react-icons/go"
-import { ImVolumeMute2 } from "react-icons/im"
 
 export const Settings: React.FC = () => {
   const [profanityFilter, setProfanityFilter] = useState(true)
@@ -22,6 +20,7 @@ export const Settings: React.FC = () => {
           <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
             <h2>Settings</h2>
           </DropdownItem>,
+
           <div className="border-b-2" key={1} />,
 
           <DropdownItem
