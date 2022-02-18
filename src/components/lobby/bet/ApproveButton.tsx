@@ -23,7 +23,7 @@ export const ApproveButton: React.FC<Props> = ({ betId }) => {
       <div className="flex flex-col justify-center">
         <button
           type="button"
-          className="cw-button animate-pulse h-8 w-8 z-10 grid place-content-center mx-2"
+          className="cw-button h-8 w-8 z-10 grid place-content-center mx-2"
           onClick={approve}
           title="Accept"
         >

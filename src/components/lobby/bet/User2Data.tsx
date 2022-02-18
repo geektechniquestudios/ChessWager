@@ -30,11 +30,10 @@ export const User2Data: React.FC<Props> = ({
   id,
   hasUser2Paid,
 }) => {
+  const fundedStyle = hasUser2Paid ? "border-positive" : ""
   return (
     <div
-      className={` ${
-        hasUser2Paid ? "border-positive" : ""
-      } flex justify-center align-middle w-full border-1 rounded-sm bg-stone-300 px-2 py-0.5`}
+      className={`flex justify-center align-middle w-full border-none rounded-sm text-stone-900 dark:text-stone-300 px-1 ${fundedStyle}`}
     >
       <div className="flex justify-between w-full gap-2.5">
         <User2BetAmount amount={amount} multiplier={multiplier} />

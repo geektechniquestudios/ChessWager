@@ -1,8 +1,8 @@
 import { FaChessKing } from "react-icons/fa"
 
 interface Props {
-  betSide: string
-  setBetSide: React.Dispatch<React.SetStateAction<string>>
+  betSide: "White" | "Black"
+  setBetSide: React.Dispatch<React.SetStateAction<"White" | "Black">>
 }
 
 export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
@@ -38,7 +38,9 @@ export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
           <FaChessKing color="black" className="" />
         </button>
       </div>
-      <p className="flex justify-center text-stone-900 dark:text-stone-300">{betSide}</p>
+      <p className="flex justify-center text-stone-900 dark:text-stone-300">
+        {betSide}
+      </p>
     </div>
   )
 }

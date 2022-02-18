@@ -24,8 +24,11 @@ export const User1Data: React.FC<Props> = ({
   status,
   hasUser1Paid,
 }) => {
+  const fundedStyle = hasUser1Paid ? "border-positive" : ""
   return (
-    <div className={`${hasUser1Paid ? "border-positive" : ""} flex justify-center align-middle w-full border-1 rounded-sm bg-stone-300 px-1 py-0.5`}>
+    <div
+      className={`flex justify-center align-middle w-full border-none rounded-sm text-stone-900 dark:text-stone-300 px-1 ${fundedStyle}`}
+    >
       <div className="flex justify-between w-full gap-2.5">
         <User1Spinner user2Id={user2Id} status={status} />
         <User1Image

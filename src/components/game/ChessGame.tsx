@@ -47,8 +47,6 @@ export const ChessGame: React.FC = () => {
 
   const [isNewGame, setIsNewGame] = useState(true)
 
-  const [score, setScore] = useState(0)
-
   const updateTitles = useCallback(
     (res: Featured): void => {
       const white: Player | undefined = res.d.players.find(
@@ -108,7 +106,6 @@ export const ChessGame: React.FC = () => {
 
   return (
     <div className="flex justify-center w-full">
-      {score}
       <div
         className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-100 dark:bg-stone-800 text-primary-dark dark:text-primary my-10 p-2.5 w-1/2 shadow-lg border-1 border-stone-500 color-shift min-w-min"
         style={{ minWidth: "17em", maxWidth: "80vh" }}

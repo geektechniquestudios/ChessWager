@@ -72,13 +72,13 @@ export const Bet: React.FC<Props> = ({
     isUser1 || isUser2 ? true : false,
   )
   const selectedStyle = isSelected
-    ? " selected-bet bg-stone-300"
-    : "hover:bg-stone-400"
+    ? " bg-stone-100 dark:bg-black"
+    : "hover:bg-stone-200 dark:hover:bg-stone-900 dark:bg-stone-800 bg-stone-300"
 
   return (
-    <div className={`bet w-full flex justify-center align-middle`}>
+    <div className={`w-full flex justify-center align-middle`}>
       <a
-        className={`flex justify-center align-middle w-full px-1 py-0.5 ${selectedStyle}`}
+        className={`flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700  ${selectedStyle}`}
         onClick={() => {
           status === "ready" && !isUser1 && setIsSelected(!isSelected)
         }}

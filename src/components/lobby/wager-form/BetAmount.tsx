@@ -25,12 +25,12 @@ export const BetAmount: React.FC<Props> = ({
   setIsAmountEmpty,
 }) => {
   const { avaxPrice } = Price.useContainer()
-  const borderWarning = isAmountEmpty ? "border-negative" : ""
+  const borderWarning = isAmountEmpty ? " border-negative" : "border-stone-400 dark:border-stone-500 "
   const [isUsdFocused, setIsUsdFocused] = useState(false)
 
   return (
     <div
-      className={`${borderWarning} flex border-1 border-stone-400 dark:border-stone-500 px-1 color-shift bg-stone-200 dark:bg-stone-800`}
+      className={`border-1 flex px-1 color-shift bg-stone-200 dark:bg-stone-800 ${borderWarning}`}
     >
       <label className="grid place-content-center m-2 text-stone-900 dark:text-stone-300">
         Your Bet

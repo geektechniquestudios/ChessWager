@@ -21,7 +21,8 @@ export const WagerForm: React.FC = () => {
 
   const user1Metamask = walletAddress
 
-  const [betSide, setBetSide] = useState("White")
+
+  const [betSide, setBetSide] = useState<"White" | "Black">("White")
   const [betAmount, setBetAmount] = useState(0.0)
   const [multiplier, setMultiplier] = useState(1.0)
   const [sliderVal, setSliderVal] = useState(0.0)
@@ -51,7 +52,7 @@ export const WagerForm: React.FC = () => {
     if (auth.currentUser) {
       const { uid, photoURL, displayName }: firebase.User = auth.currentUser
 
-      userRef
+      userRef // @todo make into transaction
         .doc(uid)
         .get()
         .then((doc: any) => {
