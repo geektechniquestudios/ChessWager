@@ -12,6 +12,7 @@ import { FiAward } from "react-icons/fi"
 import { MdPeopleOutline } from "react-icons/md"
 import { BsGraphUp } from "react-icons/bs"
 import { FaUserTag } from "react-icons/fa"
+import { RiChat2Line } from "react-icons/ri"
 
 export const Profile: React.FC = () => {
   const { user } = Auth.useContainer()
@@ -32,16 +33,19 @@ export const Profile: React.FC = () => {
           <div className="border-b-2" key={1}>
             {" "}
           </div>,
-          <DropdownItem leftIcon={<MdPeopleOutline />} key={2}>
+          <DropdownItem goToMenu="messages" leftIcon={<RiChat2Line />} key={2}>
+            Messages
+          </DropdownItem>,
+          <DropdownItem leftIcon={<MdPeopleOutline />} key={3}>
             Friends
           </DropdownItem>,
-          <DropdownItem leftIcon={<BsGraphUp />} key={3}>
+          <DropdownItem leftIcon={<BsGraphUp />} key={4}>
             Stats
           </DropdownItem>,
-          <DropdownItem leftIcon={<FiAward />} key={4}>
+          <DropdownItem leftIcon={<FiAward />} key={5}>
             Achievements
           </DropdownItem>,
-          <DropdownItem leftIcon={<FaUserTag />} key={5}>
+          <DropdownItem leftIcon={<FaUserTag />} key={6}>
             Display Name
           </DropdownItem>,
           <StaticDropdownItem
@@ -62,7 +66,7 @@ export const Profile: React.FC = () => {
                 className="w-6 h-6 rounded-full mr-2"
               />
             }
-            key={6}
+            key={7}
           >
             User Image
           </StaticDropdownItem>,
