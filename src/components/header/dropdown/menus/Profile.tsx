@@ -12,6 +12,7 @@ import { FiAward } from "react-icons/fi"
 import { MdPeopleOutline } from "react-icons/md"
 import { BsGraphUp } from "react-icons/bs"
 import { FaUserTag } from "react-icons/fa"
+import { RiChat2Line } from "react-icons/ri"
 
 export const Profile: React.FC = () => {
   const { user } = Auth.useContainer()
@@ -23,48 +24,53 @@ export const Profile: React.FC = () => {
   }
 
   return (
-    <Menu
-      menuItems={[
-        <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
-          <h2>Profile</h2>
-        </DropdownItem>,
-        <div className="border-b-2" key={1} />,
-        <DropdownItem leftIcon={<MdPeopleOutline />} key={2}>
-          Friends
-        </DropdownItem>,
-        <DropdownItem leftIcon={<BsGraphUp />} key={3}>
-          Stats
-        </DropdownItem>,
-        <DropdownItem leftIcon={<FiAward />} key={4}>
-          Achievements
-        </DropdownItem>,
-        <DropdownItem leftIcon={<FaUserTag />} key={5}>
-          Display Name
-        </DropdownItem>,
-        <StaticDropdownItem
-          leftIcon={
-            <button
-              onClick={() => {
-                // uploadImage()
-              }}
-            >
-              <AiOutlineCloudUpload />
-            </button>
-          }
-          onClick={() => {}}
-          rightIcon={
-            <img
-              src={user!.photoURL!}
-              alt=""
-              className="w-6 h-6 rounded-full mr-2"
-            />
-          }
-          key={6}
-        >
-          User Image
-        </StaticDropdownItem>,
-      ]}
-      thisMenu={"profile"}
-    />
+    <>
+      <Menu
+        menuItems={[
+          <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
+            <h2>Profile</h2>
+          </DropdownItem>,
+          <div className="border-b-2" key={1} />,
+          <DropdownItem goToMenu="messages" leftIcon={<RiChat2Line />} key={2}>
+            Messages
+          </DropdownItem>,
+          <DropdownItem leftIcon={<MdPeopleOutline />} key={3}>
+            Friends
+          </DropdownItem>,
+          <DropdownItem leftIcon={<BsGraphUp />} key={4}>
+            Stats
+          </DropdownItem>,
+          <DropdownItem leftIcon={<FiAward />} key={5}>
+            Achievements
+          </DropdownItem>,
+          <DropdownItem leftIcon={<FaUserTag />} key={6}>
+            Display Name
+          </DropdownItem>,
+          <StaticDropdownItem
+            leftIcon={
+              <button
+                onClick={() => {
+                  // uploadImage()
+                }}
+              >
+                <AiOutlineCloudUpload />
+              </button>
+            }
+            onClick={() => {}}
+            rightIcon={
+              <img
+                src={user!.photoURL!}
+                alt=""
+                className="w-6 h-6 rounded-full mr-2"
+              />
+            }
+            key={7}
+          >
+            User Image
+          </StaticDropdownItem>,
+        ]}
+        thisMenu={"profile"}
+      />
+    </>
   )
 }

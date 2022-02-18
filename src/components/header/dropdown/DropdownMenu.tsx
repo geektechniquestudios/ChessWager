@@ -4,6 +4,7 @@ import { DropdownState } from "../../containers/DropdownState"
 import { Blocked } from "./menus/Blocked"
 import { Help } from "./menus/Help"
 import { Main } from "./menus/Main"
+import { Messages } from "./menus/Messages"
 import { Profile } from "./menus/Profile"
 import { Settings } from "./menus/Settings"
 import { Social } from "./menus/Social"
@@ -61,6 +62,7 @@ export const DropdownMenu = () => {
       <Social />
       <Help />
       {user && <Blocked />}
+      {user && <Messages />}
     </div>
   )
 }
