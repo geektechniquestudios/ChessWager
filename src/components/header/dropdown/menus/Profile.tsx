@@ -8,10 +8,8 @@ import { StaticDropdownItem } from "../StaticDropdownItem"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
 import { AiOutlineCloudUpload } from "react-icons/ai"
-import { FiAward } from "react-icons/fi"
-import { MdPeopleOutline } from "react-icons/md"
+import { FiAward, FiUser, FiUsers } from "react-icons/fi"
 import { BsGraphUp } from "react-icons/bs"
-import { FaUserTag } from "react-icons/fa"
 
 export const Profile: React.FC = () => {
   const { user } = Auth.useContainer()
@@ -32,7 +30,7 @@ export const Profile: React.FC = () => {
           <div className="border-b-2" key={1}>
             {" "}
           </div>,
-          <DropdownItem leftIcon={<MdPeopleOutline />} key={2}>
+          <DropdownItem leftIcon={<FiUsers />} key={2}>
             Friends
           </DropdownItem>,
           <DropdownItem leftIcon={<BsGraphUp />} key={3}>
@@ -41,7 +39,7 @@ export const Profile: React.FC = () => {
           <DropdownItem leftIcon={<FiAward />} key={4}>
             Achievements
           </DropdownItem>,
-          <DropdownItem leftIcon={<FaUserTag />} key={5}>
+          <DropdownItem leftIcon={<FiUser />} key={5}>
             Display Name
           </DropdownItem>,
           <StaticDropdownItem
