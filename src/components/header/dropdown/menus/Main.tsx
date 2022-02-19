@@ -52,27 +52,32 @@ export const Main: React.FC = () => {
       >
         <div className="menu">
           {user && (
-            <DropdownItem leftIcon={<CgProfile />} goToMenu="profile">
-              Profile
-            </DropdownItem>
+            <DropdownItem
+              leftIcon={<CgProfile />}
+              goToMenu="profile"
+              text="Profile"
+            />
           )}
           {user && (
-            <DropdownItem leftIcon={<RiSettings5Line />} goToMenu="settings">
-              Settings
-            </DropdownItem>
+            <DropdownItem
+              leftIcon={<RiSettings5Line />}
+              goToMenu="settings"
+              text="Settings"
+            />
           )}
-
           {user && (
-            <DropdownItem leftIcon={<GoGift />} goToMenu="store">
-              Store
-            </DropdownItem>
+            <DropdownItem leftIcon={<GoGift />} goToMenu="store" text="Store" />
           )}
-          <DropdownItem leftIcon={<BsShare />} goToMenu="social">
-            Social
-          </DropdownItem>
-          <DropdownItem leftIcon={<BiHelpCircle />} goToMenu="help">
-            Help
-          </DropdownItem>
+          <DropdownItem
+            leftIcon={<BsShare />}
+            goToMenu="social"
+            text="Social"
+          />
+          <DropdownItem
+            leftIcon={<BiHelpCircle />}
+            goToMenu="help"
+            text="Help"
+          />
           <DropdownItem
             onClick={() => {
               setIsDarkOn(!isDarkOn)
@@ -89,25 +94,22 @@ export const Main: React.FC = () => {
               </div>
             }
             leftIcon={isDarkOn ? <MdOutlineDarkMode /> : <BsSun />}
-          >
-            {isDarkOn ? "Dark Mode" : "Light Mode"}
-          </DropdownItem>
+            text={isDarkOn ? "Dark Mode" : "Light Mode"}
+          />
           <div className="border-b-2" />
           {!isWalletConnected && (
             <DropdownItem
               onClick={connectWallet}
               leftIcon={<MdAttachMoney />}
-            >
-              Connect Wallet
-            </DropdownItem>
+              text="Connect Wallet"
+            />
           )}
           {isWalletConnected && (
             <DropdownItem
               onClick={disconnectWallet}
               leftIcon={<MdMoneyOff />}
-            >
-              Disconnect Wallet
-            </DropdownItem>
+              text="Disconnect Wallet"
+            />
           )}
 
           {!user && (
@@ -116,18 +118,15 @@ export const Main: React.FC = () => {
                 signInWithGoogle()
               }}
               leftIcon={<RiLoginCircleLine />}
-            >
-              Log in
-            </DropdownItem>
+              text="Sign In"
+            />
           )}
-
           {user && (
             <DropdownItem
               onClick={signOutWithGoogle}
               leftIcon={<RiLogoutCircleLine />}
-            >
-              Log Out
-            </DropdownItem>
+              text="Sign Out"
+            />
           )}
         </div>
       </CSSTransition>

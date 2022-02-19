@@ -24,25 +24,28 @@ export const Profile: React.FC = () => {
     <>
       <Menu
         menuItems={[
-          <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
-            <h2>Profile</h2>
-          </DropdownItem>,
+          <DropdownItem
+            goToMenu="main"
+            leftIcon={<BiArrowBack />}
+            key={0}
+            text="Profile"
+          />,
           <div className="border-b-2" key={1} />,
-          <DropdownItem goToMenu="messages" leftIcon={<RiChat2Line />} key={2}>
-            Messages
-          </DropdownItem>,
-          <DropdownItem goToMenu="friends" leftIcon={<FiUsers />} key={3}>
-            Friends
-          </DropdownItem>,
-          <DropdownItem leftIcon={<BsGraphUp />} key={4}>
-            Stats
-          </DropdownItem>,
-          <DropdownItem leftIcon={<FiAward />} key={5}>
-            Achievements
-          </DropdownItem>,
-          <DropdownItem leftIcon={<FiUser />} key={6}>
-            Display Name
-          </DropdownItem>,
+          <DropdownItem
+            goToMenu="messages"
+            leftIcon={<RiChat2Line />}
+            key={2}
+            text="Messages"
+          />,
+          <DropdownItem
+            goToMenu="friends"
+            leftIcon={<FiUsers />}
+            key={3}
+            text="Friends"
+          />,
+          <DropdownItem leftIcon={<BsGraphUp />} key={4} text="Stats" />,
+          <DropdownItem leftIcon={<FiAward />} key={5} text="Achievements" />,
+          <DropdownItem leftIcon={<FiUser />} key={6} text="Display Name" />,
           <DropdownItem
             leftIcon={
               <button
@@ -62,9 +65,8 @@ export const Profile: React.FC = () => {
               />
             }
             key={7}
-          >
-            User Image
-          </DropdownItem>,
+            text="User Image"
+          />,
         ]}
         thisMenu={"profile"}
       />

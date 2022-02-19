@@ -1,7 +1,7 @@
 import { DropdownState } from "../../containers/DropdownState"
 
 interface Props {
-  children?: React.ReactNode
+  text?: React.ReactNode
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
   goToMenu?: string
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const DropdownItem: React.FC<Props> = ({
-  children,
+  text,
   leftIcon,
   rightIcon,
   goToMenu,
@@ -30,7 +30,7 @@ export const DropdownItem: React.FC<Props> = ({
       }}
     >
       <div>{leftIcon}</div>
-      <div className="mx-2"> {children}</div>
+      <div className="mx-2">{text}</div>
       <div>{rightIcon}</div>
     </a>
   )

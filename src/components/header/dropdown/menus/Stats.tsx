@@ -9,16 +9,17 @@ export const Stats: React.FC = () => {
     <>
       <Menu
         menuItems={[
-          <DropdownItem goToMenu="profile" leftIcon={<BiArrowBack />} key={0}>
-            <h2>Help</h2>
-          </DropdownItem>,
+          <DropdownItem
+            goToMenu="profile"
+            leftIcon={<BiArrowBack />}
+            key={0}
+            text="Help"
+          />,
           <div className="border-b-2" key={1} />,
-          <DropdownItem>
-            {/* @todo get from firebase  */}
-            Follow Through: {}
-          </DropdownItem>,
-          <DropdownItem key={2}>Number of Bets</DropdownItem>,
-          <DropdownItem key={3}>Net Profit</DropdownItem>,
+          <DropdownItem key={2} text="Number of Bets" />,
+          <DropdownItem key={3} text="Net Profit" />,
+          <DropdownItem key={4} text="Total Profit" />,
+          <DropdownItem key={5} text="Follow Through" />,
         ]}
         thisMenu={"stats"}
       />

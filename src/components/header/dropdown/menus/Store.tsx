@@ -15,26 +15,37 @@ export const Store: React.FC = () => {
     <>
       <Menu
         menuItems={[
-          <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
-            <h2>Store</h2>
-          </DropdownItem>,
+          <DropdownItem
+            goToMenu="main"
+            leftIcon={<BiArrowBack />}
+            key={0}
+            text="Store"
+          />,
           <div className="border-b-2" key={1} />,
-
-          <DropdownItem leftIcon={<BsSuitClub />} goToMenu="blocked" key={2}>
-            Membership
-          </DropdownItem>,
-
-          <DropdownItem leftIcon={<SiOpenbadges />} goToMenu="blocked" key={3}>
-            Badges
-          </DropdownItem>,
-
-          <DropdownItem leftIcon={<GiMonkey />} goToMenu="blocked" key={4}>
-            NFTs
-          </DropdownItem>,
-
-          <DropdownItem leftIcon={<RiShirtLine />} goToMenu="blocked" key={5}>
-            Merch
-          </DropdownItem>,
+          <DropdownItem
+            leftIcon={<BsSuitClub />}
+            goToMenu="blocked"
+            key={2}
+            text="Membership"
+          />,
+          <DropdownItem
+            leftIcon={<SiOpenbadges />}
+            goToMenu="blocked"
+            key={3}
+            text="Badges"
+          />,
+          <DropdownItem
+            leftIcon={<GiMonkey />}
+            goToMenu="blocked"
+            key={4}
+            text="NFTs"
+          />,
+          <DropdownItem
+            leftIcon={<RiShirtLine />}
+            goToMenu="blocked"
+            key={5}
+            text="Merch"
+          />,
         ]}
         thisMenu={"store"}
       />

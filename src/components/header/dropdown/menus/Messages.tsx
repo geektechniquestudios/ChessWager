@@ -7,10 +7,13 @@ export const Messages: React.FC = ({}) => {
     <>
       <Menu
         menuItems={[
-          <DropdownItem goToMenu="profile" leftIcon={<BiArrowBack />} key={0}>
-            <h2>Messages</h2>
-          </DropdownItem>,
-          <div className="border-b-2" key={1}/>
+          <DropdownItem
+            goToMenu="profile"
+            leftIcon={<BiArrowBack />}
+            key={0}
+            text="Messages"
+          />,
+          <div className="border-b-2" key={1} />,
         ]}
         thisMenu={"messages"}
       />

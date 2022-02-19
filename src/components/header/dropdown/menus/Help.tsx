@@ -11,19 +11,28 @@ export const Help: React.FC = () => {
     <>
       <Menu
         menuItems={[
-          <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
-            <h2>Help</h2>
-          </DropdownItem>,
+          <DropdownItem
+            goToMenu="main"
+            leftIcon={<BiArrowBack />}
+            key={0}
+            text="Help"
+          />,
           <div className="border-b-2" key={1} />,
-          <DropdownItem leftIcon={<AiOutlineQuestionCircle />} key={2}>
-            How to Play
-          </DropdownItem>,
-          <DropdownItem leftIcon={<AiOutlineInfoCircle />} key={3}>
-            FAQs
-          </DropdownItem>,
-          <DropdownItem leftIcon={<BiMessageRoundedError />} key={4}>
-            Contact Us
-          </DropdownItem>,
+          <DropdownItem
+            leftIcon={<AiOutlineQuestionCircle />}
+            key={2}
+            text="How to Play"
+          />,
+          <DropdownItem
+            leftIcon={<AiOutlineInfoCircle />}
+            key={3}
+            text="FAQs"
+          />,
+          <DropdownItem
+            leftIcon={<BiMessageRoundedError />}
+            key={4}
+            text="Contact Us"
+          />,
         ]}
         thisMenu={"help"}
       />

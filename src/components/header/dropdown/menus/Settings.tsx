@@ -16,57 +16,49 @@ export const Settings: React.FC = () => {
     <>
       <Menu
         menuItems={[
-          <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
-            <h2>Settings</h2>
-          </DropdownItem>,
-
+          <DropdownItem
+            goToMenu="main"
+            leftIcon={<BiArrowBack />}
+            key={0}
+            text="Settings"
+          />,
           <div className="border-b-2" key={1} />,
-
           <DropdownItem
             leftIcon={<MdOutlineBlock />}
             goToMenu="blocked"
             key={2}
-          >
-            Blocked Users
-          </DropdownItem>,
-
+            text="Blocked Users"
+          />,
           <DropdownItem
             onClick={() => {
               setIsMuted(!isMuted)
             }}
             leftIcon={isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
             rightIcon={
-              <div className="p-2 justify-center align-middle flex h-full">
-                <Toggle
-                  className="filter-toggle pointer-events-none "
-                  checked={isMuted}
-                  readOnly
-                />
-              </div>
+              <Toggle
+                className="filter-toggle pointer-events-none "
+                checked={isMuted}
+                readOnly
+              />
             }
             key={3}
-          >
-            Sound
-          </DropdownItem>,
-
+            text={isMuted ? "Unmute" : "Mute"}
+          />,
           <DropdownItem
             leftIcon={<RiChatDeleteLine />}
             onClick={() => {
               setProfanityFilter(!profanityFilter)
             }}
             rightIcon={
-              <div className="p-2 justify-center align-middle flex h-full">
-                <Toggle
-                  className="filter-toggle pointer-events-none "
-                  checked={profanityFilter}
-                  readOnly
-                />
-              </div>
+              <Toggle
+                className="filter-toggle pointer-events-none "
+                checked={profanityFilter}
+                readOnly
+              />
             }
             key={4}
-          >
-            Profanity Filter
-          </DropdownItem>,
+            text="Profanity Filter"
+          />,
         ]}
         thisMenu={"settings"}
       />

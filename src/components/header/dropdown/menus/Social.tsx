@@ -25,49 +25,37 @@ export const Social: React.FC = () => {
             url="https://www.instagram.com/chesswager/"
             leftIcon={<RiInstagramLine />}
             key={2}
-          >
-            Instagram
-          </DropdownItem>,
-
+            text="Instagram"
+          />,
           <DropdownItem
             url="https://www.facebook.com/profile.php?id=100073643917469"
             leftIcon={<RiFacebookCircleLine />}
             key={3}
-          >
-            Facebook
-          </DropdownItem>,
-
+            text="Facebook"
+          />,
           <DropdownItem
             url="https://twitter.com/ChessWager"
             leftIcon={<RiTwitterLine />}
             key={4}
-          >
-            Twitter
-          </DropdownItem>,
-
+            text="Twitter"
+          />,
           <DropdownItem
             url="https://www.reddit.com/user/ChessWager64"
             leftIcon={<RiRedditLine />}
             key={5}
-          >
-            Reddit
-          </DropdownItem>,
-
+            text="Reddit"
+          />,
           <DropdownItem
             url="https://www.youtube.com/channel/UCJhScjp1G8lmF6IXRDM_paQ"
             leftIcon={<RiYoutubeLine />}
             key={6}
-          >
-            Youtube
-          </DropdownItem>,
-
+            text="Youtube"
+          />,
           <DropdownItem
             url="https://github.com/geektechniquestudios/ChessWager"
             leftIcon={<RiGithubLine />}
             key={7}
-          >
-            Github
-          </DropdownItem>,
+          />,
         ]}
         thisMenu={"social"}
       />
