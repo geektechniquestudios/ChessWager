@@ -1,7 +1,6 @@
 import "../../../../style/dropdown.scss"
 
 import { DropdownItem } from "../DropdownItem"
-import { StaticDropdownItem } from "../StaticDropdownItem"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
 
@@ -14,12 +13,12 @@ export const Stats: React.FC = () => {
             <h2>Help</h2>
           </DropdownItem>,
           <div className="border-b-2" key={1} />,
-          <StaticDropdownItem>
+          <DropdownItem>
             {/* @todo get from firebase  */}
             Follow Through: {}
-          </StaticDropdownItem>,
-          <StaticDropdownItem key={2}>Number of Bets</StaticDropdownItem>,
-          <StaticDropdownItem key={3}>Net Profit</StaticDropdownItem>,
+          </DropdownItem>,
+          <DropdownItem key={2}>Number of Bets</DropdownItem>,
+          <DropdownItem key={3}>Net Profit</DropdownItem>,
         ]}
         thisMenu={"stats"}
       />

@@ -21,7 +21,7 @@ export const ApproveKickWrapper: React.FC<Props> = ({
         auth.currentUser &&
         user1Id === auth.currentUser.uid &&
         status === "pending" && (
-          <div className="flex justify-between animate-pulse border-l">
+          <div className="flex justify-between border-l gap-2 px-2 border-stone-400 dark:border-stone-700">
             <ApproveButton betId={id} />
             <KickButton betId={id} />
           </div>

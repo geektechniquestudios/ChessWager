@@ -4,6 +4,7 @@ import { BiDollar } from "react-icons/bi"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
 import "../../style/buttons.scss"
+import { PayButton } from "./bet/PayButton"
 require("dotenv").config({ path: "../../../.env" })
 const isLocal = process.env.REACT_APP_BRANCH_ENV === "develop"
 
@@ -81,7 +82,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
     }
   }
 
-  const sendBet = async () => {
+  const sendBet = async (): Promise<void> => {
     if (typeof window.ethereum !== undefined) {
       await window.ethereum.request({ method: "eth_requestAccounts" })
       const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -113,16 +114,5 @@ export const MetamaskPrompt: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return (
-    <div className="flex flex-col justify-center">
-      <button
-        className="cw-button animate-pulse grid place-content-center m-0.5 h-full"
-        onClick={() => {
-          sendBet()
-        }}
-      >
-        <BiDollar size="24" title="Send Wager" color="green" />
-      </button>
-    </div>
-  )
+  return <PayButton sendBet={sendBet} />
 }

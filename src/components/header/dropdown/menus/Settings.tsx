@@ -4,7 +4,6 @@ import { useState } from "react"
 import { DropdownItem } from "../DropdownItem"
 import Toggle from "react-toggle"
 
-import { StaticDropdownItem } from "../StaticDropdownItem"
 import { RiChatDeleteLine } from "react-icons/ri"
 import { BiArrowBack, BiVolumeFull, BiVolumeMute } from "react-icons/bi"
 import { Menu } from "../Menu"
@@ -31,7 +30,7 @@ export const Settings: React.FC = () => {
             Blocked Users
           </DropdownItem>,
 
-          <StaticDropdownItem
+          <DropdownItem
             onClick={() => {
               setIsMuted(!isMuted)
             }}
@@ -48,9 +47,9 @@ export const Settings: React.FC = () => {
             key={3}
           >
             Sound
-          </StaticDropdownItem>,
+          </DropdownItem>,
 
-          <StaticDropdownItem
+          <DropdownItem
             leftIcon={<RiChatDeleteLine />}
             onClick={() => {
               setProfanityFilter(!profanityFilter)
@@ -67,7 +66,7 @@ export const Settings: React.FC = () => {
             key={4}
           >
             Profanity Filter
-          </StaticDropdownItem>,
+          </DropdownItem>,
         ]}
         thisMenu={"settings"}
       />

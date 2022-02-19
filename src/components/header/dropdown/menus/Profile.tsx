@@ -4,7 +4,6 @@ import { Auth } from "../../../containers/Auth"
 import { DropdownItem } from "../DropdownItem"
 import firebase from "firebase/compat"
 
-import { StaticDropdownItem } from "../StaticDropdownItem"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
 import { AiOutlineCloudUpload } from "react-icons/ai"
@@ -46,7 +45,7 @@ export const Profile: React.FC = () => {
           <DropdownItem leftIcon={<FaUserTag />} key={6}>
             Display Name
           </DropdownItem>,
-          <StaticDropdownItem
+          <DropdownItem
             leftIcon={
               <button
                 onClick={() => {
@@ -67,7 +66,7 @@ export const Profile: React.FC = () => {
             key={7}
           >
             User Image
-          </StaticDropdownItem>,
+          </DropdownItem>,
         ]}
         thisMenu={"profile"}
       />

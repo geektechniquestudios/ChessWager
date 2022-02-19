@@ -11,7 +11,6 @@ import {
   RiRedditLine,
   RiYoutubeLine,
 } from "react-icons/ri"
-import { StaticDropdownItem } from "../StaticDropdownItem"
 
 export const Social: React.FC = () => {
   return (
@@ -22,53 +21,53 @@ export const Social: React.FC = () => {
             <h2>Social</h2>
           </DropdownItem>,
           <div className="border-b-2" key={1} />,
-          <StaticDropdownItem
+          <DropdownItem
             url="https://www.instagram.com/chesswager/"
             leftIcon={<RiInstagramLine />}
             key={2}
           >
             Instagram
-          </StaticDropdownItem>,
+          </DropdownItem>,
 
-          <StaticDropdownItem
+          <DropdownItem
             url="https://www.facebook.com/profile.php?id=100073643917469"
             leftIcon={<RiFacebookCircleLine />}
             key={3}
           >
             Facebook
-          </StaticDropdownItem>,
+          </DropdownItem>,
 
-          <StaticDropdownItem
+          <DropdownItem
             url="https://twitter.com/ChessWager"
             leftIcon={<RiTwitterLine />}
             key={4}
           >
             Twitter
-          </StaticDropdownItem>,
+          </DropdownItem>,
 
-          <StaticDropdownItem
+          <DropdownItem
             url="https://www.reddit.com/user/ChessWager64"
             leftIcon={<RiRedditLine />}
             key={5}
           >
             Reddit
-          </StaticDropdownItem>,
+          </DropdownItem>,
 
-          <StaticDropdownItem
+          <DropdownItem
             url="https://www.youtube.com/channel/UCJhScjp1G8lmF6IXRDM_paQ"
             leftIcon={<RiYoutubeLine />}
             key={6}
           >
             Youtube
-          </StaticDropdownItem>,
+          </DropdownItem>,
 
-          <StaticDropdownItem
+          <DropdownItem
             url="https://github.com/geektechniquestudios/ChessWager"
             leftIcon={<RiGithubLine />}
             key={7}
           >
             Github
-          </StaticDropdownItem>,
+          </DropdownItem>,
         ]}
         thisMenu={"social"}
       />

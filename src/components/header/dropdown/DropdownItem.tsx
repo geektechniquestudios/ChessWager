@@ -5,6 +5,8 @@ interface Props {
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
   goToMenu?: string
+  url?: string
+  onClick?: () => void
 }
 
 export const DropdownItem: React.FC<Props> = ({
@@ -12,20 +14,24 @@ export const DropdownItem: React.FC<Props> = ({
   leftIcon,
   rightIcon,
   goToMenu,
+  url,
+  onClick,
 }) => {
   const { setActiveMenu } = DropdownState.useContainer()
+  const address = url ?? "#"
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
-      href="#"
-      className="menu-item color-shift"
+      href={address}
+      className="h-14 flex items-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-600 p-1 m-0.5 w-full dark:text-stone-200 dark:hover:text-stone-200 color-shift"
       onClick={() => {
+        onClick && onClick()
         goToMenu && setActiveMenu(goToMenu)
       }}
     >
-      <span className="icon-button">{leftIcon}</span>
+      <div>{leftIcon}</div>
       <div className="mx-2"> {children}</div>
-      <span className="icon-right">{rightIcon}</span>
+      <div>{rightIcon}</div>
     </a>
   )
 }

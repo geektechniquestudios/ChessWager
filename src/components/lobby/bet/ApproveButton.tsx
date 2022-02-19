@@ -12,10 +12,12 @@ export const ApproveButton: React.FC<Props> = ({ betId }) => {
 
   const approve = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    betDoc.update({
-      status: "approved",
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    }).catch(console.error)
+    betDoc
+      .update({
+        status: "approved",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .catch(console.error)
   }
 
   return (
@@ -23,7 +25,7 @@ export const ApproveButton: React.FC<Props> = ({ betId }) => {
       <div className="flex flex-col justify-center">
         <button
           type="button"
-          className="cw-button h-8 w-8 z-10 grid place-content-center mx-2"
+          className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-800 rounded-md animate-pulse"
           onClick={approve}
           title="Accept"
         >

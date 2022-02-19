@@ -56,16 +56,15 @@ export const JoinButton: React.FC<Props> = ({
   return (
     <>
       {isSelected && status === "ready" && !isUser1 && (
-        <div className="flex justify-center align-middle h-full flex-col animate-pulse">
+        <div className="flex justify-center h-full flex-col animate-pulse">
           <div className="flex">
             <button
               onClick={accept}
               type="button"
               title="Join Bet"
-              className="w-8 h-8 grid place-content-center cw-button border-none"
-              // style={{transform: "scaleX(-1)"}}
+              className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-700 rounded-md"
             >
-              <BsBoxArrowInLeft color="green" size="26" />
+              <BsBoxArrowInLeft color="green" size="23" />
             </button>
           </div>
         </div>

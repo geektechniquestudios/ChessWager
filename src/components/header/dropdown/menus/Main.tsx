@@ -5,7 +5,6 @@ import { DropdownItem } from "../DropdownItem"
 import { CSSTransition } from "react-transition-group"
 import Toggle from "react-toggle"
 
-import { StaticDropdownItem } from "../StaticDropdownItem"
 import { CgProfile } from "react-icons/cg"
 import {
   RiLoginCircleLine,
@@ -74,7 +73,7 @@ export const Main: React.FC = () => {
           <DropdownItem leftIcon={<BiHelpCircle />} goToMenu="help">
             Help
           </DropdownItem>
-          <StaticDropdownItem
+          <DropdownItem
             onClick={() => {
               setIsDarkOn(!isDarkOn)
               updateUserDarkPref(!isDarkOn)
@@ -92,43 +91,43 @@ export const Main: React.FC = () => {
             leftIcon={isDarkOn ? <MdOutlineDarkMode /> : <BsSun />}
           >
             {isDarkOn ? "Dark Mode" : "Light Mode"}
-          </StaticDropdownItem>
+          </DropdownItem>
           <div className="border-b-2" />
           {!isWalletConnected && (
-            <StaticDropdownItem
+            <DropdownItem
               onClick={connectWallet}
               leftIcon={<MdAttachMoney />}
             >
               Connect Wallet
-            </StaticDropdownItem>
+            </DropdownItem>
           )}
           {isWalletConnected && (
-            <StaticDropdownItem
+            <DropdownItem
               onClick={disconnectWallet}
               leftIcon={<MdMoneyOff />}
             >
               Disconnect Wallet
-            </StaticDropdownItem>
+            </DropdownItem>
           )}
 
           {!user && (
-            <StaticDropdownItem
+            <DropdownItem
               onClick={() => {
                 signInWithGoogle()
               }}
               leftIcon={<RiLoginCircleLine />}
             >
               Log in
-            </StaticDropdownItem>
+            </DropdownItem>
           )}
 
           {user && (
-            <StaticDropdownItem
+            <DropdownItem
               onClick={signOutWithGoogle}
               leftIcon={<RiLogoutCircleLine />}
             >
               Log Out
-            </StaticDropdownItem>
+            </DropdownItem>
           )}
         </div>
       </CSSTransition>
