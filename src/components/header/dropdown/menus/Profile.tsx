@@ -8,10 +8,8 @@ import { StaticDropdownItem } from "../StaticDropdownItem"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
 import { AiOutlineCloudUpload } from "react-icons/ai"
-import { FiAward } from "react-icons/fi"
-import { MdPeopleOutline } from "react-icons/md"
+import { FiAward, FiUser, FiUsers } from "react-icons/fi"
 import { BsGraphUp } from "react-icons/bs"
-import { FaUserTag } from "react-icons/fa"
 import { RiChat2Line } from "react-icons/ri"
 
 export const Profile: React.FC = () => {
@@ -34,7 +32,7 @@ export const Profile: React.FC = () => {
           <DropdownItem goToMenu="messages" leftIcon={<RiChat2Line />} key={2}>
             Messages
           </DropdownItem>,
-          <DropdownItem leftIcon={<MdPeopleOutline />} key={3}>
+          <DropdownItem goToMenu="friends" leftIcon={<FiUsers />} key={3}>
             Friends
           </DropdownItem>,
           <DropdownItem leftIcon={<BsGraphUp />} key={4}>
@@ -43,7 +41,7 @@ export const Profile: React.FC = () => {
           <DropdownItem leftIcon={<FiAward />} key={5}>
             Achievements
           </DropdownItem>,
-          <DropdownItem leftIcon={<FaUserTag />} key={6}>
+          <DropdownItem leftIcon={<FiUser />} key={6}>
             Display Name
           </DropdownItem>,
           <StaticDropdownItem
