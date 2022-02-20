@@ -45,9 +45,12 @@ export const Blocked: React.FC = () => {
     <>
       <Menu
         menuItems={[
-          <DropdownItem leftIcon={<BsArrowLeft />} goToMenu="settings" key={0}>
-            Blocked Users
-          </DropdownItem>,
+          <DropdownItem
+            leftIcon={<BsArrowLeft />}
+            goToMenu="settings"
+            key={0}
+            text="Blocked"
+          />,
         ]}
         thisMenu={"blocked"}
       />

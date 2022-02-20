@@ -32,9 +32,9 @@ export const BetAmount: React.FC<Props> = ({
     <div
       className={`border-1 flex px-1 color-shift bg-stone-200 dark:bg-stone-800 ${borderWarning}`}
     >
-      <label className="grid place-content-center m-2 text-stone-900 dark:text-stone-300">
+      <p className="grid place-content-center m-2 text-stone-900 dark:text-stone-300 font-bold">
         Your Bet
-      </label>
+      </p>
       <div className="border-1 m-2 border-stone-900 dark:border-stone-500" />
       <div>
         <div className="flex justify-between my-1">

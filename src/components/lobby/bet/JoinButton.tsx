@@ -62,7 +62,7 @@ export const JoinButton: React.FC<Props> = ({
               onClick={accept}
               type="button"
               title="Join Bet"
-              className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-700 rounded-md"
+              className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-700 rounded-md ml-2"
             >
               <BsBoxArrowInLeft color="green" size="23" />
             </button>

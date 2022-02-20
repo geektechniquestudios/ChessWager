@@ -9,13 +9,13 @@ export const LobbyHeaderButtons: React.FC = () => {
     <div className="flex justify-between w-full px-20">
       <HeaderButton buttonName="Side" buttonIcon={<GiYinYang />} />
       <HeaderButton buttonName="Trust" buttonIcon={<FaRegHandshake />} />
-      <HeaderButton buttonName="Cost" buttonIcon={<GiPayMoney />} />
       <HeaderButton buttonName="Prize" buttonIcon={<BsPiggyBank />} />
-      <HeaderButton buttonName="Age" buttonIcon={<FaRegClock />} />
+      <HeaderButton buttonName="Cost" buttonIcon={<GiPayMoney />} />
       <HeaderButton
         buttonName="Multiplier"
         buttonIcon={<AiOutlineCalculator />}
       />
+      <HeaderButton buttonName="Age" buttonIcon={<FaRegClock />} />
     </div>
   )
 }

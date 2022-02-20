@@ -2,7 +2,6 @@ import "../../../../style/dropdown.scss"
 import { Auth } from "../../../containers/Auth"
 
 import { DropdownItem } from "../DropdownItem"
-import { CSSTransition } from "react-transition-group"
 import Toggle from "react-toggle"
 
 import { CgProfile } from "react-icons/cg"
@@ -18,8 +17,13 @@ import { BsSun } from "react-icons/bs"
 import { GoGift } from "react-icons/go"
 import { DropdownState } from "../../../containers/DropdownState"
 import { DarkMode } from "../../../containers/DarkMode"
+import { Menu } from "../Menu"
 
-export const Main: React.FC = () => {
+interface Props {
+  dropdownRef: React.MutableRefObject<any>
+}
+
+export const Main: React.FC<Props> = ({ dropdownRef }) => {
   const {
     user,
     signOutWithGoogle,
@@ -28,29 +32,16 @@ export const Main: React.FC = () => {
     isWalletConnected,
     disconnectWallet,
   } = Auth.useContainer()
-
-  const { setMenuHeight, activeMenu, heightMultiplier } =
+  const { setIsDropdownOpen, setMenuHeight, heightMultiplier } =
     DropdownState.useContainer()
   const { isDarkOn, setIsDarkOn } = DarkMode.useContainer()
   const updateUserDarkPref = (isChecked: boolean) => {
     localStorage.setItem("darkMode", isChecked.toString())
   }
-
-  const calcHeight = (el: any) => {
-    const height = el.offsetHeight * heightMultiplier
-    setMenuHeight(height)
-  }
-
   return (
-    <>
-      <CSSTransition
-        in={activeMenu === "main"}
-        timeout={500}
-        classNames="menu-primary"
-        unmountOnExit
-        onEnter={calcHeight}
-      >
-        <div className="menu">
+    <Menu
+      menuItems={[
+        <div key={0}>
           {user && (
             <DropdownItem
               leftIcon={<CgProfile />}
@@ -58,6 +49,8 @@ export const Main: React.FC = () => {
               text="Profile"
             />
           )}
+        </div>,
+        <div key={1}>
           {user && (
             <DropdownItem
               leftIcon={<RiSettings5Line />}
@@ -65,38 +58,43 @@ export const Main: React.FC = () => {
               text="Settings"
             />
           )}
+        </div>,
+        <div key={2}>
           {user && (
             <DropdownItem leftIcon={<GoGift />} goToMenu="store" text="Store" />
           )}
-          <DropdownItem
-            leftIcon={<BsShare />}
-            goToMenu="social"
-            text="Social"
-          />
-          <DropdownItem
-            leftIcon={<BiHelpCircle />}
-            goToMenu="help"
-            text="Help"
-          />
-          <DropdownItem
-            onClick={() => {
-              setIsDarkOn(!isDarkOn)
-              updateUserDarkPref(!isDarkOn)
-            }}
-            rightIcon={
-              <div className="px-2 justify-center align-middle flex h-full py-2 ">
-                <Toggle
-                  icons={false}
-                  className="toggle pointer-events-none "
-                  checked={isDarkOn}
-                  readOnly
-                />
-              </div>
-            }
-            leftIcon={isDarkOn ? <MdOutlineDarkMode /> : <BsSun />}
-            text={isDarkOn ? "Dark Mode" : "Light Mode"}
-          />
-          <div className="border-b-2" />
+        </div>,
+        <DropdownItem
+          leftIcon={<BsShare />}
+          goToMenu="social"
+          text="Social"
+          key={3}
+        />,
+        <DropdownItem
+          leftIcon={<BiHelpCircle />}
+          goToMenu="help"
+          text="Help"
+          key={4}
+        />,
+        <DropdownItem
+          onClick={() => {
+            setIsDarkOn(!isDarkOn)
+            updateUserDarkPref(!isDarkOn)
+          }}
+          rightIcon={
+            <Toggle
+              icons={false}
+              className="toggle pointer-events-none"
+              checked={isDarkOn}
+              readOnly
+            />
+          }
+          leftIcon={isDarkOn ? <MdOutlineDarkMode /> : <BsSun />}
+          text={isDarkOn ? "Dark Mode" : "Light Mode"}
+          key={5}
+        />,
+        <div className="border-b-2" key={6} />,
+        <div key={7}>
           {!isWalletConnected && (
             <DropdownItem
               onClick={connectWallet}
@@ -104,6 +102,8 @@ export const Main: React.FC = () => {
               text="Connect Wallet"
             />
           )}
+        </div>,
+        <div key={8}>
           {isWalletConnected && (
             <DropdownItem
               onClick={disconnectWallet}
@@ -111,25 +111,35 @@ export const Main: React.FC = () => {
               text="Disconnect Wallet"
             />
           )}
-
+        </div>,
+        <div key={9}>
           {!user && (
             <DropdownItem
               onClick={() => {
+                // setIsDropdownOpen(false)
+                // setMenuHeight(515)
                 signInWithGoogle()
               }}
               leftIcon={<RiLoginCircleLine />}
               text="Sign In"
             />
           )}
+        </div>,
+        <div key={10}>
           {user && (
             <DropdownItem
-              onClick={signOutWithGoogle}
+              onClick={() => {
+                // setIsDropdownOpen(false)
+                // setMenuHeight(325)
+                signOutWithGoogle()
+              }}
               leftIcon={<RiLogoutCircleLine />}
               text="Sign Out"
             />
           )}
-        </div>
-      </CSSTransition>
-    </>
+        </div>,
+      ]}
+      thisMenu={"main"}
+    />
   )
 }

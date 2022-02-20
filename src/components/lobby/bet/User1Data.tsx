@@ -27,14 +27,12 @@ export const User1Data: React.FC<Props> = ({
   const fundedStyle = hasUser1Paid ? "border-positive" : ""
   return (
     <div
-      className={`flex justify-center align-middle w-full border-none rounded-sm text-stone-900 dark:text-stone-300 px-1 ${fundedStyle}`}
+      className={`flex justify-center w-full border-none rounded-sm text-stone-900 dark:text-stone-300 px-1 gap-2.5 ${fundedStyle}`}
     >
-      <div className="flex justify-between w-full gap-2.5">
-        <User1Spinner user2Id={user2Id} status={status} />
-        <UserImage photoURL={user1PhotoURL} displayName={user1DisplayName} />
-        <User1FollowThrough user1FollowThrough={user1FollowThrough} />
-        <User1BetAmount amount={amount} multiplier={multiplier} />
-      </div>
+      <User1Spinner user2Id={user2Id} status={status} />
+      <UserImage photoURL={user1PhotoURL} displayName={user1DisplayName} />
+      <User1FollowThrough user1FollowThrough={user1FollowThrough} />
+      <User1BetAmount amount={amount} multiplier={multiplier} />
     </div>
   )
 }

@@ -8,11 +8,6 @@
   transition: height var(--speed) ease;
 }
 
-.menu {
-  @apply w-52 justify-center;
-}
-
-
 /* CSSTransition classes  */
 .menu-primary-enter {
   position: absolute;

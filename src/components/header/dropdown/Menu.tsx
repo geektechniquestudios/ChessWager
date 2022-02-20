@@ -3,7 +3,7 @@ import { DropdownState } from "../../containers/DropdownState"
 
 interface Props {
   thisMenu: string
-  menuItems: any
+  menuItems: React.ReactNode[]
 }
 
 export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
@@ -16,16 +16,14 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
   }
 
   return (
-    <>
-      <CSSTransition
-        in={activeMenu === thisMenu}
-        timeout={500}
-        classNames="menu-primary"
-        unmountOnExit
-        onEnter={calcHeight}
-      >
-        <div className="menu">{menuItems.map((item: any) => item)}</div>
-      </CSSTransition>
-    </>
+    <CSSTransition
+      in={activeMenu === thisMenu}
+      timeout={500}
+      classNames="menu-primary"
+      unmountOnExit
+      onEnter={calcHeight}
+    >
+      <div className="w-52">{menuItems.map((item: any) => item)}</div>
+    </CSSTransition>
   )
 }

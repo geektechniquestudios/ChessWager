@@ -33,28 +33,26 @@ export const User2Data: React.FC<Props> = ({
   const fundedStyle = hasUser2Paid ? "border-positive" : ""
   return (
     <div
-      className={`flex justify-center align-middle w-full border-none rounded-sm text-stone-900 dark:text-stone-300 px-1 ${fundedStyle}`}
+      className={`flex justify-center align-middle w-full border-none rounded-sm text-stone-900 dark:text-stone-300 px-1 gap-2.5 ${fundedStyle}`}
     >
-      <div className="flex justify-between w-full gap-2.5">
-        <User2BetAmount amount={amount} multiplier={multiplier} />
-        <User2FollowThrough
-          user2FollowThrough={user2FollowThrough}
-          status={status}
-        />
-        <User2Image
-          user2PhotoURL={user2PhotoURL}
-          user2DisplayName={user2DisplayName}
-          status={status}
-        />
-        <User2Spinner status={status} user1Id={user1Id} />
-        <JoinButton
-          id={id}
-          user1Id={user1Id}
-          isSelected={isSelected}
-          status={status}
-        />
-        <ApproveKickWrapper user1Id={user1Id} status={status} id={id} />
-      </div>
+      <User2BetAmount amount={amount} multiplier={multiplier} />
+      <User2FollowThrough
+        user2FollowThrough={user2FollowThrough}
+        status={status}
+      />
+      <User2Image
+        user2PhotoURL={user2PhotoURL}
+        user2DisplayName={user2DisplayName}
+        status={status}
+      />
+      <User2Spinner status={status} user1Id={user1Id} />
+      <JoinButton
+        id={id}
+        user1Id={user1Id}
+        isSelected={isSelected}
+        status={status}
+      />
+      <ApproveKickWrapper user1Id={user1Id} status={status} id={id} />
     </div>
   )
 }

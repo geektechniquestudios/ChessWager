@@ -23,15 +23,17 @@ export const DropdownItem: React.FC<Props> = ({
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       href={address}
-      className="h-14 flex items-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-600 p-1 m-0.5 w-full dark:text-stone-200 dark:hover:text-stone-200 color-shift"
+      className="h-14 flex items-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-600 px-2 m-0.5 w-full dark:text-stone-200 dark:hover:text-stone-200 color-shift"
       onClick={() => {
         onClick && onClick()
         goToMenu && setActiveMenu(goToMenu)
       }}
     >
-      <div>{leftIcon}</div>
-      <div className="mx-2">{text}</div>
-      <div>{rightIcon}</div>
+      <div className="w-full flex gap-3">
+        <div className="flex flex-col justify-center">{leftIcon}</div>
+        <div className="">{text}</div>
+      </div>
+      <div className="flex flex-col justify-center">{rightIcon}</div>
     </a>
   )
 }

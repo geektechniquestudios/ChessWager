@@ -17,9 +17,12 @@ export const Social: React.FC = () => {
     <>
       <Menu
         menuItems={[
-          <DropdownItem goToMenu="main" leftIcon={<BiArrowBack />} key={0}>
-            <h2>Social</h2>
-          </DropdownItem>,
+          <DropdownItem
+            goToMenu="main"
+            leftIcon={<BiArrowBack />}
+            key={0}
+            text="Social"
+          />,
           <div className="border-b-2" key={1} />,
           <DropdownItem
             url="https://www.instagram.com/chesswager/"
@@ -55,6 +58,7 @@ export const Social: React.FC = () => {
             url="https://github.com/geektechniquestudios/ChessWager"
             leftIcon={<RiGithubLine />}
             key={7}
+            text="Github"
           />,
         ]}
         thisMenu={"social"}
