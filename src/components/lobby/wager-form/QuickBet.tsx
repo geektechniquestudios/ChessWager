@@ -23,7 +23,7 @@ export const QuickBet: React.FC<Props> = ({
     setIsAmountEmpty(false)
   }
   return (
-    <div className="grid grid-cols-3 grid-rows-2 w-full border-1 border-stone-400 dark:border-stone-500 dark:bg-stone-800 bg-stone-200 color-shift">
+    <div className="grid grid-cols-3 grid-rows-2 w-full border-1 border-stone-400 dark:border-stone-500 dark:bg-stone-700 bg-stone-300 color-shift">
       <Button
         type="button"
         variant="text"
@@ -31,7 +31,7 @@ export const QuickBet: React.FC<Props> = ({
           updateBetValues(20)
         }}
       >
-        $20
+        <p className="font-bold">$20</p>
       </Button>
       <Button
         type="button"
@@ -40,7 +40,7 @@ export const QuickBet: React.FC<Props> = ({
           updateBetValues(50)
         }}
       >
-        $50
+        <p className="font-bold">$50</p>
       </Button>
       <Button
         type="button"
@@ -49,7 +49,7 @@ export const QuickBet: React.FC<Props> = ({
           updateBetValues(100)
         }}
       >
-        $100
+        <p className="font-bold">$100</p>
       </Button>
       <Button
         type="button"
@@ -58,7 +58,7 @@ export const QuickBet: React.FC<Props> = ({
           updateBetValues(500)
         }}
       >
-        $500
+        <p className="font-bold">$500</p>
       </Button>
       <Button
         type="button"
@@ -67,7 +67,7 @@ export const QuickBet: React.FC<Props> = ({
           updateBetValues(1000)
         }}
       >
-        $1k
+        <p className="font-bold">$1k</p>
       </Button>
       <Button
         type="button"
@@ -76,7 +76,7 @@ export const QuickBet: React.FC<Props> = ({
           updateBetValues(5000)
         }}
       >
-        $5k
+        <p className="font-bold">$5k</p>
       </Button>
     </div>
   )

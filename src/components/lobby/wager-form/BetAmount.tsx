@@ -30,7 +30,7 @@ export const BetAmount: React.FC<Props> = ({
 
   return (
     <div
-      className={`border-1 flex px-1 color-shift bg-stone-200 dark:bg-stone-800 ${borderWarning}`}
+      className={`border-1 flex px-1 color-shift bg-stone-300 dark:bg-stone-700 ${borderWarning}`}
     >
       <p className="grid place-content-center m-2 text-stone-900 dark:text-stone-300 font-bold">
         Your Bet
@@ -38,9 +38,9 @@ export const BetAmount: React.FC<Props> = ({
       <div className="border-1 m-2 border-stone-900 dark:border-stone-500" />
       <div>
         <div className="flex justify-between my-1">
-          <span className="m-1 text-stone-900 dark:text-stone-300">USD</span>
+          <div className="flex justify-center flex-col font-bold m-1 text-stone-900 dark:text-stone-300 text-xs">USD</div>
           <CurrencyInput
-            className="ml-1  p-1 rounded-sm bg-stone-100 dark:bg-stone-700 dark:text-stone-300 text-stone-900"
+            className="ml-1  p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-300 text-stone-900"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue={""}
@@ -71,9 +71,9 @@ export const BetAmount: React.FC<Props> = ({
           />
         </div>
         <div className="flex justify-between my-1">
-          <span className="m-1 text-stone-900 dark:text-stone-300">AVAX</span>
+          <div className="flex justify-center flex-col font-bold m-1 text-stone-900 dark:text-stone-300 text-xs">AVAX</div>
           <CurrencyInput
-            className="ml-1  p-1 rounded-sm bg-stone-100 dark:bg-stone-700 dark:text-stone-300"
+            className="ml-1  p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue={""}

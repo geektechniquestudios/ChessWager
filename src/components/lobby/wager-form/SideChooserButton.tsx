@@ -16,7 +16,7 @@ export const SideChooserButton: React.FC<Props> = ({
     <button
       title={thisSide}
       type="button"
-      className={`color-shift rounded-md w-9 h-9 grid place-content-center border-1 ${
+      className={`color-shift rounded-md w-8 h-8 grid place-content-center border-1 ${
         thisSide === "Black"
           ? "hover:bg-stone-400 dark:hover:bg-stone-500"
           : "hover:bg-stone-500 dark:hover:bg-stone-800"
