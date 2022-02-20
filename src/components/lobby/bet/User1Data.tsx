@@ -24,10 +24,12 @@ export const User1Data: React.FC<Props> = ({
   status,
   hasUser1Paid,
 }) => {
-  const fundedStyle = hasUser1Paid ? "border-positive" : ""
+  const fundedStyle = hasUser1Paid
+    ? "bg-gradient-to-l from-green-900 via-transparent to-transparent"
+    : "bg-transparent"
   return (
     <div
-      className={`flex justify-center w-full border-none rounded-sm text-stone-900 dark:text-stone-300 px-1 gap-2.5 ${fundedStyle}`}
+      className={`color-shift flex justify-center w-full border-none text-stone-900 dark:text-stone-300 px-1 gap-2.5 ${fundedStyle}`}
     >
       <User1Spinner user2Id={user2Id} status={status} />
       <UserImage photoURL={user1PhotoURL} displayName={user1DisplayName} />

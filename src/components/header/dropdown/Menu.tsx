@@ -7,11 +7,10 @@ interface Props {
 }
 
 export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
-  const { activeMenu, heightMultiplier, setMenuHeight } =
-    DropdownState.useContainer()
+  const { activeMenu, setMenuHeight } = DropdownState.useContainer()
 
   const calcHeight = (el: any) => {
-    const height = el.offsetHeight * heightMultiplier
+    const height = el.offsetHeight
     setMenuHeight(height)
   }
 
@@ -23,7 +22,7 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
       unmountOnExit
       onEnter={calcHeight}
     >
-      <div className="w-52">{menuItems.map((item: any) => item)}</div>
+      <div className="w-64">{menuItems.map((item: any) => item)}</div>
     </CSSTransition>
   )
 }

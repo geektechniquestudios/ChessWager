@@ -6,14 +6,11 @@ const useDropdownState = () => {
   const [activeMenu, setActiveMenu] = useState("main")
   const [menuHeight, setMenuHeight] = useState<number>()
 
-  const heightMultiplier = 1.1
-
   return {
     isDropdownOpen,
     setIsDropdownOpen,
     activeMenu,
     setActiveMenu,
-    heightMultiplier,
     menuHeight,
     setMenuHeight,
   }

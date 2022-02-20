@@ -22,7 +22,10 @@ export const Settings: React.FC = () => {
             key={0}
             text="Settings"
           />,
-          <div className="border-b-2" key={1} />,
+          <div
+            className="border-b-2 border-stone-400 dark:border-stone-600"
+            key={1}
+          />,
           <DropdownItem
             leftIcon={<MdOutlineBlock />}
             goToMenu="blocked"
@@ -36,13 +39,13 @@ export const Settings: React.FC = () => {
             leftIcon={isMuted ? <BiVolumeFull /> : <BiVolumeMute />}
             rightIcon={
               <Toggle
-                className="filter-toggle pointer-events-none "
+                className="filter-toggle pointer-events-none"
                 checked={isMuted}
                 readOnly
               />
             }
             key={3}
-            text={isMuted ? "Unmute" : "Mute"}
+            text={isMuted ? "Sound" : "Muted"}
           />,
           <DropdownItem
             leftIcon={<RiChatDeleteLine />}
@@ -51,7 +54,7 @@ export const Settings: React.FC = () => {
             }}
             rightIcon={
               <Toggle
-                className="filter-toggle pointer-events-none "
+                className="filter-toggle pointer-events-none"
                 checked={profanityFilter}
                 readOnly
               />

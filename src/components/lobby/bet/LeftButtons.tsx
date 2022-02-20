@@ -60,7 +60,6 @@ export const LeftButtons: React.FC<Props> = ({
           </div>
         </div>
       )}
-      {hasUser1Paid && <p>Funded</p>}
     </>
   )
 }

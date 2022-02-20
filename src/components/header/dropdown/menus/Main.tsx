@@ -19,11 +19,7 @@ import { DropdownState } from "../../../containers/DropdownState"
 import { DarkMode } from "../../../containers/DarkMode"
 import { Menu } from "../Menu"
 
-interface Props {
-  dropdownRef: React.MutableRefObject<any>
-}
-
-export const Main: React.FC<Props> = ({ dropdownRef }) => {
+export const Main: React.FC = () => {
   const {
     user,
     signOutWithGoogle,
@@ -32,8 +28,7 @@ export const Main: React.FC<Props> = ({ dropdownRef }) => {
     isWalletConnected,
     disconnectWallet,
   } = Auth.useContainer()
-  const { setIsDropdownOpen, setMenuHeight, heightMultiplier } =
-    DropdownState.useContainer()
+  const { setIsDropdownOpen, setMenuHeight } = DropdownState.useContainer()
   const { isDarkOn, setIsDarkOn } = DarkMode.useContainer()
   const updateUserDarkPref = (isChecked: boolean) => {
     localStorage.setItem("darkMode", isChecked.toString())
@@ -93,7 +88,10 @@ export const Main: React.FC<Props> = ({ dropdownRef }) => {
           text={isDarkOn ? "Dark Mode" : "Light Mode"}
           key={5}
         />,
-        <div className="border-b-2" key={6} />,
+        <div
+          className="border-b-2 border-stone-400 dark:border-stone-600"
+          key={6}
+        />,
         <div key={7}>
           {!isWalletConnected && (
             <DropdownItem
@@ -116,8 +114,8 @@ export const Main: React.FC<Props> = ({ dropdownRef }) => {
           {!user && (
             <DropdownItem
               onClick={() => {
-                // setIsDropdownOpen(false)
-                // setMenuHeight(515)
+                setIsDropdownOpen(false)
+                setMenuHeight(0)
                 signInWithGoogle()
               }}
               leftIcon={<RiLoginCircleLine />}
@@ -129,8 +127,8 @@ export const Main: React.FC<Props> = ({ dropdownRef }) => {
           {user && (
             <DropdownItem
               onClick={() => {
-                // setIsDropdownOpen(false)
-                // setMenuHeight(325)
+                setIsDropdownOpen(false)
+                setMenuHeight(0)
                 signOutWithGoogle()
               }}
               leftIcon={<RiLogoutCircleLine />}

@@ -13,7 +13,7 @@ export const ChatHeader: React.FC = () => {
           setShowChat(false)
           localStorage.setItem("showChat", "false")
         }}
-        className=" hover:bg-stone-400 dark:hover:bg-stone-900 rounded-sm color-shift m-2"
+        className=" hover:bg-stone-400 dark:hover:bg-stone-800 rounded-md color-shift m-2"
       >
         <BiArrowFromLeft
           size="1.3em"
@@ -24,7 +24,7 @@ export const ChatHeader: React.FC = () => {
         GLOBAL CHAT
       </div>
       <button
-        className=" hover:bg-stone-400 dark:hover:bg-stone-900 rounded-sm color-shift m-2"
+        className=" hover:bg-stone-400 dark:hover:bg-stone-800 rounded-md color-shift m-2"
         onClick={() => {
           setActiveMenu("settings")
           setIsDropdownOpen(true)

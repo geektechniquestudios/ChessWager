@@ -30,7 +30,10 @@ export const Profile: React.FC = () => {
             key={0}
             text="Profile"
           />,
-          <div className="border-b-2" key={1} />,
+          <div
+            className="border-b-2 border-stone-400 dark:border-stone-600"
+            key={1}
+          />,
           <DropdownItem
             goToMenu="messages"
             leftIcon={<RiChat2Line />}

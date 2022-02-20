@@ -14,7 +14,7 @@ export const ShowChatButton: React.FC<Props> = ({}) => {
             setShowChat(true)
             localStorage.setItem("showChat", "true")
           }}
-          className="m-3 hover:bg-stone-400 dark:hover:bg-stone-700 rounded-sm color-shift absolute top-12 right-0"
+          className="m-3 hover:bg-stone-400 dark:hover:bg-stone-700 rounded-md color-shift absolute top-12 right-0"
         >
           <BiArrowFromRight
             size="1.4em"

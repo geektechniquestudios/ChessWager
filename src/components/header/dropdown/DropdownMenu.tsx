@@ -12,7 +12,7 @@ import { Social } from "./menus/Social"
 import { Store } from "./menus/Store"
 
 export const DropdownMenu = () => {
-  const CloseMenuListener = (ref: any) => {
+  const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
     const { setIsDropdownOpen } = DropdownState.useContainer()
     useEffect(() => {
       const handleClickOutside = (event: Event) => {
@@ -21,6 +21,7 @@ export const DropdownMenu = () => {
         }
         if (ref.current && !ref.current.contains(event.target)) {
           setIsDropdownOpen(false)
+          setMenuHeight(0)
         }
       }
 
@@ -33,40 +34,22 @@ export const DropdownMenu = () => {
   const dropdownRef = useRef<any>()
 
   const { user } = Auth.useContainer()
-  const { menuHeight, setMenuHeight, activeMenu, heightMultiplier } =
-    DropdownState.useContainer()
+  const { menuHeight, setMenuHeight } = DropdownState.useContainer()
 
   CloseMenuListener(dropdownRef)
 
   useEffect(() => {
-    // if (user) {
-    //   setMenuHeight(515)
-    // } else {
-    //   setMenuHeight(325)
-    // }
-    setMenuHeight(
-      dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
-    )
-    // activeMenu === "settings" &&
-    //   setMenuHeight(
-    //     dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
-    //   )
-  }, [heightMultiplier, setMenuHeight])
-
-  // useEffect(() => {
-  //   setMenuHeight(
-  //     dropdownRef.current?.firstChild.offsetHeight * heightMultiplier,
-  //   )
-  // }, [user, setMenuHeight, heightMultiplier])
+    setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
+  }, [setMenuHeight])
 
   return (
     <div
-      className="dropdown absolute w-64 -translate-x-1/2 bg-stone-100 dark:bg-stone-700 border-2 border-secondary-dark text-stone-800 dark:text-stone-200 overflow-hidden right-2 top-10 z-50 rounded-md shadow-2xl"
+      className="dropdown absolute w-64 -translate-x-1/2 bg-stone-100 dark:bg-stone-700 border-2 border-stone-400 dark:border-stone-600 text-stone-800 dark:text-stone-200 overflow-hidden right-5 top-10 z-50 rounded-md shadow-2xl"
       style={{ height: menuHeight }}
       ref={dropdownRef}
     >
-      <div className="flex flex-col justify-center items-center h-full">
-        <Main dropdownRef={dropdownRef} />
+      <div className="flex justify-center">
+        <Main />
         {user && <Profile />}
         {user && <Settings />}
         {user && <Store />}
