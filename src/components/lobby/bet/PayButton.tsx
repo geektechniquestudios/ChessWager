@@ -1,4 +1,4 @@
-import { BiDollar, BiWallet } from "react-icons/bi"
+import { BiWallet } from "react-icons/bi"
 
 export const PayButton: React.FC<any> = (sendBet: () => void) => {
   return (
