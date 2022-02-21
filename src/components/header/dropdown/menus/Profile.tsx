@@ -35,16 +35,16 @@ export const Profile: React.FC = () => {
             key={1}
           />,
           <DropdownItem
-            goToMenu="messages"
-            leftIcon={<RiChat2Line />}
-            key={2}
-            text="Messages"
-          />,
-          <DropdownItem
             goToMenu="friends"
             leftIcon={<FiUsers />}
-            key={3}
+            key={2}
             text="Friends"
+          />,
+          <DropdownItem
+            goToMenu="messages"
+            leftIcon={<RiChat2Line />}
+            key={3}
+            text="Messages"
           />,
           <DropdownItem leftIcon={<BsGraphUp />} key={4} text="Stats" />,
           <DropdownItem leftIcon={<FiAward />} key={5} text="Achievements" />,
