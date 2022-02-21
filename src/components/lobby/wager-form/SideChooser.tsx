@@ -1,4 +1,3 @@
-import { FaChessKing } from "react-icons/fa"
 import { SideChooserButton } from "./SideChooserButton"
 
 interface Props {
@@ -13,7 +12,7 @@ export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
         Side
       </p>
       <div className="border-1 mx-2 border-stone-900 dark:border-stone-500" />
-      <div className="flex gap-4 items-center w-full justify-center">
+      <div className="flex items-center w-full justify-evenly">
         <SideChooserButton
           betSide={betSide}
           thisSide="White"

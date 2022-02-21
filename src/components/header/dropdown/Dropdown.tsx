@@ -13,10 +13,10 @@ export const Dropdown: React.FC = () => {
   const pointerEvents = isDropdownOpen ? "pointer-events-none" : ""
 
   return (
-    <>
+    <div className="flex flex-col justify-center">
       <a
         href="#"
-        className={`flex w-8 h-8 m-2 align-middle rounded-full bg-secondary dark:bg-secondary-dark hover:bg-stone-500 dark:hover:bg-stone-600 ${pointerEvents}`}
+        className={`w-7 h-7 m-2 rounded-full bg-stone-500 dark:bg-stone-600 hover:bg-stone-500 dark:hover:bg-stone-600 ${pointerEvents}`}
         onClick={() => {
           setActiveMenu("main")
           setIsDropdownOpen(!isDropdownOpen)
@@ -26,13 +26,13 @@ export const Dropdown: React.FC = () => {
           <img
             src={photoURL!}
             alt=""
-            className="w-8 h-8 color-shift rounded-full hover:border-teal-700 border-stone-900 dark:border-stone-200 border-1"
+            className="w-7 h-7 color-shift rounded-full "
           />
         ) : (
-          <BiUserCircle className="w-8 h-8" />
+          <BiUserCircle className="w-7 h-7" />
         )}
       </a>
       {isDropdownOpen && <DropdownMenu />}
-    </>
+    </div>
   )
 }

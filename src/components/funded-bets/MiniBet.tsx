@@ -37,7 +37,7 @@ export const MiniBet: React.FC<Props> = ({
     <div>
       <div className="flex justify-between p-1">
         <div className="flex gap-1 mx-1">
-          <div className="border-1 rounded-full bg-secondary-dark grid place-content-center w-5 h-5">
+          <div className="border-1 rounded-full bg-stone-600 grid place-content-center w-5 h-5">
             <GiChessRook color={betSide} size="1rem" />
           </div>
           <img
@@ -53,7 +53,7 @@ export const MiniBet: React.FC<Props> = ({
             className="h-6 w-6 rounded-full"
             title={user2DisplayName}
           />
-          <div className="border-1 rounded-full bg-secondary-dark grid place-content-center w-5 h-5">
+          <div className="border-1 rounded-full bg-stone-600 grid place-content-center w-5 h-5">
             <GiChessRook
               color={betSide === "White" ? "black" : "white"}
               size="1rem"
@@ -64,7 +64,7 @@ export const MiniBet: React.FC<Props> = ({
           <p>{`$${(Number(potSize) * avaxPrice).toFixed(2)}`}</p>
         </div>
       </div>
-      <div className="h-0.5 bg-gradient-to-r from-secondary-dark to-transparent" />
+      <div className="h-0.5 bg-gradient-to-r from-stone-600 to-transparent" />
     </div>
   )
 }

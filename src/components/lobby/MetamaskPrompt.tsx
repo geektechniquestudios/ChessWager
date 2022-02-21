@@ -1,10 +1,9 @@
 import { BigNumber, ethers } from "ethers"
 import { useEffect } from "react"
-import { BiDollar } from "react-icons/bi"
+import { BiDollar, BiWallet } from "react-icons/bi"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
 import "../../style/buttons.scss"
-import { PayButton } from "./bet/PayButton"
 require("dotenv").config({ path: "../../../.env" })
 const isLocal = process.env.REACT_APP_BRANCH_ENV === "develop"
 
@@ -114,5 +113,14 @@ export const MetamaskPrompt: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return <PayButton sendBet={sendBet} />
+  return (
+    <div className="flex flex-col justify-center">
+      <button
+        className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-800 rounded-md animate-pulse"
+        onClick={sendBet}
+      >
+        <BiWallet size="24" title="Send Wager" color="green" />
+      </button>
+    </div>
+  )
 }
