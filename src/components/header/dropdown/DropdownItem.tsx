@@ -23,6 +23,8 @@ export const DropdownItem: React.FC<Props> = ({
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       href={address}
+      target={url ? "_blank" : ""}
+      rel="noreferrer"
       className="h-14 w-64 px-4 flex items-center hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift"
       onClick={() => {
         onClick && onClick()
