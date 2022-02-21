@@ -30,17 +30,13 @@ export const User2Data: React.FC<Props> = ({
   id,
   hasUser2Paid,
 }) => {
-  const fundedStyle = hasUser2Paid
-    ? "bg-gradient-to-r from-green-900 via-transparent to-transparent"
-    : "bg-transparent"
   return (
-    <div
-      className={`color-shift flex justify-center align-middle w-full border-none rounded-sm text-stone-900 dark:text-stone-300 px-1 gap-2.5 ${fundedStyle}`}
-    >
+    <div className="color-shift flex justify-center w-full border-none text-stone-900 dark:text-stone-300 px-1 gap-2.5">
       <User2BetAmount amount={amount} multiplier={multiplier} />
       <User2FollowThrough
         user2FollowThrough={user2FollowThrough}
         status={status}
+        hasUser2Paid={hasUser2Paid}
       />
       <User2Image
         user2PhotoURL={user2PhotoURL}

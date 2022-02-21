@@ -1,18 +1,18 @@
-import { FaRegHandshake } from "react-icons/fa"
+import { FollowThrough } from "./FollowThrough"
 
 interface Props {
   user1FollowThrough: number[]
+  hasUser1Paid: boolean
 }
 
-export const User1FollowThrough: React.FC<Props> = ({ user1FollowThrough }) => {
+export const User1FollowThrough: React.FC<Props> = ({
+  user1FollowThrough,
+  hasUser1Paid,
+}) => {
   return (
-    <div className="flex flex-col justify-center w-16">
-      <div className="text-xs flex justify-center align-middle">
-        {user1FollowThrough[0]} / {user1FollowThrough[1]}
-      </div>
-      <div className="flex justify-center align-middle">
-        <FaRegHandshake title="Follow-through" />
-      </div>
-    </div>
+    <FollowThrough
+      followThrough={user1FollowThrough}
+      hasUserPaid={hasUser1Paid}
+    />
   )
 }
