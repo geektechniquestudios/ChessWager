@@ -1,6 +1,6 @@
 import { BigNumber, ethers } from "ethers"
 import { useEffect } from "react"
-import { BiDollar, BiWallet } from "react-icons/bi"
+import { BiWallet } from "react-icons/bi"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
 import "../../style/buttons.scss"
