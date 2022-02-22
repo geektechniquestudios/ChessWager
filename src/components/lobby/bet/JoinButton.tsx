@@ -1,9 +1,9 @@
 import "firebase/compat/functions"
 import firebase from "firebase/compat"
 import { Auth } from "../../containers/Auth"
-import { BsBoxArrowInDownLeft, BsBoxArrowInLeft, BsPlay } from "react-icons/bs"
+import { BsBoxArrowInLeft } from "react-icons/bs"
 import "../../../style/buttons.scss"
-import { ImEnter } from "react-icons/im"
+import { DarkMode } from "../../containers/DarkMode"
 const firestore = firebase.firestore()
 
 interface Props {
@@ -53,6 +53,8 @@ export const JoinButton: React.FC<Props> = ({
       })
   }
 
+  const { isDarkOn } = DarkMode.useContainer()
+
   return (
     <>
       {isSelected && status === "ready" && !isUser1 && (
@@ -64,7 +66,10 @@ export const JoinButton: React.FC<Props> = ({
               title="Join Bet"
               className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-700 rounded-md ml-2"
             >
-              <BsBoxArrowInLeft color="green" size="23" />
+              <BsBoxArrowInLeft
+                color={isDarkOn ? "#bbf7d0" : "#14532d"}
+                size="23"
+              />
             </button>
           </div>
         </div>

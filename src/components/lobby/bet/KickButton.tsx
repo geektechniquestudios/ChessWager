@@ -1,5 +1,6 @@
 import firebase from "firebase/compat"
 import { FiUserMinus } from "react-icons/fi"
+import { DarkMode } from "../../containers/DarkMode"
 const firestore = firebase.firestore()
 
 interface Props {
@@ -23,6 +24,7 @@ export const KickButton: React.FC<Props> = ({ betId }) => {
       })
       .catch(console.error)
   }
+  const { isDarkOn } = DarkMode.useContainer()
   return (
     <>
       <div className="flex flex-col justify-center">
@@ -31,7 +33,7 @@ export const KickButton: React.FC<Props> = ({ betId }) => {
           onClick={kick}
           title="Kick User"
         >
-          <FiUserMinus color="red" size="19" />
+          <FiUserMinus color={isDarkOn ? "#7f1d1d" : "#fecaca"} size="19" />
         </button>
       </div>
     </>

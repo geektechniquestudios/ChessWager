@@ -1,4 +1,5 @@
 import { FaRegHandshake } from "react-icons/fa"
+import { DarkMode } from "../../containers/DarkMode"
 
 interface Props {
   followThrough: number[]
@@ -9,6 +10,7 @@ export const FollowThrough: React.FC<Props> = ({
   followThrough,
   hasUserPaid,
 }) => {
+  const { isDarkOn } = DarkMode.useContainer()
   return (
     <div className="flex flex-col justify-center w-16">
       <div className="text-xs flex justify-center align-middle">
@@ -18,7 +20,7 @@ export const FollowThrough: React.FC<Props> = ({
         <FaRegHandshake
           className="color-shift"
           title="Follow-through"
-          color={hasUserPaid ? "green" : ""}
+          color={hasUserPaid ? (isDarkOn ? "#7f1d1d" : "#fecaca") : ""}
         />
       </div>
     </div>

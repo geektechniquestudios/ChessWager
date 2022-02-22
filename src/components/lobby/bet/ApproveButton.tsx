@@ -32,7 +32,7 @@ export const ApproveButton: React.FC<Props> = ({ betId }) => {
           onClick={approve}
           title="Accept"
         >
-          <FiUserCheck color={isDarkOn ? "#bbf7d0" : "#14532d"} size="19" />
+          <FiUserCheck color={isDarkOn ? "#14532d" : "#bbf7d0"} size="19" />
         </button>
       </div>
     </>
