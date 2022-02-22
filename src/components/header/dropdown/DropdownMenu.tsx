@@ -6,6 +6,7 @@ import { Friends } from "./menus/Friends"
 import { Help } from "./menus/Help"
 import { Main } from "./menus/Main"
 import { Messages } from "./menus/Messages"
+import { Notifications } from "./menus/Notifications"
 import { Profile } from "./menus/Profile"
 import { Settings } from "./menus/Settings"
 import { Social } from "./menus/Social"
@@ -58,6 +59,7 @@ export const DropdownMenu = () => {
         {user && <Blocked />}
         {user && <Messages />}
         {user && <Friends />}
+        {user && <Notifications />}
       </div>
     </div>
   )

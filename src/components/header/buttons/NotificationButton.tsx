@@ -4,7 +4,7 @@ import { DropdownState } from "../../containers/DropdownState"
 
 export const NotificationButton: React.FC = () => {
   const { user } = Auth.useContainer()
-  const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
+  const { openDropdownToMenu } = DropdownState.useContainer()
 
   return (
     <>
@@ -14,8 +14,7 @@ export const NotificationButton: React.FC = () => {
             className="cw-button header-button"
             title="Notifications"
             onClick={() => {
-              setIsDropdownOpen(true)
-              setActiveMenu("settings")
+              openDropdownToMenu("notifications")
             }}
           >
             <RiNotification3Line size="21" className="m-2" />
