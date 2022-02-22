@@ -6,14 +6,14 @@ interface Props {
 }
 
 export const UserTitle: React.FC<Props> = ({ photoURL, userName }) => {
-  const { setIsDropdownOpen } = DropdownState.useContainer()
+  const { openDropdownToMenu } = DropdownState.useContainer()
 
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       className="flex gap-1 mr-1 float-left hover:underline"
       onClick={() => {
-        setIsDropdownOpen(true)
+        openDropdownToMenu("settings")
       }}
     >
       <img

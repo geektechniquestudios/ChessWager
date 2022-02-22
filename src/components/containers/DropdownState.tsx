@@ -6,6 +6,11 @@ const useDropdownState = () => {
   const [activeMenu, setActiveMenu] = useState("main")
   const [menuHeight, setMenuHeight] = useState(0)
 
+  const openDropdownToMenu = (menu: string) => {
+    setActiveMenu(menu)
+    setIsDropdownOpen(true)
+  }
+
   return {
     isDropdownOpen,
     setIsDropdownOpen,
@@ -13,6 +18,7 @@ const useDropdownState = () => {
     setActiveMenu,
     menuHeight,
     setMenuHeight,
+    openDropdownToMenu,
   }
 }
 

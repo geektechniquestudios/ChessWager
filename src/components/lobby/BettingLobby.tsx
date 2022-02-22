@@ -7,6 +7,7 @@ import { FirebaseError } from "@firebase/util"
 import { GameState } from "../containers/GameState"
 import { Auth } from "../containers/Auth"
 import { LobbyHeader } from "./lobby-header/LobbyHeader"
+import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
 
 const firestore = firebase.firestore()
 
@@ -36,12 +37,12 @@ interface Lobby {
 
 export const BettingLobby: React.FC = () => {
   const { user } = Auth.useContainer()
+  const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const gameIdContainer = GameState.useContainer()
 
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
   const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
-
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 
@@ -55,11 +56,7 @@ export const BettingLobby: React.FC = () => {
             {lobby &&
               user &&
               lobby
-                .filter(
-                  (bet) =>
-                    (bet.user1Id === user.uid || bet.user2Id === user.uid) &&
-                    bet.gameId !== "",
-                )
+                .filter((bet) => bet.user1Id === user.uid && bet.gameId !== "")
                 .map((bet) => (
                   <Bet
                     className=""

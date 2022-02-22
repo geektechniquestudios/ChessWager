@@ -33,7 +33,7 @@ export const KickButton: React.FC<Props> = ({ betId }) => {
           onClick={kick}
           title="Kick User"
         >
-          <FiUserMinus color={isDarkOn ? "#7f1d1d" : "#fecaca"} size="19" />
+          <FiUserMinus color={isDarkOn ? "#fecaca" : "#7f1d1d"} size="19" />
         </button>
       </div>
     </>
