@@ -113,10 +113,17 @@ export const MetamaskPrompt: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const isUser1 = auth.currentUser?.uid === user1Id
+  const isUser2 = auth.currentUser?.uid === user2Id
+
+  const borderRight = isUser1 ? "border-r" : ""
+  const borderLeft = isUser2 ? "border-l" : ""
+  const borderStyle = `${borderRight} ${borderLeft} border-stone-400 dark:border-stone-700`
+
   return (
-    <div className="flex flex-col justify-center">
+    <div className={`flex flex-col justify-center ${borderStyle}}`}>
       <button
-        className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-800 rounded-md animate-pulse"
+        className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-800 rounded-md animate-pulse mx-2"
         onClick={sendBet}
       >
         <BiWallet size="24" title="Send Wager" color="green" />

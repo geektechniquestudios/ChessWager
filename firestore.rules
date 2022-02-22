@@ -166,8 +166,8 @@ service cloud.firestore {
         return
           userData.walletAddress == requestData.user2Metamask &&
           userData.photoURL == requestData.user2PhotoURL &&
-          userData.betAcceptedCount == requestData.user2FollowThrough[0] &&
-          userData.betFundedCount == requestData.user2FollowThrough[1];
+          userData.betFundedCount == requestData.user2FollowThrough[0] &&
+          userData.betAcceptedCount == requestData.user2FollowThrough[1];
       }
 
       function isLeaveFromUser2() {
