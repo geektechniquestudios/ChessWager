@@ -4,7 +4,6 @@ import { Menu } from "../Menu"
 
 export const Messages: React.FC = ({}) => {
   return (
-    <>
       <Menu
         menuItems={[
           <DropdownItem
@@ -17,6 +16,5 @@ export const Messages: React.FC = ({}) => {
         ]}
         thisMenu={"messages"}
       />
-    </>
   )
 }
