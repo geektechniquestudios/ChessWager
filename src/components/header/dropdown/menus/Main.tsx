@@ -137,7 +137,7 @@ export const Main: React.FC = () => {
           )}
         </div>,
       ]}
-      thisMenu={"main"}
+      thisMenu="main"
     />
   )
 }

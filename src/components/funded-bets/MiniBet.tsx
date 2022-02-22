@@ -34,10 +34,10 @@ export const MiniBet: React.FC<Props> = ({
 
   const { avaxPrice } = Price.useContainer()
   return (
-    <div>
+    <div className="text-stone-900 dark:text-stone-300">
       <div className="flex justify-between p-1">
         <div className="flex gap-1 mx-1">
-          <div className="border-1 rounded-full bg-stone-600 grid place-content-center w-5 h-5">
+          <div className="border-1 rounded-md bg-stone-600 grid place-content-center w-5 h-5 border-stone-700">
             <GiChessRook color={betSide} size="1rem" />
           </div>
           <img
@@ -46,16 +46,16 @@ export const MiniBet: React.FC<Props> = ({
             className="h-6 w-6 rounded-full"
             title={user1DisplayName}
           />
-          <p>vs</p>
+          <p className="font-bold">vs</p>
           <img
             src={user2PhotoURL}
             alt=""
             className="h-6 w-6 rounded-full"
             title={user2DisplayName}
           />
-          <div className="border-1 rounded-full bg-stone-600 grid place-content-center w-5 h-5">
+          <div className="border-1 rounded-md bg-stone-400 grid place-content-center w-5 h-5 border-stone-700">
             <GiChessRook
-              color={betSide === "White" ? "black" : "white"}
+              color={betSide === "white" ? "black" : "white"}
               size="1rem"
             />
           </div>
