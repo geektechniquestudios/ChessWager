@@ -44,7 +44,7 @@ export const FundedBets: React.FC<Props> = () => {
 
   const { avaxPrice } = Price.useContainer()
 
-  let amountAtStake = (
+  const amountAtStake = (
     (lobby
       ?.filter((bet) => bet.status === "funded")
       .map((bet) => bet.amount + bet.amount * bet.multiplier)
@@ -78,7 +78,7 @@ export const FundedBets: React.FC<Props> = () => {
             {lobby &&
               lobby
                 .sort((a, b) => b.amount - a.amount)
-                .filter((bet) => bet.status === "funded")
+                // .filter((bet) => bet.status === "funded")
                 .map((bet) => (
                   <MiniBet
                     key={bet.id}

@@ -1,6 +1,5 @@
 import { AscDescDisplay } from "./AscDescDisplay"
 import { LobbyHeaderButtons } from "./LobbyHeaderButtons"
-import { LobbyHeaderState } from "./LobbyHeaderState"
 
 export const LobbyHeader: React.FC = () => {
   return (
