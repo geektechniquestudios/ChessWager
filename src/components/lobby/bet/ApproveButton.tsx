@@ -1,6 +1,7 @@
 import firebase from "firebase/compat"
 import { FiUserCheck } from "react-icons/fi"
 import "../../../style/buttons.scss"
+import { DarkMode } from "../../containers/DarkMode"
 const firestore = firebase.firestore()
 interface Props {
   betId: string
@@ -20,6 +21,8 @@ export const ApproveButton: React.FC<Props> = ({ betId }) => {
       .catch(console.error)
   }
 
+  const { isDarkOn } = DarkMode.useContainer()
+
   return (
     <>
       <div className="flex flex-col justify-center">
@@ -29,7 +32,7 @@ export const ApproveButton: React.FC<Props> = ({ betId }) => {
           onClick={approve}
           title="Accept"
         >
-          <FiUserCheck color="green" size="19" />
+          <FiUserCheck color={isDarkOn ? "#bbf7d0" : "#14532d"} size="19" />
         </button>
       </div>
     </>

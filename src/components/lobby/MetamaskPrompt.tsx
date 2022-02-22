@@ -4,6 +4,7 @@ import { BiDollar, BiWallet } from "react-icons/bi"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
 import "../../style/buttons.scss"
+import { DarkMode } from "../containers/DarkMode"
 require("dotenv").config({ path: "../../../.env" })
 const isLocal = process.env.REACT_APP_BRANCH_ENV === "develop"
 
@@ -120,13 +121,19 @@ export const MetamaskPrompt: React.FC<Props> = ({
   const borderLeft = isUser2 ? "border-l" : ""
   const borderStyle = `${borderRight} ${borderLeft} border-stone-400 dark:border-stone-700`
 
+  const { isDarkOn } = DarkMode.useContainer()
+
   return (
     <div className={`flex flex-col justify-center ${borderStyle}}`}>
       <button
         className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-800 rounded-md animate-pulse mx-2"
         onClick={sendBet}
       >
-        <BiWallet size="24" title="Send Wager" color="green" />
+        <BiWallet
+          size="24"
+          title="Send Wager"
+          color={isDarkOn ? "#bbf7d0" : "#14532d"}
+        />
       </button>
     </div>
   )
