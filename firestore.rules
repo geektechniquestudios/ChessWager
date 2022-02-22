@@ -1,6 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    allow read, write: if false;
     function canCreate() {
     	let isSignedIn = request.auth.uid != null;
       let isBanned = exists(/databases/$(database)/documents/banned/$(request.auth.uid));
@@ -120,8 +121,8 @@ service cloud.firestore {
         return 
           userData.walletAddress == requestData.user1Metamask &&
           userData.photoURL == requestData.user1PhotoURL &&
-          userData.betAcceptedCount == requestData.user1FollowThrough[0] && 
-          userData.betFundedCount == requestData.user1FollowThrough[1];
+          userData.betFundedCount == requestData.user1FollowThrough[0] && 
+          userData.betAcceptedCount == requestData.user1FollowThrough[1];
       }
 
       function isCreateTimeStampValid() {

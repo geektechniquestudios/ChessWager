@@ -50,7 +50,7 @@ const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestor
   db.collection("games")
 
 contract.on(
-  "BetPlacedStatus", 
+  "BetPlacedStatus",
   async (message: string, betId: string, gameId: string) => {
     console.log("BetPlacedStatus: ", message, betId)
 
@@ -123,53 +123,56 @@ contract.on(
     user1 payment: ${didUser1Pay} 
     user2 payment: ${didUser2Pay}`)
 
-    db.runTransaction(async (transaction: any) => {
-      transaction
-        .get(lobbyRef.doc(betId))
-        .then((doc: any) => {
-          if (!doc.data().hasFollowThroughBeenCounted) {
-            transaction.update(lobbyRef.doc(betId), {
+    lobbyRef
+      .doc(betId)
+      .get()
+      .then((doc: any) => {
+        if (!doc.data().hasFollowThroughBeenCounted) {
+          lobbyRef.doc(betId).set(
+            {
               hasFollowThroughBeenCounted: true,
-            })
-          } else {
-            return
-          }
+            },
+            { merge: true },
+          )
+        } else {
+          console.log("hasFollowThroughBeenCounted already set")
+          return
+        }
 
-          if (doc.data().status === "funded") {
+        if (doc.data().status === "funded") {
+          userCollectionRef.doc(doc.data().user1Id).update({
+            betAcceptedCount: admin.firestore.FieldValue.increment(1),
+            betFundedCount: admin.firestore.FieldValue.increment(1),
+          })
+          userCollectionRef.doc(doc.data().user2Id).update({
+            betAcceptedCount: admin.firestore.FieldValue.increment(1),
+            betFundedCount: admin.firestore.FieldValue.increment(1),
+          })
+        }
+
+        if (doc.data().status === "approved") {
+          if (didUser1Pay) {
+            // if only user1 paid
             userCollectionRef.doc(doc.data().user1Id).update({
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
               betFundedCount: admin.firestore.FieldValue.increment(1),
             })
             userCollectionRef.doc(doc.data().user2Id).update({
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
+            })
+          } else if (didUser2Pay) {
+            // if only user2 paid
+            userCollectionRef.doc(doc.data().user1Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
+            })
+            userCollectionRef.doc(doc.data().user2Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
               betFundedCount: admin.firestore.FieldValue.increment(1),
             })
           }
-
-          if (doc.data().status === "approved") {
-            if (didUser1Pay) {
-              // if only user1 paid
-              userCollectionRef.doc(doc.data().user1Id).update({
-                betAcceptedCount: admin.firestore.FieldValue.increment(1),
-                betFundedCount: admin.firestore.FieldValue.increment(1),
-              })
-              userCollectionRef.doc(doc.data().user2Id).update({
-                betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              })
-            } else if (didUser2Pay) {
-              // if only user2 paid
-              userCollectionRef.doc(doc.data().user1Id).update({
-                betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              })
-              userCollectionRef.doc(doc.data().user2Id).update({
-                betAcceptedCount: admin.firestore.FieldValue.increment(1),
-                betFundedCount: admin.firestore.FieldValue.increment(1),
-              })
-            }
-          }
-        })
-        .catch(console.error)
-    })
+        }
+      })
+      .catch(console.error)
   },
 )
 

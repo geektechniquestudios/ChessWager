@@ -14,7 +14,7 @@ export const ChatButton: React.FC = () => {
             title="Messages"
             onClick={() => {
               setIsDropdownOpen(true)
-              setActiveMenu("settings")
+              setActiveMenu("messages")
             }}
           >
             <RiChat2Line size="21" className="m-2" />

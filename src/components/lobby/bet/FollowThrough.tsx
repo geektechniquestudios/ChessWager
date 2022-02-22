@@ -16,6 +16,7 @@ export const FollowThrough: React.FC<Props> = ({
       </div>
       <div className="flex justify-center align-middle">
         <FaRegHandshake
+          className="color-shift"
           title="Follow-through"
           color={hasUserPaid ? "green" : ""}
         />

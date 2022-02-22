@@ -15,7 +15,7 @@ export const FriendsButton: React.FC = () => {
             title="Friends"
             onClick={() => {
               setIsDropdownOpen(true)
-              setActiveMenu("settings")
+              setActiveMenu("friends")
             }}
           >
             <FiUsers size="21" className="m-2" />

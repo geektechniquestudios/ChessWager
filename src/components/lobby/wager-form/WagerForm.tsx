@@ -21,7 +21,6 @@ export const WagerForm: React.FC = () => {
 
   const user1Metamask = walletAddress
 
-
   const [betSide, setBetSide] = useState<"White" | "Black">("White")
   const [betAmount, setBetAmount] = useState(0.0)
   const [multiplier, setMultiplier] = useState(1.0)
