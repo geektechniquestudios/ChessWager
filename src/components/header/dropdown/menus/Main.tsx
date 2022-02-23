@@ -18,6 +18,7 @@ import { GoGift } from "react-icons/go"
 import { DropdownState } from "../../../containers/DropdownState"
 import { DarkMode } from "../../../containers/DarkMode"
 import { Menu } from "../Menu"
+import { AiOutlineTrophy } from "react-icons/ai"
 
 export const Main: React.FC = () => {
   const {
@@ -66,10 +67,16 @@ export const Main: React.FC = () => {
           key={3}
         />,
         <DropdownItem
+          leftIcon={<AiOutlineTrophy />}
+          goToMenu="leaderboard"
+          text="Leaderboard"
+          key={4}
+        />,
+        <DropdownItem
           leftIcon={<BiHelpCircle />}
           goToMenu="help"
           text="Help"
-          key={4}
+          key={5}
         />,
         <DropdownItem
           onClick={() => {
@@ -86,13 +93,13 @@ export const Main: React.FC = () => {
           }
           leftIcon={isDarkOn ? <MdOutlineDarkMode /> : <BsSun />}
           text={isDarkOn ? "Dark Mode" : "Light Mode"}
-          key={5}
+          key={6}
         />,
         <div
           className="border-b-2 border-stone-400 dark:border-stone-600"
-          key={6}
+          key={7}
         />,
-        <div key={7}>
+        <div key={8}>
           {!isWalletConnected && (
             <DropdownItem
               onClick={connectWallet}
@@ -101,7 +108,7 @@ export const Main: React.FC = () => {
             />
           )}
         </div>,
-        <div key={8}>
+        <div key={9}>
           {isWalletConnected && (
             <DropdownItem
               onClick={disconnectWallet}
@@ -110,7 +117,7 @@ export const Main: React.FC = () => {
             />
           )}
         </div>,
-        <div key={9}>
+        <div key={10}>
           {!user && (
             <DropdownItem
               onClick={() => {
@@ -123,7 +130,7 @@ export const Main: React.FC = () => {
             />
           )}
         </div>,
-        <div key={10}>
+        <div key={11}>
           {user && (
             <DropdownItem
               onClick={() => {

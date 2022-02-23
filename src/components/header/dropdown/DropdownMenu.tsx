@@ -4,6 +4,7 @@ import { DropdownState } from "../../containers/DropdownState"
 import { Blocked } from "./menus/Blocked"
 import { Friends } from "./menus/Friends"
 import { Help } from "./menus/Help"
+import { Leaderboard } from "./menus/Leaderboard"
 import { Main } from "./menus/Main"
 import { Messages } from "./menus/Messages"
 import { Profile } from "./menus/Profile"
@@ -54,6 +55,7 @@ export const DropdownMenu = () => {
         {user && <Settings />}
         {user && <Store />}
         <Social />
+        <Leaderboard />
         <Help />
         {user && <Blocked />}
         {user && <Messages />}
