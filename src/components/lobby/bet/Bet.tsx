@@ -11,7 +11,6 @@ import { CenterOfBet } from "./CenterOfBet"
 import { useState } from "react"
 
 interface Props {
-  className: string
   id: string
   amount: number
   betSide: string
@@ -35,7 +34,6 @@ interface Props {
 }
 
 export const Bet: React.FC<Props> = ({
-  className,
   id,
   amount,
   betSide,
@@ -76,7 +74,9 @@ export const Bet: React.FC<Props> = ({
     : "hover:bg-stone-200 dark:hover:bg-stone-900 dark:bg-stone-800 bg-stone-300"
 
   return (
-    <div className={`w-full flex justify-center align-middle overflow-x-hidden`}>
+    <div
+      className={`w-full flex justify-center align-middle overflow-x-hidden`}
+    >
       <a
         className={`flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700  ${selectedStyle}`}
         onClick={() => {

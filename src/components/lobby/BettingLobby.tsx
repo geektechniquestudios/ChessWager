@@ -8,6 +8,7 @@ import { GameState } from "../containers/GameState"
 import { Auth } from "../containers/Auth"
 import { LobbyHeader } from "./lobby-header/LobbyHeader"
 import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
+import { useEffect, useState } from "react"
 
 const firestore = firebase.firestore()
 
@@ -46,6 +47,36 @@ export const BettingLobby: React.FC = () => {
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 
+  // const [interactableLobby, setInteractableLobby] = useState(
+  //   lobby?.filter(
+  //     (bet) =>
+  //       bet.status !== "funded" &&
+  //       bet.user1Id !== user?.uid &&
+  //       bet.gameId !== "",
+  //   ),
+  // )
+
+  //   useEffect(() => {
+  //     const updateLobby = () => {
+  //       setInteractableLobby(
+  //         lobby?.filter(
+  //           (bet) =>
+  //             bet.status !== "funded" &&
+  //             bet.user1Id !== user?.uid &&
+  //             bet.gameId !== "",
+  //         ),
+  //       )
+  //     }
+  //     // every 5 seconds,update the lobby object, or if user hits sort button
+
+  //     const interval = setInterval(() => {}, 5000)
+  //     // sort based on most recent button clicked and isDescending
+  //     updateLobby()
+  //     // switch statement including side, trust, prize, cost, multiplier, and age
+  //     // "selected" bets should keep index in the array
+  //     return () => clearInterval(interval)
+  //   }, [mostRecentButton, isDescending, lobby, user])
+
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
       <WagerForm />
@@ -53,48 +84,16 @@ export const BettingLobby: React.FC = () => {
         <div className="overflow-y-hidden">
           <LobbyHeader />
           <div className=" overflow-y-hidden h-full overflow-x-auto">
-            {lobby &&
-              user &&
+            {user &&
               lobby
-                .filter((bet) => bet.user1Id === user.uid && bet.gameId !== "")
-                .map((bet) => (
-                  <Bet
-                    className=""
-                    key={bet.id}
-                    id={bet.id}
-                    amount={bet.amount}
-                    betSide={bet.betSide}
-                    multiplier={bet.multiplier}
-                    status={bet.status}
-                    user1Id={bet.user1Id}
-                    user1Metamask={bet.user1Metamask}
-                    user1PhotoURL={bet.user1PhotoURL}
-                    user1DisplayName={bet.user1DisplayName}
-                    hasUser1Paid={bet.hasUser1Paid}
-                    user2Id={bet.user2Id}
-                    user2Metamask={bet.user2Metamask}
-                    user2PhotoURL={bet.user2PhotoURL}
-                    user2DisplayName={bet.user2DisplayName}
-                    hasUser2Paid={bet.hasUser2Paid}
-                    gameId={bet.gameId}
-                    timestamp={bet.timestamp?.seconds}
-                    contractAddress={bet.contractAddress}
-                    user1FollowThrough={bet.user1FollowThrough}
-                    user2FollowThrough={bet.user2FollowThrough}
-                  />
-                ))}
-            {lobby &&
-              lobby
-                .filter(
+                ?.filter(
                   (bet) =>
-                    bet.status === "ready" &&
-                    bet.user1Id !== user?.uid &&
-                    bet.user2Id !== user?.uid &&
-                    bet.gameId !== "",
+                    bet.user1Id === user.uid &&
+                    bet.gameId !== "" &&
+                    bet.status !== "funded",
                 )
                 .map((bet) => (
                   <Bet
-                    className="ready-bet"
                     key={bet.id}
                     id={bet.id}
                     amount={bet.amount}
@@ -118,6 +117,39 @@ export const BettingLobby: React.FC = () => {
                     user2FollowThrough={bet.user2FollowThrough}
                   />
                 ))}
+            {lobby
+              ?.filter(
+                (bet) =>
+                  bet.status === "ready" &&
+                  bet.user1Id !== user?.uid &&
+                  bet.user2Id !== user?.uid &&
+                  bet.gameId !== "",
+              )
+              .map((bet) => (
+                <Bet
+                  key={bet.id}
+                  id={bet.id}
+                  amount={bet.amount}
+                  betSide={bet.betSide}
+                  multiplier={bet.multiplier}
+                  status={bet.status}
+                  user1Id={bet.user1Id}
+                  user1Metamask={bet.user1Metamask}
+                  user1PhotoURL={bet.user1PhotoURL}
+                  user1DisplayName={bet.user1DisplayName}
+                  hasUser1Paid={bet.hasUser1Paid}
+                  user2Id={bet.user2Id}
+                  user2Metamask={bet.user2Metamask}
+                  user2PhotoURL={bet.user2PhotoURL}
+                  user2DisplayName={bet.user2DisplayName}
+                  hasUser2Paid={bet.hasUser2Paid}
+                  gameId={bet.gameId}
+                  timestamp={bet.timestamp?.seconds}
+                  contractAddress={bet.contractAddress}
+                  user1FollowThrough={bet.user1FollowThrough}
+                  user2FollowThrough={bet.user2FollowThrough}
+                />
+              ))}
           </div>
         </div>
       </main>
