@@ -8,6 +8,7 @@ import { RiChatDeleteLine } from "react-icons/ri"
 import { BiArrowBack, BiVolumeFull, BiVolumeMute } from "react-icons/bi"
 import { Menu } from "../Menu"
 import { MdOutlineBlock } from "react-icons/md"
+import { MenuLine } from "../MenuLine"
 
 export const Settings: React.FC = () => {
   const [profanityFilter, setProfanityFilter] = useState(true)
@@ -22,10 +23,7 @@ export const Settings: React.FC = () => {
             key={0}
             text="Settings"
           />,
-          <div
-            className="border-b-2 border-stone-400 dark:border-stone-600"
-            key={1}
-          />,
+          <MenuLine key={1} />,
           <DropdownItem
             leftIcon={<MdOutlineBlock />}
             goToMenu="blocked"

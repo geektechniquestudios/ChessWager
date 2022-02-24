@@ -5,6 +5,7 @@ import { BiMessageRoundedError } from "react-icons/bi"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
 import { AiOutlineInfoCircle, AiOutlineQuestionCircle } from "react-icons/ai"
+import { MenuLine } from "../MenuLine"
 
 export const Help: React.FC = () => {
   return (
@@ -17,10 +18,7 @@ export const Help: React.FC = () => {
             key={0}
             text="Help"
           />,
-          <div
-            className="border-b-2 border-stone-400 dark:border-stone-600"
-            key={1}
-          />,
+          <MenuLine key={1} />,
           <DropdownItem
             leftIcon={<AiOutlineQuestionCircle />}
             key={2}

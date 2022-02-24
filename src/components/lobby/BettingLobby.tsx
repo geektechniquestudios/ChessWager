@@ -8,6 +8,7 @@ import { GameState } from "../containers/GameState"
 import { Auth } from "../containers/Auth"
 import { LobbyHeader } from "./lobby-header/LobbyHeader"
 import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
+import { useEffect, useState } from "react"
 
 const firestore = firebase.firestore()
 
@@ -46,35 +47,35 @@ export const BettingLobby: React.FC = () => {
   const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 
-  // const [interactableLobby, setInteractableLobby] = useState(
-  //   lobby?.filter(
-  //     (bet) =>
-  //       bet.status !== "funded" &&
-  //       bet.user1Id !== user?.uid &&
-  //       bet.gameId !== "",
-  //   ),
-  // )
+  const [interactableLobby, setInteractableLobby] = useState(
+    lobby?.filter(
+      (bet) =>
+        bet.status !== "funded" &&
+        bet.user1Id !== user?.uid &&
+        bet.gameId !== "",
+    ),
+  )
 
-  //   useEffect(() => {
-  //     const updateLobby = () => {
-  //       setInteractableLobby(
-  //         lobby?.filter(
-  //           (bet) =>
-  //             bet.status !== "funded" &&
-  //             bet.user1Id !== user?.uid &&
-  //             bet.gameId !== "",
-  //         ),
-  //       )
-  //     }
-  //     // every 5 seconds,update the lobby object, or if user hits sort button
+  useEffect(() => {
+    const updateLobby = () => {
+      setInteractableLobby(
+        lobby?.filter(
+          (bet) =>
+            bet.status !== "funded" &&
+            bet.user1Id !== user?.uid &&
+            bet.gameId !== "",
+        ),
+      )
+    }
+    // every 5 seconds,update the lobby object, or if user hits sort button
 
-  //     const interval = setInterval(() => {}, 5000)
-  //     // sort based on most recent button clicked and isDescending
-  //     updateLobby()
-  //     // switch statement including side, trust, prize, cost, multiplier, and age
-  //     // "selected" bets should keep index in the array
-  //     return () => clearInterval(interval)
-  //   }, [mostRecentButton, isDescending, lobby, user])
+    const interval = setInterval(updateLobby, 5000)
+    // sort based on most recent button clicked and isdescending
+    // updatelobby()
+    // switch statement including side, trust, prize, cost, multiplier, and age
+    // "selected" bets should keep index in the array
+    return () => clearInterval(interval)
+  }, [mostRecentButton, isDescending, lobby, user])
 
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">

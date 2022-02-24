@@ -322,23 +322,35 @@ service cloud.firestore {
       function areUpdateRequestKeysValid() {
         let requestData = request.resource.data;
         return
-          !(requestData.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "walletAddress"])) &&
+          (!(requestData.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "walletAddress"])) &&
           requestData.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]) &&
-          requestData.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]);
+          requestData.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]));
       }
 
       function isUpdateRequestDataValid() {
         let requestData = request.resource.data;
         return
-          requestData.blocked is list &&
+          (requestData.blocked is list &&
           requestData.photoURL is string &&
-          requestData.walletAddress is string;
+          requestData.walletAddress is string);
+      }
+
+      function isWalletUpdateRequestKeyValid() {
+        let requestData = request.resource.data;
+        return 
+          !(requestData.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL"])) &&
+          requestData.keys().hasOnly(["walletAddress"]) &&
+          requestData.keys().hasAll(["walletAddress"]);
+      }
+
+      function isWalletUpdateRequestDataValid() {
+        return request.resource.data.walletAddress is string;
       }
 
       allow update: if canCreate() &&
-        doesProfileBelongToUser() &&
-        areUpdateRequestKeysValid() &&
-        isUpdateRequestDataValid();
+        doesProfileBelongToUser();
+        // ((areUpdateRequestKeysValid() && isUpdateRequestDataValid()) 
+        // || (isWalletUpdateRequestKeyValid() && isWalletUpdateRequestDataValid()));
     }
   }
 }

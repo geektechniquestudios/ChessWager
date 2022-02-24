@@ -11,6 +11,7 @@ import {
   RiRedditLine,
   RiYoutubeLine,
 } from "react-icons/ri"
+import { MenuLine } from "../MenuLine"
 
 export const Social: React.FC = () => {
   return (
@@ -23,10 +24,7 @@ export const Social: React.FC = () => {
             key={0}
             text="Social"
           />,
-          <div
-            className="border-b-2 border-stone-400 dark:border-stone-600"
-            key={1}
-          />,
+          <MenuLine key={1} />,
           <DropdownItem
             url="https://www.instagram.com/chesswager/"
             leftIcon={<RiInstagramLine />}

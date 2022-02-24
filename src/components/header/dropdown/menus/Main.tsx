@@ -19,6 +19,7 @@ import { DropdownState } from "../../../containers/DropdownState"
 import { DarkMode } from "../../../containers/DarkMode"
 import { Menu } from "../Menu"
 import { AiOutlineTrophy } from "react-icons/ai"
+import { MenuLine } from "../MenuLine"
 
 export const Main: React.FC = () => {
   const {
@@ -95,10 +96,7 @@ export const Main: React.FC = () => {
           text={isDarkOn ? "Dark Mode" : "Light Mode"}
           key={6}
         />,
-        <div
-          className="border-b-2 border-stone-400 dark:border-stone-600"
-          key={7}
-        />,
+        <MenuLine key={7} />,
         <div key={8}>
           {!isWalletConnected && (
             <DropdownItem
