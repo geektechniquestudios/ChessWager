@@ -12,7 +12,6 @@ import { QuickBet } from "./QuickBet"
 import { TheirBet } from "./TheirBet"
 const firestore = firebase.firestore()
 
-
 export const WagerForm: React.FC = () => {
   const { gameId } = GameState.useContainer()
   const { walletAddress, isWalletConnected, auth, connectWallet } =
@@ -83,7 +82,7 @@ export const WagerForm: React.FC = () => {
   }
 
   return (
-    <div className="flex h-full shadow-2xl bg-stone-200 dark:bg-stone-900 border-1 border-stone-400 dark:border-stone-800">
+    <div className="flex h-full shadow-2xl bg-stone-200 dark:bg-stone-900 border border-stone-400 dark:border-stone-800">
       <div className="flex w-full p-2">
         <fieldset disabled={!auth.currentUser} className="flex w-full">
           <form

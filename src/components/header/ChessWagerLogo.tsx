@@ -20,7 +20,7 @@ export const ChessWagerLogo: React.FC<Props> = ({
   strokeWidth ?? (strokeWidth = 1)
   return (
     <div className="flex flex-col justify-center">
-      <div className="flex justify-center align-middle p-1 border-1 rounded-full w-8 h-8">
+      <div className="flex justify-center align-middle p-1 border rounded-full w-8 h-8">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={width}

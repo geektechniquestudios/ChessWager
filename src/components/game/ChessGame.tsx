@@ -107,11 +107,11 @@ export const ChessGame: React.FC = () => {
   return (
     <div className="flex justify-center w-full">
       <div
-        className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-100 dark:bg-stone-800 text-primary-dark dark:text-primary my-10 p-2.5 w-1/2 shadow-lg border-1 border-stone-500 color-shift min-w-min"
+        className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-300 my-10 p-2.5 w-1/2 shadow-lg border border-stone-500 color-shift min-w-min"
         style={{ minWidth: "17em", maxWidth: "80vh" }}
       >
         <div className="resize flex w-full h-full justify-center align-middle">
-          <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border-1 border-stone-500 dark:border-stone-700">
+          <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border border-stone-500 dark:border-stone-700">
             <div className="flex justify-center w-full">
               <PlayerData
                 side={orientation === "white" ? "black" : "white"}

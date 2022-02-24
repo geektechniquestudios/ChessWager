@@ -32,7 +32,7 @@ export const DeleteBetButton: React.FC<Props> = ({ user1Id, status, id }) => {
               type="button"
               title="Delete Bet"
               onClick={deleteCurrentBet}
-              className="cw-button dark:text-negative text-negative hover:text-negative dark:hover:text-rose-300 transform grid place-content-center mx-1 p-0.5 border-0"
+              className="cw-button dark:text-red-600 text-red-600 hover:text-red-600 dark:hover:text-rose-300 transform grid place-content-center mx-1 p-0.5 border-0"
               id="delete-button"
             >
               <RiCloseFill />

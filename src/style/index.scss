@@ -52,10 +52,10 @@ code {
   @apply w-2 h-2;
 }
 #page > main::-webkit-scrollbar-track {
-  @apply bg-primary dark:bg-primary-dark;
+  @apply bg-stone-200 dark:bg-stone-500;
 }
 #page > main::-webkit-scrollbar-thumb {
-  @apply bg-secondary-dark rounded-full;
+  @apply bg-stone-400 dark:bg-stone-700 rounded-full;
 }
 
 .color-shift {
