@@ -1,0 +1,18 @@
+FROM node:14
+
+WORKDIR /app
+
+COPY ./contract-listener ./contract-listener
+
+COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/contracts/ChessWager.sol/ChessWager.json
+
+# only in local
+# COPY ./chess-wager-develop-firebase-adminsdk-z02bi-9bab414c8a.json ./
+
+COPY .env ./
+
+WORKDIR /app/contract-listener/
+
+RUN npm install
+
+CMD ["npm", "start"]

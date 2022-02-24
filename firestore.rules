@@ -1,0 +1,344 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    allow read, write: if false;
+    function canCreate() {
+    	let isSignedIn = request.auth.uid != null;
+      let isBanned = exists(/databases/$(database)/documents/banned/$(request.auth.uid));
+      return isSignedIn && !isBanned;
+    }
+
+    match /messages/{docId} {
+    	allow read: if true;
+
+      function areCreateRequestKeysValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.keys().hasAll(["createdAt", "photoURL", "text", "uid", "userName"]) &&
+          requestData.keys().hasOnly(["createdAt", "photoURL", "text", "uid", "userName"]);
+      }
+
+      function isCreateRequestDataValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.createdAt is timestamp &&
+          requestData.photoURL is string &&
+          requestData.text is string &&
+          requestData.uid is string &&
+          requestData.userName is string;
+      }
+
+      function isOwner() {
+        return request.auth.uid == request.resource.data.uid;
+      }
+
+      function isShortEnough() {
+        return request.resource.data.text.size() <= 500;
+      }
+
+      function isCreatedAtTimeStampValid() {
+        return request.resource.data.createdAt == request.time;
+      }
+
+      allow create: if canCreate() &&
+        areCreateRequestKeysValid() &&
+        isCreateRequestDataValid() &&
+        isOwner() &&
+        isShortEnough() &&
+        isCreatedAtTimeStampValid();
+      
+      function areUpdateRequestKeysValid() {
+        let requestData = request.resource.data;
+        return 
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["createdAt", "photoURL", "uid", "userName"])) &&
+          requestData.keys().hasAll(["updatedAt", "createdAt", "photoURL", "text", "uid", "userName"]) &&
+          requestData.keys().hasOnly(["updatedAt", "createdAt", "photoURL", "text", "uid", "userName"]);
+      }
+
+      function isUpdateRequestDataValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.updatedAt is timestamp &&
+          requestData.createdAt is timestamp &&
+          requestData.photoURL is string &&
+          requestData.text is string &&
+          requestData.uid is string &&
+          requestData.userName is string;
+      }
+      
+      function isUpdatedAtTimeStampValid() {
+        return request.resource.data.updatedAt == request.time;
+      }
+
+      allow update: if canCreate() && 
+        areUpdateRequestKeysValid() &&
+        isUpdateRequestDataValid() &&
+        isOwner() &&
+        isShortEnough() &&
+        isUpdatedAtTimeStampValid();
+    }
+
+  
+    match /lobby/{docId} {
+      allow read: if true;
+
+      function areCreateRequestKeysValid() {
+        let requestData = request.resource.data;
+        return
+          requestData.keys().hasAll(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) && 
+          requestData.keys().hasOnly(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]);
+      }
+
+      function isCreateRequestDataValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.amount is number && 
+          requestData.amount > 0 &&
+          requestData.betSide is string &&
+          (requestData.betSide == "white" || requestData.betSide == "black") &&
+          requestData.createdAt is timestamp &&
+          requestData.gameId is string &&
+          requestData.gameId != "" &&
+          requestData.multiplier is number &&
+          requestData.status == "ready" && 
+          requestData.user1Id is string &&
+          requestData.user1Metamask is string &&
+          requestData.user1PhotoURL is string &&
+          requestData.user1DisplayName is string &&
+          requestData.user1FollowThrough is list &&
+          requestData.contractAddress is string;
+      }
+
+      function isFromUser1() {
+        return 
+          request.resource.data.user1Id == request.auth.uid && 
+          request.auth.token.name == request.resource.data.user1DisplayName;
+      }
+
+      function doesCreateRequestDataMatchUser1Profile() {
+        let requestData = request.resource.data;
+        let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+        return 
+          userData.walletAddress == requestData.user1Metamask &&
+          userData.photoURL == requestData.user1PhotoURL &&
+          userData.betFundedCount == requestData.user1FollowThrough[0] && 
+          userData.betAcceptedCount == requestData.user1FollowThrough[1];
+      }
+
+      function isCreateTimeStampValid() {
+        return request.resource.data.createdAt == request.time;
+      }
+      
+      allow create: if canCreate() && 
+        areCreateRequestKeysValid() &&
+        isCreateRequestDataValid() &&
+        isFromUser1() &&
+        doesCreateRequestDataMatchUser1Profile() &&
+        isCreateTimeStampValid();
+
+      function areJoinRequestKeysValid() {
+          return 
+            !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&
+            request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) &&
+            request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]);
+      }
+
+      function isJoinRequestDataValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.status is string &&       
+          requestData.status == "pending" &&
+          resource.data.status == "ready" &&
+          requestData.user2Id is string &&
+          requestData.user2Metamask is string &&
+          requestData.user2PhotoURL is string &&
+          requestData.user2FollowThrough is list &&
+          requestData.user2DisplayName is string;
+      }
+
+      function isUser2Blocked() {
+        return (get(/databases/$(database)/documents/users/$(resource.data.user1Id)).data.blocked.hasAny([request.auth.uid]));
+      }
+
+      function isUser2JoinDataValid() {
+        let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+        let requestData = request.resource.data;
+        return
+          userData.walletAddress == requestData.user2Metamask &&
+          userData.photoURL == requestData.user2PhotoURL &&
+          userData.betFundedCount == requestData.user2FollowThrough[0] &&
+          userData.betAcceptedCount == requestData.user2FollowThrough[1];
+      }
+
+      function isLeaveFromUser2() {
+        return 
+          request.auth.token.name == resource.data.user2DisplayName && 
+          resource.data.user2Id == request.auth.uid;
+      }
+
+      function isJoinFromUser2() {
+        return 
+          request.auth.token.name == request.resource.data.user2DisplayName && 
+          request.resource.data.user2Id == request.auth.uid;
+      }
+
+      function areLeaveRequestKeysValid() {
+        let requestData = request.resource.data;
+        return
+          !(requestData.diff(resource.data).affectedKeys().hasAny(["amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&
+          requestData.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) &&
+          requestData.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]);
+      }
+
+      function isLeaveRequestDataValid() {
+        let requestData = request.resource.data;
+        return
+          requestData.status is string &&
+          requestData.status == "ready" &&
+          resource.data.status == "pending" &&
+          requestData.user2Id is string &&
+          requestData.user2Metamask is string &&
+          requestData.user2PhotoURL is string &&
+          requestData.user2FollowThrough is list &&
+          requestData.user2DisplayName is string;
+      }
+
+      function areKickRequestKeysValid() {
+        return 
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&
+          request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]) &&
+          request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"]);   
+      }
+
+      function isKickRequestDataValid() {
+        let requestData = request.resource.data;
+        return
+          requestData.status is string &&
+          requestData.user2Id is string &&
+          requestData.user2Metamask is string &&
+          requestData.user2PhotoURL is string &&
+          requestData.user2FollowThrough is list &&
+          requestData.user2DisplayName is string &&
+
+          requestData.user2Id == "" &&
+          requestData.user2Metamask == "" &&
+          requestData.user2PhotoURL == "" &&
+          requestData.user2FollowThrough == [0, 0] &&
+          requestData.user2DisplayName == "" &&
+          requestData.status == "ready" &&
+          resource.data.status == "pending";
+      }
+
+      function areApproveRequestKeysValid() {
+        return
+         !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&
+          request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp"]) &&
+          request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp"]);
+
+      }
+
+      function isApproveRequestDataValid() {
+        return
+          request.resource.data.status is string &&
+          request.resource.data.status == "approved" &&
+          resource.data.status == "pending" &&
+          request.resource.data.timestamp is timestamp;
+      }
+      // 4 Possibilities:
+      allow update: if canCreate() && 
+        // 1. User2 joins bet || Join Button *don't place this comment on the line below, it causes a compline error*
+      (
+        (
+          areJoinRequestKeysValid() &&
+          isJoinRequestDataValid() &&
+          !isUser2Blocked() &&
+          isUser2JoinDataValid() &&
+          isJoinFromUser2()
+        ) ||        
+        // 2. User2 leaves the bet || leave Button
+        (       
+          areLeaveRequestKeysValid() &&
+          isLeaveRequestDataValid() &&
+          isLeaveFromUser2()
+        ) ||
+        // 3. User1 kicks user2 from the bet || Kick Button
+        (
+          areKickRequestKeysValid() &&
+          isKickRequestDataValid() &&
+          isFromUser1()
+        ) ||
+        // 4. User1 approves user2 || Approve Button
+        (
+          areApproveRequestKeysValid() &&
+          isApproveRequestDataValid() &&
+          isFromUser1()
+        )
+      );
+
+      function isDeleteFromUser1() {
+        return 
+          resource.data.user1Id == request.auth.uid && 
+          request.auth.token.name == resource.data.user1DisplayName;
+      }
+
+      allow delete: if canCreate() && 
+        isDeleteFromUser1() && 
+        (resource.data.status == "ready" || resource.data.status == "pending");
+    }
+    
+    match /users/{docId} {
+      allow read: if canCreate() && docId == request.auth.uid;
+
+      function doesProfileBelongToUser() {
+        return docId == request.auth.uid;
+      }
+
+      function areCreateRequestKeysValid() {
+        return
+          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]) &&
+          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]);
+      }
+
+      function isCreateRequestDataValid() {
+        let requestData = request.resource.data;
+        return
+          requestData.betAcceptedCount is number &&
+          requestData.betFundedCount is number  &&
+          requestData.blocked is list &&
+          requestData.walletAddress is string &&
+          requestData.photoURL is string &&
+
+          requestData.betAcceptedCount == 0 &&
+          requestData.betFundedCount == 0 &&
+          requestData.blocked == [] &&
+          requestData.photoURL != "";
+      }
+
+      allow create: if canCreate() &&
+        doesProfileBelongToUser() &&
+        areCreateRequestKeysValid() && 
+        isCreateRequestDataValid();
+
+      function areUpdateRequestKeysValid() {
+        let requestData = request.resource.data;
+        return
+          !(requestData.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "walletAddress"])) &&
+          requestData.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]) &&
+          requestData.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]);
+      }
+
+      function isUpdateRequestDataValid() {
+        let requestData = request.resource.data;
+        return
+          requestData.blocked is list &&
+          requestData.photoURL is string &&
+          requestData.walletAddress is string;
+      }
+
+      allow update: if canCreate() &&
+        doesProfileBelongToUser() &&
+        areUpdateRequestKeysValid() &&
+        isUpdateRequestDataValid();
+    }
+  }
+}
