@@ -60,13 +60,13 @@ export const Multiplier: React.FC<Props> = ({
   }
 
   return (
-    <div className="flex p-2 border-1 w-full border-stone-400 dark:border-stone-500 dark:bg-stone-700 bg-stone-300 color-shift">
+    <div className="flex p-2 border w-full border-stone-400 dark:border-stone-500 dark:bg-stone-700 bg-stone-300 color-shift">
       <div className="grid place-content-center">
         <p className="text-stone-900 dark:text-stone-300 font-bold">
           Multiplier
         </p>
       </div>
-      <div className="border-1 mx-2 border-stone-900 dark:border-stone-500" />
+      <div className="border mx-2 border-stone-900 dark:border-stone-500" />
       <div className="flex w-full justify-center">
         <div className="flex flex-col w-full px-3 py-1">
           <Slider

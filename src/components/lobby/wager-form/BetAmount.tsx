@@ -30,12 +30,12 @@ export const BetAmount: React.FC<Props> = ({
 
   return (
     <div
-      className={`border-1 flex px-1 color-shift bg-stone-300 dark:bg-stone-700 ${borderWarning}`}
+      className={`border flex px-1 color-shift bg-stone-300 dark:bg-stone-700 ${borderWarning}`}
     >
       <p className="grid place-content-center m-2 text-stone-900 dark:text-stone-300 font-bold">
         Your Bet
       </p>
-      <div className="border-1 m-2 border-stone-900 dark:border-stone-500" />
+      <div className="border m-2 border-stone-900 dark:border-stone-500" />
       <div>
         <div className="flex justify-between my-1">
           <div className="flex justify-center flex-col font-bold m-1 text-stone-900 dark:text-stone-300 text-xs">USD</div>
