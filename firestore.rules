@@ -295,8 +295,8 @@ service cloud.firestore {
 
       function areCreateRequestKeysValid() {
         return
-          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]) &&
-          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL"]);
+          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "bets"]) &&
+          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "bets"]);
       }
 
       function isCreateRequestDataValid() {
@@ -307,11 +307,13 @@ service cloud.firestore {
           requestData.blocked is list &&
           requestData.walletAddress is string &&
           requestData.photoURL is string &&
+          requestData.bets is list &&
 
           requestData.betAcceptedCount == 0 &&
           requestData.betFundedCount == 0 &&
           requestData.blocked == [] &&
-          requestData.photoURL != "";
+          requestData.photoURL != "" &&
+          requestData.bets == [];
       }
 
       allow create: if canCreate() &&
@@ -336,11 +338,11 @@ service cloud.firestore {
       }
 
       function isWalletUpdateRequestKeyValid() {
-        let requestData = request.resource.data;
+        // let requestData = request.resource.data;
         return 
-          !(requestData.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL"])) &&
-          requestData.keys().hasOnly(["walletAddress"]) &&
-          requestData.keys().hasAll(["walletAddress"]);
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL", "bets"])) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL", "bets"]) &&
+          request.resource.data.keys().hasAll(["walletAddress"]);
       }
 
       function isWalletUpdateRequestDataValid() {
@@ -348,9 +350,9 @@ service cloud.firestore {
       }
 
       allow update: if canCreate() &&
-        doesProfileBelongToUser();
-        // ((areUpdateRequestKeysValid() && isUpdateRequestDataValid()) 
-        // || (isWalletUpdateRequestKeyValid() && isWalletUpdateRequestDataValid()));
+        doesProfileBelongToUser() &&
+        ((areUpdateRequestKeysValid() && isUpdateRequestDataValid()) 
+        || (isWalletUpdateRequestKeyValid() && isWalletUpdateRequestDataValid()));
     }
   }
 }

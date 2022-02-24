@@ -84,10 +84,11 @@ const useAuth = () => {
                   blocked: [],
                   walletAddress: "",
                   photoURL: auth.currentUser!.photoURL,
+                  bets: [],
                 })
                 .catch(console.error)
             }
-            if (doc.data()!.walletAddress !== "") {
+            if (doc.data()?.walletAddress ?? "" !== "") {
               setIsWalletConnected(true)
               localStorage.setItem("isWalletConnected", "true")
               setWalletAddress(doc.data()!.walletAddress)
