@@ -37,7 +37,7 @@ export const LeaveButton: React.FC<Props> = ({ user2Id, status, id }) => {
             <button
               title="Leave"
               onClick={cancel}
-              className="cw-button dark:text-negative text-negative hover:text-negative dark:hover:text-rose-300 transform grid place-content-center mx-1 p-0.5 border-0"
+              className="cw-button dark:text-red-600 text-red-600 hover:text-red-600 dark:hover:text-rose-300 transform grid place-content-center mx-1 p-0.5 border-0"
               id="leave-button"
             >
               <RiCloseFill />

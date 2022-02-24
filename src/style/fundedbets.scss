@@ -1,5 +1,5 @@
-$primary: #A8A29E;
-$secondary: #44403C;
+$primary: #a8a29e;
+$secondary: #44403c;
 
 .funded-bets {
   scrollbar-width: thin;
@@ -10,8 +10,8 @@ $secondary: #44403C;
   @apply w-2 m-0.5;
 }
 .funded-bets::-webkit-scrollbar-track {
-  @apply bg-primary dark:bg-primary-dark;
+  @apply bg-stone-200 dark:bg-stone-500;
 }
 .funded-bets::-webkit-scrollbar-thumb {
-  @apply bg-secondary dark:bg-secondary-dark rounded-full;
+  @apply bg-stone-400 dark:bg-stone-700 rounded-full;
 }

@@ -55,7 +55,7 @@ export const FundedBets: React.FC<Props> = () => {
 
   return (
     <div
-      className="w-52 overflow-y-hidden flex flex-col overflow-x-visible "
+      className="w-60 overflow-y-hidden flex flex-col overflow-x-visible"
       style={{ direction: "rtl" }}
     >
       <div className="flex w-full justify-between px-0.5 py-1 bg-gradient-to-r from-stone-300 via-stone-300 to-transparent dark:from-stone-800 dark:via-stone-800 dark:to-transparent dark:text-stone-50">
@@ -65,11 +65,11 @@ export const FundedBets: React.FC<Props> = () => {
           style={{ direction: "ltr" }}
         >{`$${amountAtStake} at Stake`}</div>
       </div>
-      <div className="h-0.5 bg-gradient-to-r from-secondary-dark to-transparent" />
+      <div className="h-0.5 bg-gradient-to-r from-stone-600 to-transparent" />
       <div className="overflow-y-hidden overflow-x-visible flex flex-col h-full">
         <div
           style={{ direction: "rtl" }}
-          className="funded-bets overflow-y-auto overflow-x-visible h-full flex flex-col"
+          className="funded-bets overflow-y-auto overflow-x-visible h-full flex flex-col border-l"
         >
           <div
             className="overflow-x-visible h-0 flex flex-col"
@@ -78,7 +78,7 @@ export const FundedBets: React.FC<Props> = () => {
             {lobby &&
               lobby
                 .sort((a, b) => b.amount - a.amount)
-                .filter((bet) => bet.status === "funded")
+                // .filter((bet) => bet.status === "funded")
                 .map((bet) => (
                   <MiniBet
                     key={bet.id}

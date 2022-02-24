@@ -26,18 +26,18 @@ $secondary: #44403c;
   @apply w-2;
 }
 .chat-window::-webkit-scrollbar-track {
-  @apply bg-primary dark:bg-primary-dark;
+  @apply bg-stone-300 dark:bg-stone-500;
 }
 .chat-window::-webkit-scrollbar-thumb {
-  @apply bg-secondary-dark rounded-full;
+  @apply bg-stone-400 dark:bg-stone-700 rounded-full;
 }
 
 .input::-webkit-scrollbar {
   @apply w-2;
 }
 .input::-webkit-scrollbar-track {
-  @apply bg-primary dark:bg-primary-dark border-2;
+  @apply bg-stone-300 dark:bg-stone-500;
 }
 .input::-webkit-scrollbar-thumb {
-  @apply bg-secondary-dark rounded-full;
+  @apply bg-stone-400 dark:bg-stone-700 rounded-full;
 }
