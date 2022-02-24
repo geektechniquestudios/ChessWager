@@ -1,5 +1,3 @@
-import { DropdownState } from "../../containers/DropdownState"
-
 interface Props {
   content: React.ReactNode
   height?: number

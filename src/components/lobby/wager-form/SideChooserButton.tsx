@@ -35,7 +35,7 @@ export const SideChooserButton: React.FC<Props> = ({
       }}
     >
       <FaChessKing
-        className={thisSide === "White" ? "text-stone-100" : "text-black" }
+        className={thisSide === "White" ? "text-stone-100" : "text-black"}
         stroke={thisSide === "White" ? "black" : "white"}
         strokeWidth={8}
         size={20}

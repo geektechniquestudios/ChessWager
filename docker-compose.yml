@@ -42,7 +42,3 @@ services:
       retries: 3
     volumes:
       - stream_data:/data
-    # logging:
-    #   driver: gcplogs
-    # ports:
-    #   - "80:8080"

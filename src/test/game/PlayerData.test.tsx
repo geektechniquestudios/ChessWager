@@ -6,6 +6,7 @@ test("basic presence test", () => {
     <>
       <p>title</p>
       <PlayerData
+        isNewGame={false}
         title={"title"}
         name={""}
         time={0}

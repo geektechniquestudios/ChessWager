@@ -8,7 +8,6 @@ import { GameState } from "../containers/GameState"
 import { Auth } from "../containers/Auth"
 import { LobbyHeader } from "./lobby-header/LobbyHeader"
 import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
-import { useEffect, useState } from "react"
 
 const firestore = firebase.firestore()
 

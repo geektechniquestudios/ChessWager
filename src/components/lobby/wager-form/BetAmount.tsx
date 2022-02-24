@@ -25,7 +25,9 @@ export const BetAmount: React.FC<Props> = ({
   setIsAmountEmpty,
 }) => {
   const { avaxPrice } = Price.useContainer()
-  const borderWarning = isAmountEmpty ? " border-negative" : "border-stone-400 dark:border-stone-500 "
+  const borderWarning = isAmountEmpty
+    ? " border-negative"
+    : "border-stone-400 dark:border-stone-500 "
   const [isUsdFocused, setIsUsdFocused] = useState(false)
 
   return (
@@ -38,7 +40,9 @@ export const BetAmount: React.FC<Props> = ({
       <div className="border m-2 border-stone-900 dark:border-stone-500" />
       <div>
         <div className="flex justify-between my-1">
-          <div className="flex justify-center flex-col font-bold m-1 text-stone-900 dark:text-stone-300 text-xs">USD</div>
+          <div className="flex justify-center flex-col font-bold m-1 text-stone-900 dark:text-stone-300 text-xs">
+            USD
+          </div>
           <CurrencyInput
             className="ml-1  p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-300 text-stone-900"
             autoComplete="off"
@@ -71,7 +75,9 @@ export const BetAmount: React.FC<Props> = ({
           />
         </div>
         <div className="flex justify-between my-1">
-          <div className="flex justify-center flex-col font-bold m-1 text-stone-900 dark:text-stone-300 text-xs">AVAX</div>
+          <div className="flex justify-center flex-col font-bold m-1 text-stone-900 dark:text-stone-300 text-xs">
+            AVAX
+          </div>
           <CurrencyInput
             className="ml-1  p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"

@@ -1,5 +1,4 @@
 import { GiChessRook } from "react-icons/gi"
-import { Price } from "../../containers/Price"
 import { PotSize } from "./PotSize"
 
 interface Props {
