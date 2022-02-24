@@ -46,7 +46,7 @@ export const DropdownMenu = () => {
 
   return (
     <div
-      className="dropdown absolute w-64 -translate-x-1/2 bg-stone-100 dark:bg-stone-700 border-2 border-stone-400 dark:border-stone-600 text-stone-800 dark:text-stone-200 overflow-hidden right-5 top-10 z-50 rounded-md shadow-2xl"
+      className="dropdown absolute w-64 bg-stone-100 dark:bg-stone-700 border-2 border-stone-400 dark:border-stone-600 text-stone-800 dark:text-stone-200 overflow-hidden right-5 top-10 z-50 rounded-md shadow-2xl"
       style={{ height: menuHeight }}
       ref={dropdownRef}
     >

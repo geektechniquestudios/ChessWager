@@ -42,7 +42,7 @@ async function main() {
   await chessWager.deployed()
 
   console.log(`ChessWager ${env} deployed to: ${chessWager.address}`)
-  setEnvValue("REACT_APP_CONTRACT_ADDRESS", chessWager.address)
+  setEnvValue("VITE_CONTRACT_ADDRESS", chessWager.address)
 
   if (env === "develop" || env === "test" || env === "main") {
     await contractRef.doc(chessWager.address).set({

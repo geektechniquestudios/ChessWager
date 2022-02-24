@@ -1,9 +1,7 @@
-const { stone } = require("tailwindcss/colors")
 const colors = require("tailwindcss/colors")
 
 module.exports = {
-  // mode: "jit",
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   darkMode: "class",
   theme: {
     colors: {
@@ -24,7 +22,7 @@ module.exports = {
       transparent: "transparent",
       black: colors.black,
       white: colors.white,
-      stone: colors.warmGray,
+      stone: colors.stone,
       rose: colors.rose,
       amber: colors.amber,
       green: colors.green,
@@ -33,9 +31,6 @@ module.exports = {
       red: colors.red,
       yellow: colors.yellow,
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [require("@tailwindcss/aspect-ratio")],
 }

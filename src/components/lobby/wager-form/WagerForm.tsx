@@ -12,7 +12,6 @@ import { QuickBet } from "./QuickBet"
 import { TheirBet } from "./TheirBet"
 const firestore = firebase.firestore()
 
-require("dotenv").config({ path: "../../../../.env" })
 
 export const WagerForm: React.FC = () => {
   const { gameId } = GameState.useContainer()
@@ -75,7 +74,7 @@ export const WagerForm: React.FC = () => {
               user1PhotoURL: photoURL,
               user1DisplayName: displayName,
               user1FollowThrough: user1FollowThrough,
-              contractAddress: process.env.REACT_APP_CONTRACT_ADDRESS,
+              contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
             })
             .catch(console.error)
         })

@@ -62,7 +62,7 @@ export const payWinnersByGameId = async (gameId: string) => {
     .catch(console.error)
 }
 
-const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
+const contractAddress = process.env.VITE_CONTRACT_ADDRESS!
 const contractABI = ChessWager.abi
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
 

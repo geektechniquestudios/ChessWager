@@ -1,9 +1,19 @@
 {
   "name": "chess-wager",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "deploy-contract-develop": "yarn hardhat run hardhat/scripts/deploy.js --network avalancheLocal",
+    "deploy-contract-test": "yarn hardhat run hardhat/scripts/deploy.js --network fuji",
+    "deploy-contract-main": "yarn hardhat run hardhat/scripts/deploy.js --network avalancheMainnet",
+    "deploy-firebase": "firebase deploy --debug --token \"$FIREBASE_TOKEN\"",
+    "predeploy-encrypt": "gcloud config set project chess-wager-test && gcloud kms encrypt --plaintext-file=env/.env.test --ciphertext-file=env/.env.test.enc --location=global --keyring=chess-wager --key=chess-wager-test && gcloud config set project chess-wager-main && gcloud kms encrypt --plaintext-file=env/.env.main --ciphertext-file=env/.env.main.enc --location=global --keyring=chess-wager --key=chess-wager-main",
+    "functions-install": "cd functions && npm install && cd .."
+  },
   "dependencies": {
-    "@craco/craco": "^6.4.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@mui/material": "^5.2.7",
@@ -15,11 +25,8 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@truffle/hdwallet-provider": "^1.5.1",
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^16.0.9",
     "bootstrap": "^5.1.1",
     "can-ndjson-stream": "^1.0.2",
-    "dotenv": "^10.0.0",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.0",
     "firebase": "^9.1.0",
@@ -42,51 +49,23 @@
     "unstated-next": "^1.1.0",
     "web-vitals": "^1.1.2"
   },
-  "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject",
-    "deploy-contract-develop": "npx hardhat run hardhat/scripts/deploy.js --network avalancheLocal",
-    "deploy-contract-test": "npx hardhat run hardhat/scripts/deploy.js --network fuji",
-    "deploy-contract-main": "npx hardhat run hardhat/scripts/deploy.js --network avalancheMainnet",
-    "deploy-firebase": "firebase deploy --debug --token \"$FIREBASE_TOKEN\"",
-    "predeploy-encrypt": "gcloud config set project chess-wager-test && gcloud kms encrypt --plaintext-file=env/.env.test --ciphertext-file=env/.env.test.enc --location=global --keyring=chess-wager --key=chess-wager-test && gcloud config set project chess-wager-main && gcloud kms encrypt --plaintext-file=env/.env.main --ciphertext-file=env/.env.main.enc --location=global --keyring=chess-wager --key=chess-wager-main",
-    "functions-install": "cd functions && npm install && cd .."
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@types/chai": "^4.3.0",
     "@types/jest": "^25.0.24",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.11.12",
+    "@types/react": "^17.0.33",
+    "@types/react-dom": "^17.0.10",
     "@types/react-toggle": "^4.0.3",
     "@types/react-transition-group": "^4.4.4",
-    "autoprefixer": "^9.8.8",
+    "@vitejs/plugin-react": "^1.0.7",
+    "autoprefixer": "^10.4.2",
     "chai": "^4.3.4",
-    "eslint-config-react-app": "^7.0.0",
     "hardhat": "^2.8.3",
-    "postcss": "^7.0.39",
+    "postcss": "^8.4.6",
     "prettier-plugin-solidity": "^1.0.0-beta.18",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.5.3"
+    "tailwindcss": "^3.0.23",
+    "typescript": "^4.5.4",
+    "vite": "^2.8.0"
   }
 }
