@@ -1,7 +1,0 @@
-@import "index.scss";
-
-a:hover {
-  @extend .color-shift;
-  @apply text-black cursor-pointer;
-}
-
