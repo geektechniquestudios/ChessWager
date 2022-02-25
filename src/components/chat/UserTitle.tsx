@@ -13,7 +13,7 @@ export const UserTitle: React.FC<Props> = ({ photoURL, userName }) => {
     <a
       className="flex gap-1 mr-1 float-left hover:underline"
       onClick={() => {
-        openDropdownToMenu("settings")
+        openDropdownToMenu("user")
       }}
     >
       <img
