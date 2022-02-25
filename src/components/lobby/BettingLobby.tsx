@@ -12,7 +12,7 @@ import { useEffect, useState } from "react"
 
 const firestore = firebase.firestore()
 
-interface Lobby {
+interface Bet {
   id: string
   amount: number
   betSide: string
@@ -39,43 +39,65 @@ interface Lobby {
 export const BettingLobby: React.FC = () => {
   const { user } = Auth.useContainer()
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
-  const gameIdContainer = GameState.useContainer()
+  const { gameId } = GameState.useContainer()
 
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
-  const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
-  const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
+  const query = lobbyRef.where("gameId", "==", gameId)
+  const [lobby]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 
-  const [interactableLobby, setInteractableLobby] = useState(
-    lobby?.filter(
-      (bet) =>
-        bet.status !== "funded" &&
-        bet.user1Id !== user?.uid &&
-        bet.gameId !== "",
-    ),
-  )
+  // const [interactableLobby, setInteractableLobby] = useState(
+  //   lobby?.filter(
+  //     (bet) =>
+  //       bet.status !== "funded" &&
+  //       bet.user1Id !== user?.uid &&
+  //       bet.gameId !== "",
+  //   ),
+  // )
 
-  useEffect(() => {
-    const updateLobby = () => {
-      setInteractableLobby(
-        lobby?.filter(
-          (bet) =>
-            bet.status !== "funded" &&
-            bet.user1Id !== user?.uid &&
-            bet.gameId !== "",
-        ),
-      )
-    }
-    // every 5 seconds,update the lobby object, or if user hits sort button
+  // useEffect(() => {
+  //   const updateLobby = () => {
+  //     setInteractableLobby(
+  //       lobby
+  //         ?.filter(
+  //           (bet) =>
+  //             bet.status !== "funded" &&
+  //             bet.user1Id !== user?.uid &&
+  //             bet.gameId !== "",
+  //         )
+  //         .sort(),
+  //     )
+  //   }
 
-    const interval = setInterval(updateLobby, 5000)
-    // sort based on most recent button clicked and isdescending
-    // updatelobby()
+  //   const interval = setInterval(updateLobby, 5000)
+  //   // sort based on most recent button clicked and isdescending
+
+  //   let sortingFunction: any
+
+  //   switch (mostRecentButton) {
+  //     case "Side": {
+  //       sortingFunction = (a: Bet, b: Bet) => {
+  //         if (a.betSide === b.betSide) return 0
+  //         if (a.betSide === "white") return isDescending ? 1 : -1
+  //         if (a.betSide === "black") return isDescending ? -1 : 1
+  //       }
+  //     }
+  //     case "Trust": {
+  //     }
+  //     case "Prize": {
+  //     }
+  //     case "Cost": {
+  //     }
+  //     case "Multiplier": {
+  //     }
+  //     case "Time": {
+  //     }
+  //   }
     // switch statement including side, trust, prize, cost, multiplier, and age
     // "selected" bets should keep index in the array
-    return () => clearInterval(interval)
-  }, [mostRecentButton, isDescending, lobby, user])
+  //   return () => clearInterval(interval)
+  // }, [mostRecentButton, isDescending, lobby, user])
 
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
@@ -120,12 +142,13 @@ export const BettingLobby: React.FC = () => {
             {lobby
               ?.filter(
                 (bet) =>
-                  bet.status === "ready" &&
+                  // bet.status === "ready" &&
                   bet.user1Id !== user?.uid &&
-                  bet.user2Id !== user?.uid &&
+                  // bet.user2Id !== user?.uid &&
                   bet.gameId !== "",
               )
-              .map((bet) => (
+              // // sort
+              ?.map((bet) => (
                 <Bet
                   key={bet.id}
                   id={bet.id}
@@ -150,6 +173,7 @@ export const BettingLobby: React.FC = () => {
                   user2FollowThrough={bet.user2FollowThrough}
                 />
               ))}
+            {/* add lobby here that is new bets not updated to the interactable lobby yet */}
           </div>
         </div>
       </main>

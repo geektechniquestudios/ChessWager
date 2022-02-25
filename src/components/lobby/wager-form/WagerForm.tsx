@@ -19,7 +19,7 @@ export const WagerForm: React.FC = () => {
 
   const user1Metamask = walletAddress
 
-  const [betSide, setBetSide] = useState<"White" | "Black">("White")
+  const [betSide, setBetSide] = useState<"white" | "black">("white")
   const [betAmount, setBetAmount] = useState(0.0)
   const [multiplier, setMultiplier] = useState(1.0)
   const [sliderVal, setSliderVal] = useState(0.0)
@@ -63,7 +63,7 @@ export const WagerForm: React.FC = () => {
           lobbyRef
             .add({
               amount: betAmount,
-              betSide: betSide.toLowerCase(),
+              betSide: betSide,
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
               gameId: gameId,
               multiplier: multiplier,

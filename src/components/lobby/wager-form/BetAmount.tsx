@@ -26,7 +26,7 @@ export const BetAmount: React.FC<Props> = ({
 }) => {
   const { avaxPrice } = Price.useContainer()
   const borderWarning = isAmountEmpty
-    ? " border-negative"
+    ? " border-red-600"
     : "border-stone-400 dark:border-stone-500 "
   const [isUsdFocused, setIsUsdFocused] = useState(false)
 
@@ -47,7 +47,7 @@ export const BetAmount: React.FC<Props> = ({
             className="ml-1  p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-300 text-stone-900"
             autoComplete="off"
             placeholder="Choose your bet"
-            defaultValue={""}
+            defaultValue=""
             value={
               isUsdFocused
                 ? localUsdAmount
@@ -82,7 +82,7 @@ export const BetAmount: React.FC<Props> = ({
             className="ml-1  p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"
             placeholder="Choose your bet"
-            defaultValue={""}
+            defaultValue=""
             decimalsLimit={6}
             value={localAvaxAmount}
             onValueChange={(value) => {

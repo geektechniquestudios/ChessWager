@@ -15,7 +15,7 @@ export const LobbyHeaderButtons: React.FC = () => {
         buttonName="Multiplier"
         buttonIcon={<AiOutlineCalculator />}
       />
-      <HeaderButton buttonName="Age" buttonIcon={<FaRegClock />} />
+      <HeaderButton buttonName="Time" buttonIcon={<FaRegClock />} />
     </div>
   )
 }

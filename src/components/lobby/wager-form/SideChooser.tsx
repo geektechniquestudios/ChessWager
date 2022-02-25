@@ -1,8 +1,8 @@
 import { SideChooserButton } from "./SideChooserButton"
 
 interface Props {
-  betSide: "White" | "Black"
-  setBetSide: React.Dispatch<React.SetStateAction<"White" | "Black">>
+  betSide: "white" | "black"
+  setBetSide: React.Dispatch<React.SetStateAction<"white" | "black">>
 }
 
 export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
@@ -15,12 +15,12 @@ export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
       <div className="flex items-center w-full justify-evenly">
         <SideChooserButton
           betSide={betSide}
-          thisSide="White"
+          thisSide="white"
           setBetSide={setBetSide}
         />
         <SideChooserButton
           betSide={betSide}
-          thisSide="Black"
+          thisSide="black"
           setBetSide={setBetSide}
         />
       </div>

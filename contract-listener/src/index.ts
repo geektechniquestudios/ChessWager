@@ -21,8 +21,8 @@ admin.initializeApp({ credential: cred })
 const db = admin.firestore()
 
 const contractAddress = process.env.VITE_CONTRACT_ADDRESS
+console.log(`Listening to contract address: ${contractAddress}`)
 const contractABI = ChessWager.abi
-const metamaskAddress = process.env.METAMASK_ACCOUNT_ADDRESS
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
 
 let rpcUrl
@@ -33,7 +33,6 @@ if (process.env.BRANCH_ENV === "develop") {
 } else if (process.env.BRANCH_ENV === "main") {
   rpcUrl = process.env.AVALANCHE_MAINNET_RPC_URL
 }
-console.log(metamaskAddress)
 
 const Wallet = ethers.Wallet
 const Contract = ethers.Contract

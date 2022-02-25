@@ -20,7 +20,7 @@ export const FollowThrough: React.FC<Props> = ({
         <FaRegHandshake
           className="color-shift"
           title="Follow-through"
-          color={hasUserPaid ? (isDarkOn ? "#7f1d1d" : "#fecaca") : ""}
+          color={hasUserPaid ? (isDarkOn ? "#86efac" : "#22c55e") : ""}
         />
       </div>
     </div>

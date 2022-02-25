@@ -100,7 +100,11 @@ export const Main: React.FC = () => {
         <div key={8}>
           {!isWalletConnected && (
             <DropdownItem
-              onClick={connectWallet}
+              onClick={() => {
+                setIsDropdownOpen(false)
+                setMenuHeight(0)
+                connectWallet()
+              }}
               leftIcon={<MdAttachMoney />}
               text="Connect Wallet"
             />
@@ -109,7 +113,11 @@ export const Main: React.FC = () => {
         <div key={9}>
           {isWalletConnected && (
             <DropdownItem
-              onClick={disconnectWallet}
+              onClick={() => {
+                setIsDropdownOpen(false)
+                setMenuHeight(0)
+                disconnectWallet()
+              }}
               leftIcon={<MdMoneyOff />}
               text="Disconnect Wallet"
             />
