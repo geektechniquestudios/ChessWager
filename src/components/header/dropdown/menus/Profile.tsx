@@ -52,7 +52,12 @@ export const Profile: React.FC = () => {
         />,
         <DropdownItem leftIcon={<BsGraphUp />} key={5} text="Stats" />,
         <DropdownItem leftIcon={<FiAward />} key={6} text="Achievements" />,
-        <DropdownItem leftIcon={<FiUser />} key={7} text="Display Name" />,
+        <DropdownItem
+          goToMenu="displayName"
+          leftIcon={<FiUser />}
+          key={7}
+          text="Display Name"
+        />,
         <DropdownItem
           leftIcon={
             <button
