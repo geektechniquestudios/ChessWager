@@ -24,7 +24,7 @@ export const UserImage: React.FC<Props> = ({
         className="text-xs mx-1 flex flex-col justify-center text-stone-900 dark:text-stone-300 hover:underline"
         onClick={(e) => {
           e.stopPropagation()
-          openDropdownToMenu("settings")
+          openDropdownToMenu("user")
         }}
       >
         {displayName}
