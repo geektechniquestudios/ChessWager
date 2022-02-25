@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
 import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
+import { Achievements } from "./menus/Achievements"
 import { Blocked } from "./menus/Blocked"
 import { Friends } from "./menus/Friends"
 import { Help } from "./menus/Help"
@@ -66,6 +67,7 @@ export const DropdownMenu = () => {
         {user && <Notifications />}
         <User />
         <SearchUsers />
+        {user && <Achievements />}
       </div>
     </div>
   )
