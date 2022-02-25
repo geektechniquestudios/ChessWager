@@ -15,7 +15,7 @@ const firestore = firebase.firestore()
 interface Bet {
   id: string
   amount: number
-  betSide: string
+  betSide: "black" | "white"
   multiplier: number
   status: string
   user1Id: string
@@ -47,57 +47,73 @@ export const BettingLobby: React.FC = () => {
   const [lobby]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 
-  // const [interactableLobby, setInteractableLobby] = useState(
-  //   lobby?.filter(
-  //     (bet) =>
-  //       bet.status !== "funded" &&
-  //       bet.user1Id !== user?.uid &&
-  //       bet.gameId !== "",
-  //   ),
-  // )
+  const [interactableLobby, setInteractableLobby] = useState(
+    lobby?.filter(
+      (bet) =>
+        bet.status !== "funded" &&
+        bet.user1Id !== user?.uid &&
+        bet.gameId !== "",
+    ),
+  )
 
-  // useEffect(() => {
-  //   const updateLobby = () => {
-  //     setInteractableLobby(
-  //       lobby
-  //         ?.filter(
-  //           (bet) =>
-  //             bet.status !== "funded" &&
-  //             bet.user1Id !== user?.uid &&
-  //             bet.gameId !== "",
-  //         )
-  //         .sort(),
-  //     )
-  //   }
+  const determineSortOrder = (a: number, b: number): number => {
+    if (a === b) return 0
+    if (a > b) return isDescending ? 1 : -1
+    if (b < a) return isDescending ? -1 : 1
+    return 0
+  }
 
-  //   const interval = setInterval(updateLobby, 5000)
-  //   // sort based on most recent button clicked and isdescending
+  const sortingFunction = (a: Bet, b: Bet) => {
+    switch (mostRecentButton) {
+      case "Side": {
+        if (a.betSide === b.betSide) return 0
+        if (a.betSide === "white") return isDescending ? 1 : -1
+        if (a.betSide === "black") return isDescending ? -1 : 1
+        return 0
+      }
+      case "Trust": {
+        const bet1Trust = a.user1FollowThrough[0] / a.user1FollowThrough[1]
+        const bet2Trust = b.user1FollowThrough[0] / b.user1FollowThrough[1]
+        return determineSortOrder(bet1Trust, bet2Trust)
+      }
+      case "Prize": {
+        const bet1Prize = a.amount + a.amount * a.multiplier
+        const bet2Prize = b.amount + b.amount * b.multiplier
+        return determineSortOrder(bet1Prize, bet2Prize)
+      }
+      case "Cost": {
+        return determineSortOrder(a.amount, b.amount)
+      }
+      case "Multiplier": {
+        return determineSortOrder(a.multiplier, b.multiplier)
+      }
+      case "Time": {
+        return determineSortOrder(a.createdAt.getTime(), b.createdAt.getTime())
+      }
+      default: {
+        return 0
+      }
+    }
+  }
+  const updateLobby = () => {
+    setInteractableLobby(
+      lobby
+        ?.filter(
+          (bet) =>
+            bet.status !== "funded" &&
+            bet.user1Id !== user?.uid &&
+            bet.gameId !== "",
+        )
+        .sort(sortingFunction),
+    )
+  }
+  useEffect(() => {
+    updateLobby()
+    const interval = setInterval(updateLobby, 5000)
 
-  //   let sortingFunction: any
-
-  //   switch (mostRecentButton) {
-  //     case "Side": {
-  //       sortingFunction = (a: Bet, b: Bet) => {
-  //         if (a.betSide === b.betSide) return 0
-  //         if (a.betSide === "white") return isDescending ? 1 : -1
-  //         if (a.betSide === "black") return isDescending ? -1 : 1
-  //       }
-  //     }
-  //     case "Trust": {
-  //     }
-  //     case "Prize": {
-  //     }
-  //     case "Cost": {
-  //     }
-  //     case "Multiplier": {
-  //     }
-  //     case "Time": {
-  //     }
-  //   }
-    // switch statement including side, trust, prize, cost, multiplier, and age
     // "selected" bets should keep index in the array
-  //   return () => clearInterval(interval)
-  // }, [mostRecentButton, isDescending, lobby, user])
+    return () => clearInterval(interval)
+  }, [mostRecentButton, isDescending, lobby, user, gameId])
 
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
@@ -139,13 +155,36 @@ export const BettingLobby: React.FC = () => {
                     user2FollowThrough={bet.user2FollowThrough}
                   />
                 ))}
-            {lobby
+            {interactableLobby?.map((bet) => (
+              <Bet
+                key={bet.id}
+                id={bet.id}
+                amount={bet.amount}
+                betSide={bet.betSide}
+                multiplier={bet.multiplier}
+                status={bet.status}
+                user1Id={bet.user1Id}
+                user1Metamask={bet.user1Metamask}
+                user1PhotoURL={bet.user1PhotoURL}
+                user1DisplayName={bet.user1DisplayName}
+                hasUser1Paid={bet.hasUser1Paid}
+                user2Id={bet.user2Id}
+                user2Metamask={bet.user2Metamask}
+                user2PhotoURL={bet.user2PhotoURL}
+                user2DisplayName={bet.user2DisplayName}
+                hasUser2Paid={bet.hasUser2Paid}
+                gameId={bet.gameId}
+                timestamp={bet.timestamp?.seconds}
+                contractAddress={bet.contractAddress}
+                user1FollowThrough={bet.user1FollowThrough}
+                user2FollowThrough={bet.user2FollowThrough}
+              />
+            ))}
+            {/* add lobby here that is new bets not updated to the interactable lobby yet */}
+            {/* {lobby
               ?.filter(
                 (bet) =>
-                  // bet.status === "ready" &&
-                  bet.user1Id !== user?.uid &&
-                  // bet.user2Id !== user?.uid &&
-                  bet.gameId !== "",
+                  //remove bets that have already appeared and are funded
               )
               // // sort
               ?.map((bet) => (
@@ -172,8 +211,7 @@ export const BettingLobby: React.FC = () => {
                   user1FollowThrough={bet.user1FollowThrough}
                   user2FollowThrough={bet.user2FollowThrough}
                 />
-              ))}
-            {/* add lobby here that is new bets not updated to the interactable lobby yet */}
+              ))} */}
           </div>
         </div>
       </main>

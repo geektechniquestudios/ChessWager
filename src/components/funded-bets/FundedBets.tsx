@@ -55,7 +55,7 @@ export const FundedBets: React.FC<Props> = () => {
 
   return (
     <div
-      className="w-60 overflow-y-hidden flex flex-col overflow-x-visible"
+      className="w-52 overflow-y-hidden flex flex-col overflow-x-visible shrink-0"
       style={{ direction: "rtl" }}
     >
       <div className="flex w-full justify-between px-0.5 py-1 bg-gradient-to-r from-stone-300 via-stone-300 to-transparent dark:from-stone-800 dark:via-stone-800 dark:to-transparent dark:text-stone-50">

@@ -73,16 +73,18 @@ export const Bet: React.FC<Props> = ({
     ? " bg-stone-100 dark:bg-black"
     : "hover:bg-stone-200 dark:hover:bg-stone-900 dark:bg-stone-800 bg-stone-300"
 
+  const pointerEvents =
+    status === "ready" && !isUser1 ? "cursor-pointer" : "pointer-events-auto"
+
   return (
     <div
       className={`w-full flex justify-center align-middle overflow-x-hidden`}
     >
-      <a
-        className={`flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700  ${selectedStyle}`}
+      <div
+        className={`${pointerEvents} flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700 color-shift  ${selectedStyle}`}
         onClick={() => {
           status === "ready" && !isUser1 && setIsSelected(!isSelected)
         }}
-        href="#"
       >
         <LeftButtons
           user1Id={user1Id}
@@ -141,7 +143,7 @@ export const Bet: React.FC<Props> = ({
           contractAddress={contractAddress}
           isSelected={isSelected}
         />
-      </a>
+      </div>
     </div>
   )
 }

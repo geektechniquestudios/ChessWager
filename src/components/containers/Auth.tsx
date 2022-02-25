@@ -60,7 +60,7 @@ const useAuth = () => {
         })
     } catch (error) {
       console.error(error)
-      alert("Please install Metamask to make a wager")
+      alert("Please connect Metamask to make a wager")
       setIsWalletConnecting(false)
     }
   }
