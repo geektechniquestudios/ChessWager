@@ -48,24 +48,36 @@ const useAuth = () => {
       userCollectionRef
         .doc(auth.currentUser?.uid)
         .update({ walletAddress: walletAddress })
-      setIsWalletConnected(true)
-      setWalletAddress(walletAddress)
-      localStorage.setItem("walletAddress", walletAddress)
-      localStorage.setItem("isWalletConnected", "true")
-      setIsWalletConnecting(false)
+        .then(() => {
+          setIsWalletConnected(true)
+          setIsWalletConnecting(false)
+          setWalletAddress(walletAddress)
+          localStorage.setItem("walletAddress", walletAddress)
+          localStorage.setItem("isWalletConnected", "true")
+        })
+        .catch(() => {
+          alert("Error connecting to wallet")
+        })
     } catch (error) {
       console.error(error)
-      alert("You need to install Metamask")
+      alert("Please install Metamask to make a wager")
       setIsWalletConnecting(false)
     }
   }
 
   const disconnectWallet = async () => {
-    setWalletAddress("")
-    setIsWalletConnected(false)
-    localStorage.setItem("walletAddress", "")
-    localStorage.setItem("isWalletConnected", "false")
-    userCollectionRef.doc(auth.currentUser?.uid).update({ walletAddress: "" })
+    userCollectionRef
+      .doc(auth.currentUser?.uid)
+      .update({ walletAddress: "" })
+      .then(() => {
+        setWalletAddress("")
+        setIsWalletConnected(false)
+        localStorage.setItem("walletAddress", "")
+        localStorage.setItem("isWalletConnected", "false")
+      })
+      .catch(() => {
+        alert("Error disconnecting wallet")
+      })
   }
 
   const signInWithGoogle = async () => {

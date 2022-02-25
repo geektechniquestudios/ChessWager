@@ -338,7 +338,6 @@ service cloud.firestore {
       }
 
       function isWalletUpdateRequestKeyValid() {
-        // let requestData = request.resource.data;
         return 
           !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL", "bets"])) &&
           request.resource.data.keys().hasOnly(["walletAddress", "blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL", "bets"]) &&
