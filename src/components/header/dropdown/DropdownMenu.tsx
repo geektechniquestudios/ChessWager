@@ -14,6 +14,7 @@ import { Profile } from "./menus/Profile"
 import { SearchUsers } from "./menus/SearchUsers"
 import { Settings } from "./menus/Settings"
 import { Social } from "./menus/Social"
+import { Stats } from "./menus/Stats"
 import { Store } from "./menus/Store"
 import { User } from "./menus/User"
 
@@ -70,6 +71,7 @@ export const DropdownMenu = () => {
         <SearchUsers />
         {user && <DisplayName />}
         {user && <Achievements />}
+        {user && <Stats />}
       </div>
     </div>
   )

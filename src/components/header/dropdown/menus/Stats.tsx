@@ -3,6 +3,7 @@ import "../../../../style/dropdown.scss"
 import { DropdownItem } from "../DropdownItem"
 import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../Menu"
+import { MenuLine } from "../MenuLine"
 
 export const Stats: React.FC = () => {
   return (
@@ -13,9 +14,9 @@ export const Stats: React.FC = () => {
             goToMenu="profile"
             leftIcon={<BiArrowBack />}
             key={0}
-            text="Help"
+            text="Stats"
           />,
-          <div className="border-b-2" key={1} />,
+          <MenuLine key={1} />,
           <DropdownItem key={2} text="Number of Bets" />,
           <DropdownItem key={3} text="Net Profit" />,
           <DropdownItem key={4} text="Total Profit" />,
