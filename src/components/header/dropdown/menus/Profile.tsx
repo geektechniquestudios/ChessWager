@@ -57,6 +57,12 @@ export const Profile: React.FC = () => {
           key={6}
           text="Achievements"
         />,
+        <DropdownItem
+          goToMenu="displayName"
+          leftIcon={<FiUser />}
+          key={7}
+          text="Display Name"
+        />,
         <DropdownItem leftIcon={<FiUser />} key={7} text="Display Name" />,
         <DropdownItem
           leftIcon={
