@@ -1,7 +1,9 @@
 import { useEffect, useRef } from "react"
 import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
+import { Achievements } from "./menus/Achievements"
 import { Blocked } from "./menus/Blocked"
+import { DisplayName } from "./menus/DisplayName"
 import { Friends } from "./menus/Friends"
 import { Help } from "./menus/Help"
 import { Leaderboard } from "./menus/Leaderboard"
@@ -9,9 +11,11 @@ import { Main } from "./menus/Main"
 import { Messages } from "./menus/Messages"
 import { Notifications } from "./menus/Notifications"
 import { Profile } from "./menus/Profile"
+import { SearchUsers } from "./menus/SearchUsers"
 import { Settings } from "./menus/Settings"
 import { Social } from "./menus/Social"
 import { Store } from "./menus/Store"
+import { User } from "./menus/User"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -62,6 +66,10 @@ export const DropdownMenu = () => {
         {user && <Messages />}
         {user && <Friends />}
         {user && <Notifications />}
+        <User />
+        <SearchUsers />
+        {user && <DisplayName />}
+        {user && <Achievements />}
       </div>
     </div>
   )

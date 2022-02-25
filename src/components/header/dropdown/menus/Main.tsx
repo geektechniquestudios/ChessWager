@@ -11,7 +11,7 @@ import {
   RiSettings5Line,
 } from "react-icons/ri"
 import { BsShare } from "react-icons/bs"
-import { BiHelpCircle } from "react-icons/bi"
+import { BiHelpCircle, BiSearchAlt2 } from "react-icons/bi"
 import { MdAttachMoney, MdMoneyOff, MdOutlineDarkMode } from "react-icons/md"
 import { BsSun } from "react-icons/bs"
 import { GoGift } from "react-icons/go"
@@ -74,10 +74,16 @@ export const Main: React.FC = () => {
           key={4}
         />,
         <DropdownItem
+          leftIcon={<BiSearchAlt2 />}
+          goToMenu="searchUsers"
+          text="Search Users"
+          key={5}
+        />,
+        <DropdownItem
           leftIcon={<BiHelpCircle />}
           goToMenu="help"
           text="Help"
-          key={5}
+          key={6}
         />,
         <DropdownItem
           onClick={() => {
@@ -94,10 +100,10 @@ export const Main: React.FC = () => {
           }
           leftIcon={isDarkOn ? <MdOutlineDarkMode /> : <BsSun />}
           text={isDarkOn ? "Dark Mode" : "Light Mode"}
-          key={6}
+          key={7}
         />,
-        <MenuLine key={7} />,
-        <div key={8}>
+        <MenuLine key={8} />,
+        <div key={9}>
           {!isWalletConnected && (
             <DropdownItem
               onClick={() => {
@@ -110,7 +116,7 @@ export const Main: React.FC = () => {
             />
           )}
         </div>,
-        <div key={9}>
+        <div key={10}>
           {isWalletConnected && (
             <DropdownItem
               onClick={() => {
@@ -123,7 +129,7 @@ export const Main: React.FC = () => {
             />
           )}
         </div>,
-        <div key={10}>
+        <div key={11}>
           {!user && (
             <DropdownItem
               onClick={() => {
@@ -136,7 +142,7 @@ export const Main: React.FC = () => {
             />
           )}
         </div>,
-        <div key={11}>
+        <div key={12}>
           {user && (
             <DropdownItem
               onClick={() => {

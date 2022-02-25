@@ -3,7 +3,7 @@ import { DropdownItem } from "../DropdownItem"
 import { Menu } from "../Menu"
 import { MenuLine } from "../MenuLine"
 
-export const Notifications: React.FC = ({}) => {
+export const Achievements: React.FC = ({}) => {
   return (
     <Menu
       menuItems={[
@@ -11,11 +11,11 @@ export const Notifications: React.FC = ({}) => {
           goToMenu="profile"
           leftIcon={<BiArrowBack />}
           key={0}
-          text="Notifications"
+          text="Achievements"
         />,
         <MenuLine key={1} />,
       ]}
-      thisMenu={"notifications"}
+      thisMenu={"achievements"}
     />
   )
 }

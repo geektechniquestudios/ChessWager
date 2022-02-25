@@ -1,21 +1,22 @@
 import { BiArrowBack } from "react-icons/bi"
+import { FiUser } from "react-icons/fi"
 import { DropdownItem } from "../DropdownItem"
 import { Menu } from "../Menu"
 import { MenuLine } from "../MenuLine"
 
-export const Notifications: React.FC = ({}) => {
+export const SearchUsers: React.FC = ({}) => {
   return (
     <Menu
       menuItems={[
         <DropdownItem
-          goToMenu="profile"
+          goToMenu="main"
           leftIcon={<BiArrowBack />}
           key={0}
-          text="Notifications"
+          text="Search Users"
         />,
         <MenuLine key={1} />,
       ]}
-      thisMenu={"notifications"}
+      thisMenu={"searchUsers"}
     />
   )
 }
