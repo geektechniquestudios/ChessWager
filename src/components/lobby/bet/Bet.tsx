@@ -8,7 +8,7 @@ import { User2Data } from "./User2Data"
 import { LeftButtons } from "./LeftButtons"
 import { RightButtons } from "./RightButtons"
 import { CenterOfBet } from "./CenterOfBet"
-import { useState } from "react"
+import React, { useState } from "react"
 
 interface Props {
   id: string
@@ -31,6 +31,10 @@ interface Props {
   contractAddress: string
   user1FollowThrough: number[]
   user2FollowThrough: number[]
+  selectedBetMap: Record<string, boolean>
+  setSelectedBetMap: React.Dispatch<
+    React.SetStateAction<Record<string, boolean>>
+  >
 }
 
 export const Bet: React.FC<Props> = ({
@@ -54,6 +58,8 @@ export const Bet: React.FC<Props> = ({
   contractAddress,
   user1FollowThrough,
   user2FollowThrough,
+  selectedBetMap,
+  setSelectedBetMap,
 }) => {
   const { auth } = Auth.useContainer()
   const bigAmount = ethers.utils.parseEther(amount.toString())
@@ -76,14 +82,17 @@ export const Bet: React.FC<Props> = ({
   const pointerEvents =
     status === "ready" && !isUser1 ? "cursor-pointer" : "pointer-events-auto"
 
+  const updateSelectedStatus = () => {
+    setIsSelected(!isSelected)
+    selectedBetMap[id] = !isSelected
+  }
+
   return (
-    <div
-      className={`w-full flex justify-center align-middle overflow-x-hidden`}
-    >
+    <div className="w-full flex justify-center align-middle overflow-x-hidden">
       <div
-        className={`${pointerEvents} flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700 color-shift  ${selectedStyle}`}
+        className={`${pointerEvents} flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700 color-shift ${selectedStyle}`}
         onClick={() => {
-          status === "ready" && !isUser1 && setIsSelected(!isSelected)
+          status === "ready" && !isUser1 && updateSelectedStatus()
         }}
       >
         <LeftButtons
