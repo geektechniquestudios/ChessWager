@@ -55,22 +55,22 @@ export const Countdown: React.FC<Props> = ({ fen, side, time, isNewGame }) => {
     const lowTime = secondsToShow(time - count - 1) < 20
     const veryLowTime = secondsToShow(time - count - 1) < 3
     const bgColor =
-      isPlayerTurn && !lowTime
-        ? "bg-teal-50 dark:bg-green-800"
-        : "bg-stone-300 dark:bg-stone-600"
+      isPlayerTurn && !lowTime ? "dark:bg-green-800 bg-teal-50" : ""
     const lowTimeColor =
-      isPlayerTurn && lowTime && !veryLowTime
-        ? "bg-rose-50 dark:bg-amber-600"
-        : ""
+      lowTime && isPlayerTurn ? "bg-rose-50 dark:bg-amber-600" : ""
     const veryLowTimeColor =
-      isPlayerTurn && veryLowTime ? "bg-red-200 dark:bg-red-800" : ""
+      veryLowTime && isPlayerTurn ? "bg-red-200 dark:bg-red-800 " : ""
     const newGameStyle = isNewGame ? "animate-pulse" : ""
-    return `${bgColor} ${lowTimeColor} ${veryLowTimeColor} ${newGameStyle}`
+    return { bgColor, lowTimeColor, veryLowTimeColor, newGameStyle }
   }
+
+  const { bgColor, newGameStyle, lowTimeColor, veryLowTimeColor } =
+    buildStyles()
 
   return (
     <p
-      className={`text-2xl p-1.5 border-l border-stone-900 text-stone-900 dark:text-stone-200 ${buildStyles()} `}
+      className={`bg-stone-300 dark:bg-stone-600 text-2xl p-1.5 border-l border-stone-900 text-stone-900 dark:text-stone-200
+         ${bgColor} ${lowTimeColor} ${veryLowTimeColor} ${newGameStyle}`}
     >
       {!isNewGame ? formatTime(secondsToShow(time - count - 1)) : "??:??"}
     </p>

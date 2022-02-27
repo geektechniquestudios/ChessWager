@@ -63,7 +63,7 @@ export const BettingLobby: React.FC = () => {
     return 0
   }
 
-  const sortingFunction: (a: Bet, b: Bet) => number = (a: Bet, b: Bet) => {
+  const sortingFunction = (a: Bet, b: Bet) => {
     switch (mostRecentButton) {
       case "Side": {
         if (a.betSide === b.betSide) return 0
@@ -96,7 +96,6 @@ export const BettingLobby: React.FC = () => {
     }
   }
   const updateLobby = () => {
-    Object.keys(selectedBetMap).forEach(console.log)
     setInteractableLobby(
       lobby
         ?.filter(
@@ -108,14 +107,11 @@ export const BettingLobby: React.FC = () => {
         .sort(sortingFunction),
     )
   }
-
-  const [selectedBetMap, setSelectedBetMap] = useState<Record<string, boolean>>(
-    { testing: true },
-  )
-
   useEffect(() => {
     updateLobby()
     const interval = setInterval(updateLobby, 5000)
+
+    // "selected" bets should keep index in the array
     return () => clearInterval(interval)
   }, [mostRecentButton, isDescending, lobby, user, gameId])
 
@@ -157,8 +153,6 @@ export const BettingLobby: React.FC = () => {
                     contractAddress={bet.contractAddress}
                     user1FollowThrough={bet.user1FollowThrough}
                     user2FollowThrough={bet.user2FollowThrough}
-                    selectedBetMap={selectedBetMap}
-                    setSelectedBetMap={setSelectedBetMap}
                   />
                 ))}
             {interactableLobby?.map((bet) => (
@@ -184,8 +178,6 @@ export const BettingLobby: React.FC = () => {
                 contractAddress={bet.contractAddress}
                 user1FollowThrough={bet.user1FollowThrough}
                 user2FollowThrough={bet.user2FollowThrough}
-                selectedBetMap={selectedBetMap}
-                setSelectedBetMap={setSelectedBetMap}
               />
             ))}
             {/* add lobby here that is new bets not updated to the interactable lobby yet */}
