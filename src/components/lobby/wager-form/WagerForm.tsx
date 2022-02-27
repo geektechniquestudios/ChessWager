@@ -12,10 +12,17 @@ import { QuickBet } from "./QuickBet"
 import { TheirBet } from "./TheirBet"
 const firestore = firebase.firestore()
 
+declare let window: any
+
 export const WagerForm: React.FC = () => {
   const { gameId } = GameState.useContainer()
-  const { walletAddress, isWalletConnected, auth, connectWallet } =
-    Auth.useContainer()
+  const {
+    walletAddress,
+    isWalletConnected,
+    auth,
+    connectWallet,
+    doesUserHaveEnoughAvax,
+  } = Auth.useContainer()
 
   const user1Metamask = walletAddress
 
@@ -33,52 +40,59 @@ export const WagerForm: React.FC = () => {
   const userRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("users")
 
+  const canUserBet: () => Promise<boolean> = async () => {
+    if (!auth.currentUser) {
+      alert("You must be logged in to bet")
+      return false
+    } else if (betAmount === 0) {
+      setIsAmountEmpty(true)
+      return false
+    } else if (!isWalletConnected) {
+      connectWallet()
+      return false
+    } else if (!(await doesUserHaveEnoughAvax(betAmount))) {
+      alert("Deposit more avax to place this bet")
+      return false
+    }
+    return true
+  }
+
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (betAmount === 0) {
-      setIsAmountEmpty(true)
-      return
-    }
+    if (!canUserBet()) return
 
-    if (!isWalletConnected) {
-      connectWallet()
-      return
-    }
+    const { uid, photoURL, displayName }: firebase.User = auth.currentUser!
 
-    if (auth.currentUser) {
-      const { uid, photoURL, displayName }: firebase.User = auth.currentUser
-
-      userRef // @todo make into transaction
-        .doc(uid)
-        .get()
-        .then((doc: any) => {
-          const user1FollowThrough = [
-            doc.data().betFundedCount,
-            doc.data().betAcceptedCount,
-          ]
-          return user1FollowThrough
-        })
-        .then((user1FollowThrough: number[]) => {
-          lobbyRef
-            .add({
-              amount: betAmount,
-              betSide: betSide,
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              gameId: gameId,
-              multiplier: multiplier,
-              status: "ready",
-              user1Id: uid,
-              user1Metamask: user1Metamask,
-              user1PhotoURL: photoURL,
-              user1DisplayName: displayName,
-              user1FollowThrough: user1FollowThrough,
-              contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
-            })
-            .catch(console.error)
-        })
-        .catch(console.error)
-    }
+    userRef
+      .doc(uid)
+      .get()
+      .then((doc: any) => {
+        const user1FollowThrough = [
+          doc.data().betFundedCount,
+          doc.data().betAcceptedCount,
+        ]
+        return user1FollowThrough
+      })
+      .then((user1FollowThrough: number[]) => {
+        lobbyRef
+          .add({
+            amount: betAmount,
+            betSide: betSide,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            gameId: gameId,
+            multiplier: multiplier,
+            status: "ready",
+            user1Id: uid,
+            user1Metamask: user1Metamask,
+            user1PhotoURL: photoURL,
+            user1DisplayName: displayName,
+            user1FollowThrough: user1FollowThrough,
+            contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
+          })
+          .catch(console.error)
+      })
+      .catch(console.error)
   }
 
   return (

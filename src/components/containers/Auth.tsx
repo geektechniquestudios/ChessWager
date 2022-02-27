@@ -2,7 +2,8 @@ import firebase from "firebase/compat"
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { createContainer } from "unstated-next"
-import { ethers } from "ethers"
+import { BigNumber, ethers } from "ethers"
+import { formatEther, parseEther } from "ethers/lib/utils"
 const firestore = firebase.firestore()
 
 declare let window: any
@@ -126,6 +127,15 @@ const useAuth = () => {
     localStorage.setItem("walletAddress", "")
   }
 
+  const doesUserHaveEnoughAvax = async (price: number) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
+    const balance: BigNumber = await provider.getBalance(walletAddress!)
+    if (balance.gte(parseEther(price.toString()))) {
+      return true
+    }
+    return false
+  }
+
   return {
     user,
     auth,
@@ -138,6 +148,7 @@ const useAuth = () => {
     signInWithGoogle,
     signOutWithGoogle,
     isWalletConnecting,
+    doesUserHaveEnoughAvax,
   }
 }
 

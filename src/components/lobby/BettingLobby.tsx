@@ -95,8 +95,9 @@ export const BettingLobby: React.FC = () => {
       }
     }
   }
+
   const updateLobby = () => {
-    Object.keys(selectedBetMap).forEach(console.log)
+    // Object.keys(selectedBetMap).forEach(console.log)
     setInteractableLobby(
       lobby
         ?.filter(
