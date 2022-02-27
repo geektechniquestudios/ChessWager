@@ -24,7 +24,7 @@ export const Store: React.FC = () => {
           <MenuLine key={1} />,
           <DropdownItem
             leftIcon={<BsSuitClub />}
-            goToMenu="blocked"
+            goToMenu="membership"
             key={2}
             text="Membership"
           />,

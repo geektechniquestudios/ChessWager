@@ -8,6 +8,7 @@ import { Friends } from "./menus/Friends"
 import { Help } from "./menus/Help"
 import { Leaderboard } from "./menus/Leaderboard"
 import { Main } from "./menus/Main"
+import { Membership } from "./menus/Membership"
 import { Messages } from "./menus/Messages"
 import { Notifications } from "./menus/Notifications"
 import { Profile } from "./menus/Profile"
@@ -72,6 +73,7 @@ export const DropdownMenu = () => {
         {user && <DisplayName />}
         {user && <Achievements />}
         {user && <Stats />}
+        {user && <Membership />}
       </div>
     </div>
   )
