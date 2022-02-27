@@ -44,11 +44,11 @@ export const BettingLobby: React.FC = () => {
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
   const query = lobbyRef.where("gameId", "==", gameId)
-  const [lobby]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
+  const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 
   const [interactableLobby, setInteractableLobby] = useState(
-    lobby?.filter(
+    bets?.filter(
       (bet) =>
         bet.status !== "funded" &&
         bet.user1Id !== user?.uid &&
@@ -100,7 +100,7 @@ export const BettingLobby: React.FC = () => {
   const updateLobby = () => {
     // Object.keys(selectedBetMap).forEach(console.log)
     setInteractableLobby(
-      lobby
+      bets
         ?.filter(
           (bet) =>
             bet.status !== "funded" &&
@@ -119,7 +119,7 @@ export const BettingLobby: React.FC = () => {
     updateLobby()
     const interval = setInterval(updateLobby, 5000)
     return () => clearInterval(interval)
-  }, [mostRecentButton, isDescending, lobby, user, gameId])
+  }, [mostRecentButton, isDescending, bets, user, gameId])
 
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
@@ -129,7 +129,7 @@ export const BettingLobby: React.FC = () => {
           <LobbyHeader />
           <div className=" overflow-y-hidden h-full overflow-x-auto">
             {user &&
-              lobby
+              bets
                 ?.filter(
                   (bet) =>
                     bet.user1Id === user.uid &&

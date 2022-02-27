@@ -5,12 +5,13 @@ import { FirebaseError } from "@firebase/util"
 import { MiniBet } from "./MiniBet"
 import { Price } from "../containers/Price"
 import "../../style/fundedbets.scss"
+import { Auth } from "../containers/Auth"
 
 const firestore = firebase.firestore()
 
 interface Props {}
 
-interface Lobby {
+interface Bet {
   id: string
   amount: number
   betSide: string
@@ -33,25 +34,33 @@ interface Lobby {
 }
 
 export const FundedBets: React.FC<Props> = () => {
-  const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
+  const betRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
   const gameIdContainer = GameState.useContainer()
 
-  const query = lobbyRef.where("gameId", "==", gameIdContainer.gameId)
+  const query = betRef.where("gameId", "==", gameIdContainer.gameId)
 
-  const [lobby]: [Lobby[] | undefined, boolean, FirebaseError | undefined] =
+  const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 
   const { avaxPrice } = Price.useContainer()
 
   const amountAtStake = (
-    (lobby
+    (bets
       ?.filter((bet) => bet.status === "funded")
       .map((bet) => bet.amount + bet.amount * bet.multiplier)
       .reduce((a, b) => a + b, 0) ?? 0) * avaxPrice
   )
     .toFixed(2)
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+  const { auth } = Auth.useContainer()
+  const isBetRelatedToUser = (bet: Bet): boolean => {
+    return (
+      auth.currentUser?.uid === bet.user1Id ||
+      auth.currentUser?.uid === bet.user2Id
+    )
+  }
 
   return (
     <div
@@ -75,22 +84,45 @@ export const FundedBets: React.FC<Props> = () => {
             className="overflow-x-visible h-0 flex flex-col"
             style={{ direction: "ltr" }}
           >
-            {lobby &&
-              lobby
-                .sort((a, b) => b.amount - a.amount)
-                .filter((bet) => bet.status === "funded")
-                .map((bet) => (
-                  <MiniBet
-                    key={bet.id}
-                    amount={bet.amount}
-                    betSide={bet.betSide}
-                    multiplier={bet.multiplier}
-                    user1PhotoURL={bet.user1PhotoURL}
-                    user2PhotoURL={bet.user2PhotoURL}
-                    user1DisplayName={bet.user1DisplayName}
-                    user2DisplayName={bet.user2DisplayName}
-                  />
-                ))}
+            {bets
+              ?.sort((a, b) => b.amount - a.amount)
+              .filter(
+                (bet) => bet.status === "funded" && isBetRelatedToUser(bet),
+              )
+              .map((bet) => (
+                <MiniBet
+                  key={bet.id}
+                  amount={bet.amount}
+                  betSide={bet.betSide}
+                  multiplier={bet.multiplier}
+                  user1PhotoURL={bet.user1PhotoURL}
+                  user2PhotoURL={bet.user2PhotoURL}
+                  user1DisplayName={bet.user1DisplayName}
+                  user2DisplayName={bet.user2DisplayName}
+                />
+              ))}
+          </div>
+          <div
+            className="overflow-x-visible h-0 flex flex-col"
+            style={{ direction: "ltr" }}
+          >
+            {bets
+              ?.sort((a, b) => b.amount - a.amount)
+              .filter(
+                (bet) => bet.status === "funded" && !isBetRelatedToUser(bet),
+              )
+              .map((bet) => (
+                <MiniBet
+                  key={bet.id}
+                  amount={bet.amount}
+                  betSide={bet.betSide}
+                  multiplier={bet.multiplier}
+                  user1PhotoURL={bet.user1PhotoURL}
+                  user2PhotoURL={bet.user2PhotoURL}
+                  user1DisplayName={bet.user1DisplayName}
+                  user2DisplayName={bet.user2DisplayName}
+                />
+              ))}
           </div>
         </div>
       </div>
