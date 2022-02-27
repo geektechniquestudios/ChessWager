@@ -56,39 +56,40 @@ export const BettingLobby: React.FC = () => {
     ),
   )
 
-  const determineSortOrder = (a: number, b: number): number => {
+  const determineSortOrder = (a: number, b: number): 1 | 0 | -1 => {
     if (a === b) return 0
-    if (a > b) return isDescending ? 1 : -1
-    if (b < a) return isDescending ? -1 : 1
+    if (a > b) return 1
+    if (b < a) return -1
     return 0
+  }
+
+  const descendingSwitch = (a: number, b: number) => {
+    return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
   }
 
   const sortingFunction: (a: Bet, b: Bet) => number = (a: Bet, b: Bet) => {
     switch (mostRecentButton) {
       case "Side": {
-        if (a.betSide === b.betSide) return 0
-        if (a.betSide === "white") return isDescending ? 1 : -1
-        if (a.betSide === "black") return isDescending ? -1 : 1
-        return 0
+        return descendingSwitch(Number(a.betSide), Number(b.betSide))
       }
       case "Trust": {
         const bet1Trust = a.user1FollowThrough[0] / a.user1FollowThrough[1]
         const bet2Trust = b.user1FollowThrough[0] / b.user1FollowThrough[1]
-        return determineSortOrder(bet1Trust, bet2Trust)
+        return descendingSwitch(bet1Trust, bet2Trust)
       }
       case "Prize": {
         const bet1Prize = a.amount + a.amount * a.multiplier
         const bet2Prize = b.amount + b.amount * b.multiplier
-        return determineSortOrder(bet1Prize, bet2Prize)
+        return descendingSwitch(bet1Prize, bet2Prize)
       }
       case "Cost": {
-        return determineSortOrder(a.amount, b.amount)
+        return descendingSwitch(a.amount, b.amount)
       }
       case "Multiplier": {
-        return determineSortOrder(a.multiplier, b.multiplier)
+        return descendingSwitch(a.multiplier, b.multiplier)
       }
       case "Time": {
-        return determineSortOrder(a.createdAt.getTime(), b.createdAt.getTime())
+        return descendingSwitch(a.createdAt.getTime(), b.createdAt.getTime())
       }
       default: {
         return 0
