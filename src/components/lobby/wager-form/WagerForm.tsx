@@ -12,8 +12,6 @@ import { QuickBet } from "./QuickBet"
 import { TheirBet } from "./TheirBet"
 const firestore = firebase.firestore()
 
-declare let window: any
-
 export const WagerForm: React.FC = () => {
   const { gameId } = GameState.useContainer()
   const {
@@ -60,7 +58,7 @@ export const WagerForm: React.FC = () => {
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (!canUserBet()) return
+    if (!(await canUserBet())) return
 
     const { uid, photoURL, displayName }: firebase.User = auth.currentUser!
 
