@@ -92,7 +92,10 @@ export const Bet: React.FC<Props> = ({
       <div
         className={`${pointerEvents} flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700 color-shift ${selectedStyle}`}
         onClick={() => {
-          status === "ready" && !isUser1 && updateSelectedStatus()
+          status === "ready" &&
+            !isUser1 &&
+            auth.currentUser &&
+            updateSelectedStatus()
         }}
       >
         <LeftButtons

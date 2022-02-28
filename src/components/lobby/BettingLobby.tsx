@@ -56,40 +56,46 @@ export const BettingLobby: React.FC = () => {
     ),
   )
 
-  const determineSortOrder = (a: number, b: number): 1 | 0 | -1 => {
+  const determineSortOrder = (
+    a: number | string | Date,
+    b: number | string | Date,
+  ): 1 | 0 | -1 => {
     if (a === b) return 0
     if (a > b) return 1
     if (b < a) return -1
     return 0
   }
 
-  const descendingSwitch = (a: number, b: number) => {
+  const sortBasedOnDescending = (
+    a: number | string | Date,
+    b: number | string | Date,
+  ): 0 | 1 | -1 => {
     return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
   }
 
-  const sortingFunction: (a: Bet, b: Bet) => number = (a: Bet, b: Bet) => {
+  const sortingFunction: (a: Bet, b: Bet) => 0 | 1 | -1 = (a: Bet, b: Bet) => {
     switch (mostRecentButton) {
       case "Side": {
-        return descendingSwitch(Number(a.betSide), Number(b.betSide))
+        return sortBasedOnDescending(a.betSide, b.betSide)
       }
       case "Trust": {
         const bet1Trust = a.user1FollowThrough[0] / a.user1FollowThrough[1]
         const bet2Trust = b.user1FollowThrough[0] / b.user1FollowThrough[1]
-        return descendingSwitch(bet1Trust, bet2Trust)
+        return sortBasedOnDescending(bet1Trust, bet2Trust)
       }
       case "Prize": {
         const bet1Prize = a.amount + a.amount * a.multiplier
         const bet2Prize = b.amount + b.amount * b.multiplier
-        return descendingSwitch(bet1Prize, bet2Prize)
+        return sortBasedOnDescending(bet1Prize, bet2Prize)
       }
       case "Cost": {
-        return descendingSwitch(a.amount, b.amount)
+        return sortBasedOnDescending(a.amount, b.amount)
       }
       case "Multiplier": {
-        return descendingSwitch(a.multiplier, b.multiplier)
+        return sortBasedOnDescending(a.multiplier, b.multiplier)
       }
       case "Time": {
-        return descendingSwitch(a.createdAt.getTime(), b.createdAt.getTime())
+        return sortBasedOnDescending(a.createdAt, b.createdAt)
       }
       default: {
         return 0
@@ -99,6 +105,7 @@ export const BettingLobby: React.FC = () => {
 
   const updateLobby = () => {
     // Object.keys(selectedBetMap).forEach(console.log)
+    console.log("updating lobby")
     setInteractableLobby(
       bets
         ?.filter(
