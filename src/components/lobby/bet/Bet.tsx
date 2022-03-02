@@ -85,7 +85,7 @@ export const Bet: React.FC<Props> = ({
   const updateSelectedStatus = () => {
     if (!isUser1 && !isUser2 && status === "ready" && user) {
       setIsSelected(!isSelected)
-      // selectedBetMap[id] = !isSelected
+      selectedBetMap[id] = !isSelected
     }
   }
 

@@ -17,7 +17,7 @@ export const AvaxPriceButton: React.FC = () => {
             data-toggle="tooltip"
           >
             {`AVAX $${avaxPrice
-              .toFixed(2)
+              ?.toFixed(2)
               .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}`}
           </p>
         </a>

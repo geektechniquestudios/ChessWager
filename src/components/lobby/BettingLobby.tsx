@@ -40,6 +40,9 @@ export const BettingLobby: React.FC = () => {
   const { user } = Auth.useContainer()
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const { gameId } = GameState.useContainer()
+  const [selectedBetMap, setSelectedBetMap] = useState<Record<string, boolean>>(
+    {},
+  )
 
   const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby")
@@ -103,32 +106,30 @@ export const BettingLobby: React.FC = () => {
     }
   }
 
-  const updateLobby = () => {
-    // Object.keys(selectedBetMap).forEach(console.log)
-    // console.log("updating lobby")
-    setInteractableLobby(
-      bets
-        ?.filter(
-          (bet) =>
-            bet.status !== "funded" &&
-            bet.user1Id !== user?.uid &&
-            bet.gameId !== "",
-        )
-        .sort((a: Bet, b: Bet) => {
-          return sortingFunction(a, b)
-        }),
+  const interactableFilter = (bet: Bet): boolean => {
+    return (
+      bet.status !== "funded" && bet.user1Id !== user?.uid && bet.gameId !== ""
     )
   }
 
-  const [selectedBetMap, setSelectedBetMap] = useState<Record<string, boolean>>(
-    { testing: true },
-  )
+  const updateLobby = () => {
+    Object.keys(selectedBetMap).forEach((key) => {
+      selectedBetMap[key] === true && console.log(key)
+    })
+
+    console.log("updating lobby")
+    setInteractableLobby(bets?.filter(interactableFilter).sort(sortingFunction))
+  }
 
   useEffect(() => {
     updateLobby()
     const interval = setInterval(updateLobby, 5000)
     return () => clearInterval(interval)
-  }, [mostRecentButton, isDescending, bets, user, gameId])
+  }, [mostRecentButton, isDescending, user, gameId])
+
+  // useEffect(() => {
+  //   setSelectedBetMap({})
+  // }, [gameId])
 
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
@@ -136,7 +137,7 @@ export const BettingLobby: React.FC = () => {
       <main className="w-full">
         <div className="overflow-y-hidden">
           <LobbyHeader />
-          <div className=" overflow-y-hidden h-full overflow-x-auto">
+          <div className="overflow-y-hidden h-full overflow-x-auto">
             {user &&
               bets
                 ?.filter(
