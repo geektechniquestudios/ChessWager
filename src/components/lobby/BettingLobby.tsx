@@ -50,78 +50,77 @@ export const BettingLobby: React.FC = () => {
   const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
 
-  const [interactableLobby, setInteractableLobby] = useState(
-    bets?.filter(
-      (bet) =>
-        bet.status !== "funded" &&
-        bet.user1Id !== user?.uid &&
-        bet.gameId !== "",
-    ),
-  )
-
-  const determineSortOrder = (
-    a: number | string | Date,
-    b: number | string | Date,
-  ): 1 | 0 | -1 | number => {
-    return +(a > b) || -(a < b)
-  }
-
-  const sortBasedOnDescending = (
-    a: number | string | Date,
-    b: number | string | Date,
-  ): 0 | 1 | -1 | number => {
-    return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
-  }
-
-  const sortingFunction = (a: Bet, b: Bet): 0 | 1 | -1 | number => {
-    switch (mostRecentButton) {
-      case "Side": {
-        return sortBasedOnDescending(a.betSide, b.betSide)
-      }
-      case "Trust": {
-        const bet1Trust = a.user1FollowThrough[0] / a.user1FollowThrough[1]
-        const bet2Trust = b.user1FollowThrough[0] / b.user1FollowThrough[1]
-        return sortBasedOnDescending(bet1Trust, bet2Trust)
-      }
-      case "Prize": {
-        const bet1Prize = a.amount + a.amount * a.multiplier
-        const bet2Prize = b.amount + b.amount * b.multiplier
-        return sortBasedOnDescending(bet1Prize, bet2Prize)
-      }
-      case "Cost": {
-        return sortBasedOnDescending(a.amount, b.amount)
-      }
-      case "Multiplier": {
-        return sortBasedOnDescending(a.multiplier, b.multiplier)
-      }
-      case "Time": {
-        return sortBasedOnDescending(a.createdAt, b.createdAt)
-      }
-      case "": {
-        return 0
-      }
-      default: {
-        return 0
-      }
-    }
-  }
-
   const interactableFilter = (bet: Bet): boolean => {
     return (
       bet.status !== "funded" && bet.user1Id !== user?.uid && bet.gameId !== ""
     )
   }
 
-  const updateLobby = () => {
-    Object.keys(selectedBetMap).forEach((key) => {
-      selectedBetMap[key] === true && console.log(key)
-    })
-
-    console.log("updating lobby")
-    setInteractableLobby(bets?.filter(interactableFilter).sort(sortingFunction))
-  }
+  const [interactableLobby, setInteractableLobby] = useState(
+    // bets?.filter(interactableFilter),
+    bets,
+  )
 
   useEffect(() => {
+    const determineSortOrder = (
+      a: number | string | Date,
+      b: number | string | Date,
+    ): 1 | 0 | -1 | number => {
+      return +(a > b) || -(a < b)
+    }
+
+    const sortBasedOnDescending = (
+      a: number | string | Date,
+      b: number | string | Date,
+    ): 0 | 1 | -1 | number => {
+      return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
+    }
+
+    const sortingFunction = (a: Bet, b: Bet): 0 | 1 | -1 | number => {
+      switch (mostRecentButton) {
+        case "Side": {
+          return sortBasedOnDescending(a.betSide, b.betSide)
+        }
+        case "Trust": {
+          const bet1Trust = a.user1FollowThrough[0] / a.user1FollowThrough[1]
+          const bet2Trust = b.user1FollowThrough[0] / b.user1FollowThrough[1]
+          return sortBasedOnDescending(bet1Trust, bet2Trust)
+        }
+        case "Prize": {
+          const bet1Prize = a.amount + a.amount * a.multiplier
+          const bet2Prize = b.amount + b.amount * b.multiplier
+          return sortBasedOnDescending(bet1Prize, bet2Prize)
+        }
+        case "Cost": {
+          return sortBasedOnDescending(a.amount, b.amount)
+        }
+        case "Multiplier": {
+          return sortBasedOnDescending(a.multiplier, b.multiplier)
+        }
+        case "Time": {
+          return sortBasedOnDescending(a.createdAt, b.createdAt)
+        }
+        case "": {
+          return 0
+        }
+        default: {
+          return 0
+        }
+      }
+    }
+
+    const updateLobby = () => {
+      // Object.keys(selectedBetMap).forEach((key) => {
+      //   selectedBetMap[key] === true && console.log(key)
+      // })
+
+      console.log("updating lobby")
+      setInteractableLobby(
+        // bets?.filter(interactableFilter).sort(sortingFunction) ?? [],
+        bets!,
+      )
+    }
+
     updateLobby()
     const interval = setInterval(updateLobby, 5000)
     return () => clearInterval(interval)

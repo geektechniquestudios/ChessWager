@@ -59,7 +59,7 @@ export const Bet: React.FC<Props> = ({
   user1FollowThrough,
   user2FollowThrough,
   selectedBetMap,
-  setSelectedBetMap,
+  // setSelectedBetMap,
 }) => {
   const { auth, user } = Auth.useContainer()
   const bigAmount = ethers.utils.parseEther(amount.toString())
