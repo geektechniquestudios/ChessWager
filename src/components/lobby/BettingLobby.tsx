@@ -59,21 +59,18 @@ export const BettingLobby: React.FC = () => {
   const determineSortOrder = (
     a: number | string | Date,
     b: number | string | Date,
-  ): 1 | 0 | -1 => {
-    if (a === b) return 0
-    if (a > b) return 1
-    if (b < a) return -1
-    return 0
+  ): 1 | 0 | -1 | number => {
+    return +(a > b) || -(a < b)
   }
 
   const sortBasedOnDescending = (
     a: number | string | Date,
     b: number | string | Date,
-  ): 0 | 1 | -1 => {
+  ): 0 | 1 | -1 | number => {
     return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
   }
 
-  const sortingFunction: (a: Bet, b: Bet) => 0 | 1 | -1 = (a: Bet, b: Bet) => {
+  const sortingFunction = (a: Bet, b: Bet): 0 | 1 | -1 | number => {
     switch (mostRecentButton) {
       case "Side": {
         return sortBasedOnDescending(a.betSide, b.betSide)
@@ -97,6 +94,9 @@ export const BettingLobby: React.FC = () => {
       case "Time": {
         return sortBasedOnDescending(a.createdAt, b.createdAt)
       }
+      case "": {
+        return 0
+      }
       default: {
         return 0
       }
@@ -105,7 +105,7 @@ export const BettingLobby: React.FC = () => {
 
   const updateLobby = () => {
     // Object.keys(selectedBetMap).forEach(console.log)
-    console.log("updating lobby")
+    // console.log("updating lobby")
     setInteractableLobby(
       bets
         ?.filter(
@@ -114,7 +114,9 @@ export const BettingLobby: React.FC = () => {
             bet.user1Id !== user?.uid &&
             bet.gameId !== "",
         )
-        .sort(sortingFunction),
+        .sort((a: Bet, b: Bet) => {
+          return sortingFunction(a, b)
+        }),
     )
   }
 

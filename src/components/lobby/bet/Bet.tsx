@@ -61,7 +61,7 @@ export const Bet: React.FC<Props> = ({
   selectedBetMap,
   setSelectedBetMap,
 }) => {
-  const { auth } = Auth.useContainer()
+  const { auth, user } = Auth.useContainer()
   const bigAmount = ethers.utils.parseEther(amount.toString())
   const potSize = ethers.utils.formatEther(
     bigAmount
@@ -73,30 +73,27 @@ export const Bet: React.FC<Props> = ({
   const isUser1 = auth.currentUser?.uid === user1Id
   const isUser2 = auth.currentUser?.uid === user2Id
   const [isSelected, setIsSelected] = useState(
-    isUser1 || isUser2 ? true : false,
+    (isUser1 || isUser2) && user ? true : false,
   )
   const selectedStyle = isSelected
-    ? " bg-stone-100 dark:bg-black"
+    ? "bg-stone-100 dark:bg-black"
     : "hover:bg-stone-200 dark:hover:bg-stone-900 dark:bg-stone-800 bg-stone-300"
 
   const pointerEvents =
     status === "ready" && !isUser1 ? "cursor-pointer" : "pointer-events-auto"
 
   const updateSelectedStatus = () => {
-    setIsSelected(!isSelected)
-    selectedBetMap[id] = !isSelected
+    if (!isUser1 && !isUser2 && status === "ready" && user) {
+      setIsSelected(!isSelected)
+      // selectedBetMap[id] = !isSelected
+    }
   }
 
   return (
     <div className="w-full flex justify-center align-middle overflow-x-hidden">
       <div
         className={`${pointerEvents} flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700 color-shift ${selectedStyle}`}
-        onClick={() => {
-          status === "ready" &&
-            !isUser1 &&
-            auth.currentUser &&
-            updateSelectedStatus()
-        }}
+        onClick={updateSelectedStatus}
       >
         <LeftButtons
           user1Id={user1Id}

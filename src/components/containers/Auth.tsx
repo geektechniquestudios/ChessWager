@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { createContainer } from "unstated-next"
 import { BigNumber, ethers } from "ethers"
-import { formatEther, parseEther } from "ethers/lib/utils"
+import { parseEther } from "ethers/lib/utils"
 const firestore = firebase.firestore()
 
 declare let window: any
@@ -56,12 +56,14 @@ const useAuth = () => {
           localStorage.setItem("walletAddress", walletAddress)
           localStorage.setItem("isWalletConnected", "true")
         })
-        .catch(() => {
+        .catch((error) => {
+          console.error(error)
           alert("Error connecting to wallet")
+          setIsWalletConnected(false)
         })
     } catch (error) {
       console.error(error)
-      alert("Please connect Metamask to make a wager")
+      alert("Error connecting to wallet. Is Metamask installed?")
       setIsWalletConnecting(false)
     }
   }
