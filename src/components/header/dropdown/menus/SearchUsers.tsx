@@ -24,7 +24,10 @@ export const SearchUsers: React.FC = ({}) => {
           key={2}
           content={<SearchArea search={search} setSearch={setSearch} />}
         />,
-        <DropdownArea key={3} content={<UsersList search={search} />} />,
+        <DropdownArea
+          key={3}
+          content={<>{<UsersList search={search} />}</>}
+        />,
       ]}
       thisMenu={"searchUsers"}
     />

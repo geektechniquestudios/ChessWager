@@ -13,7 +13,7 @@ interface Props {
 export const UsersList: React.FC<Props> = ({ search }) => {
   const usersCollectionRef = firestore.collection("users")
   const query = usersCollectionRef
-    .where("displayName", ">=", search)
+    .where("displayName", ">=", search) //@todo tolowercase
     .where("displayName", "<=", search + "\uf8ff")
 
   const [users]: [User[] | undefined, boolean, FirebaseError | undefined] =

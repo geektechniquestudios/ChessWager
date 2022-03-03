@@ -295,8 +295,8 @@ service cloud.firestore {
 
       function areCreateRequestKeysValid() {
         return
-          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName" ,"bets", "id"]) &&
-          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName" ,"bets", "id"]);
+          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName", "searchableDisplayName","bets", "id"]) &&
+          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName", "searchableDisplayName","bets", "id"]);
       }
 
       function isCreateRequestDataValid() {
@@ -310,13 +310,16 @@ service cloud.firestore {
           requestData.displayName is string &&
           requestData.bets is list &&
           requestData.id is string &&
+          requestData.searchableDisplayName is string &&
 
           requestData.betAcceptedCount == 0 &&
           requestData.betFundedCount == 0 &&
           requestData.blocked == [] &&
           requestData.photoURL != "" &&
           requestData.bets == [] &&
-          requestData.id == request.auth.uid;
+          requestData.id == request.auth.uid &&
+          requestData.displayName == request.auth.token.name &&
+          requestData.searchableDisplayName == request.auth.token.name;
       }
 
       allow create: if canCreate() &&

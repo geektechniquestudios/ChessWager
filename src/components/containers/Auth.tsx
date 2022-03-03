@@ -104,6 +104,7 @@ const useAuth = () => {
                   walletAddress: "",
                   photoURL: auth.currentUser!.photoURL,
                   displayName: auth.currentUser!.displayName,
+                  searchableDisplayName: auth.currentUser!.displayName?.toLowerCase(),
                   bets: [],
                   id: auth.currentUser!.uid,
                 })
