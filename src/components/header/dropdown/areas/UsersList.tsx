@@ -20,7 +20,7 @@ export const UsersList: React.FC<Props> = ({ search }) => {
     useCollectionData(query, { idField: "id" })
 
   return (
-    <div className="h-60 w-full overflow-y-auto">
+    <div className="h-60 w-full overflow-y-auto overflow-x-hidden">
       {users?.map((user) => (
         <UserListItem key={user.id} {...user} />
       ))}
