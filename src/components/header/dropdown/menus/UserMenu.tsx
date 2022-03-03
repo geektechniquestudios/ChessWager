@@ -1,9 +1,13 @@
+import { useEffect, useState } from "react"
 import { BiArrowBack } from "react-icons/bi"
 import { DropdownItem } from "../DropdownItem"
 import { Menu } from "../Menu"
 import { MenuLine } from "../MenuLine"
+import { UserData } from "../areas/UserData"
+import { UserMenuState } from "../../../containers/UserMenuState"
 
-export const User: React.FC = ({}) => {
+export const UserMenu: React.FC = ({}) => {
+  const { searchedUser } = UserMenuState.useContainer()
   return (
     <Menu
       menuItems={[
@@ -11,9 +15,10 @@ export const User: React.FC = ({}) => {
           goToMenu="searchUsers"
           leftIcon={<BiArrowBack />}
           key={0}
-          text="User"
+          text={searchedUser?.displayName ?? "Loading..."}
         />,
         <MenuLine key={1} />,
+        <UserData key={2} {...searchedUser} />,
       ]}
       thisMenu={"user"}
     />

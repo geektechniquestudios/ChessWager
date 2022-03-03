@@ -1,12 +1,15 @@
+import { useState } from "react"
 import { BiArrowBack } from "react-icons/bi"
-import { FiUser } from "react-icons/fi"
 import { SearchArea } from "../areas/SearchArea"
+import { UsersList } from "../areas/UsersList"
 import { DropdownArea } from "../DropdownArea"
 import { DropdownItem } from "../DropdownItem"
 import { Menu } from "../Menu"
 import { MenuLine } from "../MenuLine"
 
 export const SearchUsers: React.FC = ({}) => {
+  const [search, setSearch] = useState("")
+
   return (
     <Menu
       menuItems={[
@@ -17,7 +20,22 @@ export const SearchUsers: React.FC = ({}) => {
           text="Search Users"
         />,
         <MenuLine key={1} />,
-        <DropdownArea key={2} content={<SearchArea />} />,
+        <DropdownArea
+          key={2}
+          content={<SearchArea search={search} setSearch={setSearch} />}
+        />,
+        <DropdownArea
+          key={3}
+          content={
+            <>
+              {search.length > 3 ? (
+                <UsersList search={search} />
+              ) : (
+                <div className="h-60" />
+              )}
+            </>
+          }
+        />,
       ]}
       thisMenu={"searchUsers"}
     />
