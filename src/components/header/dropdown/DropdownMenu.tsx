@@ -3,6 +3,7 @@ import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 import { Achievements } from "./menus/Achievements"
 import { Blocked } from "./menus/Blocked"
+import { DirectMessage } from "./menus/DirectMessage"
 import { DisplayName } from "./menus/DisplayName"
 import { Friends } from "./menus/Friends"
 import { Help } from "./menus/Help"
@@ -12,6 +13,7 @@ import { Membership } from "./menus/Membership"
 import { Messages } from "./menus/Messages"
 import { Notifications } from "./menus/Notifications"
 import { Profile } from "./menus/Profile"
+import { Report } from "./menus/Report"
 import { SearchUsers } from "./menus/SearchUsers"
 import { Settings } from "./menus/Settings"
 import { Social } from "./menus/Social"
@@ -74,6 +76,8 @@ export const DropdownMenu = () => {
         {user && <Achievements />}
         {user && <Stats />}
         {user && <Membership />}
+        {user && <DirectMessage />}
+        {user && <Report />}
       </div>
     </div>
   )
