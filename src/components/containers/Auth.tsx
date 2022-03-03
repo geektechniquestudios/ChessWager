@@ -31,6 +31,7 @@ const useAuth = () => {
   ] = useAuthState(auth)
 
   const [isWalletConnecting, setIsWalletConnecting] = useState(false)
+
   const connectWallet = async () => {
     if (!user) {
       signInWithGoogle()
@@ -56,6 +57,9 @@ const useAuth = () => {
           localStorage.setItem("walletAddress", walletAddress)
           localStorage.setItem("isWalletConnected", "true")
         })
+        .then(() => {
+          alert("Wallet connected")
+        })
         .catch((error) => {
           console.error(error)
           alert("Error connecting to wallet")
@@ -63,7 +67,7 @@ const useAuth = () => {
         })
     } catch (error) {
       console.error(error)
-      alert("Error connecting to wallet. Is Metamask installed?")
+      alert("Error connecting to wallet.")
       setIsWalletConnecting(false)
     }
   }
@@ -99,7 +103,9 @@ const useAuth = () => {
                   blocked: [],
                   walletAddress: "",
                   photoURL: auth.currentUser!.photoURL,
+                  displayName: auth.currentUser!.displayName,
                   bets: [],
+                  id: auth.currentUser!.uid,
                 })
                 .catch(console.error)
             }

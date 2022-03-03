@@ -17,7 +17,7 @@ import { Settings } from "./menus/Settings"
 import { Social } from "./menus/Social"
 import { Stats } from "./menus/Stats"
 import { Store } from "./menus/Store"
-import { User } from "./menus/User"
+import { UserMenu } from "./menus/UserMenu"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -68,7 +68,7 @@ export const DropdownMenu = () => {
         {user && <Messages />}
         {user && <Friends />}
         {user && <Notifications />}
-        <User />
+        <UserMenu />
         <SearchUsers />
         {user && <DisplayName />}
         {user && <Achievements />}
