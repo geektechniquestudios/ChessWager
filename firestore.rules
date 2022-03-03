@@ -317,9 +317,8 @@ service cloud.firestore {
           requestData.blocked == [] &&
           requestData.photoURL != "" &&
           requestData.bets == [] &&
-          requestData.id == request.auth.uid &&
-          requestData.displayName == request.auth.token.name &&
-          requestData.searchableDisplayName == request.auth.token.name;
+          requestData.id == request.auth.uid;
+
       }
 
       allow create: if canCreate() &&
@@ -330,9 +329,9 @@ service cloud.firestore {
       function areUpdateRequestKeysValid() {
         let requestData = request.resource.data;
         return
-          (!(requestData.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "walletAddress", "displayName"])) &&
-          requestData.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName"]) &&
-          requestData.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName"]));
+          (!(requestData.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "walletAddress", "displayName", "searchableDisplayName", "id"])) &&
+          requestData.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id"]) &&
+          requestData.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id"]));
       }
 
       function isUpdateRequestDataValid() {
@@ -345,8 +344,8 @@ service cloud.firestore {
 
       function isWalletUpdateRequestKeyValid() {
         return 
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL", "displayName","bets"])) &&
-          request.resource.data.keys().hasOnly(["walletAddress", "blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL", "displayName", "bets"]) &&
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL", "displayName","bets", "searchableDisplayName", "id"])) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL", "displayName", "bets", "searchableDisplayName", "id"]) &&
           request.resource.data.keys().hasAll(["walletAddress"]);
       }
 
