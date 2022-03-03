@@ -3,9 +3,12 @@ import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 import { Achievements } from "./menus/Achievements"
 import { Blocked } from "./menus/Blocked"
+import { Contact } from "./menus/Contact"
 import { DisplayName } from "./menus/DisplayName"
+import { Faq } from "./menus/Faq"
 import { Friends } from "./menus/Friends"
 import { Help } from "./menus/Help"
+import { HowToPlay } from "./menus/HowToPlay"
 import { Leaderboard } from "./menus/Leaderboard"
 import { Main } from "./menus/Main"
 import { Membership } from "./menus/Membership"
@@ -74,6 +77,9 @@ export const DropdownMenu = () => {
         {user && <Achievements />}
         {user && <Stats />}
         {user && <Membership />}
+        <HowToPlay />
+        <Faq />
+        <Contact />
       </div>
     </div>
   )
