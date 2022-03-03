@@ -1,11 +1,20 @@
+import { useEffect, useRef } from "react"
+
 interface Props {
   search: string
   setSearch: React.Dispatch<React.SetStateAction<string>>
 }
 
 export const SearchArea: React.FC<Props> = ({ search, setSearch }) => {
+  const searchInput = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    setTimeout(() => {
+      searchInput.current?.focus()
+    }, 500)
+  }, [])
   return (
     <input
+      ref={searchInput}
       type="search"
       value={search}
       onChange={(e) => setSearch(e.target.value)}
