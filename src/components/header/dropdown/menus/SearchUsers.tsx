@@ -26,7 +26,15 @@ export const SearchUsers: React.FC = ({}) => {
         />,
         <DropdownArea
           key={3}
-          content={<>{<UsersList search={search} />}</>}
+          content={
+            <>
+              {search.length > 3 ? (
+                <UsersList search={search} />
+              ) : (
+                <div className="h-60" />
+              )}
+            </>
+          }
         />,
       ]}
       thisMenu={"searchUsers"}
