@@ -35,7 +35,7 @@ export const DropdownItem: React.FC<Props> = ({
     >
       <div className="w-full flex gap-3">
         <div className="flex flex-col justify-center">{leftIcon}</div>
-        <p>{text}</p>
+        <p className="flex flex-col justify-center">{text}</p>
       </div>
       <div className="flex flex-col justify-center">{rightIcon}</div>
     </a>

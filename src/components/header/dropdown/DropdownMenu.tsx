@@ -3,9 +3,12 @@ import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 import { Achievements } from "./menus/Achievements"
 import { Blocked } from "./menus/Blocked"
+import { Contact } from "./menus/Contact"
 import { DisplayName } from "./menus/DisplayName"
+import { Faq } from "./menus/Faq"
 import { Friends } from "./menus/Friends"
 import { Help } from "./menus/Help"
+import { HowToPlay } from "./menus/HowToPlay"
 import { Leaderboard } from "./menus/Leaderboard"
 import { Main } from "./menus/Main"
 import { Membership } from "./menus/Membership"
@@ -17,7 +20,7 @@ import { Settings } from "./menus/Settings"
 import { Social } from "./menus/Social"
 import { Stats } from "./menus/Stats"
 import { Store } from "./menus/Store"
-import { User } from "./menus/User"
+import { UserMenu } from "./menus/UserMenu"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -68,12 +71,15 @@ export const DropdownMenu = () => {
         {user && <Messages />}
         {user && <Friends />}
         {user && <Notifications />}
-        <User />
+        <UserMenu />
         <SearchUsers />
         {user && <DisplayName />}
         {user && <Achievements />}
         {user && <Stats />}
         {user && <Membership />}
+        <HowToPlay />
+        <Faq />
+        <Contact />
       </div>
     </div>
   )

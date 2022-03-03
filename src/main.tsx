@@ -15,6 +15,7 @@ import { ChatToggle } from "./components/containers/ChatToggle"
 import { DarkMode } from "./components/containers/DarkMode"
 import { DropdownState } from "./components/containers/DropdownState"
 import { LobbyHeaderState } from "./components/lobby/lobby-header/LobbyHeaderState"
+import { UserMenuState } from "./components/containers/UserMenuState"
 
 const theme = createTheme({
   palette: {
@@ -33,9 +34,11 @@ ReactDOM.render(
                 <DarkMode.Provider>
                   <DropdownState.Provider>
                     <LobbyHeaderState.Provider>
-                      <ThemeProvider theme={theme}>
-                        <App />
-                      </ThemeProvider>
+                      <UserMenuState.Provider>
+                        <ThemeProvider theme={theme}>
+                          <App />
+                        </ThemeProvider>
+                      </UserMenuState.Provider>
                     </LobbyHeaderState.Provider>
                   </DropdownState.Provider>
                 </DarkMode.Provider>
