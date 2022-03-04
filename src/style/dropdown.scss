@@ -1,5 +1,8 @@
 @import "index.scss";
 
+$primary: #a8a29e;
+$secondary: #78716c;
+
 :root {
   --speed: 500ms;
 }
@@ -51,4 +54,29 @@
 
 .filter-toggle.react-toggle--checked .react-toggle-thumb {
   @apply bg-stone-800 pointer-events-none border-stone-700;
+}
+
+.search-users {
+  scrollbar-width: thin;
+  scrollbar-color: $secondary $primary;
+}
+
+.search-users::-webkit-scrollbar {
+  @apply w-2;
+}
+.search-users::-webkit-scrollbar-track {
+  @apply bg-stone-100 dark:bg-stone-700;
+}
+.search-users::-webkit-scrollbar-thumb {
+  @apply bg-stone-400 dark:bg-stone-800 rounded-full;
+}
+
+.input::-webkit-scrollbar {
+  @apply w-2;
+}
+.input::-webkit-scrollbar-track {
+  @apply bg-stone-100 dark:bg-stone-700;
+}
+.input::-webkit-scrollbar-thumb {
+  @apply bg-stone-400 dark:bg-stone-800 rounded-full;
 }
