@@ -55,75 +55,74 @@ export const BettingLobby: React.FC = () => {
     )
   }
 
-  const [interactableLobby, setInteractableLobby] = useState(
-    // bets?.filter(interactableFilter),
+  const [interactableLobby, setInteractableLobby] = useState<Bet[] | undefined>(
     bets,
   )
 
-  useEffect(() => {
-    const determineSortOrder = (
-      a: number | string | Date,
-      b: number | string | Date,
-    ): 1 | 0 | -1 | number => {
-      return +(a > b) || -(a < b)
-    }
+  const determineSortOrder = (
+    a: number | string | Date,
+    b: number | string | Date,
+  ): 1 | 0 | -1 | number => {
+    return +(a > b) || -(a < b)
+  }
 
-    const sortBasedOnDescending = (
-      a: number | string | Date,
-      b: number | string | Date,
-    ): 0 | 1 | -1 | number => {
-      return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
-    }
+  const sortBasedOnDescending = (
+    a: number | string | Date,
+    b: number | string | Date,
+  ): 0 | 1 | -1 | number => {
+    return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
+  }
 
-    const sortingFunction = (a: Bet, b: Bet): 0 | 1 | -1 | number => {
-      switch (mostRecentButton) {
-        case "Side": {
-          return sortBasedOnDescending(a.betSide, b.betSide)
-        }
-        case "Trust": {
-          const bet1Trust = a.user1FollowThrough[0] / a.user1FollowThrough[1]
-          const bet2Trust = b.user1FollowThrough[0] / b.user1FollowThrough[1]
-          return sortBasedOnDescending(bet1Trust, bet2Trust)
-        }
-        case "Prize": {
-          const bet1Prize = a.amount + a.amount * a.multiplier
-          const bet2Prize = b.amount + b.amount * b.multiplier
-          return sortBasedOnDescending(bet1Prize, bet2Prize)
-        }
-        case "Cost": {
-          return sortBasedOnDescending(a.amount, b.amount)
-        }
-        case "Multiplier": {
-          return sortBasedOnDescending(a.multiplier, b.multiplier)
-        }
-        case "Time": {
-          return sortBasedOnDescending(a.createdAt, b.createdAt)
-        }
-        case "": {
-          return 0
-        }
-        default: {
-          return 0
-        }
+  const sortingFunction = (a: Bet, b: Bet): 0 | 1 | -1 | number => {
+    switch (mostRecentButton) {
+      case "Side": {
+        return sortBasedOnDescending(a.betSide, b.betSide)
+      }
+      case "Trust": {
+        const bet1Trust = a.user1FollowThrough[0] / a.user1FollowThrough[1]
+        const bet2Trust = b.user1FollowThrough[0] / b.user1FollowThrough[1]
+        return sortBasedOnDescending(bet1Trust, bet2Trust)
+      }
+      case "Prize": {
+        const bet1Prize = a.amount + a.amount * a.multiplier
+        const bet2Prize = b.amount + b.amount * b.multiplier
+        return sortBasedOnDescending(bet1Prize, bet2Prize)
+      }
+      case "Cost": {
+        return sortBasedOnDescending(a.amount, b.amount)
+      }
+      case "Multiplier": {
+        return sortBasedOnDescending(a.multiplier, b.multiplier)
+      }
+      case "Time": {
+        return sortBasedOnDescending(a.createdAt, b.createdAt)
+      }
+      case "": {
+        return 0
+      }
+      default: {
+        return 0
       }
     }
+  }
 
-    const updateLobby = () => {
-      // Object.keys(selectedBetMap).forEach((key) => {
-      //   selectedBetMap[key] === true && console.log(key)
-      // })
+  const updateLobby = () => {
+    // Object.keys(selectedBetMap).forEach((key) => {
+    //   selectedBetMap[key] === true && console.log(key)
+    // })
+    // const selectedBets = bets?.filter((bet) => selectedBetMap[bet.id])
+    setInteractableLobby(
+      bets?.filter(interactableFilter).sort(sortingFunction) ?? [],
+    )
+  }
 
-      console.log("updating lobby")
-      setInteractableLobby(
-        // bets?.filter(interactableFilter).sort(sortingFunction) ?? [],
-        bets!,
-      )
-    }
-
+  const [dummy, setDummy] = useState(true)
+  useEffect(() => {
     updateLobby()
-    const interval = setInterval(updateLobby, 5000)
-    return () => clearInterval(interval)
-  }, [mostRecentButton, isDescending, user, gameId])
+    setTimeout(() => {
+      setDummy(!dummy)
+    }, 5000)
+  }, [mostRecentButton, isDescending, user, gameId, dummy])
 
   // useEffect(() => {
   //   setSelectedBetMap({})
