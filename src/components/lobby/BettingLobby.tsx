@@ -36,24 +36,24 @@ interface Bet {
   user2FollowThrough: number[]
 }
 
+interface BetData {
+  isSelected: boolean
+  index: number
+  id: string
+}
+
 export const BettingLobby: React.FC = () => {
   const { user } = Auth.useContainer()
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const { gameId } = GameState.useContainer()
-  const [selectedBetMap, setSelectedBetMap] = useState<Record<string, boolean>>(
-    {},
+  const [selectedBetMap, setSelectedBetMap] = useState(
+    new Map<string, BetData>(),
   )
 
   const lobbyCollectionRef = firestore.collection("lobby")
   const query = lobbyCollectionRef.where("gameId", "==", gameId)
   const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" })
-
-  const interactableFilter = (bet: Bet): boolean => {
-    return (
-      bet.status !== "funded" && bet.user1Id !== user?.uid && bet.gameId !== ""
-    )
-  }
 
   const [interactableLobby, setInteractableLobby] = useState<Bet[] | undefined>(
     bets,
@@ -62,18 +62,18 @@ export const BettingLobby: React.FC = () => {
   const determineSortOrder = (
     a: number | string | Date,
     b: number | string | Date,
-  ): 1 | 0 | -1 | number => {
+  ): number => {
     return +(a > b) || -(a < b)
   }
 
   const sortBasedOnDescending = (
     a: number | string | Date,
     b: number | string | Date,
-  ): 0 | 1 | -1 | number => {
+  ): number => {
     return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
   }
 
-  const sortingFunction = (a: Bet, b: Bet): 0 | 1 | -1 | number => {
+  const sortBasedOnRecentButton = (a: Bet, b: Bet): number => {
     switch (mostRecentButton) {
       case "Side": {
         return sortBasedOnDescending(a.betSide, b.betSide)
@@ -107,13 +107,52 @@ export const BettingLobby: React.FC = () => {
   }
 
   const updateLobby = () => {
-    // Object.keys(selectedBetMap).forEach((key) => {
-    //   selectedBetMap[key] === true && console.log(key)
-    // })
-    // const selectedBets = bets?.filter((bet) => selectedBetMap[bet.id])
-    setInteractableLobby(
-      bets?.filter(interactableFilter).sort(sortingFunction) ?? [],
-    )
+    const buildNotSelectedBets = () => {
+      const filterOutSelected = (bet: Bet) =>
+        !selectedBetMap.get(bet.id)?.isSelected ?? true
+      const filterOutFundedAndUserRelated = (bet: Bet): boolean => {
+        return (
+          bet.status !== "funded" &&
+          bet.user1Id !== user?.uid &&
+          bet.gameId !== ""
+        )
+      }
+      return bets
+        ?.filter(filterOutFundedAndUserRelated)
+        .filter(filterOutSelected)
+        .sort(sortBasedOnRecentButton)
+        .reverse()
+    }
+
+    const notSelectedBets = buildNotSelectedBets()
+
+    const selectedBets = bets
+      ?.filter((bet) => selectedBetMap.get(bet.id)?.isSelected)
+      .reverse()
+
+    const selectedBetIndicies = [...selectedBetMap.keys()]
+      .map((key) => selectedBetMap.get(key)!.index)
+      .sort((a, b) => b - a)
+
+    const weaveBets = (): Bet[] => {
+      let out: Bet[] = []
+      let selectedBetIndex = selectedBetIndicies.pop()
+      const selectedLength = selectedBets?.length ?? 0
+      console.log(selectedLength)
+      const notSelectedLength = notSelectedBets?.length ?? 0
+      console.log(notSelectedLength)
+      while (out.length < selectedLength + notSelectedLength) {
+        if (out.length + 1 === selectedBetIndex) {
+          out = [...out, selectedBets!.pop()!]
+          selectedBetIndex = selectedBetIndicies.pop()
+        } else {
+          out = [...out, notSelectedBets!.pop()!]
+        }
+      }
+      return out
+    }
+
+    setInteractableLobby(weaveBets())
   }
 
   const [dummy, setDummy] = useState(true)
@@ -124,9 +163,10 @@ export const BettingLobby: React.FC = () => {
     }, 5000)
   }, [mostRecentButton, isDescending, user, gameId, dummy])
 
-  // useEffect(() => {
-  //   setSelectedBetMap({})
-  // }, [gameId])
+  useEffect(() => {
+    updateLobby()
+    setSelectedBetMap(new Map())
+  }, [gameId])
 
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
@@ -152,13 +192,14 @@ export const BettingLobby: React.FC = () => {
                     setSelectedBetMap={setSelectedBetMap}
                   />
                 ))}
-            {interactableLobby?.map((bet) => (
+            {interactableLobby?.map((bet, index) => (
               <Bet
                 key={bet.id}
                 {...bet}
                 timestamp={bet.timestamp?.seconds}
                 selectedBetMap={selectedBetMap}
                 setSelectedBetMap={setSelectedBetMap}
+                index={index}
               />
             ))}
             {/* add lobby here that is new bets not updated to the interactable lobby yet */}

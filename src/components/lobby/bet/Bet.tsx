@@ -10,6 +10,11 @@ import { RightButtons } from "./RightButtons"
 import { CenterOfBet } from "./CenterOfBet"
 import React, { useState } from "react"
 
+interface BetData {
+  isSelected: boolean
+  index: number
+  id: string
+}
 interface Props {
   id: string
   amount: number
@@ -31,10 +36,9 @@ interface Props {
   contractAddress: string
   user1FollowThrough: number[]
   user2FollowThrough: number[]
-  selectedBetMap: Record<string, boolean>
-  setSelectedBetMap: React.Dispatch<
-    React.SetStateAction<Record<string, boolean>>
-  >
+  selectedBetMap: Map<string, BetData>
+  setSelectedBetMap: React.Dispatch<React.SetStateAction<Map<string, BetData>>>
+  index?: number
 }
 
 export const Bet: React.FC<Props> = ({
@@ -59,7 +63,8 @@ export const Bet: React.FC<Props> = ({
   user1FollowThrough,
   user2FollowThrough,
   selectedBetMap,
-  // setSelectedBetMap,
+  setSelectedBetMap,
+  index,
 }) => {
   const { auth, user } = Auth.useContainer()
   const bigAmount = ethers.utils.parseEther(amount.toString())
@@ -85,7 +90,16 @@ export const Bet: React.FC<Props> = ({
   const updateSelectedStatus = () => {
     if (!isUser1 && !isUser2 && status === "ready" && user) {
       setIsSelected(!isSelected)
-      selectedBetMap[id] = !isSelected
+      index &&
+        setSelectedBetMap((prevState) => {
+          const newMap = new Map(prevState)
+          newMap.set(id, {
+            isSelected: !isSelected,
+            index: index,
+            id: id,
+          })
+          return newMap
+        })
     }
   }
 
