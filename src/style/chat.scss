@@ -4,9 +4,6 @@ $form-height: 5em;
 $chat-header-height: 3em;
 $main-header-height: 3em;
 
-$primary: #a8a29e;
-$secondary: #78716c;
-
 .global-chat-header {
   height: $chat-header-height;
 }
@@ -15,29 +12,4 @@ $secondary: #78716c;
   $padding: 0rem;
   padding: $padding;
   height: calc(100vh - $main-header-height - $chat-header-height);
-}
-
-.chat-window {
-  scrollbar-width: thin;
-  scrollbar-color: $primary $secondary;
-}
-
-.chat-window::-webkit-scrollbar {
-  @apply w-2;
-}
-.chat-window::-webkit-scrollbar-track {
-  @apply bg-stone-300 dark:bg-stone-500;
-}
-.chat-window::-webkit-scrollbar-thumb {
-  @apply bg-stone-400 dark:bg-stone-800 rounded-full;
-}
-
-.input::-webkit-scrollbar {
-  @apply w-2;
-}
-.input::-webkit-scrollbar-track {
-  @apply bg-stone-300 dark:bg-stone-500;
-}
-.input::-webkit-scrollbar-thumb {
-  @apply bg-stone-400 dark:bg-stone-800 rounded-full;
 }

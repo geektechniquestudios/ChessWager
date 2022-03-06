@@ -1,4 +1,5 @@
 import "./style/index.scss"
+import "./style/scrollbar.scss"
 import "firebase/compat/firestore"
 import "firebase/compat/auth"
 import "./config"
@@ -28,7 +29,7 @@ export const App: React.FC = () => {
           <MainHeader />
         </header>
 
-        <main className="overflow-y-auto flex justify-center">
+        <main className="scrollbar overflow-y-auto flex justify-center">
           <div className="w-full">
             <ShowChatButton />
             <div className="flex flex-col w-auto">
