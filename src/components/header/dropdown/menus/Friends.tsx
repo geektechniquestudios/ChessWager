@@ -14,7 +14,7 @@ export const Friends: React.FC = ({}) => {
             key={0}
             text="Friends"
           />,
-          <MenuLine />,
+          <MenuLine key={1}/>,
         ]}
         thisMenu={"friends"}
       />

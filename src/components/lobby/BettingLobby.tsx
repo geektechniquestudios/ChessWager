@@ -42,6 +42,30 @@ interface BetData {
   id: string
 }
 
+const genericBet: Bet = {
+  id: "",
+  amount: 0,
+  betSide: "black",
+  multiplier: 0,
+  status: "",
+  user1Id: "",
+  user1Metamask: "",
+  user1PhotoURL: "",
+  user1DisplayName: "",
+  hasUser1Paid: false,
+  user2Id: "",
+  user2Metamask: "",
+  user2PhotoURL: "",
+  user2DisplayName: "",
+  hasUser2Paid: false,
+  createdAt: new Date(),
+  gameId: "",
+  timestamp: firebase.firestore.Timestamp.now(),
+  contractAddress: "",
+  user1FollowThrough: [],
+  user2FollowThrough: [],
+}
+
 export const BettingLobby: React.FC = () => {
   const { user } = Auth.useContainer()
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
@@ -142,16 +166,15 @@ export const BettingLobby: React.FC = () => {
       const notSelectedLength = notSelectedBets?.length ?? 0
       console.log(notSelectedLength)
       while (out.length < selectedLength + notSelectedLength) {
-        if (out.length + 1 === selectedBetIndex) {
-          out = [...out, selectedBets!.pop()!]
+        if (out.length === selectedBetIndex) {
+          out = [...out, selectedBets?.pop() ?? genericBet]
           selectedBetIndex = selectedBetIndicies.pop()
         } else {
-          out = [...out, notSelectedBets!.pop()!]
+          out = [...out, notSelectedBets!.pop() ?? genericBet]
         }
       }
       return out
     }
-
     setInteractableLobby(weaveBets())
   }
 
@@ -202,38 +225,6 @@ export const BettingLobby: React.FC = () => {
                 index={index}
               />
             ))}
-            {/* add lobby here that is new bets not updated to the interactable lobby yet */}
-            {/* {lobby
-              ?.filter(
-                (bet) =>
-                  //remove bets that have already appeared and are funded
-              )
-              // // sort
-              ?.map((bet) => (
-                <Bet
-                  key={bet.id}
-                  id={bet.id}
-                  amount={bet.amount}
-                  betSide={bet.betSide}
-                  multiplier={bet.multiplier}
-                  status={bet.status}
-                  user1Id={bet.user1Id}
-                  user1Metamask={bet.user1Metamask}
-                  user1PhotoURL={bet.user1PhotoURL}
-                  user1DisplayName={bet.user1DisplayName}
-                  hasUser1Paid={bet.hasUser1Paid}
-                  user2Id={bet.user2Id}
-                  user2Metamask={bet.user2Metamask}
-                  user2PhotoURL={bet.user2PhotoURL}
-                  user2DisplayName={bet.user2DisplayName}
-                  hasUser2Paid={bet.hasUser2Paid}
-                  gameId={bet.gameId}
-                  timestamp={bet.timestamp?.seconds}
-                  contractAddress={bet.contractAddress}
-                  user1FollowThrough={bet.user1FollowThrough}
-                  user2FollowThrough={bet.user2FollowThrough}
-                />
-              ))} */}
           </div>
         </div>
       </main>

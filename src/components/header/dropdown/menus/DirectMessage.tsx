@@ -14,7 +14,7 @@ export const DirectMessage: React.FC = ({}) => {
             key={0}
             text="Direct Messages"
           />,
-          <MenuLine />,
+          <MenuLine key={1} />,
         ]}
         thisMenu={"directMessage"}
       />

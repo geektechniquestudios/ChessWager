@@ -9,6 +9,7 @@ import { LeftButtons } from "./LeftButtons"
 import { RightButtons } from "./RightButtons"
 import { CenterOfBet } from "./CenterOfBet"
 import React, { useState } from "react"
+import firebase from "firebase/compat/app"
 
 interface BetData {
   isSelected: boolean
@@ -90,16 +91,15 @@ export const Bet: React.FC<Props> = ({
   const updateSelectedStatus = () => {
     if (!isUser1 && !isUser2 && status === "ready" && user) {
       setIsSelected(!isSelected)
-      index &&
-        setSelectedBetMap((prevState) => {
-          const newMap = new Map(prevState)
-          newMap.set(id, {
-            isSelected: !isSelected,
-            index: index,
-            id: id,
-          })
-          return newMap
+      if (index) {
+        const newMap = new Map(selectedBetMap)
+        newMap.set(id, {
+          isSelected: !isSelected,
+          index: index!,
+          id: id,
         })
+        setSelectedBetMap(newMap)
+      }
     }
   }
 
