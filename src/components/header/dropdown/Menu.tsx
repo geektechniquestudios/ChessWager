@@ -1,4 +1,3 @@
-import { ReactNode } from "react"
 import { CSSTransition } from "react-transition-group"
 import { DropdownState } from "../../containers/DropdownState"
 
@@ -23,7 +22,9 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
       unmountOnExit
       onEnter={calcHeight}
     >
-      <div className="w-64">{menuItems.map((item: ReactNode) => item)}</div>
+      <div className="w-64">
+        {menuItems.map((item: React.ReactNode) => item)}
+      </div>
     </CSSTransition>
   )
 }

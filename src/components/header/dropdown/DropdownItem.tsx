@@ -7,7 +7,6 @@ interface Props {
   goToMenu?: string
   url?: string
   onClick?: () => void
-  height?: number
 }
 
 export const DropdownItem: React.FC<Props> = ({
@@ -17,7 +16,6 @@ export const DropdownItem: React.FC<Props> = ({
   goToMenu,
   url,
   onClick,
-  height,
 }) => {
   const { setActiveMenu } = DropdownState.useContainer()
   const address = url ?? "#"

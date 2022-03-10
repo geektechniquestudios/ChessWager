@@ -1,5 +1,4 @@
-import React from "react"
-import ReactDOM from "react-dom"
+import ReactDOM from "react-dom/client"
 import "./style/index.scss"
 import { App } from "./App"
 import reportWebVitals from "./reportWebVitals"
@@ -23,33 +22,34 @@ const theme = createTheme({
   },
 })
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Firestore.Provider>
-      <Auth.Provider>
-        <GameState.Provider>
-          <Price.Provider>
-            <ChatFormData.Provider>
-              <ChatToggle.Provider>
-                <DarkMode.Provider>
-                  <DropdownState.Provider>
-                    <LobbyHeaderState.Provider>
-                      <UserMenuState.Provider>
-                        <ThemeProvider theme={theme}>
-                          <App />
-                        </ThemeProvider>
-                      </UserMenuState.Provider>
-                    </LobbyHeaderState.Provider>
-                  </DropdownState.Provider>
-                </DarkMode.Provider>
-              </ChatToggle.Provider>
-            </ChatFormData.Provider>
-          </Price.Provider>
-        </GameState.Provider>
-      </Auth.Provider>
-    </Firestore.Provider>
-  </React.StrictMode>,
-  document.getElementById("root"),
+const root = ReactDOM.createRoot(
+  document.getElementById("root")! as HTMLDivElement,
+)
+
+root.render(
+  <Firestore.Provider>
+    <Auth.Provider>
+      <GameState.Provider>
+        <Price.Provider>
+          <ChatFormData.Provider>
+            <ChatToggle.Provider>
+              <DarkMode.Provider>
+                <DropdownState.Provider>
+                  <LobbyHeaderState.Provider>
+                    <UserMenuState.Provider>
+                      <ThemeProvider theme={theme}>
+                        <App />
+                      </ThemeProvider>
+                    </UserMenuState.Provider>
+                  </LobbyHeaderState.Provider>
+                </DropdownState.Provider>
+              </DarkMode.Provider>
+            </ChatToggle.Provider>
+          </ChatFormData.Provider>
+        </Price.Provider>
+      </GameState.Provider>
+    </Auth.Provider>
+  </Firestore.Provider>,
 )
 
 // If you want to start measuring performance in your app, pass a function
