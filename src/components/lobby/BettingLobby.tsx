@@ -9,6 +9,7 @@ import { Auth } from "../containers/Auth"
 import { LobbyHeader } from "./lobby-header/LobbyHeader"
 import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
 import { useEffect, useState } from "react"
+import { LobbyState } from "../containers/LobbyState"
 
 const firestore = firebase.firestore()
 
@@ -170,7 +171,7 @@ export const BettingLobby: React.FC = () => {
           out = [...out, selectedBets?.pop() ?? genericBet]
           selectedBetIndex = selectedBetIndicies.pop()
         } else {
-          out = [...out, notSelectedBets!.pop() ?? genericBet]
+          out = [...out, notSelectedBets?.pop() ?? genericBet]
         }
       }
       return out
@@ -178,13 +179,13 @@ export const BettingLobby: React.FC = () => {
     setInteractableLobby(weaveBets())
   }
 
-  const [dummy, setDummy] = useState(true)
+  const { dummy, setDummy } = LobbyState.useContainer()
   useEffect(() => {
     updateLobby()
     setTimeout(() => {
       setDummy(!dummy)
     }, 5000)
-  }, [mostRecentButton, isDescending, user, gameId, dummy])
+  }, [mostRecentButton, isDescending, user, dummy, gameId])
 
   useEffect(() => {
     updateLobby()

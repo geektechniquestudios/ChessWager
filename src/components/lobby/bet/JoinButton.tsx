@@ -4,6 +4,7 @@ import { Auth } from "../../containers/Auth"
 import { BsBoxArrowInLeft } from "react-icons/bs"
 import "../../../style/buttons.scss"
 import { DarkMode } from "../../containers/DarkMode"
+import { LobbyState } from "../../containers/LobbyState"
 const firestore = firebase.firestore()
 
 interface Props {
@@ -54,14 +55,17 @@ export const JoinButton: React.FC<Props> = ({
   }
 
   const { isDarkOn } = DarkMode.useContainer()
-
+  const { dummy, setDummy } = LobbyState.useContainer()
   return (
     <>
       {isSelected && status === "ready" && !isUser1 && (
         <div className="flex justify-center h-full flex-col animate-pulse">
           <div className="flex">
             <button
-              onClick={accept}
+              onClick={(event) => {
+                setDummy(!dummy)
+                accept(event)
+              }}
               type="button"
               title="Join Bet"
               className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-700 rounded-md ml-2"
