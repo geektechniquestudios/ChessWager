@@ -14,7 +14,7 @@ export const Report: React.FC = ({}) => {
             key={0}
             text="Report"
           />,
-          <MenuLine />,
+          <MenuLine key={2} />,
         ]}
         thisMenu={"report"}
       />
