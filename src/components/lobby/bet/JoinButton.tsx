@@ -28,7 +28,7 @@ export const JoinButton: React.FC<Props> = ({
     firestore.collection("lobby").doc(id)
 
   const user2DisplayName = auth.currentUser?.displayName
-  const { dummy, setDummy } = LobbyState.useContainer()
+  const { refreshLobby } = LobbyState.useContainer()
 
   const accept = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
@@ -51,9 +51,7 @@ export const JoinButton: React.FC<Props> = ({
             user2FollowThrough: user2FollowThrough,
             user2DisplayName: user2DisplayName,
           })
-          .then(() => {
-            setDummy(!dummy)
-          })
+          .then(refreshLobby)
           .catch(console.error)
       })
   }

@@ -5,7 +5,7 @@ export const AvaxPriceButton: React.FC = () => {
 
   return (
     <>
-      {avaxPrice !== 0 && (
+      {avaxPrice !== 0 && avaxPrice !== undefined && (
         <a
           href="https://www.coingecko.com/en/coins/avalanche"
           className="cw-button flex flex-col justify-center border-none my-2 hover:bg-stone-300 dark:hover:bg-stone-700 h-9"

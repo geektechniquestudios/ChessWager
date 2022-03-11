@@ -148,7 +148,6 @@ export const BettingLobby: React.FC = () => {
         .sort(sortBasedOnRecentButton)
         .reverse()
     }
-
     const notSelectedBets = buildNotSelectedBets()
 
     const selectedBets = bets
@@ -179,29 +178,21 @@ export const BettingLobby: React.FC = () => {
     setInteractableLobby(weaveBets())
   }
 
-  const { dummy, setDummy } = LobbyState.useContainer()
+  const { dummy, refreshLobby } = LobbyState.useContainer()
   useEffect(() => {
     updateLobby()
     setTimeout(() => {
-      setDummy(!dummy)
+      refreshLobby()
     }, 5000)
   }, [mostRecentButton, isDescending, user, dummy, gameId])
 
   useEffect(() => {
     updateLobby()
     setSelectedBetMap(new Map())
-  }, [gameId]) 
+  }, [gameId])
 
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
-      <button
-        className=""
-        onClick={() => {
-          setDummy(!dummy)
-        }}
-      >
-        test
-      </button>
       <WagerForm />
       <main className="w-full">
         <div className="overflow-y-hidden">
