@@ -28,7 +28,7 @@ export const SearchUsers: React.FC = ({}) => {
           key={3}
           content={
             <>
-              {search.length > -1 ? (
+              {search.length > 3 ? (
                 <UsersList search={search} />
               ) : (
                 <div className="h-60" />
