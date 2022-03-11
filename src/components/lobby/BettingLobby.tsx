@@ -190,10 +190,18 @@ export const BettingLobby: React.FC = () => {
   useEffect(() => {
     updateLobby()
     setSelectedBetMap(new Map())
-  }, [gameId])
+  }, [gameId]) 
 
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
+      <button
+        className=""
+        onClick={() => {
+          setDummy(!dummy)
+        }}
+      >
+        test
+      </button>
       <WagerForm />
       <main className="w-full">
         <div className="overflow-y-hidden">

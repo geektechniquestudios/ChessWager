@@ -28,6 +28,7 @@ export const JoinButton: React.FC<Props> = ({
     firestore.collection("lobby").doc(id)
 
   const user2DisplayName = auth.currentUser?.displayName
+  const { dummy, setDummy } = LobbyState.useContainer()
 
   const accept = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
@@ -50,12 +51,14 @@ export const JoinButton: React.FC<Props> = ({
             user2FollowThrough: user2FollowThrough,
             user2DisplayName: user2DisplayName,
           })
+          .then(() => {
+            setDummy(!dummy)
+          })
           .catch(console.error)
       })
   }
 
   const { isDarkOn } = DarkMode.useContainer()
-  const { dummy, setDummy } = LobbyState.useContainer()
   return (
     <>
       {isSelected && status === "ready" && !isUser1 && (
@@ -63,7 +66,6 @@ export const JoinButton: React.FC<Props> = ({
           <div className="flex">
             <button
               onClick={(event) => {
-                setDummy(!dummy)
                 accept(event)
               }}
               type="button"
