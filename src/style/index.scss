@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-$primary: #a8a29e;
-$secondary: #78716c;
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -40,22 +37,10 @@ code {
 
 #page > main {
   grid-area: game;
-  scrollbar-width: thin;
-  scrollbar-color: $primary $secondary;
 }
 
 #page > aside {
   grid-area: chat;
-}
-
-#page > main::-webkit-scrollbar {
-  @apply w-2 h-2;
-}
-#page > main::-webkit-scrollbar-track {
-  @apply bg-stone-200 dark:bg-stone-500;
-}
-#page > main::-webkit-scrollbar-thumb {
-  @apply bg-stone-400 dark:bg-stone-800 rounded-full;
 }
 
 .color-shift {

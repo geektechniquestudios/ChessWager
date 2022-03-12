@@ -4,7 +4,7 @@ import { GameState } from "../containers/GameState"
 import { FirebaseError } from "@firebase/util"
 import { MiniBet } from "./MiniBet"
 import { Price } from "../containers/Price"
-import "../../style/fundedbets.scss"
+import "../../style/scrollbar.scss"
 import { Auth } from "../containers/Auth"
 
 const firestore = firebase.firestore()
@@ -78,7 +78,7 @@ export const FundedBets: React.FC<Props> = () => {
       <div className="overflow-y-hidden overflow-x-visible flex flex-col h-full">
         <div
           style={{ direction: "rtl" }}
-          className="funded-bets overflow-y-auto overflow-x-visible h-full flex flex-col border-l"
+          className="scrollbar-funded overflow-y-auto overflow-x-visible h-full flex flex-col border-l"
         >
           <div
             className="overflow-x-visible h-0 flex flex-col"

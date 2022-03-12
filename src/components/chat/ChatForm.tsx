@@ -2,6 +2,7 @@ import { TextareaAutosize } from "@mui/material"
 import { Auth } from "../containers/Auth"
 import firebase from "firebase/compat/app"
 import { ChatFormData } from "../containers/ChatFormData"
+import "../../style/scrollbar.scss"
 
 interface Props {
   dummy: React.RefObject<HTMLInputElement>

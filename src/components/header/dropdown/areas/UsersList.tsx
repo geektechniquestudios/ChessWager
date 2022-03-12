@@ -3,6 +3,7 @@ import { FirebaseError } from "firebase/app"
 import firebase from "firebase/compat/app"
 import { UserListItem } from "./UserListItem"
 import { User } from "../../../../interfaces/User"
+import "../../../../style/scrollbar.scss"
 
 const firestore = firebase.firestore()
 
@@ -20,7 +21,9 @@ export const UsersList: React.FC<Props> = ({ search }) => {
     useCollectionData(query, { idField: "id" })
 
   return (
-    <div className="h-60 w-full overflow-y-auto overflow-x-hidden">
+    <div className="scrollbar-dropdown h-60 w-full overflow-y-auto overflow-x-hidden ml-0.5"
+    style={{ direction: "rtl" }}
+    >
       {users?.map((user) => (
         <UserListItem key={user.id} {...user} />
       ))}
