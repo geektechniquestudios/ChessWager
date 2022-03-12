@@ -26,7 +26,7 @@ export const Settings: React.FC = () => {
           <MenuLine key={1} />,
           <DropdownItem
             leftIcon={<MdOutlineBlock />}
-            goToMenu="blocked"
+            goToMenu="blockedUsers"
             key={2}
             text="Blocked Users"
           />,

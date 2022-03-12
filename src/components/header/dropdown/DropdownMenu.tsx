@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 import { Achievements } from "./menus/Achievements"
-import { Blocked } from "./menus/Blocked"
+import { BlockedUsers } from "./menus/BlockedUsers"
 import { DirectMessage } from "./menus/DirectMessage"
 import { Contact } from "./menus/Contact"
 import { DisplayName } from "./menus/DisplayName"
@@ -69,7 +69,7 @@ export const DropdownMenu = () => {
         <Social />
         <Leaderboard />
         <Help />
-        {user && <Blocked />}
+        {user && <BlockedUsers />}
         {user && <Messages />}
         {user && <Friends />}
         {user && <Notifications />}
