@@ -21,7 +21,7 @@ export const UsersList: React.FC<Props> = ({ search }) => {
     useCollectionData(query, { idField: "id" })
 
   return (
-    <div className="scrollbar-search h-60 w-full overflow-y-auto overflow-x-hidden ml-0.5"
+    <div className="scrollbar-dropdown h-60 w-full overflow-y-auto overflow-x-hidden ml-0.5"
     style={{ direction: "rtl" }}
     >
       {users?.map((user) => (
