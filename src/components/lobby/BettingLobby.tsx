@@ -162,9 +162,7 @@ export const BettingLobby: React.FC = () => {
       let out: Bet[] = []
       let selectedBetIndex = selectedBetIndicies.pop()
       const selectedLength = selectedBets?.length ?? 0
-      console.log(selectedLength)
       const notSelectedLength = notSelectedBets?.length ?? 0
-      console.log(notSelectedLength)
       while (out.length < selectedLength + notSelectedLength) {
         if (out.length === selectedBetIndex) {
           out = [...out, selectedBets?.pop() ?? genericBet]
@@ -187,7 +185,7 @@ export const BettingLobby: React.FC = () => {
   }, [mostRecentButton, isDescending, user, dummy, gameId])
 
   useEffect(() => {
-    updateLobby()
+    setInteractableLobby([])
     setSelectedBetMap(new Map())
   }, [gameId])
 
@@ -208,7 +206,7 @@ export const BettingLobby: React.FC = () => {
                 )
                 .map((bet) => (
                   <Bet
-                    key={bet.id}
+                    key={(bet.id === "" ? : bet.id)}
                     {...bet}
                     timestamp={bet.timestamp?.seconds}
                     selectedBetMap={selectedBetMap}
@@ -225,6 +223,18 @@ export const BettingLobby: React.FC = () => {
                 index={index}
               />
             ))}
+            {/* {bets?.filter(
+              (bet) =>
+                //if bet is in either of the other 2 lobby lists
+                !(
+                  bets
+                    ?.filter(
+                      (bet) =>
+                        bet.user1Id === user?.uid
+                    )
+                    .includes(bet) || interactableLobby?.includes(bet)
+                ),
+            )} */}
           </div>
         </div>
       </main>

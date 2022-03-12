@@ -52,7 +52,7 @@ export const ChatForm: React.FC<Props> = ({ dummy, messagesRef }) => {
           onChange={(e) => {
             setFormValue(e.target.value)
           }}
-          className="input break-words inline-block resize-none outline-none text-lg w-full p-2 bg-stone-200 dark:bg-stone-800 dark:text-stone-50"
+          className="scrollbar break-words inline-block resize-none outline-none text-lg w-full p-2 bg-stone-200 dark:bg-stone-800 dark:text-stone-50"
           placeholder="Send a Message"
           maxRows={4}
           onKeyDown={(e) => {

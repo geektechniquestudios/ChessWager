@@ -9,7 +9,6 @@ import { LeftButtons } from "./LeftButtons"
 import { RightButtons } from "./RightButtons"
 import { CenterOfBet } from "./CenterOfBet"
 import React, { useState } from "react"
-import firebase from "firebase/compat/app"
 
 interface BetData {
   isSelected: boolean
@@ -81,15 +80,16 @@ export const Bet: React.FC<Props> = ({
   const [isSelected, setIsSelected] = useState(
     (isUser1 || isUser2) && user ? true : false,
   )
-  const selectedStyle = isSelected
-    ? "bg-stone-100 dark:bg-black"
-    : "hover:bg-stone-200 dark:hover:bg-stone-900 dark:bg-stone-800 bg-stone-300"
+  const selectedStyle =
+    isSelected || id === ""
+      ? "bg-stone-100 dark:bg-black"
+      : "hover:bg-stone-200 dark:hover:bg-stone-900 dark:bg-stone-800 bg-stone-300"
 
   const pointerEvents =
     status === "ready" && !isUser1 ? "cursor-pointer" : "pointer-events-auto"
 
   const updateSelectedStatus = () => {
-    if (!isUser1 && !isUser2 && status === "ready" && user) {
+    if (!isUser1 && !isUser2 && status === "ready" && user && id !== "") {
       setIsSelected(!isSelected)
       if (index) {
         const newMap = new Map(selectedBetMap)
@@ -106,66 +106,70 @@ export const Bet: React.FC<Props> = ({
   return (
     <div className="w-full flex justify-center align-middle overflow-x-hidden">
       <div
-        className={`${pointerEvents} flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700 color-shift ${selectedStyle}`}
+        className={`${pointerEvents} h-11 flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700 color-shift ${selectedStyle}`}
         onClick={updateSelectedStatus}
       >
-        <LeftButtons
-          user1Id={user1Id}
-          status={status}
-          id={id}
-          amount={amount}
-          betSide={betSide}
-          multiplier={multiplier}
-          user1Metamask={user1Metamask}
-          hasUser1Paid={hasUser1Paid}
-          user2Id={user2Id}
-          user2Metamask={user2Metamask}
-          gameId={gameId}
-          timestamp={timestamp}
-          contractAddress={contractAddress}
-          isSelected={isSelected}
-        />
-        <div className="flex gap-0.5">
-          <User1Data
-            user1FollowThrough={user1FollowThrough}
-            user1PhotoURL={user1PhotoURL}
-            user1DisplayName={user1DisplayName}
-            amount={amount}
-            multiplier={multiplier}
-            user2Id={user2Id}
-            status={status}
-            hasUser1Paid={hasUser1Paid}
-          />
-          <CenterOfBet potSize={potSize} betSide={betSide} />
-          <User2Data
-            user2FollowThrough={user2FollowThrough}
-            user2PhotoURL={user2PhotoURL}
-            user2DisplayName={user2DisplayName}
-            user1Id={user1Id}
-            amount={amount}
-            multiplier={multiplier}
-            status={status}
-            isSelected={isSelected}
-            id={id}
-            hasUser2Paid={hasUser2Paid}
-          />
-        </div>
-        <RightButtons
-          user2Id={user2Id}
-          status={status}
-          user1Id={user1Id}
-          id={id}
-          amount={amount}
-          betSide={betSide}
-          multiplier={multiplier}
-          user2Metamask={user2Metamask}
-          hasUser2Paid={hasUser2Paid}
-          user1Metamask={user1Metamask}
-          gameId={gameId}
-          timestamp={timestamp}
-          contractAddress={contractAddress}
-          isSelected={isSelected}
-        />
+        {id !== "" && (
+          <>
+            <LeftButtons
+              user1Id={user1Id}
+              status={status}
+              id={id}
+              amount={amount}
+              betSide={betSide}
+              multiplier={multiplier}
+              user1Metamask={user1Metamask}
+              hasUser1Paid={hasUser1Paid}
+              user2Id={user2Id}
+              user2Metamask={user2Metamask}
+              gameId={gameId}
+              timestamp={timestamp}
+              contractAddress={contractAddress}
+              isSelected={isSelected}
+            />
+            <div className="flex gap-0.5">
+              <User1Data
+                user1FollowThrough={user1FollowThrough}
+                user1PhotoURL={user1PhotoURL}
+                user1DisplayName={user1DisplayName}
+                amount={amount}
+                multiplier={multiplier}
+                user2Id={user2Id}
+                status={status}
+                hasUser1Paid={hasUser1Paid}
+              />
+              <CenterOfBet potSize={potSize} betSide={betSide} />
+              <User2Data
+                user2FollowThrough={user2FollowThrough}
+                user2PhotoURL={user2PhotoURL}
+                user2DisplayName={user2DisplayName}
+                user1Id={user1Id}
+                amount={amount}
+                multiplier={multiplier}
+                status={status}
+                isSelected={isSelected}
+                id={id}
+                hasUser2Paid={hasUser2Paid}
+              />
+            </div>
+            <RightButtons
+              user2Id={user2Id}
+              status={status}
+              user1Id={user1Id}
+              id={id}
+              amount={amount}
+              betSide={betSide}
+              multiplier={multiplier}
+              user2Metamask={user2Metamask}
+              hasUser2Paid={hasUser2Paid}
+              user1Metamask={user1Metamask}
+              gameId={gameId}
+              timestamp={timestamp}
+              contractAddress={contractAddress}
+              isSelected={isSelected}
+            />
+          </>
+        )}
       </div>
     </div>
   )
