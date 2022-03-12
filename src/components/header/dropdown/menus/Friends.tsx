@@ -16,10 +16,7 @@ export const Friends: React.FC = ({}) => {
             text="Friends"
           />,
           <div className="border-b-2" key={1} />,
-          <DropdownArea
-          key={2}
-          content={<FriendsList/>}
-          />,
+          <DropdownArea key={2} content={<FriendsList />} />,
         ]}
         thisMenu={"friends"}
       />
