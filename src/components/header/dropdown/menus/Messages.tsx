@@ -16,10 +16,7 @@ export const Messages: React.FC = ({}) => {
           text="Messages"
         />,
         <MenuLine key={1} />,
-        <DropdownArea
-          key={2}
-          content={<MessagesList/>}
-        />,
+        <DropdownArea key={2} content={<MessagesList />} />,
       ]}
       thisMenu={"messages"}
     />
