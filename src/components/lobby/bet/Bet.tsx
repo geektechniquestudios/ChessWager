@@ -39,6 +39,7 @@ interface Props {
   selectedBetMap: Map<string, BetData>
   setSelectedBetMap: React.Dispatch<React.SetStateAction<Map<string, BetData>>>
   index?: number
+  isLobbyEnabled?: boolean
 }
 
 export const Bet: React.FC<Props> = ({
@@ -65,7 +66,9 @@ export const Bet: React.FC<Props> = ({
   selectedBetMap,
   setSelectedBetMap,
   index,
+  isLobbyEnabled,
 }) => {
+  isLobbyEnabled = isLobbyEnabled ?? true
   const { auth, user } = Auth.useContainer()
   const bigAmount = ethers.utils.parseEther(amount.toString())
   const potSize = ethers.utils.formatEther(
@@ -85,20 +88,35 @@ export const Bet: React.FC<Props> = ({
       ? "bg-stone-100 dark:bg-black"
       : "hover:bg-stone-200 dark:hover:bg-stone-900 dark:bg-stone-800 bg-stone-300"
 
-  const pointerEvents =
-    status === "ready" && !isUser1 ? "cursor-pointer" : "pointer-events-auto"
+  const pointerEvents = status === "ready" && !isUser1 ? "cursor-pointer" : ""
+
+  const disabledStyle =
+    isLobbyEnabled || isSelected ? "" : "opacity-50 pointer-events-none"
 
   const updateSelectedStatus = () => {
-    if (!isUser1 && !isUser2 && status === "ready" && user && id !== "") {
-      setIsSelected(!isSelected)
+    if (
+      !isUser1 &&
+      !isUser2 &&
+      status === "ready" &&
+      user &&
+      id !== "" &&
+      isLobbyEnabled
+    ) {
+      const isSelectedTemp = isSelected
+
       if (index) {
         const newMap = new Map(selectedBetMap)
-        newMap.set(id, {
-          isSelected: !isSelected,
-          index: index!,
-          id: id,
-        })
+        if (isSelectedTemp) {
+          newMap.set(id, {
+            isSelected: true,
+            index: index!,
+            id: id,
+          })
+        } else {
+          newMap.delete(id)
+        }
         setSelectedBetMap(newMap)
+        setIsSelected(!isSelectedTemp)
       }
     }
   }
@@ -106,7 +124,7 @@ export const Bet: React.FC<Props> = ({
   return (
     <div className="w-full flex justify-center align-middle overflow-x-hidden">
       <div
-        className={`${pointerEvents} h-11 flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700 color-shift ${selectedStyle}`}
+        className={`${pointerEvents} h-11 flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700 color-shift ${selectedStyle} ${disabledStyle}`}
         onClick={updateSelectedStatus}
       >
         {id !== "" && (

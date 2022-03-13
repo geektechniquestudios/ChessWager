@@ -132,9 +132,13 @@ export const BettingLobby: React.FC = () => {
   }
 
   const updateLobby = () => {
+    // ingestAllBetsIntoMap()
+    const tempSelectedBetMap = selectedBetMap
+    const tempBets = bets
+
     const buildNotSelectedBets = () => {
-      const filterOutSelected = (bet: Bet) =>
-        !selectedBetMap.get(bet.id)?.isSelected ?? true
+      const filterOutSelected = (bet: Bet): boolean =>
+        !tempSelectedBetMap.get(bet.id)?.isSelected
       const filterOutFundedAndUserRelated = (bet: Bet): boolean => {
         return (
           bet.status !== "funded" &&
@@ -142,7 +146,7 @@ export const BettingLobby: React.FC = () => {
           bet.gameId !== ""
         )
       }
-      return bets
+      return tempBets
         ?.filter(filterOutFundedAndUserRelated)
         .filter(filterOutSelected)
         .sort(sortBasedOnRecentButton)
@@ -150,12 +154,12 @@ export const BettingLobby: React.FC = () => {
     }
     const notSelectedBets = buildNotSelectedBets()
 
-    const selectedBets = bets
-      ?.filter((bet) => selectedBetMap.get(bet.id)?.isSelected)
+    const selectedBets = tempBets
+      ?.filter((bet) => tempSelectedBetMap.get(bet.id)?.isSelected)
       .reverse()
 
-    const selectedBetIndicies = [...selectedBetMap.keys()]
-      .map((key) => selectedBetMap.get(key)!.index)
+    const selectedBetIndicies = [...tempSelectedBetMap.keys()]
+      .map((key) => tempSelectedBetMap.get(key)!.index)
       .sort((a, b) => b - a)
 
     const weaveBets = (): Bet[] => {
@@ -176,18 +180,39 @@ export const BettingLobby: React.FC = () => {
     setInteractableLobby(weaveBets())
   }
 
+  const [isLobbyEnabled, setIsLobbyEnabled] = useState(true)
+
   const { dummy, refreshLobby } = LobbyState.useContainer()
   useEffect(() => {
-    updateLobby()
-    setTimeout(() => {
-      refreshLobby()
-    }, 5000)
-  }, [mostRecentButton, isDescending, user, dummy, gameId])
+    // updateLobby()
+    // setTimeout(() => {
+    //   setIsLobbyEnabled(false)
+    //   setTimeout(() => {
+    //     refreshLobby()
+    //     setIsLobbyEnabled(true)
+    //   }, 1000)
+    // }, 4000)
+    safeSelectedMapUpdate()
+  }, [mostRecentButton, isDescending, user, dummy])
 
   useEffect(() => {
     setInteractableLobby([])
     setSelectedBetMap(new Map())
+    refreshLobby()
   }, [gameId])
+
+  const safeSelectedMapUpdate = async () => {
+    const delay = (time: number) => {
+      return new Promise((resolve) => setTimeout(resolve, time))
+    }
+
+    setIsLobbyEnabled(false)
+    await delay(1000)
+    updateLobby()
+    setIsLobbyEnabled(true)
+    await delay(4000)
+    refreshLobby()
+  }
 
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
@@ -204,9 +229,9 @@ export const BettingLobby: React.FC = () => {
                     bet.gameId !== "" &&
                     bet.status !== "funded",
                 )
-                .map((bet) => (
+                .map((bet, index) => (
                   <Bet
-                    key={(bet.id === "" ? : bet.id)}
+                    key={index}
                     {...bet}
                     timestamp={bet.timestamp?.seconds}
                     selectedBetMap={selectedBetMap}
@@ -215,12 +240,13 @@ export const BettingLobby: React.FC = () => {
                 ))}
             {interactableLobby?.map((bet, index) => (
               <Bet
-                key={bet.id}
+                key={index}
                 {...bet}
                 timestamp={bet.timestamp?.seconds}
                 selectedBetMap={selectedBetMap}
                 setSelectedBetMap={setSelectedBetMap}
                 index={index}
+                isLobbyEnabled={isLobbyEnabled}
               />
             ))}
             {/* {bets?.filter(
