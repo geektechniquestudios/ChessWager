@@ -8,12 +8,14 @@ const usePrice = () => {
       : 0,
   )
   const getAvaxPrice = async () => {
-    return fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd",
+    return (
+      fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd",
+      )
+        .then((res) => res.json())
+        .then((data) => data["avalanche-2"].usd ?? 0)
+        .catch(() => localStorage.getItem("avaxPrice")) ?? 0
     )
-      .then((res) => res.json())
-      .then((data) => data["avalanche-2"].usd)
-      .catch(() => localStorage.getItem("avaxPrice"))
   }
   useEffect(() => {
     getAvaxPrice().then((price) => {

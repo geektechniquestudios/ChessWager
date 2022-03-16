@@ -131,8 +131,10 @@ export const BettingLobby: React.FC = () => {
     }
   }
 
+  const returnTrue = (): boolean => true
+
+  const [isLobbyUpdating, setIsLobbyUpdating] = useState(false)
   const updateLobby = () => {
-    // ingestAllBetsIntoMap()
     const tempSelectedBetMap = selectedBetMap
     const tempBets = bets
 
@@ -154,20 +156,31 @@ export const BettingLobby: React.FC = () => {
     }
     const notSelectedBets = buildNotSelectedBets()
 
-    const selectedBets = tempBets
-      ?.filter((bet) => tempSelectedBetMap.get(bet.id)?.isSelected)
-      .reverse()
+    const selectedBets =
+      tempBets
+        ?.filter((bet) => tempSelectedBetMap.get(bet.id)?.isSelected)
+        .sort(
+          (a, b) =>
+            (tempSelectedBetMap.get(b.id)?.index ?? 0) -
+            (tempSelectedBetMap.get(a.id)?.index ?? 0),
+        ) ?? []
 
-    const selectedBetIndicies = [...tempSelectedBetMap.keys()]
-      .map((key) => tempSelectedBetMap.get(key)!.index)
-      .sort((a, b) => b - a)
+    const selectedBetIndicies =
+      [...tempSelectedBetMap.keys()]
+        .filter((key) => tempSelectedBetMap.get(key)?.isSelected)
+        .map((key) => tempSelectedBetMap.get(key)!.index)
+        .sort((a, b) => b - a) ?? []
 
     const weaveBets = (): Bet[] => {
       let out: Bet[] = []
       let selectedBetIndex = selectedBetIndicies.pop()
       const selectedLength = selectedBets?.length ?? 0
       const notSelectedLength = notSelectedBets?.length ?? 0
-      while (out.length < selectedLength + notSelectedLength) {
+      while (
+        out.length <
+        Math.max(selectedBetIndicies[0] ?? 0, selectedLength) +
+          notSelectedLength
+      ) {
         if (out.length === selectedBetIndex) {
           out = [...out, selectedBets?.pop() ?? genericBet]
           selectedBetIndex = selectedBetIndicies.pop()
@@ -183,36 +196,39 @@ export const BettingLobby: React.FC = () => {
   const [isLobbyEnabled, setIsLobbyEnabled] = useState(true)
 
   const { dummy, refreshLobby } = LobbyState.useContainer()
-  useEffect(() => {
-    // updateLobby()
-    // setTimeout(() => {
-    //   setIsLobbyEnabled(false)
-    //   setTimeout(() => {
-    //     refreshLobby()
-    //     setIsLobbyEnabled(true)
-    //   }, 1000)
-    // }, 4000)
-    safeSelectedMapUpdate()
-  }, [mostRecentButton, isDescending, user, dummy])
 
-  useEffect(() => {
-    setInteractableLobby([])
-    setSelectedBetMap(new Map())
-    refreshLobby()
-  }, [gameId])
-
-  const safeSelectedMapUpdate = async () => {
+  const heartBeat = async () => {
     const delay = (time: number) => {
       return new Promise((resolve) => setTimeout(resolve, time))
     }
 
     setIsLobbyEnabled(false)
     await delay(1000)
-    updateLobby()
     setIsLobbyEnabled(true)
-    await delay(4000)
+    updateLobby()
     refreshLobby()
   }
+
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      count > 0 ? setCount(count - 1) : heartBeat()
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [count])
+
+  useEffect(() => {
+    setCount(5)
+    setIsLobbyEnabled(true)
+  }, [mostRecentButton, isDescending, user, dummy])
+
+  useEffect(() => {
+    setInteractableLobby([])
+    setSelectedBetMap(new Map())
+    updateLobby()
+    refreshLobby()
+  }, [gameId])
 
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">

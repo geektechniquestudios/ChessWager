@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
+    "test": "jest",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "deploy-contract-develop": "yarn hardhat run hardhat/scripts/deploy.js --network avalancheLocal",
@@ -21,9 +22,9 @@
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@openzeppelin/contracts": "^4.3.2",
     "@tailwindcss/aspect-ratio": "^0.4.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
     "@truffle/hdwallet-provider": "^1.5.1",
     "can-ndjson-stream": "^1.0.2",
     "ethereum-waffle": "^3.4.0",
@@ -45,7 +46,11 @@
     "web-vitals": "^1.1.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
     "@types/chai": "^4.3.0",
+    "@types/enzyme": "^3.10.11",
     "@types/jest": "^25.0.24",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.11.12",
@@ -56,12 +61,24 @@
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.2",
     "chai": "^4.3.4",
+    "enzyme": "^3.11.0",
     "hardhat": "^2.8.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.5.1",
     "postcss": "^8.4.6",
     "prettier": "^2.5.1",
     "prettier-plugin-solidity": "^1.0.0-beta.18",
     "tailwindcss": "^3.0.23",
     "typescript": "^4.5.4",
     "vite": "^2.8.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest-setup.ts"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
+    }
   }
 }
