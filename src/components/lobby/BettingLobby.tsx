@@ -131,10 +131,11 @@ export const BettingLobby: React.FC = () => {
     }
   }
 
-  const returnTrue = (): boolean => true
-
   const [isLobbyUpdating, setIsLobbyUpdating] = useState(false)
   const updateLobby = () => {
+    console.log("updating lobby")
+    if (isLobbyUpdating) return
+    setIsLobbyUpdating(true)
     const tempSelectedBetMap = selectedBetMap
     const tempBets = bets
 
@@ -191,45 +192,53 @@ export const BettingLobby: React.FC = () => {
       return out
     }
     setInteractableLobby(weaveBets())
+    setIsLobbyUpdating(false)
   }
 
   const [isLobbyEnabled, setIsLobbyEnabled] = useState(true)
 
   const { dummy, refreshLobby } = LobbyState.useContainer()
-
+  const delay = (time: number) => {
+    return new Promise((resolve) => setTimeout(resolve, time))
+  }
   const heartBeat = async () => {
-    const delay = (time: number) => {
-      return new Promise((resolve) => setTimeout(resolve, time))
-    }
-
+    console.log("heartbeat")
     setIsLobbyEnabled(false)
     await delay(1000)
-    setIsLobbyEnabled(true)
     updateLobby()
-    refreshLobby()
+    setIsLobbyEnabled(true)
+    setCount(5)
   }
 
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(5)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const [isCounting, setIsCounting] = useState(false)
+  const heartBeatCountdown = () => {
+    if (isCounting) return
+    setIsCounting(true)
+    console.log("countdown effect " + count)
+    const timeout = setTimeout(() => {
       count > 0 ? setCount(count - 1) : heartBeat()
     }, 1000)
-    return () => clearInterval(interval)
-  }, [count])
+    setIsCounting(false)
+    return () => clearTimeout(timeout)
+  }
+  useEffect(heartBeatCountdown, [count])
 
   useEffect(() => {
-    setCount(5)
+    console.log("button clicked")
+    updateLobby()
     setIsLobbyEnabled(true)
+    setCount(5)
   }, [mostRecentButton, isDescending, user, dummy])
 
   useEffect(() => {
+    console.log("new game, clearing old data")
     setInteractableLobby([])
     setSelectedBetMap(new Map())
-    updateLobby()
-    refreshLobby()
   }, [gameId])
 
+  useEffect(() => {}, [])
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
       <WagerForm />
