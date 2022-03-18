@@ -84,6 +84,7 @@ export const BettingLobby: React.FC = () => {
     bets,
   )
 
+  // This is here to satisfy browser compatibility; I know it seems odd
   const determineSortOrder = (
     a: number | string | Date,
     b: number | string | Date,
@@ -133,8 +134,9 @@ export const BettingLobby: React.FC = () => {
 
   const [isLobbyUpdating, setIsLobbyUpdating] = useState(false)
   const updateLobby = () => {
-    console.log("updating lobby")
+    const tempGameId = gameId
     if (isLobbyUpdating) return
+    console.log("updating lobby")
     setIsLobbyUpdating(true)
     const tempSelectedBetMap = selectedBetMap
     const tempBets = bets
@@ -160,17 +162,18 @@ export const BettingLobby: React.FC = () => {
     const selectedBets =
       tempBets
         ?.filter((bet) => tempSelectedBetMap.get(bet.id)?.isSelected)
-        .sort(
-          (a, b) =>
-            (tempSelectedBetMap.get(b.id)?.index ?? 0) -
-            (tempSelectedBetMap.get(a.id)?.index ?? 0),
+        .sort((a, b) =>
+          determineSortOrder(
+            tempSelectedBetMap.get(b.id)?.index ?? 0,
+            tempSelectedBetMap.get(a.id)?.index ?? 0,
+          ),
         ) ?? []
 
     const selectedBetIndicies =
       [...tempSelectedBetMap.keys()]
         .filter((key) => tempSelectedBetMap.get(key)?.isSelected)
         .map((key) => tempSelectedBetMap.get(key)!.index)
-        .sort((a, b) => b - a) ?? []
+        .sort((a, b) => determineSortOrder(b, a)) ?? []
 
     const weaveBets = (): Bet[] => {
       let out: Bet[] = []
@@ -191,7 +194,9 @@ export const BettingLobby: React.FC = () => {
       }
       return out
     }
-    setInteractableLobby(weaveBets())
+    gameId === tempGameId
+      ? setInteractableLobby(weaveBets())
+      : setInteractableLobby([])
     setIsLobbyUpdating(false)
   }
 
@@ -234,11 +239,12 @@ export const BettingLobby: React.FC = () => {
 
   useEffect(() => {
     console.log("new game, clearing old data")
-    setInteractableLobby([])
     setSelectedBetMap(new Map())
+    setInteractableLobby([])
+    setIsLobbyEnabled(true)
+    setCount(5)
   }, [gameId])
 
-  useEffect(() => {}, [])
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
       <WagerForm />

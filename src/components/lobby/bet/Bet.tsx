@@ -103,7 +103,6 @@ export const Bet: React.FC<Props> = ({
       isLobbyEnabled
     ) {
       const isSelectedTemp = isSelected
-
       if (index) {
         const newMap = new Map(selectedBetMap)
         if (isSelectedTemp) {
