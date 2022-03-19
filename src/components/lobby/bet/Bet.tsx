@@ -81,7 +81,8 @@ export const Bet: React.FC<Props> = ({
   const isUser1 = auth.currentUser?.uid === user1Id
   const isUser2 = auth.currentUser?.uid === user2Id
   const [isSelected, setIsSelected] = useState(
-    (isUser1 || isUser2) && user ? true : false,
+    (selectedBetMap.has(id) || isUser1 || isUser2) && user,
+    // (isUser1 || isUser2) && user ? true : false,
   )
   const selectedStyle =
     isSelected || id === ""
@@ -103,20 +104,18 @@ export const Bet: React.FC<Props> = ({
       isLobbyEnabled
     ) {
       const isSelectedTemp = isSelected
-      if (index) {
-        const newMap = new Map(selectedBetMap)
-        if (isSelectedTemp) {
-          newMap.set(id, {
-            isSelected: true,
-            index: index!,
-            id: id,
-          })
-        } else {
-          newMap.delete(id)
-        }
-        setSelectedBetMap(newMap)
-        setIsSelected(!isSelectedTemp)
+      const newMap = new Map(selectedBetMap)
+      if (!isSelectedTemp) {
+        newMap.set(id, {
+          isSelected: true,
+          index: index!,
+          id: id,
+        })
+      } else {
+        newMap.delete(id)
       }
+      setSelectedBetMap(newMap)
+      setIsSelected(!isSelectedTemp)
     }
   }
 

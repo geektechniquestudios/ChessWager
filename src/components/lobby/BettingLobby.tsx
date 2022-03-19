@@ -84,7 +84,7 @@ export const BettingLobby: React.FC = () => {
     bets,
   )
 
-  // This is here to satisfy browser compatibility; I know it seems odd
+  // This is for browser compatibility
   const determineSortOrder = (
     a: number | string | Date,
     b: number | string | Date,
@@ -138,10 +138,11 @@ export const BettingLobby: React.FC = () => {
     if (isLobbyUpdating) return
     console.log("updating lobby")
     setIsLobbyUpdating(true)
-    const tempSelectedBetMap = selectedBetMap
+    console.log(selectedBetMap)
+    const tempSelectedBetMap = new Map(selectedBetMap)
     const tempBets = bets
 
-    const buildNotSelectedBets = () => {
+    const buildNotSelectedBets = (): Bet[] => {
       const filterOutSelected = (bet: Bet): boolean =>
         !tempSelectedBetMap.get(bet.id)?.isSelected
       const filterOutFundedAndUserRelated = (bet: Bet): boolean => {
@@ -151,40 +152,55 @@ export const BettingLobby: React.FC = () => {
           bet.gameId !== ""
         )
       }
-      return tempBets
-        ?.filter(filterOutFundedAndUserRelated)
-        .filter(filterOutSelected)
-        .sort(sortBasedOnRecentButton)
-        .reverse()
+      return (
+        tempBets
+          ?.filter(filterOutFundedAndUserRelated)
+          .filter(filterOutSelected)
+          .sort(sortBasedOnRecentButton)
+          .reverse() ?? []
+      )
     }
     const notSelectedBets = buildNotSelectedBets()
-
     const selectedBets =
       tempBets
-        ?.filter((bet) => tempSelectedBetMap.get(bet.id)?.isSelected)
+        ?.filter((bet) => tempSelectedBetMap.get(bet.id))
         .sort((a, b) =>
           determineSortOrder(
-            tempSelectedBetMap.get(b.id)?.index ?? 0,
-            tempSelectedBetMap.get(a.id)?.index ?? 0,
+            tempSelectedBetMap.get(b.id)?.index!,
+            tempSelectedBetMap.get(a.id)?.index!,
           ),
         ) ?? []
 
     const selectedBetIndicies =
-      [...tempSelectedBetMap.keys()]
-        .filter((key) => tempSelectedBetMap.get(key)?.isSelected)
-        .map((key) => tempSelectedBetMap.get(key)!.index)
-        .sort((a, b) => determineSortOrder(b, a)) ?? []
+      selectedBets
+        .map((bet) => tempSelectedBetMap.get(bet.id)?.index)
+        .sort((a, b) => determineSortOrder(b ?? 0, a ?? 0)) ?? []
+    // [...tempSelectedBetMap.keys()]
+    //   .filter((key) => tempSelectedBetMap.get(key)?.isSelected)
+    //   .map((key) => tempSelectedBetMap.get(key)!.index)
+    //   .sort((a, b) => determineSortOrder(b, a)) ?? []
+
+    // const selectedBetByIndexMap = new Map<number, Bet>()
+    // selectedBets.forEach((bet) => {
+    //   console.log(bet)
+    //   console.log(bet.amount)
+    //   selectedBetByIndexMap.set(tempSelectedBetMap.get(bet.id)?.index!, bet)
+    // })
 
     const weaveBets = (): Bet[] => {
       let out: Bet[] = []
-      let selectedBetIndex = selectedBetIndicies.pop()
       const selectedLength = selectedBets?.length ?? 0
       const notSelectedLength = notSelectedBets?.length ?? 0
-      while (
-        out.length <
-        Math.max(selectedBetIndicies[0] ?? 0, selectedLength) +
-          notSelectedLength
-      ) {
+      console.log("highest selected: ", selectedBetIndicies[0])
+      const maxPossLength = Math.max(
+        (selectedBetIndicies[0] ?? -1) + 1,
+        selectedLength + notSelectedLength,
+      )
+      console.log(selectedBets)
+      console.log(selectedBetIndicies)
+      console.log(notSelectedBets)
+      let selectedBetIndex = selectedBetIndicies.pop()
+      while (out.length < maxPossLength) {
         if (out.length === selectedBetIndex) {
           out = [...out, selectedBets?.pop() ?? genericBet]
           selectedBetIndex = selectedBetIndicies.pop()
@@ -202,11 +218,11 @@ export const BettingLobby: React.FC = () => {
 
   const [isLobbyEnabled, setIsLobbyEnabled] = useState(true)
 
-  const { dummy, refreshLobby } = LobbyState.useContainer()
-  const delay = (time: number) => {
-    return new Promise((resolve) => setTimeout(resolve, time))
-  }
+  const { dummy } = LobbyState.useContainer()
+
   const heartBeat = async () => {
+    const delay = (time: number) =>
+      new Promise((resolve) => setTimeout(resolve, time))
     console.log("heartbeat")
     setIsLobbyEnabled(false)
     await delay(1000)
