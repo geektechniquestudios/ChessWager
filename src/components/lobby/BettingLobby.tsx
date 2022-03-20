@@ -138,13 +138,10 @@ export const BettingLobby: React.FC = () => {
     if (isLobbyUpdating) return
     console.log("updating lobby")
     setIsLobbyUpdating(true)
-    console.log(selectedBetMap)
-    const tempSelectedBetMap = new Map(selectedBetMap)
-    const tempBets = bets
 
     const buildNotSelectedBets = (): Bet[] => {
       const filterOutSelected = (bet: Bet): boolean =>
-        !tempSelectedBetMap.get(bet.id)?.isSelected
+        !selectedBetMap.get(bet.id)?.isSelected
       const filterOutFundedAndUserRelated = (bet: Bet): boolean => {
         return (
           bet.status !== "funded" &&
@@ -153,39 +150,28 @@ export const BettingLobby: React.FC = () => {
         )
       }
       return (
-        tempBets
+        bets
           ?.filter(filterOutFundedAndUserRelated)
           .filter(filterOutSelected)
-          .sort(sortBasedOnRecentButton)
-          .reverse() ?? []
+          .sort((a, b) => sortBasedOnRecentButton(b, a)) ?? []
       )
     }
     const notSelectedBets = buildNotSelectedBets()
+
     const selectedBets =
-      tempBets
-        ?.filter((bet) => tempSelectedBetMap.get(bet.id))
+      bets
+        ?.filter((bet) => selectedBetMap.get(bet.id))
         .sort((a, b) =>
           determineSortOrder(
-            tempSelectedBetMap.get(b.id)?.index!,
-            tempSelectedBetMap.get(a.id)?.index!,
+            selectedBetMap.get(b.id)?.index!,
+            selectedBetMap.get(a.id)?.index!,
           ),
         ) ?? []
-
     const selectedBetIndicies =
       selectedBets
-        .map((bet) => tempSelectedBetMap.get(bet.id)?.index)
+        .map((bet) => selectedBetMap.get(bet.id)?.index)
         .sort((a, b) => determineSortOrder(b ?? 0, a ?? 0)) ?? []
-    // [...tempSelectedBetMap.keys()]
-    //   .filter((key) => tempSelectedBetMap.get(key)?.isSelected)
-    //   .map((key) => tempSelectedBetMap.get(key)!.index)
-    //   .sort((a, b) => determineSortOrder(b, a)) ?? []
 
-    // const selectedBetByIndexMap = new Map<number, Bet>()
-    // selectedBets.forEach((bet) => {
-    //   console.log(bet)
-    //   console.log(bet.amount)
-    //   selectedBetByIndexMap.set(tempSelectedBetMap.get(bet.id)?.index!, bet)
-    // })
 
     const weaveBets = (): Bet[] => {
       let out: Bet[] = []
@@ -210,9 +196,7 @@ export const BettingLobby: React.FC = () => {
       }
       return out
     }
-    gameId === tempGameId
-      ? setInteractableLobby(weaveBets())
-      : setInteractableLobby([])
+    setInteractableLobby(gameId === tempGameId ? weaveBets() : [])
     setIsLobbyUpdating(false)
   }
 
@@ -278,7 +262,7 @@ export const BettingLobby: React.FC = () => {
                 )
                 .map((bet, index) => (
                   <Bet
-                    key={index}
+                    key={bet.id + index}
                     {...bet}
                     timestamp={bet.timestamp?.seconds}
                     selectedBetMap={selectedBetMap}
@@ -287,7 +271,7 @@ export const BettingLobby: React.FC = () => {
                 ))}
             {interactableLobby?.map((bet, index) => (
               <Bet
-                key={index}
+                key={bet.id + index}
                 {...bet}
                 timestamp={bet.timestamp?.seconds}
                 selectedBetMap={selectedBetMap}

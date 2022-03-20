@@ -78,7 +78,7 @@ export const FundedBets: React.FC<Props> = () => {
       <div className="overflow-y-hidden overflow-x-visible flex flex-col h-full">
         <div
           style={{ direction: "rtl" }}
-          className="scrollbar-funded overflow-y-auto overflow-x-visible h-full flex flex-col border-l"
+          className="scrollbar-funded overflow-y-auto overflow-x-visible h-full flex flex-col"
         >
           <div
             className="overflow-x-visible h-0 flex flex-col"
