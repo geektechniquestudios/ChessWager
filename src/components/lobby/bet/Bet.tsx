@@ -121,9 +121,8 @@ export const Bet: React.FC<Props> = ({
       id !== "" &&
       isLobbyEnabled
     ) {
-      const isSelectedTemp = isSelected
       const newMap = new Map(selectedBetMap)
-      if (!isSelectedTemp) {
+      if (!isSelected) {
         newMap.set(id, {
           isSelected: true,
           index: index!,
@@ -133,7 +132,7 @@ export const Bet: React.FC<Props> = ({
         newMap.delete(id)
       }
       setSelectedBetMap(newMap)
-      setIsSelected(!isSelectedTemp)
+      setIsSelected(!isSelected)
     }
   }
 

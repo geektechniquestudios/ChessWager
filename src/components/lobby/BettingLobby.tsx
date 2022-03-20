@@ -142,13 +142,11 @@ export const BettingLobby: React.FC = () => {
     const buildNotSelectedBets = (): Bet[] => {
       const filterOutSelected = (bet: Bet): boolean =>
         !selectedBetMap.get(bet.id)?.isSelected
-      const filterOutFundedAndUserRelated = (bet: Bet): boolean => {
-        return (
-          bet.status !== "funded" &&
-          bet.user1Id !== user?.uid &&
-          bet.gameId !== ""
-        )
-      }
+      const filterOutFundedAndUserRelated = (bet: Bet): boolean =>
+        bet.status !== "funded" &&
+        bet.user1Id !== user?.uid &&
+        bet.gameId !== ""
+
       return (
         bets
           ?.filter(filterOutFundedAndUserRelated)
@@ -171,7 +169,6 @@ export const BettingLobby: React.FC = () => {
       selectedBets
         .map((bet) => selectedBetMap.get(bet.id)?.index)
         .sort((a, b) => determineSortOrder(b ?? 0, a ?? 0)) ?? []
-
 
     const weaveBets = (): Bet[] => {
       let out: Bet[] = []
@@ -269,6 +266,7 @@ export const BettingLobby: React.FC = () => {
                     setSelectedBetMap={setSelectedBetMap}
                   />
                 ))}
+
             {interactableLobby?.map((bet, index) => (
               <Bet
                 key={bet.id + index}
@@ -280,6 +278,25 @@ export const BettingLobby: React.FC = () => {
                 isLobbyEnabled={isLobbyEnabled}
               />
             ))}
+            {/* {bets
+              ?.filter(
+                (bet) =>
+                  bet.user1Id !== user?.uid &&
+                  bet.gameId !== "" &&
+                  bet.status !== "funded" &&
+                  !interactableLobby?.includes(bet),
+              )
+              .map((bet, index) => (
+                <Bet
+                  key={bet.id + index}
+                  {...bet}
+                  timestamp={bet.timestamp?.seconds}
+                  selectedBetMap={selectedBetMap}
+                  setSelectedBetMap={setSelectedBetMap}
+                  index={index}
+                  isLobbyEnabled={true}
+                />
+              ))} */}
             {/* {bets?.filter(
               (bet) =>
                 //if bet is in either of the other 2 lobby lists
