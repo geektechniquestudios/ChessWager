@@ -33,7 +33,7 @@ export const App: React.FC = () => {
           <div className="w-full">
             <ShowChatButton />
             <div className="flex flex-col w-auto">
-              <div className="flex overflow-y-hidden overflow-x-visible">
+              <div className="scrollbar flex overflow-y-hidden overflow-x-visible">
                 <FundedBets />
                 <ChessGame />
               </div>

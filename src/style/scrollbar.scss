@@ -6,7 +6,7 @@ $secondary: #78716c;
   scrollbar-color: $primary $secondary;
 }
 .scrollbar::-webkit-scrollbar {
-  @apply w-2;
+  @apply w-2 h-2;
 }
 .scrollbar::-webkit-scrollbar-track {
   @apply bg-stone-300 dark:bg-stone-500;
