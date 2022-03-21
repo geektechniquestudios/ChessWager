@@ -13,7 +13,7 @@ export const NotificationsList: React.FC = ({}) => {
         />
       ) : (
         <div className="h-72 m-3 w-full justify-center flex dark:text-stone-400 text-stone-400">
-          No notifications
+          No notifications yet
         </div>
       )}
     </>

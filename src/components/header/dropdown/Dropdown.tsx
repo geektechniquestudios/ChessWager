@@ -26,10 +26,10 @@ export const Dropdown: React.FC = () => {
           <img
             src={photoURL!}
             alt=""
-            className="w-7 h-7 color-shift rounded-full "
+            className="w-7 h-7 rounded-full"
           />
         ) : (
-          <BiUserCircle className="w-7 h-7" />
+          <BiUserCircle className="w-7 h-7 color-shift text-stone-600 dark:text-stone-400 bg-stone-50 dark:bg-stone-800" />
         )}
       </a>
       {isDropdownOpen && <DropdownMenu />}

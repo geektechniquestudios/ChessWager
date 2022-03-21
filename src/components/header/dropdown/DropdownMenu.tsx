@@ -23,6 +23,7 @@ import { Social } from "./menus/Social"
 import { Stats } from "./menus/Stats"
 import { Store } from "./menus/Store"
 import { UserMenu } from "./menus/UserMenu"
+import { Persona } from "./menus/Persona"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -84,6 +85,7 @@ export const DropdownMenu = () => {
         <HowToPlay />
         <Faq />
         <Contact />
+        <Persona />
       </div>
     </div>
   )

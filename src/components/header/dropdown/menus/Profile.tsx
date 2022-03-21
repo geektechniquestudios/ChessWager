@@ -4,7 +4,7 @@ import { Auth } from "../../../containers/Auth"
 import { DropdownItem } from "../DropdownItem"
 import firebase from "firebase/compat"
 
-import { BiArrowBack } from "react-icons/bi"
+import { BiArrowBack, BiUserCircle } from "react-icons/bi"
 import { Menu } from "../Menu"
 import { AiOutlineCloudUpload } from "react-icons/ai"
 import { FiAward, FiUser, FiUsers } from "react-icons/fi"
@@ -33,39 +33,45 @@ export const Profile: React.FC = () => {
         />,
         <MenuLine key={1} />,
         <DropdownItem
+          goToMenu="persona"
+          leftIcon={<BiUserCircle />}
+          key={2}
+          text="Persona"
+        />,
+        <DropdownItem
           goToMenu="notifications"
           leftIcon={<RiNotification3Line />}
-          key={2}
+          key={3}
           text="Notifications"
         />,
         <DropdownItem
           goToMenu="friends"
           leftIcon={<FiUsers />}
-          key={3}
+          key={4}
           text="Friends"
         />,
         <DropdownItem
           goToMenu="messages"
           leftIcon={<RiChat2Line />}
-          key={4}
+          key={5}
           text="Messages"
         />,
         <DropdownItem
           goToMenu="stats"
           leftIcon={<BsGraphUp />}
-          key={5}
+          key={6}
           text="Stats"
         />,
         <DropdownItem
           goToMenu="achievements"
           leftIcon={<FiAward />}
-          key={6}
+          key={7}
           text="Achievements"
         />,
         <DropdownItem
           goToMenu="displayName"
           leftIcon={<FiUser />}
-          key={7}
+          key={8}
           text="Display Name"
         />,
         <DropdownItem
@@ -86,7 +92,7 @@ export const Profile: React.FC = () => {
               className="w-6 h-6 rounded-full mr-2"
             />
           }
-          key={8}
+          key={9}
           text="User Image"
         />,
       ]}

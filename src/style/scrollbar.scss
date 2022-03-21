@@ -6,13 +6,17 @@ $secondary: #78716c;
   scrollbar-color: $primary $secondary;
 }
 .scrollbar::-webkit-scrollbar {
-  @apply w-2;
+  @apply w-2 h-2;
 }
 .scrollbar::-webkit-scrollbar-track {
-  @apply bg-stone-300 dark:bg-stone-500;
+  @apply bg-transparent;
 }
 .scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-stone-400 dark:bg-stone-800 rounded-full;
+  @apply bg-stone-400 dark:bg-stone-500 rounded-full;
+}
+
+.scrollbar::-webkit-scrollbar-corner {
+  @apply bg-stone-400 dark:bg-stone-500;
 }
 
 .scrollbar-funded {
@@ -23,10 +27,10 @@ $secondary: #78716c;
   @apply w-2 m-0.5;
 }
 .scrollbar-funded::-webkit-scrollbar-track {
-  @apply bg-stone-200 dark:bg-stone-500;
+  @apply bg-transparent;
 }
 .scrollbar-funded::-webkit-scrollbar-thumb {
-  @apply bg-stone-400 dark:bg-stone-800 rounded-full;
+  @apply bg-stone-400 dark:bg-stone-500 rounded-full;
 }
 
 .scrollbar-dropdown {
@@ -37,8 +41,8 @@ $secondary: #78716c;
   @apply w-2;
 }
 .scrollbar-dropdown::-webkit-scrollbar-track {
-  @apply bg-stone-100 dark:bg-stone-700;
+  @apply bg-transparent;
 }
 .scrollbar-dropdown::-webkit-scrollbar-thumb {
-  @apply bg-stone-400 dark:bg-stone-800 rounded-full;
+  @apply bg-stone-400 dark:bg-stone-500 rounded-full;
 }

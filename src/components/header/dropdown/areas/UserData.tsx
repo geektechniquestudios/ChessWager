@@ -1,3 +1,4 @@
+import { Auth } from "../../../containers/Auth"
 import { AddFriendButton } from "../buttons/AddFriendButton"
 import { BlockUserButton } from "../buttons/BlockUserButton"
 import { ReportUserButton } from "../buttons/ReportUserButton"
@@ -24,18 +25,25 @@ export const UserData: React.FC<Props> = ({
   photoURL,
   walletAddress,
 }) => {
+  const { user, auth } = Auth.useContainer()
+
+  const isUser = auth.currentUser?.uid === id
+
   return (
     <div className="h-96 flex flex-col w-full items-center">
       <img
         src={photoURL}
-        className="w-24 h-24 rounded-full grid place-content-center my-9"
+        className="w-24 h-24 rounded-full grid place-content-center mt-9 mb-3"
       />
-      <div className="h-22 flex w-full justify-evenly">
-        <SendMessageButton id={id ?? "...Loading"} />
-        <BlockUserButton id={id ?? "...Loading"} />
-        <ReportUserButton id={id ?? "...Loading"} />
-        <AddFriendButton id={id ?? "...Loading"} />
-      </div>
+      <p>{auth.currentUser?.displayName ?? ""}</p>
+      {!isUser && (
+        <div className="h-22 flex w-full justify-evenly">
+          <SendMessageButton id={id ?? "...Loading"} />
+          <BlockUserButton id={id ?? "...Loading"} />
+          <ReportUserButton id={id ?? "...Loading"} />
+          <AddFriendButton id={id ?? "...Loading"} />
+        </div>
+      )}
       <div className="w-full h-full"></div>
     </div>
   )
