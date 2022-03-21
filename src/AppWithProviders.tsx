@@ -1,7 +1,6 @@
 import ReactDOM from "react-dom/client"
 import "./style/index.scss"
 import { App } from "./App"
-import reportWebVitals from "./reportWebVitals"
 import { Auth } from "./components/containers/Auth"
 import { Firestore } from "./components/containers/Firestore"
 import { GameState } from "./components/containers/GameState"

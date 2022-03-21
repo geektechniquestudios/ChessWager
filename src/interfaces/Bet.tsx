@@ -23,3 +23,9 @@ export interface Bet {
   user1FollowThrough: number[]
   user2FollowThrough: number[]
 }
+
+export interface BetData {
+  isSelected: boolean
+  index: number
+  id: string
+}
