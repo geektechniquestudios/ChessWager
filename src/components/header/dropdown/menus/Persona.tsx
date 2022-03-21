@@ -1,12 +1,23 @@
+import firebase from "firebase/compat/app"
+import { FirebaseError } from "@firebase/util"
+
 import { BiArrowBack } from "react-icons/bi"
 import { DropdownItem } from "../DropdownItem"
 import { Menu } from "../Menu"
 import { MenuLine } from "../MenuLine"
 import { UserData } from "../areas/UserData"
-import { UserMenuState } from "../../../containers/UserMenuState"
+import { Auth } from "../../../containers/Auth"
+import { useDocumentDataOnce } from "react-firebase-hooks/firestore"
+
+const firestore = firebase.firestore()
 
 export const Persona: React.FC = ({}) => {
-  const { searchedUser } = UserMenuState.useContainer()
+  const { auth } = Auth.useContainer()
+  const userDocRef = firestore
+    .collection("users")
+    .doc(auth.currentUser?.uid ?? "")
+  const [user]: [any | undefined, boolean, FirebaseError | undefined] =
+    useDocumentDataOnce(userDocRef)
   return (
     <Menu
       menuItems={[
@@ -17,7 +28,7 @@ export const Persona: React.FC = ({}) => {
           text="Persona"
         />,
         <MenuLine key={1} />,
-        <UserData key={2} {...searchedUser} />,
+        <UserData key={2} {...user} />,
       ]}
       thisMenu={"persona"}
     />
