@@ -22,7 +22,7 @@ export const RealtimeBets: React.FC<Props> = ({
   genericBet,
 }) => {
   const { user } = Auth.useContainer()
-  const { isRealTime } = LobbyHeaderState.useContainer()
+  const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
 
   const updateLobby = () => {
     const buildNotSelectedBets = (): Bet[] => {
@@ -80,33 +80,26 @@ export const RealtimeBets: React.FC<Props> = ({
       }
       return out
     }
-
-    const [realTimeBets, setRealTimeBets] = useState<Bet[]>(bets)
-    useEffect(() => {
-      setRealTimeBets(weaveBets())
-    }, [bets])
-
-    return (
-      <>
-        {bets
-          // ?.filter(
-          //   (bet) =>
-          //     bet.user1Id !== user?.uid &&
-          //     bet.gameId !== "" &&
-          //     bet.status !== "funded",
-          // )
-          .map((bet, index) => (
-            <BetComponent
-              key={bet.id + index}
-              {...bet}
-              timestamp={bet.timestamp?.seconds}
-              selectedBetMap={selectedBetMap}
-              setSelectedBetMap={setSelectedBetMap}
-              index={index}
-              isLobbyEnabled={true}
-            />
-          ))}
-      </>
-    )
+    setRealTimeBets(weaveBets())
   }
+  useEffect(() => {
+    updateLobby()
+  }, [bets, mostRecentButton, isDescending])
+  const [realTimeBets, setRealTimeBets] = useState<Bet[]>(bets)
+
+  return (
+    <>
+      {realTimeBets.map((bet, index) => (
+        <BetComponent
+          key={bet.id + index}
+          {...bet}
+          timestamp={bet.timestamp?.seconds}
+          selectedBetMap={selectedBetMap}
+          setSelectedBetMap={setSelectedBetMap}
+          index={index}
+          isLobbyEnabled={true}
+        />
+      ))}
+    </>
+  )
 }

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react"
 import { LobbyState } from "../containers/LobbyState"
 import { CreatedByUserBets } from "./CreatedByUserBets"
 import { RefreshingBets } from "./RefreshingBets"
-import { RealtimeBets } from "./RealTimeBets"
+import { RealtimeBets } from "./RealtimeBets"
 
 const firestore = firebase.firestore()
 
@@ -140,13 +140,13 @@ export const BettingLobby: React.FC = () => {
           <LobbyHeader />
           <div className="overflow-y-hidden h-full overflow-x-auto">
             <CreatedByUserBets
-              bets={bets!}
+              bets={bets ?? []}
               selectedBetMap={selectedBetMap}
               setSelectedBetMap={setSelectedBetMap}
             />
             {isRealTime ? (
               <RealtimeBets
-                bets={bets!}
+                bets={bets ?? []}
                 selectedBetMap={selectedBetMap}
                 setSelectedBetMap={setSelectedBetMap}
                 determineSortOrder={determineSortOrder}
@@ -155,7 +155,7 @@ export const BettingLobby: React.FC = () => {
               />
             ) : (
               <RefreshingBets
-                bets={bets!}
+                bets={bets ?? []}
                 selectedBetMap={selectedBetMap}
                 setSelectedBetMap={setSelectedBetMap}
                 determineSortOrder={determineSortOrder}
@@ -163,25 +163,6 @@ export const BettingLobby: React.FC = () => {
                 genericBet={genericBet}
               />
             )}
-            {/* {bets
-              ?.filter(
-                (bet) =>
-                  bet.user1Id !== user?.uid &&
-                  bet.gameId !== "" &&
-                  bet.status !== "funded" &&
-                  !interactableLobby?.includes(bet),
-              )
-              .map((bet, index) => (
-                <Bet
-                  key={bet.id + index}
-                  {...bet}
-                  timestamp={bet.timestamp?.seconds}
-                  selectedBetMap={selectedBetMap}
-                  setSelectedBetMap={setSelectedBetMap}
-                  index={index}
-                  isLobbyEnabled={true}
-                />
-              ))} */}
           </div>
         </div>
       </main>
