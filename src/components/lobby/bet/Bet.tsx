@@ -81,26 +81,8 @@ export const Bet: React.FC<Props> = ({
   const isUser1 = auth.currentUser?.uid === user1Id
   const isUser2 = auth.currentUser?.uid === user2Id
   const [isSelected, setIsSelected] = useState(
-    isUser1 || isUser2
-      ? //  && (selectedBetMap.get(id)?.isSelected ?? false))
-        true
-      : false,
+    isUser1 || isUser2 ? true : false,
   )
-
-  // const { dummy } = LobbyState.useContainer()
-  // useEffect(() => {
-  //   setIsSelected(
-  //     isUser1 || (isUser2 && user && selectedBetMap.get(id)) ? true : false,
-  //   )
-  // }, [dummy])
-  // useEffect(() => {
-  //   return () => {
-  //     const newMap = new Map(selectedBetMap)
-  //     newMap.delete(id)
-  //     setSelectedBetMap(newMap)
-  //     setIsSelected(false)
-  //   }
-  // }, [])
 
   const selectedStyle =
     isSelected || id === ""
@@ -170,6 +152,7 @@ export const Bet: React.FC<Props> = ({
                 user2Id={user2Id}
                 status={status}
                 hasUser1Paid={hasUser1Paid}
+                user1Id={user1Id}
               />
               <CenterOfBet potSize={potSize} betSide={betSide} />
               <User2Data
@@ -177,6 +160,7 @@ export const Bet: React.FC<Props> = ({
                 user2PhotoURL={user2PhotoURL}
                 user2DisplayName={user2DisplayName}
                 user1Id={user1Id}
+                user2Id={user2Id}
                 amount={amount}
                 multiplier={multiplier}
                 status={status}

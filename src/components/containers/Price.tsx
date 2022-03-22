@@ -7,27 +7,32 @@ const usePrice = () => {
       ? parseFloat(localStorage.getItem("avaxPrice")!)
       : 0,
   )
-  const getAvaxPrice = async () => {
+
+  const getAvaxPrice = async (): Promise<number> => {
     return (
       fetch(
         "https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd",
       )
         .then((res) => res.json())
-        .then((data) => data["avalanche-2"].usd ?? 0)
-        .catch(() => localStorage.getItem("avaxPrice")) ?? 0
+        .then((data) => data["avalanche-2"].usd)
+        .catch(console.error) ?? 0
     )
   }
-  useEffect(() => {
-    getAvaxPrice().then((price) => {
-      setAvaxPrice(price ?? localStorage.getItem("avaxPrice") ?? 0)
-      localStorage.setItem("avaxPrice", price.toString())
-    })
-    setInterval(() => {
-      getAvaxPrice().then((price) => {
-        setAvaxPrice(price ?? localStorage.getItem("avaxPrice") ?? 0)
-        localStorage.setItem("avaxPrice", price.toString())
+
+  const priceFetch = () => {
+    getAvaxPrice()
+      .then((price) => {
+        const tempPrice = price ?? localStorage.getItem("avaxPrice") ?? 0
+        setAvaxPrice(tempPrice)
+        localStorage.setItem("avaxPrice", tempPrice.toString())
       })
-    }, 10000)
+      .catch(console.error)
+  }
+
+  useEffect(() => {
+    priceFetch()
+    setInterval(priceFetch, 20000)
+    return clearInterval
   }, [])
   return { avaxPrice }
 }

@@ -16,6 +16,7 @@ interface Props {
   user1Id: string
   id: string
   hasUser2Paid: boolean
+  user2Id: string
 }
 
 export const User2Data: React.FC<Props> = ({
@@ -29,6 +30,7 @@ export const User2Data: React.FC<Props> = ({
   isSelected,
   id,
   hasUser2Paid,
+  user2Id,
 }) => {
   return (
     <div className="color-shift flex justify-center w-full border-none text-stone-900 dark:text-stone-300 px-1 gap-2.5">
@@ -42,6 +44,7 @@ export const User2Data: React.FC<Props> = ({
         user2PhotoURL={user2PhotoURL}
         user2DisplayName={user2DisplayName}
         status={status}
+        user2Id={user2Id}
       />
       <User2Spinner status={status} user1Id={user1Id} />
       <JoinButton

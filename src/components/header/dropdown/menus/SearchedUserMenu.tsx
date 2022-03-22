@@ -15,7 +15,7 @@ export const SearchedUserMenu: React.FC = ({}) => {
           goToMenu="searchUsers"
           leftIcon={<BiArrowBack />}
           key={0}
-          text={searchedUser?.displayName ?? "Loading..."}
+          text={"Search"}
         />,
         <MenuLine key={1} />,
         <UserData key={2} {...searchedUser} />,

@@ -2,20 +2,21 @@ import { MessageBody } from "./MessageBody"
 import { UserTitle } from "./UserTitle"
 
 interface Props {
-  message: {
-    text: string
-    uid: string
-    photoURL: string
-    userName: string
-  }
+  text: string
+  uid: string
+  photoURL: string
+  userName: string
 }
 
-export const ChatMessage: React.FC<Props> = ({ message }) => {
-  const { text, photoURL, userName } = message
-
+export const ChatMessage: React.FC<Props> = ({
+  text,
+  uid,
+  photoURL,
+  userName,
+}) => {
   return (
     <div className="w-full hover:bg-stone-300 dark:hover:bg-black color-shift gap-1.5 p-2 rounded-md color-shift">
-      <UserTitle photoURL={photoURL} userName={userName} />
+      <UserTitle photoURL={photoURL} userName={userName} uid={uid} />
       <MessageBody text={text} />
     </div>
   )

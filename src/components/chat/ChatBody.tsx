@@ -13,7 +13,9 @@ export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
 
   return (
     <div className="scrollbar flex flex-col-reverse pb-3 overflow-y-scroll overflow-x-hidden px-1">
-      {messages?.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+      {messages?.map((message) => (
+        <ChatMessage key={message.id} {...message} />
+      ))}
     </div>
   )
 }
