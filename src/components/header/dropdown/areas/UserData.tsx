@@ -32,8 +32,8 @@ export const UserData: React.FC<Props> = ({
   const isUser = auth.currentUser?.uid === id
 
   return (
-    <div className="h-96 flex flex-col w-full items-center">
-      {isLoading ? (
+    <div className="h-96 flex flex-col items-center">
+      {!isLoading ? (
         <>
           <img
             src={photoURL}
@@ -51,11 +51,11 @@ export const UserData: React.FC<Props> = ({
           <div className="w-full h-full"></div>
         </>
       ) : (
-        <div className="w-full h-full flex-col">
+        <div className="flex-col w-full h-full">
           <div className="flex w-full justify-center">
             <div className="rounded-full h-24 w-24 bg-stone-400 dark:bg-stone-500 my-9 animate-pulse" />
           </div>
-          <div className="w-full h-full bg-stone-400 dark:bg-stone-500 animate-pulse" />
+          <div className="h-full bg-stone-400 dark:bg-stone-500 animate-pulse rounded-md" />
         </div>
       )}
     </div>
