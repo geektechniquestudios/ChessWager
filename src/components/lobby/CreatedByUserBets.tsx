@@ -1,5 +1,6 @@
 import { Bet } from "../../interfaces/Bet"
 import { Auth } from "../containers/Auth"
+import { BetsState } from "../containers/BetsState"
 import { Bet as BetComponent } from "./bet/Bet"
 
 interface BetData {
@@ -8,17 +9,16 @@ interface BetData {
   id: string
 }
 interface Props {
-  bets: Bet[]
   selectedBetMap: Map<string, BetData>
   setSelectedBetMap: React.Dispatch<React.SetStateAction<Map<string, BetData>>>
 }
 
 export const CreatedByUserBets: React.FC<Props> = ({
-  bets,
   selectedBetMap,
   setSelectedBetMap,
 }) => {
   const { user } = Auth.useContainer()
+  const { bets } = BetsState.useContainer()
   return (
     <>
       {user &&

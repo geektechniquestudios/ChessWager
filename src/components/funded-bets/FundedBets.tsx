@@ -6,6 +6,7 @@ import { MiniBet } from "./MiniBet"
 import { Price } from "../containers/Price"
 import "../../style/scrollbar.scss"
 import { Auth } from "../containers/Auth"
+import { BetsState } from "../containers/BetsState"
 
 const firestore = firebase.firestore()
 
@@ -34,16 +35,11 @@ interface Bet {
 }
 
 export const FundedBets: React.FC<Props> = () => {
-  const betRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-    firestore.collection("lobby")
   const gameIdContainer = GameState.useContainer()
 
-  const query = betRef.where("gameId", "==", gameIdContainer.gameId)
-
-  const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
-    useCollectionData(query, { idField: "id" })
-
   const { avaxPrice } = Price.useContainer()
+
+  const { bets } = BetsState.useContainer()
 
   const amountAtStake = (
     (bets

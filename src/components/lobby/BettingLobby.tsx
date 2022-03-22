@@ -77,10 +77,10 @@ export const BettingLobby: React.FC = () => {
     new Map<string, BetData>(),
   )
 
-  const lobbyCollectionRef = firestore.collection("lobby")
-  const query = lobbyCollectionRef.where("gameId", "==", gameId)
-  const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
-    useCollectionData(query, { idField: "id" }) ?? []
+  // const lobbyCollectionRef = firestore.collection("lobby")
+  // const query = lobbyCollectionRef.where("gameId", "==", gameId)
+  // const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
+  //   useCollectionData(query, { idField: "id" }) ?? []
 
   // This is for browser compatibility
   const determineSortOrder = (
@@ -139,13 +139,11 @@ export const BettingLobby: React.FC = () => {
           <LobbyHeader />
           <div className="overflow-y-hidden h-full overflow-x-auto">
             <CreatedByUserBets
-              bets={bets ?? []}
               selectedBetMap={selectedBetMap}
               setSelectedBetMap={setSelectedBetMap}
             />
             {isRealTime ? (
               <RealtimeBets
-                bets={bets ?? []}
                 selectedBetMap={selectedBetMap}
                 setSelectedBetMap={setSelectedBetMap}
                 determineSortOrder={determineSortOrder}
@@ -154,7 +152,6 @@ export const BettingLobby: React.FC = () => {
               />
             ) : (
               <RefreshingBets
-                bets={bets ?? []}
                 selectedBetMap={selectedBetMap}
                 setSelectedBetMap={setSelectedBetMap}
                 determineSortOrder={determineSortOrder}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Bet, BetData } from "../../interfaces/Bet"
 import { Auth } from "../containers/Auth"
+import { BetsState } from "../containers/BetsState"
 import { GameState } from "../containers/GameState"
 import { LobbyState } from "../containers/LobbyState"
 import { Bet as BetComponent } from "./bet/Bet"
@@ -11,7 +12,6 @@ interface Props {
   setSelectedBetMap: React.Dispatch<React.SetStateAction<Map<string, BetData>>>
   determineSortOrder: any
   sortBasedOnRecentButton: any
-  bets: Bet[]
   genericBet: Bet
 }
 
@@ -20,13 +20,13 @@ export const RefreshingBets: React.FC<Props> = ({
   setSelectedBetMap,
   determineSortOrder,
   sortBasedOnRecentButton,
-  bets,
   genericBet,
 }) => {
   const { gameId } = GameState.useContainer()
   const { user } = Auth.useContainer()
   const [isLobbyUpdating, setIsLobbyUpdating] = useState(false)
   const [refreshingBets, setRefreshingBets] = useState<Bet[]>([])
+  const { bets } = BetsState.useContainer()
 
   const updateLobby = () => {
     const tempGameId = gameId

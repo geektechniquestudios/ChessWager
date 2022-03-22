@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Bet, BetData } from "../../interfaces/Bet"
 import { Auth } from "../containers/Auth"
+import { BetsState } from "../containers/BetsState"
 import { Bet as BetComponent } from "./bet/Bet"
 import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
 
@@ -9,7 +10,6 @@ interface Props {
   setSelectedBetMap: React.Dispatch<React.SetStateAction<Map<string, BetData>>>
   determineSortOrder: any
   sortBasedOnRecentButton: any
-  bets: Bet[]
   genericBet: Bet
 }
 
@@ -18,12 +18,12 @@ export const RealtimeBets: React.FC<Props> = ({
   setSelectedBetMap,
   determineSortOrder,
   sortBasedOnRecentButton,
-  bets,
   genericBet,
 }) => {
   const { user } = Auth.useContainer()
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const [realTimeBets, setRealTimeBets] = useState<Bet[]>([])
+  const { bets } = BetsState.useContainer()
 
   const updateLobby = () => {
     const buildNotSelectedBets = (): Bet[] => {

@@ -15,4 +15,4 @@ const useBetState = () => {
     useCollectionData(query, { idField: "id" }) ?? []
   return { bets }
 }
-export const BetState = createContainer(useBetState)
+export const BetsState = createContainer(useBetState)
