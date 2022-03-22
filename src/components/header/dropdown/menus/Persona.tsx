@@ -8,6 +8,7 @@ import { MenuLine } from "../MenuLine"
 import { UserData } from "../areas/UserData"
 import { Auth } from "../../../containers/Auth"
 import { useDocumentDataOnce } from "react-firebase-hooks/firestore"
+import { User } from "../../../../interfaces/User"
 
 const firestore = firebase.firestore()
 
@@ -16,7 +17,7 @@ export const Persona: React.FC = ({}) => {
   const userDocRef = firestore
     .collection("users")
     .doc(auth.currentUser?.uid ?? "")
-  const [user]: [any | undefined, boolean, FirebaseError | undefined] =
+  const [user]: [User | undefined, boolean, FirebaseError | undefined] =
     useDocumentDataOnce(userDocRef)
   return (
     <Menu

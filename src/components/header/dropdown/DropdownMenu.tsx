@@ -22,7 +22,7 @@ import { Settings } from "./menus/Settings"
 import { Social } from "./menus/Social"
 import { Stats } from "./menus/Stats"
 import { Store } from "./menus/Store"
-import { UserMenu } from "./menus/UserMenu"
+import { SearchedUserMenu } from "./menus/SearchedUserMenu"
 import { Persona } from "./menus/Persona"
 import { ClickedUser } from "./menus/ClickedUser"
 
@@ -75,7 +75,7 @@ export const DropdownMenu = () => {
         {user && <Messages />}
         {user && <Friends />}
         {user && <Notifications />}
-        <UserMenu />
+        <SearchedUserMenu />
         <SearchUsers />
         {user && <DisplayName />}
         {user && <Achievements />}
