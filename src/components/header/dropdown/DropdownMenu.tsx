@@ -25,6 +25,7 @@ import { Store } from "./menus/Store"
 import { SearchedUserMenu } from "./menus/SearchedUserMenu"
 import { Persona } from "./menus/Persona"
 import { ClickedUser } from "./menus/ClickedUser"
+import { UserMenuState } from "../../containers/UserMenuState"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -57,6 +58,7 @@ export const DropdownMenu = () => {
     setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
   }, [setMenuHeight])
 
+  const { clickedUserId } = UserMenuState.useContainer()
   return (
     <div
       className="dropdown absolute w-64 bg-stone-100 dark:bg-stone-700 border-2 border-stone-400 dark:border-stone-500 text-stone-800 dark:text-stone-200 overflow-hidden right-5 top-10 z-50 rounded-md shadow-2xl"
@@ -87,7 +89,7 @@ export const DropdownMenu = () => {
         <Faq />
         <Contact />
         {user && <Persona />}
-        {user && <ClickedUser />}
+        {clickedUserId !== "" && user && <ClickedUser />}
       </div>
     </div>
   )

@@ -8,8 +8,11 @@ import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
 interface Props {
   selectedBetMap: Map<string, BetData>
   setSelectedBetMap: React.Dispatch<React.SetStateAction<Map<string, BetData>>>
-  determineSortOrder: any
-  sortBasedOnRecentButton: any
+  determineSortOrder: (
+    a: number | string | Date,
+    b: number | string | Date,
+  ) => number
+  sortBasedOnRecentButton: (a: Bet, b: Bet) => number
   genericBet: Bet
 }
 

@@ -10,8 +10,11 @@ import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
 interface Props {
   selectedBetMap: Map<string, BetData>
   setSelectedBetMap: React.Dispatch<React.SetStateAction<Map<string, BetData>>>
-  determineSortOrder: any
-  sortBasedOnRecentButton: any
+  determineSortOrder: (
+    a: number | string | Date,
+    b: number | string | Date,
+  ) => number
+  sortBasedOnRecentButton: (a: Bet, b: Bet) => number
   genericBet: Bet
 }
 
@@ -124,20 +127,24 @@ export const RefreshingBets: React.FC<Props> = ({
   useEffect(heartBeatCountdown, [count])
 
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
-  useEffect(() => {
+  const updateForButtonClick = () => {
+    if(bets?.length === 0) return
     console.log("button clicked")
     updateLobby()
     setIsLobbyEnabled(true)
     setCount(5)
-  }, [mostRecentButton, isDescending, user, dummy])
+  }
+  useEffect(updateForButtonClick, [mostRecentButton, isDescending, user, dummy])
 
-  useEffect(() => {
+  const updateForNewGame = () => {
+    if(bets?.length === 0) return
     console.log("new game, clearing old data")
     setSelectedBetMap(new Map())
     setRefreshingBets([])
     setIsLobbyEnabled(true)
     setCount(5)
-  }, [gameId])
+  }
+  useEffect(updateForNewGame, [gameId])
 
   return (
     <>
