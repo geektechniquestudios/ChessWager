@@ -3,6 +3,7 @@ import { DropdownArea } from "../DropdownArea"
 import { DropdownItem } from "../DropdownItem"
 import { FriendsList } from "./FriendsList"
 import { Menu } from "../Menu"
+import { MenuLine } from "../MenuLine"
 
 export const Friends: React.FC = ({}) => {
   return (
@@ -15,7 +16,7 @@ export const Friends: React.FC = ({}) => {
             key={0}
             text="Friends"
           />,
-          <div className="border-b-2" key={1} />,
+          <MenuLine key={1} />,
           <DropdownArea key={2} content={<FriendsList />} />,
         ]}
         thisMenu={"friends"}

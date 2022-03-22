@@ -1,6 +1,7 @@
 import { BiArrowBack } from "react-icons/bi"
 import { DropdownItem } from "../DropdownItem"
 import { Menu } from "../Menu"
+import { MenuLine } from "../MenuLine"
 
 export const Report: React.FC = ({}) => {
   return (
@@ -13,7 +14,7 @@ export const Report: React.FC = ({}) => {
             key={0}
             text="Report"
           />,
-          <div className="border-b-2" key={1} />,
+          <MenuLine key={2} />,
         ]}
         thisMenu={"report"}
       />

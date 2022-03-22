@@ -1,6 +1,7 @@
 import firebase from "firebase/compat"
 import { FiUserMinus } from "react-icons/fi"
 import { DarkMode } from "../../containers/DarkMode"
+import { LobbyState } from "../../containers/LobbyState"
 const firestore = firebase.firestore()
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
 export const KickButton: React.FC<Props> = ({ betId }) => {
   const betDoc: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
     firestore.collection("lobby").doc(betId)
-
+  const { refreshLobby } = LobbyState.useContainer()
   const kick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
     betDoc
@@ -22,6 +23,7 @@ export const KickButton: React.FC<Props> = ({ betId }) => {
         user2FollowThrough: [0, 0],
         user2DisplayName: "",
       })
+      .then(refreshLobby)
       .catch(console.error)
   }
   const { isDarkOn } = DarkMode.useContainer()

@@ -9,6 +9,10 @@ import { Auth } from "../containers/Auth"
 import { LobbyHeader } from "./lobby-header/LobbyHeader"
 import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
 import { useEffect, useState } from "react"
+import { LobbyState } from "../containers/LobbyState"
+import { CreatedByUserBets } from "./CreatedByUserBets"
+import { RefreshingBets } from "./RefreshingBets"
+import { RealtimeBets } from "./RealtimeBets"
 
 const firestore = firebase.firestore()
 
@@ -36,40 +40,64 @@ interface Bet {
   user2FollowThrough: number[]
 }
 
+interface BetData {
+  isSelected: boolean
+  index: number
+  id: string
+}
+
+const genericBet: Bet = {
+  id: "",
+  amount: 0,
+  betSide: "black",
+  multiplier: 0,
+  status: "",
+  user1Id: "",
+  user1Metamask: "",
+  user1PhotoURL: "",
+  user1DisplayName: "",
+  hasUser1Paid: false,
+  user2Id: "",
+  user2Metamask: "",
+  user2PhotoURL: "",
+  user2DisplayName: "",
+  hasUser2Paid: false,
+  createdAt: new Date(),
+  gameId: "",
+  timestamp: firebase.firestore.Timestamp.now(),
+  contractAddress: "",
+  user1FollowThrough: [],
+  user2FollowThrough: [],
+}
+
 export const BettingLobby: React.FC = () => {
-  const { user } = Auth.useContainer()
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const { gameId } = GameState.useContainer()
-
-  const lobbyCollectionRef = firestore.collection("lobby")
-  const query = lobbyCollectionRef.where("gameId", "==", gameId)
-  const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
-    useCollectionData(query, { idField: "id" })
-
-  const [interactableLobby, setInteractableLobby] = useState(
-    bets?.filter(
-      (bet) =>
-        bet.status !== "funded" &&
-        bet.user1Id !== user?.uid &&
-        bet.gameId !== "",
-    ),
+  const [selectedBetMap, setSelectedBetMap] = useState(
+    new Map<string, BetData>(),
   )
 
+  // const lobbyCollectionRef = firestore.collection("lobby")
+  // const query = lobbyCollectionRef.where("gameId", "==", gameId)
+  // const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
+  //   useCollectionData(query, { idField: "id" }) ?? []
+
+  // This is for browser compatibility
   const determineSortOrder = (
     a: number | string | Date,
     b: number | string | Date,
-  ): 1 | 0 | -1 | number => {
+  ): number => {
     return +(a > b) || -(a < b)
   }
 
   const sortBasedOnDescending = (
     a: number | string | Date,
     b: number | string | Date,
-  ): 0 | 1 | -1 | number => {
+  ): number => {
     return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
   }
 
-  const sortingFunction = (a: Bet, b: Bet): 0 | 1 | -1 | number => {
+  const sortBasedOnRecentButton = (a: Bet, b: Bet): number => {
     switch (mostRecentButton) {
       case "Side": {
         return sortBasedOnDescending(a.betSide, b.betSide)
@@ -102,98 +130,35 @@ export const BettingLobby: React.FC = () => {
     }
   }
 
-  const updateLobby = () => {
-    // Object.keys(selectedBetMap).forEach(console.log)
-    // console.log("updating lobby")
-    setInteractableLobby(
-      bets
-        ?.filter(
-          (bet) =>
-            bet.status !== "funded" &&
-            bet.user1Id !== user?.uid &&
-            bet.gameId !== "",
-        )
-        .sort((a: Bet, b: Bet) => {
-          return sortingFunction(a, b)
-        }),
-    )
-  }
-
-  const [selectedBetMap, setSelectedBetMap] = useState<Record<string, boolean>>(
-    { testing: true },
-  )
-
-  useEffect(() => {
-    updateLobby()
-    const interval = setInterval(updateLobby, 5000)
-    return () => clearInterval(interval)
-  }, [mostRecentButton, isDescending, bets, user, gameId])
-
+  const { isRealTime } = LobbyHeaderState.useContainer()
   return (
     <div className="flex border-t border-stone-400 dark:border-stone-900">
       <WagerForm />
       <main className="w-full">
         <div className="overflow-y-hidden">
           <LobbyHeader />
-          <div className=" overflow-y-hidden h-full overflow-x-auto">
-            {user &&
-              bets
-                ?.filter(
-                  (bet) =>
-                    bet.user1Id === user.uid &&
-                    bet.gameId !== "" &&
-                    bet.status !== "funded",
-                )
-                .map((bet) => (
-                  <Bet
-                    key={bet.id}
-                    {...bet}
-                    timestamp={bet.timestamp?.seconds}
-                    selectedBetMap={selectedBetMap}
-                    setSelectedBetMap={setSelectedBetMap}
-                  />
-                ))}
-            {interactableLobby?.map((bet) => (
-              <Bet
-                key={bet.id}
-                {...bet}
-                timestamp={bet.timestamp?.seconds}
+          <div className="overflow-y-hidden h-full overflow-x-auto">
+            <CreatedByUserBets
+              selectedBetMap={selectedBetMap}
+              setSelectedBetMap={setSelectedBetMap}
+            />
+            {isRealTime ? (
+              <RealtimeBets
                 selectedBetMap={selectedBetMap}
                 setSelectedBetMap={setSelectedBetMap}
+                determineSortOrder={determineSortOrder}
+                sortBasedOnRecentButton={sortBasedOnRecentButton}
+                genericBet={genericBet}
               />
-            ))}
-            {/* add lobby here that is new bets not updated to the interactable lobby yet */}
-            {/* {lobby
-              ?.filter(
-                (bet) =>
-                  //remove bets that have already appeared and are funded
-              )
-              // // sort
-              ?.map((bet) => (
-                <Bet
-                  key={bet.id}
-                  id={bet.id}
-                  amount={bet.amount}
-                  betSide={bet.betSide}
-                  multiplier={bet.multiplier}
-                  status={bet.status}
-                  user1Id={bet.user1Id}
-                  user1Metamask={bet.user1Metamask}
-                  user1PhotoURL={bet.user1PhotoURL}
-                  user1DisplayName={bet.user1DisplayName}
-                  hasUser1Paid={bet.hasUser1Paid}
-                  user2Id={bet.user2Id}
-                  user2Metamask={bet.user2Metamask}
-                  user2PhotoURL={bet.user2PhotoURL}
-                  user2DisplayName={bet.user2DisplayName}
-                  hasUser2Paid={bet.hasUser2Paid}
-                  gameId={bet.gameId}
-                  timestamp={bet.timestamp?.seconds}
-                  contractAddress={bet.contractAddress}
-                  user1FollowThrough={bet.user1FollowThrough}
-                  user2FollowThrough={bet.user2FollowThrough}
-                />
-              ))} */}
+            ) : (
+              <RefreshingBets
+                selectedBetMap={selectedBetMap}
+                setSelectedBetMap={setSelectedBetMap}
+                determineSortOrder={determineSortOrder}
+                sortBasedOnRecentButton={sortBasedOnRecentButton}
+                genericBet={genericBet}
+              />
+            )}
           </div>
         </div>
       </main>

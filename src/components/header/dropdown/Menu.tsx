@@ -17,12 +17,14 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
   return (
     <CSSTransition
       in={activeMenu === thisMenu}
-      timeout={500}
+      timeout={300}
       classNames="menu-primary"
       unmountOnExit
       onEnter={calcHeight}
     >
-      <div className="w-64">{menuItems.map((item: any) => item)}</div>
+      <div className="w-64">
+        {menuItems.map((item: React.ReactNode) => item)}
+      </div>
     </CSSTransition>
   )
 }
