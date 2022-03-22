@@ -17,7 +17,7 @@ export const UserListItem: React.FC<User> = (user: User) => {
       onClick={() => {
         setSearchedUser(user)
       }}
-      goToMenu="user"
+      goToMenu="searchedUser"
     />
   )
 }

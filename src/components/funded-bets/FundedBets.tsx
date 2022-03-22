@@ -1,14 +1,10 @@
 import firebase from "firebase/compat/app"
-import { useCollectionData } from "react-firebase-hooks/firestore"
 import { GameState } from "../containers/GameState"
-import { FirebaseError } from "@firebase/util"
 import { MiniBet } from "./MiniBet"
 import { Price } from "../containers/Price"
 import "../../style/scrollbar.scss"
 import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
-
-const firestore = firebase.firestore()
 
 interface Props {}
 

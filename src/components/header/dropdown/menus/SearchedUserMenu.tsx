@@ -5,8 +5,9 @@ import { MenuLine } from "../MenuLine"
 import { UserData } from "../areas/UserData"
 import { UserMenuState } from "../../../containers/UserMenuState"
 
-export const UserMenu: React.FC = ({}) => {
+export const SearchedUserMenu: React.FC = ({}) => {
   const { searchedUser } = UserMenuState.useContainer()
+
   return (
     <Menu
       menuItems={[
@@ -19,7 +20,7 @@ export const UserMenu: React.FC = ({}) => {
         <MenuLine key={1} />,
         <UserData key={2} {...searchedUser} />,
       ]}
-      thisMenu={"user"}
+      thisMenu={"searchedUser"}
     />
   )
 }

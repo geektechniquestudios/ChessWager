@@ -1,20 +1,13 @@
 import firebase from "firebase/compat/app"
-import { useCollectionData } from "react-firebase-hooks/firestore"
 import { Bet } from "./bet/Bet"
 
 import { WagerForm } from "./wager-form/WagerForm"
-import { FirebaseError } from "@firebase/util"
-import { GameState } from "../containers/GameState"
-import { Auth } from "../containers/Auth"
 import { LobbyHeader } from "./lobby-header/LobbyHeader"
 import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
-import { useEffect, useState } from "react"
-import { LobbyState } from "../containers/LobbyState"
+import { useState } from "react"
 import { CreatedByUserBets } from "./CreatedByUserBets"
 import { RefreshingBets } from "./RefreshingBets"
 import { RealtimeBets } from "./RealtimeBets"
-
-const firestore = firebase.firestore()
 
 interface Bet {
   id: string
@@ -72,15 +65,9 @@ const genericBet: Bet = {
 
 export const BettingLobby: React.FC = () => {
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
-  const { gameId } = GameState.useContainer()
   const [selectedBetMap, setSelectedBetMap] = useState(
     new Map<string, BetData>(),
   )
-
-  // const lobbyCollectionRef = firestore.collection("lobby")
-  // const query = lobbyCollectionRef.where("gameId", "==", gameId)
-  // const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
-  //   useCollectionData(query, { idField: "id" }) ?? []
 
   // This is for browser compatibility
   const determineSortOrder = (

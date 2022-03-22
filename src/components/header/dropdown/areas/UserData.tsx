@@ -33,9 +33,9 @@ export const UserData: React.FC<Props> = ({
     <div className="h-96 flex flex-col w-full items-center">
       <img
         src={photoURL}
-        className="w-24 h-24 rounded-full grid place-content-center mt-9 mb-3"
+        className="w-24 h-24 rounded-full grid place-content-center mt-9"
       />
-      <p>{auth.currentUser?.displayName ?? ""}</p>
+      <p className="my-3">{displayName ?? ""}</p>
       {!isUser && (
         <div className="h-22 flex w-full justify-evenly">
           <SendMessageButton id={id ?? "...Loading"} />
