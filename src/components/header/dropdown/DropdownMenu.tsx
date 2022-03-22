@@ -24,6 +24,7 @@ import { Stats } from "./menus/Stats"
 import { Store } from "./menus/Store"
 import { UserMenu } from "./menus/UserMenu"
 import { Persona } from "./menus/Persona"
+import { ClickedUser } from "./menus/ClickedUser"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -85,7 +86,8 @@ export const DropdownMenu = () => {
         <HowToPlay />
         <Faq />
         <Contact />
-        <Persona />
+        {user && <Persona />}
+        {user && <ClickedUser />}
       </div>
     </div>
   )
