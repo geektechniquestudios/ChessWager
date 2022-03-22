@@ -9,7 +9,7 @@ export const DirectMessage: React.FC = ({}) => {
       <Menu
         menuItems={[
           <DropdownItem
-            goToMenu="user"
+            goToMenu="searchedUser"
             leftIcon={<BiArrowBack />}
             key={0}
             text="Direct Messages"
