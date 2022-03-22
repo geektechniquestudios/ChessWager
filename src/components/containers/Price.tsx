@@ -9,14 +9,12 @@ const usePrice = () => {
   )
 
   const getAvaxPrice = async (): Promise<number> => {
-    return (
-      fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd",
-      )
-        .then((res) => res.json())
-        .then((data) => data["avalanche-2"].usd)
-        .catch(console.error) ?? 0
+    return fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=avalanche-2&vs_currencies=usd",
     )
+      .then((res) => res.json())
+      .then((data) => data["avalanche-2"].usd)
+      .catch(console.error)
   }
 
   const priceFetch = () => {
