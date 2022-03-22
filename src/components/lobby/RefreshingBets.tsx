@@ -136,7 +136,7 @@ export const RefreshingBets: React.FC<Props> = ({
     setSelectedBetMap(new Map())
     setRefreshingBets([])
     setIsLobbyEnabled(true)
-    setCount(0)
+    setCount(5)
   }, [gameId])
 
   return (

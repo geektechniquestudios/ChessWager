@@ -71,7 +71,6 @@ const genericBet: Bet = {
 }
 
 export const BettingLobby: React.FC = () => {
-  const { user } = Auth.useContainer()
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const { gameId } = GameState.useContainer()
   const [selectedBetMap, setSelectedBetMap] = useState(
