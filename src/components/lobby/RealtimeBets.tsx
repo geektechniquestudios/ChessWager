@@ -23,6 +23,7 @@ export const RealtimeBets: React.FC<Props> = ({
 }) => {
   const { user } = Auth.useContainer()
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
+  const [realTimeBets, setRealTimeBets] = useState<Bet[]>([])
 
   const updateLobby = () => {
     const buildNotSelectedBets = (): Bet[] => {
@@ -61,14 +62,10 @@ export const RealtimeBets: React.FC<Props> = ({
       let out: Bet[] = []
       const selectedLength = selectedBets?.length ?? 0
       const notSelectedLength = notSelectedBets?.length ?? 0
-      console.log("highest selected: ", selectedBetIndicies[0])
       const maxPossLength = Math.max(
         (selectedBetIndicies[0] ?? -1) + 1,
         selectedLength + notSelectedLength,
       )
-      console.log(selectedBets)
-      console.log(selectedBetIndicies)
-      console.log(notSelectedBets)
       let selectedBetIndex = selectedBetIndicies.pop()
       while (out.length < maxPossLength) {
         if (out.length === selectedBetIndex) {
@@ -82,10 +79,10 @@ export const RealtimeBets: React.FC<Props> = ({
     }
     setRealTimeBets(weaveBets())
   }
+
   useEffect(() => {
     updateLobby()
   }, [bets, mostRecentButton, isDescending])
-  const [realTimeBets, setRealTimeBets] = useState<Bet[]>(bets)
 
   return (
     <>

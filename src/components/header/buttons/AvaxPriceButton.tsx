@@ -3,6 +3,11 @@ import { Price } from "../../containers/Price"
 export const AvaxPriceButton: React.FC = () => {
   const { avaxPrice } = Price.useContainer()
 
+  const price =
+    avaxPrice ?? localStorage.getItem("avaxPrice") !== null
+      ? parseFloat(localStorage.getItem("avaxPrice")!)
+      : 0
+
   return (
     <>
       {avaxPrice !== 0 && avaxPrice !== undefined && avaxPrice !== null && (
@@ -16,7 +21,7 @@ export const AvaxPriceButton: React.FC = () => {
             title="Price from CoinGecko"
             data-toggle="tooltip"
           >
-            {`AVAX $${avaxPrice
+            {`AVAX $${price
               ?.toFixed(2)
               .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}`}
           </p>

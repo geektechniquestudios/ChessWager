@@ -26,7 +26,7 @@ export const RefreshingBets: React.FC<Props> = ({
   const { gameId } = GameState.useContainer()
   const { user } = Auth.useContainer()
   const [isLobbyUpdating, setIsLobbyUpdating] = useState(false)
-  const [interactableLobby, setInteractableLobby] = useState<Bet[]>(bets ?? [])
+  const [refreshingBets, setRefreshingBets] = useState<Bet[]>([])
 
   const updateLobby = () => {
     const tempGameId = gameId
@@ -89,7 +89,7 @@ export const RefreshingBets: React.FC<Props> = ({
       }
       return out
     }
-    setInteractableLobby(gameId === tempGameId ? weaveBets() : [])
+    setRefreshingBets(gameId === tempGameId ? weaveBets() : [])
     setIsLobbyUpdating(false)
   }
 
@@ -123,8 +123,7 @@ export const RefreshingBets: React.FC<Props> = ({
   }
   useEffect(heartBeatCountdown, [count])
 
-  const { mostRecentButton, isDescending, isRealTime } =
-    LobbyHeaderState.useContainer()
+  const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   useEffect(() => {
     console.log("button clicked")
     updateLobby()
@@ -135,14 +134,14 @@ export const RefreshingBets: React.FC<Props> = ({
   useEffect(() => {
     console.log("new game, clearing old data")
     setSelectedBetMap(new Map())
-    // setInteractableLobby([])
+    setRefreshingBets([])
     setIsLobbyEnabled(true)
-    setCount(5)
+    setCount(0)
   }, [gameId])
 
   return (
     <>
-      {interactableLobby?.map((bet, index) => (
+      {refreshingBets?.map((bet, index) => (
         <BetComponent
           key={bet.id + index}
           {...bet}
