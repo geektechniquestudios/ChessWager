@@ -60,7 +60,6 @@ chess-wager-main-firebase-adminsdk-bgzkv-95b4357651.json
 chess-wager-test-firebase-adminsdk-hl438-9c361ba626.json
 
 # yarn
-
 .pnp.*
 .yarn/*
 !.yarn/patches
