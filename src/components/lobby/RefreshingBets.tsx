@@ -29,7 +29,7 @@ export const RefreshingBets: React.FC<Props> = ({
   const { user } = Auth.useContainer()
   const [isLobbyUpdating, setIsLobbyUpdating] = useState(false)
   const [refreshingBets, setRefreshingBets] = useState<Bet[]>([])
-  const { bets } = BetsState.useContainer()
+  const { bets, isLoading } = BetsState.useContainer()
 
   const updateLobby = () => {
     const tempGameId = gameId
@@ -44,7 +44,6 @@ export const RefreshingBets: React.FC<Props> = ({
         bet.status !== "funded" &&
         bet.user1Id !== user?.uid &&
         bet.gameId !== ""
-
       return (
         bets
           ?.filter(filterOutFundedAndUserRelated)
@@ -127,17 +126,24 @@ export const RefreshingBets: React.FC<Props> = ({
   useEffect(heartBeatCountdown, [count])
 
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
+
   const updateForButtonClick = () => {
-    if(bets?.length === 0) return
+    if (isLoading) return
     console.log("button clicked")
     updateLobby()
     setIsLobbyEnabled(true)
     setCount(5)
   }
-  useEffect(updateForButtonClick, [mostRecentButton, isDescending, user, dummy])
+  useEffect(updateForButtonClick, [
+    mostRecentButton,
+    isDescending,
+    user,
+    dummy,
+    isLoading,
+  ])
 
   const updateForNewGame = () => {
-    if(bets?.length === 0) return
+    if (isLoading) return
     console.log("new game, clearing old data")
     setSelectedBetMap(new Map())
     setRefreshingBets([])

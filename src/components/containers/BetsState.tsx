@@ -11,8 +11,8 @@ const useBetState = () => {
   const { gameId } = GameState.useContainer()
   const lobbyCollectionRef = firestore.collection("lobby")
   const query = lobbyCollectionRef.where("gameId", "==", gameId)
-  const [bets]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
+  const [bets, isLoading]: [Bet[] | undefined, boolean, FirebaseError | undefined] =
     useCollectionData(query, { idField: "id" }) ?? []
-  return { bets }
+  return { bets, isLoading }
 }
 export const BetsState = createContainer(useBetState)
