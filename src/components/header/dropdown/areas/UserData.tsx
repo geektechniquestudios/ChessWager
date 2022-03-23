@@ -1,3 +1,5 @@
+import { BsPiggyBank } from "react-icons/bs"
+import { FaRegHandshake, FaUsersSlash } from "react-icons/fa"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtons } from "./UserButtons"
 
@@ -36,15 +38,16 @@ export const UserData: React.FC<Props> = ({
           />
           <p className="my-3">{displayName ?? ""}</p>
           <UserButtons id={id ?? ""} />
-          <div className="w-full h-full grid gap-2 grid-cols-2 grid-rows-4 p-2 text-sm">
-            <div>Follow-Through: {betFundedCount}/{betAcceptedCount}</div>
-            <div>Bet Count: {bets}</div>
-            <div>Bets Won: </div>
-            <div>Win%: </div>
-            <div>Total Amount Bet: </div>
-            <div>Net Profit: </div>
-            <div>Blocked: {blocked}</div>
-
+          <div className="w-full h-full grid gap-2 grid-cols-2 p-2 text-sm">
+            <div className="flex justify-evenly">
+              <FaRegHandshake /> {betFundedCount}/{betAcceptedCount}
+            </div>
+            <div className="flex justify-evenly">Bet Count: {bets}</div>
+            <div className="flex justify-evenly">Bets Won: </div>
+            <div className="flex justify-evenly">Win%: </div>
+            <div className="flex justify-evenly">Total Amount Bet: </div>
+            <div className="flex justify-evenly"><BsPiggyBank /> </div>
+            <div className="flex justify-evenly"><FaUsersSlash /> {blocked}</div>
           </div>
         </>
       )}
