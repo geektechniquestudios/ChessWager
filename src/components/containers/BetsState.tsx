@@ -185,10 +185,15 @@ const useBetState = () => {
     setRefreshingBets(await updateLobby(bets ?? []))
   }
 
+  const clearMapForLobbyChange = () => () => {
+    if (!isLoading) setSelectedBetMap(new Map())
+  }
+
   return {
     bets,
     selectedBetMap,
     setSelectedBetMap,
+    clearMapForLobbyChange,
     isLoading,
     realTimeBets,
     refreshingBets,

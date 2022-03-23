@@ -8,22 +8,15 @@ interface Props {}
 export const RealtimeBets: React.FC<Props> = ({}) => {
   const { mostRecentButton, isDescending, isRealTime } =
     LobbyHeaderState.useContainer()
-  const {
-    bets,
-    updateRealTimeBets,
-    realTimeBets,
-    isLoading,
-    setSelectedBetMap,
-  } = BetsState.useContainer()
+  const { bets, updateRealTimeBets, realTimeBets, clearMapForLobbyChange } =
+    BetsState.useContainer()
 
   useEffect(() => {
     updateRealTimeBets()
   }, [bets, mostRecentButton, isDescending])
-  const clearMapForLobbyChange = () => () => {
-    if (!isLoading) setSelectedBetMap(new Map())
-  }
 
   useEffect(clearMapForLobbyChange, [isRealTime])
+
   return (
     <>
       {realTimeBets.map((bet, index) => (

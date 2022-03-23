@@ -18,6 +18,7 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
     setSelectedBetMap,
     refreshingBets,
     setRefreshingBets,
+    clearMapForLobbyChange,
   } = BetsState.useContainer()
 
   const [isLobbyEnabled, setIsLobbyEnabled] = useState(true)
@@ -44,7 +45,8 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
   }
   useEffect(heartBeatCountdown, [count])
 
-  const { mostRecentButton, isDescending, isRealTime } = LobbyHeaderState.useContainer()
+  const { mostRecentButton, isDescending, isRealTime } =
+    LobbyHeaderState.useContainer()
   const updateForButtonClick = () => {
     if (isLoading) return
     updateRefreshingBets()
@@ -70,9 +72,6 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
   }
   useEffect(updateForNewGame, [gameId])
 
-  const clearMapForLobbyChange = () => () => {
-    if (!isLoading) setSelectedBetMap(new Map())
-  }
   useEffect(clearMapForLobbyChange, [isRealTime])
 
   return (
