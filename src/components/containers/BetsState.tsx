@@ -1,5 +1,5 @@
-import { createContainer } from "unstated-next"
 import firebase from "firebase/compat/app"
+import { createContainer } from "unstated-next"
 import { GameState } from "./GameState"
 import { Bet, BetData } from "../../interfaces/Bet"
 import { FirebaseError } from "@firebase/util"
