@@ -1,17 +1,23 @@
 import { TextareaAutosize } from "@mui/material"
 import { Auth } from "../containers/Auth"
 import firebase from "firebase/compat/app"
-import { ChatFormData } from "../containers/ChatFormData"
 import "../../style/scrollbar.scss"
 
 interface Props {
   dummy: React.RefObject<HTMLInputElement>
   messagesRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+  formValue: string
+  setFormValue: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const ChatForm: React.FC<Props> = ({ dummy, messagesRef }) => {
+export const ChatForm: React.FC<Props> = ({
+  dummy,
+  messagesRef,
+  formValue,
+  setFormValue,
+}) => {
   const { user, auth } = Auth.useContainer()
-  const { formValue, setFormValue } = ChatFormData.useContainer()
+  // const { formValue, setFormValue } = ChatFormData.useContainer()
 
   const sendMessage = async (
     e:
@@ -19,34 +25,26 @@ export const ChatForm: React.FC<Props> = ({ dummy, messagesRef }) => {
       | React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
     e.preventDefault()
-    if (formValue.trim() === "" || !user) {
-      return
-    }
+    if (formValue.trim() === "" || !user || !auth.currentUser) return
 
-    if (auth.currentUser) {
-      const { uid, photoURL }: firebase.User = auth.currentUser
+    const { uid, photoURL }: firebase.User = auth.currentUser
+    await messagesRef.add({
+      text: formValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      uid,
+      photoURL,
+      userName: auth.currentUser.displayName,
+    })
 
-      await messagesRef.add({
-        text: formValue,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        uid,
-        photoURL,
-        userName: auth.currentUser.displayName,
-      })
-
-      setFormValue("")
-      dummy.current?.scrollIntoView({ behavior: "smooth" })
-    }
+    setFormValue("")
+    dummy.current?.scrollIntoView({ behavior: "smooth" })
   }
   return (
     <fieldset
       disabled={!auth.currentUser}
       className="fieldset justify-center flex"
     >
-      <form
-        onSubmit={(e) => sendMessage(e)}
-        className="form justify-center w-full pb-1"
-      >
+      <form onSubmit={sendMessage} className="form justify-center w-full pb-1">
         <TextareaAutosize
           value={auth.currentUser ? formValue : "Sign in to Chat"}
           onChange={(e) => {
@@ -62,7 +60,6 @@ export const ChatForm: React.FC<Props> = ({ dummy, messagesRef }) => {
         <div className="w-full flex justify-end p-2">
           <button
             className="cw-button px-2 py-1 hover:bg-stone-300"
-            onClick={() => {}}
             type="submit"
           >
             Chat

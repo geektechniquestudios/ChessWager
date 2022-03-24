@@ -6,18 +6,22 @@ import { SendMessageButton } from "../buttons/SendMessageButton"
 
 interface Props {
   id: string
+  displayName: string
 }
 
-export const UserButtons: React.FC<Props> = ({ id }) => {
+export const UserButtons: React.FC<Props> = ({ id, displayName }) => {
   const { auth } = Auth.useContainer()
 
   const isUser = auth.currentUser?.uid === id
 
   return (
     <>
-      {!isUser && (
+      {!isUser && displayName !== "" && (
         <div className="h-22 flex w-full justify-evenly">
-          <SendMessageButton id={id ?? "...Loading"} />
+          <SendMessageButton
+            id={id ?? "...Loading"}
+            displayName={displayName}
+          />
           <BlockUserButton id={id ?? "...Loading"} />
           <ReportUserButton id={id ?? "...Loading"} />
           <AddFriendButton id={id ?? "...Loading"} />

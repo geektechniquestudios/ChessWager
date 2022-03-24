@@ -10,6 +10,7 @@ import { Firestore } from "../containers/Firestore"
 import { ChatHeader } from "./ChatHeader"
 import { ChatForm } from "./ChatForm"
 import { ChatBody } from "./ChatBody"
+import { ChatFormData } from "../containers/ChatFormData"
 
 export const GlobalChat: React.FC = () => {
   const { firestore } = Firestore.useContainer()
@@ -17,6 +18,7 @@ export const GlobalChat: React.FC = () => {
   const dummy = useRef<HTMLInputElement>(null)
   const messagesRef = firestore.collection("messages")
 
+  const { chatFormValue, setChatFormValue } = ChatFormData.useContainer()
   return (
     <div
       className="global-chat flex flex-col border-l border-stone-400 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 color-shift"
@@ -24,8 +26,13 @@ export const GlobalChat: React.FC = () => {
     >
       <ChatHeader />
       <main className="global-chat-main flex flex-col-reverse">
-        <ChatForm dummy={dummy} messagesRef={messagesRef} />
-        <span ref={dummy}></span>
+        <ChatForm
+          dummy={dummy}
+          messagesRef={messagesRef}
+          formValue={chatFormValue}
+          setFormValue={setChatFormValue}
+        />
+        <span ref={dummy} />
         <ChatBody messagesRef={messagesRef} />
       </main>
     </div>

@@ -3,7 +3,7 @@ import { DropdownArea } from "../DropdownArea"
 import { DropdownItem } from "../DropdownItem"
 import { Menu } from "../Menu"
 import { MenuLine } from "../MenuLine"
-import { MessagesList } from "./MessagesList"
+import { ConversationsList } from "./ConversationsList"
 
 export const Messages: React.FC = ({}) => {
   return (
@@ -16,7 +16,7 @@ export const Messages: React.FC = ({}) => {
           text="Messages"
         />,
         <MenuLine key={1} />,
-        <DropdownArea key={2} content={<MessagesList />} />,
+        <DropdownArea key={2} content={<ConversationsList />} />,
       ]}
       thisMenu={"messages"}
     />
