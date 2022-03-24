@@ -1,13 +1,14 @@
-import { BsPiggyBank } from "react-icons/bs"
-import { FaRegHandshake, FaUsersSlash } from "react-icons/fa"
+import { BetCount } from "../user-data-pieces/BetCount"
+import { BetsWon } from "../user-data-pieces/BetsWon"
+import { NetProfit } from "../user-data-pieces/NetProfit"
+import { NumberBlocked } from "../user-data-pieces/NumberBlocked"
+import { TotalAmountBet } from "../user-data-pieces/TotalAmountBet"
+import { Trust } from "../user-data-pieces/Trust"
+import { WinPercent } from "../user-data-pieces/WinPercent"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtons } from "./UserButtons"
 
 interface Props {
-  betAcceptedCount?: number
-  betFundedCount?: number
-  bets?: string[]
-  blocked?: string[]
   photoURL?: string
   displayName?: string
   walletAddress?: string
@@ -16,10 +17,6 @@ interface Props {
 }
 
 export const UserData: React.FC<Props> = ({
-  betAcceptedCount,
-  betFundedCount,
-  bets,
-  blocked,
   displayName,
   id,
   photoURL,
@@ -39,15 +36,13 @@ export const UserData: React.FC<Props> = ({
           <p className="my-3">{displayName ?? ""}</p>
           <UserButtons id={id ?? ""} />
           <div className="w-full h-full grid gap-2 grid-cols-2 p-2 text-sm">
-            <div className="flex justify-evenly">
-              <FaRegHandshake /> {betFundedCount}/{betAcceptedCount}
-            </div>
-            <div className="flex justify-evenly">Bet Count: {bets}</div>
-            <div className="flex justify-evenly">Bets Won: </div>
-            <div className="flex justify-evenly">Win%: </div>
-            <div className="flex justify-evenly">Total Amount Bet: </div>
-            <div className="flex justify-evenly"><BsPiggyBank /> </div>
-            <div className="flex justify-evenly"><FaUsersSlash /> {blocked}</div>
+            <Trust />
+            <BetCount />
+            <BetsWon />
+            <WinPercent />
+            <TotalAmountBet />
+            <NetProfit />
+            <NumberBlocked />
           </div>
         </>
       )}
