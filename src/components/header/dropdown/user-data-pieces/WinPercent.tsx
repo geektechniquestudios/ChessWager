@@ -1,11 +1,15 @@
 interface Props {
-    bets?: string[]
+  bets?: string[]
 }
 
-export const WinPercent: React.FC<Props> = ({
-  bets,
-}) => {
+export const WinPercent: React.FC<Props> = ({ bets }) => {
   return (
-    <div data-bs-toggle="tooltip" title="Win Percent" className="flex justify-evenly">Win%: {bets}</div>
+    <div
+      data-bs-toggle="tooltip"
+      title="Win Percent"
+      className="flex justify-evenly"
+    >
+      Win%: {bets}
+    </div>
   )
 }

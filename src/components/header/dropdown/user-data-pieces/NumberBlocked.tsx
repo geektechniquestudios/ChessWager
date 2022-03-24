@@ -1,13 +1,17 @@
 import { FaUsersSlash } from "react-icons/fa"
 
 interface Props {
-    blocked?: string[]
+  blocked?: string[]
 }
 
-export const NumberBlocked: React.FC<Props> = ({
-  blocked,
-}) => {
+export const NumberBlocked: React.FC<Props> = ({ blocked }) => {
   return (
-    <div data-bs-toggle="tooltip" title="Number Blocked" className="flex justify-evenly"><FaUsersSlash /> {blocked}</div>
-    )
+    <div
+      data-bs-toggle="tooltip"
+      title="Number Blocked"
+      className="flex justify-evenly"
+    >
+      <FaUsersSlash /> {blocked}
+    </div>
+  )
 }
