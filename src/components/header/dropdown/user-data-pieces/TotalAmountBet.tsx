@@ -8,6 +8,6 @@ export const TotalAmountBet: React.FC<Props> = ({
   bets,
 }) => {
   return (
-    <div className="flex justify-evenly"><GiPayMoney /> {bets}</div>
+    <div data-bs-toggle="tooltip" title="Total Amount Bet" className="flex justify-evenly"><GiPayMoney /> {bets}</div>
   )
 }

@@ -10,7 +10,7 @@ export const Trust: React.FC<Props> = ({
   betFundedCount,
 }) => {
   return (
-    <div className="flex justify-evenly">
+    <div data-bs-toggle="tooltip" title="Trust" className="flex justify-evenly">
       <FaRegHandshake /> {betFundedCount}/{betAcceptedCount}
     </div>
   )

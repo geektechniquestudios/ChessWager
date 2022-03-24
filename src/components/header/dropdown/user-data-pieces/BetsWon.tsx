@@ -6,6 +6,6 @@ export const BetsWon: React.FC<Props> = ({
   bets,
 }) => {
   return (
-    <div className="flex justify-evenly">Bets Won: {bets}</div>
+    <div data-bs-toggle="tooltip" title="Bets Won" className="flex justify-evenly">Bets Won: {bets}</div>
   )
 }

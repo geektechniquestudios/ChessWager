@@ -8,6 +8,6 @@ export const NumberBlocked: React.FC<Props> = ({
   blocked,
 }) => {
   return (
-    <div className="flex justify-evenly"><FaUsersSlash /> {blocked}</div>
+    <div data-bs-toggle="tooltip" title="Number Blocked" className="flex justify-evenly"><FaUsersSlash /> {blocked}</div>
     )
 }
