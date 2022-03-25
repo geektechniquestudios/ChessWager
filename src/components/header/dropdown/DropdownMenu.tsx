@@ -26,6 +26,7 @@ import { SearchedUserMenu } from "./menus/SearchedUserMenu"
 import { Persona } from "./menus/Persona"
 import { ClickedUser } from "./menus/ClickedUser"
 import { UserMenuState } from "../../containers/UserMenuState"
+import { Conversation } from "./menus/Conversation"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -90,6 +91,7 @@ export const DropdownMenu = () => {
         <Contact />
         {user && <Persona />}
         {clickedUserId !== "" && user && <ClickedUser />}
+        {user && <Conversation />}
       </div>
     </div>
   )

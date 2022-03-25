@@ -10,9 +10,14 @@ const firestore = firebase.firestore()
 interface Props {
   id: string
   displayName: string
+  photoURL: string
 }
 
-export const SendMessageButton: React.FC<Props> = ({ id, displayName }) => {
+export const SendMessageButton: React.FC<Props> = ({
+  id,
+  displayName,
+  photoURL,
+}) => {
   const { setActiveMenu } = DropdownState.useContainer()
 
   const { auth } = Auth.useContainer()
@@ -21,8 +26,19 @@ export const SendMessageButton: React.FC<Props> = ({ id, displayName }) => {
   const createConvoDoc = () => {
     const convoDoc = firestore.collection("conversations").doc(docId)
     convoDoc.set({
-      users: [id, auth.currentUser?.uid],
-      userNames: [displayName, auth.currentUser?.displayName],
+      userIds: [id, auth.currentUser?.uid],
+      user1: {
+        id: auth.currentUser?.uid,
+        displayName: auth.currentUser?.displayName,
+        photoUrl: auth.currentUser?.photoURL,
+        isRead: false,
+      },
+      user2: {
+        id: id,
+        displayName: displayName,
+        photoURL: photoURL,
+        isRead: false,
+      },
     })
   }
   return (

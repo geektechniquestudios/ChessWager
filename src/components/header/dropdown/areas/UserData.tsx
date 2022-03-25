@@ -35,7 +35,11 @@ export const UserData: React.FC<Props> = ({
             className="w-24 h-24 rounded-full grid place-content-center mt-9"
           />
           <p className="my-3">{displayName ?? ""}</p>
-          <UserButtons id={id ?? ""} displayName={displayName ?? ""} />
+          <UserButtons
+            id={id ?? ""}
+            displayName={displayName ?? ""}
+            photoURL={photoURL!}
+          />
           <div className="w-full h-full"></div>
         </>
       )}

@@ -1,20 +1,19 @@
 import firebase from "firebase/compat/app"
+
 import { useRef } from "react"
 import { ChatBody } from "../../../chat/ChatBody"
 import { ChatForm } from "../../../chat/ChatForm"
 import { Auth } from "../../../containers/Auth"
 import { ChatFormData } from "../../../containers/ChatFormData"
 import { UserMenuState } from "../../../containers/UserMenuState"
-import "../../../../style/scrollbar.scss"
-
 const firestore = firebase.firestore()
 
 interface Props {}
 
-export const SearchedConversation: React.FC<Props> = ({}) => {
+export const ConversationData: React.FC<Props> = ({}) => {
   const { auth } = Auth.useContainer()
-  const { searchedUser } = UserMenuState.useContainer()
-  const docId = [auth.currentUser?.uid, searchedUser?.id].sort().join("-")
+  const { userIdFromMessages } = UserMenuState.useContainer()
+  const docId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
 
   const conversationsCollectionRef = firestore
     .collection("conversations")
@@ -29,6 +28,7 @@ export const SearchedConversation: React.FC<Props> = ({}) => {
     newMap.set(docId, formValue)
     setConvoFormValue(newMap)
   }
+
   return (
     <div className="flex flex-col-reverse h-72 ">
       <ChatForm

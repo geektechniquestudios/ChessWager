@@ -7,7 +7,9 @@ interface Props {
   dummy: React.RefObject<HTMLInputElement>
   messagesRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
   formValue: string
-  setFormValue: React.Dispatch<React.SetStateAction<string>>
+  setFormValue:
+    | React.Dispatch<React.SetStateAction<string>>
+    | ((formValue: string) => void)
 }
 
 export const ChatForm: React.FC<Props> = ({

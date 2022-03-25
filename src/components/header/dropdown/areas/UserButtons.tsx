@@ -7,9 +7,10 @@ import { SendMessageButton } from "../buttons/SendMessageButton"
 interface Props {
   id: string
   displayName: string
+  photoURL: string
 }
 
-export const UserButtons: React.FC<Props> = ({ id, displayName }) => {
+export const UserButtons: React.FC<Props> = ({ id, displayName, photoURL }) => {
   const { auth } = Auth.useContainer()
 
   const isUser = auth.currentUser?.uid === id
@@ -21,6 +22,7 @@ export const UserButtons: React.FC<Props> = ({ id, displayName }) => {
           <SendMessageButton
             id={id ?? "...Loading"}
             displayName={displayName}
+            photoURL={photoURL}
           />
           <BlockUserButton id={id ?? "...Loading"} />
           <ReportUserButton id={id ?? "...Loading"} />
