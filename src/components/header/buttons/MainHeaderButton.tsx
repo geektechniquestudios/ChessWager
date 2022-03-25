@@ -1,8 +1,17 @@
-import { RiChat2Line } from "react-icons/ri"
 import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 
-export const ChatButton: React.FC = () => {
+interface Props {
+  title: string
+  openToMenu: string
+  icon: React.ReactNode
+}
+
+export const MainHeaderButton: React.FC<Props> = ({
+  title,
+  openToMenu,
+  icon,
+}) => {
   const { user } = Auth.useContainer()
   const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
   return (
@@ -11,13 +20,13 @@ export const ChatButton: React.FC = () => {
         <div className="flex flex-col justify-center">
           <button
             className="cw-button header-button"
-            title="Messages"
+            title={title}
             onClick={() => {
               setIsDropdownOpen(true)
-              setActiveMenu("messages")
+              setActiveMenu(openToMenu)
             }}
           >
-            <RiChat2Line size="21" className="m-2" />
+            {icon}
           </button>
         </div>
       )}

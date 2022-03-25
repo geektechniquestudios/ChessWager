@@ -26,18 +26,21 @@ export const SendMessageButton: React.FC<Props> = ({
   const createConvoDoc = () => {
     const convoDoc = firestore.collection("conversations").doc(docId)
     convoDoc.set({
+      msgThumbnail: "",
       userIds: [id, auth.currentUser?.uid],
       user1: {
         id: auth.currentUser?.uid,
         displayName: auth.currentUser?.displayName,
         photoUrl: auth.currentUser?.photoURL,
-        isRead: false,
+        hasNewMessages: false,
+        isDeleted: false,
       },
       user2: {
         id: id,
         displayName: displayName,
         photoURL: photoURL,
-        isRead: false,
+        hasNewMessages: false,
+        isDeleted: false,
       },
     })
   }

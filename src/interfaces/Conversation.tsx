@@ -2,7 +2,7 @@ interface User {
   id: string
   displayName: string
   photoURL: string
-  isRead: boolean
+  hasNewMessages: boolean
 }
 export interface Conversation {
   id: string

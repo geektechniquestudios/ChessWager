@@ -6,31 +6,15 @@ import { Auth } from "../../../containers/Auth"
 import { Conversation } from "../../../../interfaces/Conversation"
 import { DropdownConvoItem } from "../DropdownConvoItem"
 import { UserMenuState } from "../../../containers/UserMenuState"
-const firestore = firebase.firestore()
+import { ConversationsState } from "../../../containers/ConversationsState"
 
 export const ConversationsList: React.FC = ({}) => {
-  const { auth } = Auth.useContainer()
-  const conversationsCollectionRef = firestore.collection("conversations")
-  const query = conversationsCollectionRef.where(
-    "userIds",
-    "array-contains",
-    auth.currentUser?.uid ?? "",
-  )
-  const [conversations, isLoading]: [
-    Conversation[] | undefined,
-    boolean,
-    FirebaseError | undefined,
-  ] = useCollectionData(query, { idField: "id" }) ?? []
-  const specificConvoCollectionRef = (docId: string) =>
-    firestore.collection("conversations").doc(docId).collection("messages")
-
-  const convoUserList =
-    conversations?.map((conversation) =>
-      auth.currentUser?.uid === conversation.user1.id
-        ? conversation.user2
-        : conversation.user1,
-    ) ?? []
-
+  const {
+    conversations,
+    convoUserList,
+    isLoading,
+    specificConvoCollectionRef,
+  } = ConversationsState.useContainer()
   const { setUserIdFromMessages, setUsernameFromMessages } =
     UserMenuState.useContainer()
   return (
@@ -48,7 +32,7 @@ export const ConversationsList: React.FC = ({}) => {
                   leftIcon={
                     <img
                       src={user.photoURL}
-                      alt="user"
+                      alt=""
                       className="w-6 h-6 rounded-full grid place-content-center"
                     />
                   }
