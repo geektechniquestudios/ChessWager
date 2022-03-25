@@ -1,14 +1,15 @@
-import { BetCount } from "../user-data-pieces/BetCount"
-import { BetsWon } from "../user-data-pieces/BetsWon"
-import { NetProfit } from "../user-data-pieces/NetProfit"
-import { NumberBlocked } from "../user-data-pieces/NumberBlocked"
-import { TotalAmountBet } from "../user-data-pieces/TotalAmountBet"
-import { Trust } from "../user-data-pieces/Trust"
-import { WinPercent } from "../user-data-pieces/WinPercent"
+import { BsPiggyBank } from "react-icons/bs"
+import { FaRegHandshake, FaUsersSlash } from "react-icons/fa"
+import { GiPayMoney, GiYinYang } from "react-icons/gi"
+import { UserDataPiece } from "../UserDataPiece"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtons } from "./UserButtons"
 
 interface Props {
+  betAcceptedCount?: number
+  betFundedCount?: number
+  bets?: string[]
+  blocked?: string[]
   photoURL?: string
   displayName?: string
   walletAddress?: string
@@ -17,6 +18,10 @@ interface Props {
 }
 
 export const UserData: React.FC<Props> = ({
+  betAcceptedCount,
+  betFundedCount,
+  bets,
+  blocked,
   displayName,
   id,
   photoURL,
@@ -36,13 +41,19 @@ export const UserData: React.FC<Props> = ({
           <p className="my-3">{displayName ?? ""}</p>
           <UserButtons id={id ?? ""} />
           <div className="w-full h-full grid gap-2 grid-cols-2 p-2 text-sm">
-            <Trust />
-            <BetCount />
-            <BetsWon />
-            <WinPercent />
-            <TotalAmountBet />
-            <NetProfit />
-            <NumberBlocked />
+            <UserDataPiece dataName="Trust" dataIcon={<FaRegHandshake />} />
+            <UserDataPiece dataName="Bet Count" dataIcon={<GiYinYang />} />
+            <UserDataPiece dataName="Bets Won" dataIcon={<GiYinYang />} />
+            <UserDataPiece dataName="Net Profit" dataIcon={<BsPiggyBank />} />
+            <UserDataPiece dataName="Win Percent" dataIcon={<GiYinYang />} />
+            <UserDataPiece
+              dataName="Total Amount Bet"
+              dataIcon={<GiPayMoney />}
+            />
+            <UserDataPiece
+              dataName="Users Blocked"
+              dataIcon={<FaUsersSlash />}
+            />
           </div>
         </>
       )}
