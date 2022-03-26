@@ -1,5 +1,9 @@
+import { BsPiggyBank } from "react-icons/bs"
+import { FaRegHandshake, FaUsersSlash } from "react-icons/fa"
+import { GiPayMoney, GiYinYang } from "react-icons/gi"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtons } from "./UserButtons"
+import { UserDataTile } from "./UserDataTile"
 
 interface Props {
   betAcceptedCount?: number
@@ -40,7 +44,21 @@ export const UserData: React.FC<Props> = ({
             displayName={displayName ?? ""}
             photoURL={photoURL!}
           />
-          <div className="w-full h-full"></div>
+          <div className="w-full h-full grid gap-2 grid-cols-2 p-2 text-sm">
+            <UserDataTile dataName="Trust" dataIcon={<FaRegHandshake />} />
+            <UserDataTile dataName="Bet Count" dataIcon={<GiYinYang />} />
+            <UserDataTile dataName="Bets Won" dataIcon={<GiYinYang />} />
+            <UserDataTile dataName="Net Profit" dataIcon={<BsPiggyBank />} />
+            <UserDataTile dataName="Win Percent" dataIcon={<GiYinYang />} />
+            <UserDataTile
+              dataName="Total Amount Bet"
+              dataIcon={<GiPayMoney />}
+            />
+            <UserDataTile
+              dataName="Users Blocked"
+              dataIcon={<FaUsersSlash />}
+            />
+          </div>{" "}
         </>
       )}
     </div>
