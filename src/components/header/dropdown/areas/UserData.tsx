@@ -44,7 +44,9 @@ export const UserData: React.FC<Props> = ({
             displayName={displayName ?? ""}
             photoURL={photoURL!}
           />
-          <div className="w-full h-full grid gap-2 grid-cols-2 p-2 text-sm">
+          <div className="w-full h-full grid gap-2 grid-cols-2 p-2">
+            <UserDataTile dataName="Following" dataIcon={<GiYinYang />} />
+            <UserDataTile dataName="Followers" dataIcon={<GiYinYang />} />
             <UserDataTile dataName="Trust" dataIcon={<FaRegHandshake />} />
             <UserDataTile dataName="Bet Count" dataIcon={<GiYinYang />} />
             <UserDataTile dataName="Bets Won" dataIcon={<GiYinYang />} />
