@@ -26,7 +26,7 @@ export const PlayerData: React.FC<Props> = ({
           <p className="flex mx-1 font-bold text-teal-700">{title}</p>
           <div className="flex gap-2">
             <p>{name}</p>
-            <p className="font-bold">{rating}</p>
+            <p className="font-bold">{rating !== 0 ? rating : ""}</p>
           </div>
         </div>
       </div>

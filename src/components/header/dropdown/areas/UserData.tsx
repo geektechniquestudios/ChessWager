@@ -39,7 +39,11 @@ export const UserData: React.FC<Props> = ({
             className="w-24 h-24 rounded-full grid place-content-center mt-9"
           />
           <p className="my-3">{displayName ?? ""}</p>
-          <UserButtons id={id ?? ""} />
+          <UserButtons
+            id={id ?? ""}
+            displayName={displayName ?? ""}
+            photoURL={photoURL!}
+          />
           <div className="w-full h-full grid gap-2 grid-cols-2 p-2 text-sm">
             <UserDataPiece dataName="Trust" dataIcon={<FaRegHandshake />} />
             <UserDataPiece dataName="Bet Count" dataIcon={<GiYinYang />} />

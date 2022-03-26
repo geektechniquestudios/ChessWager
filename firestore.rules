@@ -8,6 +8,81 @@ service cloud.firestore {
       return isSignedIn && !isBanned;
     }
 
+    match /conversations/{conversation} {
+      allow read, write: if true;
+    }
+
+    match /conversations/{conversation}/messages/{docId} {
+      allow read: if true;
+
+      function areCreateRequestKeysValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.keys().hasAll(["createdAt", "photoURL", "text", "uid", "userName"]) &&
+          requestData.keys().hasOnly(["createdAt", "photoURL", "text", "uid", "userName"]);
+      }
+
+      function isCreateRequestDataValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.createdAt is timestamp &&
+          requestData.photoURL is string &&
+          requestData.text is string &&
+          requestData.uid is string &&
+          requestData.userName is string;
+      }
+
+      function isOwner() {
+        return request.auth.uid == request.resource.data.uid;
+      }
+
+      function isShortEnough() {
+        return request.resource.data.text.size() <= 500;
+      }
+
+      function isCreatedAtTimeStampValid() {
+        return request.resource.data.createdAt == request.time;
+      }
+
+      allow create: if canCreate() &&
+        areCreateRequestKeysValid() &&
+        isCreateRequestDataValid() &&
+        isOwner() &&
+        isShortEnough() &&
+        isCreatedAtTimeStampValid();
+      
+      function areUpdateRequestKeysValid() {
+        let requestData = request.resource.data;
+        return 
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["createdAt", "photoURL", "uid", "userName"])) &&
+          requestData.keys().hasAll(["updatedAt", "createdAt", "photoURL", "text", "uid", "userName"]) &&
+          requestData.keys().hasOnly(["updatedAt", "createdAt", "photoURL", "text", "uid", "userName"]);
+      }
+
+      function isUpdateRequestDataValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.updatedAt is timestamp &&
+          requestData.createdAt is timestamp &&
+          requestData.photoURL is string &&
+          requestData.text is string &&
+          requestData.uid is string &&
+          requestData.userName is string;
+      }
+      
+      function isUpdatedAtTimeStampValid() {
+        return request.resource.data.updatedAt == request.time;
+      }
+
+      allow update: if canCreate() && 
+        areUpdateRequestKeysValid() &&
+        isUpdateRequestDataValid() &&
+        isOwner() &&
+        isShortEnough() &&
+        isUpdatedAtTimeStampValid();
+    }
+
+
     match /messages/{docId} {
     	allow read: if true;
 

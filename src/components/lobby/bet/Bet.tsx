@@ -9,12 +9,8 @@ import { LeftButtons } from "./LeftButtons"
 import { RightButtons } from "./RightButtons"
 import { CenterOfBet } from "./CenterOfBet"
 import React, { useState } from "react"
+import { BetsState } from "../../containers/BetsState"
 
-interface BetData {
-  isSelected: boolean
-  index: number
-  id: string
-}
 interface Props {
   id: string
   amount: number
@@ -36,8 +32,6 @@ interface Props {
   contractAddress: string
   user1FollowThrough: number[]
   user2FollowThrough: number[]
-  selectedBetMap: Map<string, BetData>
-  setSelectedBetMap: React.Dispatch<React.SetStateAction<Map<string, BetData>>>
   index?: number
   isLobbyEnabled?: boolean
 }
@@ -63,8 +57,6 @@ export const Bet: React.FC<Props> = ({
   contractAddress,
   user1FollowThrough,
   user2FollowThrough,
-  selectedBetMap,
-  setSelectedBetMap,
   index,
   isLobbyEnabled,
 }) => {
@@ -80,6 +72,7 @@ export const Bet: React.FC<Props> = ({
 
   const isUser1 = auth.currentUser?.uid === user1Id
   const isUser2 = auth.currentUser?.uid === user2Id
+  const { selectedBetMap, setSelectedBetMap } = BetsState.useContainer()
   const [isSelected, setIsSelected] = useState(
     isUser1 || isUser2 ? true : false,
   )

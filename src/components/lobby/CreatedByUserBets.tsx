@@ -1,22 +1,10 @@
-import { Bet } from "../../interfaces/Bet"
 import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
 import { Bet as BetComponent } from "./bet/Bet"
 
-interface BetData {
-  isSelected: boolean
-  index: number
-  id: string
-}
-interface Props {
-  selectedBetMap: Map<string, BetData>
-  setSelectedBetMap: React.Dispatch<React.SetStateAction<Map<string, BetData>>>
-}
+interface Props {}
 
-export const CreatedByUserBets: React.FC<Props> = ({
-  selectedBetMap,
-  setSelectedBetMap,
-}) => {
+export const CreatedByUserBets: React.FC<Props> = ({}) => {
   const { user } = Auth.useContainer()
   const { bets } = BetsState.useContainer()
   return (
@@ -34,8 +22,6 @@ export const CreatedByUserBets: React.FC<Props> = ({
               key={bet.id + index}
               {...bet}
               timestamp={bet.timestamp?.seconds}
-              selectedBetMap={selectedBetMap}
-              setSelectedBetMap={setSelectedBetMap}
             />
           ))}
     </>

@@ -31,10 +31,7 @@ interface Bet {
 }
 
 export const FundedBets: React.FC<Props> = () => {
-  const gameIdContainer = GameState.useContainer()
-
   const { avaxPrice } = Price.useContainer()
-
   const { bets } = BetsState.useContainer()
 
   const amountAtStake = (

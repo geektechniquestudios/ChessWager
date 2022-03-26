@@ -12,7 +12,7 @@ export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
   const [messages] = useCollectionData(query, { idField: "id" })
 
   return (
-    <div className="scrollbar flex flex-col-reverse pb-3 overflow-y-scroll overflow-x-hidden px-1">
+    <div className="scrollbar flex flex-col-reverse pb-3 overflow-y-auto overflow-x-hidden px-1">
       {messages?.map((message) => (
         <ChatMessage key={message.id} {...message} />
       ))}
