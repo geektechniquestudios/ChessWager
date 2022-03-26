@@ -2,10 +2,11 @@ import firebase from "firebase/compat/app"
 
 import { useRef } from "react"
 import { ChatBody } from "../../../../chat/ChatBody"
-import { ChatForm } from "../../../../chat/ChatForm"
 import { Auth } from "../../../../containers/Auth"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { UserMenuState } from "../../../../containers/UserMenuState"
+import { ConvoChatBody } from "./ConvoChatBody"
+import { ConvoChatForm } from "./ConvoChatForm"
 const firestore = firebase.firestore()
 
 interface Props {}
@@ -20,6 +21,10 @@ export const ConversationData: React.FC<Props> = ({}) => {
     .doc(docId)
     .collection("messages")
 
+  const conversationCollectionRef = firestore
+    .collection("conversations")
+    .doc(docId)
+
   const dummy = useRef<HTMLInputElement>(null)
 
   const { convoFormValue, setConvoFormValue } = ChatFormData.useContainer()
@@ -30,15 +35,16 @@ export const ConversationData: React.FC<Props> = ({}) => {
   }
 
   return (
-    <div className="flex flex-col-reverse h-72 ">
-      <ChatForm
+    <div className="flex flex-col-reverse h-96 ">
+      <ConvoChatForm
         dummy={dummy}
         messagesRef={conversationsCollectionRef}
         formValue={convoFormValue.get(docId) ?? ""}
         setFormValue={setFormValue}
+        conversationCollectionRef={conversationCollectionRef}
       />
       <span ref={dummy} />
-      <ChatBody messagesRef={conversationsCollectionRef} />
+      <ConvoChatBody messagesRef={conversationsCollectionRef} />
     </div>
   )
 }

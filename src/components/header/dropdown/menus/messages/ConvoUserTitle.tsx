@@ -1,5 +1,5 @@
-import { DropdownState } from "../containers/DropdownState"
-import { UserMenuState } from "../containers/UserMenuState"
+import { DropdownState } from "../../../../containers/DropdownState"
+import { UserMenuState } from "../../../../containers/UserMenuState"
 
 interface Props {
   photoURL: string
@@ -7,17 +7,18 @@ interface Props {
   uid: string
 }
 
-export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
+export const ConvoUserTitle: React.FC<Props> = ({
+  photoURL,
+  userName,
+  uid,
+}) => {
   const { openDropdownToMenu } = DropdownState.useContainer()
   const { setClickedUserId } = UserMenuState.useContainer()
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       className="flex gap-1 mr-1 float-left"
-      onClick={() => {
-        openDropdownToMenu("clickedUser")
-        setClickedUserId(uid)
-      }}
+      onClick={() => {}}
     >
       <img
         src={photoURL}
@@ -25,7 +26,7 @@ export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
         title={userName}
         className="w-4 h-4 rounded-full"
       />
-      <p className="text-xs font-bold text-stone-900 dark:text-stone-300 hover:underline">{`${userName}:`}</p>
+      <p className="text-xs font-bold text-stone-900 dark:text-stone-300">{`${userName}:`}</p>
     </a>
   )
 }

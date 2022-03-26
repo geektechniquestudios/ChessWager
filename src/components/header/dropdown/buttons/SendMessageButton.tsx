@@ -25,24 +25,51 @@ export const SendMessageButton: React.FC<Props> = ({
 
   const createConvoDoc = () => {
     const convoDoc = firestore.collection("conversations").doc(docId)
+    // const userDoc1 = firestore
+    //   .collection("conversations")
+    //   .doc(docId)
+    //   .collection("users")
+    //   .doc(auth.currentUser?.uid)
+    // const userDoc2 = firestore
+    //   .collection("conversations")
+    //   .doc(docId)
+    //   .collection("users")
+    //   .doc(id)
+
     convoDoc.set({
-      msgThumbnail: "",
+      messageThumbnail: "",
       userIds: [id, auth.currentUser?.uid],
       user1: {
         id: auth.currentUser?.uid,
         displayName: auth.currentUser?.displayName,
         photoUrl: auth.currentUser?.photoURL,
-        hasNewMessages: false,
-        isDeleted: false,
       },
       user2: {
         id: id,
         displayName: displayName,
         photoURL: photoURL,
-        hasNewMessages: false,
-        isDeleted: false,
       },
+      isDeletedForUser1: false,
+      isDeletedForUser2: false,
+      doesUser1HaveNewMessages: false,
+      doesUser2HaveNewMessages: false,
     })
+
+    // userDoc1.set({
+    //   id: auth.currentUser?.uid,
+    //   displayName: auth.currentUser?.displayName,
+    //   photoUrl: auth.currentUser?.photoURL,
+    //   hasNewMessages: false,
+    //   isDeleted: false,
+    // })
+
+    // userDoc2.set({
+    //   id: id,
+    //   displayName: displayName,
+    //   photoURL: photoURL,
+    //   hasNewMessages: false,
+    //   isDeleted: false,
+    // })
   }
   return (
     <DropdownButton

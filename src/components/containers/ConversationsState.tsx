@@ -35,17 +35,21 @@ const useConversationsState = () => {
     (conversations
       ?.map((conversation) =>
         auth.currentUser?.uid === conversation.user1.id
-          ? conversation.user1
-          : conversation.user2,
+          ? conversation.doesUser1HaveNewMessages
+          : conversation.doesUser2HaveNewMessages,
       )
-      .filter((user) => user.hasNewMessages).length ?? 0) > 0
-  console.log(doesUserHaveNewMessages)
+      .filter((hasNewMessages) => hasNewMessages).length ?? 0) > 0
+
+  const isUser1 = (conversation: Conversation) =>
+    auth.currentUser?.uid === conversation.user1.id
+
   return {
     doesUserHaveNewMessages,
     convoUserList,
     conversations,
     isLoading,
     specificConvoCollectionRef,
+    isUser1,
   }
 }
 

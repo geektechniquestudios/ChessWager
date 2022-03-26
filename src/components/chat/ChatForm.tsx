@@ -19,8 +19,6 @@ export const ChatForm: React.FC<Props> = ({
   setFormValue,
 }) => {
   const { user, auth } = Auth.useContainer()
-  // const { formValue, setFormValue } = ChatFormData.useContainer()
-
   const sendMessage = async (
     e:
       | React.FormEvent<HTMLFormElement>

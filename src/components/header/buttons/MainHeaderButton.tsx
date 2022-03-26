@@ -5,12 +5,14 @@ interface Props {
   title: string
   openToMenu: string
   icon: React.ReactNode
+  onClick?: () => void
 }
 
 export const MainHeaderButton: React.FC<Props> = ({
   title,
   openToMenu,
   icon,
+  onClick,
 }) => {
   const { user } = Auth.useContainer()
   const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
@@ -24,6 +26,7 @@ export const MainHeaderButton: React.FC<Props> = ({
             onClick={() => {
               setIsDropdownOpen(true)
               setActiveMenu(openToMenu)
+              onClick && onClick()
             }}
           >
             {icon}

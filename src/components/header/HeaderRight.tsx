@@ -11,15 +11,21 @@ export const HeaderRight: React.FC = () => {
   const { doesUserHaveNewMessages } = ConversationsState.useContainer()
   const { isDarkOn } = DarkMode.useContainer()
 
+  // useEffect(() => {}, [doesUserHaveNewMessages])
+
   const messageIcon: React.ReactNode = doesUserHaveNewMessages ? (
     <RiChat2Line
       size="21"
       className="m-2"
-      color={isDarkOn ? "#4ade80" : "#16a34a"}
+      color={isDarkOn ? "#4ade80" : "#15803d"}
     />
   ) : (
     <RiChat2Line size="21" className="m-2" />
   )
+
+  const setNewMessagesToFalse = () => {
+    
+  }
 
   return (
     <div className="flex-auto justify-end align-middle flex mx-3 gap-1.5">
@@ -32,6 +38,7 @@ export const HeaderRight: React.FC = () => {
         title="Messages"
         openToMenu="messages"
         icon={messageIcon}
+        onClick={setNewMessagesToFalse}
       />
       <MainHeaderButton
         title="Friends"

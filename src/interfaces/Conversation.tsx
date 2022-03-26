@@ -9,5 +9,9 @@ export interface Conversation {
   userIds: string[]
   user1: User
   user2: User
+  isDeletedForUser1: boolean
+  isDeletedForUser2: boolean
+  doesUser1HaveNewMessages: boolean
+  doesUser2HaveNewMessages: boolean
   messages: any
 }

@@ -17,6 +17,7 @@ import { UserMenuState } from "./components/containers/UserMenuState"
 import { LobbyState } from "./components/containers/LobbyState"
 import { BetsState } from "./components/containers/BetsState"
 import { ConversationsState } from "./components/containers/ConversationsState"
+import { UserDataState } from "./components/containers/UserDataState"
 
 const theme = createTheme({
   palette: {
@@ -39,9 +40,11 @@ export const AppWithProviders: React.FC = ({}) => {
                         <UserMenuState.Provider>
                           <BetsState.Provider>
                             <ConversationsState.Provider>
-                              <ThemeProvider theme={theme}>
-                                <App />
-                              </ThemeProvider>
+                              <UserDataState.Provider>
+                                <ThemeProvider theme={theme}>
+                                  <App />
+                                </ThemeProvider>
+                              </UserDataState.Provider>
                             </ConversationsState.Provider>
                           </BetsState.Provider>
                         </UserMenuState.Provider>
