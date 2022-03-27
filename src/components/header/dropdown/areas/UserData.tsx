@@ -45,22 +45,52 @@ export const UserData: React.FC<Props> = ({
             photoURL={photoURL!}
           />
           <div className="w-full h-full grid gap-2 grid-cols-2 p-2">
-            <UserDataTile dataName="Following" dataIcon={<GiYinYang />} />
-            <UserDataTile dataName="Followers" dataIcon={<GiYinYang />} />
-            <UserDataTile dataName="Trust" dataIcon={<FaRegHandshake />} />
-            <UserDataTile dataName="Bet Count" dataIcon={<GiYinYang />} />
-            <UserDataTile dataName="Bets Won" dataIcon={<GiYinYang />} />
-            <UserDataTile dataName="Net Profit" dataIcon={<BsPiggyBank />} />
-            <UserDataTile dataName="Win Percent" dataIcon={<GiYinYang />} />
             <UserDataTile
-              dataName="Total Amount Bet"
-              dataIcon={<GiPayMoney />}
+              data={""}
+              name="Following"
+              icon={<GiYinYang />}
             />
             <UserDataTile
-              dataName="Users Blocked"
-              dataIcon={<FaUsersSlash />}
+              data={""}
+              name="Followers"
+              icon={<GiYinYang />}
             />
-          </div>{" "}
+            <UserDataTile
+              data={`${betFundedCount} / ${betAcceptedCount}`}
+              name="Trust"
+              icon={<FaRegHandshake />}
+            />
+            <UserDataTile
+              data={""}
+              name="Bet Count"
+              icon={<GiYinYang />}
+            />
+            <UserDataTile
+              data={""}
+              name="Bets Won"
+              icon={<GiYinYang />}
+            />
+            <UserDataTile
+              data={""}
+              name="Net Profit"
+              icon={<BsPiggyBank />}
+            />
+            <UserDataTile
+              data={""}
+              name="Win Percent"
+              icon={<GiYinYang />}
+            />
+            <UserDataTile
+              data={""}
+              name="Total Amount Bet"
+              icon={<GiPayMoney />}
+            />
+            <UserDataTile
+              data={""}
+              name="Users Blocked"
+              icon={<FaUsersSlash />}
+            />
+          </div>
         </>
       )}
     </div>

@@ -1,16 +1,20 @@
 interface Props {
-  dataName: string
-  dataIcon: React.ReactNode
+  name: string
+  icon: React.ReactNode
+  data: string
 }
 
-export const UserDataTile: React.FC<Props> = ({ dataName, dataIcon }) => {
+export const UserDataTile: React.FC<Props> = ({ name, icon, data }) => {
   return (
-    <div className="flex justify-evenly bg-stone-300 dark:bg-stone-800">
+    <div className="flex justify-between bg-stone-300 dark:bg-stone-800">
       <div
-        title={dataName}
-        className="flex items-center rounded align-center m-1 px-5 bg-stone-200 dark:bg-stone-700"
+        title={name}
+        className="flex items-center align-center m-1 px-5 bg-stone-200 dark:bg-stone-700"
       >
-        {dataIcon}
+        {icon}
+      </div>
+      <div className="grid place-content-center mx-1.5">
+        {data}
       </div>
     </div>
   )
