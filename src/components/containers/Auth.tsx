@@ -1,15 +1,20 @@
-import firebase from "firebase/compat"
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { createContainer } from "unstated-next"
 import { BigNumber, ethers } from "ethers"
 import { parseEther } from "ethers/lib/utils"
-const firestore = firebase.firestore()
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { firebaseApp } from "../../config"
+import {
+  getFirestore,
+  doc,
+  updateDoc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore"
 
 declare let window: any
-
-const userCollectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-  firestore.collection("users")
+const db = getFirestore(firebaseApp)
 
 const useAuth = () => {
   const [walletAddress, setWalletAddress] = useState(
@@ -23,12 +28,10 @@ const useAuth = () => {
       : false,
   )
 
-  const auth: firebase.auth.Auth = firebase.auth()
-  const [user]: [
-    firebase.User | null | undefined,
-    boolean,
-    firebase.auth.Error | undefined,
-  ] = useAuthState(auth)
+  // const auth: firebase.auth.Auth = firebase.auth()
+  const auth = getAuth(firebaseApp)
+
+  const [user] = useAuthState(auth)
 
   const [isWalletConnecting, setIsWalletConnecting] = useState(false)
 
@@ -47,9 +50,10 @@ const useAuth = () => {
       await provider.send("eth_requestAccounts", [])
       const signer = provider.getSigner()
       const walletAddress = await signer.getAddress()
-      userCollectionRef
-        .doc(auth.currentUser?.uid)
-        .update({ walletAddress: walletAddress })
+      const userDoc = doc(db, "users", auth.currentUser!.uid)
+      updateDoc(userDoc, {
+        walletAddress,
+      })
         .then(() => {
           setIsWalletConnected(true)
           setIsWalletConnecting(false)
@@ -73,9 +77,11 @@ const useAuth = () => {
   }
 
   const disconnectWallet = async () => {
-    userCollectionRef
-      .doc(auth.currentUser?.uid)
-      .update({ walletAddress: "" })
+    if (!auth.currentUser) return
+    const userDoc = doc(db, "users", auth.currentUser!.uid)
+    updateDoc(userDoc, {
+      walletAddress,
+    })
       .then(() => {
         setWalletAddress("")
         setIsWalletConnected(false)
@@ -90,25 +96,22 @@ const useAuth = () => {
   const signInWithGoogle = async () => {
     const addToUsers = () => {
       if (auth.currentUser) {
-        const usersCollectionRef = firestore.collection("users")
-        const userDoc = usersCollectionRef.doc(auth.currentUser.uid)
-        userDoc
-          .get()
+        const userDoc = doc(db, "users", auth.currentUser!.uid)
+        getDoc(userDoc)
           .then((doc) => {
-            if (!doc.exists) {
-              userDoc
-                .set({
-                  betAcceptedCount: 0,
-                  betFundedCount: 0,
-                  blocked: [],
-                  walletAddress: "",
-                  photoURL: auth.currentUser!.photoURL,
-                  displayName: auth.currentUser!.displayName,
-                  searchableDisplayName: auth.currentUser!.displayName?.toLowerCase(),
-                  bets: [],
-                  id: auth.currentUser!.uid,
-                })
-                .catch(console.error)
+            if (!doc.exists()) {
+              setDoc(userDoc, {
+                betAcceptedCount: 0,
+                betFundedCount: 0,
+                blocked: [],
+                walletAddress: "",
+                photoURL: auth.currentUser!.photoURL,
+                displayName: auth.currentUser!.displayName,
+                searchableDisplayName:
+                  auth.currentUser!.displayName?.toLowerCase(),
+                bets: [],
+                id: auth.currentUser!.uid,
+              }).catch(console.error)
             }
             if (doc.data()?.walletAddress ?? "" !== "") {
               setIsWalletConnected(true)
@@ -120,9 +123,11 @@ const useAuth = () => {
           .catch(console.error)
       }
     }
-    const provider = new firebase.auth.GoogleAuthProvider()
-    auth
-      .signInWithPopup(provider)
+
+    const provider = new GoogleAuthProvider()
+    const auth = getAuth(firebaseApp)
+
+    signInWithPopup(auth, provider)
       .then(() => {
         addToUsers()
       })

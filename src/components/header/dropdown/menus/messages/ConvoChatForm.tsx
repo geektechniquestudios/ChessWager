@@ -3,8 +3,9 @@ import firebase from "firebase/compat/app"
 import { Auth } from "../../../../containers/Auth"
 import "../../../../../style/dropdown.scss"
 import { BiSend } from "react-icons/bi"
-import { useDocumentDataOnce } from "react-firebase-hooks/firestore"
 import { Conversation } from "../../../../../interfaces/Conversation"
+
+const firestore = firebase.firestore()
 
 interface Props {
   dummy: React.RefObject<HTMLInputElement>
@@ -42,21 +43,31 @@ export const ConvoChatForm: React.FC<Props> = ({
     const conversation: Conversation = (
       await conversationCollectionRef.get()
     ).data() as Conversation
-    if ((conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")) {
-      conversationCollectionRef.update({
-        messageThumbnail: formValue,
-        doesUser1HaveUnreadMessages: true,
-      })
-    } else if (
-      (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
-    ) {
-      conversationCollectionRef.update({
-        messageThumbnail: formValue,
-        doesUser2HaveUnreadMessages: true,
-      })
-    } else {
-      throw new Error("User not in conversation")
-    }
+
+    // const isUser1 =
+    //   (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")
+
+    // const isUser2 =
+    //   (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
+
+    // if (isUser1) {
+    //   const userRef = firestore.collection("users").doc(conversation.user2.id)
+    //   userRef.update({
+    //     hasNewMessage: true,
+    //   })
+
+    //   conversationCollectionRef.update({
+    //     messageThumbnail: formValue,
+    //     doesUser1HaveUnreadMessages: true,
+    //   })
+    // } else if (isUser2) {
+    //   conversationCollectionRef.update({
+    //     messageThumbnail: formValue,
+    //     doesUser2HaveUnreadMessages: true,
+    //   })
+    // } else {
+    //   throw new Error("User not in conversation")
+    // }
 
     // also need to get convo ref and set messages to unread for other user
     // also need to batch writes

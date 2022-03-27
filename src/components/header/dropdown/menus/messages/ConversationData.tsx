@@ -1,7 +1,6 @@
 import firebase from "firebase/compat/app"
 
 import { useRef } from "react"
-import { ChatBody } from "../../../../chat/ChatBody"
 import { Auth } from "../../../../containers/Auth"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { UserMenuState } from "../../../../containers/UserMenuState"
@@ -35,7 +34,7 @@ export const ConversationData: React.FC<Props> = ({}) => {
   }
 
   return (
-    <div className="flex flex-col-reverse h-96 ">
+    <div className="flex flex-col-reverse h-96">
       <ConvoChatForm
         dummy={dummy}
         messagesRef={conversationsCollectionRef}

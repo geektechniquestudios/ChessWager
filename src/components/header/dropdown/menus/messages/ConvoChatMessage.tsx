@@ -1,5 +1,4 @@
 import { MessageBody } from "../../../../chat/MessageBody"
-import { UserTitle } from "../../../../chat/UserTitle"
 import { ConvoUserTitle } from "./ConvoUserTitle"
 
 interface Props {
