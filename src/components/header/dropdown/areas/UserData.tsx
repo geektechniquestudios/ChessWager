@@ -44,14 +44,14 @@ export const UserData: React.FC<Props> = ({
             displayName={displayName ?? ""}
             photoURL={photoURL!}
           />
-          <div className="w-full h-full grid gap-2 grid-cols-2 p-2">
+          <div className="w-full h-full grid gap-2 grid-cols-2 p-3">
             <UserDataTile
-              data={""}
+              data={"5"}
               name="Following"
               icon={<GiYinYang />}
             />
             <UserDataTile
-              data={""}
+              data={"20"}
               name="Followers"
               icon={<GiYinYang />}
             />
@@ -61,32 +61,32 @@ export const UserData: React.FC<Props> = ({
               icon={<FaRegHandshake />}
             />
             <UserDataTile
-              data={""}
+              data={"128"}
               name="Bet Count"
               icon={<GiYinYang />}
             />
             <UserDataTile
-              data={""}
+              data={"72"}
               name="Bets Won"
               icon={<GiYinYang />}
             />
             <UserDataTile
-              data={""}
+              data={"1121"}
               name="Net Profit"
               icon={<BsPiggyBank />}
             />
             <UserDataTile
-              data={""}
+              data={"56.25"}
               name="Win Percent"
               icon={<GiYinYang />}
             />
             <UserDataTile
-              data={""}
+              data={"479"}
               name="Total Amount Bet"
               icon={<GiPayMoney />}
             />
             <UserDataTile
-              data={""}
+              data={"3"}
               name="Users Blocked"
               icon={<FaUsersSlash />}
             />
