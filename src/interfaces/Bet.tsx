@@ -1,4 +1,4 @@
-import firebase from "firebase/compat/app"
+import { Timestamp } from "firebase/firestore"
 
 export interface Bet {
   id: string
@@ -18,7 +18,7 @@ export interface Bet {
   hasUser2Paid: boolean
   createdAt: Date
   gameId: string
-  timestamp: firebase.firestore.Timestamp
+  timestamp: Timestamp
   contractAddress: string
   user1FollowThrough: number[]
   user2FollowThrough: number[]

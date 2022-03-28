@@ -36,7 +36,7 @@
     "react-chessground": "^1.5.0",
     "react-currency-input-field": "^3.5.1",
     "react-dom": "^18.0.0-rc.2",
-    "react-firebase-hooks": "^3.0.4",
+    "react-firebase-hooks": "^4.0.2",
     "react-flip-toolkit": "^7.0.13",
     "react-icons": "^4.3.1",
     "react-textarea-autosize": "^8.3.3",

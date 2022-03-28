@@ -1,4 +1,3 @@
-import firebase from "firebase/compat"
 
 import { Auth } from "../../../../containers/Auth"
 import { DropdownItem } from "../../DropdownItem"
@@ -15,9 +14,9 @@ export const Profile: React.FC = () => {
   const { user } = Auth.useContainer()
   const uploadImage = async (file: File) => {
     // upload image to firebase storage
-    const storageRef = firebase.storage().ref()
-    const imageRef = storageRef.child(`${user!.uid}/profile.jpg`)
-    await imageRef.put(file)
+    // const storageRef = firebase.storage().ref()
+    // const imageRef = storageRef.child(`${user!.uid}/profile.jpg`)
+    // await imageRef.put(file)
   }
 
   return (

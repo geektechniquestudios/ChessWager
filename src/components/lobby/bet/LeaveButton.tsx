@@ -1,9 +1,16 @@
 import { RiCloseFill } from "react-icons/ri"
-import firebase from "firebase/compat"
 import { Auth } from "../../containers/Auth"
 import "../../../style/buttons.scss"
 import { LobbyState } from "../../containers/LobbyState"
-const firestore = firebase.firestore()
+import {
+  doc,
+  DocumentData,
+  DocumentReference,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore"
+import { firebaseApp } from "../../../config"
+const db = getFirestore(firebaseApp)
 
 interface Props {
   user2Id: string
@@ -13,19 +20,18 @@ interface Props {
 
 export const LeaveButton: React.FC<Props> = ({ user2Id, status, id }) => {
   const { user, auth } = Auth.useContainer()
-  const betDoc: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
-    firestore.collection("lobby").doc(id)
+  const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
 
   const { refreshLobby } = LobbyState.useContainer()
   const cancel = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    betDoc
-      .update({
-        status: "ready",
-        user2Id: "",
-        user2Metamask: "",
-        user2PhotoURL: "",
-      })
+
+    updateDoc(betDoc, {
+      status: "ready",
+      user2Id: "",
+      user2Metamask: "",
+      user2PhotoURL: "",
+    })
       .then(refreshLobby)
       .catch(console.error)
   }

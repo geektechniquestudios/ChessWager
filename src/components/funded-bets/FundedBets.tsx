@@ -1,34 +1,11 @@
-import firebase from "firebase/compat/app"
-import { GameState } from "../containers/GameState"
 import { MiniBet } from "./MiniBet"
 import { Price } from "../containers/Price"
 import "../../style/scrollbar.scss"
 import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
+import { Bet } from "../../interfaces/Bet"
 
 interface Props {}
-
-interface Bet {
-  id: string
-  amount: number
-  betSide: string
-  multiplier: number
-  status: string
-  user1Id: string
-  user1Metamask: string
-  user1PhotoURL: string
-  hasUser1Paid: boolean
-  user2Id: string
-  user2Metamask: string
-  user2PhotoURL: string
-  hasUser2Paid: boolean
-  createdAt: Date
-  gameId: string
-  timestamp: firebase.firestore.Timestamp
-  contractAddress: string
-  user1DisplayName: string
-  user2DisplayName: string
-}
 
 export const FundedBets: React.FC<Props> = () => {
   const { avaxPrice } = Price.useContainer()
@@ -36,9 +13,9 @@ export const FundedBets: React.FC<Props> = () => {
 
   const amountAtStake = (
     (bets
-      ?.filter((bet) => bet.status === "funded")
-      .map((bet) => bet.amount + bet.amount * bet.multiplier)
-      .reduce((a, b) => a + b, 0) ?? 0) * avaxPrice
+      ?.filter((bet: Bet) => bet.status === "funded")
+      .map((bet: Bet) => bet.amount + bet.amount * bet.multiplier)
+      .reduce((a: number, b: number) => a + b, 0) ?? 0) * avaxPrice
   )
     .toFixed(2)
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -74,11 +51,12 @@ export const FundedBets: React.FC<Props> = () => {
             style={{ direction: "ltr" }}
           >
             {bets
-              ?.sort((a, b) => b.amount - a.amount)
+              ?.sort((a: Bet, b: Bet) => b.amount - a.amount)
               .filter(
-                (bet) => bet.status === "funded" && isBetRelatedToUser(bet),
+                (bet: Bet) =>
+                  bet.status === "funded" && isBetRelatedToUser(bet),
               )
-              .map((bet) => (
+              .map((bet: Bet) => (
                 <MiniBet
                   key={bet.id}
                   amount={bet.amount}
@@ -96,11 +74,12 @@ export const FundedBets: React.FC<Props> = () => {
             style={{ direction: "ltr" }}
           >
             {bets
-              ?.sort((a, b) => b.amount - a.amount)
+              ?.sort((a: Bet, b: Bet) => b.amount - a.amount)
               .filter(
-                (bet) => bet.status === "funded" && !isBetRelatedToUser(bet),
+                (bet: Bet) =>
+                  bet.status === "funded" && !isBetRelatedToUser(bet),
               )
-              .map((bet) => (
+              .map((bet: Bet) => (
                 <MiniBet
                   key={bet.id}
                   amount={bet.amount}

@@ -1,22 +1,19 @@
 import "../../style/chat.scss"
 import "../../style/buttons.scss"
 
-import "firebase/compat/firestore"
-import "firebase/compat/auth"
-import "firebase/compat/analytics"
-
 import { useRef } from "react"
-import { Firestore } from "../containers/Firestore"
 import { ChatHeader } from "./ChatHeader"
 import { ChatForm } from "./ChatForm"
 import { ChatBody } from "./ChatBody"
 import { ChatFormData } from "../containers/ChatFormData"
+import { collection, getFirestore } from "firebase/firestore"
+import { firebaseApp } from "../../config"
+
+const db = getFirestore(firebaseApp)
 
 export const GlobalChat: React.FC = () => {
-  const { firestore } = Firestore.useContainer()
-
   const dummy = useRef<HTMLInputElement>(null)
-  const messagesRef = firestore.collection("messages")
+  const messagesRef = collection(db, "messages")
 
   const { chatFormValue, setChatFormValue } = ChatFormData.useContainer()
   return (

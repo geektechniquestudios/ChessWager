@@ -1,29 +1,41 @@
 import { TextareaAutosize } from "@mui/material"
-import firebase from "firebase/compat/app"
 import { Auth } from "../../../../containers/Auth"
 import "../../../../../style/dropdown.scss"
 import { BiSend } from "react-icons/bi"
 import { Conversation } from "../../../../../interfaces/Conversation"
-
-const firestore = firebase.firestore()
+import {
+  addDoc,
+  collection,
+  CollectionReference,
+  doc,
+  DocumentData,
+  DocumentReference,
+  getDoc,
+  getFirestore,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore"
+import { firebaseApp } from "../../../../../config"
+const db = getFirestore(firebaseApp)
 
 interface Props {
   dummy: React.RefObject<HTMLInputElement>
-  messagesRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+  messagesRef: CollectionReference<DocumentData>
   formValue: string
   setFormValue:
     | React.Dispatch<React.SetStateAction<string>>
     | ((formValue: string) => void)
-  conversationCollectionRef: firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
+  conversationDocRef: DocumentReference<DocumentData>
 }
 export const ConvoChatForm: React.FC<Props> = ({
   dummy,
   messagesRef,
   formValue,
   setFormValue,
-  conversationCollectionRef,
+  conversationDocRef,
 }) => {
   const { user, auth } = Auth.useContainer()
+  
   const sendMessage = async (
     e:
       | React.FormEvent<HTMLFormElement>
@@ -32,42 +44,41 @@ export const ConvoChatForm: React.FC<Props> = ({
     e.preventDefault()
     if (formValue.trim() === "" || !user || !auth.currentUser) return
 
-    const { uid, photoURL }: firebase.User = auth.currentUser
-    await messagesRef.add({
+    const { uid, photoURL } = auth.currentUser
+
+    addDoc(messagesRef, {
       text: formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
       uid,
       photoURL,
     })
 
-    const conversation: Conversation = (
-      await conversationCollectionRef.get()
-    ).data() as Conversation
+    const conversation = (await getDoc(conversationDocRef)).data()
 
-    // const isUser1 =
-    //   (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")
+    const isUser1 =
+      (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")
 
-    // const isUser2 =
-    //   (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
+    const isUser2 =
+      (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
 
-    // if (isUser1) {
-    //   const userRef = firestore.collection("users").doc(conversation.user2.id)
-    //   userRef.update({
-    //     hasNewMessage: true,
-    //   })
+    if (isUser1) {
+      const userRef = doc(db, "users", conversation!.user2.id)
+      updateDoc(userRef, {
+        hasNewMessage: true,
+      })
 
-    //   conversationCollectionRef.update({
-    //     messageThumbnail: formValue,
-    //     doesUser1HaveUnreadMessages: true,
-    //   })
-    // } else if (isUser2) {
-    //   conversationCollectionRef.update({
-    //     messageThumbnail: formValue,
-    //     doesUser2HaveUnreadMessages: true,
-    //   })
-    // } else {
-    //   throw new Error("User not in conversation")
-    // }
+      updateDoc(conversationDocRef, {
+        messageThumbnail: formValue,
+        doesUser1HaveUnreadMessages: true,
+      })
+    } else if (isUser2) {
+      updateDoc(conversationDocRef, {
+        messageThumbnail: formValue,
+        doesUser1HaveUnreadMessages: true,
+      })
+    } else {
+      throw new Error("User not in conversation")
+    }
 
     // also need to get convo ref and set messages to unread for other user
     // also need to batch writes

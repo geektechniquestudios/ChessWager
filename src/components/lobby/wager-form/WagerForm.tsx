@@ -1,6 +1,5 @@
 import { useState } from "react"
 import "../../../style/lobby.scss"
-import firebase from "firebase/compat/app"
 import { GameState } from "../../containers/GameState"
 import { Auth } from "../../containers/Auth"
 import { SideChooser } from "./SideChooser"
@@ -10,7 +9,16 @@ import { Total } from "./Total"
 import { PlaceBet } from "./PlaceBet"
 import { QuickBet } from "./QuickBet"
 import { TheirBet } from "./TheirBet"
-const firestore = firebase.firestore()
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+  serverTimestamp
+} from "firebase/firestore"
+import { firebaseApp } from "../../../config"
+const db = getFirestore(firebaseApp)
 
 export const WagerForm: React.FC = () => {
   const { gameId } = GameState.useContainer()
@@ -33,10 +41,8 @@ export const WagerForm: React.FC = () => {
   const [localUsdAmount, setLocalUsdAmount] = useState("")
   const [isAmountEmpty, setIsAmountEmpty] = useState(false)
 
-  const lobbyRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-    firestore.collection("lobby")
-  const userRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-    firestore.collection("users")
+  const lobbyRef = collection(db, "lobby")
+  const userRef = collection(db, "users")
 
   const canUserBet: () => Promise<boolean> = async () => {
     if (!auth.currentUser) {
@@ -60,11 +66,9 @@ export const WagerForm: React.FC = () => {
 
     if (!(await canUserBet())) return
 
-    const { uid, photoURL, displayName }: firebase.User = auth.currentUser!
-
-    userRef
-      .doc(uid)
-      .get()
+    const { uid, photoURL, displayName } = auth.currentUser!
+    const userDoc = doc(userRef, uid)
+    getDoc(userDoc)
       .then((doc: any) => {
         const user1FollowThrough = [
           doc.data().betFundedCount,
@@ -73,22 +77,20 @@ export const WagerForm: React.FC = () => {
         return user1FollowThrough
       })
       .then((user1FollowThrough: number[]) => {
-        lobbyRef
-          .add({
-            amount: betAmount,
-            betSide: betSide,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            gameId: gameId,
-            multiplier: multiplier,
-            status: "ready",
-            user1Id: uid,
-            user1Metamask: user1Metamask,
-            user1PhotoURL: photoURL,
-            user1DisplayName: displayName,
-            user1FollowThrough: user1FollowThrough,
-            contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
-          })
-          .catch(console.error)
+        addDoc(lobbyRef, {
+          amount: betAmount,
+          betSide: betSide,
+          createdAt: serverTimestamp(),
+          gameId: gameId,
+          multiplier: multiplier,
+          status: "ready",
+          user1Id: uid,
+          user1Metamask: user1Metamask,
+          user1PhotoURL: photoURL,
+          user1DisplayName: displayName,
+          user1FollowThrough: user1FollowThrough,
+          contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
+        }).catch(console.error)
       })
       .catch(console.error)
   }

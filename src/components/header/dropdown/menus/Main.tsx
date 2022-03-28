@@ -1,9 +1,8 @@
 import "../../../../style/dropdown.scss"
+import "react-toggle/style.css"
 import { Auth } from "../../../containers/Auth"
-
 import { DropdownItem } from "../DropdownItem"
 import Toggle from "react-toggle"
-
 import { CgProfile } from "react-icons/cg"
 import {
   RiLoginCircleLine,

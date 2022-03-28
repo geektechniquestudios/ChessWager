@@ -28,7 +28,6 @@ const useAuth = () => {
       : false,
   )
 
-  // const auth: firebase.auth.Auth = firebase.auth()
   const auth = getAuth(firebaseApp)
 
   const [user] = useAuthState(auth)

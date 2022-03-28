@@ -1,12 +1,17 @@
 import { RiMailSendLine } from "react-icons/ri"
 import { DropdownState } from "../../../containers/DropdownState"
 import { DropdownButton } from "./DropdownButton"
-
-import firebase from "firebase/compat/app"
 import { Auth } from "../../../containers/Auth"
+import { firebaseApp } from "../../../../config"
+import {
+  collection,
+  doc,
+  getFirestore,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore"
 
-const firestore = firebase.firestore()
-
+const db = getFirestore(firebaseApp)
 interface Props {
   id: string
   displayName: string
@@ -24,7 +29,7 @@ export const SendMessageButton: React.FC<Props> = ({
   const docId = [auth.currentUser?.uid, id].sort().join("-")
 
   const createConvoDoc = () => {
-    const convoDoc = firestore.collection("conversations").doc(docId)
+    const convoDoc = doc(db, "conversations", docId)
     // const userDoc1 = firestore
     //   .collection("conversations")
     //   .doc(docId)
@@ -36,7 +41,7 @@ export const SendMessageButton: React.FC<Props> = ({
     //   .collection("users")
     //   .doc(id)
 
-    convoDoc.set({
+    updateDoc(convoDoc, {
       messageThumbnail: "",
       userIds: [id, auth.currentUser?.uid],
       user1: {
@@ -54,23 +59,23 @@ export const SendMessageButton: React.FC<Props> = ({
       doesUser1HaveNewMessages: false,
       doesUser2HaveNewMessages: false,
     })
-
-    // userDoc1.set({
-    //   id: auth.currentUser?.uid,
-    //   displayName: auth.currentUser?.displayName,
-    //   photoUrl: auth.currentUser?.photoURL,
-    //   hasNewMessages: false,
-    //   isDeleted: false,
-    // })
-
-    // userDoc2.set({
-    //   id: id,
-    //   displayName: displayName,
-    //   photoURL: photoURL,
-    //   hasNewMessages: false,
-    //   isDeleted: false,
-    // })
   }
+  // userDoc1.set({
+  //   id: auth.currentUser?.uid,
+  //   displayName: auth.currentUser?.displayName,
+  //   photoUrl: auth.currentUser?.photoURL,
+  //   hasNewMessages: false,
+  //   isDeleted: false,
+  // })
+
+  // userDoc2.set({
+  //   id: id,
+  //   displayName: displayName,
+  //   photoURL: photoURL,
+  //   hasNewMessages: false,
+  //   isDeleted: false,
+  // })
+
   return (
     <DropdownButton
       content={<RiMailSendLine />}

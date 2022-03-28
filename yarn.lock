@@ -7750,7 +7750,7 @@ __metadata:
     react-chessground: ^1.5.0
     react-currency-input-field: ^3.5.1
     react-dom: ^18.0.0-rc.2
-    react-firebase-hooks: ^3.0.4
+    react-firebase-hooks: ^4.0.2
     react-flip-toolkit: ^7.0.13
     react-icons: ^4.3.1
     react-textarea-autosize: ^8.3.3
@@ -19941,13 +19941,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-firebase-hooks@npm:^3.0.4":
-  version: 3.0.5
-  resolution: "react-firebase-hooks@npm:3.0.5"
+"react-firebase-hooks@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "react-firebase-hooks@npm:4.0.2"
   peerDependencies:
-    firebase: ">= 8.0.0"
+    firebase: ">= 9.0.0"
     react: ">= 16.8.0"
-  checksum: 8fba4e6a7a8bf7ed0e8ae76f51d1333890ea3fcd0d3d3c028aee4a6cf603333a5f49d4af30c2ec6d11eb0c1ffeee8cb5dc0f97012808ec9ad10c5ac57290de73
+  checksum: d7160ccf18e32c39c4286e44708f64c8584b8aec2267cb35eacc4ae682521726e24ad045288f655efa184d5ffbc9073ef37a12ef8b6bbd1fa6aceaac23da70a2
   languageName: node
   linkType: hard
 

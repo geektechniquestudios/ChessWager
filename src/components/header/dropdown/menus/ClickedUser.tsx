@@ -1,16 +1,17 @@
-import firebase from "firebase/compat/app"
 import { FirebaseError } from "@firebase/util"
 
 import { Menu } from "../Menu"
 import { UserData } from "../areas/UserData"
 import { useDocumentDataOnce } from "react-firebase-hooks/firestore"
 import { UserMenuState } from "../../../containers/UserMenuState"
+import { doc, getFirestore } from "firebase/firestore"
+import { firebaseApp } from "../../../../config"
 
-const firestore = firebase.firestore()
+const db = getFirestore(firebaseApp)
 
 export const ClickedUser: React.FC = ({}) => {
   const { clickedUserId } = UserMenuState.useContainer()
-  const userDocRef = firestore.collection("users").doc(clickedUserId ?? "")
+  const userDocRef = doc(db, "users", clickedUserId)
   const [user, isLoading]: [
     any | undefined,
     boolean,
