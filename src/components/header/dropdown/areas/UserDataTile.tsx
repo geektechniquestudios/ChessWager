@@ -9,7 +9,7 @@ export const UserDataTile: React.FC<Props> = ({ name, icon, data }) => {
     <div className="flex justify-between rounded-md bg-stone-300 dark:bg-stone-600">
       <div
         title={name}
-        className="flex items-center align-center rounded-md m-1 px-5 bg-stone-100 dark:bg-stone-700"
+        className="flex items-center align-center rounded-md text-lg m-1 px-4 bg-stone-100 dark:bg-stone-700"
       >
         {icon}
       </div>

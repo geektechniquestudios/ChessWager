@@ -46,7 +46,7 @@ export const UserData: React.FC<Props> = ({
             displayName={displayName ?? ""}
             photoURL={photoURL!}
           />
-          <div className="w-full h-full grid gap-2 grid-cols-2 p-3">
+          <div className="w-full h-full grid gap-1.5 grid-cols-2 p-2">
             <UserDataTile
               data={"5"}
               name="Following"
