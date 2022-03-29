@@ -48,12 +48,12 @@ export const UserData: React.FC<Props> = ({
           />
           <div className="w-full h-full grid gap-2 grid-cols-2 p-3">
             <UserDataTile
-              data={""}
+              data={"5"}
               name="Following"
               icon={<GiShadowFollower />}
             />
             <UserDataTile
-              data={""}
+              data={"20"}
               name="Followers"
               icon={<GiTwoShadows />}
             />
@@ -63,32 +63,32 @@ export const UserData: React.FC<Props> = ({
               icon={<FaRegHandshake />}
             />
             <UserDataTile
-              data={""}
+              data={"128"}
               name="Bet Count"
               icon={<RiStackLine />}
             />
             <UserDataTile
-              data={""}
+              data={"72"}
               name="Bets Won"
               icon={<GiPodiumWinner />}
             />
             <UserDataTile
-              data={""}
+              data={"1121"}
               name="Net Profit"
               icon={<BsPiggyBank />}
             />
             <UserDataTile
-              data={""}
+              data={"56.25"}
               name="Win Percent"
               icon={<FiPercent />}
             />
             <UserDataTile
-              data={""}
+              data={"479"}
               name="Total Amount Bet"
               icon={<GiPayMoney />}
             />
             <UserDataTile
-              data={""}
+              data={"3"}
               name="Users Blocked"
               icon={<FaUsersSlash />}
             />
