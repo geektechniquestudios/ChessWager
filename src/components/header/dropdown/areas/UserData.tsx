@@ -1,6 +1,8 @@
 import { BsPiggyBank } from "react-icons/bs"
 import { FaRegHandshake, FaUsersSlash } from "react-icons/fa"
-import { GiPayMoney, GiYinYang } from "react-icons/gi"
+import { FiPercent } from "react-icons/fi"
+import { GiPayMoney, GiPodiumWinner, GiShadowFollower, GiTwoShadows } from "react-icons/gi"
+import { RiStackLine } from "react-icons/ri"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtons } from "./UserButtons"
 import { UserDataTile } from "./UserDataTile"
@@ -48,12 +50,12 @@ export const UserData: React.FC<Props> = ({
             <UserDataTile
               data={"5"}
               name="Following"
-              icon={<GiYinYang />}
+              icon={<GiShadowFollower />}
             />
             <UserDataTile
               data={"20"}
               name="Followers"
-              icon={<GiYinYang />}
+              icon={<GiTwoShadows />}
             />
             <UserDataTile
               data={`${betFundedCount} / ${betAcceptedCount}`}
@@ -63,12 +65,12 @@ export const UserData: React.FC<Props> = ({
             <UserDataTile
               data={"128"}
               name="Bet Count"
-              icon={<GiYinYang />}
+              icon={<RiStackLine />}
             />
             <UserDataTile
               data={"72"}
               name="Bets Won"
-              icon={<GiYinYang />}
+              icon={<GiPodiumWinner />}
             />
             <UserDataTile
               data={"1121"}
@@ -78,7 +80,7 @@ export const UserData: React.FC<Props> = ({
             <UserDataTile
               data={"56.25"}
               name="Win Percent"
-              icon={<GiYinYang />}
+              icon={<FiPercent />}
             />
             <UserDataTile
               data={"479"}
