@@ -1,4 +1,3 @@
-import { AiOutlineMinusCircle } from "react-icons/ai"
 import { BsPiggyBank } from "react-icons/bs"
 import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
 import { FiPercent } from "react-icons/fi"
@@ -13,6 +12,7 @@ import { DarkMode } from "../../../containers/DarkMode"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtons } from "./UserButtons"
 import { UserDataTile } from "./UserDataTile"
+import { WideDataTile } from "./WideDataTile"
 
 interface Props {
   betAcceptedCount?: number
@@ -83,7 +83,7 @@ export const UserData: React.FC<Props> = ({
             <UserDataTile
               data={"56"}
               name="Bets Lost"
-              icon={<AiOutlineMinusCircle />}
+              icon={<FaRegHandPeace className="rotate-180" />}
             />
             <UserDataTile
               data={"56.25"}
@@ -106,7 +106,9 @@ export const UserData: React.FC<Props> = ({
               name="Net Profit"
               icon={<BsPiggyBank />}
             />
-            <UserDataTile
+          </div>
+          <div className="w-full px-2">
+            <WideDataTile
               data={"9430"}
               name="Total Amount Won"
               icon={<RiHandCoinLine />}
