@@ -1,5 +1,5 @@
 import { createContainer } from "unstated-next"
-import { Conversation } from "../../interfaces/Conversation"
+import type { Conversation } from "../../interfaces/Conversation"
 import { FirebaseError } from "firebase/app"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { Auth } from "./Auth"

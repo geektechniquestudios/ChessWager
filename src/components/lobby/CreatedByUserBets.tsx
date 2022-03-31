@@ -1,4 +1,4 @@
-import { Bet } from "../../interfaces/Bet"
+import type { Bet } from "../../interfaces/Bet"
 import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
 import { Bet as BetComponent } from "./bet/Bet"

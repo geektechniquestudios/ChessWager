@@ -2,7 +2,7 @@ import { TextareaAutosize } from "@mui/material"
 import { Auth } from "../../../../containers/Auth"
 import "../../../../../style/dropdown.scss"
 import { BiSend } from "react-icons/bi"
-import { Conversation } from "../../../../../interfaces/Conversation"
+import type { Conversation } from "../../../../../interfaces/Conversation"
 import {
   addDoc,
   collection,

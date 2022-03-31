@@ -1,6 +1,6 @@
 import { createContainer } from "unstated-next"
 import { GameState } from "./GameState"
-import { Bet, BetData } from "../../interfaces/Bet"
+import type { Bet, BetData } from "../../interfaces/Bet"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useState } from "react"
 import { Auth } from "./Auth"

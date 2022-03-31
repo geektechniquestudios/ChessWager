@@ -1,7 +1,7 @@
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { FirebaseError } from "firebase/app"
 import { UserListItem } from "./UserListItem"
-import { User } from "../../../../interfaces/User"
+import type { User } from "../../../../interfaces/User"
 import "../../../../style/scrollbar.scss"
 
 import { firebaseApp } from "../../../../config"

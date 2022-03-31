@@ -3,7 +3,7 @@ import { Price } from "../containers/Price"
 import "../../style/scrollbar.scss"
 import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
-import { Bet } from "../../interfaces/Bet"
+import type { Bet } from "../../interfaces/Bet"
 
 interface Props {}
 

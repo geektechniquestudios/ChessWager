@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore"
 import { User } from "firebase/auth"
 import { FirebaseError } from "firebase/app"
-import { Message } from "../../interfaces/Message"
+import type { Message } from "../../interfaces/Message"
 
 interface Props {
   messagesRef: CollectionReference<DocumentData>
@@ -26,9 +26,14 @@ export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
 
   return (
     <div className="scrollbar flex flex-col-reverse pb-3 overflow-y-auto overflow-x-hidden px-1">
-      {messages?.map((message: Message) => (
-        <ChatMessage key={message.uid} {...message} />
-      ))}
+      {messages
+        ?.sort(
+          (a: Message, b: Message) =>
+            b.createdAt?.seconds - a.createdAt?.seconds,
+        )
+        .map((message: Message) => (
+          <ChatMessage key={message.uid + message?.createdAt} {...message} />
+        ))}
     </div>
   )
 }

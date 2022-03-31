@@ -7,7 +7,7 @@ import {
   query,
 } from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { Message } from "../../../../../interfaces/Message"
+import type { Message } from "../../../../../interfaces/Message"
 import { ConvoChatMessage } from "./ConvoChatMessage"
 
 interface Props {
@@ -24,7 +24,7 @@ export const ConvoChatBody: React.FC<Props> = ({ messagesRef }) => {
   return (
     <div className="scrollbar flex flex-col-reverse pb-3 overflow-y-auto overflow-x-hidden px-1">
       {messages?.map((message: Message) => (
-        <ConvoChatMessage key={message.uid} {...message} />
+        <ConvoChatMessage key={message.uid + message.createdAt} {...message} />
       ))}
     </div>
   )

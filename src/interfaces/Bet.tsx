@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore"
 
-export interface Bet {
+export type Bet =  {
   id: string
   amount: number
   betSide: "black" | "white"
@@ -24,7 +24,7 @@ export interface Bet {
   user2FollowThrough: number[]
 }
 
-export interface BetData {
+export type BetData = {
   isSelected: boolean
   index: number
   id: string

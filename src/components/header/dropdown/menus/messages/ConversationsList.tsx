@@ -2,7 +2,7 @@ import "../../../../../style/scrollbar.scss"
 import { DropdownConvoItem } from "../../DropdownConvoItem"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { ConversationsState } from "../../../../containers/ConversationsState"
-import { User } from "../../../../../interfaces/User"
+import type { User } from "../../../../../interfaces/User"
 
 export const ConversationsList: React.FC = ({}) => {
   const {

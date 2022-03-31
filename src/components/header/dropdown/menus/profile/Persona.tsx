@@ -5,7 +5,7 @@ import { MenuLine } from "../../MenuLine"
 import { UserData } from "../../areas/UserData"
 import { Auth } from "../../../../containers/Auth"
 import { useDocumentDataOnce } from "react-firebase-hooks/firestore"
-import { User } from "../../../../../interfaces/User"
+import type { User } from "../../../../../interfaces/User"
 import {
   doc,
   DocumentData,
