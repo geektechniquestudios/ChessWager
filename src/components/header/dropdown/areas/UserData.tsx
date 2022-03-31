@@ -1,8 +1,15 @@
+import { AiOutlineMinusCircle } from "react-icons/ai"
 import { BsPiggyBank } from "react-icons/bs"
-import { FaRegHandshake, FaUsersSlash } from "react-icons/fa"
+import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
 import { FiPercent } from "react-icons/fi"
-import { GiPayMoney, GiPodiumWinner, GiShadowFollower, GiTwoShadows } from "react-icons/gi"
-import { RiStackLine } from "react-icons/ri"
+import { GiPayMoney } from "react-icons/gi"
+import {
+  RiHandCoinLine,
+  RiHeartsLine,
+  RiStackLine,
+  RiUserHeartLine,
+} from "react-icons/ri"
+import { DarkMode } from "../../../containers/DarkMode"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtons } from "./UserButtons"
 import { UserDataTile } from "./UserDataTile"
@@ -30,6 +37,7 @@ export const UserData: React.FC<Props> = ({
   walletAddress,
   isLoading,
 }) => {
+  const { isDarkOn } = DarkMode.useContainer()
   return (
     <div className="h-96 flex flex-col items-center">
       {isLoading ? (
@@ -50,12 +58,12 @@ export const UserData: React.FC<Props> = ({
             <UserDataTile
               data={"5"}
               name="Following"
-              icon={<GiShadowFollower />}
+              icon={<RiUserHeartLine />}
             />
             <UserDataTile
               data={"20"}
               name="Followers"
-              icon={<GiTwoShadows />}
+              icon={<RiHeartsLine />}
             />
             <UserDataTile
               data={`${betFundedCount} / ${betAcceptedCount}`}
@@ -70,12 +78,12 @@ export const UserData: React.FC<Props> = ({
             <UserDataTile
               data={"72"}
               name="Bets Won"
-              icon={<GiPodiumWinner />}
+              icon={<FaRegHandPeace />}
             />
             <UserDataTile
-              data={"1121"}
-              name="Net Profit"
-              icon={<BsPiggyBank />}
+              data={"56"}
+              name="Bets Lost"
+              icon={<AiOutlineMinusCircle />}
             />
             <UserDataTile
               data={"56.25"}
@@ -85,12 +93,23 @@ export const UserData: React.FC<Props> = ({
             <UserDataTile
               data={"479"}
               name="Total Amount Bet"
-              icon={<GiPayMoney />}
+              icon={
+                <GiPayMoney
+                  strokeWidth={22}
+                  stroke={isDarkOn ? "#d6d3d1" : "#1c1917"}
+                  color="transparent"
+                />
+              }
             />
             <UserDataTile
-              data={"3"}
-              name="Users Blocked"
-              icon={<FaUsersSlash />}
+              data={"1121"}
+              name="Net Profit"
+              icon={<BsPiggyBank />}
+            />
+            <UserDataTile
+              data={"9430"}
+              name="Total Amount Won"
+              icon={<RiHandCoinLine />}
             />
           </div>
         </>

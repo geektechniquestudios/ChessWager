@@ -6,14 +6,16 @@ interface Props {
 
 export const UserDataTile: React.FC<Props> = ({ name, icon, data }) => {
   return (
-    <div className="flex justify-between rounded-md bg-stone-300 dark:bg-stone-600">
-      <div
-        title={name}
-        className="flex items-center align-center rounded-md text-lg m-1 px-4 bg-stone-100 dark:bg-stone-700"
-      >
+    <div
+      title={name}
+      className="flex justify-between rounded-md bg-stone-300 dark:bg-stone-600"
+    >
+      <div className="flex justify-center items-center rounded-md text-lg m-1 px-4 bg-stone-100 dark:bg-stone-700">
         {icon}
       </div>
-      <div className="grid place-content-center mx-1.5">{data}</div>
+      <div className="flex justify-center items-center grow text-lg">
+        {data}
+      </div>
     </div>
   )
 }
