@@ -1,4 +1,3 @@
-import { FirebaseError } from "firebase/app"
 import {
   CollectionReference,
   DocumentData,
@@ -16,11 +15,7 @@ interface Props {
 export const ConvoChatBody: React.FC<Props> = ({ messagesRef }) => {
   const q = query(messagesRef, orderBy("createdAt", "desc"), limit(25))
 
-  const [messages]: [
-    Message[] | any | undefined,
-    boolean,
-    FirebaseError | undefined,
-  ] = useCollectionData(q, { idField: "id" })
+  const [messages] = useCollectionData<[Message[]] | any>(q, { idField: "id" })
   return (
     <div className="scrollbar flex flex-col-reverse pb-3 overflow-y-auto overflow-x-hidden px-1">
       {messages?.map((message: Message) => (

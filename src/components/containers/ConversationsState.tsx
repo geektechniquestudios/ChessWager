@@ -1,6 +1,5 @@
 import { createContainer } from "unstated-next"
 import type { Conversation } from "../../interfaces/Conversation"
-import { FirebaseError } from "firebase/app"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { Auth } from "./Auth"
 import { firebaseApp } from "../../config"
@@ -15,11 +14,9 @@ const useConversationsState = () => {
     conversationsCollectionRef,
     where("userIds", "array-contains", auth.currentUser?.uid ?? ""),
   )
-  const [conversations, isLoading]: [
-    any | Conversation[] | undefined,
-    boolean,
-    FirebaseError | undefined,
-  ] = useCollectionData(q, { idField: "id" }) ?? []
+  const [conversations, isLoading] =
+    useCollectionData<[Conversation[], boolean] | any>(q, { idField: "id" }) ??
+    []
 
   const specificConvoCollectionRef = (docId: string) =>
     collection(doc(db, "conversations", docId), "messages")

@@ -8,14 +8,11 @@ import { LobbyHeaderState } from "./LobbyHeaderState"
 import { firebaseApp } from "../../config"
 import {
   collection,
-  DocumentData,
-  FirestoreError,
   getFirestore,
   query,
   Timestamp,
   where,
 } from "firebase/firestore"
-import { Data } from "react-firebase-hooks/firestore/dist/firestore/types"
 
 const db = getFirestore(firebaseApp)
 
@@ -47,11 +44,8 @@ const useBetState = () => {
   const { gameId } = GameState.useContainer()
   const lobbyCollectionRef = collection(db, "lobby")
   const q = query(lobbyCollectionRef, where("gameId", "==", gameId))
-  const [bets, isLoading]: [
-    any | Data<DocumentData, keyof Bet, keyof Bet>[] | undefined,
-    boolean,
-    FirestoreError | undefined,
-  ] = useCollectionData(q, { idField: "id" }) ?? []
+  const [bets, isLoading] =
+    useCollectionData<[Bet[], boolean] | any>(q, { idField: "id" }) ?? []
   const [selectedBetMap, setSelectedBetMap] = useState(
     new Map<string, BetData>(),
   )

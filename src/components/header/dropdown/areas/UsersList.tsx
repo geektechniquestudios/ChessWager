@@ -1,12 +1,10 @@
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { FirebaseError } from "firebase/app"
 import { UserListItem } from "./UserListItem"
 import type { User } from "../../../../interfaces/User"
 import "../../../../style/scrollbar.scss"
 
 import { firebaseApp } from "../../../../config"
-import { collection, DocumentData, FirestoreError, getFirestore, query, where } from "firebase/firestore"
-import { Data } from "react-firebase-hooks/firestore/dist/firestore/types"
+import { collection, getFirestore, query, where } from "firebase/firestore"
 
 const db = getFirestore(firebaseApp)
 interface Props {
@@ -15,17 +13,14 @@ interface Props {
 
 export const UsersList: React.FC<Props> = ({ search }) => {
   const usersCollectionRef = collection(db, "users")
+
   const q = query(
     usersCollectionRef,
     where("searchableDisplayName", ">=", search.toLowerCase()),
     where("searchableDisplayName", "<=", search.toLowerCase() + "\uf8ff"),
   )
 
-  const [users]: [
-    Data<DocumentData, keyof User, keyof User>[] | undefined,
-    boolean,
-    FirestoreError | undefined,
-  ] | any = useCollectionData(q, { idField: "id" })
+  const [users] = useCollectionData<[User[]] | any>(q)
 
   return (
     <div
@@ -33,7 +28,7 @@ export const UsersList: React.FC<Props> = ({ search }) => {
       style={{ direction: "rtl" }}
     >
       <div style={{ direction: "ltr" }}>
-        {users?.map((user: User) => (
+        {users?.map((user) => (
           <UserListItem key={user.id} {...user} />
         ))}
       </div>
