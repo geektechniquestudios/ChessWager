@@ -16,7 +16,7 @@ export const LobbyHeaderButtons: React.FC = () => {
         buttonName="Cost"
         buttonIcon={
           <GiPayMoney
-            strokeWidth={22}
+            strokeWidth={28}
             stroke={isDarkOn ? "#d6d3d1" : "#1c1917"}
             color="transparent"
           />

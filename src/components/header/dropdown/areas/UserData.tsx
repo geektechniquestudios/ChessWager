@@ -1,5 +1,5 @@
 import { BsPiggyBank } from "react-icons/bs"
-import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
+import { FaRegGem, FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
 import { FiPercent } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
 import {
@@ -12,7 +12,6 @@ import { DarkMode } from "../../../containers/DarkMode"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtons } from "./UserButtons"
 import { UserDataTile } from "./UserDataTile"
-import { WideDataTile } from "./WideDataTile"
 
 interface Props {
   betAcceptedCount?: number
@@ -70,11 +69,7 @@ export const UserData: React.FC<Props> = ({
               name="Trust"
               icon={<FaRegHandshake />}
             />
-            <UserDataTile
-              data={"128"}
-              name="Bets"
-              icon={<RiStackLine />}
-            />
+            <UserDataTile data={"128"} name="Bets" icon={<FaRegGem />} />
             <UserDataTile
               data={"72"}
               name="Bets Won"
@@ -95,7 +90,7 @@ export const UserData: React.FC<Props> = ({
               name="Total Amount Bet"
               icon={
                 <GiPayMoney
-                  strokeWidth={22}
+                  strokeWidth={35}
                   stroke={isDarkOn ? "#d6d3d1" : "#1c1917"}
                   color="transparent"
                 />
