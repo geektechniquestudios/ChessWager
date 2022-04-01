@@ -46,7 +46,7 @@ export const UserData: React.FC<Props> = ({
         <>
           <img
             src={photoURL}
-            className="w-24 h-24 rounded-full grid place-content-center mt-9"
+            className="w-24 h-24 rounded-full grid place-content-center mt-6"
           />
           <p className="my-3">{displayName ?? ""}</p>
           <UserButtons
@@ -72,7 +72,7 @@ export const UserData: React.FC<Props> = ({
             />
             <UserDataTile
               data={"128"}
-              name="Bet Count"
+              name="Bets"
               icon={<RiStackLine />}
             />
             <UserDataTile
@@ -106,14 +106,19 @@ export const UserData: React.FC<Props> = ({
               name="Net Profit"
               icon={<BsPiggyBank />}
             />
-          </div>
-          <div className="w-full px-2">
-            <WideDataTile
+            <UserDataTile
               data={"9430"}
               name="Total Amount Won"
               icon={<RiHandCoinLine />}
             />
           </div>
+          {/* <div className="w-full px-2">
+            <WideDataTile
+              data={"9430"}
+              name="Total Amount Won"
+              icon={<RiHandCoinLine />}
+            />
+          </div> */}
         </>
       )}
     </div>

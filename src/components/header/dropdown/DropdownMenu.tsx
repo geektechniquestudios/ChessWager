@@ -7,7 +7,6 @@ import { DirectMessage } from "./menus/search/DirectMessage"
 import { Contact } from "./menus/help/Contact"
 import { DisplayName } from "./menus/profile/DisplayName"
 import { Faq } from "./menus/help/Faq"
-import { Friends } from "./menus/profile/Friends"
 import { Help } from "./menus/main/Help"
 import { HowToPlay } from "./menus/help/HowToPlay"
 import { Leaderboard } from "./menus/main/Leaderboard"
@@ -27,6 +26,8 @@ import { Persona } from "./menus/profile/Persona"
 import { ClickedUser } from "./menus/ClickedUser"
 import { UserMenuState } from "../../containers/UserMenuState"
 import { Conversation } from "./menus/messages/Conversation"
+import { Following } from "./menus/profile/Following"
+import { BetsMenu } from "./menus/profile/BetsMenu"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -76,7 +77,7 @@ export const DropdownMenu = () => {
         <Help />
         {user && <BlockedUsers />}
         {user && <Messages />}
-        {user && <Friends />}
+        {user && <Following />}
         {user && <Notifications />}
         <SearchedUserMenu />
         <SearchUsers />
@@ -92,6 +93,7 @@ export const DropdownMenu = () => {
         {user && <Persona />}
         {clickedUserId !== "" && user && <ClickedUser />}
         {user && <Conversation />}
+        {user && <BetsMenu />}
       </div>
     </div>
   )
