@@ -5,8 +5,6 @@ import { PlayerData } from "./PlayerData"
 import { GameState } from "../containers/GameState"
 import Chessground from "@react-chess/chessground"
 
-// import { Chessground } from "react-chessground"
-
 interface Featured {
   t: string
   d: {
