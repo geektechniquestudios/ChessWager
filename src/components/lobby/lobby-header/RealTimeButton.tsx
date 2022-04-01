@@ -1,5 +1,5 @@
 import { BsFillLightningChargeFill, BsLightningCharge } from "react-icons/bs"
-import { LobbyHeaderState } from "./LobbyHeaderState"
+import { LobbyHeaderState } from "../../containers/LobbyHeaderState"
 
 interface Props {}
 

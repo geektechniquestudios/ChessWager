@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { BetsState } from "../containers/BetsState"
 import { Bet as BetComponent } from "./bet/Bet"
-import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
+import { LobbyHeaderState } from "../containers/LobbyHeaderState"
 
 interface Props {}
 

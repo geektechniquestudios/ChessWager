@@ -1,8 +1,16 @@
 import { Auth } from "../../containers/Auth"
-import firebase from "firebase/compat"
 import { RiCloseFill } from "react-icons/ri"
 import "../../../style/lobby.scss"
-const firestore = firebase.firestore()
+import {
+  deleteDoc,
+  doc,
+  DocumentData,
+  DocumentReference,
+  getFirestore,
+} from "firebase/firestore"
+import { firebaseApp } from "../../../config"
+
+const db = getFirestore(firebaseApp)
 
 interface Props {
   user1Id: string
@@ -12,13 +20,12 @@ interface Props {
 
 export const DeleteBetButton: React.FC<Props> = ({ user1Id, status, id }) => {
   const { user, auth } = Auth.useContainer()
-  const betDoc: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
-    firestore.collection("lobby").doc(id)
+  const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
   const deleteCurrentBet = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.stopPropagation()
-    betDoc.delete().catch(console.error)
+    deleteDoc(betDoc).catch(console.error)
   }
 
   return (

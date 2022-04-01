@@ -4,7 +4,7 @@ import { BetsState } from "../containers/BetsState"
 import { GameState } from "../containers/GameState"
 import { LobbyState } from "../containers/LobbyState"
 import { Bet as BetComponent } from "./bet/Bet"
-import { LobbyHeaderState } from "./lobby-header/LobbyHeaderState"
+import { LobbyHeaderState } from "../containers/LobbyHeaderState"
 
 interface Props {}
 

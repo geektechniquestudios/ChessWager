@@ -1,4 +1,4 @@
-export interface User {
+export type User = {
   betAcceptedCount: number
   betFundedCount: number
   bets: string[]

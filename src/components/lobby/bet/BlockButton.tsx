@@ -1,7 +1,17 @@
 import { Auth } from "../../containers/Auth"
-import firebase from "firebase/compat"
 import { MdThumbDown } from "react-icons/md"
-const firestore = firebase.firestore()
+import { firebaseApp } from "../../../config"
+import {
+  arrayUnion,
+  doc,
+  DocumentData,
+  DocumentReference,
+  getFirestore,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore"
+import { LobbyState } from "../../containers/LobbyState"
+const db = getFirestore(firebaseApp)
 
 interface Props {
   user1Id: string
@@ -10,27 +20,42 @@ interface Props {
   betId: string
 }
 
-export const BlockButton: React.FC<Props> = ({ user1Id, user2Id, status, betId }) => {
+export const BlockButton: React.FC<Props> = ({
+  user1Id,
+  user2Id,
+  status,
+  betId,
+}) => {
   const { auth, user } = Auth.useContainer()
+  const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", betId)
+
+  const { refreshLobby } = LobbyState.useContainer()
 
   const kick = () => {
-    const kickUser = firebase.functions().httpsCallable("kickUser")
-    kickUser({
-      betId: betId,
-    }).catch(console.error)
+    updateDoc(betDoc, {
+      status: "ready",
+      user2Id: "",
+      user2Metamask: "",
+      user2PhotoURL: "",
+      user2FollowThrough: [0, 0],
+      user2DisplayName: "",
+    })
+      .then(refreshLobby)
+      .catch(console.error)
   }
 
   const block = () => {
-    const userCollectionRef = firestore.collection("users")
-    const userDocRef = userCollectionRef.doc(auth.currentUser?.uid)
-    userDocRef.set(
+    const userDocRef = doc(db, "users", auth.currentUser!.uid)
+    setDoc(
+      userDocRef,
       {
-        blocked: firebase.firestore.FieldValue.arrayUnion(user2Id),
+        blocked: arrayUnion(user2Id),
       },
       { merge: true },
-    )
+    ).catch(console.error)
     kick()
   }
+
   return (
     <>
       {user &&

@@ -1,7 +1,7 @@
+import "react-toggle/style.css"
+import Toggle from "react-toggle"
 import { useState } from "react"
 import { DropdownItem } from "../../DropdownItem"
-import Toggle from "react-toggle"
-
 import { RiChatDeleteLine } from "react-icons/ri"
 import { BiArrowBack, BiVolumeFull, BiVolumeMute } from "react-icons/bi"
 import { Menu } from "../../Menu"

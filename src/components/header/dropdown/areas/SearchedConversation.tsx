@@ -1,4 +1,3 @@
-import firebase from "firebase/compat/app"
 import { useRef } from "react"
 import { ChatBody } from "../../../chat/ChatBody"
 import { ChatForm } from "../../../chat/ChatForm"
@@ -6,8 +5,10 @@ import { Auth } from "../../../containers/Auth"
 import { ChatFormData } from "../../../containers/ChatFormData"
 import { UserMenuState } from "../../../containers/UserMenuState"
 import "../../../../style/scrollbar.scss"
+import { firebaseApp } from "../../../../config"
+import { collection, doc, getFirestore } from "firebase/firestore"
 
-const firestore = firebase.firestore()
+const db = getFirestore(firebaseApp)
 
 interface Props {}
 
@@ -16,10 +17,10 @@ export const SearchedConversation: React.FC<Props> = ({}) => {
   const { searchedUser } = UserMenuState.useContainer()
   const docId = [auth.currentUser?.uid, searchedUser?.id].sort().join("-")
 
-  const conversationsCollectionRef = firestore
-    .collection("conversations")
-    .doc(docId)
-    .collection("messages")
+  const conversationsCollectionRef = collection(
+    doc(db, "conversations", docId),
+    "messages",
+  )
 
   const dummy = useRef<HTMLInputElement>(null)
 

@@ -1,24 +1,31 @@
-import firebase from "firebase/compat"
+import {
+  DocumentData,
+  DocumentReference,
+  updateDoc,
+  serverTimestamp,
+  doc,
+  getFirestore,
+} from "firebase/firestore"
 import { FiUserCheck } from "react-icons/fi"
+import { firebaseApp } from "../../../config"
 import "../../../style/buttons.scss"
 import { DarkMode } from "../../containers/DarkMode"
 import { LobbyState } from "../../containers/LobbyState"
-const firestore = firebase.firestore()
 interface Props {
   betId: string
 }
+const db = getFirestore(firebaseApp)
 
 export const ApproveButton: React.FC<Props> = ({ betId }) => {
-  const betDoc: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
-    firestore.collection("lobby").doc(betId)
+  const betDoc: DocumentReference<DocumentData> = 
+    doc(db, "lobby", betId)
   const { refreshLobby } = LobbyState.useContainer()
   const approve = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    betDoc
-      .update({
-        status: "approved",
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      })
+    updateDoc(betDoc, {
+      status: "approved",
+      timestamp: serverTimestamp(),
+    })
       .then(refreshLobby)
       .catch(console.error)
   }

@@ -1,5 +1,5 @@
+import { CollectionReference, DocumentData } from "firebase/firestore"
 import { DropdownState } from "../../containers/DropdownState"
-import firebase from "firebase/compat/app"
 
 interface Props {
   userId: string
@@ -11,7 +11,7 @@ interface Props {
   onClick?: () => void
   specificConvoCollectionRef: (
     docId: string,
-  ) => firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+  ) => CollectionReference<DocumentData>
 }
 
 export const DropdownConvoItem: React.FC<Props> = ({

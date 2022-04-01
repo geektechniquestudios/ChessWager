@@ -1,5 +1,5 @@
+import { Button } from "@mui/material"
 import { Price } from "../../containers/Price"
-import Button from "@mui/material/Button"
 
 interface Props {
   setBetAmount: React.Dispatch<React.SetStateAction<number>>

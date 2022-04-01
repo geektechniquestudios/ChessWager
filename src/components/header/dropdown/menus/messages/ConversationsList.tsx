@@ -2,6 +2,7 @@ import "../../../../../style/scrollbar.scss"
 import { DropdownConvoItem } from "../../DropdownConvoItem"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { ConversationsState } from "../../../../containers/ConversationsState"
+import type { User } from "../../../../../interfaces/User"
 
 export const ConversationsList: React.FC = ({}) => {
   const {
@@ -18,7 +19,7 @@ export const ConversationsList: React.FC = ({}) => {
         <>
           <>
             {(conversations?.length ?? 0) > 0 &&
-              convoUserList.map((user, index) => (
+              convoUserList.map((user: User, index: number) => (
                 <DropdownConvoItem
                   userId={user.id}
                   text={user.displayName}

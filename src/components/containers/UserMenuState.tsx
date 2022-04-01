@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { createContainer } from "unstated-next"
-import { User } from "../../interfaces/User"
+import type { User } from "../../interfaces/User"
 
 const useUserMenuState = () => {
   const [searchedUser, setSearchedUser] = useState<User>()

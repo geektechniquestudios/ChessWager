@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import "../../style/lobby.scss"
-import "firebase/compat/functions"
 import { BigNumber, ethers } from "ethers"
 import { GiChessRook } from "react-icons/gi"
 import { Price } from "../containers/Price"

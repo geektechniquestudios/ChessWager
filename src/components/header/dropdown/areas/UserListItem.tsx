@@ -1,4 +1,4 @@
-import { User } from "../../../../interfaces/User"
+import type { User } from "../../../../interfaces/User"
 import { UserMenuState } from "../../../containers/UserMenuState"
 import { DropdownItem } from "../DropdownItem"
 

@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react"
 // @ts-ignore
 import ndjsonStream from "can-ndjson-stream"
-import "react-chessground/dist/styles/chessground.css"
 import { PlayerData } from "./PlayerData"
 import { GameState } from "../containers/GameState"
-// @ts-ignore
-import Chessground from "react-chessground"
+import Chessground from "@react-chess/chessground"
 
 interface Featured {
   t: string
@@ -43,7 +41,9 @@ export const ChessGame: React.FC = () => {
   const [blackTime, setBlackTime] = useState(0)
   const [blackRating, setBlackRating] = useState(0)
   const [blackTitle, setBlackTitle] = useState("")
-  const [orientation, setOrientation] = useState("white")
+  const [orientation, setOrientation] = useState<"white" | "black" | undefined>(
+    "white",
+  )
 
   const [isNewGame, setIsNewGame] = useState(true)
 
@@ -60,7 +60,13 @@ export const ChessGame: React.FC = () => {
 
       setFen(res.d.fen ?? "")
       setGameId(res.d.id)
-      setOrientation(res.d.orientation)
+
+      const resolveOrientation = (orientation: string): "white" | "black" =>
+        "white" === orientation || "black" === orientation
+          ? orientation
+          : "white"
+
+      setOrientation(resolveOrientation(res.d.orientation))
 
       setWhiteTitle(white.user.title ?? "")
       setBlackTitle(black.user.title ?? "")
@@ -125,14 +131,15 @@ export const ChessGame: React.FC = () => {
             </div>
             <div className="aspect-w-1 aspect-h-1 border-t border-b dark:border-stone-400 border-stone-600">
               <Chessground
-                coordinates={false}
-                id="chess-board"
-                fen={fen}
-                orientation={orientation}
-                draggable={{ enabled: false }}
-                movable={{ free: false }}
-                height="100%"
-                width="100%"
+                contained={true}
+                config={{
+                  fen,
+                  orientation,
+                  draggable: { enabled: false },
+                  movable: {
+                    free: false,
+                  },
+                }}
               />
             </div>
             <div className="flex justify-center">

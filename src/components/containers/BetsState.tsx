@@ -1,14 +1,23 @@
-import firebase from "firebase/compat/app"
 import { createContainer } from "unstated-next"
 import { GameState } from "./GameState"
-import { Bet, BetData } from "../../interfaces/Bet"
-import { FirebaseError } from "@firebase/util"
+import type { Bet, BetData } from "../../interfaces/Bet"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useState } from "react"
 import { Auth } from "./Auth"
-import { LobbyHeaderState } from "../lobby/lobby-header/LobbyHeaderState"
+import { LobbyHeaderState } from "./LobbyHeaderState"
+import { firebaseApp } from "../../config"
+import {
+  collection,
+  DocumentData,
+  FirestoreError,
+  getFirestore,
+  query,
+  Timestamp,
+  where,
+} from "firebase/firestore"
+import { Data } from "react-firebase-hooks/firestore/dist/firestore/types"
 
-const firestore = firebase.firestore()
+const db = getFirestore(firebaseApp)
 
 const genericBet: Bet = {
   id: "",
@@ -28,7 +37,7 @@ const genericBet: Bet = {
   hasUser2Paid: false,
   createdAt: new Date(),
   gameId: "",
-  timestamp: firebase.firestore.Timestamp.now(),
+  timestamp: Timestamp.now(),
   contractAddress: "",
   user1FollowThrough: [],
   user2FollowThrough: [],
@@ -36,13 +45,13 @@ const genericBet: Bet = {
 
 const useBetState = () => {
   const { gameId } = GameState.useContainer()
-  const lobbyCollectionRef = firestore.collection("lobby")
-  const query = lobbyCollectionRef.where("gameId", "==", gameId)
+  const lobbyCollectionRef = collection(db, "lobby")
+  const q = query(lobbyCollectionRef, where("gameId", "==", gameId))
   const [bets, isLoading]: [
-    Bet[] | undefined,
+    any | Data<DocumentData, keyof Bet, keyof Bet>[] | undefined,
     boolean,
-    FirebaseError | undefined,
-  ] = useCollectionData(query, { idField: "id" }) ?? []
+    FirestoreError | undefined,
+  ] = useCollectionData(q, { idField: "id" }) ?? []
   const [selectedBetMap, setSelectedBetMap] = useState(
     new Map<string, BetData>(),
   )

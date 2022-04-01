@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import "../../../style/lobby.scss"
-import "firebase/compat/functions"
 import { Auth } from "../../containers/Auth"
 import { BigNumber, ethers } from "ethers"
 import { User1Data } from "./User1Data"
@@ -8,7 +7,7 @@ import { User2Data } from "./User2Data"
 import { LeftButtons } from "./LeftButtons"
 import { RightButtons } from "./RightButtons"
 import { CenterOfBet } from "./CenterOfBet"
-import React, { useState } from "react"
+import { useState } from "react"
 import { BetsState } from "../../containers/BetsState"
 
 interface Props {

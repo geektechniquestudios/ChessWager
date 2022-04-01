@@ -1,7 +1,5 @@
 import "./style/index.scss"
 import "./style/scrollbar.scss"
-import "firebase/compat/firestore"
-import "firebase/compat/auth"
 import "./config"
 
 import { BettingLobby } from "./components/lobby/BettingLobby"

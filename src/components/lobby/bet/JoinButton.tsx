@@ -1,11 +1,19 @@
-import "firebase/compat/functions"
-import firebase from "firebase/compat"
 import { Auth } from "../../containers/Auth"
 import { BsBoxArrowInLeft } from "react-icons/bs"
 import "../../../style/buttons.scss"
 import { DarkMode } from "../../containers/DarkMode"
 import { LobbyState } from "../../containers/LobbyState"
-const firestore = firebase.firestore()
+import {
+  doc,
+  DocumentData,
+  DocumentReference,
+  getDoc,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore"
+import { firebaseApp } from "../../../config"
+
+const db = getFirestore(firebaseApp)
 
 interface Props {
   id: string
@@ -22,18 +30,19 @@ export const JoinButton: React.FC<Props> = ({
 }) => {
   const { auth, walletAddress } = Auth.useContainer()
   const isUser1 = auth.currentUser?.uid === user1Id
-  const userDoc: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
-    firestore.collection("users").doc(auth.currentUser?.uid)
-  const betDoc: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
-    firestore.collection("lobby").doc(id)
+  const userDoc: DocumentReference<DocumentData> = doc(
+    db,
+    "users",
+    auth.currentUser!.uid,
+  )
+  const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
 
   const user2DisplayName = auth.currentUser?.displayName
   const { refreshLobby } = LobbyState.useContainer()
 
   const accept = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    userDoc
-      .get()
+    getDoc(userDoc)
       .then((doc: any) => {
         const user2FollowThrough = [
           doc.data().betFundedCount,
@@ -42,15 +51,14 @@ export const JoinButton: React.FC<Props> = ({
         return user2FollowThrough
       })
       .then((user2FollowThrough: number[]) => {
-        betDoc
-          .update({
-            status: "pending",
-            user2Id: auth.currentUser?.uid,
-            user2Metamask: walletAddress,
-            user2PhotoURL: auth.currentUser?.photoURL,
-            user2FollowThrough: user2FollowThrough,
-            user2DisplayName: user2DisplayName,
-          })
+        updateDoc(betDoc, {
+          status: "pending",
+          user2Id: auth.currentUser?.uid,
+          user2Metamask: walletAddress,
+          user2PhotoURL: auth.currentUser?.photoURL,
+          user2FollowThrough: user2FollowThrough,
+          user2DisplayName: user2DisplayName,
+        })
           .then(refreshLobby)
           .catch(console.error)
       })

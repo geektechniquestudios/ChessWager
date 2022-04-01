@@ -1,3 +1,4 @@
+import type { Bet } from "../../interfaces/Bet"
 import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
 import { Bet as BetComponent } from "./bet/Bet"
@@ -12,12 +13,12 @@ export const CreatedByUserBets: React.FC<Props> = ({}) => {
       {user &&
         bets
           ?.filter(
-            (bet) =>
+            (bet: Bet) =>
               bet.user1Id === user.uid &&
               bet.gameId !== "" &&
               bet.status !== "funded",
           )
-          .map((bet, index) => (
+          .map((bet: Bet, index: number) => (
             <BetComponent
               key={bet.id + index}
               {...bet}

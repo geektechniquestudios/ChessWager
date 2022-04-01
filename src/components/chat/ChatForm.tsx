@@ -1,11 +1,16 @@
 import { TextareaAutosize } from "@mui/material"
 import { Auth } from "../containers/Auth"
-import firebase from "firebase/compat/app"
 import "../../style/scrollbar.scss"
+import {
+  addDoc,
+  CollectionReference,
+  DocumentData,
+  serverTimestamp,
+} from "firebase/firestore"
 
 interface Props {
   dummy: React.RefObject<HTMLInputElement>
-  messagesRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+  messagesRef: CollectionReference<DocumentData>
   formValue: string
   setFormValue:
     | React.Dispatch<React.SetStateAction<string>>
@@ -27,10 +32,11 @@ export const ChatForm: React.FC<Props> = ({
     e.preventDefault()
     if (formValue.trim() === "" || !user || !auth.currentUser) return
 
-    const { uid, photoURL }: firebase.User = auth.currentUser
-    await messagesRef.add({
+    const { uid, photoURL } = auth.currentUser
+
+    addDoc(messagesRef, {
       text: formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: serverTimestamp(),
       uid,
       photoURL,
       userName: auth.currentUser.displayName,

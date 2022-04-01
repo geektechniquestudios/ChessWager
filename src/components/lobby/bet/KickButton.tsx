@@ -1,28 +1,33 @@
-import firebase from "firebase/compat"
+import {
+  doc,
+  DocumentData,
+  DocumentReference,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore"
 import { FiUserMinus } from "react-icons/fi"
+import { firebaseApp } from "../../../config"
 import { DarkMode } from "../../containers/DarkMode"
 import { LobbyState } from "../../containers/LobbyState"
-const firestore = firebase.firestore()
+const db = getFirestore(firebaseApp)
 
 interface Props {
   betId: string
 }
 
 export const KickButton: React.FC<Props> = ({ betId }) => {
-  const betDoc: firebase.firestore.DocumentReference<firebase.firestore.DocumentData> =
-    firestore.collection("lobby").doc(betId)
+  const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", betId)
   const { refreshLobby } = LobbyState.useContainer()
   const kick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
-    betDoc
-      .update({
-        status: "ready",
-        user2Id: "",
-        user2Metamask: "",
-        user2PhotoURL: "",
-        user2FollowThrough: [0, 0],
-        user2DisplayName: "",
-      })
+    updateDoc(betDoc, {
+      status: "ready",
+      user2Id: "",
+      user2Metamask: "",
+      user2PhotoURL: "",
+      user2FollowThrough: [0, 0],
+      user2DisplayName: "",
+    })
       .then(refreshLobby)
       .catch(console.error)
   }
