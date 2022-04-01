@@ -55,23 +55,23 @@ export const Main: React.FC = () => {
             />
           )}
         </div>,
-        <div key={2}>
-          {user && (
-            <DropdownItem leftIcon={<GoGift />} goToMenu="store" text="Store" />
-          )}
-        </div>,
+        // <div key={2}>
+        //   {user && (
+        //     <DropdownItem leftIcon={<GoGift />} goToMenu="store" text="Store" />
+        //   )}
+        // </div>,
         <DropdownItem
           leftIcon={<BsShare />}
           goToMenu="social"
           text="Social"
           key={3}
         />,
-        <DropdownItem
-          leftIcon={<AiOutlineTrophy />}
-          goToMenu="leaderboard"
-          text="Leaderboard"
-          key={4}
-        />,
+        // <DropdownItem
+        //   leftIcon={<AiOutlineTrophy />}
+        //   goToMenu="leaderboard"
+        //   text="Leaderboard"
+        //   key={4}
+        // />,
         <DropdownItem
           leftIcon={<BiSearchAlt2 />}
           goToMenu="searchUsers"

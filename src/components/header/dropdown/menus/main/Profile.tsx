@@ -29,42 +29,42 @@ export const Profile: React.FC = () => {
           text="Profile"
         />,
         <MenuLine key={1} />,
-        <DropdownItem
-          goToMenu="persona"
-          leftIcon={<BiUserCircle />}
-          key={2}
-          text="Persona"
-        />,
-        <DropdownItem
-          goToMenu="notifications"
-          leftIcon={<RiNotification3Line />}
-          key={3}
-          text="Notifications"
-        />,
-        <DropdownItem
-          goToMenu="following"
-          leftIcon={<RiUserHeartLine />}
-          key={4}
-          text="Following"
-        />,
-        <DropdownItem
-          goToMenu="messages"
-          leftIcon={<RiChat2Line />}
-          key={5}
-          text="Messages"
-        />,
-        <DropdownItem
-          goToMenu="stats"
-          leftIcon={<BsGraphUp />}
-          key={6}
-          text="Stats"
-        />,
-        <DropdownItem
-          goToMenu="achievements"
-          leftIcon={<FiAward />}
-          key={7}
-          text="Achievements"
-        />,
+        // <DropdownItem
+        //   goToMenu="persona"
+        //   leftIcon={<BiUserCircle />}
+        //   key={2}
+        //   text="Persona"
+        // />,
+        // <DropdownItem
+        //   goToMenu="notifications"
+        //   leftIcon={<RiNotification3Line />}
+        //   key={3}
+        //   text="Notifications"
+        // />,
+        // <DropdownItem
+        //   goToMenu="following"
+        //   leftIcon={<RiUserHeartLine />}
+        //   key={4}
+        //   text="Following"
+        // />,
+        // <DropdownItem
+        //   goToMenu="messages"
+        //   leftIcon={<RiChat2Line />}
+        //   key={5}
+        //   text="Messages"
+        // />,
+        // <DropdownItem
+        //   goToMenu="stats"
+        //   leftIcon={<BsGraphUp />}
+        //   key={6}
+        //   text="Stats"
+        // />,
+        // <DropdownItem
+        //   goToMenu="achievements"
+        //   leftIcon={<FiAward />}
+        //   key={7}
+        //   text="Achievements"
+        // />,
         <DropdownItem
           goToMenu="displayName"
           leftIcon={<FiUser />}
