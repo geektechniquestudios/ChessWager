@@ -1,6 +1,6 @@
+import { Slider } from "@mui/material"
 import { useState } from "react"
 import CurrencyInput from "react-currency-input-field"
-import Slider from "@mui/material/Slider"
 
 interface Props {
   setMultiplier: React.Dispatch<React.SetStateAction<number>>

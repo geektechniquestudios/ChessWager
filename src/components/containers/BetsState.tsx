@@ -4,7 +4,7 @@ import type { Bet, BetData } from "../../interfaces/Bet"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useState } from "react"
 import { Auth } from "./Auth"
-import { LobbyHeaderState } from "../lobby/lobby-header/LobbyHeaderState"
+import { LobbyHeaderState } from "./LobbyHeaderState"
 import { firebaseApp } from "../../config"
 import {
   collection,

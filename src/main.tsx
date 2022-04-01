@@ -1,10 +1,11 @@
 import { StrictMode } from "react"
-import { render } from "react-dom"
+import { createRoot } from "react-dom/client"
 import { AppWithProviders } from "./AppWithProviders"
 
-render(
+const root = createRoot(document.getElementById("root")!)
+
+root.render(
   <StrictMode>
     <AppWithProviders />
   </StrictMode>,
-  document.getElementById("root"),
 )
