@@ -67,3 +67,4 @@ chess-wager-test-firebase-adminsdk-hl438-9c361ba626.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.yarn/install-state.gz
