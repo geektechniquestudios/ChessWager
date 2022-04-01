@@ -2,15 +2,18 @@ import { SignInButton } from "./buttons/SignInButton"
 import { Dropdown } from "./dropdown/Dropdown"
 import { MainHeaderButton } from "./buttons/MainHeaderButton"
 import { BiSearchAlt2 } from "react-icons/bi"
-import { RiChat2Line, RiNotification3Line, RiStackLine, RiUserHeartLine } from "react-icons/ri"
+import {
+  RiChat2Line,
+  RiNotification3Line,
+  RiUserHeartLine,
+} from "react-icons/ri"
 import { ConversationsState } from "../containers/ConversationsState"
 import { DarkMode } from "../containers/DarkMode"
+import { FaRegGem } from "react-icons/fa"
 
 export const HeaderRight: React.FC = () => {
   const { doesUserHaveNewMessages } = ConversationsState.useContainer()
   const { isDarkOn } = DarkMode.useContainer()
-
-  // useEffect(() => {}, [doesUserHaveNewMessages])
 
   const messageIcon: React.ReactNode = doesUserHaveNewMessages ? (
     <RiChat2Line
@@ -22,9 +25,7 @@ export const HeaderRight: React.FC = () => {
     <RiChat2Line size="21" className="m-2" />
   )
 
-  const setNewMessagesToFalse = () => {
-    
-  }
+  const setNewMessagesToFalse = () => {}
 
   return (
     <div className="flex-auto justify-end align-middle flex mx-3 gap-1.5">
@@ -52,7 +53,7 @@ export const HeaderRight: React.FC = () => {
       <MainHeaderButton
         title="Bets"
         openToMenu="bets"
-        icon={<RiStackLine size="21" className="m-2" />}
+        icon={<FaRegGem size="21" className="m-2" />}
       />
       <SignInButton />
       <Dropdown />
