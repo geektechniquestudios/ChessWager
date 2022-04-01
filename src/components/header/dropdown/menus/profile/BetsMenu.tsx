@@ -3,9 +3,9 @@ import { DropdownArea } from "../../DropdownArea"
 import { DropdownItem } from "../../DropdownItem"
 import { Menu } from "../../Menu"
 import { MenuLine } from "../../MenuLine"
-import { AchievementsList } from "../../areas/AchievementsList"
+import { BetsList } from "../../areas/BetsList"
 
-export const Achievements: React.FC = ({}) => {
+export const BetsMenu: React.FC = () => {
   return (
     <Menu
       menuItems={[
@@ -13,12 +13,12 @@ export const Achievements: React.FC = ({}) => {
           goToMenu="profile"
           leftIcon={<BiArrowBack />}
           key={0}
-          text="Achievements"
+          text="Bets"
         />,
         <MenuLine key={1} />,
-        <DropdownArea key={2} content={<AchievementsList />} />,
+        <DropdownArea key={2} content={<BetsList />} />,
       ]}
-      thisMenu={"achievements"}
+      thisMenu={"bets"}
     />
   )
 }

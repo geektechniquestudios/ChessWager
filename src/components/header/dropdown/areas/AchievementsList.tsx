@@ -1,4 +1,4 @@
-import "../../../../../style/scrollbar.scss"
+import "../../../../style/scrollbar.scss"
 
 export const AchievementsList: React.FC = ({}) => {
   return (

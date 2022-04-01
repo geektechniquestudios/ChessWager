@@ -4,9 +4,9 @@ import { DropdownItem } from "../../DropdownItem"
 import { BiArrowBack, BiUserCircle } from "react-icons/bi"
 import { Menu } from "../../Menu"
 import { AiOutlineCloudUpload } from "react-icons/ai"
-import { FiAward, FiUser, FiUsers } from "react-icons/fi"
+import { FiAward, FiUser } from "react-icons/fi"
 import { BsGraphUp } from "react-icons/bs"
-import { RiChat2Line } from "react-icons/ri"
+import { RiChat2Line, RiUserHeartLine } from "react-icons/ri"
 import { RiNotification3Line } from "react-icons/ri"
 import { MenuLine } from "../../MenuLine"
 
@@ -42,10 +42,10 @@ export const Profile: React.FC = () => {
           text="Notifications"
         />,
         <DropdownItem
-          goToMenu="friends"
-          leftIcon={<FiUsers />}
+          goToMenu="following"
+          leftIcon={<RiUserHeartLine />}
           key={4}
-          text="Friends"
+          text="Following"
         />,
         <DropdownItem
           goToMenu="messages"

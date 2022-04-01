@@ -1,9 +1,18 @@
 import { BsPiggyBank } from "react-icons/bs"
-import { FaRegHandshake, FaUsersSlash } from "react-icons/fa"
-import { GiPayMoney, GiYinYang } from "react-icons/gi"
+import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
+import { FiPercent } from "react-icons/fi"
+import { GiPayMoney } from "react-icons/gi"
+import {
+  RiHandCoinLine,
+  RiHeartsLine,
+  RiStackLine,
+  RiUserHeartLine,
+} from "react-icons/ri"
+import { DarkMode } from "../../../containers/DarkMode"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtons } from "./UserButtons"
 import { UserDataTile } from "./UserDataTile"
+import { WideDataTile } from "./WideDataTile"
 
 interface Props {
   betAcceptedCount?: number
@@ -28,6 +37,7 @@ export const UserData: React.FC<Props> = ({
   walletAddress,
   isLoading,
 }) => {
+  const { isDarkOn } = DarkMode.useContainer()
   return (
     <div className="h-96 flex flex-col items-center">
       {isLoading ? (
@@ -36,7 +46,7 @@ export const UserData: React.FC<Props> = ({
         <>
           <img
             src={photoURL}
-            className="w-24 h-24 rounded-full grid place-content-center mt-9"
+            className="w-24 h-24 rounded-full grid place-content-center mt-6"
           />
           <p className="my-3">{displayName ?? ""}</p>
           <UserButtons
@@ -44,16 +54,16 @@ export const UserData: React.FC<Props> = ({
             displayName={displayName ?? ""}
             photoURL={photoURL!}
           />
-          <div className="w-full h-full grid gap-2 grid-cols-2 p-2">
+          <div className="w-full h-full grid gap-1.5 grid-cols-2 p-2">
             <UserDataTile
-              data={""}
+              data={"5"}
               name="Following"
-              icon={<GiYinYang />}
+              icon={<RiUserHeartLine />}
             />
             <UserDataTile
-              data={""}
+              data={"20"}
               name="Followers"
-              icon={<GiYinYang />}
+              icon={<RiHeartsLine />}
             />
             <UserDataTile
               data={`${betFundedCount} / ${betAcceptedCount}`}
@@ -61,36 +71,54 @@ export const UserData: React.FC<Props> = ({
               icon={<FaRegHandshake />}
             />
             <UserDataTile
-              data={""}
-              name="Bet Count"
-              icon={<GiYinYang />}
+              data={"128"}
+              name="Bets"
+              icon={<RiStackLine />}
             />
             <UserDataTile
-              data={""}
+              data={"72"}
               name="Bets Won"
-              icon={<GiYinYang />}
+              icon={<FaRegHandPeace />}
             />
             <UserDataTile
-              data={""}
+              data={"56"}
+              name="Bets Lost"
+              icon={<FaRegHandPeace className="rotate-180" />}
+            />
+            <UserDataTile
+              data={"56.25"}
+              name="Win Percent"
+              icon={<FiPercent />}
+            />
+            <UserDataTile
+              data={"479"}
+              name="Total Amount Bet"
+              icon={
+                <GiPayMoney
+                  strokeWidth={22}
+                  stroke={isDarkOn ? "#d6d3d1" : "#1c1917"}
+                  color="transparent"
+                />
+              }
+            />
+            <UserDataTile
+              data={"1121"}
               name="Net Profit"
               icon={<BsPiggyBank />}
             />
             <UserDataTile
-              data={""}
-              name="Win Percent"
-              icon={<GiYinYang />}
-            />
-            <UserDataTile
-              data={""}
-              name="Total Amount Bet"
-              icon={<GiPayMoney />}
-            />
-            <UserDataTile
-              data={""}
-              name="Users Blocked"
-              icon={<FaUsersSlash />}
+              data={"9430"}
+              name="Total Amount Won"
+              icon={<RiHandCoinLine />}
             />
           </div>
+          {/* <div className="w-full px-2">
+            <WideDataTile
+              data={"9430"}
+              name="Total Amount Won"
+              icon={<RiHandCoinLine />}
+            />
+          </div> */}
         </>
       )}
     </div>
