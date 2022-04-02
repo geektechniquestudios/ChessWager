@@ -35,7 +35,7 @@ export const ConvoChatForm: React.FC<Props> = ({
   conversationDocRef,
 }) => {
   const { user, auth } = Auth.useContainer()
-  
+
   const sendMessage = async (
     e:
       | React.FormEvent<HTMLFormElement>
@@ -66,12 +66,15 @@ export const ConvoChatForm: React.FC<Props> = ({
       updateDoc(userRef, {
         hasNewMessage: true,
       })
-
       updateDoc(conversationDocRef, {
         messageThumbnail: formValue,
         doesUser1HaveUnreadMessages: true,
       })
     } else if (isUser2) {
+      const userRef = doc(db, "users", conversation!.user1.id)
+      updateDoc(userRef, {
+        hasNewMessage: true,
+      })
       updateDoc(conversationDocRef, {
         messageThumbnail: formValue,
         doesUser1HaveUnreadMessages: true,

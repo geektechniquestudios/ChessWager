@@ -2,12 +2,7 @@ import { BsPiggyBank } from "react-icons/bs"
 import { FaRegGem, FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
 import { FiPercent } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
-import {
-  RiHandCoinLine,
-  RiHeartsLine,
-  RiStackLine,
-  RiUserHeartLine,
-} from "react-icons/ri"
+import { RiHandCoinLine, RiHeartsLine, RiUserHeartLine } from "react-icons/ri"
 import { DarkMode } from "../../../containers/DarkMode"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtons } from "./UserButtons"
@@ -16,24 +11,26 @@ import { UserDataTile } from "./UserDataTile"
 interface Props {
   betAcceptedCount?: number
   betFundedCount?: number
-  bets?: string[]
-  blocked?: string[]
   photoURL?: string
   displayName?: string
   walletAddress?: string
   id?: string
+  amountBet: number
+  amountWon: number
+  betWinCount: number
   isLoading?: boolean
 }
 
 export const UserData: React.FC<Props> = ({
   betAcceptedCount,
   betFundedCount,
-  bets,
-  blocked,
   displayName,
   id,
   photoURL,
   walletAddress,
+  amountBet,
+  amountWon,
+  betWinCount,
   isLoading,
 }) => {
   const { isDarkOn } = DarkMode.useContainer()

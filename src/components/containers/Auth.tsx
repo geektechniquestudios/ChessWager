@@ -102,14 +102,16 @@ const useAuth = () => {
               setDoc(userDoc, {
                 betAcceptedCount: 0,
                 betFundedCount: 0,
-                blocked: [],
                 walletAddress: "",
                 photoURL: auth.currentUser!.photoURL,
                 displayName: auth.currentUser!.displayName,
                 searchableDisplayName:
                   auth.currentUser!.displayName?.toLowerCase(),
-                bets: [],
                 id: auth.currentUser!.uid,
+                amountBet: 0,
+                amountWon: 0,
+                betWinCount: 0,
+                hasNewMessage: false,
               }).catch(console.error)
             }
             if (doc.data()?.walletAddress ?? "" !== "") {
@@ -126,11 +128,7 @@ const useAuth = () => {
     const provider = new GoogleAuthProvider()
     const auth = getAuth(firebaseApp)
 
-    signInWithPopup(auth, provider)
-      .then(() => {
-        addToUsers()
-      })
-      .catch(console.error)
+    signInWithPopup(auth, provider).then(addToUsers).catch(console.error)
   }
   const signOutWithGoogle = async () => {
     auth.signOut()

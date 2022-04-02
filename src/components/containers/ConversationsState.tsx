@@ -4,6 +4,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore"
 import { Auth } from "./Auth"
 import { firebaseApp } from "../../config"
 import { collection, doc, getFirestore, query, where } from "firebase/firestore"
+import { UserDataState } from "./UserDataState"
 
 const db = getFirestore(firebaseApp)
 
@@ -28,20 +29,21 @@ const useConversationsState = () => {
         : conversation.user1,
     ) ?? []
 
-  const doesUserHaveNewMessages =
-    (conversations
-      ?.map((conversation: Conversation) =>
-        auth.currentUser?.uid === conversation.user1.id
-          ? conversation.doesUser1HaveNewMessages
-          : conversation.doesUser2HaveNewMessages,
-      )
-      .filter((hasNewMessages: boolean) => hasNewMessages).length ?? 0) > 0
+
+  // const doesUserHaveNewMessages = userData?.hasNewMessage ?? false
+  // (conversations
+  //   ?.map((conversation: Conversation) =>
+  //     auth.currentUser?.uid === conversation.user1.id
+  //       ? conversation.doesUser1HaveNewMessages
+  //       : conversation.doesUser2HaveNewMessages,
+  //   )
+  //   .filter((hasNewMessages: boolean) => hasNewMessages).length ?? 0) > 0
 
   const isUser1 = (conversation: Conversation) =>
     auth.currentUser?.uid === conversation.user1.id
 
   return {
-    doesUserHaveNewMessages,
+    // doesUserHaveNewMessages,
     convoUserList,
     conversations,
     isLoading,

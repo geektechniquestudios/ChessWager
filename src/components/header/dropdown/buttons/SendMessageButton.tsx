@@ -41,24 +41,28 @@ export const SendMessageButton: React.FC<Props> = ({
     //   .collection("users")
     //   .doc(id)
 
-    updateDoc(convoDoc, {
-      messageThumbnail: "",
-      userIds: [id, auth.currentUser?.uid],
-      user1: {
-        id: auth.currentUser?.uid,
-        displayName: auth.currentUser?.displayName,
-        photoUrl: auth.currentUser?.photoURL,
+    setDoc(
+      convoDoc,
+      {
+        messageThumbnail: "",
+        userIds: [id, auth.currentUser?.uid],
+        user1: {
+          id: auth.currentUser?.uid,
+          displayName: auth.currentUser?.displayName,
+          photoUrl: auth.currentUser?.photoURL,
+        },
+        user2: {
+          id: id,
+          displayName: displayName,
+          photoURL: photoURL,
+        },
+        isDeletedForUser1: false,
+        isDeletedForUser2: false,
+        doesUser1HaveNewMessages: false,
+        doesUser2HaveNewMessages: false,
       },
-      user2: {
-        id: id,
-        displayName: displayName,
-        photoURL: photoURL,
-      },
-      isDeletedForUser1: false,
-      isDeletedForUser2: false,
-      doesUser1HaveNewMessages: false,
-      doesUser2HaveNewMessages: false,
-    })
+      { merge: true },
+    )
   }
   // userDoc1.set({
   //   id: auth.currentUser?.uid,
