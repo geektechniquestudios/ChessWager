@@ -65,7 +65,7 @@ export const UserData: React.FC<Props> = ({
               icon={<RiHeartsLine />}
             />
             <UserDataTile
-              data={`${betFundedCount} / ${betAcceptedCount}`}
+              data={`${betFundedCount ?? 0} / ${betAcceptedCount ?? 0}`}
               name="Trust"
               icon={<FaRegHandshake />}
             />

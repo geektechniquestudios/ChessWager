@@ -37,24 +37,24 @@ export const Main: React.FC = () => {
   return (
     <Menu
       menuItems={[
-        <div key={0}>
-          {user && (
-            <DropdownItem
-              leftIcon={<CgProfile />}
-              goToMenu="profile"
-              text="Profile"
-            />
-          )}
-        </div>,
-        <div key={1}>
-          {user && (
-            <DropdownItem
-              leftIcon={<RiSettings5Line />}
-              goToMenu="settings"
-              text="Settings"
-            />
-          )}
-        </div>,
+        // <div key={0}>
+        //   {user && (
+        //     <DropdownItem
+        //       leftIcon={<CgProfile />}
+        //       goToMenu="profile"
+        //       text="Profile"
+        //     />
+        //   )}
+        // </div>,
+        // <div key={1}>
+        //   {user && (
+        //     <DropdownItem
+        //       leftIcon={<RiSettings5Line />}
+        //       goToMenu="settings"
+        //       text="Settings"
+        //     />
+        //   )}
+        // </div>,
         // <div key={2}>
         //   {user && (
         //     <DropdownItem leftIcon={<GoGift />} goToMenu="store" text="Store" />
@@ -72,12 +72,12 @@ export const Main: React.FC = () => {
         //   text="Leaderboard"
         //   key={4}
         // />,
-        <DropdownItem
-          leftIcon={<BiSearchAlt2 />}
-          goToMenu="searchUsers"
-          text="Search Users"
-          key={5}
-        />,
+        // <DropdownItem
+        //   leftIcon={<BiSearchAlt2 />}
+        //   goToMenu="searchUsers"
+        //   text="Search Users"
+        //   key={5}
+        // />,
         <DropdownItem
           leftIcon={<BiHelpCircle />}
           goToMenu="help"

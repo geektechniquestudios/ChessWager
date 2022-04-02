@@ -30,7 +30,7 @@ export const Persona: React.FC = ({}) => {
   return (
     <Menu
       menuItems={[
-        <DropdownItem leftIcon={<CgProfile />} key={0} text="Persona" />,
+        <DropdownItem key={0} text="Persona" />,
         <MenuLine key={1} />,
         <UserData key={2} {...user} />,
       ]}
