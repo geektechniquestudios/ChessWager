@@ -35,7 +35,7 @@ export const UserData: React.FC<Props> = ({
 }) => {
   const { isDarkOn } = DarkMode.useContainer()
   return (
-    <div className="h-96 flex flex-col items-center">
+    <div className="h-72 flex flex-col items-center">
       {isLoading ? (
         <UserDataLoading isLoading={isLoading} />
       ) : (
@@ -66,24 +66,28 @@ export const UserData: React.FC<Props> = ({
               name="Trust"
               icon={<FaRegHandshake />}
             />
-            <UserDataTile data={"128"} name="Bets" icon={<FaRegGem />} />
             <UserDataTile
-              data={"72"}
+              data={`${betAcceptedCount ?? 0}`}
+              name="Bets"
+              icon={<FaRegGem />}
+            />
+            <UserDataTile
+              data={`${betWinCount ?? 0}`}
               name="Bets Won"
               icon={<FaRegHandPeace />}
             />
             <UserDataTile
-              data={"56"}
+              data={`${betAcceptedCount ?? 0} - ${betWinCount ?? 0}`}
               name="Bets Lost"
               icon={<FaRegHandPeace className="rotate-180" />}
             />
             <UserDataTile
-              data={"56.25"}
+              data={`${betWinCount ?? 0} / ${betAcceptedCount ?? 0}`}
               name="Win Percent"
               icon={<FiPercent />}
             />
             <UserDataTile
-              data={"479"}
+              data={`${amountBet ?? 0}`}
               name="Total Amount Bet"
               icon={
                 <GiPayMoney
@@ -94,12 +98,12 @@ export const UserData: React.FC<Props> = ({
               }
             />
             <UserDataTile
-              data={"1121"}
+              data={`${amountWon ?? 0} - ${amountBet ?? 0}`}
               name="Net Profit"
               icon={<BsPiggyBank />}
             />
             <UserDataTile
-              data={"9430"}
+              data={`${amountWon ?? 0}`}
               name="Total Amount Won"
               icon={<RiHandCoinLine />}
             />

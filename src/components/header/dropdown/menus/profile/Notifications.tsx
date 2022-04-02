@@ -1,23 +1,12 @@
-import { BiArrowBack } from "react-icons/bi"
 import { DropdownArea } from "../../DropdownArea"
-import { DropdownItem } from "../../DropdownItem"
 import { Menu } from "../../Menu"
-import { MenuLine } from "../../MenuLine"
 import { NotificationsList } from "../../areas/NotificationsList"
+import { DropdownTop } from "../../DropdownTop"
 
 export const Notifications: React.FC = () => {
   return (
     <Menu
-      menuItems={[
-        <DropdownItem
-          goToMenu="profile"
-          leftIcon={<BiArrowBack />}
-          key={0}
-          text="Notifications"
-        />,
-        <MenuLine key={1} />,
-        <DropdownArea key={2} content={<NotificationsList />} />,
-      ]}
+      menuItems={[<DropdownArea key={2} content={<NotificationsList />} />]}
       thisMenu={"notifications"}
     />
   )
