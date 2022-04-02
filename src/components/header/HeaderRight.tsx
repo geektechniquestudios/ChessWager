@@ -11,22 +11,39 @@ import { ConversationsState } from "../containers/ConversationsState"
 import { DarkMode } from "../containers/DarkMode"
 import { FaRegGem } from "react-icons/fa"
 import { CgProfile } from "react-icons/cg"
+import { UserDataState } from "../containers/UserDataState"
+import { Auth } from "../containers/Auth"
+import { doc, getFirestore } from "firebase/firestore"
+import { firebaseApp } from "../../config"
+
+const db = getFirestore(firebaseApp)
 
 export const HeaderRight: React.FC = () => {
-  const { doesUserHaveNewMessages } = ConversationsState.useContainer()
   const { isDarkOn } = DarkMode.useContainer()
+  const { userData } = UserDataState.useContainer()
 
-  const messageIcon: React.ReactNode = doesUserHaveNewMessages ? (
-    <RiChat2Line
-      size="21"
-      className="m-2"
-      color={isDarkOn ? "#4ade80" : "#15803d"}
-    />
-  ) : (
-    <RiChat2Line size="21" className="m-2" />
-  )
+  // const messageIcon: React.ReactNode = <></>
+  // userData?.hasNewMessage ?? false ? (
+  //   <RiChat2Line
+  //     size="21"
+  //     className="m-2"
+  //     color={isDarkOn ? "#4ade80" : "#15803d"}
+  //   />
+  // ) : (
+  //   <RiChat2Line size="21" className="m-2" />
+  // )
 
-  const setNewMessagesToFalse = () => {}
+  const greenMessageStyle =
+    userData?.hasNewMessage ?? false
+      ? isDarkOn
+        ? "text-green-400"
+        : "text-green-600"
+      : ""
+
+  const { auth } = Auth.useContainer()
+  const setNewMessagesToFalse = () => {
+    const userRef = doc(db, "users", auth.currentUser!.uid)
+  }
 
   return (
     <div className="flex-auto justify-end align-middle flex mx-3 gap-1.5">
@@ -38,7 +55,7 @@ export const HeaderRight: React.FC = () => {
       <MainHeaderButton
         title="Messages"
         openToMenu="messages"
-        icon={messageIcon}
+        icon={<RiChat2Line size="21" className={`m-2 ${greenMessageStyle}`} />}
         onClick={setNewMessagesToFalse}
       />
       <MainHeaderButton

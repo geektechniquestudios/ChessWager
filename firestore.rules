@@ -371,8 +371,8 @@ service cloud.firestore {
 
       function areCreateRequestKeysValid() {
         return
-          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName", "searchableDisplayName","bets", "id"]) &&
-          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName", "searchableDisplayName","bets", "id"]);
+          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage"]) &&
+          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage"]);
       }
 
       function isCreateRequestDataValid() {
@@ -380,21 +380,24 @@ service cloud.firestore {
         return
           requestData.betAcceptedCount is number &&
           requestData.betFundedCount is number  &&
-          requestData.blocked is list &&
           requestData.walletAddress is string &&
           requestData.photoURL is string &&
           requestData.displayName is string &&
-          requestData.bets is list &&
           requestData.id is string &&
           requestData.searchableDisplayName is string &&
+          requestData.amountBet is number &&
+          requestData.amountWon is number &&
+          requestData.betWinCount is number &&
+          requestData.hasNewMessage is bool &&
 
           requestData.betAcceptedCount == 0 &&
           requestData.betFundedCount == 0 &&
-          requestData.blocked == [] &&
           requestData.photoURL != "" &&
-          requestData.bets == [] &&
-          requestData.id == request.auth.uid;
-
+          requestData.id == request.auth.uid && 
+          requestData.amountBet == 0 && 
+          requestData.amountWon == 0 &&
+          requestData.betWinCount == 0 &&
+          requestData.hasNewMessage == false;
       }
 
       allow create: if canCreate() &&
@@ -402,26 +405,10 @@ service cloud.firestore {
         areCreateRequestKeysValid() && 
         isCreateRequestDataValid();
 
-      function areUpdateRequestKeysValid() {
-        let requestData = request.resource.data;
-        return
-          (!(requestData.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "walletAddress", "displayName", "searchableDisplayName", "id"])) &&
-          requestData.keys().hasAll(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id"]) &&
-          requestData.keys().hasOnly(["betAcceptedCount", "betFundedCount", "blocked", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id"]));
-      }
-
-      function isUpdateRequestDataValid() {
-        let requestData = request.resource.data;
-        return
-          (requestData.blocked is list &&
-          requestData.photoURL is string &&
-          requestData.walletAddress is string);
-      }
-
       function isWalletUpdateRequestKeyValid() {
         return 
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL", "displayName","bets", "searchableDisplayName", "id"])) &&
-          request.resource.data.keys().hasOnly(["walletAddress", "blocked", "photoURL", "betAcceptedCount", "betFundedCount", "blocked", "photoURL", "displayName", "bets", "searchableDisplayName", "id"]) &&
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage"])) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage"]) &&
           request.resource.data.keys().hasAll(["walletAddress"]);
       }
 
@@ -429,10 +416,41 @@ service cloud.firestore {
         return request.resource.data.walletAddress is string;
       }
 
+      function isNewMessageKeyValid() {
+        return 
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "walletAddress"])) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage"]) &&
+          request.resource.data.keys().hasAll(["hasNewMessage"]);
+      }
+
+      function isNewMessageDataValid() {
+        return request.resource.data.hasNewMessage is bool;
+      }
+
+      function isSenderBlocked () {
+        return false;
+      }
+
       allow update: if canCreate() &&
-        doesProfileBelongToUser() &&
-        ((areUpdateRequestKeysValid() && isUpdateRequestDataValid()) 
-        || (isWalletUpdateRequestKeyValid() && isWalletUpdateRequestDataValid()));
+        (doesProfileBelongToUser() &&
+        isWalletUpdateRequestKeyValid() && isWalletUpdateRequestDataValid()) || 
+        (!doesProfileBelongToUser() && isNewMessageKeyValid() && isNewMessageDataValid() && !isSenderBlocked());
+    }
+
+    match /users/{userId}/bets/{docId} {
+      allow read, write: if true;
+    }
+
+    match /users/{userId}/blocked/{docId} {
+      allow read, write: if true;
+    }
+    
+    match /users/{userId}/followers/{docId} {
+      allow read, write: if true;
+    }
+    
+    match /users/{userId}/following/{docId} {
+      allow read, write: if true;
     }
   }
 }

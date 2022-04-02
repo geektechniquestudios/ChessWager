@@ -16,7 +16,7 @@ export const ConversationData: React.FC<Props> = ({}) => {
   const { userIdFromMessages } = UserMenuState.useContainer()
   const docId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
 
-  const conversationsCollectionRef = collection(
+  const messagesRef = collection(
     doc(db, "conversations", docId),
     "messages",
   )
@@ -35,13 +35,13 @@ export const ConversationData: React.FC<Props> = ({}) => {
     <div className="flex flex-col-reverse h-96">
       <ConvoChatForm
         dummy={dummy}
-        messagesRef={conversationsCollectionRef}
+        messagesRef={messagesRef}
         formValue={convoFormValue.get(docId) ?? ""}
         setFormValue={setFormValue}
         conversationDocRef={conversationDocRef}
       />
       <span ref={dummy} />
-      <ConvoChatBody messagesRef={conversationsCollectionRef} />
+      <ConvoChatBody messagesRef={messagesRef} />
     </div>
   )
 }

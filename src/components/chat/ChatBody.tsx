@@ -1,6 +1,6 @@
+import "../../style/scrollbar.scss"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { ChatMessage } from "./ChatMessage"
-import "../../style/scrollbar.scss"
 import {
   CollectionReference,
   DocumentData,
@@ -25,8 +25,11 @@ export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
           (a: Message, b: Message) =>
             b.createdAt?.seconds - a.createdAt?.seconds,
         )
-        .map((message: Message) => (
-          <ChatMessage key={message.uid + message?.createdAt} {...message} />
+        .map((message: Message, index: number) => (
+          <ChatMessage
+            key={message.uid + message?.createdAt + index}
+            {...message}
+          />
         ))}
     </div>
   )
