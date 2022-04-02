@@ -10,6 +10,7 @@ import {
 import { ConversationsState } from "../containers/ConversationsState"
 import { DarkMode } from "../containers/DarkMode"
 import { FaRegGem } from "react-icons/fa"
+import { CgProfile } from "react-icons/cg"
 import { UserDataState } from "../containers/UserDataState"
 import { Auth } from "../containers/Auth"
 import { doc, getFirestore } from "firebase/firestore"
@@ -71,6 +72,11 @@ export const HeaderRight: React.FC = () => {
         title="Bets"
         openToMenu="bets"
         icon={<FaRegGem size="21" className="m-2" />}
+      />
+      <MainHeaderButton
+        title="Persona"
+        openToMenu="persona"
+        icon={<CgProfile size="21" className="m-2" />}
       />
       <SignInButton />
       <Dropdown />
