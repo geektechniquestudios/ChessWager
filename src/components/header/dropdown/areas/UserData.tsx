@@ -18,6 +18,8 @@ interface Props {
   amountBet?: number
   amountWon?: number
   betWinCount?: number
+  followerCount?: number
+  followingCount?: number
   isLoading?: boolean
 }
 
@@ -31,6 +33,8 @@ export const UserData: React.FC<Props> = ({
   amountBet = 0,
   amountWon = 0,
   betWinCount = 0,
+  followerCount = 0,
+  followingCount = 0,
   isLoading,
 }) => {
   const { isDarkOn } = DarkMode.useContainer()
@@ -61,12 +65,12 @@ export const UserData: React.FC<Props> = ({
           />
           <div className="w-full h-full grid gap-1.5 grid-cols-2 p-2">
             <UserDataTile
-              data={""}
+              data={followingCount}
               name="Following"
               icon={<RiUserHeartLine />}
             />
             <UserDataTile
-              data={""}
+              data={followerCount}
               name="Followers"
               icon={<RiHeartsLine />}
             />

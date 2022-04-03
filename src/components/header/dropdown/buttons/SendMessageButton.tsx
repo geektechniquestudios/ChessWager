@@ -6,10 +6,12 @@ import { firebaseApp } from "../../../../config"
 import {
   collection,
   doc,
+  getDoc,
   getFirestore,
   setDoc,
   updateDoc,
 } from "firebase/firestore"
+import { UserMenuState } from "../../../containers/UserMenuState"
 
 const db = getFirestore(firebaseApp)
 interface Props {
@@ -24,61 +26,44 @@ export const SendMessageButton: React.FC<Props> = ({
   photoURL,
 }) => {
   const { setActiveMenu } = DropdownState.useContainer()
+  const { setUserIdFromMessages, setUsernameFromMessages } =
+    UserMenuState.useContainer()
 
   const { auth } = Auth.useContainer()
   const docId = [auth.currentUser?.uid, id].sort().join("-")
 
   const createConvoDoc = () => {
     const convoDoc = doc(db, "conversations", docId)
-    // const userDoc1 = firestore
-    //   .collection("conversations")
-    //   .doc(docId)
-    //   .collection("users")
-    //   .doc(auth.currentUser?.uid)
-    // const userDoc2 = firestore
-    //   .collection("conversations")
-    //   .doc(docId)
-    //   .collection("users")
-    //   .doc(id)
 
-    setDoc(
-      convoDoc,
-      {
-        messageThumbnail: "",
-        userIds: [id, auth.currentUser?.uid],
-        user1: {
-          id: auth.currentUser?.uid,
-          displayName: auth.currentUser?.displayName,
-          photoUrl: auth.currentUser?.photoURL,
-        },
-        user2: {
-          id: id,
-          displayName: displayName,
-          photoURL: photoURL,
-        },
-        isDeletedForUser1: false,
-        isDeletedForUser2: false,
-        doesUser1HaveNewMessages: false,
-        doesUser2HaveNewMessages: false,
-      },
-      { merge: true },
-    )
+    getDoc(convoDoc)
+      .then((doc) => doc.exists())
+      .then((doesDocExist) => {
+        if (!doesDocExist) {
+          setDoc(
+            convoDoc,
+            {
+              messageThumbnail: "",
+              userIds: [id, auth.currentUser?.uid],
+              user1: {
+                id: auth.currentUser?.uid,
+                displayName: auth.currentUser?.displayName,
+                photoUrl: auth.currentUser?.photoURL,
+              },
+              user2: {
+                id: id,
+                displayName: displayName,
+                photoURL: photoURL,
+              },
+              isDeletedForUser1: false,
+              isDeletedForUser2: false,
+              doesUser1HaveNewMessages: false,
+              doesUser2HaveNewMessages: false,
+            },
+            { merge: true },
+          )
+        }
+      })
   }
-  // userDoc1.set({
-  //   id: auth.currentUser?.uid,
-  //   displayName: auth.currentUser?.displayName,
-  //   photoUrl: auth.currentUser?.photoURL,
-  //   hasNewMessages: false,
-  //   isDeleted: false,
-  // })
-
-  // userDoc2.set({
-  //   id: id,
-  //   displayName: displayName,
-  //   photoURL: photoURL,
-  //   hasNewMessages: false,
-  //   isDeleted: false,
-  // })
 
   return (
     <DropdownButton
@@ -86,6 +71,8 @@ export const SendMessageButton: React.FC<Props> = ({
       onClick={() => {
         setActiveMenu("directMessage")
         createConvoDoc()
+        setUserIdFromMessages(id)
+        setUsernameFromMessages(displayName)
       }}
       title="Send Direct Message"
     />

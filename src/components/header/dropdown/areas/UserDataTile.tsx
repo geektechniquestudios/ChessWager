@@ -1,7 +1,7 @@
 interface Props {
   name: string
   icon: React.ReactNode
-  data: string
+  data: string | number
 }
 
 export const UserDataTile: React.FC<Props> = ({ name, icon, data }) => {

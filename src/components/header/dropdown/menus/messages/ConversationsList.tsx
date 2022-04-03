@@ -38,7 +38,7 @@ export const ConversationsList: React.FC = ({}) => {
                       <img
                         src={user.photoURL}
                         alt=""
-                        className="w-6 h-6 rounded-full grid place-content-center border"
+                        className="w-6 h-6 rounded-full grid place-content-center"
                       />
                     }
                     goToMenu="conversation"
