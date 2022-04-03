@@ -139,6 +139,7 @@ export const ChessGame: React.FC = () => {
                   movable: {
                     free: false,
                   },
+                  coordinates: false,
                 }}
               />
             </div>

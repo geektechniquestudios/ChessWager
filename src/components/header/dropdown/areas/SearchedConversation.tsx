@@ -1,12 +1,12 @@
 import { useRef } from "react"
-import { ChatBody } from "../../../chat/ChatBody"
-import { ChatForm } from "../../../chat/ChatForm"
 import { Auth } from "../../../containers/Auth"
 import { ChatFormData } from "../../../containers/ChatFormData"
 import { UserMenuState } from "../../../containers/UserMenuState"
 import "../../../../style/scrollbar.scss"
 import { firebaseApp } from "../../../../config"
 import { collection, doc, getFirestore } from "firebase/firestore"
+import { ConvoChatForm } from "../menus/messages/ConvoChatForm"
+import { ConvoChatBody } from "../menus/messages/ConvoChatBody"
 
 const db = getFirestore(firebaseApp)
 
@@ -14,16 +14,14 @@ interface Props {}
 
 export const SearchedConversation: React.FC<Props> = ({}) => {
   const { auth } = Auth.useContainer()
-  const { searchedUser } = UserMenuState.useContainer()
-  const docId = [auth.currentUser?.uid, searchedUser?.id].sort().join("-")
+  const { userIdFromMessages } = UserMenuState.useContainer()
+  const docId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
 
-  const conversationsCollectionRef = collection(
-    doc(db, "conversations", docId),
-    "messages",
-  )
+  const messagesRef = collection(doc(db, "conversations", docId), "messages")
+
+  const conversationDocRef = doc(db, "conversations", docId)
 
   const dummy = useRef<HTMLInputElement>(null)
-
   const { convoFormValue, setConvoFormValue } = ChatFormData.useContainer()
   const setFormValue = (formValue: string) => {
     const newMap = new Map(convoFormValue)
@@ -31,15 +29,16 @@ export const SearchedConversation: React.FC<Props> = ({}) => {
     setConvoFormValue(newMap)
   }
   return (
-    <div className="flex flex-col-reverse h-72 ">
-      <ChatForm
+    <div className="flex flex-col-reverse h-96 ">
+      <ConvoChatForm
         dummy={dummy}
-        messagesRef={conversationsCollectionRef}
+        messagesRef={messagesRef}
         formValue={convoFormValue.get(docId) ?? ""}
         setFormValue={setFormValue}
+        conversationDocRef={conversationDocRef}
       />
       <span ref={dummy} />
-      <ChatBody messagesRef={conversationsCollectionRef} />
+      <ConvoChatBody messagesRef={messagesRef} />
     </div>
   )
 }

@@ -112,6 +112,9 @@ const useAuth = () => {
                 amountWon: 0,
                 betWinCount: 0,
                 hasNewMessage: false,
+                followerCount: 0,
+                followingCount: 0,
+                hasNewNotification: false,
               }).catch(console.error)
             }
             if (doc.data()?.walletAddress ?? "" !== "") {

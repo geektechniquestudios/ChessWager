@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
-  const q = query(messagesRef, orderBy("createdAt", "desc"), limit(25))
+  const q = query(messagesRef, orderBy("createdAt", "desc"), limit(100))
   const [messages] = useCollectionData<Message[] | any>(q)
 
   return (

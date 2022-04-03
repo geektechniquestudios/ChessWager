@@ -22,33 +22,10 @@ const useConversationsState = () => {
   const specificConvoCollectionRef = (docId: string) =>
     collection(doc(db, "conversations", docId), "messages")
 
-  const convoUserList =
-    conversations?.map((conversation: Conversation) =>
-      auth.currentUser?.uid === conversation.user1.id
-        ? conversation.user2
-        : conversation.user1,
-    ) ?? []
-
-
-  // const doesUserHaveNewMessages = userData?.hasNewMessage ?? false
-  // (conversations
-  //   ?.map((conversation: Conversation) =>
-  //     auth.currentUser?.uid === conversation.user1.id
-  //       ? conversation.doesUser1HaveNewMessages
-  //       : conversation.doesUser2HaveNewMessages,
-  //   )
-  //   .filter((hasNewMessages: boolean) => hasNewMessages).length ?? 0) > 0
-
-  const isUser1 = (conversation: Conversation) =>
-    auth.currentUser?.uid === conversation.user1.id
-
   return {
-    // doesUserHaveNewMessages,
-    convoUserList,
     conversations,
     isLoading,
     specificConvoCollectionRef,
-    isUser1,
   }
 }
 

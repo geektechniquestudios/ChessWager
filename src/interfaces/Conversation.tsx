@@ -1,4 +1,6 @@
-type User = {
+import { Timestamp } from "firebase/firestore"
+
+export type User = {
   id: string
   displayName: string
   photoURL: string
@@ -13,5 +15,7 @@ export type Conversation = {
   isDeletedForUser2: boolean
   doesUser1HaveNewMessages: boolean
   doesUser2HaveNewMessages: boolean
+  modifiedAt: Timestamp
   messages: any
+  messageThumbnail: string
 }

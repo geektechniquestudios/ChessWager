@@ -28,10 +28,11 @@ import { UserMenuState } from "../../containers/UserMenuState"
 import { Conversation } from "./menus/messages/Conversation"
 import { Following } from "./menus/profile/Following"
 import { BetsMenu } from "./menus/profile/BetsMenu"
+import { DarkMode } from "../../containers/DarkMode"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
-    const { setIsDropdownOpen } = DropdownState.useContainer()
+    const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
     useEffect(() => {
       const handleClickOutside = (event: Event) => {
         if (ref.current?.contains(event.target)) {
@@ -39,6 +40,7 @@ export const DropdownMenu = () => {
         }
         if (ref.current && !ref.current.contains(event.target)) {
           setIsDropdownOpen(false)
+          setActiveMenu("")
           setMenuHeight(0)
         }
       }
@@ -61,10 +63,23 @@ export const DropdownMenu = () => {
   }, [setMenuHeight])
 
   const { clickedUserId } = UserMenuState.useContainer()
+  const { isDarkOn } = DarkMode.useContainer()
+  const bgColor = isDarkOn
+    ? "rgba(68, 64, 60, 0.60)"
+    : "rgba(245, 245, 244, 0.60)"
+  const blur = isDarkOn ? "blur(18px)" : "blur(16px)"
+
+  const firefoxColors = (): string =>
+    "bg-stone-100 dark:bg-stone-700 border-2 border-stone-400 dark:border-stone-500"
+
   return (
     <div
-      className="dropdown absolute w-64 bg-stone-100 dark:bg-stone-700 border-2 border-stone-400 dark:border-stone-500 text-stone-800 dark:text-stone-200 overflow-hidden right-5 top-10 z-50 rounded-md shadow-2xl"
-      style={{ height: menuHeight }}
+      className={`${firefoxColors} dropdown absolute w-64 text-stone-800 dark:text-stone-200 overflow-hidden right-5 top-10 z-50 rounded-md shadow-lg border border-stone-400  dark:border-stone-500`}
+      style={{
+        height: menuHeight,
+        // background: bgColor,
+        backdropFilter: blur,
+      }}
       ref={dropdownRef}
     >
       <div className="flex justify-center">

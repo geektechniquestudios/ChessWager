@@ -371,8 +371,8 @@ service cloud.firestore {
 
       function areCreateRequestKeysValid() {
         return
-          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage"]) &&
-          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage"]);
+          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification"]) &&
+          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification"]);
       }
 
       function isCreateRequestDataValid() {
@@ -389,6 +389,9 @@ service cloud.firestore {
           requestData.amountWon is number &&
           requestData.betWinCount is number &&
           requestData.hasNewMessage is bool &&
+          requestData.followerCount is number &&
+          requestData.followingCount is number &&
+          requestData.hasNewNotification is bool &&
 
           requestData.betAcceptedCount == 0 &&
           requestData.betFundedCount == 0 &&
@@ -397,7 +400,10 @@ service cloud.firestore {
           requestData.amountBet == 0 && 
           requestData.amountWon == 0 &&
           requestData.betWinCount == 0 &&
-          requestData.hasNewMessage == false;
+          requestData.hasNewMessage == false &&
+          requestData.followerCount == 0 &&
+          requestData.followingCount == 0 && 
+          requestData.hasNewNotification == false;
       }
 
       allow create: if canCreate() &&
@@ -407,8 +413,8 @@ service cloud.firestore {
 
       function isWalletUpdateRequestKeyValid() {
         return 
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage"])) &&
-          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage"]) &&
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification"])) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification"]) &&
           request.resource.data.keys().hasAll(["walletAddress"]);
       }
 
@@ -418,8 +424,8 @@ service cloud.firestore {
 
       function isNewMessageKeyValid() {
         return 
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "walletAddress"])) &&
-          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage"]) &&
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "walletAddress", "hasNewNotification"])) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification"]) &&
           request.resource.data.keys().hasAll(["hasNewMessage"]);
       }
 
@@ -431,10 +437,52 @@ service cloud.firestore {
         return false;
       }
 
+      function isReceiverBlocked () {
+        return false;
+      }
+
+      function isUpdatedIncrementFollowingCountDataValid() {
+        // check that value is only incremented by 1 
+        // check that not already following
+        return true;
+      }
+
+      function isUpdatedDecrementFollowingCountDataValid() {
+        // check that value is only decremented by 1 
+        // check that already following
+        return true;
+      }
+
+      function isUpdatedIncrementFollowerCountDataValid() {
+        // check that value is only incremented by 1 
+        // check that not already follower
+        return true;
+      }
+
+      function isUpdatedDecrementFollowerCountDataValid() {
+        // check that value is only decremented by 1 
+        // check that already follower
+        return true;
+      }
+
+      function isUpdatedFollowingCountKeyValid() {
+        return true;
+      }
+
+      function isUpdatedFollowerCountKeyValid() {
+        return true;
+      }
+
       allow update: if canCreate() &&
-        (doesProfileBelongToUser() &&
-        isWalletUpdateRequestKeyValid() && isWalletUpdateRequestDataValid()) || 
-        (!doesProfileBelongToUser() && isNewMessageKeyValid() && isNewMessageDataValid() && !isSenderBlocked());
+      (
+        (doesProfileBelongToUser() && isWalletUpdateRequestKeyValid() && isWalletUpdateRequestDataValid()) ||  // update wallet address
+        (!doesProfileBelongToUser() && isNewMessageKeyValid() && isNewMessageDataValid() && !isSenderBlocked()) || // hasNewMessage update
+        (doesProfileBelongToUser() && isUpdatedFollowingCountKeyValid() && isUpdatedIncrementFollowingCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) || // increment following count
+        (doesProfileBelongToUser() && isUpdatedFollowingCountKeyValid() && isUpdatedDecrementFollowingCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) || // decrement following count
+        (!doesProfileBelongToUser() && isUpdatedFollowerCountKeyValid() && isUpdatedIncrementFollowerCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) || // increment follower count
+        (!doesProfileBelongToUser() && isUpdatedFollowerCountKeyValid() && isUpdatedDecrementFollowerCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) // decrement follower count
+      );
+
     }
 
     match /users/{userId}/bets/{docId} {

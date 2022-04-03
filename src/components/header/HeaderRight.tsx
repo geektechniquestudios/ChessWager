@@ -7,13 +7,12 @@ import {
   RiNotification3Line,
   RiUserHeartLine,
 } from "react-icons/ri"
-import { ConversationsState } from "../containers/ConversationsState"
 import { DarkMode } from "../containers/DarkMode"
 import { FaRegGem } from "react-icons/fa"
 import { CgProfile } from "react-icons/cg"
 import { UserDataState } from "../containers/UserDataState"
 import { Auth } from "../containers/Auth"
-import { doc, getFirestore } from "firebase/firestore"
+import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore"
 import { firebaseApp } from "../../config"
 
 const db = getFirestore(firebaseApp)
@@ -42,7 +41,9 @@ export const HeaderRight: React.FC = () => {
 
   const { auth } = Auth.useContainer()
   const setNewMessagesToFalse = () => {
+    if (!userData!.hasNewMessage) return
     const userRef = doc(db, "users", auth.currentUser!.uid)
+    updateDoc(userRef, { hasNewMessage: false })
   }
 
   return (
