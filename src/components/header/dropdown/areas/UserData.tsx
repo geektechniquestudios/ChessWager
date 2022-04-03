@@ -15,27 +15,36 @@ interface Props {
   displayName?: string
   walletAddress?: string
   id?: string
-  amountBet: number
-  amountWon: number
-  betWinCount: number
+  amountBet?: number
+  amountWon?: number
+  betWinCount?: number
   isLoading?: boolean
 }
 
 export const UserData: React.FC<Props> = ({
-  betAcceptedCount,
-  betFundedCount,
+  betAcceptedCount = 0,
+  betFundedCount = 0,
   displayName,
   id,
   photoURL,
   walletAddress,
-  amountBet,
-  amountWon,
-  betWinCount,
+  amountBet = 0,
+  amountWon = 0,
+  betWinCount = 0,
   isLoading,
 }) => {
   const { isDarkOn } = DarkMode.useContainer()
+  const winPercent =
+    betWinCount !== 0 && betFundedCount !== 0
+      ? ((betWinCount / betFundedCount) * 100).toFixed(2)
+      : 0
+  const trust =
+    betWinCount !== 0 && betFundedCount !== 0
+      ? ((betFundedCount / betAcceptedCount) * 100).toFixed(2)
+      : 0
+
   return (
-    <div className="h-96 flex flex-col items-center">
+    <div className="flex flex-col items-center">
       {isLoading ? (
         <UserDataLoading isLoading={isLoading} />
       ) : (
@@ -52,38 +61,42 @@ export const UserData: React.FC<Props> = ({
           />
           <div className="w-full h-full grid gap-1.5 grid-cols-2 p-2">
             <UserDataTile
-              data={"5"}
+              data={""}
               name="Following"
               icon={<RiUserHeartLine />}
             />
             <UserDataTile
-              data={"20"}
+              data={""}
               name="Followers"
               icon={<RiHeartsLine />}
             />
             <UserDataTile
-              data={`${betFundedCount ?? 0} / ${betAcceptedCount ?? 0}`}
+              data={`${trust}`}
               name="Trust"
               icon={<FaRegHandshake />}
             />
-            <UserDataTile data={"128"} name="Bets" icon={<FaRegGem />} />
             <UserDataTile
-              data={"72"}
+              data={`${betAcceptedCount ?? 0}`}
+              name="Bets"
+              icon={<FaRegGem />}
+            />
+            <UserDataTile
+              data={`${betWinCount ?? 0}`}
               name="Bets Won"
               icon={<FaRegHandPeace />}
             />
             <UserDataTile
-              data={"56"}
+              data={`${betFundedCount - betWinCount}`}
               name="Bets Lost"
               icon={<FaRegHandPeace className="rotate-180" />}
             />
             <UserDataTile
-              data={"56.25"}
+              data={`${winPercent}`}
               name="Win Percent"
               icon={<FiPercent />}
             />
             <UserDataTile
-              data={"479"}
+              data={`${amountBet ?? 0}`}
               name="Total Amount Bet"
               icon={
                 <GiPayMoney
@@ -94,12 +107,12 @@ export const UserData: React.FC<Props> = ({
               }
             />
             <UserDataTile
-              data={"1121"}
+              data={`${amountWon - amountBet}`}
               name="Net Profit"
               icon={<BsPiggyBank />}
             />
             <UserDataTile
-              data={"9430"}
+              data={`${amountWon ?? 0}`}
               name="Total Amount Won"
               icon={<RiHandCoinLine />}
             />

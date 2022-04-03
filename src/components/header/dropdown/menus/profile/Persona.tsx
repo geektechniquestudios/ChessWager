@@ -1,6 +1,4 @@
-import { DropdownItem } from "../../DropdownItem"
 import { Menu } from "../../Menu"
-import { MenuLine } from "../../MenuLine"
 import { UserData } from "../../areas/UserData"
 import { Auth } from "../../../../containers/Auth"
 import { useDocumentDataOnce } from "react-firebase-hooks/firestore"
@@ -13,7 +11,6 @@ import {
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { Data } from "react-firebase-hooks/firestore/dist/firestore/types"
-import { CgProfile } from "react-icons/cg"
 
 const db = getFirestore(firebaseApp)
 
@@ -28,13 +25,6 @@ export const Persona: React.FC = ({}) => {
       ]
     | any = useDocumentDataOnce(userDocRef)
   return (
-    <Menu
-      menuItems={[
-        <DropdownItem key={0} text="Persona" />,
-        <MenuLine key={1} />,
-        <UserData key={2} {...user} />,
-      ]}
-      thisMenu={"persona"}
-    />
+    <Menu menuItems={[<UserData key={2} {...user} />]} thisMenu={"persona"} />
   )
 }
