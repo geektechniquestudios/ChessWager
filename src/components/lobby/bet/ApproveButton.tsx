@@ -5,6 +5,7 @@ import {
   serverTimestamp,
   doc,
   getFirestore,
+  getDoc,
 } from "firebase/firestore"
 import { FiUserCheck } from "react-icons/fi"
 import { firebaseApp } from "../../../config"
@@ -13,16 +14,18 @@ import { DarkMode } from "../../containers/DarkMode"
 import { LobbyState } from "../../containers/LobbyState"
 interface Props {
   betId: string
+  user1Id: string
+  user2Id: string
 }
 const db = getFirestore(firebaseApp)
 
-export const ApproveButton: React.FC<Props> = ({ betId }) => {
-  const betDoc: DocumentReference<DocumentData> = 
-    doc(db, "lobby", betId)
+export const ApproveButton: React.FC<Props> = ({ betId, user1Id, user2Id }) => {
+  const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", betId)
   const { refreshLobby } = LobbyState.useContainer()
   const approve = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
     updateDoc(betDoc, {
+      users: [user1Id, user2Id],
       status: "approved",
       timestamp: serverTimestamp(),
     })

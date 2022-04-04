@@ -53,7 +53,7 @@ export const User2Data: React.FC<Props> = ({
         isSelected={isSelected}
         status={status}
       />
-      <ApproveKickWrapper user1Id={user1Id} status={status} id={id} />
+      <ApproveKickWrapper user1Id={user1Id} user2Id={user2Id} status={status} id={id} />
     </div>
   )
 }

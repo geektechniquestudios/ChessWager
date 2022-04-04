@@ -233,7 +233,8 @@ service cloud.firestore {
       }
 
       function isUser2Blocked() {
-        return (get(/databases/$(database)/documents/users/$(resource.data.user1Id)).data.blocked.hasAny([request.auth.uid]));
+        // return (get(/databases/$(database)/documents/users/$(resource.data.user1Id)).data.blocked.hasAny([request.auth.uid]));
+        return false;
       }
 
       function isUser2JoinDataValid() {
@@ -308,8 +309,8 @@ service cloud.firestore {
       function areApproveRequestKeysValid() {
         return
          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress"])) &&
-          request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp"]) &&
-          request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp"]);
+          request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users"]) &&
+          request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users"]);
 
       }
 
@@ -319,6 +320,10 @@ service cloud.firestore {
           request.resource.data.status == "approved" &&
           resource.data.status == "pending" &&
           request.resource.data.timestamp is timestamp;
+          // request.resource.data.users is list &&
+          // request.resource.data.users.length == 2 &&
+          // request.resource.data.users.hasOnly(["user1Id", "user2Id"]) &&
+          // request.resource.data.users.hasAll(["user1Id", "user2Id"]);
       }
       // 4 Possibilities:
       allow update: if canCreate() && 

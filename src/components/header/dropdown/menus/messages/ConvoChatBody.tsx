@@ -12,6 +12,7 @@ import { ConvoChatMessage } from "./ConvoChatMessage"
 interface Props {
   messagesRef: CollectionReference<DocumentData>
 }
+
 export const ConvoChatBody: React.FC<Props> = ({ messagesRef }) => {
   const q = query(messagesRef, orderBy("createdAt", "desc"), limit(25))
 

@@ -1,8 +1,7 @@
+import "../../../../style/scrollbar.scss"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { UserListItem } from "./UserListItem"
 import type { User } from "../../../../interfaces/User"
-import "../../../../style/scrollbar.scss"
-
 import { firebaseApp } from "../../../../config"
 import { collection, getFirestore, query, where } from "firebase/firestore"
 
