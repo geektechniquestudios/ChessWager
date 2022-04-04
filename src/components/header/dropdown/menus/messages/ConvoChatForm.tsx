@@ -111,7 +111,7 @@ export const ConvoChatForm: React.FC<Props> = ({
     dummy.current?.scrollIntoView({ behavior: "smooth" })
   }
   return (
-    <div className="flex-col justify-end w-full">
+    <div className="flex-col justify-start w-full grow pb-2">
       <fieldset
         disabled={!auth.currentUser}
         className="fieldset justify-center flex"

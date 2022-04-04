@@ -12,18 +12,21 @@ import {
   updateDoc,
 } from "firebase/firestore"
 import { UserMenuState } from "../../../containers/UserMenuState"
+import { SearchedDirectMessage } from "../menus/search/SearchedDirectMessage"
 
 const db = getFirestore(firebaseApp)
 interface Props {
   id: string
   displayName: string
   photoURL: string
+  clickedOrSearched: string
 }
 
 export const SendMessageButton: React.FC<Props> = ({
   id,
   displayName,
   photoURL,
+  clickedOrSearched,
 }) => {
   const { setActiveMenu } = DropdownState.useContainer()
   const { setUserIdFromMessages, setUsernameFromMessages } =
@@ -69,7 +72,7 @@ export const SendMessageButton: React.FC<Props> = ({
     <DropdownButton
       content={<RiMailSendLine />}
       onClick={() => {
-        setActiveMenu("directMessage")
+        setActiveMenu(clickedOrSearched + "DirectMessage")
         createConvoDoc()
         setUserIdFromMessages(id)
         setUsernameFromMessages(displayName)

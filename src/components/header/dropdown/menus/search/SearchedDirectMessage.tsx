@@ -5,7 +5,7 @@ import { DropdownItem } from "../../DropdownItem"
 import { Menu } from "../../Menu"
 import { MenuLine } from "../../MenuLine"
 
-export const DirectMessage: React.FC = ({}) => {
+export const SearchedDirectMessage: React.FC = ({}) => {
   const { searchedUser } = UserMenuState.useContainer()
   return (
     <Menu
@@ -19,7 +19,7 @@ export const DirectMessage: React.FC = ({}) => {
         <MenuLine key={1} />,
         <SearchedConversation key={2} />,
       ]}
-      thisMenu={"directMessage"}
+      thisMenu={"searchedDirectMessage"}
     />
   )
 }

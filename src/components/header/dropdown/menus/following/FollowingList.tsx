@@ -12,7 +12,7 @@ export const FollowingList: React.FC = ({}) => {
           style={{ direction: "rtl" }}
         />
       ) : (
-        <div className="h-72 m-3 w-full justify-center flex dark:text-stone-400 text-stone-400">
+        <div className="h-72 mt-10 w-full justify-center flex dark:text-stone-400 text-stone-400">
           Not following anyone yet
         </div>
       )}

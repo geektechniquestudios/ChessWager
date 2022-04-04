@@ -18,7 +18,7 @@ export const SearchedUserMenu: React.FC = ({}) => {
           text={"Search"}
         />,
         <MenuLine key={1} />,
-        <UserData key={2} {...searchedUser} />,
+        <UserData key={2} {...searchedUser} clickedOrSearched="searched" />,
       ]}
       thisMenu={"searchedUser"}
     />

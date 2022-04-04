@@ -16,11 +16,7 @@ export const ConversationData: React.FC<Props> = ({}) => {
   const { userIdFromMessages } = UserMenuState.useContainer()
   const docId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
 
-  const messagesRef = collection(
-    doc(db, "conversations", docId),
-    "messages",
-  )
-
+  const messagesRef = collection(doc(db, "conversations", docId), "messages")
   const conversationDocRef = doc(db, "conversations", docId)
 
   const dummy = useRef<HTMLInputElement>(null)

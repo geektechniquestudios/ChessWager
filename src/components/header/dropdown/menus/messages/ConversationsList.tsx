@@ -52,7 +52,7 @@ export const ConversationsList: React.FC = ({}) => {
           </>
           <>
             {(conversations?.length ?? 0) === 0 && (
-              <div className="mt-3 w-full justify-center flex">
+              <div className="mt-10 w-full justify-center flex">
                 No messages yet
               </div>
             )}

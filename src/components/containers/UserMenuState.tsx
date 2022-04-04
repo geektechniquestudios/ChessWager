@@ -5,6 +5,7 @@ import type { User } from "../../interfaces/User"
 const useUserMenuState = () => {
   const [searchedUser, setSearchedUser] = useState<User>()
   const [clickedUserId, setClickedUserId] = useState<string>("")
+  const [clickedUser, setClickedUser] = useState<User>()
   const [userIdFromMessages, setUserIdFromMessages] = useState<string>("")
   const [usernameFromMessages, setUsernameFromMessages] = useState<string>("")
   return {
@@ -16,6 +17,8 @@ const useUserMenuState = () => {
     setUserIdFromMessages,
     usernameFromMessages,
     setUsernameFromMessages,
+    clickedUser,
+    setClickedUser,
   }
 }
 

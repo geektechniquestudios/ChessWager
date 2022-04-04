@@ -8,13 +8,17 @@ interface Props {
   id: string
   displayName: string
   photoURL: string
+  clickedOrSearched: "clicked" | "searched"
 }
 
-export const UserButtons: React.FC<Props> = ({ id, displayName, photoURL }) => {
+export const UserButtons: React.FC<Props> = ({
+  id,
+  displayName,
+  photoURL,
+  clickedOrSearched,
+}) => {
   const { auth } = Auth.useContainer()
-
   const isUser = auth.currentUser?.uid === id
-
   return (
     <>
       {!isUser && displayName !== "" && (
@@ -23,6 +27,7 @@ export const UserButtons: React.FC<Props> = ({ id, displayName, photoURL }) => {
             id={id ?? "...Loading"}
             displayName={displayName}
             photoURL={photoURL}
+            clickedOrSearched={clickedOrSearched}
           />
           <BlockUserButton id={id ?? "...Loading"} />
           <ReportUserButton id={id ?? "...Loading"} />

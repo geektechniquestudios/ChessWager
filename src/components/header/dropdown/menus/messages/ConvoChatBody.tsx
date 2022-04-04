@@ -17,9 +17,9 @@ export const ConvoChatBody: React.FC<Props> = ({ messagesRef }) => {
 
   const [messages] = useCollectionData<[Message[]] | any>(q, { idField: "id" })
   return (
-    <div className="scrollbar flex flex-col-reverse pt-3 overflow-y-auto overflow-x-hidden px-1">
-      {messages?.map((message: Message) => (
-        <ConvoChatMessage key={message.uid + message.createdAt} {...message} />
+    <div className="scrollbar flex flex-col-reverse pt-3 overflow-y-auto overflow-x-hidden px-1 h-full">
+      {messages?.map((message: Message, index: number) => (
+        <ConvoChatMessage key={index} {...message} />
       ))}
     </div>
   )

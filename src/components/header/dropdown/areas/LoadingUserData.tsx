@@ -1,8 +1,6 @@
-interface Props {
-  isLoading: boolean
-}
+interface Props {}
 
-export const UserDataLoading: React.FC<Props> = ({ isLoading }) => {
+export const UserDataLoading: React.FC<Props> = ({}) => {
   return (
     <div className="flex-col w-full h-full">
       <div className="flex w-full justify-center">

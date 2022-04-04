@@ -15,13 +15,15 @@ export const MainHeaderButton: React.FC<Props> = ({
   onClick,
 }) => {
   const { user } = Auth.useContainer()
-  const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
+  const { setIsDropdownOpen, setActiveMenu, activeMenu } =
+    DropdownState.useContainer()
+  const activeStyle = activeMenu === openToMenu ? "bg-stone-700" : ""
   return (
     <>
       {user && (
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center align-middle">
           <button
-            className="cw-button header-button"
+            className={`cw-button header-button ${activeStyle}`}
             title={title}
             onClick={() => {
               setIsDropdownOpen(true)

@@ -3,7 +3,7 @@ import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 import { Achievements } from "./menus/profile/Achievements"
 import { BlockedUsers } from "./menus/settings/BlockedUsers"
-import { DirectMessage } from "./menus/search/DirectMessage"
+import { SearchedDirectMessage } from "./menus/search/SearchedDirectMessage"
 import { Contact } from "./menus/help/Contact"
 import { DisplayName } from "./menus/profile/DisplayName"
 import { Faq } from "./menus/help/Faq"
@@ -29,6 +29,7 @@ import { Conversation } from "./menus/messages/Conversation"
 import { Following } from "./menus/profile/Following"
 import { BetsMenu } from "./menus/profile/BetsMenu"
 import { DarkMode } from "../../containers/DarkMode"
+import { ClickedDirectMessage } from "./menus/ClickedDirectMessage"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -65,19 +66,18 @@ export const DropdownMenu = () => {
   const { clickedUserId } = UserMenuState.useContainer()
   const { isDarkOn } = DarkMode.useContainer()
   const bgColor = isDarkOn
-    ? "rgba(68, 64, 60, 0.60)"
+    ? "rgba(68, 64, 60, 0.79)"
     : "rgba(245, 245, 244, 0.60)"
   const blur = isDarkOn ? "blur(18px)" : "blur(16px)"
 
-  const firefoxColors = (): string =>
-    "bg-stone-100 dark:bg-stone-700 border-2 border-stone-400 dark:border-stone-500"
+  const firefoxColors = (): string => "bg-stone-100 dark:bg-stone-700"
 
   return (
     <div
       className={`${firefoxColors} dropdown absolute w-64 text-stone-800 dark:text-stone-200 overflow-hidden right-5 top-10 z-50 rounded-md shadow-lg border border-stone-400  dark:border-stone-500`}
       style={{
         height: menuHeight,
-        // background: bgColor,
+        background: bgColor,
         backdropFilter: blur,
       }}
       ref={dropdownRef}
@@ -85,22 +85,22 @@ export const DropdownMenu = () => {
       <div className="flex justify-center">
         <Main />
         {user && <Profile />}
-        {user && <Settings />}
-        {user && <Store />}
+        {/* {user && <Settings />} */}
+        {/* {user && <Store />} */}
         <Social />
-        <Leaderboard />
+        {/* <Leaderboard /> */}
         <Help />
-        {user && <BlockedUsers />}
+        {/* {user && <BlockedUsers />} */}
         {user && <Messages />}
         {user && <Following />}
         {user && <Notifications />}
         <SearchedUserMenu />
         <SearchUsers />
         {user && <DisplayName />}
-        {user && <Achievements />}
-        {user && <Stats />}
-        {user && <Membership />}
-        {user && <DirectMessage />}
+        {/* {user && <Achievements />} */}
+        {/* {user && <Stats />} */}
+        {/* {user && <Membership />} */}
+        {user && <SearchedDirectMessage />}
         {user && <Report />}
         <HowToPlay />
         <Faq />
@@ -109,6 +109,7 @@ export const DropdownMenu = () => {
         {clickedUserId !== "" && user && <ClickedUser />}
         {user && <Conversation />}
         {user && <BetsMenu />}
+        <ClickedDirectMessage />
       </div>
     </div>
   )

@@ -21,17 +21,6 @@ export const HeaderRight: React.FC = () => {
   const { isDarkOn } = DarkMode.useContainer()
   const { userData } = UserDataState.useContainer()
 
-  // const messageIcon: React.ReactNode = <></>
-  // userData?.hasNewMessage ?? false ? (
-  //   <RiChat2Line
-  //     size="21"
-  //     className="m-2"
-  //     color={isDarkOn ? "#4ade80" : "#15803d"}
-  //   />
-  // ) : (
-  //   <RiChat2Line size="21" className="m-2" />
-  // )
-
   const greenMessageStyle =
     userData?.hasNewMessage ?? false
       ? isDarkOn
@@ -54,6 +43,11 @@ export const HeaderRight: React.FC = () => {
         icon={<BiSearchAlt2 size="21" className="m-2" />}
       />
       <MainHeaderButton
+        title="Notifications"
+        openToMenu="notifications"
+        icon={<RiNotification3Line size="21" className="m-2" />}
+      />
+      <MainHeaderButton
         title="Messages"
         openToMenu="messages"
         icon={<RiChat2Line size="21" className={`m-2 ${greenMessageStyle}`} />}
@@ -65,14 +59,9 @@ export const HeaderRight: React.FC = () => {
         icon={<RiUserHeartLine size="21" className="m-2" />}
       />
       <MainHeaderButton
-        title="Notifications"
-        openToMenu="notifications"
-        icon={<RiNotification3Line size="21" className="m-2" />}
-      />
-      <MainHeaderButton
         title="Bets"
         openToMenu="bets"
-        icon={<FaRegGem size="21" className="m-2" />}
+        icon={<FaRegGem size="20" className="m-2" />}
       />
       <MainHeaderButton
         title="Persona"
