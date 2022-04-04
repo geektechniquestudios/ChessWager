@@ -13,23 +13,26 @@ export const BetsList: React.FC = ({}) => {
   const q = query(
     betsRef,
     where("users", "array-contains", auth.currentUser?.uid ?? ""),
+    // orderBy("createdAt"),
     // where("user2Id", "==", auth.currentUser?.uid ?? ""),
   )
 
-  const [bets] =
-    useCollectionDataOnce<[Bet[]] | any>(q, { idField: "id" }) ?? []
+  const [bets, isLoading] =
+    useCollectionDataOnce<[Bet[], boolean] | any>(q, { idField: "id" }) ?? []
 
   return (
     <>
-      {bets?.length ?? 0 > 0 ? (
+      {(bets?.length ?? 0) > 0 || isLoading ? (
         <div
           className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden ml-0.5"
           style={{ direction: "rtl" }}
         >
           <div className="" style={{ direction: "ltr" }}>
-            {bets?.map((bet: Bet) => (
-              <div>{bet.id}</div>
-            ))}
+            {bets
+              ?.sort((a, b) => a.createdAt - b.createdAt)
+              .map((bet: Bet) => (
+                <div>{bet.id}</div>
+              ))}
           </div>
         </div>
       ) : (

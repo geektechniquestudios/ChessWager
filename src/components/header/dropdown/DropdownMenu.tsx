@@ -65,9 +65,15 @@ export const DropdownMenu = () => {
 
   const { clickedUserId } = UserMenuState.useContainer()
   const { isDarkOn } = DarkMode.useContainer()
-  const bgColor = isDarkOn
-    ? "rgba(68, 64, 60, 0.79)"
-    : "rgba(245, 245, 244, 0.60)"
+  const isFirefox = navigator.userAgent.indexOf("Firefox") !== -1
+
+  const bgColor = !isFirefox
+    ? isDarkOn
+      ? "rgba(68, 64, 60, 0.79)"
+      : "rgba(245, 245, 244, 0.60)"
+    : isDarkOn
+    ? "rgba(68, 64, 60, 0.99)"
+    : "rgba(245, 245, 244, 0.99)"
   const blur = isDarkOn ? "blur(18px)" : "blur(16px)"
 
   const firefoxColors = (): string => "bg-stone-100 dark:bg-stone-700"

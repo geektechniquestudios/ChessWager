@@ -5,7 +5,6 @@ import {
   serverTimestamp,
   doc,
   getFirestore,
-  getDoc,
 } from "firebase/firestore"
 import { FiUserCheck } from "react-icons/fi"
 import { firebaseApp } from "../../../config"

@@ -1,5 +1,5 @@
 import { CollectionReference, DocumentData } from "firebase/firestore"
-import { DropdownState } from "../../containers/DropdownState"
+import { DropdownState } from "../../../containers/DropdownState"
 
 interface Props {
   userId: string
@@ -15,7 +15,7 @@ interface Props {
   messageThumbnail: string
 }
 
-export const DropdownConvoItem: React.FC<Props> = ({
+export const BetsListItem: React.FC<Props> = ({
   userName,
   leftIcon,
   rightIcon,
