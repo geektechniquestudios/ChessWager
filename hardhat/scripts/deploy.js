@@ -2,9 +2,9 @@ const fs = require("fs")
 const os = require("os")
 const hre = require("hardhat")
 const admin = require("firebase-admin")
-const env = process.env.BRANCH_ENV
+const env = process.env.VITE_BRANCH_ENV
 const isLocal = env === "develop"
-const adminSdk = process.env.FIREBASE_ADMIN_SDK
+const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 require("dotenv").config({ path: "../../.env" })
 
 let cred

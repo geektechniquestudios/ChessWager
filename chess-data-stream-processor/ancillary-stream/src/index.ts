@@ -1,8 +1,8 @@
+// @ts-ignore
 import ndjson from "ndjson"
 import fs from "fs"
 import { payWinnersByGameId } from "../../payment-processor/src/index"
 require("dotenv").config({ path: "../../.env" })
-
 
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
@@ -19,7 +19,6 @@ if (isLocal) {
 }
 
 admin.initializeApp({ credential: cred })
-
 
 const defaultTime = 15
 let secondsUntilRestart = defaultTime

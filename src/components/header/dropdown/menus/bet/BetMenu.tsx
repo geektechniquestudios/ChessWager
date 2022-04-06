@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { BiArrowBack } from "react-icons/bi"
 import { SiLichess } from "react-icons/si"
+import { DarkMode } from "../../../../containers/DarkMode"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { Price } from "../../../../containers/Price"
 import { DropdownItem } from "../../DropdownItem"
@@ -44,6 +45,10 @@ export const BetMenu: React.FC<Props> = ({}) => {
     fetch(`https://lichess.org/api/game/${gameId}`)
       .then((res) => res.json())
       .then((gameData: any) => {
+        if (gameData.status === "started") {
+          setOutcome("In progress")
+          return
+        }
         if (gameData.hasOwnProperty("winner")) {
           const whiteWins = gameData.winner === "white"
           const blackWins = gameData.winner === "black"
@@ -65,12 +70,17 @@ export const BetMenu: React.FC<Props> = ({}) => {
     (betSide === "white" && outcome === "White Wins") ||
     (betSide === "black" && outcome === "Black Wins")
 
+  const { isDarkOn } = DarkMode.useContainer()
   const resultStyle =
-    outcome === "Draw"
+    outcome === "Draw" || outcome === "In progress"
       ? ""
       : isOnWinningSide
-      ? "text-green-500"
-      : "text-red-500"
+      ? isDarkOn
+        ? "text-green-400"
+        : "text-green-800"
+      : isDarkOn
+      ? "text-red-400"
+      : "text-red-800"
 
   return (
     <Menu
@@ -155,7 +165,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
                   <div className="flex grow justify-center">
                     <a
                       href={`https://lichess.org/${gameId}`}
-                      className="rounded-full grid place-content-center color-shift clickable border border-stone-400 dark:border-stone-800 hover:bg-stone-300 dark:hover:bg-stone-700 hover:text-black hover:border-black dark:hover:text-white dark:hover:border-white text-stone-800 dark:text-stone-300 p-1 bg-white dark:bg-stone-800"
+                      className="rounded-full grid place-content-center color-shift clickable border border-stone-400 dark:border-stone-800 hover:text-black hover:border-black dark:hover:text-white dark:hover:border-white text-stone-800 dark:text-stone-300 p-1 bg-white dark:bg-stone-800"
                       title="Game Source"
                       rel="noopener noreferrer"
                       target="_blank"

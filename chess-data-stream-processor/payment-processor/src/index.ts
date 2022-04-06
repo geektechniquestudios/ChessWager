@@ -64,7 +64,7 @@ export const payWinnersByGameId = async (gameId: string) => {
 
 const contractAddress = process.env.VITE_CONTRACT_ADDRESS!
 const contractABI = ChessWager.abi
-const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
+const metamaskKey = process.env.VITE_METAMASK_ACCOUNT_KEY
 
 let rpcUrl
 if (process.env.VITE_BRANCH_ENV === "develop") {

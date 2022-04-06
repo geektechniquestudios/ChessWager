@@ -30,7 +30,7 @@ export const BetsList: React.FC = ({}) => {
         >
           <div className="" style={{ direction: "ltr" }}>
             {bets
-              ?.sort((a, b) => a.createdAt - b.createdAt)
+              ?.sort((a, b) => b.createdAt - a.createdAt)
               .filter((bet) => bet.status === "approved" || bet.status === "funded")
               .map((bet: Bet, index: number) => (
                 <BetsListItem key={bet.id + index} {...bet} bet={bet} />
