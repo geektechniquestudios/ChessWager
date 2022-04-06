@@ -7,8 +7,8 @@ require("dotenv").config({ path: "../../.env" })
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
-const isLocal = process.env.BRANCH_ENV === "develop"
-const adminSdk = process.env.FIREBASE_ADMIN_SDK
+const isLocal = process.env.VITE_BRANCH_ENV === "develop"
+const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
 let cred
 if (isLocal) {

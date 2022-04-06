@@ -6,8 +6,8 @@ const ethers = require("ethers")
 
 const admin = require("firebase-admin")
 
-const isLocal = process.env.BRANCH_ENV === "develop"
-const adminSdk = process.env.FIREBASE_ADMIN_SDK
+const isLocal = process.env.VITE_BRANCH_ENV === "develop"
+const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
 let cred
 if (isLocal) {
@@ -67,12 +67,12 @@ const contractABI = ChessWager.abi
 const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
 
 let rpcUrl
-if (process.env.BRANCH_ENV === "develop") {
-  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
-} else if (process.env.BRANCH_ENV === "test") {
-  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
-} else if (process.env.BRANCH_ENV === "main") {
-  rpcUrl = process.env.AVALANCHE_MAINNET_RPC_URL
+if (process.env.VITE_BRANCH_ENV === "develop") {
+  rpcUrl = process.env.VITE_AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.VITE_BRANCH_ENV === "test") {
+  rpcUrl = process.env.VITE_AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.VITE_BRANCH_ENV === "main") {
+  rpcUrl = process.env.VITE_AVALANCHE_MAINNET_RPC_URL
 }
 
 const Wallet = ethers.Wallet

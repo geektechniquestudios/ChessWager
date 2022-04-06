@@ -1,3 +1,4 @@
+import "../../../style/buttons.scss"
 import {
   DocumentData,
   DocumentReference,
@@ -8,7 +9,6 @@ import {
 } from "firebase/firestore"
 import { FiUserCheck } from "react-icons/fi"
 import { firebaseApp } from "../../../config"
-import "../../../style/buttons.scss"
 import { DarkMode } from "../../containers/DarkMode"
 import { LobbyState } from "../../containers/LobbyState"
 interface Props {
