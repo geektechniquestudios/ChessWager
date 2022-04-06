@@ -10,8 +10,3 @@
   transform: translate(0px, 0.1rem);
   transform: scale(0.98);
 }
-
-.header-button {
-  @extend .color-shift;
-  @apply border-none hover:bg-stone-300 dark:hover:bg-stone-700 h-9 w-9;
-}

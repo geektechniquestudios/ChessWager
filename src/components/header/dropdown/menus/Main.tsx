@@ -29,7 +29,8 @@ export const Main: React.FC = () => {
     isWalletConnected,
     disconnectWallet,
   } = Auth.useContainer()
-  const { setIsDropdownOpen, setMenuHeight } = DropdownState.useContainer()
+  const { setIsDropdownOpen, setMenuHeight, setActiveMenu } =
+    DropdownState.useContainer()
   const { isDarkOn, setIsDarkOn } = DarkMode.useContainer()
   const updateUserDarkPref = (isChecked: boolean) => {
     localStorage.setItem("darkMode", isChecked.toString())
@@ -120,6 +121,7 @@ export const Main: React.FC = () => {
             <DropdownItem
               onClick={() => {
                 setIsDropdownOpen(false)
+                setActiveMenu("")
                 setMenuHeight(0)
                 disconnectWallet()
               }}
@@ -146,6 +148,7 @@ export const Main: React.FC = () => {
             <DropdownItem
               onClick={() => {
                 setIsDropdownOpen(false)
+                setActiveMenu("")
                 setMenuHeight(0)
                 signOutWithGoogle()
               }}

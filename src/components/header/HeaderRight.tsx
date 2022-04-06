@@ -1,19 +1,16 @@
 import { SignInButton } from "./buttons/SignInButton"
-import { Dropdown } from "./dropdown/Dropdown"
 import { MainHeaderButton } from "./buttons/MainHeaderButton"
-import { BiSearchAlt2 } from "react-icons/bi"
-import {
-  RiChat2Line,
-  RiNotification3Line,
-  RiUserHeartLine,
-} from "react-icons/ri"
+import { BiChevronDown, BiSearchAlt2 } from "react-icons/bi"
+import { RiChat2Line, RiNotification3Line } from "react-icons/ri"
 import { DarkMode } from "../containers/DarkMode"
 import { FaRegGem } from "react-icons/fa"
 import { CgProfile } from "react-icons/cg"
 import { UserDataState } from "../containers/UserDataState"
 import { Auth } from "../containers/Auth"
-import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore"
+import { doc, getFirestore, updateDoc } from "firebase/firestore"
 import { firebaseApp } from "../../config"
+import { DropdownMenu } from "./dropdown/DropdownMenu"
+import { DropdownState } from "../containers/DropdownState"
 
 const db = getFirestore(firebaseApp)
 
@@ -34,42 +31,55 @@ export const HeaderRight: React.FC = () => {
     const userRef = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userRef, { hasNewMessage: false })
   }
-
+  const { isDropdownOpen, setIsDropdownOpen, setActiveMenu } =
+    DropdownState.useContainer()
   return (
-    <div className="flex-auto justify-end align-middle flex mx-3 gap-1.5">
+    <div className="flex-auto justify-end align-middle items-center flex mx-3 gap-1.5">
       <MainHeaderButton
         title="Search Users"
         openToMenu="searchUsers"
-        icon={<BiSearchAlt2 size="21" className="m-2" />}
+        icon={<BiSearchAlt2 size="21" />}
+        authRequired={true}
       />
       <MainHeaderButton
         title="Notifications"
         openToMenu="notifications"
-        icon={<RiNotification3Line size="21" className="m-2" />}
+        icon={<RiNotification3Line size="21" />}
+        authRequired={true}
       />
       <MainHeaderButton
         title="Messages"
         openToMenu="messages"
-        icon={<RiChat2Line size="21" className={`m-2 ${greenMessageStyle}`} />}
+        icon={<RiChat2Line size="21" className={`${greenMessageStyle}`} />}
         onClick={setNewMessagesToFalse}
+        authRequired={true}
       />
-      <MainHeaderButton
+      {/* <MainHeaderButton
         title="Following"
         openToMenu="following"
-        icon={<RiUserHeartLine size="21" className="m-2" />}
-      />
+        icon={<RiUserHeartLine size="21" />}
+        authRequired={true}
+      /> */}
       <MainHeaderButton
         title="Bets"
         openToMenu="bets"
-        icon={<FaRegGem size="20" className="m-2" />}
+        icon={<FaRegGem size="20" />}
+        authRequired={true}
       />
       <MainHeaderButton
         title="Persona"
         openToMenu="persona"
-        icon={<CgProfile size="21" className="m-2" />}
+        icon={<CgProfile size="21" />}
+        authRequired={true}
       />
       <SignInButton />
-      <Dropdown />
+      <MainHeaderButton
+        title="Main"
+        openToMenu="main"
+        icon={<BiChevronDown size="21" />}
+        authRequired={false}
+      />
+      {isDropdownOpen && <DropdownMenu />}
     </div>
   )
 }

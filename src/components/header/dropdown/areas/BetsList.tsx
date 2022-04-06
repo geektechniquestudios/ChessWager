@@ -4,6 +4,7 @@ import { firebaseApp } from "../../../../config"
 import { Auth } from "../../../containers/Auth"
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore"
 import { Bet } from "../../../../interfaces/Bet"
+import { BetsListItem } from "./BetsListItem"
 
 const db = getFirestore(firebaseApp)
 
@@ -30,8 +31,9 @@ export const BetsList: React.FC = ({}) => {
           <div className="" style={{ direction: "ltr" }}>
             {bets
               ?.sort((a, b) => a.createdAt - b.createdAt)
-              .map((bet: Bet) => (
-                <div>{bet.id}</div>
+              .filter((bet) => bet.status === "approved" || bet.status === "funded")
+              .map((bet: Bet, index: number) => (
+                <BetsListItem key={bet.id + index} {...bet} bet={bet} />
               ))}
           </div>
         </div>

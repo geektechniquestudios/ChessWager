@@ -7,7 +7,7 @@ export const SignInButton: React.FC = () => {
   return (
     <>
       {!user && (
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center mx-2">
           <button
             onClick={signInWithGoogle}
             className="cw-button color-shift p-2 hover:bg-stone-300"

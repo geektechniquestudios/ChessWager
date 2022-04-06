@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore"
 
-export type Bet =  {
+export type Bet = {
   id: string
   amount: number
   betSide: "black" | "white"
@@ -16,12 +16,13 @@ export type Bet =  {
   user2PhotoURL: string
   user2DisplayName: string
   hasUser2Paid: boolean
-  createdAt: Date
+  createdAt: Timestamp
   gameId: string
   timestamp: Timestamp
   contractAddress: string
   user1FollowThrough: number[]
   user2FollowThrough: number[]
+  winner: "user1" | "user2" | "draw"
 }
 
 export type BetData = {

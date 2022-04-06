@@ -23,9 +23,11 @@ export const ConvoChatBody: React.FC<Props> = ({ messagesRef }) => {
       style={{ direction: "rtl" }}
     >
       <div style={{ direction: "ltr" }}>
-        {messages?.map((message: Message, index: number) => (
-          <ConvoChatMessage key={index} {...message} />
-        ))}
+        {messages
+          ?.sort((a, b) => a.createdAt - b.createdAt)
+          .map((message: Message, index: number) => (
+            <ConvoChatMessage key={index} {...message} />
+          ))}
       </div>
     </div>
   )

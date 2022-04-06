@@ -18,7 +18,7 @@ export const SearchArea: React.FC<Props> = ({ search, setSearch }) => {
       type="search"
       value={search}
       onChange={(e) => setSearch(e.target.value)}
-      className="inline-block resize-none outline-none text-lg w-full p-2 bg-stone-200 dark:bg-stone-800 dark:text-stone-50 h-12"
+      className="inline-block resize-none outline-none text-lg w-full p-2 bg-stone-300 dark:bg-stone-800 dark:text-stone-50 h-12"
       placeholder="Find someone"
     />
   )

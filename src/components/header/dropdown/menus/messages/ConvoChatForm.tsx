@@ -125,7 +125,7 @@ export const ConvoChatForm: React.FC<Props> = ({
             onChange={(e) => {
               setFormValue(e.target.value)
             }}
-            className="scrollbar break-words inline-block resize-none outline-none text-md grow p-2 bg-stone-200 dark:bg-stone-800 dark:text-stone-50 rounded-md ml-2"
+            className="scrollbar break-words inline-block resize-none outline-none text-md grow p-2 bg-stone-300 dark:bg-stone-800 dark:text-stone-50 rounded-md ml-2"
             placeholder="Send a Message"
             maxRows={4}
             onKeyDown={(e) => {

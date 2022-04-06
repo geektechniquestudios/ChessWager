@@ -7,17 +7,15 @@ export const LichessButton: React.FC<Props> = ({}) => {
   const { gameId } = GameState.useContainer()
 
   return (
-    <div className="flex flex-col justify-center">
-      <a
-        href={`https://lichess.org/${gameId}`}
-        className="cw-button header-button"
-        title="Watch on Lichess"
-        data-toggle="tooltip"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <SiLichess size="19" className="m-2" title="Watch on Lichess" />
-      </a>
-    </div>
+    <a
+      href={`https://lichess.org/${gameId}`}
+      className="w-9 h-9 rounded-md grid place-content-center color-shift clickable border-none hover:bg-stone-300 dark:hover:bg-stone-700 hover:text-black hover:border-black dark:hover:text-white dark:hover:border-white border-stone-800 dark:border-stone-300 text-stone-800 dark:text-stone-300"
+      title="Watch on Lichess"
+      data-toggle="tooltip"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <SiLichess size="19" title="Watch on Lichess" />
+    </a>
   )
 }

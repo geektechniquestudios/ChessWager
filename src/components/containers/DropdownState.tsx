@@ -1,10 +1,12 @@
 import { useState } from "react"
 import { createContainer } from "unstated-next"
+import { Bet } from "../../interfaces/Bet"
 
 const useDropdownState = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [activeMenu, setActiveMenu] = useState("main")
+  const [activeMenu, setActiveMenu] = useState("")
   const [menuHeight, setMenuHeight] = useState(0)
+  const [bet, setBet] = useState<Bet | null>(null)
 
   const openDropdownToMenu = (menu: string) => {
     setActiveMenu(menu)
@@ -19,6 +21,8 @@ const useDropdownState = () => {
     menuHeight,
     setMenuHeight,
     openDropdownToMenu,
+    bet,
+    setBet,
   }
 }
 

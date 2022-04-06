@@ -27,9 +27,10 @@ import { ClickedUser } from "./menus/ClickedUser"
 import { UserMenuState } from "../../containers/UserMenuState"
 import { Conversation } from "./menus/messages/Conversation"
 import { Following } from "./menus/profile/Following"
-import { BetsMenu } from "./menus/profile/BetsMenu"
+import { BetsMenu } from "./menus/bet/BetsMenu"
 import { DarkMode } from "../../containers/DarkMode"
 import { ClickedDirectMessage } from "./menus/ClickedDirectMessage"
+import { BetMenu } from "./menus/bet/BetMenu"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -116,6 +117,7 @@ export const DropdownMenu = () => {
         {user && <Conversation />}
         {user && <BetsMenu />}
         <ClickedDirectMessage />
+        {user && <BetMenu />}
       </div>
     </div>
   )
