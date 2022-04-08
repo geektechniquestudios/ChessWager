@@ -100,7 +100,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
                   photoURL={user1PhotoURL!}
                   displayName={user1DisplayName!}
                   amount={amount!}
-                  id={id!}
+                  id={user1Id!}
                   betSide={betSide! === "white" ? "White" : "Black"}
                   hasUserPaid={hasUser1Paid!}
                   funded={hasUser1Paid!}
@@ -109,7 +109,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
                   photoURL={user2PhotoURL!}
                   displayName={user2DisplayName!}
                   amount={amount! * multiplier!}
-                  id={id!}
+                  id={user2Id!}
                   betSide={betSide! === "white" ? "Black" : "White"}
                   hasUserPaid={hasUser2Paid!}
                   funded={hasUser2Paid!}

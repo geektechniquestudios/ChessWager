@@ -22,7 +22,7 @@ export const ClickedFromBetsDM: React.FC<Props> = ({}) => {
         <MenuLine key={1} />,
         <ConversationData key={2} />,
       ]}
-      thisMenu={"clickedUserFromBetsDM"}
+      thisMenu={"clickedFromBetsDirectMessage"}
     />
   )
 }

@@ -1,3 +1,4 @@
+import { Auth } from "../../containers/Auth"
 import { ApproveKickWrapper } from "./ApproveKickWrapper"
 import { JoinButton } from "./JoinButton"
 import { User2BetAmount } from "./User2BetAmount"
@@ -32,6 +33,7 @@ export const User2Data: React.FC<Props> = ({
   hasUser2Paid,
   user2Id,
 }) => {
+  const { user } = Auth.useContainer()
   return (
     <div className="color-shift flex justify-center w-full border-none text-stone-900 dark:text-stone-300 px-1 gap-2.5">
       <User2BetAmount amount={amount} multiplier={multiplier} />
@@ -47,13 +49,20 @@ export const User2Data: React.FC<Props> = ({
         user2Id={user2Id}
       />
       <User2Spinner status={status} user1Id={user1Id} />
-      <JoinButton
-        id={id}
+      {user && (
+        <JoinButton
+          id={id}
+          user1Id={user1Id}
+          isSelected={isSelected}
+          status={status}
+        />
+      )}
+      <ApproveKickWrapper
         user1Id={user1Id}
-        isSelected={isSelected}
+        user2Id={user2Id}
         status={status}
+        id={id}
       />
-      <ApproveKickWrapper user1Id={user1Id} user2Id={user2Id} status={status} id={id} />
     </div>
   )
 }

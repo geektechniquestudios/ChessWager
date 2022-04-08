@@ -1,3 +1,4 @@
+import { Auth } from "../containers/Auth"
 import { DropdownState } from "../containers/DropdownState"
 import { UserMenuState } from "../containers/UserMenuState"
 
@@ -10,10 +11,12 @@ interface Props {
 export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
   const { openDropdownToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
+  const { user } = Auth.useContainer()
+  const disabledStyle = !user ? "pointer-events-none" : ""
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
-      className="flex gap-1 mr-1 float-left"
+      className={`flex gap-1 mr-1 float-left ${disabledStyle}`}
       onClick={() => {
         setClickedUserById(uid)
         openDropdownToMenu("clickedUser")

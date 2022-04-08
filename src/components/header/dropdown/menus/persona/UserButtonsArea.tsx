@@ -24,14 +24,16 @@ export const UserButtonsArea: React.FC<Props> = ({
       {!isUser && displayName !== "" && (
         <div className="h-22 my-1 flex w-full justify-evenly">
           <SendMessageButton
-            id={id ?? "...Loading"}
+            id={id ?? ""}
             displayName={displayName}
             photoURL={photoURL}
             activeMenu={activeMenu}
           />
-          <BlockUserButton id={id ?? "...Loading"} />
-          <ReportUserButton id={id ?? "...Loading"} />
-          <AddFriendButton id={id ?? "...Loading"} />
+          <BlockUserButton id={id ?? ""} />
+
+          <ReportUserButton id={id ?? ""} activeMenu={activeMenu} />
+
+          <AddFriendButton id={id ?? ""} />
         </div>
       )}
     </>

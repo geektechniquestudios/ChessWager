@@ -33,6 +33,7 @@ import { ClickedDirectMessageMenu } from "./menus/clicked-user/ClickedDirectMess
 import { BetMenu } from "./menus/bets/BetMenu"
 import { ClickedFromBets } from "./menus/bets/clicked-user/ClickedFromBets"
 import { ClickedFromBetsDM } from "./menus/bets/clicked-user/ClickedFromBetsDM"
+import { ClickedReportMenu } from "./menus/clicked-user/ClickedReportMenu"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -122,6 +123,7 @@ export const DropdownMenu = () => {
         {user && <BetMenu />}
         {user && <ClickedFromBets />}
         {user && <ClickedFromBetsDM />}
+        {user && <ClickedReportMenu />}
       </div>
     </div>
   )
