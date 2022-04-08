@@ -1,12 +1,12 @@
 import "react-toggle/style.css"
 import Toggle from "react-toggle"
 import { useState } from "react"
-import { DropdownItem } from "../../DropdownItem"
+import { DropdownItem } from "../../models/DropdownItem"
 import { RiChatDeleteLine } from "react-icons/ri"
 import { BiArrowBack, BiVolumeFull, BiVolumeMute } from "react-icons/bi"
-import { Menu } from "../../Menu"
+import { Menu } from "../../models/Menu"
 import { MdOutlineBlock } from "react-icons/md"
-import { MenuLine } from "../../MenuLine"
+import { MenuLine } from "../../models/MenuLine"
 
 export const Settings: React.FC = () => {
   const [profanityFilter, setProfanityFilter] = useState(true)

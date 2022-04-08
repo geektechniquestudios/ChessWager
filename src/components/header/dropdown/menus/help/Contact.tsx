@@ -1,7 +1,7 @@
 import { BiArrowBack } from "react-icons/bi"
-import { DropdownItem } from "../../DropdownItem"
-import { Menu } from "../../Menu"
-import { MenuLine } from "../../MenuLine"
+import { DropdownItem } from "../../models/DropdownItem"
+import { Menu } from "../../models/Menu"
+import { MenuLine } from "../../models/MenuLine"
 
 export const Contact: React.FC = ({}) => {
   return (

@@ -3,19 +3,19 @@ import { DropdownItem } from "../../models/DropdownItem"
 import { Menu } from "../../models/Menu"
 import { MenuLine } from "../../models/MenuLine"
 
-export const HowToPlay: React.FC = ({}) => {
+export const Leaderboard: React.FC = ({}) => {
   return (
     <Menu
       menuItems={[
         <DropdownItem
-          goToMenu="help"
+          goToMenu="main"
           leftIcon={<BiArrowBack />}
           key={0}
-          text="How to Play"
+          text="Leaderboard"
         />,
         <MenuLine key={1} />,
       ]}
-      thisMenu={"howToPlay"}
+      thisMenu={"leaderboard"}
     />
   )
 }

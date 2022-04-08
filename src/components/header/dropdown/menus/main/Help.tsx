@@ -1,9 +1,9 @@
-import { DropdownItem } from "../../DropdownItem"
+import { DropdownItem } from "../../models/DropdownItem"
 import { BiMessageRoundedError } from "react-icons/bi"
 import { BiArrowBack } from "react-icons/bi"
-import { Menu } from "../../Menu"
+import { Menu } from "../../models/Menu"
 import { AiOutlineInfoCircle, AiOutlineQuestionCircle } from "react-icons/ai"
-import { MenuLine } from "../../MenuLine"
+import { MenuLine } from "../../models/MenuLine"
 
 export const Help: React.FC = () => {
   return (

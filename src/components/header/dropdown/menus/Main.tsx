@@ -1,7 +1,7 @@
 import "../../../../style/dropdown.scss"
 import "react-toggle/style.css"
 import { Auth } from "../../../containers/Auth"
-import { DropdownItem } from "../DropdownItem"
+import { DropdownItem } from "../models/DropdownItem"
 import Toggle from "react-toggle"
 import { CgProfile } from "react-icons/cg"
 import {
@@ -16,9 +16,9 @@ import { BsSun } from "react-icons/bs"
 import { GoGift } from "react-icons/go"
 import { DropdownState } from "../../../containers/DropdownState"
 import { DarkMode } from "../../../containers/DarkMode"
-import { Menu } from "../Menu"
+import { Menu } from "../models/Menu"
 import { AiOutlineTrophy } from "react-icons/ai"
-import { MenuLine } from "../MenuLine"
+import { MenuLine } from "../models/MenuLine"
 
 export const Main: React.FC = () => {
   const {

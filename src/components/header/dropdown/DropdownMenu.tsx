@@ -1,36 +1,38 @@
 import { useEffect, useRef } from "react"
 import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
-import { Achievements } from "./menus/profile/Achievements"
-import { BlockedUsers } from "./menus/settings/BlockedUsers"
-import { SearchedDirectMessage } from "./menus/search/SearchedDirectMessage"
+import { Achievements } from "./menus/cold-storage/profile/Achievements"
+import { BlockedUsers } from "./menus/cold-storage/settings/BlockedUsers"
+import { SearchedDirectMessageMenu } from "./menus/search/searched-user/SearchedDirectMessageMenu"
 import { Contact } from "./menus/help/Contact"
-import { DisplayName } from "./menus/profile/DisplayName"
+import { DisplayName } from "./menus/cold-storage/profile/DisplayName"
 import { Faq } from "./menus/help/Faq"
 import { Help } from "./menus/main/Help"
 import { HowToPlay } from "./menus/help/HowToPlay"
-import { Leaderboard } from "./menus/main/Leaderboard"
+import { Leaderboard } from "./menus/cold-storage/Leaderboard"
 import { Main } from "./menus/Main"
-import { Membership } from "./menus/store/Membership"
-import { Messages } from "./menus/profile/Messages"
-import { Notifications } from "./menus/profile/Notifications"
-import { Profile } from "./menus/main/Profile"
-import { Report } from "./menus/search/Report"
-import { SearchUsers } from "./menus/main/SearchUsers"
+import { Membership } from "./menus/cold-storage/store/Membership"
+import { Messages } from "./menus/cold-storage/profile/Messages"
+import { Notifications } from "./menus/cold-storage/profile/Notifications"
+import { Profile } from "./menus/cold-storage/Profile"
+import { Report } from "./menus/persona/ReportMenu"
+import { SearchUsersMenu } from "./menus/search/SearchUsersMenu"
 import { Settings } from "./menus/main/Settings"
 import { Social } from "./menus/main/Social"
-import { Stats } from "./menus/profile/Stats"
-import { Store } from "./menus/main/Store"
-import { SearchedUserMenu } from "./menus/search/SearchedUserMenu"
-import { Persona } from "./menus/profile/Persona"
-import { ClickedUser } from "./menus/ClickedUser"
+import { Stats } from "./menus/cold-storage/profile/Stats"
+import { Store } from "./menus/cold-storage/Store"
+import { SearchedUserMenu } from "./menus/search/searched-user/SearchedUserMenu"
+import { PersonaMenu } from "./menus/persona/PersonaMenu"
+import { ClickedUserMenu } from "./menus/clicked-user/ClickedUserMenu"
 import { UserMenuState } from "../../containers/UserMenuState"
-import { Conversation } from "./menus/messages/Conversation"
-import { Following } from "./menus/profile/Following"
-import { BetsMenu } from "./menus/bet/BetsMenu"
+import { ConversationMenu } from "./menus/messages/ConversationMenu"
+import { Following } from "./menus/cold-storage/profile/Following"
+import { BetsMenu } from "./menus/bets/BetsMenu"
 import { DarkMode } from "../../containers/DarkMode"
-import { ClickedDirectMessage } from "./menus/ClickedDirectMessage"
-import { BetMenu } from "./menus/bet/BetMenu"
+import { ClickedDirectMessageMenu } from "./menus/clicked-user/ClickedDirectMessageMenu"
+import { BetMenu } from "./menus/bets/BetMenu"
+import { ClickedFromBets } from "./menus/bets/clicked-user/ClickedFromBets"
+import { ClickedFromBetsDM } from "./menus/bets/clicked-user/ClickedFromBetsDM"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -64,7 +66,7 @@ export const DropdownMenu = () => {
     setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
   }, [setMenuHeight])
 
-  const { clickedUserId } = UserMenuState.useContainer()
+  const { clickedUser } = UserMenuState.useContainer()
   const { isDarkOn } = DarkMode.useContainer()
   const isFirefox = navigator.userAgent.indexOf("Firefox") !== -1
 
@@ -102,22 +104,24 @@ export const DropdownMenu = () => {
         {user && <Following />}
         {user && <Notifications />}
         <SearchedUserMenu />
-        <SearchUsers />
+        <SearchUsersMenu />
         {user && <DisplayName />}
         {/* {user && <Achievements />} */}
         {/* {user && <Stats />} */}
         {/* {user && <Membership />} */}
-        {user && <SearchedDirectMessage />}
+        {user && <SearchedDirectMessageMenu />}
         {user && <Report />}
         <HowToPlay />
         <Faq />
         <Contact />
-        {user && <Persona />}
-        {clickedUserId !== "" && user && <ClickedUser />}
-        {user && <Conversation />}
+        {user && <PersonaMenu />}
+        {user && <ClickedUserMenu />}
+        {user && <ConversationMenu />}
         {user && <BetsMenu />}
-        <ClickedDirectMessage />
+        {user && <ClickedDirectMessageMenu />}
         {user && <BetMenu />}
+        {user && <ClickedFromBets />}
+        {user && <ClickedFromBetsDM />}
       </div>
     </div>
   )

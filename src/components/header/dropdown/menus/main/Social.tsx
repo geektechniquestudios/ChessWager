@@ -1,6 +1,6 @@
-import { DropdownItem } from "../../DropdownItem"
+import { DropdownItem } from "../../models/DropdownItem"
 import { BiArrowBack } from "react-icons/bi"
-import { Menu } from "../../Menu"
+import { Menu } from "../../models/Menu"
 import {
   RiGithubLine,
   RiInstagramLine,
@@ -9,7 +9,7 @@ import {
   RiRedditLine,
   RiYoutubeLine,
 } from "react-icons/ri"
-import { MenuLine } from "../../MenuLine"
+import { MenuLine } from "../../models/MenuLine"
 
 export const Social: React.FC = () => {
   return (

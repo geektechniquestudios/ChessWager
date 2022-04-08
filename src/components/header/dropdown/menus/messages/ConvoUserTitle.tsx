@@ -13,7 +13,6 @@ export const ConvoUserTitle: React.FC<Props> = ({
   uid,
 }) => {
   const { openDropdownToMenu } = DropdownState.useContainer()
-  const { setClickedUserId } = UserMenuState.useContainer()
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <div className="flex gap-1 mr-1 float-left" onClick={() => {}}>

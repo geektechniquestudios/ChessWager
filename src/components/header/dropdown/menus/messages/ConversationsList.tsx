@@ -1,5 +1,5 @@
 import "../../../../../style/scrollbar.scss"
-import { DropdownConvoItem } from "../../DropdownConvoItem"
+import { ConvoItem } from "./ConvoItem"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { ConversationsState } from "../../../../containers/ConversationsState"
 import { Conversation, User } from "../../../../../interfaces/Conversation"
@@ -29,7 +29,7 @@ export const ConversationsList: React.FC = ({}) => {
                 ?.sort((a, b) => a.modifiedAt - b.modifiedAt)
                 .map(convoToConvoAndUser)
                 .map(([conversation, user], index: number) => (
-                  <DropdownConvoItem
+                  <ConvoItem
                     userId={user.id}
                     userName={user.displayName}
                     key={index}

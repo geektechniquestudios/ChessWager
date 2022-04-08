@@ -9,14 +9,14 @@ interface Props {
 
 export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
   const { openDropdownToMenu } = DropdownState.useContainer()
-  const { setClickedUserId } = UserMenuState.useContainer()
+  const { setClickedUserById } = UserMenuState.useContainer()
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       className="flex gap-1 mr-1 float-left"
       onClick={() => {
+        setClickedUserById(uid)
         openDropdownToMenu("clickedUser")
-        setClickedUserId(uid)
       }}
     >
       <img

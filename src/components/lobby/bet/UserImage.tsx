@@ -16,7 +16,7 @@ export const UserImage: React.FC<Props> = ({
 }) => {
   const sideFlip = isPlayer2 ?? false ? "flex-row-reverse" : ""
   const { openDropdownToMenu } = DropdownState.useContainer()
-  const { setClickedUserId } = UserMenuState.useContainer()
+  const { setClickedUserById } = UserMenuState.useContainer()
   return (
     <div className={`flex px-1 min-w-min gap-2 ${sideFlip}`}>
       <div className="flex flex-col justify-center align-middle">
@@ -28,7 +28,7 @@ export const UserImage: React.FC<Props> = ({
         className="text-xs mx-1 flex flex-col justify-center text-stone-900 dark:text-stone-300 hover:underline"
         onClick={(e) => {
           e.stopPropagation()
-          setClickedUserId(userId)
+          setClickedUserById(userId)
           openDropdownToMenu("clickedUser")
         }}
       >
