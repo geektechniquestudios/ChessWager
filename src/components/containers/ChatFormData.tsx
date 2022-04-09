@@ -6,7 +6,15 @@ const useChatFormData = () => {
   const [convoFormValue, setConvoFormValue] = useState<Map<string, string>>(
     new Map(),
   )
-  return { chatFormValue, setChatFormValue, convoFormValue, setConvoFormValue }
+  const [reportFormValue, setReportFormValue] = useState("")
+  return {
+    chatFormValue,
+    setChatFormValue,
+    convoFormValue,
+    setConvoFormValue,
+    reportFormValue,
+    setReportFormValue,
+  }
 }
 
 export const ChatFormData = createContainer(useChatFormData)

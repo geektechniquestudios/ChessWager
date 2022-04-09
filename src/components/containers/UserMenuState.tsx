@@ -11,6 +11,7 @@ const useUserMenuState = () => {
   const [clickedUser, setClickedUser] = useState<User>()
   const [userIdFromMessages, setUserIdFromMessages] = useState<string>("")
   const [usernameFromMessages, setUsernameFromMessages] = useState<string>("")
+  const [reportedUserId, setReportedUserId] = useState<string>("")
 
   const setClickedUserById = (uid: string) => {
     const userDocRef = doc(db, "users", uid)
@@ -29,6 +30,8 @@ const useUserMenuState = () => {
     clickedUser,
     setClickedUser,
     setClickedUserById,
+    reportedUserId,
+    setReportedUserId,
   }
 }
 

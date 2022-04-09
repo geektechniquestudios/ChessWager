@@ -505,5 +505,9 @@ service cloud.firestore {
     match /users/{userId}/following/{docId} {
       allow read, write: if true;
     }
+  
+    match /reports/{docId} {
+      allow read, write: if true;
+    }
   }
 }

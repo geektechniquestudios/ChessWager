@@ -8,12 +8,15 @@ import { ChatFormData } from "../../../../containers/ChatFormData"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { DropdownArea } from "../../models/DropdownArea"
 import { ConvoChatForm } from "../messages/ConvoChatForm"
+import { ReportForm } from "../report/ReportForm"
 
 const db = getFirestore(firebaseApp)
 
-interface Props {}
+interface Props {
+  userToReport: string
+}
 
-export const ClickedReportForm: React.FC<Props> = ({}) => {
+export const ClickedReportForm: React.FC<Props> = ({ userToReport }) => {
   const { auth } = Auth.useContainer()
   const { userIdFromMessages } = UserMenuState.useContainer()
   const docId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
@@ -39,7 +42,7 @@ export const ClickedReportForm: React.FC<Props> = ({}) => {
           We're intererested in keeping our community clean. If this user has
           engaged in any of the following, please let us know.
         </p>
-        <ul className="text-sm flex flex-col gap-0.5 ml-1">
+        <ul className="text-sm flex flex-col gap-0.5">
           <li>• Sexual, violent, hateful, or abusive language</li>
           <li>• Spam or advertising</li>
           <li>• Harassment or bullying</li>
@@ -47,13 +50,14 @@ export const ClickedReportForm: React.FC<Props> = ({}) => {
         </ul>
       </div>
       <div className="mt-2">
-        <ConvoChatForm
+        <ReportForm />
+        {/* <ConvoChatForm
           dummy={dummy}
           messagesRef={messagesRef}
           formValue={convoFormValue.get(docId) ?? ""}
           setFormValue={setFormValue}
           conversationDocRef={conversationDocRef}
-        />
+        /> */}
       </div>
     </div>
   )
