@@ -29,11 +29,9 @@ export const UserButtonsArea: React.FC<Props> = ({
             photoURL={photoURL}
             activeMenu={activeMenu}
           />
-          <BlockUserButton id={id ?? ""} />
-
-          <ReportUserButton id={id ?? ""} activeMenu={activeMenu} />
-
           <AddFriendButton id={id ?? ""} />
+          <BlockUserButton id={id ?? ""} />
+          <ReportUserButton id={id ?? ""} activeMenu={activeMenu} />
         </div>
       )}
     </>

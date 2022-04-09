@@ -15,7 +15,6 @@ import { Membership } from "./menus/cold-storage/store/Membership"
 import { Messages } from "./menus/cold-storage/profile/Messages"
 import { Notifications } from "./menus/cold-storage/profile/Notifications"
 import { Profile } from "./menus/cold-storage/Profile"
-import { Report } from "./menus/persona/ReportMenu"
 import { SearchUsersMenu } from "./menus/search/SearchUsersMenu"
 import { Settings } from "./menus/main/Settings"
 import { Social } from "./menus/main/Social"
@@ -34,6 +33,8 @@ import { BetMenu } from "./menus/bets/BetMenu"
 import { ClickedFromBets } from "./menus/bets/clicked-user/ClickedFromBets"
 import { ClickedFromBetsDM } from "./menus/bets/clicked-user/ClickedFromBetsDM"
 import { ClickedReportMenu } from "./menus/clicked-user/ClickedReportMenu"
+import { SearchedReportMenu } from "./menus/search/searched-user/SearchedReportMenu"
+import { ClickedFromBetsReportMenu } from "./menus/bets/clicked-user/ClickedFromBetsReportMenu"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -67,7 +68,6 @@ export const DropdownMenu = () => {
     setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
   }, [setMenuHeight])
 
-  const { clickedUser } = UserMenuState.useContainer()
   const { isDarkOn } = DarkMode.useContainer()
   const isFirefox = navigator.userAgent.indexOf("Firefox") !== -1
 
@@ -111,7 +111,6 @@ export const DropdownMenu = () => {
         {/* {user && <Stats />} */}
         {/* {user && <Membership />} */}
         {user && <SearchedDirectMessageMenu />}
-        {user && <Report />}
         <HowToPlay />
         <Faq />
         <Contact />
@@ -124,6 +123,8 @@ export const DropdownMenu = () => {
         {user && <ClickedFromBets />}
         {user && <ClickedFromBetsDM />}
         {user && <ClickedReportMenu />}
+        {user && <SearchedReportMenu />}
+        {user && <ClickedFromBetsReportMenu />}
       </div>
     </div>
   )
