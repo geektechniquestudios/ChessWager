@@ -1,5 +1,5 @@
 import { Auth } from "../../../../containers/Auth"
-import { AddFriendButton } from "./buttons/AddFriendButton"
+import { StartFollowingButton } from "./buttons/StartFollowingButton"
 import { BlockUserButton } from "./buttons/BlockUserButton"
 import { ReportUserButton } from "./buttons/ReportUserButton"
 import { SendMessageButton } from "./buttons/SendMessageButton"
@@ -29,7 +29,7 @@ export const UserButtonsArea: React.FC<Props> = ({
             photoURL={photoURL}
             activeMenu={activeMenu}
           />
-          <AddFriendButton id={id ?? ""} />
+          <StartFollowingButton id={id ?? ""} />
           <BlockUserButton id={id ?? ""} />
           <ReportUserButton id={id ?? ""} activeMenu={activeMenu} />
         </div>
