@@ -5,13 +5,13 @@ interface Props {
   id: string
 }
 
-export const StartFollowingButton: React.FC<Props> = ({ id }) => {
-  const startFollowing = () => {}
+export const FollowButton: React.FC<Props> = ({ id }) => {
+  const follow = () => {}
   return (
     <DropdownButton
       content={<RiUserHeartLine />}
-      onClick={startFollowing}
-      title="Start Following"
+      onClick={follow}
+      title="Follow"
     />
   )
 }
