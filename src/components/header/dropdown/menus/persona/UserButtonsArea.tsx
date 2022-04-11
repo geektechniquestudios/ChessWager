@@ -1,7 +1,7 @@
 import { collection, doc, getFirestore } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
-import { AddFriendButton } from "./buttons/AddFriendButton"
+import { FollowButton } from "./buttons/FollowButton"
 import { BlockUserButton } from "./buttons/BlockUserButton"
 import { ReportUserButton } from "./buttons/ReportUserButton"
 import { SendMessageButton } from "./buttons/SendMessageButton"
@@ -36,7 +36,7 @@ export const UserButtonsArea: React.FC<Props> = ({
             photoURL={photoURL}
             activeMenu={activeMenu}
           />
-          <AddFriendButton id={id ?? ""} />
+          <FollowButton id={id ?? ""} />
           <BlockUserButton
             id={id ?? ""}
             displayName={displayName}
