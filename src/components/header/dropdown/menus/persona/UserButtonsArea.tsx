@@ -29,6 +29,7 @@ export const UserButtonsArea: React.FC<Props> = ({
   const userDoc = doc(db, "users", auth.currentUser!.uid)
   const blockedUsers = collection(userDoc, "blocked")
   const isUserBlocked = ""
+  const isFollowing = ""
   return (
     <>
       {!isUser && displayName !== "" && (

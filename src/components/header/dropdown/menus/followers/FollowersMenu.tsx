@@ -16,8 +16,8 @@ export const FollowersMenu: React.FC<Props> = ({}) => {
           text="Followers"
           leftIcon={<BiArrowBack />}
         />,
-        <MenuLine />,
-        <FollowersList />,
+        <MenuLine key={1} />,
+        <FollowersList key={2} />,
       ]}
       thisMenu="followers"
     />

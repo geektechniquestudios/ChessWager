@@ -20,6 +20,8 @@ interface Props {
   betId: string
 }
 
+// @todo safe delete on next cruft cleanup
+
 export const BlockButton: React.FC<Props> = ({
   user1Id,
   user2Id,

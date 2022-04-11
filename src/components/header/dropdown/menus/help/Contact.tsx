@@ -18,7 +18,9 @@ export const Contact: React.FC = ({}) => {
         <DropdownArea
           key={2}
           content={
-            <div className="h-24 w-full flex justify-center my-2">Not made yet</div>
+            <div className="h-24 w-full flex justify-center my-2">
+              Not made yet
+            </div>
           }
         />,
       ]}

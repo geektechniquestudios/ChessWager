@@ -1,4 +1,10 @@
-import { doc, setDoc } from "firebase/firestore"
+import {
+  CollectionReference,
+  doc,
+  DocumentData,
+  setDoc,
+  Timestamp,
+} from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
 import { DropdownButton } from "./DropdownButton"
 
@@ -6,7 +12,7 @@ interface Props {
   id: string
   displayName: string
   photoURL: string
-  blockedUsers: any
+  blockedUsers: CollectionReference<DocumentData>
 }
 
 export const BlockUserButton: React.FC<Props> = ({
@@ -19,6 +25,7 @@ export const BlockUserButton: React.FC<Props> = ({
     setDoc(doc(blockedUsers, id), {
       userName: displayName,
       photoURL,
+      createdAt: Timestamp.now(),
     })
   }
 
