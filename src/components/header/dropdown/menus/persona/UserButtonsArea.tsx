@@ -5,6 +5,9 @@ import { FollowButton } from "./buttons/FollowButton"
 import { BlockUserButton } from "./buttons/BlockUserButton"
 import { ReportUserButton } from "./buttons/ReportUserButton"
 import { SendMessageButton } from "./buttons/SendMessageButton"
+import { FollowersButton } from "./buttons/FollowersButton"
+import { FollowingButton } from "./buttons/FollowingButton"
+import { BlockedButton } from "./buttons/BlockedButton"
 
 const db = getFirestore(firebaseApp)
 
@@ -44,6 +47,13 @@ export const UserButtonsArea: React.FC<Props> = ({
             blockedUsers={blockedUsers}
           />
           <ReportUserButton id={id ?? ""} activeMenu={activeMenu} />
+        </div>
+      )}
+      {isUser && (
+        <div className="h-22 my-1 flex w-full justify-evenly">
+          <FollowersButton />
+          <FollowingButton />
+          <BlockedButton />
         </div>
       )}
     </>

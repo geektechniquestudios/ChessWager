@@ -25,7 +25,7 @@ import { PersonaMenu } from "./menus/persona/PersonaMenu"
 import { ClickedUserMenu } from "./menus/clicked-user/ClickedUserMenu"
 import { UserMenuState } from "../../containers/UserMenuState"
 import { ConversationMenu } from "./menus/messages/ConversationMenu"
-import { Following } from "./menus/cold-storage/profile/Following"
+import { FollowingMenu } from "./menus/following/FollowingMenu"
 import { BetsMenu } from "./menus/bets/BetsMenu"
 import { DarkMode } from "../../containers/DarkMode"
 import { ClickedDirectMessageMenu } from "./menus/clicked-user/ClickedDirectMessageMenu"
@@ -35,6 +35,8 @@ import { ClickedFromBetsDM } from "./menus/bets/clicked-user/ClickedFromBetsDM"
 import { ClickedReportMenu } from "./menus/clicked-user/ClickedReportMenu"
 import { SearchedReportMenu } from "./menus/search/searched-user/SearchedReportMenu"
 import { ClickedFromBetsReportMenu } from "./menus/bets/clicked-user/ClickedFromBetsReportMenu"
+import { BlockedMenu } from "./menus/blocked/BlockedMenu"
+import { FollowersMenu } from "./menus/followers/FollowersMenu"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -102,7 +104,7 @@ export const DropdownMenu = () => {
         <Help />
         {/* {user && <BlockedUsers />} */}
         {user && <Messages />}
-        {user && <Following />}
+        {/* {user && <FollowingMenu />} */}
         {user && <Notifications />}
         <SearchedUserMenu />
         <SearchUsersMenu />
@@ -125,6 +127,9 @@ export const DropdownMenu = () => {
         {user && <ClickedReportMenu />}
         {user && <SearchedReportMenu />}
         {user && <ClickedFromBetsReportMenu />}
+        {user && <BlockedMenu />}
+        {user && <FollowingMenu />}
+        {user && <FollowersMenu />}
       </div>
     </div>
   )

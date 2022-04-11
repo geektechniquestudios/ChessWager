@@ -66,15 +66,15 @@ export const UserData: React.FC<Props> = ({
             <p className="my-3 flex justify-center">{displayName ?? ""}</p>
             {isUser && isWalletConnected && (
               <div
-                className="text-xs rounded-full py-1 px-1.5 flex gap-1 bg-stone-300 dark:bg-stone-600 border border-stone-400 dark:border-stone-800"
+                className="text-xs rounded-full py-1 px-1.5 flex gap-1 bg-stone-300 dark:bg-stone-600 border border-stone-400 dark:border-stone-800 absolute top-1.5 right-1"
                 title={"Wallet Address: " + walletAddress}
               >
                 <div className="mt-0.5">
                   <BsWallet2 />
                 </div>
-                {walletAddress?.substring(0, 7)}...
+                {walletAddress?.substring(0, 6)}...
                 {walletAddress?.substring(
-                  walletAddress.length - 7,
+                  walletAddress.length - 4,
                   walletAddress.length,
                 )}
               </div>
