@@ -4,6 +4,10 @@ import { UserMenuState } from "../../../../containers/UserMenuState"
 import { ConversationsState } from "../../../../containers/ConversationsState"
 import { Conversation, User } from "../../../../../interfaces/Conversation"
 import { Auth } from "../../../../containers/Auth"
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore"
+import { firebaseApp } from "../../../../../config"
+
+const db = getFirestore(firebaseApp)
 
 export const ConversationsList: React.FC = ({}) => {
   const { conversations, isLoading, specificConvoCollectionRef } =
@@ -19,6 +23,42 @@ export const ConversationsList: React.FC = ({}) => {
       ? [conversation, conversation.user2]
       : [conversation, conversation.user1]
 
+  const setAsRead = (conversation: Conversation) => {
+    const conversationDocRef = doc(db, "conversations", conversation.id)
+    const isUser1 =
+      (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")
+    const isUser2 =
+      (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
+    if (isUser1) {
+      setDoc(
+        conversationDocRef,
+        {
+          doesUser1HaveUnreadMessages: false,
+        },
+        { merge: true },
+      )
+    } else if (isUser2) {
+      setDoc(
+        conversationDocRef,
+        {
+          doesUser2HaveUnreadMessages: false,
+        },
+        { merge: true },
+      )
+    }
+  }
+
+  const isRead = (conversation: Conversation): boolean => {
+    const isUser1 =
+      (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")
+    const isUser2 =
+      (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
+    return (
+      (isUser1 && !conversation.doesUser1HaveUnreadMessages) ||
+      (isUser2 && !conversation.doesUser2HaveUnreadMessages)
+    )
+  }
+
   return (
     <div className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden dark:text-stone-400 text-stone-400 ml-0.5">
       {!isLoading && (
@@ -30,6 +70,7 @@ export const ConversationsList: React.FC = ({}) => {
                 .map(convoToConvoAndUser)
                 .map(([conversation, user], index: number) => (
                   <ConvoItem
+                    isRead={isRead(conversation)}
                     userId={user.id}
                     userName={user.displayName}
                     key={index}
@@ -45,6 +86,7 @@ export const ConversationsList: React.FC = ({}) => {
                     onClick={() => {
                       setUserIdFromMessages(user.id)
                       setUsernameFromMessages(user.displayName)
+                      setAsRead(conversation)
                     }}
                     messageThumbnail={conversation.messageThumbnail}
                   />

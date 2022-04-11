@@ -3,16 +3,8 @@ import { DropdownState } from "../../../../../containers/DropdownState"
 import { DropdownButton } from "./DropdownButton"
 import { Auth } from "../../../../../containers/Auth"
 import { firebaseApp } from "../../../../../../config"
-import {
-  collection,
-  doc,
-  getDoc,
-  getFirestore,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore"
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore"
 import { UserMenuState } from "../../../../../containers/UserMenuState"
-import { SearchedDirectMessageMenu } from "../../search/searched-user/SearchedDirectMessageMenu"
 
 const db = getFirestore(firebaseApp)
 interface Props {
@@ -59,8 +51,8 @@ export const SendMessageButton: React.FC<Props> = ({
               },
               isDeletedForUser1: false,
               isDeletedForUser2: false,
-              doesUser1HaveNewMessages: false,
-              doesUser2HaveNewMessages: false,
+              doesUser1HaveUnreadMessages: false,
+              doesUser2HaveUnreadMessages: false,
             },
             { merge: true },
           )

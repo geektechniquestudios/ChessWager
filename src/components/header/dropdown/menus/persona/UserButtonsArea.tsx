@@ -1,8 +1,12 @@
+import { collection, doc, getFirestore } from "firebase/firestore"
+import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
 import { AddFriendButton } from "./buttons/AddFriendButton"
 import { BlockUserButton } from "./buttons/BlockUserButton"
 import { ReportUserButton } from "./buttons/ReportUserButton"
 import { SendMessageButton } from "./buttons/SendMessageButton"
+
+const db = getFirestore(firebaseApp)
 
 interface Props {
   id: string
@@ -19,6 +23,9 @@ export const UserButtonsArea: React.FC<Props> = ({
 }) => {
   const { auth } = Auth.useContainer()
   const isUser = auth.currentUser?.uid === id
+  const userDoc = doc(db, "users", auth.currentUser!.uid)
+  const blockedUsers = collection(userDoc, "blocked")
+  const isUserBlocked = ""
   return (
     <>
       {!isUser && displayName !== "" && (
@@ -30,7 +37,12 @@ export const UserButtonsArea: React.FC<Props> = ({
             activeMenu={activeMenu}
           />
           <AddFriendButton id={id ?? ""} />
-          <BlockUserButton id={id ?? ""} />
+          <BlockUserButton
+            id={id ?? ""}
+            displayName={displayName}
+            photoURL={photoURL}
+            blockedUsers={blockedUsers}
+          />
           <ReportUserButton id={id ?? ""} activeMenu={activeMenu} />
         </div>
       )}

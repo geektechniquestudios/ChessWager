@@ -13,8 +13,8 @@ export type Conversation = {
   user2: User
   isDeletedForUser1: boolean
   isDeletedForUser2: boolean
-  doesUser1HaveNewMessages: boolean
-  doesUser2HaveNewMessages: boolean
+  doesUser1HaveUnreadMessages: boolean
+  doesUser2HaveUnreadMessages: boolean
   modifiedAt: Timestamp
   messages: any
   messageThumbnail: string

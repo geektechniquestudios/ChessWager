@@ -55,7 +55,7 @@ export const ConvoChatForm: React.FC<Props> = ({
       userName: displayName,
     })
 
-    const conversation = (await getDoc(conversationDocRef)).data()
+    const conversation = (await getDoc(conversationDocRef)).data() // I think we already call this in the Conversations state component, could be massively improved
 
     const isUser1 =
       (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")
@@ -76,7 +76,7 @@ export const ConvoChatForm: React.FC<Props> = ({
         conversationDocRef,
         {
           messageThumbnail: formValue,
-          doesUser1HaveUnreadMessages: true,
+          doesUser2HaveUnreadMessages: true,
           modifiedAt: serverTimestamp(),
         },
         { merge: true },

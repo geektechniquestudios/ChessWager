@@ -2,6 +2,7 @@ import { CollectionReference, DocumentData } from "firebase/firestore"
 import { DropdownState } from "../../../../containers/DropdownState"
 
 interface Props {
+  isRead: boolean
   userId: string
   userName?: React.ReactNode
   leftIcon?: React.ReactNode
@@ -16,6 +17,8 @@ interface Props {
 }
 
 export const ConvoItem: React.FC<Props> = ({
+  isRead,
+  userId,
   userName,
   leftIcon,
   rightIcon,
@@ -26,13 +29,14 @@ export const ConvoItem: React.FC<Props> = ({
 }) => {
   const { setActiveMenu } = DropdownState.useContainer()
   const address = url ?? "#"
+  const unreadStyle = isRead ? "" : "bg-stone-400 dark:bg-stone-800"
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       href={address}
       target={url ? "_blank" : ""}
       rel="noreferrer"
-      className={`h-14 w-64 flex items-center hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift`}
+      className={`h-14 w-64 flex items-center hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift ${unreadStyle}`}
       onClick={() => {
         onClick && onClick()
         goToMenu && setActiveMenu(goToMenu)

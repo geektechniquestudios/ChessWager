@@ -1,39 +1,16 @@
-import { collection, doc, getFirestore } from "firebase/firestore"
-import { useRef } from "react"
-import { BsFillBadgeHdFill } from "react-icons/bs"
+import { getFirestore } from "firebase/firestore"
 import { GoReport } from "react-icons/go"
 import { firebaseApp } from "../../../../../config"
-import { Auth } from "../../../../containers/Auth"
-import { ChatFormData } from "../../../../containers/ChatFormData"
-import { UserMenuState } from "../../../../containers/UserMenuState"
-import { DropdownArea } from "../../models/DropdownArea"
-import { ConvoChatForm } from "../messages/ConvoChatForm"
 import { ReportForm } from "../report/ReportForm"
 
 const db = getFirestore(firebaseApp)
 
-interface Props {
-  userToReport: string
-}
+interface Props {}
 
-export const ClickedReportForm: React.FC<Props> = ({ userToReport }) => {
-  const { auth } = Auth.useContainer()
-  const { userIdFromMessages } = UserMenuState.useContainer()
-  const docId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
-
-  const messagesRef = collection(doc(db, "conversations", docId), "messages")
-  const conversationDocRef = doc(db, "conversations", docId)
-
-  const dummy = useRef<HTMLInputElement>(null)
-  const { convoFormValue, setConvoFormValue } = ChatFormData.useContainer()
-  const setFormValue = (formValue: string) => {
-    const newMap = new Map(convoFormValue)
-    newMap.set(docId, formValue)
-    setConvoFormValue(newMap)
-  }
+export const ClickedReportForm: React.FC<Props> = ({}) => {
   return (
     <div className="flex flex-col justify-between h-96 w-full">
-      <p className="text-lg flex justify-center w-full mt-4 items-center gap-2">
+      <p className="text-lg flex justify-center items-center gap-2 py-2 m-2 rounded-md dark:bg-stone-800 bg-stone-300">
         <GoReport />
         <>Tell Us What Happened</>
       </p>
@@ -51,13 +28,6 @@ export const ClickedReportForm: React.FC<Props> = ({ userToReport }) => {
       </div>
       <div className="mt-2">
         <ReportForm />
-        {/* <ConvoChatForm
-          dummy={dummy}
-          messagesRef={messagesRef}
-          formValue={convoFormValue.get(docId) ?? ""}
-          setFormValue={setFormValue}
-          conversationDocRef={conversationDocRef}
-        /> */}
       </div>
     </div>
   )
