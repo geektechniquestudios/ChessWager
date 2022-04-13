@@ -1,4 +1,4 @@
-import { MdOutlineReportProblem } from "react-icons/md"
+import { FiFlag } from "react-icons/fi"
 import { DropdownState } from "../../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { DropdownButton } from "./DropdownButton"
@@ -14,7 +14,7 @@ export const ReportUserButton: React.FC<Props> = ({ id, activeMenu }) => {
 
   return (
     <DropdownButton
-      content={<MdOutlineReportProblem />}
+      content={<FiFlag />}
       onClick={() => {
         setActiveMenu(activeMenu + "Report")
         setReportedUserId(id)

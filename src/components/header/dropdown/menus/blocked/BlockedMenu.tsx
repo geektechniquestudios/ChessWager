@@ -16,8 +16,8 @@ export const BlockedMenu: React.FC<Props> = ({}) => {
           text="Blocked Users"
           leftIcon={<BiArrowBack />}
         />,
-        <MenuLine />,
-        <BlockedList />,
+        <MenuLine key={1} />,
+        <BlockedList key={2} />,
       ]}
       thisMenu="blocked"
     />

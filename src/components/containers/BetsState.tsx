@@ -32,7 +32,7 @@ const genericBet: Bet = {
   user2PhotoURL: "",
   user2DisplayName: "",
   hasUser2Paid: false,
-  createdAt: new Date(),
+  createdAt: Timestamp.now(),
   gameId: "",
   timestamp: Timestamp.now(),
   contractAddress: "",
@@ -52,15 +52,15 @@ const useBetState = () => {
 
   // This is for browser compatibility
   const determineSortOrder = (
-    a: number | string | Date,
-    b: number | string | Date,
+    a: number | string | Date | Timestamp,
+    b: number | string | Date | Timestamp,
   ): number => {
     return +(a > b) || -(a < b)
   }
 
   const sortBasedOnDescending = (
-    a: number | string | Date,
-    b: number | string | Date,
+    a: number | string | Date | Timestamp,
+    b: number | string | Date | Timestamp,
   ): number => {
     return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
   }

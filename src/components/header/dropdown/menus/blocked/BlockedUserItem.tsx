@@ -1,4 +1,11 @@
-import { collection, deleteDoc, doc, getFirestore } from "firebase/firestore"
+import {
+  arrayRemove,
+  collection,
+  deleteDoc,
+  doc,
+  getFirestore,
+  setDoc,
+} from "firebase/firestore"
 import { CgUnblock } from "react-icons/cg"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
@@ -17,10 +24,11 @@ export const BlockedUserItem: React.FC<Props> = ({
   uid,
 }) => {
   const { auth } = Auth.useContainer()
-  const userDoc = doc(db, "users", auth.currentUser!.uid)
-  const blockedCollection = collection(userDoc, "blocked")
+  const userRef = doc(db, "users", auth.currentUser!.uid)
+  const blockedCollection = collection(userRef, "blocked")
   const unBlockUser = () => {
     deleteDoc(doc(blockedCollection, uid))
+    setDoc(userRef, { blockedUsers: arrayRemove(uid) }, { merge: true })
   }
 
   return (

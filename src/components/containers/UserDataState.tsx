@@ -1,12 +1,5 @@
-import {
-  doc,
-  getDoc,
-  getFirestore,
-  onSnapshot,
-  setDoc,
-  Unsubscribe,
-} from "firebase/firestore"
-import { useEffect, useState } from "react"
+import { doc, getFirestore, setDoc } from "firebase/firestore"
+import { useEffect } from "react"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { createContainer } from "unstated-next"
 import { firebaseApp } from "../../config"
@@ -18,7 +11,6 @@ const db = getFirestore(firebaseApp)
 
 export const useUserDataState = () => {
   const { auth } = Auth.useContainer()
-
   let userRef
   if (auth.currentUser?.uid) userRef = doc(db, "users", auth.currentUser?.uid)
   const [userData] = useDocumentData<User | any>(userRef)
@@ -57,14 +49,6 @@ export const useUserDataState = () => {
       )
     }
   }, [userData?.hasNewNotifications])
-
-  // useEffect(() => {
-  //   if (auth.currentUser?.uid) {
-  //     const userRef = doc(db, "users", auth.currentUser!.uid)
-  //     const [user] = useDocumentData<User | any>(userRef)
-  //     setUserData(user)
-  //   }
-  // }, [auth.currentUser?.uid])
 
   return { userData }
 }

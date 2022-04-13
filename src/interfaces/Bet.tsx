@@ -22,7 +22,7 @@ export type Bet = {
   contractAddress: string
   user1FollowThrough: number[]
   user2FollowThrough: number[]
-  winner: "user1" | "user2" | "draw"
+  winner?: "user1" | "user2" | "draw"
 }
 
 export type BetData = {

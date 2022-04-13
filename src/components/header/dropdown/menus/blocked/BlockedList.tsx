@@ -1,9 +1,5 @@
 import { collection, doc, getFirestore } from "firebase/firestore"
-import { useState } from "react"
-import {
-  useCollectionData,
-  useCollectionDataOnce,
-} from "react-firebase-hooks/firestore"
+import { useCollectionData } from "react-firebase-hooks/firestore"
 import { firebaseApp } from "../../../../../config"
 import { BlockedUser } from "../../../../../interfaces/BlockedUser"
 import { Auth } from "../../../../containers/Auth"

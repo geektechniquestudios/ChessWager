@@ -1,13 +1,15 @@
 import { collection, doc, getFirestore } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
-import { FollowButton } from "./buttons/FollowButton"
+import { AddFriendButton } from "./buttons/AddFriendButton"
 import { BlockUserButton } from "./buttons/BlockUserButton"
 import { ReportUserButton } from "./buttons/ReportUserButton"
 import { SendMessageButton } from "./buttons/SendMessageButton"
-import { FollowersButton } from "./buttons/FollowersButton"
-import { FollowingButton } from "./buttons/FollowingButton"
 import { BlockedButton } from "./buttons/BlockedButton"
+import { BsWallet2 } from "react-icons/bs"
+import { useState } from "react"
+import { RemoveFriendButton } from "./buttons/RemoveFriendButton"
+import { CancelPendingRequestButton } from "./buttons/CancelPendingRequestButton"
 
 const db = getFirestore(firebaseApp)
 
@@ -16,6 +18,7 @@ interface Props {
   displayName: string
   photoURL: string
   activeMenu: string
+  walletAddress: string
 }
 
 export const UserButtonsArea: React.FC<Props> = ({
@@ -23,40 +26,91 @@ export const UserButtonsArea: React.FC<Props> = ({
   displayName,
   photoURL,
   activeMenu,
+  walletAddress,
 }) => {
-  const { auth } = Auth.useContainer()
+  const [isUserBlocked, setIsUserBlocked] = useState(false)
+  const [isFriend, setIsFriend] = useState(false)
+  const [isFriendRequestSent, setIsFriendRequestSent] = useState(false)
+
+  const { auth, isWalletConnected } = Auth.useContainer()
   const isUser = auth.currentUser?.uid === id
   const userDoc = doc(db, "users", auth.currentUser!.uid)
   const blockedUsers = collection(userDoc, "blocked")
-  const isUserBlocked = ""
-  const isFollowing = ""
   return (
     <>
-      {!isUser && displayName !== "" && (
-        <div className="h-22 my-1 flex w-full justify-evenly">
-          <SendMessageButton
-            id={id ?? ""}
-            displayName={displayName}
-            photoURL={photoURL}
-            activeMenu={activeMenu}
-          />
-          <FollowButton id={id ?? ""} />
-          <BlockUserButton
-            id={id ?? ""}
-            displayName={displayName}
-            photoURL={photoURL}
-            blockedUsers={blockedUsers}
-          />
-          <ReportUserButton id={id ?? ""} activeMenu={activeMenu} />
-        </div>
-      )}
-      {isUser && (
-        <div className="h-22 my-1 flex w-full justify-evenly">
-          <FollowersButton />
-          <FollowingButton />
-          <BlockedButton />
-        </div>
-      )}
+      <>
+        {!isUser && displayName !== "" && (
+          <div className="h-22 my-1 flex w-full justify-between">
+            <div className="flex gap-3">
+              <SendMessageButton
+                id={id ?? ""}
+                displayName={displayName}
+                photoURL={photoURL}
+                activeMenu={activeMenu}
+              />
+              {!isFriendRequestSent && !isFriend && (
+                <AddFriendButton
+                  id={id ?? ""}
+                  onClick={() => {
+                    setIsFriendRequestSent(true)
+                  }}
+                />
+              )}
+
+              {isFriendRequestSent && (
+                <CancelPendingRequestButton
+                  onClick={() => {
+                    setIsFriendRequestSent(false)
+                  }}
+                />
+              )}
+            </div>
+
+            <div className="flex gap-3">
+              {isFriend && <RemoveFriendButton id={id} />}
+
+              {!isUserBlocked && (
+                <BlockUserButton
+                  id={id ?? ""}
+                  displayName={displayName}
+                  photoURL={photoURL}
+                  blockedUsers={blockedUsers}
+                />
+              )}
+              <ReportUserButton id={id ?? ""} activeMenu={activeMenu} />
+            </div>
+          </div>
+        )}
+      </>
+      <>
+        {isUser && (
+          <div className="flex justify-between w-full">
+            <BlockedButton />
+            {isWalletConnected && (
+              <>
+                <a
+                  className="rounded-full border border-stone-400 dark:border-stone-800 py-1 px-2 bg-white hover:underline dark:bg-stone-800 dark:hover:text-stone-200 text-xs color-shift hover:text-black hover:border-black dark:hover:border-white"
+                  title={"View Wallet on Snowtrace"}
+                  href={"https://snowtrace.io/address/" + walletAddress}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <div className="flex gap-1">
+                    <div className="mt-0.5">
+                      <BsWallet2 />
+                    </div>
+                    {walletAddress?.substring(0, 6)}...
+                    {walletAddress?.substring(
+                      walletAddress.length - 4,
+                      walletAddress.length,
+                    )}
+                  </div>
+                </a>
+              </>
+            )}
+          </div>
+        )}
+      </>
     </>
   )
 }
