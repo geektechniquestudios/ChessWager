@@ -376,8 +376,8 @@ service cloud.firestore {
 
       function areCreateRequestKeysValid() {
         return
-          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification"]) &&
-          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification"]);
+          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification", "blockedUsers", "sentFriendRequests"]) &&
+          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification", "blockedUsers", "sentFriendRequests"]);
       }
 
       function isCreateRequestDataValid() {
@@ -397,6 +397,8 @@ service cloud.firestore {
           requestData.followerCount is number &&
           requestData.followingCount is number &&
           requestData.hasNewNotification is bool &&
+          requestData.blockedUsers is list &&
+          requestData.sentFriendRequests is list &&
 
           requestData.betAcceptedCount == 0 &&
           requestData.betFundedCount == 0 &&
@@ -408,7 +410,9 @@ service cloud.firestore {
           requestData.hasNewMessage == false &&
           requestData.followerCount == 0 &&
           requestData.followingCount == 0 && 
-          requestData.hasNewNotification == false;
+          requestData.hasNewNotification == false &&
+          requestData.blockedUsers == [] &&
+          requestData.sentFriendRequests == [];
       }
 
       allow create: if canCreate() &&
@@ -418,8 +422,8 @@ service cloud.firestore {
 
       function isWalletUpdateRequestKeyValid() {
         return 
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification"])) &&
-          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification"]) &&
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests"])) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests"]) &&
           request.resource.data.keys().hasAll(["walletAddress"]);
       }
 
@@ -429,8 +433,8 @@ service cloud.firestore {
 
       function isNewMessageKeyValid() {
         return 
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "walletAddress", "hasNewNotification"])) &&
-          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification"]) &&
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "walletAddress", "hasNewNotification", "blockedUsers", "sentFriendRequests"])) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests"]) &&
           request.resource.data.keys().hasAll(["hasNewMessage"]);
       }
 
@@ -498,11 +502,16 @@ service cloud.firestore {
       allow read, write: if true;
     }
     
-    match /users/{userId}/followers/{docId} {
+    match /users/{userId}/friends/{docId} {
       allow read, write: if true;
     }
     
-    match /users/{userId}/following/{docId} {
+    match /users/{userId}/requests/{docId} {
+      allow read, write: if true;
+    }
+
+        
+    match /users/{userId}/notifications/{docId} {
       allow read, write: if true;
     }
   

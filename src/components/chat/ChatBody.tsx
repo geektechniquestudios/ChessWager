@@ -29,7 +29,10 @@ export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
   return (
     <div className="scrollbar flex flex-col-reverse pb-3 overflow-y-auto overflow-x-hidden px-1">
       {messages
-        ?.filter((message) => !userData.blockedUsers.includes(message.uid))
+        ?.filter((message) => {
+          if(userData) return !userData.blockedUsers.includes(message.uid)
+          return true
+        })
         .sort(
           (a: Message, b: Message) =>
             b.createdAt?.seconds - a.createdAt?.seconds,

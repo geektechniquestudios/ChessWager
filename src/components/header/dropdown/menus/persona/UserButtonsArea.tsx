@@ -11,6 +11,7 @@ import { useState } from "react"
 import { RemoveFriendButton } from "./buttons/RemoveFriendButton"
 import { CancelPendingRequestButton } from "./buttons/CancelPendingRequestButton"
 import { FriendRequestsButton } from "./buttons/FriendRequestsButton"
+import { UserDataState } from "../../../../containers/UserDataState"
 
 const db = getFirestore(firebaseApp)
 
@@ -29,14 +30,15 @@ export const UserButtonsArea: React.FC<Props> = ({
   activeMenu,
   walletAddress,
 }) => {
-  const [isUserBlocked, setIsUserBlocked] = useState(false)
   const [isFriend, setIsFriend] = useState(false)
-  const [isFriendRequestSent, setIsFriendRequestSent] = useState(false)
+
+  const { userData } = UserDataState.useContainer()
 
   const { auth, isWalletConnected } = Auth.useContainer()
   const isUser = auth.currentUser?.uid === id
   const userDoc = doc(db, "users", auth.currentUser!.uid)
   const blockedUsers = collection(userDoc, "blocked")
+
   return (
     <>
       <>
@@ -49,35 +51,26 @@ export const UserButtonsArea: React.FC<Props> = ({
                 photoURL={photoURL}
                 activeMenu={activeMenu}
               />
-              {!isFriendRequestSent && !isFriend && (
-                <AddFriendButton
-                  id={id ?? ""}
-                  onClick={() => {
-                    setIsFriendRequestSent(true)
-                  }}
-                />
+              {!userData.sentFriendRequests.includes(id) && !isFriend && (
+                <AddFriendButton id={id ?? ""} />
               )}
 
-              {isFriendRequestSent && (
+              {userData.sentFriendRequests.includes(id) && !isFriend && (
                 <CancelPendingRequestButton
                   className="text-green-700 dark:text-green-300 hover:text-green-700 dark:hover:text-green-300"
-                  onClick={() => {
-                    setIsFriendRequestSent(false)
-                  }}
+                  id={id}
                 />
               )}
             </div>
 
             <div className="flex gap-3">
               {isFriend && <RemoveFriendButton id={id} />}
-              {!isUserBlocked && (
-                <BlockUserButton
-                  id={id ?? ""}
-                  displayName={displayName}
-                  photoURL={photoURL}
-                  blockedUsers={blockedUsers}
-                />
-              )}
+              <BlockUserButton
+                id={id ?? ""}
+                displayName={displayName}
+                photoURL={photoURL}
+                blockedUsers={blockedUsers}
+              />
               <ReportUserButton id={id ?? ""} activeMenu={activeMenu} />
             </div>
           </div>

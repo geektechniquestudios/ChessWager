@@ -115,6 +115,8 @@ const useAuth = () => {
                 followerCount: 0,
                 followingCount: 0,
                 hasNewNotification: false,
+                blockedUsers: [],
+                sentFriendRequests: [],
               }).catch(console.error)
             }
             if (doc.data()?.walletAddress ?? "" !== "") {

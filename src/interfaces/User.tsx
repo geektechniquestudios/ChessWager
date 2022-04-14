@@ -13,4 +13,5 @@ export type User = {
   followingCount: number
   hasNewNotifications: boolean
   blockedUsers: string[]
+  sentFriendRequests: string[]
 }
