@@ -4,12 +4,14 @@ import "../../style/scrollbar.scss"
 import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
 import type { Bet } from "../../interfaces/Bet"
+import { UserDataState } from "../containers/UserDataState"
 
 interface Props {}
 
 export const FundedBets: React.FC<Props> = () => {
   const { avaxPrice } = Price.useContainer()
   const { bets } = BetsState.useContainer()
+  const { userData } = UserDataState.useContainer()
 
   const amountAtStake = (
     (bets
@@ -51,11 +53,11 @@ export const FundedBets: React.FC<Props> = () => {
             style={{ direction: "ltr" }}
           >
             {bets
-              ?.sort((a: Bet, b: Bet) => b.amount - a.amount)
-              .filter(
+              ?.filter(
                 (bet: Bet) =>
                   bet.status === "funded" && isBetRelatedToUser(bet),
               )
+              .sort((a: Bet, b: Bet) => b.amount - a.amount)
               .map((bet: Bet) => (
                 <MiniBet
                   key={bet.id}
@@ -74,11 +76,14 @@ export const FundedBets: React.FC<Props> = () => {
             style={{ direction: "ltr" }}
           >
             {bets
-              ?.sort((a: Bet, b: Bet) => b.amount - a.amount)
-              .filter(
+              ?.filter(
                 (bet: Bet) =>
-                  bet.status === "funded" && !isBetRelatedToUser(bet),
+                  bet.status === "funded" &&
+                  isBetRelatedToUser(bet) &&
+                  !userData.blockedUsers.includes(bet.user1Id) &&
+                  !userData.blockedUsers.includes(bet.user2Id),
               )
+              .sort((a: Bet, b: Bet) => b.amount - a.amount)
               .map((bet: Bet) => (
                 <MiniBet
                   key={bet.id}

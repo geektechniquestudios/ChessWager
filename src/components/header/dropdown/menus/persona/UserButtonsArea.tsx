@@ -10,6 +10,7 @@ import { BsWallet2 } from "react-icons/bs"
 import { useState } from "react"
 import { RemoveFriendButton } from "./buttons/RemoveFriendButton"
 import { CancelPendingRequestButton } from "./buttons/CancelPendingRequestButton"
+import { FriendRequestsButton } from "./buttons/FriendRequestsButton"
 
 const db = getFirestore(firebaseApp)
 
@@ -59,6 +60,7 @@ export const UserButtonsArea: React.FC<Props> = ({
 
               {isFriendRequestSent && (
                 <CancelPendingRequestButton
+                  className="text-green-700 dark:text-green-300 hover:text-green-700 dark:hover:text-green-300"
                   onClick={() => {
                     setIsFriendRequestSent(false)
                   }}
@@ -68,7 +70,6 @@ export const UserButtonsArea: React.FC<Props> = ({
 
             <div className="flex gap-3">
               {isFriend && <RemoveFriendButton id={id} />}
-
               {!isUserBlocked && (
                 <BlockUserButton
                   id={id ?? ""}
@@ -85,7 +86,10 @@ export const UserButtonsArea: React.FC<Props> = ({
       <>
         {isUser && (
           <div className="flex justify-between w-full">
-            <BlockedButton />
+            <div className="flex gap-2">
+              <FriendRequestsButton />
+              <BlockedButton />
+            </div>
             {isWalletConnected && (
               <>
                 <a

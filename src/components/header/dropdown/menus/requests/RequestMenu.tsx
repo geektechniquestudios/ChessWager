@@ -1,11 +1,12 @@
-import { DropdownArea } from "../../models/DropdownArea"
-import { FollowingList } from "./FollowingList"
-import { Menu } from "../../models/Menu"
 import { BiArrowBack } from "react-icons/bi"
 import { DropdownItem } from "../../models/DropdownItem"
+import { Menu } from "../../models/Menu"
 import { MenuLine } from "../../models/MenuLine"
+import { RequestList } from "./RequestList"
 
-export const FollowingMenu: React.FC = ({}) => {
+interface Props {}
+
+export const RequestMenu: React.FC<Props> = ({}) => {
   return (
     <Menu
       menuItems={[
@@ -13,12 +14,12 @@ export const FollowingMenu: React.FC = ({}) => {
           goToMenu="persona"
           leftIcon={<BiArrowBack />}
           key={0}
-          text="Following"
+          text="Friend Requests"
         />,
         <MenuLine key={1} />,
-        <DropdownArea key={2} content={<FollowingList />} />,
+        <RequestList key={2} />,
       ]}
-      thisMenu={"following"}
+      thisMenu="requests"
     />
   )
 }

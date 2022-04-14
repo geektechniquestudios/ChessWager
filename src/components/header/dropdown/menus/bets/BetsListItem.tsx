@@ -3,9 +3,11 @@ import {
   DocumentData,
   Timestamp,
 } from "firebase/firestore"
+import { MdBlockFlipped } from "react-icons/md"
 import { Bet } from "../../../../../interfaces/Bet"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { Price } from "../../../../containers/Price"
+import { UserDataState } from "../../../../containers/UserDataState"
 
 interface Props {
   leftIcon?: React.ReactNode
@@ -36,9 +38,11 @@ interface Props {
 
 export const BetsListItem: React.FC<Props> = ({ leftIcon, rightIcon, bet }) => {
   const { setActiveMenu, setBet } = DropdownState.useContainer()
-
   const betTotal = bet.amount + bet.amount * bet.multiplier
   const { avaxPrice } = Price.useContainer()
+  const { userData } = UserDataState.useContainer()
+  const isUser1Blocked = userData.blockedUsers.includes(bet.user1Id)
+  const isUser2Blocked = userData.blockedUsers.includes(bet.user2Id)
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
@@ -49,14 +53,22 @@ export const BetsListItem: React.FC<Props> = ({ leftIcon, rightIcon, bet }) => {
         setBet(bet)
       }}
     >
-      <div className="flex h-14 w-64 justify-center gap-2">
+      <div className="flex h-full w-64 justify-between gap-2 p-2">
         <div className="flex flex-col justify-center gap-2">
-          <img className="w-4 h-4 rounded-full" src={bet.user1PhotoURL} />
-          <img className="w-4 h-4 rounded-full" src={bet.user2PhotoURL} />
+          {isUser1Blocked ? (
+            <MdBlockFlipped className="w-4 h-4 rounded-full" />
+          ) : (
+            <img className="w-4 h-4 rounded-full" src={bet.user1PhotoURL} />
+          )}
+          {isUser2Blocked ? (
+            <MdBlockFlipped className="w-4 h-4 rounded-full" />
+          ) : (
+            <img className="w-4 h-4 rounded-full" src={bet.user2PhotoURL} />
+          )}
         </div>
-        <div className="flex flex-col justify-center h-14 overflow-hidden text-sm text-stone-900 dark:text-stone-400 whitespace-nowrap gap-1">
-          <div>{bet.user1DisplayName}</div>
-          <div>{bet.user2DisplayName}</div>
+        <div className="flex flex-col justify-center h-full overflow-hidden text-sm text-stone-900 dark:text-stone-400 whitespace-nowrap gap-1">
+          <div>{isUser1Blocked ? "Blocked User" : bet.user1DisplayName}</div>
+          <div>{isUser2Blocked ? "Blocked User" : bet.user2DisplayName}</div>
         </div>
         <div className="flex flex-col justify-center text-xs gap-1">
           <div>${(betTotal * avaxPrice).toFixed(2)} USD</div>

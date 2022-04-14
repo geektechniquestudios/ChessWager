@@ -1,19 +1,18 @@
-import { MdBlockFlipped } from "react-icons/md"
+import { FiUsers } from "react-icons/fi"
 import { DropdownState } from "../../../../../containers/DropdownState"
 import { DropdownButton } from "./DropdownButton"
 
 interface Props {}
 
-export const BlockedButton: React.FC<Props> = ({}) => {
+export const FriendRequestsButton: React.FC<Props> = ({}) => {
   const { setActiveMenu } = DropdownState.useContainer()
-
   return (
     <DropdownButton
-      content={<MdBlockFlipped />}
+      content={<FiUsers />}
       onClick={() => {
-        setActiveMenu("blocked")
+        setActiveMenu("requests")
       }}
-      title="Blocked Users"
+      title="Friend Requests"
     />
   )
 }

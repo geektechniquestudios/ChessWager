@@ -13,6 +13,7 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore"
+import { UserDataState } from "./UserDataState"
 
 const db = getFirestore(firebaseApp)
 

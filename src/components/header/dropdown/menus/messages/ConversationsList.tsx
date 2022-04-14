@@ -6,6 +6,7 @@ import { Conversation, User } from "../../../../../interfaces/Conversation"
 import { Auth } from "../../../../containers/Auth"
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
+import { UserDataState } from "../../../../containers/UserDataState"
 
 const db = getFirestore(firebaseApp)
 
@@ -14,7 +15,7 @@ export const ConversationsList: React.FC = ({}) => {
     ConversationsState.useContainer()
   const { setUserIdFromMessages, setUsernameFromMessages } =
     UserMenuState.useContainer()
-
+  const { userData } = UserDataState.useContainer()
   const { auth } = Auth.useContainer()
   const convoToConvoAndUser = (
     conversation: Conversation,
@@ -66,7 +67,12 @@ export const ConversationsList: React.FC = ({}) => {
           <>
             {(conversations?.length ?? 0) > 0 &&
               conversations
-                ?.sort((a, b) => a.modifiedAt - b.modifiedAt)
+                ?.filter(
+                  (conversation: Conversation) =>
+                    !userData.blockedUsers.includes(conversation.user1.id) &&
+                    !userData.blockedUsers.includes(conversation.user2.id),
+                )
+                .sort((a, b) => a.modifiedAt - b.modifiedAt)
                 .map(convoToConvoAndUser)
                 .map(([conversation, user], index: number) => (
                   <ConvoItem

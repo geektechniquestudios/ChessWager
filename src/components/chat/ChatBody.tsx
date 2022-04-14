@@ -24,7 +24,6 @@ export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
     messagesRef,
     orderBy("createdAt", "desc"),
     where("createdAt", ">", timestamp),
-    // where("uid", "not-in", userData.blockedUsers),
   )
   const [messages] = useCollectionData<Message[] | any>(q)
   return (

@@ -5,6 +5,7 @@ import { GameState } from "../containers/GameState"
 import { LobbyState } from "../containers/LobbyState"
 import { Bet as BetComponent } from "./bet/Bet"
 import { LobbyHeaderState } from "../containers/LobbyHeaderState"
+import { UserDataState } from "../containers/UserDataState"
 
 interface Props {}
 
@@ -55,6 +56,8 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
   }
 
   const { dummy } = LobbyState.useContainer()
+  const { userData } = UserDataState.useContainer()
+
   useEffect(updateForButtonClick, [
     mostRecentButton,
     isDescending,
@@ -76,15 +79,21 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
 
   return (
     <>
-      {refreshingBets?.map((bet, index) => (
-        <BetComponent
-          key={bet.id + index}
-          {...bet}
-          timestamp={bet.timestamp?.seconds}
-          index={index}
-          isLobbyEnabled={isLobbyEnabled}
-        />
-      ))}
+      {refreshingBets
+        ?.filter(
+          (bet) =>
+            !userData.blockedUsers.includes(bet.user1Id) &&
+            !userData.blockedUsers.includes(bet.user2Id),
+        )
+        .map((bet, index) => (
+          <BetComponent
+            key={bet.id + index}
+            {...bet}
+            timestamp={bet.timestamp?.seconds}
+            index={index}
+            isLobbyEnabled={isLobbyEnabled}
+          />
+        ))}
     </>
   )
 }

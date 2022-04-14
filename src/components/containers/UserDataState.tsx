@@ -13,7 +13,7 @@ export const useUserDataState = () => {
   const { auth } = Auth.useContainer()
   let userRef
   if (auth.currentUser?.uid) userRef = doc(db, "users", auth.currentUser?.uid)
-  const [userData] = useDocumentData<User | any>(userRef)
+  const [userData] = useDocumentData<User | any>(userRef) ?? []
   const { isDropdownOpen, activeMenu } = DropdownState.useContainer()
 
   useEffect(() => {

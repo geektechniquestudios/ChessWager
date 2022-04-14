@@ -1,11 +1,8 @@
-import { getFirestore } from "firebase/firestore"
 import { BsPiggyBank } from "react-icons/bs"
 import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
 import { FiPercent } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
 import { RiHandCoinLine, RiHeartsLine, RiUserHeartLine } from "react-icons/ri"
-import { firebaseApp } from "../../../../../config"
-import { Auth } from "../../../../containers/Auth"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtonsArea } from "./UserButtonsArea"
@@ -44,7 +41,6 @@ export const UserData: React.FC<Props> = ({
   activeMenu,
 }) => {
   const { isDarkOn } = DarkMode.useContainer()
-  const { auth, isWalletConnected } = Auth.useContainer()
   const winPercent =
     betWinCount !== 0 && betFundedCount !== 0
       ? ((betWinCount / betFundedCount) * 100).toFixed(2)
@@ -67,7 +63,7 @@ export const UserData: React.FC<Props> = ({
           />
           <img
             src={photoURL}
-            className="w-24 h-24 rounded-full grid place-content-center mt-3"
+            className="w-24 h-24 rounded-full grid place-content-center mt-3 border"
           />
           <div>
             <p className="my-3 flex justify-center">{displayName ?? ""}</p>
