@@ -5,8 +5,8 @@ const ethers = require("ethers")
 const admin = require("firebase-admin")
 
 require("dotenv").config({ path: "../.env" })
-const isLocal = process.env.BRANCH_ENV === "develop"
-const adminSdk = process.env.FIREBASE_ADMIN_SDK
+const isLocal = process.env.VITE_BRANCH_ENV === "develop"
+const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
 let cred
 if (isLocal) {
@@ -20,20 +20,19 @@ admin.initializeApp({ credential: cred })
 
 const db = admin.firestore()
 
-const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS
+const contractAddress = process.env.VITE_CONTRACT_ADDRESS
+console.log(`Listening to contract address: ${contractAddress}`)
 const contractABI = ChessWager.abi
-const metamaskAddress = process.env.METAMASK_ACCOUNT_ADDRESS
-const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
+const metamaskKey = process.env.VITE_METAMASK_ACCOUNT_KEY
 
 let rpcUrl
-if (process.env.BRANCH_ENV === "develop") {
-  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
-} else if (process.env.BRANCH_ENV === "test") {
-  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
-} else if (process.env.BRANCH_ENV === "main") {
-  rpcUrl = process.env.AVALANCHE_MAINNET_RPC_URL
+if (process.env.VITE_BRANCH_ENV === "develop") {
+  rpcUrl = process.env.VITE_AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.VITE_BRANCH_ENV === "test") {
+  rpcUrl = process.env.VITE_AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.VITE_BRANCH_ENV === "main") {
+  rpcUrl = process.env.VITE_AVALANCHE_MAINNET_RPC_URL
 }
-console.log(metamaskAddress)
 
 const Wallet = ethers.Wallet
 const Contract = ethers.Contract
@@ -51,42 +50,41 @@ const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestor
 
 contract.on(
   "BetPlacedStatus",
-  (message: string, betId: string, gameId: string) => {
+  async (message: string, betId: string, gameId: string) => {
     console.log("BetPlacedStatus: ", message, betId)
 
-    gameIdHistoryRef
-      .doc(gameId)
-      .collection("contracts")
-      .doc(contractAddress)
-      .set(
-        {
-          needToPay: true,
-          hasBeenPaid: false,
-        },
-        { merge: true },
-      )
+    const gameDoc = gameIdHistoryRef.doc(gameId)
+    gameDoc.collection("contracts").doc(contractAddress).set(
+      {
+        needToPay: true,
+        hasBeenPaid: false,
+      },
+      { merge: true },
+    )
+
+    const betDoc = lobbyRef.doc(betId)
 
     if (message === "user1 has paid") {
-      lobbyRef.doc(betId).set(
+      await betDoc.set(
         {
           hasUser1Paid: true,
         },
         { merge: true },
       )
-      gameIdHistoryRef.doc(betId).set(
+      gameDoc.set(
         {
           hasUser1Paid: true,
         },
         { merge: true },
       )
     } else if (message === "user2 has paid") {
-      lobbyRef.doc(betId).set(
+      await betDoc.set(
         {
           hasUser2Paid: true,
         },
         { merge: true },
       )
-      gameIdHistoryRef.doc(betId).set(
+      gameDoc.set(
         {
           hasUser2Paid: true,
         },
@@ -95,6 +93,18 @@ contract.on(
     } else {
       console.log("unknown message: ", message)
     }
+
+    betDoc.get().then((doc) => {
+      const data = doc.data() ?? {}
+      if (data.hasUser1Paid && data.hasUser2Paid) {
+        betDoc.set(
+          {
+            status: "funded",
+          },
+          { merge: true },
+        )
+      }
+    })
   },
 )
 
@@ -112,51 +122,56 @@ contract.on(
     user1 payment: ${didUser1Pay} 
     user2 payment: ${didUser2Pay}`)
 
-    db.runTransaction(async (transaction: any) => {
-      transaction
-        .get(lobbyRef.doc(betId))
-        .then((doc: any) => {
-          if (!doc.data().hasFollowThroughBeenCounted) {
-            transaction.update(lobbyRef.doc(betId), {
+    lobbyRef
+      .doc(betId)
+      .get()
+      .then((doc: any) => {
+        if (!doc.data().hasFollowThroughBeenCounted) {
+          lobbyRef.doc(betId).set(
+            {
               hasFollowThroughBeenCounted: true,
+            },
+            { merge: true },
+          )
+        } else {
+          console.log("hasFollowThroughBeenCounted already set")
+          return
+        }
+
+        if (doc.data().status === "funded") {
+          userCollectionRef.doc(doc.data().user1Id).update({
+            betAcceptedCount: admin.firestore.FieldValue.increment(1),
+            betFundedCount: admin.firestore.FieldValue.increment(1),
+          })
+          userCollectionRef.doc(doc.data().user2Id).update({
+            betAcceptedCount: admin.firestore.FieldValue.increment(1),
+            betFundedCount: admin.firestore.FieldValue.increment(1),
+          })
+        }
+
+        if (doc.data().status === "approved") {
+          if (didUser1Pay) {
+            // if only user1 paid
+            userCollectionRef.doc(doc.data().user1Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              betFundedCount: admin.firestore.FieldValue.increment(1),
             })
-          } else {
-            return
+            userCollectionRef.doc(doc.data().user2Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
+            })
+          } else if (didUser2Pay) {
+            // if only user2 paid
+            userCollectionRef.doc(doc.data().user1Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
+            })
+            userCollectionRef.doc(doc.data().user2Id).update({
+              betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              betFundedCount: admin.firestore.FieldValue.increment(1),
+            })
           }
-          if (doc.data().status === "approved") {
-            // if both users paid
-            if (didUser1Pay && didUser2Pay) {
-              userCollectionRef.doc(doc.data().user1Id).update({
-                betAcceptedCount: admin.firestore.FieldValue.increment(1),
-                betFundedCount: admin.firestore.FieldValue.increment(1),
-              })
-              userCollectionRef.doc(doc.data().user2Id).update({
-                betAcceptedCount: admin.firestore.FieldValue.increment(1),
-                betFundedCount: admin.firestore.FieldValue.increment(1),
-              })
-            } else if (didUser1Pay) {
-              // if only user1 paid
-              userCollectionRef.doc(doc.data().user1Id).update({
-                betAcceptedCount: admin.firestore.FieldValue.increment(1),
-                betFundedCount: admin.firestore.FieldValue.increment(1),
-              })
-              userCollectionRef.doc(doc.data().user2Id).update({
-                betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              })
-            } else if (didUser2Pay) {
-              // if only user2 paid
-              userCollectionRef.doc(doc.data().user1Id).update({
-                betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              })
-              userCollectionRef.doc(doc.data().user2Id).update({
-                betAcceptedCount: admin.firestore.FieldValue.increment(1),
-                betFundedCount: admin.firestore.FieldValue.increment(1),
-              })
-            }
-          }
-        })
-        .catch(console.error)
-    })
+        }
+      })
+      .catch(console.error)
   },
 )
 

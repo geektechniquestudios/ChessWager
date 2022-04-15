@@ -2,9 +2,9 @@ const fs = require("fs")
 const os = require("os")
 const hre = require("hardhat")
 const admin = require("firebase-admin")
-const env = process.env.BRANCH_ENV
+const env = process.env.VITE_BRANCH_ENV
 const isLocal = env === "develop"
-const adminSdk = process.env.FIREBASE_ADMIN_SDK
+const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 require("dotenv").config({ path: "../../.env" })
 
 let cred
@@ -42,13 +42,13 @@ async function main() {
   await chessWager.deployed()
 
   console.log(`ChessWager ${env} deployed to: ${chessWager.address}`)
-  setEnvValue("REACT_APP_CONTRACT_ADDRESS", chessWager.address)
-  console.log("Contract address written to database")
+  setEnvValue("VITE_CONTRACT_ADDRESS", chessWager.address)
 
   if (env === "develop" || env === "test" || env === "main") {
     await contractRef.doc(chessWager.address).set({
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     })
+    console.log("Contract address written to database")
   } else {
     throw new Error(
       "Please set the environment variable for branch_env to develop, test, or main",

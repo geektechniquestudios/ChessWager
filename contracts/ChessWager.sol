@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Affero-3.0
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.11;
 
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";

@@ -10,7 +10,8 @@
     "target": "esnext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "skipLibCheck": true
   },
   "compileOnSave": true,
   "include": ["src"]

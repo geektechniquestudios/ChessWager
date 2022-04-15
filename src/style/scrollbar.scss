@@ -1,0 +1,48 @@
+$primary: #a8a29e;
+$secondary: #78716c;
+
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: $primary $secondary;
+}
+.scrollbar::-webkit-scrollbar {
+  @apply w-2 h-2;
+}
+.scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-stone-400 dark:bg-stone-500 rounded-full;
+}
+
+.scrollbar::-webkit-scrollbar-corner {
+  @apply bg-stone-400 dark:bg-stone-500;
+}
+
+.scrollbar-funded {
+  scrollbar-width: thin;
+  scrollbar-color: $primary $secondary;
+}
+.scrollbar-funded::-webkit-scrollbar {
+  @apply w-2 m-0.5;
+}
+.scrollbar-funded::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+.scrollbar-funded::-webkit-scrollbar-thumb {
+  @apply bg-stone-400 dark:bg-stone-500 rounded-full;
+}
+
+.scrollbar-dropdown {
+  scrollbar-width: thin;
+  scrollbar-color: $secondary $primary;
+}
+.scrollbar-dropdown::-webkit-scrollbar {
+  @apply w-2;
+}
+.scrollbar-dropdown::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+.scrollbar-dropdown::-webkit-scrollbar-thumb {
+  @apply bg-stone-400 dark:bg-stone-500 rounded-full;
+}

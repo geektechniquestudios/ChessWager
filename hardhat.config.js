@@ -22,10 +22,10 @@ task(
   },
 )
 
-const accountKey = process.env.METAMASK_ACCOUNT_KEY
+const accountKey = process.env.VITE_METAMASK_ACCOUNT_KEY
 
 module.exports = {
-  solidity: "0.8.4",
+  solidity: "0.8.11",
   paths: {
     artifacts: "./src/artifacts",
   },
@@ -51,19 +51,19 @@ module.exports = {
       ],
     },
     bscTestnet: {
-      url: process.env.BSC_TESTNET_RPC_URL,
+      url: process.env.VITE_BSC_TESTNET_RPC_URL,
       chainId: 97,
       gasPrice: 20000000000,
       accounts: [accountKey],
     },
     fuji: {
-      url: process.env.AVALANCHE_TESTNET_RPC_URL,
+      url: process.env.VITE_AVALANCHE_TESTNET_RPC_URL,
       gasPrice: 225000000000,
       chainId: 43113,
       accounts: [accountKey],
     },
     avalancheMainnet: {
-      url: process.env.AVALANCHE_MAINNET_RPC_URL,
+      url: process.env.VITE_AVALANCHE_MAINNET_RPC_URL,
       gasPrice: 225000000000,
       chainId: 43114,
       accounts: [accountKey],

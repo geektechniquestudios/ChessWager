@@ -1,13 +1,140 @@
-import "../../../style/header.scss"
+import { useEffect, useRef } from "react"
+import { Auth } from "../../containers/Auth"
+import { DropdownState } from "../../containers/DropdownState"
+import { Achievements } from "./menus/cold-storage/profile/Achievements"
+import { BlockedUsers } from "./menus/cold-storage/settings/BlockedUsers"
+import { SearchedDirectMessageMenu } from "./menus/search/searched-user/SearchedDirectMessageMenu"
+import { Contact } from "./menus/help/Contact"
+import { DisplayName } from "./menus/cold-storage/profile/DisplayName"
+import { Faq } from "./menus/help/Faq"
+import { Help } from "./menus/main/Help"
+import { HowToPlay } from "./menus/help/HowToPlay"
+import { Leaderboard } from "./menus/cold-storage/Leaderboard"
+import { Main } from "./menus/Main"
+import { Membership } from "./menus/cold-storage/store/Membership"
+import { Messages } from "./menus/cold-storage/profile/Messages"
+import { Notifications } from "./menus/cold-storage/profile/Notifications"
+import { Profile } from "./menus/cold-storage/Profile"
+import { SearchUsersMenu } from "./menus/search/SearchUsersMenu"
+import { Settings } from "./menus/main/Settings"
+import { Social } from "./menus/main/Social"
+import { Stats } from "./menus/cold-storage/profile/Stats"
+import { Store } from "./menus/cold-storage/Store"
+import { SearchedUserMenu } from "./menus/search/searched-user/SearchedUserMenu"
+import { PersonaMenu } from "./menus/persona/PersonaMenu"
+import { ClickedUserMenu } from "./menus/clicked-user/ClickedUserMenu"
+import { UserMenuState } from "../../containers/UserMenuState"
+import { ConversationMenu } from "./menus/messages/ConversationMenu"
+import { FriendsMenu } from "./menus/friends/FriendsMenu"
+import { BetsMenu } from "./menus/bets/BetsMenu"
+import { DarkMode } from "../../containers/DarkMode"
+import { ClickedDirectMessageMenu } from "./menus/clicked-user/ClickedDirectMessageMenu"
+import { BetMenu } from "./menus/bets/BetMenu"
+import { ClickedFromBets } from "./menus/bets/clicked-user/ClickedFromBets"
+import { ClickedFromBetsDM } from "./menus/bets/clicked-user/ClickedFromBetsDM"
+import { ClickedReportMenu } from "./menus/clicked-user/ClickedReportMenu"
+import { SearchedReportMenu } from "./menus/search/searched-user/SearchedReportMenu"
+import { ClickedFromBetsReportMenu } from "./menus/bets/clicked-user/ClickedFromBetsReportMenu"
+import { BlockedMenu } from "./menus/blocked/BlockedMenu"
+import { FollowersMenu } from "./menus/followers/FollowersMenu"
+import { RequestMenu } from "./menus/requests/RequestMenu"
+import { RequestsFromNotificationsMenu } from "./menus/notifications/requests/RequestsFromNotificationsMenu"
 
-interface Props {
-  children: React.ReactNode
-}
+export const DropdownMenu = () => {
+  const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
+    const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
+    useEffect(() => {
+      const handleClickOutside = (event: Event) => {
+        if (ref.current?.contains(event.target)) {
+          return
+        }
+        if (ref.current && !ref.current.contains(event.target)) {
+          setIsDropdownOpen(false)
+          setActiveMenu("")
+          setMenuHeight(0)
+        }
+      }
 
-export const DropdownMenu: React.FC<Props> = ({ children }) => {
+      document.addEventListener("mousedown", handleClickOutside)
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside)
+      }
+    }, [ref, setIsDropdownOpen])
+  }
+  const dropdownRef = useRef<any>()
+
+  const { user } = Auth.useContainer()
+  const { menuHeight, setMenuHeight } = DropdownState.useContainer()
+
+  CloseMenuListener(dropdownRef)
+
+  useEffect(() => {
+    setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
+  }, [setMenuHeight])
+
+  const { isDarkOn } = DarkMode.useContainer()
+  const isFirefox = navigator.userAgent.indexOf("Firefox") !== -1
+
+  const bgColor = !isFirefox
+    ? isDarkOn
+      ? "rgba(68, 64, 60, 0.79)"
+      : "rgba(245, 245, 244, 0.60)"
+    : isDarkOn
+    ? "rgba(68, 64, 60, 0.99)"
+    : "rgba(245, 245, 244, 0.99)"
+  const blur = isDarkOn ? "blur(18px)" : "blur(16px)"
+
+  const firefoxColors = (): string => "bg-stone-100 dark:bg-stone-700"
+
   return (
-    <nav className="">
-      <ul className="flex justify-end">{children}</ul>
-    </nav>
+    <div
+      className={`${firefoxColors} dropdown absolute w-64 text-stone-800 dark:text-stone-200 overflow-hidden right-5 top-10 z-50 rounded-md shadow-lg border border-stone-400  dark:border-stone-500`}
+      style={{
+        height: menuHeight,
+        background: bgColor,
+        backdropFilter: blur,
+      }}
+      ref={dropdownRef}
+    >
+      <div className="flex justify-center">
+        <Main />
+        {user && <Profile />}
+        {/* {user && <Settings />} */}
+        {/* {user && <Store />} */}
+        <Social />
+        {/* <Leaderboard /> */}
+        <Help />
+        {/* {user && <BlockedUsers />} */}
+        {user && <Messages />}
+        {/* {user && <FollowingMenu />} */}
+        {user && <Notifications />}
+        <SearchedUserMenu />
+        <SearchUsersMenu />
+        {user && <DisplayName />}
+        {/* {user && <Achievements />} */}
+        {/* {user && <Stats />} */}
+        {/* {user && <Membership />} */}
+        {user && <SearchedDirectMessageMenu />}
+        <HowToPlay />
+        <Faq />
+        <Contact />
+        {user && <PersonaMenu />}
+        {user && <ClickedUserMenu />}
+        {user && <ConversationMenu />}
+        {user && <BetsMenu />}
+        {user && <ClickedDirectMessageMenu />}
+        {user && <BetMenu />}
+        {user && <ClickedFromBets />}
+        {user && <ClickedFromBetsDM />}
+        {user && <ClickedReportMenu />}
+        {user && <SearchedReportMenu />}
+        {user && <ClickedFromBetsReportMenu />}
+        {user && <BlockedMenu />}
+        {user && <FriendsMenu />}
+        {user && <FollowersMenu />}
+        {user && <RequestMenu />}
+        {user && <RequestsFromNotificationsMenu />}
+      </div>
+    </div>
   )
 }

@@ -3,9 +3,9 @@ const { ethers, waffle } = require("hardhat")
 
 const admin = require("firebase-admin")
 require("dotenv").config({ path: "../.env" })
-const env = process.env.BRANCH_ENV
+const env = process.env.VITE_BRANCH_ENV
 const isLocal = env === "develop"
-const adminSdk = process.env.FIREBASE_ADMIN_SDK
+const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
 const Wallet = hre.ethers.Wallet
 const Contract = hre.ethers.Contract
@@ -15,7 +15,7 @@ const ChessWager = require("../src/artifacts/contracts/ChessWager.sol/ChessWager
 const { randomUUID } = require("crypto")
 const { BigNumber } = require("ethers")
 const contractABI = ChessWager.abi
-const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
+const metamaskKey = process.env.VITE_METAMASK_ACCOUNT_KEY
 
 const provider = new providers.JsonRpcProvider("http://127.0.0.1:8545")
 const wallet = new Wallet(metamaskKey, provider)

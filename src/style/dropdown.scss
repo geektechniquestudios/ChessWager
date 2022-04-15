@@ -1,0 +1,54 @@
+@import "index.scss";
+
+:root {
+  --speed: 300ms;
+}
+
+.dropdown {
+  transition: height var(--speed) ease;
+}
+
+/* CSSTransition classes  */
+.menu-primary-enter {
+  position: absolute;
+  transform: translateX(-110%);
+}
+.menu-primary-enter-active {
+  transform: translateX(0%);
+  transition: all var(--speed) ease;
+}
+.menu-primary-exit {
+  position: absolute;
+}
+.menu-primary-exit-active {
+  transform: translateX(-110%);
+  transition: all var(--speed) ease;
+}
+
+.menu-toggle {
+  @apply bg-gradient-to-r from-stone-400 to-stone-900;
+}
+
+.toggle.react-toggle--checked .react-toggle-track {
+  @extend .menu-toggle;
+}
+
+.toggle.react-toggle .react-toggle-track {
+  @extend .menu-toggle;
+}
+
+.toggle.react-toggle--checked .react-toggle-thumb {
+  @apply bg-stone-800 pointer-events-none border-stone-700;
+}
+
+.filter-toggle.react-toggle--checked .react-toggle-track {
+  @extend .menu-toggle;
+}
+
+.filter-toggle.react-toggle .react-toggle-track {
+  @apply bg-gradient-to-r bg-stone-800 to-stone-300;
+}
+
+.filter-toggle.react-toggle--checked .react-toggle-thumb {
+  @apply bg-stone-800 pointer-events-none border-stone-700;
+}

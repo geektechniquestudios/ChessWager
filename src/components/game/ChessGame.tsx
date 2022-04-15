@@ -1,12 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react"
 // @ts-ignore
 import ndjsonStream from "can-ndjson-stream"
-import "react-chessground/dist/styles/chessground.css"
-import "../../style/game.scss"
 import { PlayerData } from "./PlayerData"
-import { GameId } from "../containers/GameId"
-// @ts-ignore
-import Chessground from "react-chessground"
+import { GameState } from "../containers/GameState"
+import Chessground from "@react-chess/chessground"
 
 interface Featured {
   t: string
@@ -31,7 +28,7 @@ interface Player {
 }
 
 export const ChessGame: React.FC = () => {
-  const { gameId, setGameId } = GameId.useContainer()
+  const { setGameId } = GameState.useContainer()
 
   const [fen, setFen] = useState("")
 
@@ -44,7 +41,11 @@ export const ChessGame: React.FC = () => {
   const [blackTime, setBlackTime] = useState(0)
   const [blackRating, setBlackRating] = useState(0)
   const [blackTitle, setBlackTitle] = useState("")
-  const [orientation, setOrientation] = useState("white")
+  const [orientation, setOrientation] = useState<"white" | "black" | undefined>(
+    "white",
+  )
+
+  const [isNewGame, setIsNewGame] = useState(true)
 
   const updateTitles = useCallback(
     (res: Featured): void => {
@@ -57,11 +58,18 @@ export const ChessGame: React.FC = () => {
 
       if (black === undefined || white === undefined) return
 
-      setFen(res.d.fen)
+      setFen(res.d.fen ?? "")
       setGameId(res.d.id)
-      setOrientation(res.d.orientation)
 
-      if (white.user.title === undefined) setWhiteTitle("")
+      const resolveOrientation = (orientation: string): "white" | "black" =>
+        "white" === orientation || "black" === orientation
+          ? orientation
+          : "white"
+
+      setOrientation(resolveOrientation(res.d.orientation))
+
+      setWhiteTitle(white.user.title ?? "")
+      setBlackTitle(black.user.title ?? "")
       setWhiteName(white.user.name)
       setWhiteRating(white.rating)
 
@@ -89,8 +97,12 @@ export const ChessGame: React.FC = () => {
               setFen(res.value.d.fen)
               setWhiteTime(res.value.d.wc)
               setBlackTime(res.value.d.bc)
+              setIsNewGame(false)
             } else {
               updateTitles(res.value)
+              setWhiteTime(0)
+              setBlackTime(0)
+              setIsNewGame(true)
             }
           }
         })
@@ -98,38 +110,53 @@ export const ChessGame: React.FC = () => {
       .catch(console.error)
   }, [updateTitles])
 
-  const lichessUrl = "https://lichess.org/" + gameId
-
   return (
-    <div id="chess-board">
-      <a href={lichessUrl} style={{ float: "right" }}>
-        Check out the game on lichess
-      </a>
-
-      <PlayerData
-        side={orientation === "white" ? "black" : "white"}
-        title={orientation === "white" ? blackTitle : whiteTitle}
-        name={orientation === "white" ? blackName : whiteName}
-        time={orientation === "white" ? blackTime : whiteTime}
-        rating={orientation === "white" ? blackRating : whiteRating}
-        fen={fen}
-      />
-      <Chessground
-        width="30vw"
-        height="30vw"
-        viewOnly={true}
-        id="chess-board"
-        fen={fen}
-        orientation={orientation}
-      />
-      <PlayerData
-        side={orientation === "white" ? "white" : "black"}
-        title={orientation === "black" ? blackTitle : whiteTitle}
-        name={orientation === "black" ? blackName : whiteName}
-        time={orientation === "black" ? blackTime : whiteTime}
-        rating={orientation === "black" ? blackRating : whiteRating}
-        fen={fen}
-      />
+    <div className="flex justify-center w-full">
+      <div
+        className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-300 my-10 p-2.5 w-1/2 shadow-lg border border-stone-500 color-shift min-w-min"
+        style={{ minWidth: "17em", maxWidth: "80vh" }}
+      >
+        <div className="resize flex w-full h-full justify-center align-middle">
+          <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border border-stone-500 dark:border-stone-700">
+            <div className="flex justify-center w-full">
+              <PlayerData
+                side={orientation === "white" ? "black" : "white"}
+                title={orientation === "white" ? blackTitle : whiteTitle}
+                name={orientation === "white" ? blackName : whiteName}
+                time={orientation === "white" ? blackTime : whiteTime}
+                rating={orientation === "white" ? blackRating : whiteRating}
+                fen={fen}
+                isNewGame={isNewGame}
+              />
+            </div>
+            <div className="aspect-w-1 aspect-h-1 border-t border-b dark:border-stone-400 border-stone-600">
+              <Chessground
+                contained={true}
+                config={{
+                  fen,
+                  orientation,
+                  draggable: { enabled: false },
+                  movable: {
+                    free: false,
+                  },
+                  coordinates: false,
+                }}
+              />
+            </div>
+            <div className="flex justify-center">
+              <PlayerData
+                side={orientation === "white" ? "white" : "black"}
+                title={orientation === "black" ? blackTitle : whiteTitle}
+                name={orientation === "black" ? blackName : whiteName}
+                time={orientation === "black" ? blackTime : whiteTime}
+                rating={orientation === "black" ? blackRating : whiteRating}
+                fen={fen}
+                isNewGame={isNewGame}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
