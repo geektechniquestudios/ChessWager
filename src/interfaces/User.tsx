@@ -14,4 +14,6 @@ export type User = {
   hasNewNotifications: boolean
   blockedUsers: string[]
   sentFriendRequests: string[]
+  redactedFriendRequests: string[]
+  friends: string[]
 }

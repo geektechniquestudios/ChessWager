@@ -9,6 +9,7 @@ import { UserDataState } from "../../../../containers/UserDataState"
 const db = getFirestore(firebaseApp)
 interface Props {
   search: string
+  friendsOrEveryone: "friends" | "everyone"
 }
 
 export const UsersList: React.FC<Props> = ({ search }) => {
@@ -24,7 +25,7 @@ export const UsersList: React.FC<Props> = ({ search }) => {
   const { userData } = UserDataState.useContainer()
   return (
     <div
-      className="scrollbar-dropdown h-60 w-full overflow-y-auto overflow-x-hidden ml-0.5"
+      className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden ml-0.5"
       style={{ direction: "rtl" }}
     >
       <div style={{ direction: "ltr" }}>

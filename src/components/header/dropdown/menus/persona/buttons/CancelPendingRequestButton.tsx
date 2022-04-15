@@ -1,4 +1,13 @@
-import { arrayRemove, doc, getFirestore, setDoc } from "firebase/firestore"
+import {
+  arrayRemove,
+  arrayUnion,
+  collection,
+  deleteDoc,
+  doc,
+  getFirestore,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore"
 import { RiUserFollowLine } from "react-icons/ri"
 import { firebaseApp } from "../../../../../../config"
 import { Auth } from "../../../../../containers/Auth"
@@ -16,14 +25,13 @@ export const CancelPendingRequestButton: React.FC<Props> = ({
 }) => {
   const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
+  const targetUserRef = doc(db, "users", id)
+  const requestsCollection = collection(targetUserRef, "requests")
   const cancelRequest = () => {
-    setDoc(
-      userRef,
-      {
-        sentFriendRequests: arrayRemove(id),
-      },
-      { merge: true },
-    )
+    deleteDoc(doc(requestsCollection, auth.currentUser!.uid))
+    updateDoc(userRef, {
+      redactedFriendRequests: arrayUnion(id),
+    })
   }
   return (
     <DropdownButton

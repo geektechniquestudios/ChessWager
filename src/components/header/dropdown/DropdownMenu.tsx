@@ -38,6 +38,7 @@ import { ClickedFromBetsReportMenu } from "./menus/bets/clicked-user/ClickedFrom
 import { BlockedMenu } from "./menus/blocked/BlockedMenu"
 import { FollowersMenu } from "./menus/followers/FollowersMenu"
 import { RequestMenu } from "./menus/requests/RequestMenu"
+import { RequestsFromNotificationsMenu } from "./menus/notifications/requests/RequestsFromNotificationsMenu"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -132,6 +133,7 @@ export const DropdownMenu = () => {
         {user && <FriendsMenu />}
         {user && <FollowersMenu />}
         {user && <RequestMenu />}
+        {user && <RequestsFromNotificationsMenu />}
       </div>
     </div>
   )

@@ -28,12 +28,23 @@ export const HeaderRight: React.FC = () => {
         ? "text-green-400"
         : "text-green-600"
       : ""
+  const greenNotificationStyle =
+    userData?.hasNewNotifications ?? false
+      ? isDarkOn
+        ? "text-green-400"
+        : "text-green-600"
+      : ""
 
   const { auth } = Auth.useContainer()
   const setNewMessagesToFalse = () => {
     if (!userData!.hasNewMessage) return
     const userRef = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userRef, { hasNewMessage: false })
+  }
+  const setNewNotificationsToFalse = () => {
+    if (!userData!.hasNewNotifications) return
+    const userRef = doc(db, "users", auth.currentUser!.uid)
+    updateDoc(userRef, { hasNewNotifications: false })
   }
   const { isDropdownOpen, setIsDropdownOpen, setActiveMenu } =
     DropdownState.useContainer()
@@ -52,7 +63,13 @@ export const HeaderRight: React.FC = () => {
       <MainHeaderButton
         title="Notifications"
         openToMenu="notifications"
-        icon={<RiNotification3Line size="21" />}
+        icon={
+          <RiNotification3Line
+            size="21"
+            className={`${greenNotificationStyle}`}
+          />
+        }
+        onClick={setNewNotificationsToFalse}
         authRequired={true}
       />
       <MainHeaderButton
@@ -60,12 +77,6 @@ export const HeaderRight: React.FC = () => {
         openToMenu="messages"
         icon={<RiChat2Line size="21" className={`${greenMessageStyle}`} />}
         onClick={setNewMessagesToFalse}
-        authRequired={true}
-      />
-      <MainHeaderButton
-        title="Friends"
-        openToMenu="friends"
-        icon={<RiUserHeartLine size="21" />}
         authRequired={true}
       />
       <MainHeaderButton

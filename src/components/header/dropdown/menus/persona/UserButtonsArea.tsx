@@ -1,4 +1,10 @@
-import { collection, doc, getFirestore } from "firebase/firestore"
+import {
+  collection,
+  doc,
+  DocumentData,
+  getDoc,
+  getFirestore,
+} from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
 import { AddFriendButton } from "./buttons/AddFriendButton"
@@ -12,6 +18,8 @@ import { RemoveFriendButton } from "./buttons/RemoveFriendButton"
 import { CancelPendingRequestButton } from "./buttons/CancelPendingRequestButton"
 import { FriendRequestsButton } from "./buttons/FriendRequestsButton"
 import { UserDataState } from "../../../../containers/UserDataState"
+import { useDocumentDataOnce } from "react-firebase-hooks/firestore"
+import { Friend } from "../../../../../interfaces/Friend"
 
 const db = getFirestore(firebaseApp)
 
@@ -30,11 +38,13 @@ export const UserButtonsArea: React.FC<Props> = ({
   activeMenu,
   walletAddress,
 }) => {
-  const [isFriend, setIsFriend] = useState(false)
-
   const { userData } = UserDataState.useContainer()
-
   const { auth, isWalletConnected } = Auth.useContainer()
+  // const friend = useDocumentDataOnce<Friend | DocumentData>(
+  //   doc(db, "users", auth.currentUser!.uid, "friends", userData!.id),
+  // )
+  const isFriend = userData!.friends.includes(id)
+
   const isUser = auth.currentUser?.uid === id
   const userDoc = doc(db, "users", auth.currentUser!.uid)
   const blockedUsers = collection(userDoc, "blocked")
@@ -51,16 +61,18 @@ export const UserButtonsArea: React.FC<Props> = ({
                 photoURL={photoURL}
                 activeMenu={activeMenu}
               />
-              {!userData.sentFriendRequests.includes(id) && !isFriend && (
-                <AddFriendButton id={id ?? ""} />
-              )}
+              {(!userData!.sentFriendRequests.includes(id) ||
+                userData!.redactedFriendRequests.includes(id)) &&
+                !isFriend && <AddFriendButton id={id ?? ""} />}
 
-              {userData.sentFriendRequests.includes(id) && !isFriend && (
-                <CancelPendingRequestButton
-                  className="text-green-700 dark:text-green-300 hover:text-green-700 dark:hover:text-green-300"
-                  id={id}
-                />
-              )}
+              {userData!.sentFriendRequests.includes(id) &&
+                !userData!.redactedFriendRequests.includes(id) &&
+                !isFriend && (
+                  <CancelPendingRequestButton
+                    className="text-green-700 dark:text-green-300 hover:text-green-700 dark:hover:text-green-300"
+                    id={id}
+                  />
+                )}
             </div>
 
             <div className="flex gap-3">
