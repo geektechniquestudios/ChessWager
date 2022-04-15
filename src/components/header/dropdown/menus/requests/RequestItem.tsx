@@ -28,9 +28,10 @@ export const RequestItem: React.FC<Props> = ({
   photoURL,
   createdAt,
 }) => {
+  const { auth } = Auth.useContainer()
+
   const targetUserRef = doc(db, "users", id)
   const notificationsCollection = collection(targetUserRef, "notifications")
-  const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const requestsCollection = collection(userRef, "requests")
 
@@ -44,7 +45,6 @@ export const RequestItem: React.FC<Props> = ({
     //   photoURL,
     //   createdAt,
     // })
-    deleteDoc(doc(requestsCollection, auth.currentUser!.uid))
     setDoc(
       doc(notificationsCollection, auth.currentUser!.uid + Timestamp.now()),
       {
@@ -61,8 +61,12 @@ export const RequestItem: React.FC<Props> = ({
     updateDoc(userRef, {
       friends: arrayUnion(id),
     })
+    deleteDoc(doc(requestsCollection, id))
   }
-  const declineRequest = () => {}
+
+  const declineRequest = () => {
+    deleteDoc(doc(requestsCollection, id))
+  }
   return (
     <div
       className="h-12 w-64 px-4 flex items-center justify-between hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift gap-3"

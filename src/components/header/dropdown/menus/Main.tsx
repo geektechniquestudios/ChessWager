@@ -108,6 +108,7 @@ export const Main: React.FC = () => {
             <DropdownItem
               onClick={() => {
                 setIsDropdownOpen(false)
+                setActiveMenu("")
                 setMenuHeight(0)
                 connectWallet()
               }}

@@ -3,7 +3,13 @@ import { useCollectionData } from "react-firebase-hooks/firestore"
 import { UsersListItem } from "./UsersListItem"
 import type { User } from "../../../../../interfaces/User"
 import { firebaseApp } from "../../../../../config"
-import { collection, getFirestore, query, where } from "firebase/firestore"
+import {
+  collection,
+  getFirestore,
+  limit,
+  query,
+  where,
+} from "firebase/firestore"
 import { UserDataState } from "../../../../containers/UserDataState"
 import { Auth } from "../../../../containers/Auth"
 
@@ -20,11 +26,13 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
     usersCollectionRef,
     where("searchableDisplayName", ">=", search.toLowerCase()),
     where("searchableDisplayName", "<=", search.toLowerCase() + "\uf8ff"),
+    limit(10),
   )
 
   const friendsOnlyQuery = query(
     usersCollectionRef,
     where("friends", "array-contains", auth.currentUser!.uid),
+    limit(10),
   )
 
   const [users] = useCollectionData<[User[]] | any>(
