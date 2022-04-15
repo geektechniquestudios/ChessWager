@@ -31,8 +31,11 @@ export const SearchUsersMenu: React.FC = ({}) => {
           key={3}
           content={
             <>
-              {search.length > 2 ? (
-                <UsersList search={search} friendsOrEveryone={friendsOrEveryOne} />
+              {search.length > 2 || friendsOrEveryOne === "friends" ? (
+                <UsersList
+                  search={search}
+                  friendsOrEveryone={friendsOrEveryOne}
+                />
               ) : (
                 <div className="h-72" />
               )}

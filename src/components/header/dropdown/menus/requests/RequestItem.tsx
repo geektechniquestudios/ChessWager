@@ -53,7 +53,6 @@ export const RequestItem: React.FC<Props> = ({
         // openToMenu: "",
         isRead: false,
       },
-      { merge: true },
     )
     updateDoc(targetUserRef, {
       hasNewNotifications: true,

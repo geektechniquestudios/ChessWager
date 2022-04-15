@@ -3,6 +3,7 @@ export type User = {
   betFundedCount: number
   photoURL: string
   displayName: string
+  searchableDisplayName: string
   walletAddress: string
   id: string
   amountBet: number

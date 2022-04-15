@@ -1,10 +1,4 @@
-import {
-  doc,
-  DocumentData,
-  getFirestore,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore"
+import { doc, getFirestore, updateDoc } from "firebase/firestore"
 import { useEffect } from "react"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { createContainer } from "unstated-next"
