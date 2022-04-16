@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore"
 import { BsPiggyBank } from "react-icons/bs"
 import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
 import { FiPercent } from "react-icons/fi"
@@ -21,6 +22,7 @@ interface Props {
   betWinCount?: number
   followerCount?: number
   followingCount?: number
+  joinDate?: Timestamp
   isLoading?: boolean
   activeMenu: string
 }
@@ -37,6 +39,7 @@ export const UserData: React.FC<Props> = ({
   betWinCount = 0,
   followerCount = 0,
   followingCount = 0,
+  joinDate,
   isLoading,
   activeMenu,
 }) => {
@@ -65,9 +68,17 @@ export const UserData: React.FC<Props> = ({
             src={photoURL}
             className="w-24 h-24 rounded-full grid place-content-center mt-3 border"
           />
-          <div>
-            <p className="my-3 flex justify-center">{displayName ?? ""}</p>
+
+          <div className="my-2 flex flex-col justify-center items-center gap-0.5">
+            <p className="text-lg">{displayName ?? ""}</p>
+            {joinDate && (
+              <p className="text-xs text-stone-500 dark:text-stone-400">
+                Joined{" "}
+                {new Date(joinDate!.seconds * 1000).toLocaleDateString("en-US")}
+              </p>
+            )}
           </div>
+
           <WideDataTile
             name="Total Amount Won"
             icon={<RiHandCoinLine />}

@@ -11,6 +11,8 @@ import {
   updateDoc,
   getDoc,
   setDoc,
+  Timestamp,
+  serverTimestamp,
 } from "firebase/firestore"
 
 declare let window: any
@@ -119,6 +121,7 @@ const useAuth = () => {
                 sentFriendRequests: [],
                 redactedFriendRequests: [],
                 friends: [],
+                joinDate: serverTimestamp(),
               }).catch(console.error)
             }
             if (doc.data()?.walletAddress ?? "" !== "") {

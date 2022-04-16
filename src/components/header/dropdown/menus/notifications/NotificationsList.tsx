@@ -42,7 +42,7 @@ export const NotificationsList: React.FC = ({}) => {
               {notifications
                 // ?.sort((a, b) => a.createdAt - b.createdAt)
                 ?.map((notification: Notification) => (
-                  <NotificationItem {...notification} />
+                  <NotificationItem {...notification} key={notification.id} />
                 ))}
             </div>
           </div>

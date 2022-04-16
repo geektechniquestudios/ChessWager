@@ -4,6 +4,7 @@ import {
   doc,
   DocumentData,
   getFirestore,
+  serverTimestamp,
   setDoc,
   Timestamp,
 } from "firebase/firestore"
@@ -36,7 +37,7 @@ export const BlockUserButton: React.FC<Props> = ({
     setDoc(doc(blockedUsers, id), {
       userName: displayName,
       photoURL,
-      createdAt: Timestamp.now(),
+      createdAt: serverTimestamp(),
     })
       .then(() => {
         setDoc(

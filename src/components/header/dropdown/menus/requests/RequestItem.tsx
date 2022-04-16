@@ -4,13 +4,15 @@ import {
   deleteDoc,
   doc,
   getFirestore,
-  setDoc,
+  serverTimestamp,
   Timestamp,
-  updateDoc,
+  writeBatch,
 } from "firebase/firestore"
 import { BsCheck2, BsX } from "react-icons/bs"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
+import { DropdownState } from "../../../../containers/DropdownState"
+import { UserMenuState } from "../../../../containers/UserMenuState"
 import { DropdownButton } from "../persona/buttons/DropdownButton"
 
 const db = getFirestore(firebaseApp)
@@ -36,60 +38,61 @@ export const RequestItem: React.FC<Props> = ({
   const requestsCollection = collection(userRef, "requests")
 
   const acceptRequest = () => {
-    // setDoc(targetUserRef, {
-    //   friends: arrayUnion(auth.currentUser!.uid),
-    // })
-    // setDoc(doc(userRef, "friends", id), {
-    //   id,
-    //   userName,
-    //   photoURL,
-    //   createdAt,
-    // })
-    setDoc(
+    const batch = writeBatch(db)
+    batch.set(
       doc(notificationsCollection, auth.currentUser!.uid + Timestamp.now()),
       {
-        createdAt: Timestamp.now(),
+        createdAt: serverTimestamp(),
         text: `${auth.currentUser!.displayName} accepted your friend request.`,
-        // openToMenu: "",
         isRead: false,
       },
     )
-    updateDoc(targetUserRef, {
+    batch.update(targetUserRef, {
       hasNewNotifications: true,
       friends: arrayUnion(auth.currentUser!.uid),
     })
-    updateDoc(userRef, {
+    batch.update(userRef, {
       friends: arrayUnion(id),
     })
-    deleteDoc(doc(requestsCollection, id))
+    batch.delete(doc(requestsCollection, id))
+    batch.commit()
   }
 
   const declineRequest = () => {
     deleteDoc(doc(requestsCollection, id))
   }
+
+  const { setActiveMenu } = DropdownState.useContainer()
+  const { setClickedUserById } = UserMenuState.useContainer()
   return (
-    <div
+    <a
       className="h-12 w-64 px-4 flex items-center justify-between hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift gap-3"
       style={{ direction: "ltr" }}
+      onClick={() => {
+        setClickedUserById(id)
+        setActiveMenu("userDataFromRequests")
+      }}
     >
       <img src={photoURL} className="rounded-full w-7 h-7" />
       <p>{userName}</p>
       <div className="flex items-center justify-center gap-3">
         <DropdownButton
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             acceptRequest()
           }}
           content={<BsCheck2 />}
           title="Accept"
         />
         <DropdownButton
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             declineRequest()
           }}
           content={<BsX />}
           title="Decline"
         />
       </div>
-    </div>
+    </a>
   )
 }

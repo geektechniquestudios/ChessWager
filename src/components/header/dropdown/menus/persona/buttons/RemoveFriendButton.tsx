@@ -1,4 +1,12 @@
-import { collection, deleteDoc, doc, getFirestore } from "firebase/firestore"
+import {
+  arrayRemove,
+  collection,
+  deleteDoc,
+  doc,
+  getFirestore,
+  updateDoc,
+  writeBatch,
+} from "firebase/firestore"
 import { RiUserUnfollowLine } from "react-icons/ri"
 import { firebaseApp } from "../../../../../../config"
 import { Auth } from "../../../../../containers/Auth"
@@ -17,8 +25,23 @@ export const RemoveFriendButton: React.FC<Props> = ({ id }) => {
     const targetUserRef = doc(db, "users", id)
     const userRef = doc(db, "users", auth.currentUser!.uid)
 
-    deleteDoc(doc(userRef, "friends", id))
-    deleteDoc(doc(targetUserRef, "friends", auth.currentUser!.uid))
+    const batch = writeBatch(db)
+    batch.update(userRef, {
+      friends: arrayRemove(id),
+      sentFriendRequests: arrayRemove(id),
+      redactedFriendRequests: arrayRemove(id),
+    })
+    batch.update(targetUserRef, {
+      friends: arrayRemove(auth.currentUser!.uid),
+      sentFriendRequests: arrayRemove(auth.currentUser!.uid),
+      redactedFriendRequests: arrayRemove(auth.currentUser!.uid),
+    })
+    batch.delete(doc(userRef, "friends", id))
+    batch.delete(doc(targetUserRef, "friends", auth.currentUser!.uid))
+    batch.delete(doc(userRef, "requests", id))
+    batch.delete(doc(targetUserRef, "requests", auth.currentUser!.uid))
+
+    batch.commit()
   }
 
   return (

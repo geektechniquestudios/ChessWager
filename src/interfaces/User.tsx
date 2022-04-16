@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore"
+
 export type User = {
   betAcceptedCount: number
   betFundedCount: number
@@ -17,4 +19,5 @@ export type User = {
   sentFriendRequests: string[]
   redactedFriendRequests: string[]
   friends: string[]
+  joinDate: Timestamp
 }

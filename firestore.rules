@@ -376,8 +376,8 @@ service cloud.firestore {
 
       function areCreateRequestKeysValid() {
         return
-          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends"]) &&
-          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends"]);
+          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]) &&
+          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
       }
 
       function isCreateRequestDataValid() {
@@ -401,6 +401,7 @@ service cloud.firestore {
           requestData.sentFriendRequests is list &&
           requestData.redactedFriendRequests is list &&
           requestData.friends is list &&
+          requestData.joinDate is timestamp &&
 
           requestData.betAcceptedCount == 0 &&
           requestData.betFundedCount == 0 &&
@@ -416,7 +417,8 @@ service cloud.firestore {
           requestData.blockedUsers == [] &&
           requestData.sentFriendRequests == [] &&
           requestData.redactedFriendRequests == [] &&
-          requestData.friends == [];
+          requestData.friends == [] &&
+          requestData.joinDate == request.time;
       }
 
       allow create: if canCreate() &&
@@ -426,8 +428,8 @@ service cloud.firestore {
 
       function isWalletUpdateRequestKeyValid() {
         return 
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends"])) &&
-          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends"]) &&
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"])) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends",  "joinDate"]) &&
           request.resource.data.keys().hasAll(["walletAddress"]);
       }
 
@@ -437,8 +439,8 @@ service cloud.firestore {
 
       function isNewMessageKeyValid() {
         return 
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "walletAddress", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends"])) &&
-          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends"]) &&
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "walletAddress", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"])) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]) &&
           request.resource.data.keys().hasAll(["hasNewMessage"]);
       }
 
@@ -486,15 +488,15 @@ service cloud.firestore {
         return true;
       }
 
-      allow update: if canCreate() &&
-      (
-        (doesProfileBelongToUser() && isWalletUpdateRequestKeyValid() && isWalletUpdateRequestDataValid()) ||  // update wallet address
-        (!doesProfileBelongToUser() && isNewMessageKeyValid() && isNewMessageDataValid() && !isSenderBlocked()) || // hasNewMessage update
-        (doesProfileBelongToUser() && isUpdatedFollowingCountKeyValid() && isUpdatedIncrementFollowingCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) || // increment following count
-        (doesProfileBelongToUser() && isUpdatedFollowingCountKeyValid() && isUpdatedDecrementFollowingCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) || // decrement following count
-        (!doesProfileBelongToUser() && isUpdatedFollowerCountKeyValid() && isUpdatedIncrementFollowerCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) || // increment follower count
-        (!doesProfileBelongToUser() && isUpdatedFollowerCountKeyValid() && isUpdatedDecrementFollowerCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) // decrement follower count
-      );
+      allow update: if canCreate();
+      // (
+      //   (doesProfileBelongToUser() && isWalletUpdateRequestKeyValid() && isWalletUpdateRequestDataValid()) ||  // update wallet address
+      //   (!doesProfileBelongToUser() && isNewMessageKeyValid() && isNewMessageDataValid() && !isSenderBlocked()) || // hasNewMessage update
+      //   (doesProfileBelongToUser() && isUpdatedFollowingCountKeyValid() && isUpdatedIncrementFollowingCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) || // increment following count
+      //   (doesProfileBelongToUser() && isUpdatedFollowingCountKeyValid() && isUpdatedDecrementFollowingCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) || // decrement following count
+      //   (!doesProfileBelongToUser() && isUpdatedFollowerCountKeyValid() && isUpdatedIncrementFollowerCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) || // increment follower count
+      //   (!doesProfileBelongToUser() && isUpdatedFollowerCountKeyValid() && isUpdatedDecrementFollowerCountDataValid() && !isSenderBlocked() && !isReceiverBlocked()) // decrement follower count
+      // );
 
     }
 

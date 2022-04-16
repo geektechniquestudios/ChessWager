@@ -40,11 +40,8 @@ export const UserButtonsArea: React.FC<Props> = ({
 }) => {
   const { userData } = UserDataState.useContainer()
   const { auth, isWalletConnected } = Auth.useContainer()
-  // const friend = useDocumentDataOnce<Friend | DocumentData>(
-  //   doc(db, "users", auth.currentUser!.uid, "friends", userData!.id),
-  // )
-  const isFriend = userData!.friends.includes(id)
 
+  const isFriend = userData?.friends.includes(id) ?? false
   const isUser = auth.currentUser?.uid === id
   const userDoc = doc(db, "users", auth.currentUser!.uid)
   const blockedUsers = collection(userDoc, "blocked")

@@ -39,6 +39,7 @@ import { BlockedMenu } from "./menus/blocked/BlockedMenu"
 import { FollowersMenu } from "./menus/followers/FollowersMenu"
 import { RequestMenu } from "./menus/requests/RequestMenu"
 import { RequestsFromNotificationsMenu } from "./menus/notifications/requests/RequestsFromNotificationsMenu"
+import { UserDataFromRequests } from "./menus/notifications/requests/user-data/UserDataFromRequests"
 
 export const DropdownMenu = () => {
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
@@ -134,6 +135,7 @@ export const DropdownMenu = () => {
         {user && <FollowersMenu />}
         {user && <RequestMenu />}
         {user && <RequestsFromNotificationsMenu />}
+        {user && <UserDataFromRequests />}
       </div>
     </div>
   )
