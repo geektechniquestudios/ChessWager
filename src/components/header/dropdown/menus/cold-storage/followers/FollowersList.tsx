@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Menu } from "../../models/Menu"
+import { Menu } from "../../../models/Menu"
 
 interface Props {}
 

@@ -42,8 +42,13 @@ export const HeaderRight: React.FC = () => {
     const userRef = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userRef, { hasNewNotifications: false })
   }
-  const { isDropdownOpen, setIsDropdownOpen, setActiveMenu } =
-    DropdownState.useContainer()
+  const {
+    isDropdownOpen,
+    setIsDropdownOpen,
+    setActiveMenu,
+    menuStack,
+    setMenuStack,
+  } = DropdownState.useContainer()
   return (
     <div className="flex-auto justify-end align-middle items-center flex mx-3 gap-1.5">
       <MainHeaderButton
@@ -51,6 +56,9 @@ export const HeaderRight: React.FC = () => {
         openToMenu="searchUsers"
         icon={<BiSearchAlt2 size="21" />}
         authRequired={true}
+        onClick={() => {
+          setMenuStack(["searchUsers"])
+        }}
       />
       <MainHeaderButton
         title="Notifications"
@@ -61,14 +69,21 @@ export const HeaderRight: React.FC = () => {
             className={`${greenNotificationStyle}`}
           />
         }
-        onClick={setNewNotificationsToFalse}
+        onClick={() => {
+          setNewNotificationsToFalse()
+          setMenuStack(["notifications"])
+          console.log(menuStack)
+        }}
         authRequired={true}
       />
       <MainHeaderButton
         title="Messages"
         openToMenu="messages"
         icon={<RiChat2Line size="21" className={`${greenMessageStyle}`} />}
-        onClick={setNewMessagesToFalse}
+        onClick={() => {
+          setNewMessagesToFalse()
+          setMenuStack(["messages"])
+        }}
         authRequired={true}
       />
       <MainHeaderButton
@@ -76,12 +91,18 @@ export const HeaderRight: React.FC = () => {
         openToMenu="bets"
         icon={<FaRegGem size="20" />}
         authRequired={true}
+        onClick={() => {
+          setMenuStack(["bets"])
+        }}
       />
       <MainHeaderButton
         title="Persona"
         openToMenu="persona"
         icon={<CgProfile size="21" />}
         authRequired={true}
+        onClick={() => {
+          setMenuStack(["persona"])
+        }}
       />
       <SignInButton />
       <MainHeaderButton
@@ -89,6 +110,9 @@ export const HeaderRight: React.FC = () => {
         openToMenu="main"
         icon={<BiChevronDown size="21" />}
         authRequired={false}
+        onClick={() => {
+          setMenuStack(["main"])
+        }}
       />
       {isDropdownOpen && <DropdownMenu />}
     </div>

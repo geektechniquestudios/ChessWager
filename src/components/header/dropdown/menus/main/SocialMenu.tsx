@@ -11,13 +11,13 @@ import {
 } from "react-icons/ri"
 import { MenuLine } from "../../models/MenuLine"
 
-export const Social: React.FC = () => {
+export const SocialMenu: React.FC = () => {
   return (
     <>
       <Menu
         menuItems={[
           <DropdownItem
-            goToMenu="main"
+            isBackButton
             leftIcon={<BiArrowBack />}
             key={0}
             text="Social"

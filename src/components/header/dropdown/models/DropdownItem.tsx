@@ -7,6 +7,7 @@ interface Props {
   goToMenu?: string
   url?: string
   onClick?: () => void
+  isBackButton?: boolean
 }
 
 export const DropdownItem: React.FC<Props> = ({
@@ -16,8 +17,10 @@ export const DropdownItem: React.FC<Props> = ({
   goToMenu,
   url,
   onClick,
+  isBackButton,
 }) => {
-  const { setActiveMenu } = DropdownState.useContainer()
+  const { setActiveMenu, menuStack, setMenuStack } =
+    DropdownState.useContainer()
   const address = url ?? "#"
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
@@ -29,6 +32,9 @@ export const DropdownItem: React.FC<Props> = ({
       onClick={() => {
         onClick && onClick()
         goToMenu && setActiveMenu(goToMenu)
+        goToMenu && setMenuStack([...menuStack, goToMenu])
+        isBackButton && setActiveMenu(menuStack[menuStack.length - 2])
+        isBackButton && setMenuStack(menuStack.slice(0, -1))
       }}
     >
       <div className="w-full flex gap-3">

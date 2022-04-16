@@ -7,17 +7,17 @@ import { SearchedDirectMessageMenu } from "./menus/search/searched-user/Searched
 import { Contact } from "./menus/help/Contact"
 import { DisplayName } from "./menus/cold-storage/profile/DisplayName"
 import { Faq } from "./menus/help/Faq"
-import { Help } from "./menus/main/Help"
+import { HelpMenu } from "./menus/main/HelpMenu"
 import { HowToPlay } from "./menus/help/HowToPlay"
 import { Leaderboard } from "./menus/cold-storage/Leaderboard"
 import { Main } from "./menus/Main"
 import { Membership } from "./menus/cold-storage/store/Membership"
 import { Messages } from "./menus/cold-storage/profile/Messages"
-import { Notifications } from "./menus/cold-storage/profile/Notifications"
+import { NotificationsMenu } from "./menus/notifications/NotificationsMenu"
 import { Profile } from "./menus/cold-storage/Profile"
 import { SearchUsersMenu } from "./menus/search/SearchUsersMenu"
 import { Settings } from "./menus/main/Settings"
-import { Social } from "./menus/main/Social"
+import { SocialMenu } from "./menus/main/SocialMenu"
 import { Stats } from "./menus/cold-storage/profile/Stats"
 import { Store } from "./menus/cold-storage/Store"
 import { SearchedUserMenu } from "./menus/search/searched-user/SearchedUserMenu"
@@ -36,12 +36,13 @@ import { ClickedReportMenu } from "./menus/clicked-user/ClickedReportMenu"
 import { SearchedReportMenu } from "./menus/search/searched-user/SearchedReportMenu"
 import { ClickedFromBetsReportMenu } from "./menus/bets/clicked-user/ClickedFromBetsReportMenu"
 import { BlockedMenu } from "./menus/blocked/BlockedMenu"
-import { FollowersMenu } from "./menus/followers/FollowersMenu"
+import { FollowersMenu } from "./menus/cold-storage/followers/FollowersMenu"
 import { RequestMenu } from "./menus/requests/RequestMenu"
 import { RequestsFromNotificationsMenu } from "./menus/notifications/requests/RequestsFromNotificationsMenu"
 import { UserDataFromRequests } from "./menus/notifications/requests/user-data/UserDataFromRequests"
 
 export const DropdownMenu = () => {
+  const { setMenuStack } = DropdownState.useContainer()
   const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
     const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
     useEffect(() => {
@@ -53,6 +54,7 @@ export const DropdownMenu = () => {
           setIsDropdownOpen(false)
           setActiveMenu("")
           setMenuHeight(0)
+          setMenuStack([])
         }
       }
 
@@ -102,13 +104,13 @@ export const DropdownMenu = () => {
         {user && <Profile />}
         {/* {user && <Settings />} */}
         {/* {user && <Store />} */}
-        <Social />
+        <SocialMenu />
         {/* <Leaderboard /> */}
-        <Help />
+        <HelpMenu />
         {/* {user && <BlockedUsers />} */}
         {user && <Messages />}
         {/* {user && <FollowingMenu />} */}
-        {user && <Notifications />}
+        {user && <NotificationsMenu />}
         <SearchedUserMenu />
         <SearchUsersMenu />
         {user && <DisplayName />}

@@ -47,7 +47,7 @@ export const AddFriendButton: React.FC<Props> = ({ id }) => {
         {
           createdAt: serverTimestamp(),
           text: `${auth.currentUser!.displayName} sent you a friend request.`,
-          openToMenu: "requestsFromNotifications",
+          openToMenu: "requests",
           isRead: false,
         },
       )

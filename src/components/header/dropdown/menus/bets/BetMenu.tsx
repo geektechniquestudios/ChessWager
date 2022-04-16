@@ -86,7 +86,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
     <Menu
       menuItems={[
         <DropdownItem
-          goToMenu="bets"
+          isBackButton
           text="Bets"
           key={0}
           leftIcon={<BiArrowBack />}

@@ -4,14 +4,16 @@ import { BiArrowBack } from "react-icons/bi"
 import { Menu } from "../../models/Menu"
 import { AiOutlineInfoCircle, AiOutlineQuestionCircle } from "react-icons/ai"
 import { MenuLine } from "../../models/MenuLine"
+import { DropdownState } from "../../../../containers/DropdownState"
 
-export const Help: React.FC = () => {
+export const HelpMenu: React.FC = () => {
+  const { menuStack, setMenuStack } = DropdownState.useContainer()
   return (
     <>
       <Menu
         menuItems={[
           <DropdownItem
-            goToMenu="main"
+            isBackButton
             leftIcon={<BiArrowBack />}
             key={0}
             text="Help"
@@ -22,18 +24,21 @@ export const Help: React.FC = () => {
             leftIcon={<AiOutlineQuestionCircle />}
             key={2}
             text="How to Play"
+            onClick={() => setMenuStack([...menuStack, "howToPlay"])}
           />,
           <DropdownItem
             goToMenu="faq"
             leftIcon={<AiOutlineInfoCircle />}
             key={3}
             text="FAQs"
+            onClick={() => setMenuStack([...menuStack, "faq"])}
           />,
           <DropdownItem
             goToMenu="contact"
             leftIcon={<BiMessageRoundedError />}
             key={4}
             text="Contact Us"
+            onClick={() => setMenuStack([...menuStack, "contact"])}
           />,
         ]}
         thisMenu={"help"}

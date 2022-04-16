@@ -9,7 +9,7 @@ export const HowToPlay: React.FC = ({}) => {
     <Menu
       menuItems={[
         <DropdownItem
-          goToMenu="help"
+          isBackButton
           leftIcon={<BiArrowBack />}
           key={0}
           text="How to Play"

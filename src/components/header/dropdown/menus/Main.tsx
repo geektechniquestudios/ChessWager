@@ -29,8 +29,13 @@ export const Main: React.FC = () => {
     isWalletConnected,
     disconnectWallet,
   } = Auth.useContainer()
-  const { setIsDropdownOpen, setMenuHeight, setActiveMenu } =
-    DropdownState.useContainer()
+  const {
+    setIsDropdownOpen,
+    setMenuHeight,
+    setActiveMenu,
+    menuStack,
+    setMenuStack,
+  } = DropdownState.useContainer()
   const { isDarkOn, setIsDarkOn } = DarkMode.useContainer()
   const updateUserDarkPref = (isChecked: boolean) => {
     localStorage.setItem("darkMode", isChecked.toString())
@@ -38,52 +43,19 @@ export const Main: React.FC = () => {
   return (
     <Menu
       menuItems={[
-        // <div key={0}>
-        //   {user && (
-        //     <DropdownItem
-        //       leftIcon={<CgProfile />}
-        //       goToMenu="profile"
-        //       text="Profile"
-        //     />
-        //   )}
-        // </div>,
-        // <div key={1}>
-        //   {user && (
-        //     <DropdownItem
-        //       leftIcon={<RiSettings5Line />}
-        //       goToMenu="settings"
-        //       text="Settings"
-        //     />
-        //   )}
-        // </div>,
-        // <div key={2}>
-        //   {user && (
-        //     <DropdownItem leftIcon={<GoGift />} goToMenu="store" text="Store" />
-        //   )}
-        // </div>,
         <DropdownItem
           leftIcon={<BsShare />}
           goToMenu="social"
           text="Social"
           key={3}
+          onClick={() => setMenuStack([...menuStack, "social"])}
         />,
-        // <DropdownItem
-        //   leftIcon={<AiOutlineTrophy />}
-        //   goToMenu="leaderboard"
-        //   text="Leaderboard"
-        //   key={4}
-        // />,
-        // <DropdownItem
-        //   leftIcon={<BiSearchAlt2 />}
-        //   goToMenu="searchUsers"
-        //   text="Search Users"
-        //   key={5}
-        // />,
         <DropdownItem
           leftIcon={<BiHelpCircle />}
           goToMenu="help"
           text="Help"
           key={6}
+          onClick={() => setMenuStack([...menuStack, "help"])}
         />,
         <DropdownItem
           onClick={() => {

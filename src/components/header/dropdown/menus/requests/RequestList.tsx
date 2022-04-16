@@ -31,7 +31,7 @@ export const RequestList: React.FC<Props> = ({}) => {
             style={{ direction: "rtl" }}
           >
             {requests?.map((request: FriendRequest) => (
-              <RequestItem {...request} />
+              <RequestItem {...request} key={request.id} />
             ))}
           </div>
         ) : (

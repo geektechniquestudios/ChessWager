@@ -1,7 +1,7 @@
 import { BiArrowBack } from "react-icons/bi"
-import { DropdownItem } from "../../models/DropdownItem"
-import { Menu } from "../../models/Menu"
-import { MenuLine } from "../../models/MenuLine"
+import { DropdownItem } from "../../../models/DropdownItem"
+import { Menu } from "../../../models/Menu"
+import { MenuLine } from "../../../models/MenuLine"
 import { FollowersList } from "./FollowersList"
 
 interface Props {}

@@ -27,7 +27,6 @@ interface Props {
   id: string
   displayName: string
   photoURL: string
-  activeMenu: string
   walletAddress: string
 }
 
@@ -35,7 +34,6 @@ export const UserButtonsArea: React.FC<Props> = ({
   id,
   displayName,
   photoURL,
-  activeMenu,
   walletAddress,
 }) => {
   const { userData } = UserDataState.useContainer()
@@ -56,7 +54,6 @@ export const UserButtonsArea: React.FC<Props> = ({
                 id={id ?? ""}
                 displayName={displayName}
                 photoURL={photoURL}
-                activeMenu={activeMenu}
               />
               {(!userData!.sentFriendRequests.includes(id) ||
                 userData!.redactedFriendRequests.includes(id)) &&
@@ -80,7 +77,7 @@ export const UserButtonsArea: React.FC<Props> = ({
                 photoURL={photoURL}
                 blockedUsers={blockedUsers}
               />
-              <ReportUserButton id={id ?? ""} activeMenu={activeMenu} />
+              <ReportUserButton id={id ?? ""} />
             </div>
           </div>
         )}

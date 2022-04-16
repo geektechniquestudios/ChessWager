@@ -11,10 +11,11 @@ export const BlockedMenu: React.FC<Props> = ({}) => {
     <Menu
       menuItems={[
         <DropdownItem
-          goToMenu="persona"
+          // goToMenu="persona"
           key={0}
           text="Blocked Users"
           leftIcon={<BiArrowBack />}
+          isBackButton
         />,
         <MenuLine key={1} />,
         <BlockedList key={2} />,

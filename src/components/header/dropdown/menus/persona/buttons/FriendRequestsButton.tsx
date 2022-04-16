@@ -6,11 +6,14 @@ interface Props {}
 
 export const FriendRequestsButton: React.FC<Props> = ({}) => {
   const { setActiveMenu } = DropdownState.useContainer()
+  const { menuStack, setMenuStack } = DropdownState.useContainer()
   return (
     <DropdownButton
       content={<FiUsers />}
       onClick={() => {
         setActiveMenu("requests")
+        setMenuStack([...menuStack, "requests"])
+        console.log(menuStack)
       }}
       title="Friend Requests"
     />

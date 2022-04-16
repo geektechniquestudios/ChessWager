@@ -11,14 +11,12 @@ interface Props {
   id: string
   displayName: string
   photoURL: string
-  activeMenu: string
 }
 
 export const SendMessageButton: React.FC<Props> = ({
   id,
   displayName,
   photoURL,
-  activeMenu,
 }) => {
   const { setActiveMenu } = DropdownState.useContainer()
   const { setUserIdFromMessages, setUsernameFromMessages } =
@@ -64,7 +62,7 @@ export const SendMessageButton: React.FC<Props> = ({
     <DropdownButton
       content={<RiMailSendLine />}
       onClick={() => {
-        setActiveMenu(activeMenu + "DirectMessage")
+        setActiveMenu("directMessage")
         createConvoDoc()
         setUserIdFromMessages(id)
         setUsernameFromMessages(displayName)

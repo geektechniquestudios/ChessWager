@@ -5,6 +5,8 @@ import { FiPercent } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
 import { RiHandCoinLine, RiHeartsLine, RiUserHeartLine } from "react-icons/ri"
 import { DarkMode } from "../../../../containers/DarkMode"
+import { DropdownState } from "../../../../containers/DropdownState"
+import { UserDataState } from "../../../../containers/UserDataState"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtonsArea } from "./UserButtonsArea"
 import { UserDataTile } from "./UserDataTile"
@@ -24,7 +26,6 @@ interface Props {
   followingCount?: number
   joinDate?: Timestamp
   isLoading?: boolean
-  activeMenu: string
 }
 
 export const UserData: React.FC<Props> = ({
@@ -41,7 +42,6 @@ export const UserData: React.FC<Props> = ({
   followingCount = 0,
   joinDate,
   isLoading,
-  activeMenu,
 }) => {
   const { isDarkOn } = DarkMode.useContainer()
   const winPercent =
@@ -50,7 +50,6 @@ export const UserData: React.FC<Props> = ({
       : 0
 
   const trust = `${betFundedCount} / ${betAcceptedCount}`
-
   return (
     <div className="flex flex-col items-center justify-between py-1.5 h-96 w-64">
       {isLoading ? (
@@ -61,7 +60,6 @@ export const UserData: React.FC<Props> = ({
             id={id ?? ""}
             displayName={displayName ?? ""}
             photoURL={photoURL!}
-            activeMenu={activeMenu}
             walletAddress={walletAddress!}
           />
           <img

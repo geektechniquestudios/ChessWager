@@ -27,7 +27,8 @@ export const NotificationItem: React.FC<Props> = ({
   isRead,
   id,
 }) => {
-  const { setActiveMenu } = DropdownState.useContainer()
+  const { setActiveMenu, menuStack, setMenuStack } =
+    DropdownState.useContainer()
   const unreadStyle = isRead ? "" : "bg-stone-400 dark:bg-stone-800"
   const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
@@ -44,7 +45,13 @@ export const NotificationItem: React.FC<Props> = ({
       style={{ direction: "ltr" }}
       onClick={() => {
         openToMenu && setActiveMenu(openToMenu)
+        if (openToMenu) {
+          const tempMenuStack = menuStack
+          tempMenuStack.push(openToMenu)
+          setMenuStack(tempMenuStack)
+        }
         setAsRead()
+        console.log(menuStack)
       }}
     >
       <p className="text-xs">{text}</p>
