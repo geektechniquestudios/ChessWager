@@ -5,9 +5,7 @@ import {
   doc,
   getFirestore,
   serverTimestamp,
-  setDoc,
   Timestamp,
-  updateDoc,
   writeBatch,
 } from "firebase/firestore"
 import { RiUserAddLine } from "react-icons/ri"

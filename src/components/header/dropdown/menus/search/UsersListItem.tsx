@@ -1,9 +1,10 @@
 import type { User } from "../../../../../interfaces/User"
+import { DropdownState } from "../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { DropdownItem } from "../../models/DropdownItem"
 
 export const UsersListItem: React.FC<User> = (user: User) => {
-  const { setSearchedUser } = UserMenuState.useContainer()
+  const { setClickedUser } = UserMenuState.useContainer()
 
   return (
     <DropdownItem
@@ -15,9 +16,9 @@ export const UsersListItem: React.FC<User> = (user: User) => {
       }
       text={user.displayName}
       onClick={() => {
-        setSearchedUser(user)
+        setClickedUser(user)
       }}
-      goToMenu="searchedUser"
+      goToMenu="clickedUser"
     />
   )
 }

@@ -1,14 +1,16 @@
 import {
   collection,
+  deleteDoc,
   doc,
   getFirestore,
-  setDoc,
   Timestamp,
   updateDoc,
 } from "firebase/firestore"
+import { BsX } from "react-icons/bs"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
+import { DropdownButton } from "../persona/buttons/DropdownButton"
 
 const db = getFirestore(firebaseApp)
 
@@ -51,10 +53,18 @@ export const NotificationItem: React.FC<Props> = ({
           setMenuStack(tempMenuStack)
         }
         setAsRead()
-        console.log(menuStack)
       }}
     >
-      <p className="text-xs">{text}</p>
+      <p className="text-xs pointer-events-auto text-left">{text}</p>
+      <DropdownButton
+        content={<BsX />}
+        className="h-4 w-4"
+        onClick={(e) => {
+          e.stopPropagation()
+          deleteDoc(notificationRef)
+        }}
+        title="Dismiss"
+      />
     </button>
   )
 }

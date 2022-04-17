@@ -42,13 +42,7 @@ export const HeaderRight: React.FC = () => {
     const userRef = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userRef, { hasNewNotifications: false })
   }
-  const {
-    isDropdownOpen,
-    setIsDropdownOpen,
-    setActiveMenu,
-    menuStack,
-    setMenuStack,
-  } = DropdownState.useContainer()
+  const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
   return (
     <div className="flex-auto justify-end align-middle items-center flex mx-3 gap-1.5">
       <MainHeaderButton
@@ -72,7 +66,6 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setNewNotificationsToFalse()
           setMenuStack(["notifications"])
-          console.log(menuStack)
         }}
         authRequired={true}
       />
@@ -106,7 +99,7 @@ export const HeaderRight: React.FC = () => {
       />
       <SignInButton />
       <MainHeaderButton
-        title="Main"
+        title="Menu"
         openToMenu="main"
         icon={<BiChevronDown size="21" />}
         authRequired={false}

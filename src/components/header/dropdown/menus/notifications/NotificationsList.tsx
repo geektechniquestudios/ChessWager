@@ -1,5 +1,4 @@
 import "../../../../../style/scrollbar.scss"
-import { useState } from "react"
 import {
   collection,
   doc,
@@ -13,7 +12,6 @@ import { Auth } from "../../../../containers/Auth"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { Notification } from "../../../../../interfaces/Notification"
 import { NotificationItem } from "./NotificationItem"
-import { DropdownItem } from "../../models/DropdownItem"
 
 const db = getFirestore(firebaseApp)
 
@@ -42,7 +40,7 @@ export const NotificationsList: React.FC = ({}) => {
               {notifications
                 // ?.sort((a, b) => a.createdAt - b.createdAt)
                 ?.map((notification: Notification) => (
-                  <NotificationItem {...notification} key={notification.id} />
+                  <NotificationItem {...notification} key={notification.id}  />
                 ))}
             </div>
           </div>

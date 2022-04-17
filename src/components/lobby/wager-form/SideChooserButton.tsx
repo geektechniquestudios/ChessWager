@@ -14,7 +14,7 @@ export const SideChooserButton: React.FC<Props> = ({
   const isSelected = betSide === thisSide
   return (
     <button
-      title={thisSide}
+      title={thisSide.charAt(0).toUpperCase() + thisSide.slice(1)}
       type="button"
       className={`color-shift rounded-md w-8 h-8 grid place-content-center border ${
         thisSide === "black"

@@ -12,7 +12,8 @@ export const ConvoUserTitle: React.FC<Props> = ({
   userName,
   uid,
 }) => {
-  const { openDropdownToMenu, setActiveMenu } = DropdownState.useContainer()
+  const { setActiveMenu, menuStack, setMenuStack } =
+    DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
@@ -21,6 +22,7 @@ export const ConvoUserTitle: React.FC<Props> = ({
       onClick={() => {
         setClickedUserById(uid)
         setActiveMenu("clickedUser")
+        setMenuStack([...menuStack, "clickedUser"])
       }}
     >
       <img

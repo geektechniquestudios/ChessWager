@@ -1,31 +1,34 @@
 import { Timestamp } from "firebase/firestore"
 import { BsPiggyBank } from "react-icons/bs"
 import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
-import { FiPercent } from "react-icons/fi"
+import { FiPercent, FiUsers } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
 import { RiHandCoinLine, RiHeartsLine, RiUserHeartLine } from "react-icons/ri"
 import { DarkMode } from "../../../../containers/DarkMode"
-import { DropdownState } from "../../../../containers/DropdownState"
-import { UserDataState } from "../../../../containers/UserDataState"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtonsArea } from "./UserButtonsArea"
 import { UserDataTile } from "./UserDataTile"
 import { WideDataTile } from "./WideDataTile"
 
 interface Props {
-  betAcceptedCount?: number
-  betFundedCount?: number
-  photoURL?: string
-  displayName?: string
-  walletAddress?: string
-  id?: string
-  amountBet?: number
-  amountWon?: number
-  betWinCount?: number
-  followerCount?: number
-  followingCount?: number
-  joinDate?: Timestamp
-  isLoading?: boolean
+  betAcceptedCount: number
+  betFundedCount: number
+  photoURL: string
+  displayName: string
+  searchableDisplayName: string
+  walletAddress: string
+  id: string
+  amountBet: number
+  amountWon: number
+  betWinCount: number
+  hasNewMessage: boolean
+  hasNewNotifications: boolean
+  blockedUsers: string[]
+  sentFriendRequests: string[]
+  redactedFriendRequests: string[]
+  friends: string[]
+  joinDate: Timestamp
+  isLoading: boolean
 }
 
 export const UserData: React.FC<Props> = ({
@@ -38,8 +41,7 @@ export const UserData: React.FC<Props> = ({
   amountBet = 0,
   amountWon = 0,
   betWinCount = 0,
-  followerCount = 0,
-  followingCount = 0,
+  friends,
   joinDate,
   isLoading,
 }) => {
@@ -64,7 +66,7 @@ export const UserData: React.FC<Props> = ({
           />
           <img
             src={photoURL}
-            className="w-24 h-24 rounded-full grid place-content-center mt-3 border"
+            className="w-24 h-24 rounded-full grid place-content-center border"
           />
 
           <div className="my-2 flex flex-col justify-center items-center gap-0.5">
@@ -77,21 +79,21 @@ export const UserData: React.FC<Props> = ({
             )}
           </div>
 
-          <WideDataTile
+          {/* <WideDataTile
             name="Total Amount Won"
             icon={<RiHandCoinLine />}
             data={`${parseFloat((amountWon ?? 0).toFixed(6))} AVAX`}
-          />
+          /> */}
           <div className="w-full grid gap-1.5 grid-cols-2 mb-1">
             <UserDataTile
-              data={followerCount}
-              name="Followers"
-              icon={<RiHeartsLine />}
+              name="Total AVAX Won"
+              icon={<RiHandCoinLine />}
+              data={parseFloat((amountWon ?? 0).toFixed(6))}
             />
             <UserDataTile
-              data={followingCount}
-              name="Following"
-              icon={<RiUserHeartLine />}
+              data={friends?.length ?? 0}
+              name="Friends"
+              icon={<FiUsers />}
             />
             <UserDataTile
               data={betWinCount ?? 0}

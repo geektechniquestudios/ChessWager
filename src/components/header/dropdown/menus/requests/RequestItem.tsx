@@ -62,7 +62,8 @@ export const RequestItem: React.FC<Props> = ({
     deleteDoc(doc(requestsCollection, id))
   }
 
-  const { setActiveMenu } = DropdownState.useContainer()
+  const { setActiveMenu, menuStack, setMenuStack } =
+    DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   return (
     <a
@@ -70,7 +71,8 @@ export const RequestItem: React.FC<Props> = ({
       style={{ direction: "ltr" }}
       onClick={() => {
         setClickedUserById(id)
-        setActiveMenu("userDataFromRequests")
+        setActiveMenu("clickedUser")
+        setMenuStack([...menuStack, "clickedUser"])
       }}
     >
       <img src={photoURL} className="rounded-full w-7 h-7" />
@@ -83,6 +85,7 @@ export const RequestItem: React.FC<Props> = ({
           }}
           content={<BsCheck2 />}
           title="Accept"
+          className="w-4 h-4"
         />
         <DropdownButton
           onClick={(e) => {
@@ -91,6 +94,7 @@ export const RequestItem: React.FC<Props> = ({
           }}
           content={<BsX />}
           title="Decline"
+          className="w-4 h-4"
         />
       </div>
     </a>

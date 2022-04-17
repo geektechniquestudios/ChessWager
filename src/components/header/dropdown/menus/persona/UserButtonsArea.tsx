@@ -1,10 +1,4 @@
-import {
-  collection,
-  doc,
-  DocumentData,
-  getDoc,
-  getFirestore,
-} from "firebase/firestore"
+import { collection, doc, getFirestore } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
 import { AddFriendButton } from "./buttons/AddFriendButton"
@@ -13,13 +7,10 @@ import { ReportUserButton } from "./buttons/ReportUserButton"
 import { SendMessageButton } from "./buttons/SendMessageButton"
 import { BlockedButton } from "./buttons/BlockedButton"
 import { BsWallet2 } from "react-icons/bs"
-import { useState } from "react"
 import { RemoveFriendButton } from "./buttons/RemoveFriendButton"
 import { CancelPendingRequestButton } from "./buttons/CancelPendingRequestButton"
 import { FriendRequestsButton } from "./buttons/FriendRequestsButton"
 import { UserDataState } from "../../../../containers/UserDataState"
-import { useDocumentDataOnce } from "react-firebase-hooks/firestore"
-import { Friend } from "../../../../../interfaces/Friend"
 
 const db = getFirestore(firebaseApp)
 
@@ -37,7 +28,7 @@ export const UserButtonsArea: React.FC<Props> = ({
   walletAddress,
 }) => {
   const { userData } = UserDataState.useContainer()
-  const { auth, isWalletConnected } = Auth.useContainer()
+  const { auth, isWalletConnected, connectWallet } = Auth.useContainer()
 
   const isFriend = userData?.friends.includes(id) ?? false
   const isUser = auth.currentUser?.uid === id
@@ -89,27 +80,44 @@ export const UserButtonsArea: React.FC<Props> = ({
               <FriendRequestsButton />
               <BlockedButton />
             </div>
-            {isWalletConnected && (
-              <>
-                <a
-                  className="rounded-full border border-stone-400 dark:border-stone-800 py-1 px-2 bg-white hover:underline dark:bg-stone-800 dark:hover:text-stone-200 text-xs color-shift hover:text-black hover:border-black dark:hover:border-white"
-                  title={"View Wallet on Snowtrace"}
-                  href={"https://snowtrace.io/address/" + walletAddress}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <div className="flex gap-1">
-                    <div className="mt-0.5">
-                      <BsWallet2 />
-                    </div>
-                    {walletAddress?.substring(0, 6)}...
-                    {walletAddress?.substring(
-                      walletAddress.length - 4,
-                      walletAddress.length,
-                    )}
+            {isWalletConnected ? (
+              <a
+                className="rounded-full border border-stone-400 dark:border-stone-800 py-1 px-2 bg-white hover:underline dark:bg-stone-800 dark:hover:text-stone-200 text-xs color-shift hover:text-black hover:border-black dark:hover:border-white"
+                title={"View Wallet on Snowtrace"}
+                href={"https://snowtrace.io/address/" + walletAddress}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <div className="flex gap-1">
+                  <div className="mt-0.5">
+                    <BsWallet2 />
                   </div>
-                </a>
-              </>
+                  {walletAddress?.substring(0, 6)}...
+                  {walletAddress?.substring(
+                    walletAddress.length - 4,
+                    walletAddress.length,
+                  )}
+                </div>
+              </a>
+            ) : (
+              <a
+                className="rounded-full border border-stone-400 dark:border-stone-800 py-1 px-2 bg-white hover:underline dark:bg-stone-800 dark:hover:text-stone-200 text-xs color-shift hover:text-black hover:border-black dark:hover:border-white"
+                title={"Connect Wallet"}
+                onClick={connectWallet}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <div className="flex gap-1">
+                  <div className="mt-0.5">
+                    <BsWallet2 />
+                  </div>
+                  {walletAddress?.substring(0, 6)}...
+                  {walletAddress?.substring(
+                    walletAddress.length - 4,
+                    walletAddress.length,
+                  )}
+                </div>
+              </a>
             )}
           </div>
         )}

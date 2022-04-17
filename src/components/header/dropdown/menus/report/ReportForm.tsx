@@ -2,23 +2,16 @@ import { TextareaAutosize } from "@mui/material"
 import { Auth } from "../../../../containers/Auth"
 import "../../../../../style/dropdown.scss"
 import { BiSend } from "react-icons/bi"
-import type { Conversation } from "../../../../../interfaces/Conversation"
 import {
   addDoc,
   collection,
-  CollectionReference,
-  doc,
-  DocumentData,
-  DocumentReference,
-  getDoc,
   getFirestore,
   serverTimestamp,
-  setDoc,
-  updateDoc,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { UserMenuState } from "../../../../containers/UserMenuState"
+
 const db = getFirestore(firebaseApp)
 
 interface Props {}

@@ -8,7 +8,8 @@ interface Props {
 }
 
 export const ReportUserButton: React.FC<Props> = ({ id }) => {
-  const { setActiveMenu } = DropdownState.useContainer()
+  const { setActiveMenu, menuStack, setMenuStack } =
+    DropdownState.useContainer()
   const { setReportedUserId } = UserMenuState.useContainer()
 
   return (
@@ -16,6 +17,7 @@ export const ReportUserButton: React.FC<Props> = ({ id }) => {
       content={<FiFlag />}
       onClick={() => {
         setActiveMenu("report")
+        setMenuStack([...menuStack, "report"])
         setReportedUserId(id)
       }}
       title="Report User"

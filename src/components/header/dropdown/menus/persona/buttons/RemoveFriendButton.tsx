@@ -1,16 +1,7 @@
-import {
-  arrayRemove,
-  collection,
-  deleteDoc,
-  doc,
-  getFirestore,
-  updateDoc,
-  writeBatch,
-} from "firebase/firestore"
+import { arrayRemove, doc, getFirestore, writeBatch } from "firebase/firestore"
 import { RiUserUnfollowLine } from "react-icons/ri"
 import { firebaseApp } from "../../../../../../config"
 import { Auth } from "../../../../../containers/Auth"
-import { UserDataState } from "../../../../../containers/UserDataState"
 import { DropdownButton } from "./DropdownButton"
 
 const db = getFirestore(firebaseApp)

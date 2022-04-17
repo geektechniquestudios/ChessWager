@@ -13,7 +13,6 @@ export const FriendRequestsButton: React.FC<Props> = ({}) => {
       onClick={() => {
         setActiveMenu("requests")
         setMenuStack([...menuStack, "requests"])
-        console.log(menuStack)
       }}
       title="Friend Requests"
     />

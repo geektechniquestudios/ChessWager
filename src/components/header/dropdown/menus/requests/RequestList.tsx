@@ -1,13 +1,8 @@
-import { collection, doc, DocumentData, getFirestore } from "firebase/firestore"
-import { useState } from "react"
-import {
-  useCollectionData,
-  useCollectionDataOnce,
-} from "react-firebase-hooks/firestore"
+import { collection, doc, getFirestore } from "firebase/firestore"
+import { useCollectionData } from "react-firebase-hooks/firestore"
 import { firebaseApp } from "../../../../../config"
 import { FriendRequest } from "../../../../../interfaces/FriendRequest"
 import { Auth } from "../../../../containers/Auth"
-import { DropdownItem } from "../../models/DropdownItem"
 import { RequestItem } from "./RequestItem"
 
 const db = getFirestore(firebaseApp)

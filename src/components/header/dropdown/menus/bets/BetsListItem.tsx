@@ -1,8 +1,4 @@
-import {
-  CollectionReference,
-  DocumentData,
-  Timestamp,
-} from "firebase/firestore"
+import { Timestamp } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
 import { Bet } from "../../../../../interfaces/Bet"
 import { DropdownState } from "../../../../containers/DropdownState"

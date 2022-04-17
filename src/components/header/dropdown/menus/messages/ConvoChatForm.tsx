@@ -2,10 +2,8 @@ import { TextareaAutosize } from "@mui/material"
 import { Auth } from "../../../../containers/Auth"
 import "../../../../../style/dropdown.scss"
 import { BiSend } from "react-icons/bi"
-import type { Conversation } from "../../../../../interfaces/Conversation"
 import {
   addDoc,
-  collection,
   CollectionReference,
   doc,
   DocumentData,
@@ -13,8 +11,7 @@ import {
   getDoc,
   getFirestore,
   serverTimestamp,
-  setDoc,
-  updateDoc,
+  writeBatch,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 const db = getFirestore(firebaseApp)
@@ -63,16 +60,17 @@ export const ConvoChatForm: React.FC<Props> = ({
     const isUser2 =
       (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
 
+    const batch = writeBatch(db)
     if (isUser1) {
       const userRef = doc(db, "users", conversation!.user2.id)
-      setDoc(
+      batch.set(
         userRef,
         {
           hasNewMessage: true,
         },
         { merge: true },
       )
-      setDoc(
+      batch.set(
         conversationDocRef,
         {
           messageThumbnail: formValue,
@@ -83,7 +81,7 @@ export const ConvoChatForm: React.FC<Props> = ({
       )
     } else if (isUser2) {
       const userRef = doc(db, "users", conversation!.user1.id)
-      setDoc(
+      batch.set(
         userRef,
         {
           hasNewMessage: true,
@@ -91,7 +89,7 @@ export const ConvoChatForm: React.FC<Props> = ({
         { merge: true },
       )
 
-      setDoc(
+      batch.set(
         conversationDocRef,
         {
           messageThumbnail: formValue,
@@ -103,9 +101,7 @@ export const ConvoChatForm: React.FC<Props> = ({
     } else {
       throw new Error("User not in conversation")
     }
-
-    // also need to batch writes
-    // also need to write rules
+    batch.commit()
 
     setFormValue("")
     dummy.current?.scrollIntoView({ behavior: "smooth" })

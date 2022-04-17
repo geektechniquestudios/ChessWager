@@ -5,7 +5,7 @@ import { NotificationsList } from "./NotificationsList"
 export const NotificationsMenu: React.FC = () => {
   return (
     <Menu
-      menuItems={[<DropdownArea key={2} content={<NotificationsList />} />]}
+      menuItems={[<DropdownArea content={<NotificationsList />} />]}
       thisMenu={"notifications"}
     />
   )
