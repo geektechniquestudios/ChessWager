@@ -1,4 +1,4 @@
-import { RiHeartsLine, RiUserHeartLine } from "react-icons/ri"
+import { RiHeartsLine } from "react-icons/ri"
 import { DropdownState } from "../../../../../containers/DropdownState"
 import { DropdownButton } from "./DropdownButton"
 

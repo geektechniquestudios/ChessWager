@@ -15,17 +15,14 @@ export const SearchUsersMenu: React.FC = ({}) => {
     <Menu
       menuItems={[
         <DropdownArea
-          key={0}
           content={<SearchArea search={search} setSearch={setSearch} />}
         />,
         <SearchToggle
           friendsOrEveryone={friendsOrEveryOne}
           setFriendsOrEveryone={setFriendsOrEveryOne}
-          key={1}
         />,
-        <MenuLine key={2} />,
+        <MenuLine />,
         <DropdownArea
-          key={3}
           content={
             <>
               {search.length > 2 || friendsOrEveryOne === "friends" ? (

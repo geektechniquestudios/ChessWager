@@ -5,9 +5,7 @@ import {
   doc,
   getFirestore,
   serverTimestamp,
-  setDoc,
   Timestamp,
-  updateDoc,
   writeBatch,
 } from "firebase/firestore"
 import { RiUserAddLine } from "react-icons/ri"
@@ -47,7 +45,7 @@ export const AddFriendButton: React.FC<Props> = ({ id }) => {
         {
           createdAt: serverTimestamp(),
           text: `${auth.currentUser!.displayName} sent you a friend request.`,
-          openToMenu: "requestsFromNotifications",
+          openToMenu: "requests",
           isRead: false,
         },
       )

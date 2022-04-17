@@ -1,8 +1,4 @@
-import {
-  CollectionReference,
-  DocumentData,
-  Timestamp,
-} from "firebase/firestore"
+import { Timestamp } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
 import { Bet } from "../../../../../interfaces/Bet"
 import { DropdownState } from "../../../../containers/DropdownState"
@@ -37,7 +33,8 @@ interface Props {
 }
 
 export const BetsListItem: React.FC<Props> = ({ leftIcon, rightIcon, bet }) => {
-  const { setActiveMenu, setBet } = DropdownState.useContainer()
+  const { setActiveMenu, setBet, menuStack, setMenuStack } =
+    DropdownState.useContainer()
   const betTotal = bet.amount + bet.amount * bet.multiplier
   const { avaxPrice } = Price.useContainer()
   const { userData } = UserDataState.useContainer()
@@ -49,8 +46,9 @@ export const BetsListItem: React.FC<Props> = ({ leftIcon, rightIcon, bet }) => {
       rel="noreferrer"
       className={`h-14 w-64 flex items-center hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-600 dark:hover:text-stone-200 color-shift`}
       onClick={() => {
-        setActiveMenu("bet")
         setBet(bet)
+        setActiveMenu("bet")
+        setMenuStack([...menuStack, "bet"])
       }}
     >
       <div className="flex h-full w-64 justify-between gap-2 p-2">

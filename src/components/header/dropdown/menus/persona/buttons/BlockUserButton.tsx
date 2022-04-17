@@ -6,7 +6,6 @@ import {
   getFirestore,
   serverTimestamp,
   setDoc,
-  Timestamp,
 } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
 import { firebaseApp } from "../../../../../../config"

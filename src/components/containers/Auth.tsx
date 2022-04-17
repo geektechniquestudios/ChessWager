@@ -11,7 +11,6 @@ import {
   updateDoc,
   getDoc,
   setDoc,
-  Timestamp,
   serverTimestamp,
 } from "firebase/firestore"
 
@@ -114,8 +113,6 @@ const useAuth = () => {
                 amountWon: 0,
                 betWinCount: 0,
                 hasNewMessage: false,
-                followerCount: 0,
-                followingCount: 0,
                 hasNewNotification: false,
                 blockedUsers: [],
                 sentFriendRequests: [],

@@ -28,7 +28,8 @@ export const UserBetData: React.FC<Props> = ({
   funded,
 }) => {
   const { avaxPrice } = Price.useContainer()
-  const { setActiveMenu } = DropdownState.useContainer()
+  const { setActiveMenu, menuStack, setMenuStack } =
+    DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { userData } = UserDataState.useContainer()
   const isUserBlocked = userData.blockedUsers.includes(id)
@@ -53,13 +54,16 @@ export const UserBetData: React.FC<Props> = ({
       </div>
       <div className="bg-white dark:bg-stone-800 w-full rounded-b-md p-1 h-full flex flex-col justify-between items-center">
         {isUserBlocked ? (
-          <p className="text-red-600 dark:text-red-400 font-bold">Blocked User</p>
+          <p className="text-red-600 dark:text-red-400 font-bold">
+            Blocked User
+          </p>
         ) : (
           <button
             className="flex hover:underline"
             onClick={() => {
               setClickedUserById(id)
-              setActiveMenu("clickedFromBets")
+              setActiveMenu("clickedUser")
+              setMenuStack([...menuStack, "clickedUser"])
             }}
           >
             {displayName}

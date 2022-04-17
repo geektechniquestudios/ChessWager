@@ -1,14 +1,16 @@
 import {
   collection,
+  deleteDoc,
   doc,
   getFirestore,
-  setDoc,
   Timestamp,
   updateDoc,
 } from "firebase/firestore"
+import { BsX } from "react-icons/bs"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
+import { DropdownButton } from "../persona/buttons/DropdownButton"
 
 const db = getFirestore(firebaseApp)
 
@@ -27,7 +29,8 @@ export const NotificationItem: React.FC<Props> = ({
   isRead,
   id,
 }) => {
-  const { setActiveMenu } = DropdownState.useContainer()
+  const { setActiveMenu, menuStack, setMenuStack } =
+    DropdownState.useContainer()
   const unreadStyle = isRead ? "" : "bg-stone-400 dark:bg-stone-800"
   const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
@@ -44,10 +47,24 @@ export const NotificationItem: React.FC<Props> = ({
       style={{ direction: "ltr" }}
       onClick={() => {
         openToMenu && setActiveMenu(openToMenu)
+        if (openToMenu) {
+          const tempMenuStack = menuStack
+          tempMenuStack.push(openToMenu)
+          setMenuStack(tempMenuStack)
+        }
         setAsRead()
       }}
     >
-      <p className="text-xs">{text}</p>
+      <p className="text-xs pointer-events-auto text-left">{text}</p>
+      <DropdownButton
+        content={<BsX />}
+        className="h-4 w-4"
+        onClick={(e) => {
+          e.stopPropagation()
+          deleteDoc(notificationRef)
+        }}
+        title="Dismiss"
+      />
     </button>
   )
 }

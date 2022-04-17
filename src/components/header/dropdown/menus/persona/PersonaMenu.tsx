@@ -4,10 +4,5 @@ import { UserDataState } from "../../../../containers/UserDataState"
 
 export const PersonaMenu: React.FC = ({}) => {
   const { userData } = UserDataState.useContainer()
-  return (
-    <Menu
-      menuItems={[<UserData key={2} {...userData} activeMenu={"persona"}/>]}
-      thisMenu={"persona"}
-    />
-  )
+  return <Menu menuItems={[<UserData {...userData} />]} thisMenu={"persona"} />
 }

@@ -7,6 +7,7 @@ import { Auth } from "../../../../containers/Auth"
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { UserDataState } from "../../../../containers/UserDataState"
+import { DropdownState } from "../../../../containers/DropdownState"
 
 const db = getFirestore(firebaseApp)
 
@@ -60,6 +61,7 @@ export const ConversationsList: React.FC = ({}) => {
     )
   }
 
+  const { menuStack, setMenuStack } = DropdownState.useContainer()
   return (
     <div className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden dark:text-stone-400 text-stone-400 ml-0.5">
       {!isLoading && (
@@ -93,6 +95,7 @@ export const ConversationsList: React.FC = ({}) => {
                       setUserIdFromMessages(user.id)
                       setUsernameFromMessages(user.displayName)
                       setAsRead(conversation)
+                      setMenuStack([...menuStack, "conversation"])
                     }}
                     messageThumbnail={conversation.messageThumbnail}
                   />

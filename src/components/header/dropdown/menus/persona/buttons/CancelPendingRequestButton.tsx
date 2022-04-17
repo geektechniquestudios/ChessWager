@@ -1,11 +1,9 @@
 import {
-  arrayRemove,
   arrayUnion,
   collection,
   deleteDoc,
   doc,
   getFirestore,
-  setDoc,
   updateDoc,
 } from "firebase/firestore"
 import { RiUserFollowLine } from "react-icons/ri"

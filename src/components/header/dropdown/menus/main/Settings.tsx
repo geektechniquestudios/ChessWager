@@ -3,10 +3,9 @@ import Toggle from "react-toggle"
 import { useState } from "react"
 import { DropdownItem } from "../../models/DropdownItem"
 import { RiChatDeleteLine } from "react-icons/ri"
-import { BiArrowBack, BiVolumeFull, BiVolumeMute } from "react-icons/bi"
+import { BiVolumeFull, BiVolumeMute } from "react-icons/bi"
 import { Menu } from "../../models/Menu"
 import { MdOutlineBlock } from "react-icons/md"
-import { MenuLine } from "../../models/MenuLine"
 
 export const Settings: React.FC = () => {
   const [profanityFilter, setProfanityFilter] = useState(true)
@@ -15,16 +14,8 @@ export const Settings: React.FC = () => {
     <Menu
       menuItems={[
         <DropdownItem
-          goToMenu="main"
-          leftIcon={<BiArrowBack />}
-          key={0}
-          text="Settings"
-        />,
-        <MenuLine key={1} />,
-        <DropdownItem
           leftIcon={<MdOutlineBlock />}
           goToMenu="blockedUsers"
-          key={2}
           text="Blocked Users"
         />,
         <DropdownItem
@@ -39,7 +30,6 @@ export const Settings: React.FC = () => {
               readOnly
             />
           }
-          key={3}
           text={isMuted ? "Sound" : "Muted"}
         />,
         <DropdownItem
@@ -54,7 +44,6 @@ export const Settings: React.FC = () => {
               readOnly
             />
           }
-          key={4}
           text="Profanity Filter"
         />,
       ]}

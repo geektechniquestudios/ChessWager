@@ -376,8 +376,8 @@ service cloud.firestore {
 
       function areCreateRequestKeysValid() {
         return
-          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]) &&
-          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "followerCount", "followingCount", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]) &&
+          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage",  "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
       }
 
       function isCreateRequestDataValid() {
@@ -394,8 +394,6 @@ service cloud.firestore {
           requestData.amountWon is number &&
           requestData.betWinCount is number &&
           requestData.hasNewMessage is bool &&
-          requestData.followerCount is number &&
-          requestData.followingCount is number &&
           requestData.hasNewNotification is bool &&
           requestData.blockedUsers is list &&
           requestData.sentFriendRequests is list &&
@@ -411,8 +409,6 @@ service cloud.firestore {
           requestData.amountWon == 0 &&
           requestData.betWinCount == 0 &&
           requestData.hasNewMessage == false &&
-          requestData.followerCount == 0 &&
-          requestData.followingCount == 0 && 
           requestData.hasNewNotification == false &&
           requestData.blockedUsers == [] &&
           requestData.sentFriendRequests == [] &&

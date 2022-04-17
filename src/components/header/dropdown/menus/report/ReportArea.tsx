@@ -1,13 +1,9 @@
-import { getFirestore } from "firebase/firestore"
 import { GoReport } from "react-icons/go"
-import { firebaseApp } from "../../../../../config"
-import { ReportForm } from "../report/ReportForm"
-
-const db = getFirestore(firebaseApp)
+import { ReportForm } from "./ReportForm"
 
 interface Props {}
 
-export const ClickedReportForm: React.FC<Props> = ({}) => {
+export const ReportArea: React.FC<Props> = ({}) => {
   return (
     <div className="flex flex-col justify-between h-96 w-full">
       <p className="text-lg flex justify-center items-center gap-2 py-2 m-2 rounded-md dark:bg-stone-800 bg-stone-300">

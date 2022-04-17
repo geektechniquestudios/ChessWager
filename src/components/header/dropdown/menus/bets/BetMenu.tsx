@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react"
-import { BiArrowBack } from "react-icons/bi"
 import { SiLichess } from "react-icons/si"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { Price } from "../../../../containers/Price"
-import { DropdownItem } from "../../models/DropdownItem"
 import { Menu } from "../../models/Menu"
-import { MenuLine } from "../../models/MenuLine"
 import { UserBetData } from "./UserBetData"
 
 interface Props {}
@@ -85,14 +82,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
   return (
     <Menu
       menuItems={[
-        <DropdownItem
-          goToMenu="bets"
-          text="Bets"
-          key={0}
-          leftIcon={<BiArrowBack />}
-        />,
-        <MenuLine key={1} />,
-        <div key={2} className="w-64">
+        <div className="w-64">
           {bet && (
             <div className="flex flex-col w-full h-full justify-between p-2 dark:text-stone-300 text-stone-900 gap-2">
               <div className="flex w-full justify-between ">

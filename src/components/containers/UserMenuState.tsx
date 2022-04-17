@@ -7,7 +7,6 @@ import type { User } from "../../interfaces/User"
 const db = getFirestore(firebaseApp)
 
 const useUserMenuState = () => {
-  const [searchedUser, setSearchedUser] = useState<User>()
   const [clickedUser, setClickedUser] = useState<User>()
   const [userIdFromMessages, setUserIdFromMessages] = useState<string>("")
   const [usernameFromMessages, setUsernameFromMessages] = useState<string>("")
@@ -21,8 +20,6 @@ const useUserMenuState = () => {
   }
 
   return {
-    searchedUser,
-    setSearchedUser,
     userIdFromMessages,
     setUserIdFromMessages,
     usernameFromMessages,

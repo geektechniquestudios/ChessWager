@@ -5,18 +5,19 @@ import { DropdownButton } from "./DropdownButton"
 
 interface Props {
   id: string
-  activeMenu: string
 }
 
-export const ReportUserButton: React.FC<Props> = ({ id, activeMenu }) => {
-  const { setActiveMenu } = DropdownState.useContainer()
+export const ReportUserButton: React.FC<Props> = ({ id }) => {
+  const { setActiveMenu, menuStack, setMenuStack } =
+    DropdownState.useContainer()
   const { setReportedUserId } = UserMenuState.useContainer()
 
   return (
     <DropdownButton
       content={<FiFlag />}
       onClick={() => {
-        setActiveMenu(activeMenu + "Report")
+        setActiveMenu("report")
+        setMenuStack([...menuStack, "report"])
         setReportedUserId(id)
       }}
       title="Report User"

@@ -12,8 +12,6 @@ export type User = {
   amountWon: number
   betWinCount: number
   hasNewMessage: boolean
-  followerCount: number
-  followingCount: number
   hasNewNotifications: boolean
   blockedUsers: string[]
   sentFriendRequests: string[]
