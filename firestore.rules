@@ -463,7 +463,7 @@ service cloud.firestore {
       function isWalletUpdateRequestKeyValid() {
         return 
           !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"])) &&
-                                       request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends",  "joinDate"]) &&
+          request.resource.data.keys().hasOnly(["walletAddress", "photoURL", "betAcceptedCount", "betFundedCount", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends",  "joinDate"]) &&
           request.resource.data.keys().hasAll(["walletAddress"]);
       }
 

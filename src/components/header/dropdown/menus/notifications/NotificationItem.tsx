@@ -35,7 +35,7 @@ export const NotificationItem: React.FC<Props> = ({
   const { setActiveMenu, menuStack, setMenuStack } =
     DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
-  const unreadStyle = isRead ? "" : "bg-stone-400 dark:bg-stone-800"
+  const unreadStyle = isRead ? "" : "bg-stone-400 dark:bg-stone-700"
   const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const notifications = collection(userRef, "notifications")

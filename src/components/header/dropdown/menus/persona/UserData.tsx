@@ -80,12 +80,12 @@ export const UserData: React.FC<Props> = ({
           </div>
 
           <div className="w-full grid gap-1.5 grid-cols-2 mb-1 text-sm">
+            <UserDataTile data={trust} name="Trust" icon={<FaRegHandshake />} />
             <UserDataTile
               data={friends?.length ?? 0}
               name="Friends"
               icon={<FiUsers />}
             />
-            <UserDataTile data={trust} name="Trust" icon={<FaRegHandshake />} />
             <UserDataTile
               data={betWinCount ?? 0}
               name="Bets Won"

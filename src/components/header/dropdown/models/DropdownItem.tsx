@@ -22,7 +22,7 @@ export const DropdownItem: React.FC<Props> = ({
   const { setActiveMenu, menuStack, setMenuStack } =
     DropdownState.useContainer()
   const address = url ?? "#"
-  const backStyle = isBackButton ? "h-10" : "h-12"
+  const backStyle = isBackButton ? "h-8 text-sm" : "h-12"
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
@@ -38,11 +38,18 @@ export const DropdownItem: React.FC<Props> = ({
         isBackButton && setMenuStack(menuStack.slice(0, -1))
       }}
     >
-      <div className="w-full flex gap-3">
-        <div className="flex flex-col justify-center">{leftIcon}</div>
-        <p className="flex flex-col justify-center">{text}</p>
-      </div>
-      <div className="flex flex-col justify-center">{rightIcon}</div>
+      {isBackButton ? (
+        <>
+          <div className="flex items-center ">{leftIcon}</div>
+          <p className=" mx-2">{text}</p>
+        </>
+      ) : (
+        <div className="w-full flex gap-3">
+          <div className="flex items-center">{leftIcon}</div>
+          <p className="flex items-center">{text}</p>
+        </div>
+      )}
+      <div className="flex items-center">{rightIcon}</div>
     </a>
   )
 }

@@ -26,7 +26,8 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
         ?.filter(
           (bet) =>
             !userData.blockedUsers.includes(bet.user1Id) &&
-            !userData.blockedUsers.includes(bet.user2Id),
+            !userData.blockedUsers.includes(bet.user2Id) &&
+            bet.status !== "funded",
         )
         .map((bet, index) => (
           <BetComponent
