@@ -105,7 +105,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
     sendBet()
     return () => {
       try {
-        contract.removeAllListeners()
+        contract && contract.removeAllListeners()
       } catch (e) {
         console.error(e)
       }

@@ -1,8 +1,17 @@
 import "../../../../../style/scrollbar.scss"
-import { collection, getFirestore, query, where } from "firebase/firestore"
+import {
+  collection,
+  getFirestore,
+  limit,
+  query,
+  where,
+} from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
-import { useCollectionDataOnce } from "react-firebase-hooks/firestore"
+import {
+  useCollectionData,
+  useCollectionDataOnce,
+} from "react-firebase-hooks/firestore"
 import { Bet } from "../../../../../interfaces/Bet"
 import { BetsListItem } from "./BetsListItem"
 
@@ -14,10 +23,11 @@ export const BetsListArea: React.FC = ({}) => {
   const q = query(
     betsRef,
     where("users", "array-contains", auth.currentUser?.uid ?? ""),
+    limit(10),
   )
 
   const [bets, isLoading] =
-    useCollectionDataOnce<[Bet[], boolean] | any>(q, { idField: "id" }) ?? []
+    useCollectionData<[Bet[], boolean] | any>(q, { idField: "id" }) ?? []
 
   return (
     <>

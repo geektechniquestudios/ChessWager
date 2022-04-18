@@ -23,6 +23,8 @@ export type Bet = {
   user1FollowThrough: number[]
   user2FollowThrough: number[]
   winner?: "user1" | "user2" | "draw"
+  hasUser1SeenUpdate?: boolean
+  hasUser2SeenUpdate?: boolean
 }
 
 export type BetData = {

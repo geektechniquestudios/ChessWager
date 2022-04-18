@@ -63,8 +63,8 @@ export const SendMessageButton: React.FC<Props> = ({
     <DropdownButton
       content={<RiMailSendLine />}
       onClick={() => {
-        setActiveMenu("messages")
-        setMenuStack([...menuStack, "messages"])
+        setActiveMenu("conversation")
+        setMenuStack([...menuStack, "conversation"])
         createConvoDoc()
         setUserIdFromMessages(id)
         setUsernameFromMessages(displayName)

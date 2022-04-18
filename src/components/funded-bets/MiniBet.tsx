@@ -35,21 +35,21 @@ export const MiniBet: React.FC<Props> = ({
   return (
     <div className="text-stone-900 dark:text-stone-300">
       <div className="flex justify-between p-1">
-        <div className="flex gap-1 mx-1">
+        <div className="flex gap-1 mx-1 items-center">
           <div className="border rounded-md bg-stone-600 grid place-content-center w-5 h-5 border-stone-700">
             <GiChessRook color={betSide} size="1rem" />
           </div>
           <img
             src={user1PhotoURL}
             alt=""
-            className="h-6 w-6 rounded-full"
+            className="h-5 w-5 rounded-full"
             title={user1DisplayName}
           />
           <p className="font-bold">vs</p>
           <img
             src={user2PhotoURL}
             alt=""
-            className="h-6 w-6 rounded-full"
+            className="h-5 w-5 rounded-full"
             title={user2DisplayName}
           />
           <div className="border rounded-md bg-stone-400 grid place-content-center w-5 h-5 border-stone-700">

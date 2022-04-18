@@ -10,6 +10,7 @@ import { BsX } from "react-icons/bs"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
+import { UserMenuState } from "../../../../containers/UserMenuState"
 import { DropdownButton } from "../persona/buttons/DropdownButton"
 
 const db = getFirestore(firebaseApp)
@@ -17,6 +18,7 @@ const db = getFirestore(firebaseApp)
 interface Props {
   text: string
   openToMenu?: string
+  clickedUserId?: string
   createdAt: Timestamp
   isRead: boolean
   id: string
@@ -25,12 +27,14 @@ interface Props {
 export const NotificationItem: React.FC<Props> = ({
   text,
   openToMenu,
+  clickedUserId,
   createdAt,
   isRead,
   id,
 }) => {
   const { setActiveMenu, menuStack, setMenuStack } =
     DropdownState.useContainer()
+  const { setClickedUserById } = UserMenuState.useContainer()
   const unreadStyle = isRead ? "" : "bg-stone-400 dark:bg-stone-800"
   const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
@@ -43,11 +47,12 @@ export const NotificationItem: React.FC<Props> = ({
   }
   return (
     <button
-      className={`h-12 w-64 px-4 flex items-center hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift ${unreadStyle}`}
+      className={`h-12 w-64 px-4 flex items-center justify-between hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift ${unreadStyle}`}
       style={{ direction: "ltr" }}
       onClick={() => {
-        openToMenu && setActiveMenu(openToMenu)
+        clickedUserId && setClickedUserById(clickedUserId)
         if (openToMenu) {
+          setActiveMenu(openToMenu)
           const tempMenuStack = menuStack
           tempMenuStack.push(openToMenu)
           setMenuStack(tempMenuStack)

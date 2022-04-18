@@ -3,32 +3,31 @@ import { BsPiggyBank } from "react-icons/bs"
 import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
 import { FiPercent, FiUsers } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
-import { RiHandCoinLine, RiHeartsLine, RiUserHeartLine } from "react-icons/ri"
+import { RiHandCoinLine } from "react-icons/ri"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtonsArea } from "./UserButtonsArea"
 import { UserDataTile } from "./UserDataTile"
-import { WideDataTile } from "./WideDataTile"
 
 interface Props {
-  betAcceptedCount: number
-  betFundedCount: number
-  photoURL: string
-  displayName: string
-  searchableDisplayName: string
-  walletAddress: string
-  id: string
-  amountBet: number
-  amountWon: number
-  betWinCount: number
-  hasNewMessage: boolean
-  hasNewNotifications: boolean
-  blockedUsers: string[]
-  sentFriendRequests: string[]
-  redactedFriendRequests: string[]
-  friends: string[]
-  joinDate: Timestamp
-  isLoading: boolean
+  betAcceptedCount?: number
+  betFundedCount?: number
+  photoURL?: string
+  displayName?: string
+  searchableDisplayName?: string
+  walletAddress?: string
+  id?: string
+  amountBet?: number
+  amountWon?: number
+  betWinCount?: number
+  hasNewMessage?: boolean
+  hasNewNotifications?: boolean
+  blockedUsers?: string[]
+  sentFriendRequests?: string[]
+  redactedFriendRequests?: string[]
+  friends?: string[]
+  joinDate?: Timestamp
+  isLoading?: boolean
 }
 
 export const UserData: React.FC<Props> = ({
@@ -73,28 +72,20 @@ export const UserData: React.FC<Props> = ({
             <p className="text-lg">{displayName ?? ""}</p>
             {joinDate && (
               <p className="text-xs text-stone-500 dark:text-stone-400">
-                Joined{" "}
-                {new Date(joinDate!.seconds * 1000).toLocaleDateString("en-US")}
+                {`Joined ${new Date(
+                  joinDate!.seconds * 1000,
+                ).toLocaleDateString("en-US")}`}
               </p>
             )}
           </div>
 
-          {/* <WideDataTile
-            name="Total Amount Won"
-            icon={<RiHandCoinLine />}
-            data={`${parseFloat((amountWon ?? 0).toFixed(6))} AVAX`}
-          /> */}
-          <div className="w-full grid gap-1.5 grid-cols-2 mb-1">
-            <UserDataTile
-              name="Total AVAX Won"
-              icon={<RiHandCoinLine />}
-              data={parseFloat((amountWon ?? 0).toFixed(6))}
-            />
+          <div className="w-full grid gap-1.5 grid-cols-2 mb-1 text-sm">
             <UserDataTile
               data={friends?.length ?? 0}
               name="Friends"
               icon={<FiUsers />}
             />
+            <UserDataTile data={trust} name="Trust" icon={<FaRegHandshake />} />
             <UserDataTile
               data={betWinCount ?? 0}
               name="Bets Won"
@@ -105,14 +96,13 @@ export const UserData: React.FC<Props> = ({
               name="Bets Lost"
               icon={<FaRegHandPeace className="rotate-180" />}
             />
-            <UserDataTile data={trust} name="Trust" icon={<FaRegHandshake />} />
             <UserDataTile
               data={winPercent}
               name="Win Percent"
               icon={<FiPercent />}
             />
             <UserDataTile
-              data={amountBet ?? 0}
+              data={amountBet.toFixed(4) ?? 0}
               name="Total Amount Bet"
               icon={
                 <GiPayMoney
@@ -123,7 +113,12 @@ export const UserData: React.FC<Props> = ({
               }
             />
             <UserDataTile
-              data={amountWon - amountBet}
+              name="Total AVAX Won"
+              icon={<RiHandCoinLine />}
+              data={parseFloat((amountWon ?? 0).toFixed(4))}
+            />
+            <UserDataTile
+              data={(amountWon - amountBet).toFixed(4) ?? 0}
               name="Net Profit"
               icon={<BsPiggyBank />}
             />

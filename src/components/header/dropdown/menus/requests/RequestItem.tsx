@@ -44,6 +44,8 @@ export const RequestItem: React.FC<Props> = ({
       {
         createdAt: serverTimestamp(),
         text: `${auth.currentUser!.displayName} accepted your friend request.`,
+        clickedUserId: auth.currentUser!.uid,
+        openToMenu: "clickedUser",
         isRead: false,
       },
     )

@@ -90,6 +90,8 @@ export const WagerForm: React.FC = () => {
           user1DisplayName: displayName,
           user1FollowThrough: user1FollowThrough,
           contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
+          hasUser1SeenUpdate: false,
+          hasUser2SeenUpdate: false,
         }).catch(console.error)
       })
       .catch(console.error)

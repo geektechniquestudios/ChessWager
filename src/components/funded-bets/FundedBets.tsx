@@ -80,8 +80,8 @@ export const FundedBets: React.FC<Props> = () => {
                 (bet: Bet) =>
                   bet.status === "funded" &&
                   isBetRelatedToUser(bet) &&
-                  !userData.blockedUsers.includes(bet.user1Id) &&
-                  !userData.blockedUsers.includes(bet.user2Id),
+                  (!userData?.blockedUsers.includes(bet.user1Id) ?? false) &&
+                  (!userData?.blockedUsers.includes(bet.user2Id) ?? false),
               )
               .sort((a: Bet, b: Bet) => b.amount - a.amount)
               .map((bet: Bet) => (

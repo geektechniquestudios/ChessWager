@@ -151,7 +151,8 @@ contract ChessWager is Ownable {
             gameIdToGameData[_gameId].betIdArray[i],
             _gameId,
             true,
-            false
+            false,
+            "none"
           );
         } else {
           // user2 was the only one that paid
@@ -161,7 +162,8 @@ contract ChessWager is Ownable {
             gameIdToGameData[_gameId].betIdArray[i],
             _gameId,
             false,
-            true
+            true,
+            "none"
           );
         }
         continue;
@@ -172,7 +174,8 @@ contract ChessWager is Ownable {
         gameIdToGameData[_gameId].betIdArray[i],
         _gameId,
         true,
-        true
+        true,
+        winningSide
       );
 
       // if game is a draw, then return money to both users
@@ -274,6 +277,7 @@ contract ChessWager is Ownable {
     string betId,
     string gameId,
     bool didUser1Pay,
-    bool didUser2Pay
+    bool didUser2Pay,
+    string winningSide
   );
 }
