@@ -119,7 +119,13 @@ const useAuth = () => {
                 redactedFriendRequests: [],
                 friends: [],
                 joinDate: serverTimestamp(),
-              }).catch(console.error)
+              })
+                .catch(console.error)
+                .then(() => {
+                  alert(
+                    "This website is under development. Please DO NOT send any real currency. Only the AVAX Fuji testnet is currently supported.",
+                  )
+                })
             }
             if (doc.data()?.walletAddress ?? "" !== "") {
               setIsWalletConnected(true)
