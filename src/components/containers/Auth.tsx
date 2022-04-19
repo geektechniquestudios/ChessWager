@@ -123,7 +123,7 @@ const useAuth = () => {
                 .catch(console.error)
                 .then(() => {
                   alert(
-                    "This website is under development. Please DO NOT send any real currency. Only the AVAX Fuji testnet is currently supported.",
+                    "This website is under development.  Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
                   )
                 })
             }
