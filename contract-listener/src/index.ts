@@ -250,13 +250,13 @@ contract.on(
           } else {
             user2NotificationsRef.doc(bet.user2Id + Timestamp.now()).set({
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
-              text: `Your bet ended in a draw`,
+              text: `Your recent bet ended in a draw`,
               openToMenu: "bets",
               isRead: false,
             })
             user1NotificationsRef.doc(bet.user1Id + Timestamp.now()).set({
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
-              text: "Your bet ended in a draw",
+              text: "Your recent bet ended in a draw",
               openToMenu: "bets",
               isRead: false,
             })

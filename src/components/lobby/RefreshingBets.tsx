@@ -82,8 +82,8 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
       {refreshingBets
         ?.filter(
           (bet) =>
-            !userData.blockedUsers.includes(bet.user1Id) &&
-            !userData.blockedUsers.includes(bet.user2Id),
+            (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
+            (!userData?.blockedUsers.includes(bet.user2Id) ?? true),
         )
         .map((bet, index) => (
           <BetComponent

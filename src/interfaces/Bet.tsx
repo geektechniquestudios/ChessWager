@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore"
+ import { Timestamp } from "firebase/firestore"
 
 export type Bet = {
   id: string

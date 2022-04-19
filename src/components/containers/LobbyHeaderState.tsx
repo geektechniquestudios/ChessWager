@@ -8,7 +8,7 @@ const useLobbyHeaderState = () => {
     localStorage.getItem("isRealTime") === "true" ||
       localStorage.getItem("isRealTime") === "false"
       ? JSON.parse(localStorage.getItem("isRealTime")!)
-      : false,
+      : true,
   )
   return {
     isDescending,

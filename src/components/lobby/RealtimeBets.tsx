@@ -19,15 +19,14 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
   }, [bets, mostRecentButton, isDescending])
 
   useEffect(clearMapForLobbyChange, [isRealTime])
-
   return (
     <>
       {realTimeBets
         ?.filter(
           (bet) =>
-            !userData.blockedUsers.includes(bet.user1Id) &&
-            !userData.blockedUsers.includes(bet.user2Id) &&
-            bet.status !== "funded",
+            (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
+            (!userData?.blockedUsers.includes(bet.user2Id) ?? true) &&
+            (bet.status ?? "") !== "funded",
         )
         .map((bet, index) => (
           <BetComponent

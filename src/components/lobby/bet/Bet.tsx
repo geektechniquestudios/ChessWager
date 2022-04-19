@@ -7,7 +7,7 @@ import { User2Data } from "./User2Data"
 import { LeftButtons } from "./LeftButtons"
 import { RightButtons } from "./RightButtons"
 import { CenterOfBet } from "./CenterOfBet"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BetsState } from "../../containers/BetsState"
 
 interface Props {
@@ -73,8 +73,23 @@ export const Bet: React.FC<Props> = ({
   const isUser2 = auth.currentUser?.uid === user2Id
   const { selectedBetMap, setSelectedBetMap } = BetsState.useContainer()
   const [isSelected, setIsSelected] = useState(
-    isUser1 || isUser2 ? true : false,
+    (isUser1 || isUser2) && status !== "funded" && status !== "pending"
+      ? true
+      : false,
   )
+
+  useEffect(() => {
+    if (
+      (isUser1 || isUser2) &&
+      auth.currentUser &&
+      status !== "funded" &&
+      status !== "pending"
+    ) {
+      setIsSelected(true)
+    } else {
+      setIsSelected(false)
+    }
+  }, [auth.currentUser])
 
   const selectedStyle =
     isSelected || id === ""

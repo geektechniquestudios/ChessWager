@@ -9,6 +9,7 @@ import { firebaseApp } from "../../config"
 import {
   collection,
   getFirestore,
+  limit,
   query,
   Timestamp,
   where,
@@ -43,7 +44,7 @@ const genericBet: Bet = {
 const useBetState = () => {
   const { gameId } = GameState.useContainer()
   const lobbyCollectionRef = collection(db, "lobby")
-  const q = query(lobbyCollectionRef, where("gameId", "==", gameId))
+  const q = query(lobbyCollectionRef, where("gameId", "==", gameId), limit(20))
   const [bets, isLoading] =
     useCollectionData<[Bet[], boolean] | any>(q, { idField: "id" }) ?? []
   const [selectedBetMap, setSelectedBetMap] = useState(
