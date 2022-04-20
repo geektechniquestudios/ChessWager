@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "test": "jest",
+    "test-cypress": "cypress run",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "deploy-contract-develop": "yarn hardhat run hardhat/scripts/deploy.js --network fuji",
