@@ -62,7 +62,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
     gasLimit: 1000000,
   }
 
-  let contract: ethers.Contract
+  // let contract: ethers.Contract
 
   const isCorrectBlockchain = async (
     provider: ethers.providers.Web3Provider,
@@ -86,14 +86,21 @@ export const MetamaskPrompt: React.FC<Props> = ({
       await window.ethereum.request({ method: "eth_requestAccounts" })
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer: any = provider.getSigner()
-      contract = new ethers.Contract(contractAddress, ChessWager.abi, signer)
+      const contract = new ethers.Contract(
+        contractAddress,
+        ChessWager.abi,
+        signer,
+      )
       try {
         if (!(await isCorrectBlockchain(provider))) {
           return
         }
         const transaction = await contract.placeBet(bet, betId, overrides)
-        await transaction.wait()
+        transaction.wait().then(() => {
+          contract.removeAllListeners()
+        })
       } catch (err) {
+        contract.removeAllListeners()
         console.error(err)
       }
     } else {
@@ -102,15 +109,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
   }
 
   useEffect(() => {
-    sendBet()
-    return () => {
-      try {
-        contract && contract.removeAllListeners()
-      } catch (e) {
-        console.error(e)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // sendBet()
   }, [])
 
   const isUser1 = auth.currentUser?.uid === user1Id

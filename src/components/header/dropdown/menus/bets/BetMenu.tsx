@@ -37,28 +37,33 @@ export const BetMenu: React.FC<Props> = ({}) => {
   const betAmount = amount! + amount! * multiplier!
   const { avaxPrice } = Price.useContainer()
   const [outcome, setOutcome] = useState<string>("")
+
+  const buildOutcomeMessage = (gameData: any): string => {
+    const whiteWins = gameData.winner === "white" ? "White won by" : ""
+    const blackWins = gameData.winner === "black" ? "Black won by" : ""
+    const isDraw = gameData.status === "draw" || gameData.status === "outoftime"
+    const draw = isDraw ? "Game ended in a draw" : ""
+    const isStalemate = gameData.status === "Game ended in a stalemate"
+    const stalemate = isStalemate ? "Stalemate" : ""
+    const resign = gameData.status === "resign" ? "resignation" : ""
+    const timeout = gameData.status === "timeout" ? "timeout" : ""
+
+    const checkmate = gameData.status === "mate" ? "checkmate" : ""
+
+    const outcome =
+      isDraw || isStalemate
+        ? `${draw}${stalemate}`
+        : `${whiteWins}${blackWins} ${resign}${timeout}${checkmate}`
+
+    return outcome
+  }
+
   useEffect(() => {
     if (!gameId) return
     fetch(`https://lichess.org/api/game/${gameId}`)
       .then((res) => res.json())
       .then((gameData: any) => {
-        if (gameData.status === "started") {
-          setOutcome("In progress")
-          return
-        }
-        if (gameData.hasOwnProperty("winner")) {
-          const whiteWins = gameData.winner === "white"
-          const blackWins = gameData.winner === "black"
-          if (whiteWins) {
-            setOutcome("White Wins")
-          } else if (blackWins) {
-            setOutcome("Black Wins")
-          } else {
-            setOutcome("Draw")
-          }
-        } else {
-          setOutcome("Draw")
-        }
+        setOutcome(buildOutcomeMessage(gameData))
       })
       .catch(console.error)
   }, [id])
@@ -79,6 +84,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
       ? "text-red-300"
       : "text-red-800"
 
+  const animateStyle = outcome === "" ? "animate-pulse" : ""
   return (
     <Menu
       menuItems={[
@@ -105,14 +111,18 @@ export const BetMenu: React.FC<Props> = ({}) => {
                   funded={hasUser2Paid!}
                 />
               </div>
-              <div className="flex w-full justify-center border h-12 rounded-md bg-white dark:bg-stone-600 border-stone-400 dark:border-stone-800 items-center gap-2">
+              <div className="flex p-2 w-full justify-center border h-12 rounded-md bg-white dark:bg-stone-600 border-stone-400 dark:border-stone-800 items-center gap-2">
                 <p>Outcome: </p>
-                <p className={`font-bold ${resultStyle}`}>{outcome}</p>
+                <p
+                  className={`font-bold text-sm text-center ${resultStyle} ${animateStyle}`}
+                >
+                  {outcome}
+                </p>
               </div>
               <div className="flex flex-col items-center">
                 <div className="flex w-full flex-col bg-white dark:bg-stone-600 rounded-md p-2 gap-0.5 text-sm border border-stone-400 dark:border-stone-800">
                   <div className="flex items-center justify-center">
-                    <p className="rounded-full bg-stone-100 dark:bg-stone-700 w-5 h-5 grid place-content-center text-xs mr-2 border border-stone-600 dark:border-stone-800">
+                    <p className="rounded-full bg-stone-50 dark:bg-stone-700 w-5 h-5 grid place-content-center text-xs mr-2 border border-stone-600 dark:border-stone-800">
                       x{multiplier}
                     </p>
                     <p className="text-sm">Multiplier</p>

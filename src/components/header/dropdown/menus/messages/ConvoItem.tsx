@@ -29,12 +29,11 @@ export const ConvoItem: React.FC<Props> = ({
 }) => {
   const { setActiveMenu, menuStack, setMenuStack } =
     DropdownState.useContainer()
-  const address = url ?? "#"
   const unreadStyle = isRead ? "" : "bg-stone-400 dark:bg-stone-800"
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
-      href={address}
+      href={url ?? "#"}
       target={url ? "_blank" : ""}
       rel="noreferrer"
       className={`h-12 w-64 flex items-center hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift ${unreadStyle}`}

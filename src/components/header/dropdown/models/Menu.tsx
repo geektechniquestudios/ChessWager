@@ -38,7 +38,6 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
   menuTitle.set("clickedUser", clickedUser?.displayName ?? "")
   menuTitle.set("persona", auth.currentUser?.displayName ?? "")
 
-
   useEffect(() => {
     menuTitle.set("clickedUser", clickedUser?.displayName ?? "")
   }, [clickedUser?.displayName])

@@ -47,7 +47,7 @@ export const NotificationItem: React.FC<Props> = ({
 
   const unreadStyle = isRead ? "" : "bg-stone-200 dark:bg-stone-700"
   return (
-    <button
+    <a
       className={`h-12 w-64 px-4 flex items-center justify-between hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift ${unreadStyle}`}
       style={{ direction: "ltr" }}
       onClick={() => {
@@ -71,6 +71,6 @@ export const NotificationItem: React.FC<Props> = ({
         }}
         title="Dismiss"
       />
-    </button>
+    </a>
   )
 }

@@ -4,17 +4,29 @@ import ndjsonStream from "can-ndjson-stream"
 import { PlayerData } from "./PlayerData"
 import { GameState } from "../containers/GameState"
 import Chessground from "@react-chess/chessground"
+import { GameResultPopup } from "./popup/GameResultPopup"
 
-interface Featured {
-  t: string
-  d: {
-    id: string
-    orientation: string //black /white
-    players: Player[]
-    fen: string
-    wc: number
-    bc: number
+interface Res {
+  value: {
+    t: string
+    d: Featured | Move
   }
+  done: boolean
+}
+interface Featured {
+  id: string
+  orientation: "black" | "white"
+  players: Player[]
+  fen: string
+  wc: number
+  bc: number
+}
+
+interface Move {
+  fen: string
+  lm: string
+  wc: 90
+  bc: 133
 }
 
 interface Player {
@@ -28,7 +40,8 @@ interface Player {
 }
 
 export const ChessGame: React.FC = () => {
-  const { setGameId } = GameState.useContainer()
+  const { gameId, setGameId,  } =
+    GameState.useContainer()
 
   const [fen, setFen] = useState("")
 
@@ -47,40 +60,36 @@ export const ChessGame: React.FC = () => {
 
   const [isNewGame, setIsNewGame] = useState(true)
 
-  const updateTitles = useCallback(
-    (res: Featured): void => {
-      const white: Player | undefined = res.d.players.find(
-        (player) => player.color === "white",
-      )
-      const black: Player | undefined = res.d.players.find(
-        (player) => player.color === "black",
-      )
+  const updateTitles = useCallback((res: Res): void => {
+    let val: Featured = res.value.d as Featured
+    const white: Player | undefined = val.players.find(
+      (player: Player) => player.color === "white",
+    )
+    const black: Player | undefined = val.players.find(
+      (player: Player) => player.color === "black",
+    )
 
-      if (black === undefined || white === undefined) return
+    if (black === undefined || white === undefined) return
 
-      setFen(res.d.fen ?? "")
-      setGameId(res.d.id)
+    setFen(val.fen ?? "")
+    setGameId(val.id)
 
-      const resolveOrientation = (orientation: string): "white" | "black" =>
-        "white" === orientation || "black" === orientation
-          ? orientation
-          : "white"
+    const resolveOrientation = (orientation: string): "white" | "black" =>
+      "white" === orientation || "black" === orientation ? orientation : "white"
 
-      setOrientation(resolveOrientation(res.d.orientation))
+    setOrientation(resolveOrientation(val.orientation))
 
-      setWhiteTitle(white.user.title ?? "")
-      setBlackTitle(black.user.title ?? "")
-      setWhiteName(white.user.name)
-      setWhiteRating(white.rating)
+    setWhiteTitle(white.user.title ?? "")
+    setBlackTitle(black.user.title ?? "")
+    setWhiteName(white.user.name)
+    setWhiteRating(white.rating)
 
-      if (black.user.title === undefined) setBlackTitle("")
-      setBlackName(black.user.name)
-      setBlackRating(black.rating)
+    if (black.user.title === undefined) setBlackTitle("")
+    setBlackName(black.user.name)
+    setBlackRating(black.rating)
 
-      return
-    },
-    [setGameId],
-  )
+    return
+  }, [])
 
   useEffect(() => {
     fetch("https://lichess.org/api/tv/feed", {
@@ -89,17 +98,20 @@ export const ChessGame: React.FC = () => {
       .then((data) => ndjsonStream(data.body))
       .then((stream) => {
         const streamReader = stream.getReader()
-        streamReader.read().then(async (res: Featured | any) => {
-          updateTitles(res.value)
+        streamReader.read().then(async (res: Res) => {
+          updateTitles(res)
           while (!res || !res.done) {
             res = await streamReader.read()
             if (res.value.t === "fen") {
+              // data is a move
               setFen(res.value.d.fen)
               setWhiteTime(res.value.d.wc)
               setBlackTime(res.value.d.bc)
               setIsNewGame(false)
             } else {
-              updateTitles(res.value)
+              // data is a new game
+              // setFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+              updateTitles(res)
               setWhiteTime(0)
               setBlackTime(0)
               setIsNewGame(true)
@@ -107,7 +119,12 @@ export const ChessGame: React.FC = () => {
           }
         })
       })
-      .catch(console.error)
+      .catch((err) => {
+        alert(
+          "Error fetching game data from lichess.org. Please reload the page or try again later.",
+        )
+        console.error(err)
+      })
   }, [updateTitles])
 
   return (
@@ -116,7 +133,8 @@ export const ChessGame: React.FC = () => {
         className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-300 my-10 p-2.5 w-1/2 shadow-lg border border-stone-500 color-shift min-w-min"
         style={{ minWidth: "17em", maxWidth: "80vh" }}
       >
-        <div className="resize flex w-full h-full justify-center align-middle">
+        <div className="resize flex w-full h-full justify-center align-middle relative">
+          <GameResultPopup />
           <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border border-stone-500 dark:border-stone-700">
             <div className="flex justify-center w-full">
               <PlayerData

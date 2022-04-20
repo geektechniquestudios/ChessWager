@@ -549,7 +549,6 @@ service cloud.firestore {
     match /users/{userId}/requests/{docId} {
       allow read, write: if true;
     }
-
         
     match /users/{userId}/notifications/{docId} {
       allow read, write: if true;
