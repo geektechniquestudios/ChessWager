@@ -1,5 +1,5 @@
-import { Auth } from "../../containers/Auth"
-import { ClockSpinner } from "./ClockSpinner"
+import { Auth } from "../../../../containers/Auth"
+import { ClockSpinner } from "../../models/ClockSpinner"
 
 interface Props {
   user2Id: string

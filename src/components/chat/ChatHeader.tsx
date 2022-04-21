@@ -23,20 +23,7 @@ export const ChatHeader: React.FC = () => {
       <div className="text-stone-900 dark:text-stone-50 grid place-content-center text-bold text-md">
         GLOBAL CHAT
       </div>
-      <div className="w-11"/>
-      {/* <button
-        className=" hover:bg-stone-400 dark:hover:bg-stone-800 rounded-md color-shift m-2"
-        onClick={() => {
-          setActiveMenu("settings")
-          setIsDropdownOpen(true)
-        }}
-      >
-        <RiChatSettingsLine
-          size="1.3em"
-          className="text-stone-900 dark:text-stone-50 m-1 color-shift cw-button border-none bg-transparent"
-          title="Chat Settings"
-        />
-      </button> */}
+      <div className="w-11" />
     </header>
   )
 }

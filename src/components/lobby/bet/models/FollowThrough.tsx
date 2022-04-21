@@ -1,5 +1,5 @@
 import { FaRegHandshake } from "react-icons/fa"
-import { DarkMode } from "../../containers/DarkMode"
+import { DarkMode } from "../../../containers/DarkMode"
 
 interface Props {
   followThrough: number[]

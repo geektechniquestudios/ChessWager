@@ -1,4 +1,4 @@
-import { Price } from "../../containers/Price"
+import { Price } from "../../../containers/Price"
 
 interface Props {
   potSize: string

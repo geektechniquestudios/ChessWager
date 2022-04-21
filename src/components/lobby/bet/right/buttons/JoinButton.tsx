@@ -1,8 +1,8 @@
-import { Auth } from "../../containers/Auth"
+import "../../../../../style/buttons.scss"
+import { Auth } from "../../../../containers/Auth"
 import { BsBoxArrowInLeft } from "react-icons/bs"
-import "../../../style/buttons.scss"
-import { DarkMode } from "../../containers/DarkMode"
-import { LobbyState } from "../../containers/LobbyState"
+import { DarkMode } from "../../../../containers/DarkMode"
+import { LobbyState } from "../../../../containers/LobbyState"
 import {
   doc,
   DocumentData,
@@ -11,7 +11,7 @@ import {
   getFirestore,
   updateDoc,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../config"
+import { firebaseApp } from "../../../../../config"
 
 const db = getFirestore(firebaseApp)
 

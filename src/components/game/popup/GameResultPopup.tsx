@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { BsX } from "react-icons/bs"
-import { FaChessKing, FaChessKnight } from "react-icons/fa"
 import { DarkMode } from "../../containers/DarkMode"
 import { GameState } from "../../containers/GameState"
 import { DropdownButton } from "../../header/dropdown/menus/persona/buttons/DropdownButton"

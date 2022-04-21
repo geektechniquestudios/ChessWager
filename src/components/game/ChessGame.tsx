@@ -40,8 +40,7 @@ interface Player {
 }
 
 export const ChessGame: React.FC = () => {
-  const { gameId, setGameId,  } =
-    GameState.useContainer()
+  const { setGameId } = GameState.useContainer()
 
   const [fen, setFen] = useState("")
 
@@ -87,8 +86,6 @@ export const ChessGame: React.FC = () => {
     if (black.user.title === undefined) setBlackTitle("")
     setBlackName(black.user.name)
     setBlackRating(black.rating)
-
-    return
   }, [])
 
   useEffect(() => {
@@ -110,7 +107,6 @@ export const ChessGame: React.FC = () => {
               setIsNewGame(false)
             } else {
               // data is a new game
-              // setFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
               updateTitles(res)
               setWhiteTime(0)
               setBlackTime(0)

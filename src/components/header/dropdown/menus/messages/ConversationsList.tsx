@@ -4,7 +4,7 @@ import { UserMenuState } from "../../../../containers/UserMenuState"
 import { ConversationsState } from "../../../../containers/ConversationsState"
 import { Conversation, User } from "../../../../../interfaces/Conversation"
 import { Auth } from "../../../../containers/Auth"
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore"
+import { doc, getFirestore, updateDoc } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { UserDataState } from "../../../../containers/UserDataState"
 import { DropdownState } from "../../../../containers/DropdownState"
@@ -32,21 +32,13 @@ export const ConversationsList: React.FC = ({}) => {
     const isUser2 =
       (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
     if (isUser1) {
-      setDoc(
-        conversationDocRef,
-        {
-          doesUser1HaveUnreadMessages: false,
-        },
-        { merge: true },
-      )
+      updateDoc(conversationDocRef, {
+        doesUser1HaveUnreadMessages: false,
+      })
     } else if (isUser2) {
-      setDoc(
-        conversationDocRef,
-        {
-          doesUser2HaveUnreadMessages: false,
-        },
-        { merge: true },
-      )
+      updateDoc(conversationDocRef, {
+        doesUser2HaveUnreadMessages: false,
+      })
     }
   }
 

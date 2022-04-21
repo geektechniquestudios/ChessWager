@@ -6,9 +6,9 @@ import {
   updateDoc,
 } from "firebase/firestore"
 import { FiUserMinus } from "react-icons/fi"
-import { firebaseApp } from "../../../config"
-import { DarkMode } from "../../containers/DarkMode"
-import { LobbyState } from "../../containers/LobbyState"
+import { firebaseApp } from "../../../../../config"
+import { DarkMode } from "../../../../containers/DarkMode"
+import { LobbyState } from "../../../../containers/LobbyState"
 const db = getFirestore(firebaseApp)
 
 interface Props {

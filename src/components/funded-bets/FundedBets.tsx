@@ -1,6 +1,6 @@
+import "../../style/scrollbar.scss"
 import { MiniBet } from "./MiniBet"
 import { Price } from "../containers/Price"
-import "../../style/scrollbar.scss"
 import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
 import type { Bet } from "../../interfaces/Bet"
@@ -13,6 +13,14 @@ export const FundedBets: React.FC<Props> = () => {
   const { bets } = BetsState.useContainer()
   const { userData } = UserDataState.useContainer()
 
+  const { auth } = Auth.useContainer()
+  const isBetRelatedToUser = (bet: Bet): boolean => {
+    return (
+      auth.currentUser?.uid === bet.user1Id ||
+      auth.currentUser?.uid === bet.user2Id
+    )
+  }
+
   const amountAtStake = (
     (bets
       ?.filter((bet: Bet) => bet.status === "funded")
@@ -21,14 +29,6 @@ export const FundedBets: React.FC<Props> = () => {
   )
     .toFixed(2)
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-
-  const { auth } = Auth.useContainer()
-  const isBetRelatedToUser = (bet: Bet): boolean => {
-    return (
-      auth.currentUser?.uid === bet.user1Id ||
-      auth.currentUser?.uid === bet.user2Id
-    )
-  }
 
   return (
     <div

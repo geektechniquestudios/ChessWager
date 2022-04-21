@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { createContainer } from "unstated-next"
 import { Bet } from "../../interfaces/Bet"
 

@@ -48,7 +48,7 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
         {users
           ?.filter(
             (user: User) =>
-              !userData.blockedUsers.includes(user.id) &&
+              (!userData?.blockedUsers.includes(user.id) ?? true) &&
               (friendsOrEveryone === "friends"
                 ? user.searchableDisplayName.startsWith(search)
                 : true),

@@ -1,5 +1,5 @@
-import { DarkMode } from "../../containers/DarkMode"
-// Forked from https://codepen.io/nikhil8krishnan/pen/rVoXJa, but there's no github repo
+import { DarkMode } from "../../../containers/DarkMode"
+// "Forked" from https://codepen.io/nikhil8krishnan/pen/rVoXJa, but there's no github repo
 // Thank you Nikhil Krishnan!
 
 export const ClockSpinner: React.FC = () => {

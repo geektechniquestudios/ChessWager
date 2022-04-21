@@ -5,7 +5,8 @@ import { DropdownButton } from "./DropdownButton"
 interface Props {}
 
 export const BlockedButton: React.FC<Props> = ({}) => {
-  const { setActiveMenu, menuStack,setMenuStack } = DropdownState.useContainer()
+  const { setActiveMenu, menuStack, setMenuStack } =
+    DropdownState.useContainer()
 
   return (
     <DropdownButton

@@ -5,6 +5,7 @@ import {
   doc,
   getFirestore,
   updateDoc,
+  writeBatch,
 } from "firebase/firestore"
 import { RiUserFollowLine } from "react-icons/ri"
 import { firebaseApp } from "../../../../../../config"
@@ -26,10 +27,12 @@ export const CancelPendingRequestButton: React.FC<Props> = ({
   const targetUserRef = doc(db, "users", id)
   const requestsCollection = collection(targetUserRef, "requests")
   const cancelRequest = () => {
-    deleteDoc(doc(requestsCollection, auth.currentUser!.uid))
-    updateDoc(userRef, {
+    const batch = writeBatch(db)
+    batch.delete(doc(requestsCollection, auth.currentUser!.uid))
+    batch.update(userRef, {
       redactedFriendRequests: arrayUnion(id),
     })
+    batch.commit()
   }
   return (
     <DropdownButton

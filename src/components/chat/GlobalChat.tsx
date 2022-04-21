@@ -35,5 +35,3 @@ export const GlobalChat: React.FC = () => {
     </div>
   )
 }
-
-export default GlobalChat

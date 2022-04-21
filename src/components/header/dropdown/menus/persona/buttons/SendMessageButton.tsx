@@ -3,7 +3,7 @@ import { DropdownState } from "../../../../../containers/DropdownState"
 import { DropdownButton } from "./DropdownButton"
 import { Auth } from "../../../../../containers/Auth"
 import { firebaseApp } from "../../../../../../config"
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore"
+import { doc, getFirestore, runTransaction } from "firebase/firestore"
 import { UserMenuState } from "../../../../../containers/UserMenuState"
 
 const db = getFirestore(firebaseApp)
@@ -29,34 +29,29 @@ export const SendMessageButton: React.FC<Props> = ({
   const createConvoDoc = () => {
     const convoDoc = doc(db, "conversations", docId)
 
-    getDoc(convoDoc)
-      .then((doc) => doc.exists())
-      .then((doesDocExist) => {
-        if (!doesDocExist) {
-          setDoc(
-            convoDoc,
-            {
-              messageThumbnail: "",
-              userIds: [id, auth.currentUser?.uid],
-              user1: {
-                id: auth.currentUser?.uid,
-                displayName: auth.currentUser?.displayName,
-                photoUrl: auth.currentUser?.photoURL,
-              },
-              user2: {
-                id: id,
-                displayName: displayName,
-                photoURL: photoURL,
-              },
-              isDeletedForUser1: false,
-              isDeletedForUser2: false,
-              doesUser1HaveUnreadMessages: false,
-              doesUser2HaveUnreadMessages: false,
-            },
-            { merge: true },
-          )
-        }
-      })
+    runTransaction(db, async (transaction) => {
+      const convo = await transaction.get(convoDoc)
+      if (!convo.exists()) {
+        transaction.set(convoDoc, {
+          messageThumbnail: "",
+          userIds: [id, auth.currentUser?.uid],
+          user1: {
+            id: auth.currentUser?.uid,
+            displayName: auth.currentUser?.displayName,
+            photoUrl: auth.currentUser?.photoURL,
+          },
+          user2: {
+            id: id,
+            displayName: displayName,
+            photoURL: photoURL,
+          },
+          isDeletedForUser1: false,
+          isDeletedForUser2: false,
+          doesUser1HaveUnreadMessages: false,
+          doesUser2HaveUnreadMessages: false,
+        })
+      }
+    })
   }
 
   return (

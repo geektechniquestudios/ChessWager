@@ -13,7 +13,7 @@ export const AvaxPriceButton: React.FC = () => {
       {avaxPrice !== 0 && avaxPrice !== undefined && avaxPrice !== null && (
         <a
           href="https://www.coingecko.com/en/coins/avalanche"
-          className="cw-button flex flex-col justify-center border-none my-2 hover:bg-stone-300 dark:hover:bg-stone-700 h-9"
+          className="h-9 rounded-md grid place-content-center color-shift clickable border-none hover:bg-stone-300 dark:hover:bg-stone-700 hover:text-black hover:border-black dark:hover:text-white dark:hover:border-white border-stone-800 dark:border-stone-300 text-stone-800 dark:text-stone-300 font-bold"
           title="Price from CoinGecko"
           data-toggle="tooltip"
           target="_blank"

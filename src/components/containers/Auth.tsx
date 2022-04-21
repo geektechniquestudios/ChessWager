@@ -12,6 +12,7 @@ import {
   getDoc,
   setDoc,
   serverTimestamp,
+  runTransaction,
 } from "firebase/firestore"
 
 declare let window: any
@@ -97,44 +98,43 @@ const useAuth = () => {
     const addToUsers = () => {
       if (auth.currentUser) {
         const userDoc = doc(db, "users", auth.currentUser!.uid)
-        getDoc(userDoc)
-          .then((doc) => {
-            if (!doc.exists()) {
-              setDoc(userDoc, {
-                betAcceptedCount: 0,
-                betFundedCount: 0,
-                walletAddress: "",
-                photoURL: auth.currentUser!.photoURL,
-                displayName: auth.currentUser!.displayName,
-                searchableDisplayName:
-                  auth.currentUser!.displayName?.toLowerCase(),
-                id: auth.currentUser!.uid,
-                amountBet: 0,
-                amountWon: 0,
-                betWinCount: 0,
-                hasNewMessage: false,
-                hasNewNotification: false,
-                blockedUsers: [],
-                sentFriendRequests: [],
-                redactedFriendRequests: [],
-                friends: [],
-                joinDate: serverTimestamp(),
-              })
-                .catch(console.error)
-                .then(() => {
-                  alert(
-                    "This website is under development.  Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
-                  )
-                })
-            }
-            if (doc.data()?.walletAddress ?? "" !== "") {
-              setIsWalletConnected(true)
-              localStorage.setItem("isWalletConnected", "true")
-              setWalletAddress(doc.data()!.walletAddress)
-              localStorage.setItem("walletAddress", doc.data()!.walletAddress)
-            }
-          })
+        runTransaction(db, async (transaction) => {
+          const doc = await transaction.get(userDoc)
+          if (!doc.exists()) {
+            transaction.set(userDoc, {
+              betAcceptedCount: 0,
+              betFundedCount: 0,
+              walletAddress: "",
+              photoURL: auth.currentUser!.photoURL,
+              displayName: auth.currentUser!.displayName,
+              searchableDisplayName:
+                auth.currentUser!.displayName?.toLowerCase(),
+              id: auth.currentUser!.uid,
+              amountBet: 0,
+              amountWon: 0,
+              betWinCount: 0,
+              hasNewMessage: false,
+              hasNewNotification: false,
+              blockedUsers: [],
+              sentFriendRequests: [],
+              redactedFriendRequests: [],
+              friends: [],
+              joinDate: serverTimestamp(),
+            })
+          }
+          if (doc.data()?.walletAddress ?? "" !== "") {
+            setIsWalletConnected(true)
+            localStorage.setItem("isWalletConnected", "true")
+            setWalletAddress(doc.data()!.walletAddress)
+            localStorage.setItem("walletAddress", doc.data()!.walletAddress)
+          }
+        })
           .catch(console.error)
+          .then(() => {
+            alert(
+              "This website is under development.  Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
+            )
+          })
       }
     }
 

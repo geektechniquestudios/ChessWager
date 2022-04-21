@@ -1,4 +1,4 @@
-import { Auth } from "../../containers/Auth"
+import { Auth } from "../../../../containers/Auth"
 import { ApproveButton } from "./ApproveButton"
 import { KickButton } from "./KickButton"
 
@@ -13,7 +13,7 @@ export const ApproveKickWrapper: React.FC<Props> = ({
   user1Id,
   status,
   id,
-  user2Id
+  user2Id,
 }) => {
   const { auth, user } = Auth.useContainer()
 

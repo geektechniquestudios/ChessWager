@@ -8,10 +8,7 @@ import {
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
-import {
-  useCollectionData,
-  useCollectionDataOnce,
-} from "react-firebase-hooks/firestore"
+import { useCollectionData } from "react-firebase-hooks/firestore"
 import { Bet } from "../../../../../interfaces/Bet"
 import { BetsListItem } from "./BetsListItem"
 

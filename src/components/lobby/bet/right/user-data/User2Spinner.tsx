@@ -1,8 +1,5 @@
-import { Auth } from "../../containers/Auth"
-import { ClockSpinner } from "./ClockSpinner"
-
-// Forked from https://codepen.io/nikhil8krishnan/pen/rVoXJa, but there's no github repo
-// Thank you Nikhil Krishnan!
+import { Auth } from "../../../../containers/Auth"
+import { ClockSpinner } from "../../models/ClockSpinner"
 
 interface Props {
   status: string

@@ -49,7 +49,6 @@ export const AddFriendButton: React.FC<Props> = ({ id }) => {
           isRead: false,
         },
       )
-      // also write rule for this; can't update notications of target user if a friend request has already been sent at some point
       batch.update(targetUserRef, {
         hasNewNotifications: true,
       })

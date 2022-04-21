@@ -1,5 +1,5 @@
-import { Auth } from "../../containers/Auth"
-import { MetamaskPrompt } from "../MetamaskPrompt"
+import { Auth } from "../../../../containers/Auth"
+import { MetamaskPrompt } from "../../../MetamaskPrompt"
 
 interface Props {
   betId: string

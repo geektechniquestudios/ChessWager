@@ -6,6 +6,7 @@ import {
   getFirestore,
   serverTimestamp,
   setDoc,
+  updateDoc,
 } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
 import { firebaseApp } from "../../../../../../config"
@@ -39,13 +40,9 @@ export const BlockUserButton: React.FC<Props> = ({
       createdAt: serverTimestamp(),
     })
       .then(() => {
-        setDoc(
-          userRef,
-          {
-            blockedUsers: arrayUnion(id),
-          },
-          { merge: true },
-        )
+        updateDoc(userRef, {
+          blockedUsers: arrayUnion(id),
+        })
       })
       .then(() => {
         alert(`${displayName} has been blocked.`)

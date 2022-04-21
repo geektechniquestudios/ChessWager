@@ -1,5 +1,4 @@
 import { BigNumber, ethers } from "ethers"
-import { useEffect } from "react"
 import { BiWallet } from "react-icons/bi"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
@@ -62,8 +61,6 @@ export const MetamaskPrompt: React.FC<Props> = ({
     gasLimit: 1000000,
   }
 
-  // let contract: ethers.Contract
-
   const isCorrectBlockchain = async (
     provider: ethers.providers.Web3Provider,
   ) => {
@@ -107,10 +104,6 @@ export const MetamaskPrompt: React.FC<Props> = ({
       console.log("window.eth undefined!") // tell user to install metamask
     }
   }
-
-  useEffect(() => {
-    // sendBet()
-  }, [])
 
   const isUser1 = auth.currentUser?.uid === user1Id
   const isUser2 = auth.currentUser?.uid === user2Id

@@ -1,5 +1,4 @@
 import "../../../../../style/scrollbar.scss"
-import { useState } from "react"
 import { Auth } from "../../../../containers/Auth"
 import { collection, doc, getFirestore } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"

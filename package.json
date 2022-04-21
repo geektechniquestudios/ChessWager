@@ -4,7 +4,10 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
-    "test": "jest",
+    "test": "jest && hardhat test && cypress run",
+    "test-jest": "jest",
+    "test-hardhat": "hardhat test",
+    "test-cypress": "cypress run",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "deploy-contract-develop": "yarn hardhat run hardhat/scripts/deploy.js --network fuji",
@@ -71,6 +74,7 @@
     "postcss": "^8.4.6",
     "prettier": "^2.5.1",
     "prettier-plugin-solidity": "^1.0.0-beta.18",
+    "react-test-renderer": "^18.0.0",
     "tailwindcss": "^3.0.24",
     "typescript": "^4.5.4",
     "vite": "^2.9.0"

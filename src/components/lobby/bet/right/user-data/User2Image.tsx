@@ -1,4 +1,4 @@
-import { UserImage } from "./UserImage"
+import { UserImage } from "../../models/UserImage"
 
 interface Props {
   user2PhotoURL: string

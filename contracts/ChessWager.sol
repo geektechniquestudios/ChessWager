@@ -237,12 +237,8 @@ contract ChessWager is Ownable {
       keccak256(abi.encodePacked("draw"))
     ) {
       uint256 user1BetAmount = (prizePool / (1 + (bet.multiplier / 100)));
-      bet.user1Metamask.transfer(
-        user1BetAmount 
-      );
-      bet.user2Metamask.transfer(
-        prizePool - user1BetAmount 
-      );
+      bet.user1Metamask.transfer(user1BetAmount);
+      bet.user2Metamask.transfer(prizePool - user1BetAmount);
     }
 
     // all checks done, only remaining outcome is one side winning

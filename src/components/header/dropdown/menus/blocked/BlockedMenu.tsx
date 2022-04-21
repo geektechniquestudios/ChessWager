@@ -1,4 +1,3 @@
-import { Auth } from "../../../../containers/Auth"
 import { Menu } from "../../models/Menu"
 import { BlockedList } from "./BlockedList"
 

@@ -8,10 +8,9 @@ import {
   doc,
   getFirestore,
   query,
-  setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore"
-import { UserDataState } from "./UserDataState"
 import { useEffect } from "react"
 import { UserMenuState } from "./UserMenuState"
 import { DropdownState } from "./DropdownState"
@@ -48,21 +47,13 @@ const useConversationsState = () => {
           const isUser2 =
             (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
           if (isUser1) {
-            setDoc(
-              conversationDocRef,
-              {
-                doesUser1HaveUnreadMessages: false,
-              },
-              { merge: true },
-            )
+            updateDoc(conversationDocRef, {
+              doesUser1HaveUnreadMessages: false,
+            })
           } else if (isUser2) {
-            setDoc(
-              conversationDocRef,
-              {
-                doesUser2HaveUnreadMessages: false,
-              },
-              { merge: true },
-            )
+            updateDoc(conversationDocRef, {
+              doesUser2HaveUnreadMessages: false,
+            })
           }
         })
     }

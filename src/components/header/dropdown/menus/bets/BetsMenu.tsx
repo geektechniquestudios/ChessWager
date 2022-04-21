@@ -5,7 +5,7 @@ import { BetsListArea } from "./BetsListArea"
 export const BetsMenu: React.FC = () => {
   return (
     <Menu
-      menuItems={[<DropdownArea key={2} content={<BetsListArea />} />]}
+      menuItems={[<DropdownArea content={<BetsListArea />} />]}
       thisMenu={"bets"}
     />
   )

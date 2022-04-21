@@ -1,4 +1,4 @@
-import { FollowThrough } from "./FollowThrough"
+import { FollowThrough } from "../../models/FollowThrough"
 
 interface Props {
   status: string

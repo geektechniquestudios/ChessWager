@@ -56,48 +56,31 @@ export const ConvoChatForm: React.FC<Props> = ({
 
     const isUser1 =
       (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")
-
     const isUser2 =
       (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
 
     const batch = writeBatch(db)
     if (isUser1) {
       const userRef = doc(db, "users", conversation!.user2.id)
-      batch.set(
-        userRef,
-        {
-          hasNewMessage: true,
-        },
-        { merge: true },
-      )
-      batch.set(
-        conversationDocRef,
-        {
-          messageThumbnail: formValue,
-          doesUser2HaveUnreadMessages: true,
-          modifiedAt: serverTimestamp(),
-        },
-        { merge: true },
-      )
+      batch.update(userRef, {
+        hasNewMessage: true,
+      })
+      batch.update(conversationDocRef, {
+        messageThumbnail: formValue,
+        doesUser2HaveUnreadMessages: true,
+        modifiedAt: serverTimestamp(),
+      })
     } else if (isUser2) {
       const userRef = doc(db, "users", conversation!.user1.id)
-      batch.set(
-        userRef,
-        {
-          hasNewMessage: true,
-        },
-        { merge: true },
-      )
+      batch.update(userRef, {
+        hasNewMessage: true,
+      })
 
-      batch.set(
-        conversationDocRef,
-        {
-          messageThumbnail: formValue,
-          doesUser1HaveUnreadMessages: true,
-          modifiedAt: serverTimestamp(),
-        },
-        { merge: true },
-      )
+      batch.update(conversationDocRef, {
+        messageThumbnail: formValue,
+        doesUser1HaveUnreadMessages: true,
+        modifiedAt: serverTimestamp(),
+      })
     } else {
       throw new Error("User not in conversation")
     }

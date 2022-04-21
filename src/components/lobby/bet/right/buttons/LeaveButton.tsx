@@ -1,7 +1,7 @@
+import "../../../../../style/buttons.scss"
 import { RiCloseFill } from "react-icons/ri"
-import { Auth } from "../../containers/Auth"
-import "../../../style/buttons.scss"
-import { LobbyState } from "../../containers/LobbyState"
+import { Auth } from "../../../../containers/Auth"
+import { LobbyState } from "../../../../containers/LobbyState"
 import {
   doc,
   DocumentData,
@@ -9,7 +9,7 @@ import {
   getFirestore,
   updateDoc,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../config"
+import { firebaseApp } from "../../../../../config"
 const db = getFirestore(firebaseApp)
 
 interface Props {
@@ -46,7 +46,7 @@ export const LeaveButton: React.FC<Props> = ({ user2Id, status, id }) => {
             <button
               title="Leave"
               onClick={cancel}
-              className="cw-button dark:text-red-600 text-red-600 hover:text-red-600 dark:hover:text-rose-300 transform grid place-content-center mx-1 p-0.5 border-0"
+              className="dark:text-red-600 text-red-600 hover:text-red-600 dark:hover:text-rose-300 transform grid place-content-center mx-1 p-0.5 border-0 color-shift clickable"
               id="leave-button"
             >
               <RiCloseFill />

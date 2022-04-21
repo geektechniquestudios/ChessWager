@@ -1,6 +1,5 @@
 import CurrencyInput from "react-currency-input-field"
 import { Price } from "../../containers/Price"
-import "../../../style/index.scss"
 import { useState } from "react"
 
 interface Props {

@@ -30,7 +30,7 @@ export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
     <div className="scrollbar flex flex-col-reverse pb-3 overflow-y-auto overflow-x-hidden px-1">
       {messages
         ?.filter((message) => {
-          if(userData) return !userData.blockedUsers.includes(message.uid)
+          if (userData) return !userData.blockedUsers.includes(message.uid)
           return true
         })
         .sort(

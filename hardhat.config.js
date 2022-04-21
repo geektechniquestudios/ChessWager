@@ -28,6 +28,7 @@ module.exports = {
   solidity: "0.8.11",
   paths: {
     artifacts: "./src/artifacts",
+    tests: "./hardhat-tests",
   },
   networks: {
     hardhat: {
