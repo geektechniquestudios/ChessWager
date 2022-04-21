@@ -12,7 +12,7 @@ interface Props {}
 export const GameResultPopup: React.FC<Props> = ({}) => {
   const { isDarkOn } = DarkMode.useContainer()
   const isFirefox = navigator.userAgent.indexOf("Firefox") !== -1
-  const { prevGameId, gameId } = GameState.useContainer()
+  const { prevGameId, gameId, buildOutcomeMessage } = GameState.useContainer()
 
   const bgColor = !isFirefox
     ? isDarkOn
@@ -26,26 +26,6 @@ export const GameResultPopup: React.FC<Props> = ({}) => {
   const firefoxColors = (): string => "bg-stone-100 dark:bg-stone-700"
 
   const [outcome, setOutcome] = useState<string>("")
-
-  const buildOutcomeMessage = (gameData: any): string => {
-    const whiteWins = gameData.winner === "white" ? "White wins by" : ""
-    const blackWins = gameData.winner === "black" ? "Black wins by" : ""
-    const isDraw = gameData.status === "draw" || gameData.status === "outoftime"
-    const draw = isDraw ? "Game ended in a draw" : ""
-    const isStalemate = gameData.status === "Game ended in a stalemate"
-    const stalemate = isStalemate ? "Stalemate" : ""
-    const resign = gameData.status === "resign" ? "resignation" : ""
-    const timeout = gameData.status === "timeout" ? "timeout" : ""
-
-    const checkmate = gameData.status === "mate" ? "checkmate" : ""
-
-    const outcome =
-      isDraw || isStalemate
-        ? `${draw}${stalemate}`
-        : `${whiteWins}${blackWins} ${resign}${timeout}${checkmate}`
-
-    return outcome
-  }
 
   const [gameData, setGameData] = useState<any>()
 
@@ -72,13 +52,13 @@ export const GameResultPopup: React.FC<Props> = ({}) => {
     <>
       {count > 0 && (
         <div
-          className={`${firefoxColors} w-64 rounded-md border border-stone-600 dark:border-stone-800 bg-stone-200 absolute z-50 top-1/3 overflow-hidden`}
+          className={`${firefoxColors} w-64 rounded-md border border-stone-600 dark:border-stone-800 bg-stone-200 absolute z-50 top-1/3 overflow-hidden drop-shadow-2xl`}
           style={{
             background: bgColor,
             backdropFilter: blur,
           }}
         >
-          <header className="w-full h-6 flex justify-between p-1 dark:bg-stone-600">
+          <header className="w-full h-6 flex justify-between p-1 bg-stone-300 dark:bg-stone-600 border-b border-stone-400 border-stone-500">
             <PopupCounter count={count} setCount={setCount} />
             <DropdownButton
               content={<BsX />}

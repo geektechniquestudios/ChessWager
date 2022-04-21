@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { SiLichess } from "react-icons/si"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { DropdownState } from "../../../../containers/DropdownState"
+import { GameState } from "../../../../containers/GameState"
 import { Price } from "../../../../containers/Price"
 import { Menu } from "../../models/Menu"
 import { UserBetData } from "./UserBetData"
@@ -37,26 +38,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
   const betAmount = amount! + amount! * multiplier!
   const { avaxPrice } = Price.useContainer()
   const [outcome, setOutcome] = useState<string>("")
-
-  const buildOutcomeMessage = (gameData: any): string => {
-    const whiteWins = gameData.winner === "white" ? "White won by" : ""
-    const blackWins = gameData.winner === "black" ? "Black won by" : ""
-    const isDraw = gameData.status === "draw" || gameData.status === "outoftime"
-    const draw = isDraw ? "Game ended in a draw" : ""
-    const isStalemate = gameData.status === "Game ended in a stalemate"
-    const stalemate = isStalemate ? "Stalemate" : ""
-    const resign = gameData.status === "resign" ? "resignation" : ""
-    const timeout = gameData.status === "timeout" ? "timeout" : ""
-
-    const checkmate = gameData.status === "mate" ? "checkmate" : ""
-
-    const outcome =
-      isDraw || isStalemate
-        ? `${draw}${stalemate}`
-        : `${whiteWins}${blackWins} ${resign}${timeout}${checkmate}`
-
-    return outcome
-  }
+  const { buildOutcomeMessage } = GameState.useContainer()
 
   useEffect(() => {
     if (!gameId) return
