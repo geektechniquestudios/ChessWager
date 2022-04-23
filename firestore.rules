@@ -11,8 +11,8 @@ service cloud.firestore {
     match /conversations/{conversationId} {
       function isUserInConvo() {
         return true;
-        // return exists(/databases/$(database)/documents/conversations/$(conversation));
-        // return get(/databases/$(database)/documents/conversations/$(conversation)).data.userIds.hasAny(request.auth.uid);
+        // return exists(/databases/$(database)/documents/conversations/$(conversationId));
+        // return get(/databases/$(database)/documents/conversations/$(conversationId)).data.userIds.hasAny(request.auth.uid);
       }
      
       
@@ -684,7 +684,7 @@ service cloud.firestore {
       }
 
       allow create: if canCreate() && isReportCreateDataValid() && isReportCreateKeyValid();
-      // need to allow update to resolved status if admin
+      // need to allow update to resolved status if moderator or admin
     }
   }
 }

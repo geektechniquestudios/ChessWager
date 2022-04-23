@@ -21,15 +21,20 @@ export const PlayerData: React.FC<Props> = ({
 }) => {
   return (
     <div className="flex w-full justify-between overflow-clip">
-      <div className="flex flex-col justify-center overflow-hidden">
-        <div className="flex justify-center mx-1.5 ">
+      <a
+        href={`https://lichess.org/@/${name}`}
+        rel="noreferrer"
+        target="_blank"
+        className="flex flex-col justify-center overflow-hidden hover:text-stone-900 dark:hover:text-white "
+      >
+        <div className="flex justify-center mx-1.5">
           <p className="flex mx-1 font-bold text-teal-700">{title}</p>
-          <div className="flex gap-2">
+          <div className="flex gap-2 hover:underline">
             <p>{name}</p>
             <p className="font-bold">{rating !== 0 ? rating : ""}</p>
           </div>
         </div>
-      </div>
+      </a>
       <Countdown fen={fen} side={side} time={time} isNewGame={isNewGame} />
     </div>
   )

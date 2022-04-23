@@ -5,7 +5,7 @@ const useGameState = () => {
   const [gameId, setGameId] = useState("")
   const [prevGameId, setPrevGameId] = useState("")
   useEffect(() => {
-    setPrevGameId(gameId)
+    if (gameId !== prevGameId) setPrevGameId(gameId)
   }, [gameId])
 
   const buildOutcomeMessage = (gameData: any): string => {

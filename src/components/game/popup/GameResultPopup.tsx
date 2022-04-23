@@ -6,12 +6,39 @@ import { DropdownButton } from "../../header/dropdown/menus/persona/buttons/Drop
 import { PopupCounter } from "./PopupCounter"
 import { PopupTitle } from "./PopupTitle"
 
-interface Props {}
+interface Props {
+  orientation: "black" | "white" | undefined
+}
 
-export const GameResultPopup: React.FC<Props> = ({}) => {
+export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
   const { isDarkOn } = DarkMode.useContainer()
   const isFirefox = navigator.userAgent.indexOf("Firefox") !== -1
   const { prevGameId, gameId, buildOutcomeMessage } = GameState.useContainer()
+
+  const [outcome, setOutcome] = useState<string>("")
+  const [gameData, setGameData] = useState<any>()
+  const [linkId, setLinkId] = useState<string>("")
+
+  useEffect(() => {
+    setLinkId(prevGameId)
+    if (prevGameId === "") return
+    fetch(`https://lichess.org/api/game/${prevGameId}`)
+      .then((res) => res.json())
+      .then((gameData: any) => {
+        setGameData(gameData)
+        if (gameData.status === "started") return
+        setOutcome(buildOutcomeMessage(gameData))
+        setCount(5)
+      })
+      .catch(console.error)
+  }, [gameId])
+
+  const [count, setCount] = useState(0)
+
+  const whitePlayer = gameData?.players.white.userId
+  const whiteRating = gameData?.players.white.rating
+  const blackPlayer = gameData?.players.black.userId
+  const blackRating = gameData?.players.black.rating
 
   const bgColor = !isFirefox
     ? isDarkOn
@@ -24,28 +51,6 @@ export const GameResultPopup: React.FC<Props> = ({}) => {
 
   const firefoxColors = (): string => "bg-stone-100 dark:bg-stone-700"
 
-  const [outcome, setOutcome] = useState<string>("")
-
-  const [gameData, setGameData] = useState<any>()
-
-  useEffect(() => {
-    if (prevGameId === "") return
-    fetch(`https://lichess.org/api/game/${prevGameId}`)
-      .then((res) => res.json())
-      .then((gameData: any) => {
-        setGameData(gameData)
-        if (gameData.status === "started") return
-        setOutcome(buildOutcomeMessage(gameData))
-        setCount(5)
-      })
-      .catch(console.error)
-  }, [gameId])
-  const [count, setCount] = useState(0)
-
-  const whitePlayer = gameData?.players.white.userId
-  const whiteRating = gameData?.players.white.rating
-  const blackPlayer = gameData?.players.black.userId
-  const blackRating = gameData?.players.black.rating
   return (
     <>
       {count > 0 && (
@@ -85,7 +90,7 @@ export const GameResultPopup: React.FC<Props> = ({}) => {
             </div>
             <a
               className="flex justify-center text-center pb-2 text-xs font-bold hover:underline hover:text-black dark:hover:text-white"
-              href={`https://lichess.org/${prevGameId}`}
+              href={`https://lichess.org/${linkId}/${orientation}`}
               rel="noreferrer"
               title="View game"
               target="_blank"

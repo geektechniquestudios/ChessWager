@@ -130,7 +130,7 @@ export const ChessGame: React.FC = () => {
         style={{ minWidth: "17em", maxWidth: "80vh" }}
       >
         <div className="resize flex w-full h-full justify-center align-middle relative">
-          <GameResultPopup />
+          <GameResultPopup orientation={orientation} />
           <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border border-stone-500 dark:border-stone-700">
             <div className="flex justify-center w-full">
               <PlayerData
