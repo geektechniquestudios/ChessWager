@@ -3,7 +3,12 @@ import { DropdownState } from "../../../../../containers/DropdownState"
 import { DropdownButton } from "./DropdownButton"
 import { Auth } from "../../../../../containers/Auth"
 import { firebaseApp } from "../../../../../../config"
-import { doc, getFirestore, runTransaction } from "firebase/firestore"
+import {
+  doc,
+  getFirestore,
+  runTransaction,
+  serverTimestamp,
+} from "firebase/firestore"
 import { UserMenuState } from "../../../../../containers/UserMenuState"
 
 const db = getFirestore(firebaseApp)
@@ -34,11 +39,12 @@ export const SendMessageButton: React.FC<Props> = ({
       if (!convo.exists()) {
         transaction.set(convoDoc, {
           messageThumbnail: "",
+          modifiedAt: serverTimestamp(),
           userIds: [id, auth.currentUser?.uid],
           user1: {
             id: auth.currentUser?.uid,
             displayName: auth.currentUser?.displayName,
-            photoUrl: auth.currentUser?.photoURL,
+            photoURL: auth.currentUser?.photoURL,
           },
           user2: {
             id: id,

@@ -7,6 +7,7 @@ import {
   serverTimestamp,
   setDoc,
   updateDoc,
+  writeBatch,
 } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
 import { firebaseApp } from "../../../../../../config"
@@ -34,21 +35,21 @@ export const BlockUserButton: React.FC<Props> = ({
   const userRef = doc(db, "users", auth.currentUser!.uid)
 
   const blockUser = () => {
-    setDoc(doc(blockedUsers, id), {
+    const batch = writeBatch(db)
+
+    batch.set(doc(blockedUsers, id), {
       userName: displayName,
       photoURL,
       createdAt: serverTimestamp(),
     })
-      .then(() => {
-        updateDoc(userRef, {
-          blockedUsers: arrayUnion(id),
-        })
-      })
-      .then(() => {
-        alert(`${displayName} has been blocked.`)
-        setIsDropdownOpen(false)
-        setMenuHeight(0)
-      })
+    batch.update(userRef, {
+      blockedUsers: arrayUnion(id),
+    })
+    batch.commit().then(() => {
+      alert(`${displayName} has been blocked.`)
+      setIsDropdownOpen(false)
+      setMenuHeight(0)
+    })
   }
 
   return (

@@ -39,10 +39,10 @@ export const ReportForm: React.FC<Props> = ({}) => {
       userName: displayName,
       reportedUserId,
       resolved: false,
+    }).then(() => {
+      setReportFormValue("")
+      alert("Your report has been sent")
     })
-
-    setReportFormValue("")
-    alert("Your report has been sent")
   }
   return (
     <div className="flex-col justify-start w-full grow pb-2">

@@ -40,15 +40,15 @@ export const AddFriendButton: React.FC<Props> = ({ id }) => {
       { merge: true },
     )
     if (!userData!.sentFriendRequests.includes(id)) {
-      batch.set(
-        doc(notificationsCollection, auth.currentUser!.uid + Timestamp.now()),
-        {
-          createdAt: serverTimestamp(),
-          text: `${auth.currentUser!.displayName} sent you a friend request.`,
-          openToMenu: "requests",
-          isRead: false,
-        },
-      )
+      // batch.set(
+      //   doc(notificationsCollection, auth.currentUser!.uid + Timestamp.now()),
+      //   {
+      //     createdAt: serverTimestamp(),
+      //     text: `${auth.currentUser!.displayName} sent you a friend request.`,
+      //     openToMenu: "requests",
+      //     isRead: false,
+      //   },
+      // )
       batch.update(targetUserRef, {
         hasNewNotifications: true,
       })

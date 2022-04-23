@@ -65,7 +65,7 @@ export const UserData: React.FC<Props> = ({
           />
           <img
             src={photoURL}
-            className="w-24 h-24 rounded-full grid place-content-center border"
+            className="w-24 h-24 rounded-full grid place-content-center border border-stone-400 dark:border-stone-500"
           />
 
           <div className="my-2 flex flex-col justify-center items-center gap-0.5">

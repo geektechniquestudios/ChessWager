@@ -44,7 +44,9 @@ export const ConvoChatForm: React.FC<Props> = ({
 
     const { uid, photoURL, displayName } = auth.currentUser
 
-    addDoc(messagesRef, {
+    const batch = writeBatch(db)
+
+    batch.set(doc(messagesRef), {
       text: formValue,
       createdAt: serverTimestamp(),
       uid,
@@ -59,7 +61,6 @@ export const ConvoChatForm: React.FC<Props> = ({
     const isUser2 =
       (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
 
-    const batch = writeBatch(db)
     if (isUser1) {
       const userRef = doc(db, "users", conversation!.user2.id)
       batch.update(userRef, {
@@ -75,7 +76,6 @@ export const ConvoChatForm: React.FC<Props> = ({
       batch.update(userRef, {
         hasNewMessage: true,
       })
-
       batch.update(conversationDocRef, {
         messageThumbnail: formValue,
         doesUser1HaveUnreadMessages: true,
@@ -89,6 +89,7 @@ export const ConvoChatForm: React.FC<Props> = ({
     setFormValue("")
     dummy.current?.scrollIntoView({ behavior: "smooth" })
   }
+
   return (
     <div className="flex-col justify-start w-full grow pb-2">
       <fieldset

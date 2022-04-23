@@ -1,12 +1,15 @@
 import { AppWithProviders } from "./AppWithProviders"
-import { shallow } from "enzyme"
 import { MainHeader } from "./components/header/MainHeader"
 import { GameResultPopup } from "./components/game/popup/GameResultPopup"
+import renderer from "react-test-renderer"
+import { HeaderMiddle } from "./components/header/HeaderMiddle"
 
-test("that jest is working", () => {
+test("jest is working", () => {
   expect(true).toBe(true)
 })
 
-
+test("jest can render a simple component", () => {
+  renderer.create(<HeaderMiddle />)
+})
 
 export {}

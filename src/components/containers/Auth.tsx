@@ -9,8 +9,6 @@ import {
   getFirestore,
   doc,
   updateDoc,
-  getDoc,
-  setDoc,
   serverTimestamp,
   runTransaction,
 } from "firebase/firestore"

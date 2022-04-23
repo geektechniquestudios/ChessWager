@@ -40,7 +40,6 @@ export const GameResultPopup: React.FC<Props> = ({}) => {
       })
       .catch(console.error)
   }, [gameId])
-
   const [count, setCount] = useState(0)
 
   const whitePlayer = gameData?.players.white.userId
@@ -51,13 +50,13 @@ export const GameResultPopup: React.FC<Props> = ({}) => {
     <>
       {count > 0 && (
         <div
-          className={`${firefoxColors} w-64 rounded-md border border-stone-600 dark:border-stone-800 bg-stone-200 absolute z-50 top-1/3 overflow-hidden drop-shadow-2xl`}
+          className={`${firefoxColors} w-64 rounded-md border border-stone-600 dark:border-stone-800 bg-stone-200 absolute z-40 overflow-hidden drop-shadow-2xl top-1/2 -translate-y-1/2`}
           style={{
             background: bgColor,
             backdropFilter: blur,
           }}
         >
-          <header className="w-full h-6 flex justify-between p-1 bg-stone-300 dark:bg-stone-600 border-b border-stone-400 border-stone-500">
+          <header className="w-full h-6 flex justify-between p-1 bg-stone-300 dark:bg-stone-600 border-b border-stone-400 dark:border-stone-500">
             <PopupCounter count={count} setCount={setCount} />
             <DropdownButton
               content={<BsX />}

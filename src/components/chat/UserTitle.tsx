@@ -9,7 +9,8 @@ interface Props {
 }
 
 export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
-  const { openDropdownToMenu } = DropdownState.useContainer()
+  const { openDropdownToMenu, menuStack, setMenuStack } =
+    DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { user } = Auth.useContainer()
   const disabledStyle = !user ? "pointer-events-none" : ""
@@ -20,6 +21,7 @@ export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
       onClick={() => {
         setClickedUserById(uid)
         openDropdownToMenu("clickedUser")
+        setMenuStack([...menuStack, "clickedUser"])
       }}
     >
       <img

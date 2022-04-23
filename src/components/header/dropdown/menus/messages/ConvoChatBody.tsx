@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const ConvoChatBody: React.FC<Props> = ({ messagesRef }) => {
-  const q = query(messagesRef, orderBy("createdAt", "desc"), limit(25))
+  const q = query(messagesRef, orderBy("createdAt", "asc"))
   const [messages] = useCollectionData<[Message[]] | any>(q, { idField: "id" })
   const { userData } = UserDataState.useContainer()
   return (
@@ -30,7 +30,7 @@ export const ConvoChatBody: React.FC<Props> = ({ messagesRef }) => {
               !userData.blockedUsers.includes(bet.user1Id) &&
               !userData.blockedUsers.includes(bet.user2Id),
           )
-          .sort((a, b) => a.createdAt - b.createdAt)
+          // .sort((a, b) => a.createdAt - b.createdAt)
           .map((message: Message, index: number) => (
             <ConvoChatMessage key={index} {...message} />
           ))}

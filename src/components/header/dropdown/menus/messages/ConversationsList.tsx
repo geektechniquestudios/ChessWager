@@ -66,7 +66,7 @@ export const ConversationsList: React.FC = ({}) => {
                     !userData.blockedUsers.includes(conversation.user1.id) &&
                     !userData.blockedUsers.includes(conversation.user2.id),
                 )
-                .sort((a, b) => a.modifiedAt - b.modifiedAt)
+                .sort((a, b) => b.modifiedAt - a.modifiedAt)
                 .map(convoToConvoAndUser)
                 .map(([conversation, user], index: number) => (
                   <ConvoItem

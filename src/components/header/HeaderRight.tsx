@@ -11,6 +11,7 @@ import { doc, getFirestore, updateDoc } from "firebase/firestore"
 import { firebaseApp } from "../../config"
 import { DropdownMenu } from "./dropdown/DropdownMenu"
 import { DropdownState } from "../containers/DropdownState"
+import { motion } from "framer-motion"
 
 const db = getFirestore(firebaseApp)
 
@@ -33,18 +34,23 @@ export const HeaderRight: React.FC = () => {
 
   const { auth } = Auth.useContainer()
   const setNewMessagesToFalse = () => {
-    if (!userData!.hasNewMessage) return
+    if (!userData?.hasNewMessage ?? true) return
     const userRef = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userRef, { hasNewMessage: false })
   }
   const setNewNotificationsToFalse = () => {
-    if (!userData!.hasNewNotifications) return
+    if (!userData?.hasNewNotifications ?? true) return
     const userRef = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userRef, { hasNewNotifications: false })
   }
   const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
   return (
-    <div className="flex-auto justify-end align-middle items-center flex mx-3 gap-1.5">
+    <div
+      className="flex-auto justify-end align-middle items-center flex mx-3 gap-1.5"
+      // initial={{ opacity: 0 }}
+      // animate={{ opacity: 1 }}
+      // transition={{ delay: 0.2, duration: 0.6}}
+    >
       <MainHeaderButton
         title="Search Users"
         openToMenu="searchUsers"
