@@ -5,9 +5,11 @@ import { Auth } from "../../../../../containers/Auth"
 import { firebaseApp } from "../../../../../../config"
 import {
   doc,
+  getDoc,
   getFirestore,
   runTransaction,
   serverTimestamp,
+  setDoc,
 } from "firebase/firestore"
 import { UserMenuState } from "../../../../../containers/UserMenuState"
 
@@ -30,34 +32,31 @@ export const SendMessageButton: React.FC<Props> = ({
 
   const { auth } = Auth.useContainer()
   const docId = [auth.currentUser?.uid, id].sort().join("-")
+  const convoDoc = doc(db, "conversations", docId)
 
-  const createConvoDoc = () => {
-    const convoDoc = doc(db, "conversations", docId)
-
-    runTransaction(db, async (transaction) => {
-      const convo = await transaction.get(convoDoc)
-      if (!convo.exists()) {
-        transaction.set(convoDoc, {
-          messageThumbnail: "",
-          modifiedAt: serverTimestamp(),
-          userIds: [id, auth.currentUser?.uid],
-          user1: {
-            id: auth.currentUser?.uid,
-            displayName: auth.currentUser?.displayName,
-            photoURL: auth.currentUser?.photoURL,
-          },
-          user2: {
-            id: id,
-            displayName: displayName,
-            photoURL: photoURL,
-          },
-          isDeletedForUser1: false,
-          isDeletedForUser2: false,
-          doesUser1HaveUnreadMessages: false,
-          doesUser2HaveUnreadMessages: false,
-        })
-      }
-    })
+  const createConvoDoc = async () => {
+    const convo = await getDoc(convoDoc)
+    if (!convo.exists()) {
+      setDoc(convoDoc, {
+        messageThumbnail: "",
+        modifiedAt: serverTimestamp(),
+        userIds: [id, auth.currentUser?.uid],
+        user1: {
+          id: auth.currentUser?.uid,
+          displayName: auth.currentUser?.displayName,
+          photoURL: auth.currentUser?.photoURL,
+        },
+        user2: {
+          id: id,
+          displayName: displayName,
+          photoURL: photoURL,
+        },
+        isDeletedForUser1: false,
+        isDeletedForUser2: false,
+        doesUser1HaveUnreadMessages: false,
+        doesUser2HaveUnreadMessages: false,
+      })
+    }
   }
 
   return (

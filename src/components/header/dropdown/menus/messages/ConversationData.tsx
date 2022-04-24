@@ -35,6 +35,7 @@ export const ConversationData: React.FC<Props> = ({}) => {
         formValue={convoFormValue.get(docId) ?? ""}
         setFormValue={setFormValue}
         conversationDocRef={conversationDocRef}
+        convoId={docId}
       />
       <span ref={dummy} />
       <ConvoChatBody messagesRef={messagesRef} />

@@ -45,7 +45,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
     fetch(`https://lichess.org/api/game/${gameId}`)
       .then((res) => res.json())
       .then((gameData: any) => {
-        setOutcome(buildOutcomeMessage(gameData))
+        setOutcome(buildOutcomeMessage(gameData) ?? "")
       })
       .catch(console.error)
   }, [id])

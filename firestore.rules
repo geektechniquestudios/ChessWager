@@ -8,18 +8,19 @@ service cloud.firestore {
       return isSignedIn && !isBanned;
     }
 
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
     match /conversations/{conversationId} {
       function isUserInConvo() {
-        return true;
-        // return exists(/databases/$(database)/documents/conversations/$(conversationId));
-        // return get(/databases/$(database)/documents/conversations/$(conversationId)).data.userIds.hasAny(request.auth.uid);
+         return request.auth.uid in resource.data.userIds
       }
-     
       
       function areCreateConvoKeysValid() {
         let requestData = request.resource.data;
-        return 
-          requestData.keys().hasAll(["messageThumbnail", "modifiedAt", "userIds", "user1", "user2", "isDeletedForUser1", "isDeletedForUser2", "doesUser1HaveUnreadMessages", "doesUser2HaveUnreadMessages"]) &&
+        return
+           requestData.keys().hasAll(["messageThumbnail", "modifiedAt", "userIds", "user1", "user2", "isDeletedForUser1", "isDeletedForUser2", "doesUser1HaveUnreadMessages", "doesUser2HaveUnreadMessages"]) &&
           requestData.keys().hasOnly(["messageThumbnail", "modifiedAt", "userIds", "user1", "user2", "isDeletedForUser1", "isDeletedForUser2", "doesUser1HaveUnreadMessages", "doesUser2HaveUnreadMessages"]);
       }
 
@@ -47,8 +48,8 @@ service cloud.firestore {
           requestData.modifiedAt == request.time &&
           request.auth.uid in requestData.userIds && 
           requestData.userIds.size() == 2 &&
-          (request.auth.uid == requestData.user1.id || request.auth.uid == requestData.user2.id) &&
-          (request.auth.token.name == requestData.user1.displayName || request.auth.token.name== requestData.user2.displayName) &&
+          ((request.auth.uid == requestData.user1.id && request.auth.token.name == requestData.user1.displayName) || 
+            (request.auth.uid == requestData.user2.id) && (request.auth.token.name== requestData.user2.displayName)) &&
           requestData.user1.id != requestData.user2.id &&
           requestData.isDeletedForUser1 == false &&
           requestData.isDeletedForUser2 == false &&
@@ -90,33 +91,40 @@ service cloud.firestore {
       allow update: if canCreate() && isUserInConvo() && (
         (areNewMessageConvoKeysValid() && isNewMessageConvoDataValid()) ||
         (isUnreadMessageConvoKeyValid() && isUnreadMessageConvoDataValid())
-      ) || true;
-      // allow update: if canCreate();
-      match /messages/{messageId} {
-        function areCreateMessageKeysValid() {
-          let requestData = request.resource.data;
-          return
-            requestData.keys().hasAll(["text", "createdAt", "uid", "photoURL", "userName"]) &&
-            requestData.keys().hasOnly(["text", "createdAt", "uid", "photoURL", "userName"]);
-        }
+      );
+    }
 
-        function isCreateMessageDataValid() {
-          let requestData = request.resource.data;
-          return
-            requestData.text is string &&
-            requestData.createdAt is timestamp &&
-            requestData.uid is string &&
-            requestData.photoURL is string &&
-            requestData.userName is string &&
-
-            requestData.createdAt == request.time &&
-            request.auth.uid == requestData.uid && 
-            request.auth.token.name == requestData.userName;
-        }
-
-        allow read: if canCreate() && isUserInConvo();
-        allow create: if canCreate() && isUserInConvo() && areCreateMessageKeysValid() && isCreateMessageDataValid();
+    match /conversations/{conversationId}/messages/{messageId} {
+      function isInConvo() {
+        // return request.auth.uid in resource.data.userIds; // not sure why this doesn't work 
+        return request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.userIds;
       }
+
+      function areCreateMessageKeysValid() {
+        let requestData = request.resource.data;
+        return
+          requestData.keys().hasAll(["text", "createdAt", "uid", "photoURL", "userName", "convoId"]) &&
+          requestData.keys().hasOnly(["text", "createdAt", "uid", "photoURL", "userName", "convoId"]);
+      }
+
+      function isCreateMessageDataValid() {
+        let requestData = request.resource.data;
+        return
+          requestData.text is string &&
+          requestData.createdAt is timestamp &&
+          requestData.uid is string &&
+          requestData.photoURL is string &&
+          requestData.userName is string &&
+          requestData.convoId is string &&
+
+          requestData.createdAt == request.time &&
+          requestData.uid == request.auth.uid && 
+          requestData.userName == request.auth.token.name &&
+          requestData.convoId == conversationId;
+      }
+
+      allow read: if canCreate() && isInConvo();
+      allow create: if canCreate() && areCreateMessageKeysValid() && isCreateMessageDataValid();
     }
 
     match /messages/{messageId} {
@@ -234,7 +242,7 @@ service cloud.firestore {
 
       function doesCreateRequestDataMatchUser1Profile() {
         let requestData = request.resource.data;
-        let userData = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+        let userData = getUserData();
         return 
           userData.walletAddress == requestData.user1Metamask &&
           userData.photoURL == requestData.user1PhotoURL &&

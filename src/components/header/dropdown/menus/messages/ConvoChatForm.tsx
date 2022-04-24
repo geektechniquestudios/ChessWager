@@ -24,13 +24,16 @@ interface Props {
     | React.Dispatch<React.SetStateAction<string>>
     | ((formValue: string) => void)
   conversationDocRef: DocumentReference<DocumentData>
+  convoId: string
 }
+
 export const ConvoChatForm: React.FC<Props> = ({
   dummy,
   messagesRef,
   formValue,
   setFormValue,
   conversationDocRef,
+  convoId,
 }) => {
   const { user, auth } = Auth.useContainer()
 
@@ -52,6 +55,7 @@ export const ConvoChatForm: React.FC<Props> = ({
       uid,
       photoURL,
       userName: displayName,
+      convoId,
     })
 
     const conversation = (await getDoc(conversationDocRef)).data() // I think we already call this in the Conversations state component, could be massively improved

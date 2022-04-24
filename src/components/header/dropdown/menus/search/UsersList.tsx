@@ -26,6 +26,11 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
     usersCollectionRef,
     where("searchableDisplayName", ">=", search.toLowerCase()),
     where("searchableDisplayName", "<=", search.toLowerCase() + "\uf8ff"),
+    where(
+      "searchableDisplayName",
+      "!=",
+      auth.currentUser?.displayName?.toLocaleLowerCase() ?? "",
+    ),
     limit(10),
   )
 
