@@ -602,7 +602,6 @@ service cloud.firestore {
         }
 
         allow write: if canCreate() && isFriendRequestCreateDataValid() && isFriendRequestCreateKeyValid();
-        // one case with notification, one without, considering redacted friend request;
         allow read: if canCreate() && isUserOwner();
         allow delete: if canCreate() && (isUserCreator() || isUserOwner());
       }
@@ -615,7 +614,7 @@ service cloud.firestore {
 
       function isNotificationCreateDataValid() {
         let requestData = request.resource.data;
-        return 
+        return
           requestData.createdAt is timestamp &&
           requestData.text is string &&
           requestData.openToMenu is string &&
@@ -623,7 +622,8 @@ service cloud.firestore {
 
           requestData.createdAt == request.time &&
           requestData.text != "" &&
-          requestData.openToMenu == "notifications" &&
+          // consider size limit on text
+          requestData.openToMenu != "" &&
           requestData.isRead == false;
       }
 
