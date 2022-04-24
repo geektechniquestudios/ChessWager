@@ -27,8 +27,7 @@ export const RemoveFriendButton: React.FC<Props> = ({ id }) => {
       sentFriendRequests: arrayRemove(auth.currentUser!.uid),
       redactedFriendRequests: arrayRemove(auth.currentUser!.uid),
     })
-    batch.delete(doc(userRef, "friends", id))
-    batch.delete(doc(targetUserRef, "friends", auth.currentUser!.uid))
+
     batch.delete(doc(userRef, "requests", id))
     batch.delete(doc(targetUserRef, "requests", auth.currentUser!.uid))
 

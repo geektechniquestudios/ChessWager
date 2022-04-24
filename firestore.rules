@@ -459,8 +459,8 @@ service cloud.firestore {
 
       function areCreateRequestKeysValid() {
         return
-          request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]) &&
-          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage",  "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+           request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]) &&
+          request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName","id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
       }
 
       function isCreateRequestDataValid() {
@@ -477,7 +477,7 @@ service cloud.firestore {
           requestData.amountWon is number &&
           requestData.betWinCount is number &&
           requestData.hasNewMessage is bool &&
-          requestData.hasNewNotification is bool &&
+          requestData.hasNewNotifications is bool &&
           requestData.blockedUsers is list &&
           requestData.sentFriendRequests is list &&
           requestData.redactedFriendRequests is list &&
@@ -492,7 +492,7 @@ service cloud.firestore {
           requestData.amountWon == 0 &&
           requestData.betWinCount == 0 &&
           requestData.hasNewMessage == false &&
-          requestData.hasNewNotification == false &&
+          requestData.hasNewNotifications == false &&
           requestData.blockedUsers == [] &&
           requestData.sentFriendRequests == [] &&
           requestData.redactedFriendRequests == [] &&
@@ -511,9 +511,9 @@ service cloud.firestore {
 
       function isWalletUpdateRequestKeyValid() {
         return
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount",                  "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"])) &&
-                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]) &&
-                                       request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount",                  "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"])) &&
+                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]) &&
+                                       request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
       }
 
       function isNewMessageDataValid() {
@@ -522,8 +522,8 @@ service cloud.firestore {
 
       function isNewMessageKeyValid() {
         return
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount",                  "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"])) &&
-                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount",                  "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"])) &&
+                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
       }
 
       function isNewBlockedUserRequestDataValid() {
@@ -532,9 +532,9 @@ service cloud.firestore {
 
       function isNewBlockedUserRequestKeyValid() {
         return
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification",                 "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"])) &&
-                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]) &&
-                                       request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications",                 "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"])) &&
+                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]) &&
+                                       request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
       }
 
       function isNewSentFriendRequestDataValid() {
@@ -545,9 +545,8 @@ service cloud.firestore {
 
       function isNewSentFriendRequestKeyValid() {
         return
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers",                                                 "friends", "joinDate"])) &&
-                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
-                                      //  request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers",                                                 "friends", "joinDate"])) &&
+                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
       }
 
       function isRedactedFriendRequestDataValid() {
@@ -557,9 +556,90 @@ service cloud.firestore {
 
       function isRedactedFriendRequestKeyValid() {
         return
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests",                           "friends", "joinDate"])) &&
-                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
-                                      //  request.resource.data.keys().hasOnly(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotification", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests",                           "friends", "joinDate"])) &&
+                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+      }
+
+      function isFriendRequestAcceptDataValid() {
+        return request.resource.data.friends is list;
+      }
+
+      function isFriendRequestAcceptKeyValid() {
+        return
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests",            "joinDate"])) &&
+                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+      }
+
+      function isFriendRequestInCollection() {
+        return true;
+        }
+
+      function isTargetFriendRequestAcceptDataValid() {
+        return 
+          request.resource.data.friends is list &&
+          request.resource.data.hasNewNotifications is bool;
+      }
+
+      function isTargetFriendRequestAcceptKeyValid() {
+        return
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage",                        "blockedUsers", "sentFriendRequests", "redactedFriendRequests",            "joinDate"])) &&
+                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+      }
+
+      function isFriendRequestInSent() {
+        return true;
+      }
+
+      function isUserNotificationUpdateKeyValid() {
+        return
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage",                        "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"])) &&
+                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+      }
+
+      function isUserNotificationUpdateDataValid() {
+        return 
+          request.resource.data.hasNewNotifications is bool &&
+          request.resource.data.hasNewNotifications == false;
+      }
+
+      function isRemoveFriendUpdateKeyValid() {
+        return
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers",                                                            "joinDate"])) &&
+                                        request.resource.data.keys().hasAll(["betAcceptedCount", "betFundedCount", "walletAddress", "photoURL", "displayName", "searchableDisplayName", "id", "amountBet", "amountWon", "betWinCount", "hasNewMessage", "hasNewNotifications", "blockedUsers", "sentFriendRequests", "redactedFriendRequests", "friends", "joinDate"]);
+          
+      }
+
+      function checkSentRequests (uid, resourceList, requestList) {
+        let isUidinRequests = uid in resourceList;
+          return (requestList.size() == resourceList.size() - 1 &&
+            resourceList.removeAll(requestList)[0] == uid) 
+            
+            || !isUidinRequests;
+      }
+
+      function isRemoveFriendUpdateDataValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.friends is list &&
+          requestData.sentFriendRequests is list &&
+          requestData.redactedFriendRequests is list &&
+          
+          // check that userid is in friends list before removal Or user id is document owner
+          (
+            // updating friend's profile
+            (
+              request.auth.uid in resource.data.friends &&
+              checkSentRequests(request.auth.uid, resource.data.friends, request.resource.data.friends) &&
+              checkSentRequests(request.auth.uid, resource.data.sentFriendRequests, request.resource.data.sentFriendRequests) &&
+              checkSentRequests(request.auth.uid, resource.data.redactedFriendRequests, request.resource.data.redactedFriendRequests)
+            )
+            || 
+            // updating own profile
+              (request.auth.uid == userId) &&
+              checkSentRequests(userId, resource.data.friends, request.resource.data.friends) &&
+              checkSentRequests(userId, resource.data.sentFriendRequests, request.resource.data.sentFriendRequests) &&
+              checkSentRequests(userId, resource.data.redactedFriendRequests, request.resource.data.redactedFriendRequests)
+          );
       }
 
       allow update: if canCreate() &&
@@ -568,74 +648,96 @@ service cloud.firestore {
         (isNewMessageDataValid() && isNewMessageKeyValid()) || // update hasNewMessage
         (isNewBlockedUserRequestDataValid() && isNewBlockedUserRequestKeyValid()) || // update blockedUsers
         (doesProfileBelongToUser() && isNewSentFriendRequestDataValid() && isNewSentFriendRequestKeyValid()) || // send friend request, so add sent and redacted friend requests 
-        (isRedactedFriendRequestDataValid() && isRedactedFriendRequestKeyValid()) // redact friend request
+        (isRedactedFriendRequestDataValid() && isRedactedFriendRequestKeyValid()) || // redact friend request
+        (doesProfileBelongToUser() && isFriendRequestAcceptDataValid() && isFriendRequestAcceptKeyValid() && isFriendRequestInCollection()) || // accept friend request
+        (!doesProfileBelongToUser() && isTargetFriendRequestAcceptDataValid() && isTargetFriendRequestAcceptKeyValid() && isFriendRequestInSent()) || // other user accepts request
+        (doesProfileBelongToUser() && isUserNotificationUpdateKeyValid() && isUserNotificationUpdateDataValid()) || // user clicks notification button
+        (isRemoveFriendUpdateKeyValid() && isRemoveFriendUpdateDataValid()) // removeFriend button click
+        // other user removes you as friend
       );
     }
  
 
-      match /users/{userId}/requests/{requestId} {
-        function isFriendRequestCreateDataValid() {
-          let requestData = request.resource.data;
-          return 
-            requestData.userName is string &&
-            requestData.photoURL is string &&
-            requestData.createdAt is timestamp &&
+    match /users/{userId}/requests/{requestId} {
+      function isFriendRequestCreateDataValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.userName is string &&
+          requestData.photoURL is string &&
+          requestData.createdAt is timestamp &&
 
-            requestData.userName == request.auth.token.name &&
-            requestData.photoURL != "" &&
-            requestData.createdAt == request.time;
-        }
-
-        function isFriendRequestCreateKeyValid() {
-          let requestData = request.resource.data;
-          return
-            requestData.keys().hasOnly(["userName", "photoURL", "createdAt"]) &&
-            requestData.keys().hasAll(["userName", "photoURL", "createdAt"]);
-        }
-
-        function isUserCreator () {
-          return requestId == request.auth.uid; 
-        }
-
-        function isUserOwner() {
-          return userId == request.auth.uid;
-        }
-
-        allow write: if canCreate() && isFriendRequestCreateDataValid() && isFriendRequestCreateKeyValid();
-        allow read: if canCreate() && isUserOwner();
-        allow delete: if canCreate() && (isUserCreator() || isUserOwner());
+          requestData.userName == request.auth.token.name &&
+          requestData.photoURL != "" &&
+          requestData.createdAt == request.time;
       }
+
+      function isFriendRequestCreateKeyValid() {
+        let requestData = request.resource.data;
+        return
+          requestData.keys().hasOnly(["userName", "photoURL", "createdAt"]) &&
+          requestData.keys().hasAll(["userName", "photoURL", "createdAt"]);
+      }
+
+      function isUserCreator () {
+        return requestId == request.auth.uid; 
+      }
+
+      function isUserOwner() {
+        return userId == request.auth.uid;
+      }
+
+      allow write: if canCreate() && isFriendRequestCreateDataValid() && isFriendRequestCreateKeyValid();
+      allow read: if canCreate() && isUserOwner();
+      allow delete: if canCreate() && (isUserCreator() || isUserOwner());
+    }
 
         
     match /users/{userId}/notifications/{notificationId} {
       function isParentDocUser() {
-        return request.resource.data.userId == request.auth.uid;
+        return userId == request.auth.uid;
       }
 
       function isNotificationCreateDataValid() {
         let requestData = request.resource.data;
         return
+          requestData.uid is string &&
           requestData.createdAt is timestamp &&
           requestData.text is string &&
           requestData.openToMenu is string &&
           requestData.isRead is bool &&
+          requestData.clickedUserId is string &&
 
+          requestData.uid == request.auth.uid &&
           requestData.createdAt == request.time &&
           requestData.text != "" &&
           // consider size limit on text
-          requestData.openToMenu != "" &&
           requestData.isRead == false;
       }
 
       function isNotificationCreateKeyValid() {
         let requestData = request.resource.data;
         return
-          requestData.keys().hasAll(["createdAt", "text", "openToMenu", "isRead"]) &&
-          requestData.keys().hasOnly(["createdAt", "text", "openToMenu", "isRead"]);
+           requestData.keys().hasAll(["uid", "createdAt", "text", "openToMenu", "isRead", "clickedUserId"]) &&
+          requestData.keys().hasOnly(["uid", "createdAt", "text", "openToMenu", "isRead", "clickedUserId"]);
+      }
+
+      function isNotificationUpdateDataValid () {
+        let requestData = request.resource.data;
+        return
+          requestData.isRead is bool &&
+          requestData.isRead == true;
+      }
+
+      function isNotificationUpdateKeyValid () {
+        let requestData = request.resource.data;
+        return
+           requestData.keys().hasAll(["uid", "createdAt", "text", "openToMenu",           "clickedUserId"]) &&
+          requestData.keys().hasOnly(["uid", "createdAt", "text", "openToMenu", "isRead", "clickedUserId"]);
       }
 
       allow create: if canCreate() && isNotificationCreateDataValid() && isNotificationCreateKeyValid();
-      allow read: if canCreate() && isParentDocUser();
+      allow read, delete: if canCreate() && isParentDocUser();
+      allow update: if canCreate() && isParentDocUser() && isNotificationUpdateDataValid() && isNotificationUpdateKeyValid();
     }
 
     match /users/{userId}/blocked/{blockedId} {

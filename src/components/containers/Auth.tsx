@@ -112,7 +112,7 @@ const useAuth = () => {
               amountWon: 0,
               betWinCount: 0,
               hasNewMessage: false,
-              hasNewNotification: false,
+              hasNewNotifications: false,
               blockedUsers: [],
               sentFriendRequests: [],
               redactedFriendRequests: [],

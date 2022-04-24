@@ -42,6 +42,7 @@ export const RequestItem: React.FC<Props> = ({
     batch.set(
       doc(notificationsCollection, auth.currentUser!.uid + Timestamp.now()),
       {
+        uid: auth.currentUser!.uid,
         createdAt: serverTimestamp(),
         text: `${auth.currentUser!.displayName} accepted your friend request.`,
         clickedUserId: auth.currentUser!.uid,

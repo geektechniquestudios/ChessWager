@@ -7,7 +7,7 @@ interface Props {
 
 export const SideChooser: React.FC<Props> = ({ betSide, setBetSide }) => {
   return (
-    <div className="flex p-2 border border-stone-400 dark:border-stone-500 dark:bg-stone-700 bg-stone-300 color-shift">
+    <div className="flex p-2 border border-stone-400 dark:border-stone-500 dark:bg-stone-700 bg-stone-300 color-shift rounded-md">
       <p className="text-stone-900 dark:text-stone-300 grid place-content-center m-2 font-bold">
         Side
       </p>

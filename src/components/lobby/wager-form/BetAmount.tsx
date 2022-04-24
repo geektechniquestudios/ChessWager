@@ -31,7 +31,7 @@ export const BetAmount: React.FC<Props> = ({
 
   return (
     <div
-      className={`border flex px-1 color-shift bg-stone-300 dark:bg-stone-700 ${borderWarning}`}
+      className={`border flex px-1 color-shift bg-stone-300 dark:bg-stone-700 rounded-md ${borderWarning}`}
     >
       <p className="grid place-content-center m-2 text-stone-900 dark:text-stone-300 font-bold">
         Your Bet
@@ -43,7 +43,7 @@ export const BetAmount: React.FC<Props> = ({
             USD
           </div>
           <CurrencyInput
-            className="ml-1 p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-300 text-stone-900"
+            className="ml-1 p-1 rounded-md bg-stone-100 dark:bg-stone-800 dark:text-stone-300 text-stone-900"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue=""
@@ -78,7 +78,7 @@ export const BetAmount: React.FC<Props> = ({
             AVAX
           </div>
           <CurrencyInput
-            className="ml-1 p-1 rounded-sm bg-stone-100 dark:bg-stone-800 dark:text-stone-300"
+            className="ml-1 p-1 rounded-md bg-stone-100 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue=""

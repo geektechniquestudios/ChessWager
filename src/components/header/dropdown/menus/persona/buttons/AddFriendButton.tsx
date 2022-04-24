@@ -43,8 +43,10 @@ export const AddFriendButton: React.FC<Props> = ({ id }) => {
       batch.set(
         doc(notificationsCollection, auth.currentUser!.uid + Timestamp.now()),
         {
+          uid: auth.currentUser!.uid,
           createdAt: serverTimestamp(),
           text: `${auth.currentUser!.displayName} sent you a friend request.`,
+          clickedUserId: "",
           openToMenu: "requests",
           isRead: false,
         },

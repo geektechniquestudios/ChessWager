@@ -45,14 +45,14 @@ export const NotificationItem: React.FC<Props> = ({
     })
   }
 
-  const unreadStyle = isRead ? "" : "bg-stone-200 dark:bg-stone-700"
+  const unreadStyle = isRead ? "" : "bg-stone-300 dark:bg-stone-500"
   return (
     <a
-      className={`h-12 w-64 px-4 flex items-center justify-between hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift ${unreadStyle}`}
+      className={`h-12 w-64 px-4 flex items-center justify-between hover:bg-stone-200 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift ${unreadStyle}`}
       style={{ direction: "ltr" }}
       onClick={() => {
         clickedUserId && setClickedUserById(clickedUserId)
-        if (openToMenu) {
+        if (openToMenu && openToMenu !== "") {
           setActiveMenu(openToMenu)
           const tempMenuStack = menuStack
           tempMenuStack.push(openToMenu)

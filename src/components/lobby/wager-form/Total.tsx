@@ -20,7 +20,7 @@ export const Total: React.FC<Props> = ({ betAmount, multiplier }) => {
   }
 
   return (
-    <div className="border flex border-stone-400 dark:border-stone-500 dark:bg-stone-700 bg-stone-300 color-shift">
+    <div className="border flex border-stone-400 dark:border-stone-500 dark:bg-stone-700 bg-stone-300 color-shift rounded-md">
       <p className="grid place-content-center m-2 border-r-2 pr-2 border-stone-900 dark:border-stone-500 text-stone-900 dark:text-stone-300 font-bold">
         Pot Size
       </p>
