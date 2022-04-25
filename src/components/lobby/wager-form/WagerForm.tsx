@@ -11,12 +11,11 @@ import { TheirBet } from "./TheirBet"
 import {
   addDoc,
   collection,
-  doc,
-  getDoc,
   getFirestore,
   serverTimestamp,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../config"
+import { UserDataState } from "../../containers/UserDataState"
 
 const db = getFirestore(firebaseApp)
 
@@ -42,7 +41,6 @@ export const WagerForm: React.FC = () => {
   const [isAmountEmpty, setIsAmountEmpty] = useState(false)
 
   const lobbyRef = collection(db, "lobby")
-  const userRef = collection(db, "users")
 
   const canUserBet: () => Promise<boolean> = async () => {
     if (!auth.currentUser) {
@@ -60,6 +58,7 @@ export const WagerForm: React.FC = () => {
     }
     return true
   }
+  const { userData } = UserDataState.useContainer()
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -67,34 +66,26 @@ export const WagerForm: React.FC = () => {
     if (!(await canUserBet())) return
 
     const { uid, photoURL, displayName } = auth.currentUser!
-    const userDoc = doc(userRef, uid)
-    getDoc(userDoc)
-      .then((doc: any) => {
-        const user1FollowThrough = [
-          doc.data().betFundedCount,
-          doc.data().betAcceptedCount,
-        ]
-        return user1FollowThrough
-      })
-      .then((user1FollowThrough: number[]) => {
-        addDoc(lobbyRef, {
-          amount: betAmount,
-          betSide: betSide,
-          createdAt: serverTimestamp(),
-          gameId: gameId,
-          multiplier: multiplier,
-          status: "ready",
-          user1Id: uid,
-          user1Metamask: user1Metamask,
-          user1PhotoURL: photoURL,
-          user1DisplayName: displayName,
-          user1FollowThrough: user1FollowThrough,
-          contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
-          hasUser1SeenUpdate: false,
-          hasUser2SeenUpdate: false,
-        }).catch(console.error)
-      })
-      .catch(console.error)
+
+    addDoc(lobbyRef, {
+      amount: betAmount,
+      betSide: betSide,
+      createdAt: serverTimestamp(),
+      gameId: gameId,
+      multiplier: multiplier,
+      status: "ready",
+      user1Id: uid,
+      user1Metamask: user1Metamask,
+      user1PhotoURL: photoURL,
+      user1DisplayName: displayName,
+      user1FollowThrough: [
+        userData!.betFundedCount,
+        userData!.betAcceptedCount,
+      ],
+      contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
+      hasUser1SeenUpdate: false,
+      hasUser2SeenUpdate: false,
+    }).catch(console.error)
   }
 
   return (
