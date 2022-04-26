@@ -89,7 +89,7 @@ export const WagerForm: React.FC = () => {
   }
 
   return (
-    <div className="flex h-full shadow-2xl bg-stone-200 dark:bg-stone-900 border border-stone-400 dark:border-stone-800 rounded-b-md">
+    <div className="flex h-full shadow-2xl bg-stone-200 dark:bg-stone-900  border-r border-b border-stone-400 dark:border-stone-700 rounded-b-md">
       <div className="flex w-full p-2">
         <fieldset className="flex w-full">
           <form
