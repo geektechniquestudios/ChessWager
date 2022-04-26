@@ -6,8 +6,8 @@ const ethers = require("ethers")
 
 const admin = require("firebase-admin")
 
-const isLocal = process.env.BRANCH_ENV === "develop"
-const adminSdk = process.env.FIREBASE_ADMIN_SDK
+const isLocal = process.env.VITE_BRANCH_ENV === "develop"
+const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
 let cred
 if (isLocal) {
@@ -62,17 +62,17 @@ export const payWinnersByGameId = async (gameId: string) => {
     .catch(console.error)
 }
 
-const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
+const contractAddress = process.env.VITE_CONTRACT_ADDRESS!
 const contractABI = ChessWager.abi
-const metamaskKey = process.env.METAMASK_ACCOUNT_KEY
+const metamaskKey = process.env.VITE_METAMASK_ACCOUNT_KEY
 
 let rpcUrl
-if (process.env.BRANCH_ENV === "develop") {
-  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
-} else if (process.env.BRANCH_ENV === "test") {
-  rpcUrl = process.env.AVALANCHE_TESTNET_RPC_URL
-} else if (process.env.BRANCH_ENV === "main") {
-  rpcUrl = process.env.AVALANCHE_MAINNET_RPC_URL
+if (process.env.VITE_BRANCH_ENV === "develop") {
+  rpcUrl = process.env.VITE_AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.VITE_BRANCH_ENV === "test") {
+  rpcUrl = process.env.VITE_AVALANCHE_TESTNET_RPC_URL
+} else if (process.env.VITE_BRANCH_ENV === "main") {
+  rpcUrl = process.env.VITE_AVALANCHE_MAINNET_RPC_URL
 }
 
 const Wallet = ethers.Wallet
@@ -107,7 +107,7 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
             console.log("No bets placed on this game, skipping contract call")
           } else if (cDoc.data().hasBeenPaid) {
             console.log(
-              "contract has already been paid, skipping contract call",
+              "Contract has already been paid, skipping contract call",
             )
           } else {
             console.log("paying winners for gameId: ", gameId)

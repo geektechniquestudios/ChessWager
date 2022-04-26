@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Affero-3.0
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.11;
 
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -27,11 +27,9 @@ contract ChessWager is Ownable {
     string[] betIdArray;
     uint256 endTime;
   }
-  mapping(address => uint256) private addressToBalance; // @todo remove if not using
-  // mapping for who bet first
   uint256 private chessWagerBalance;
   address payable private chessWagerAddress;
-  uint256 public totalWagered;
+  uint256 public totalWagered; // overall amount spent of contract
 
   constructor() {
     // store chesswageraddress
@@ -121,16 +119,12 @@ contract ChessWager is Ownable {
     }
   }
 
-  function newBet() private {}
-
-  function matchedBet() private {}
-
   function payWinners(string calldata _gameId, string calldata winningSide)
     external
     payable
     onlyOwner
   {
-    gameIdToIsGameOver[_gameId] = true; // prevents new bets on old games
+    gameIdToIsGameOver[_gameId] = true; // prevents new bets on old games @todo, stopped working at some point?
     for (uint256 i = 0; i < gameIdToGameData[_gameId].betIdArray.length; i++) {
       // going over each bet for this gameId
       Bet memory bet = betIdToBetData[gameIdToGameData[_gameId].betIdArray[i]];
@@ -157,7 +151,8 @@ contract ChessWager is Ownable {
             gameIdToGameData[_gameId].betIdArray[i],
             _gameId,
             true,
-            false
+            false,
+            "none"
           );
         } else {
           // user2 was the only one that paid
@@ -167,7 +162,8 @@ contract ChessWager is Ownable {
             gameIdToGameData[_gameId].betIdArray[i],
             _gameId,
             false,
-            true
+            true,
+            "none"
           );
         }
         continue;
@@ -178,7 +174,8 @@ contract ChessWager is Ownable {
         gameIdToGameData[_gameId].betIdArray[i],
         _gameId,
         true,
-        true
+        true,
+        winningSide
       );
 
       // if game is a draw, then return money to both users
@@ -240,12 +237,8 @@ contract ChessWager is Ownable {
       keccak256(abi.encodePacked("draw"))
     ) {
       uint256 user1BetAmount = (prizePool / (1 + (bet.multiplier / 100)));
-      bet.user1Metamask.transfer(
-        user1BetAmount // minus comission
-      );
-      bet.user2Metamask.transfer(
-        prizePool - user1BetAmount // minus comission
-      );
+      bet.user1Metamask.transfer(user1BetAmount);
+      bet.user2Metamask.transfer(prizePool - user1BetAmount);
     }
 
     // all checks done, only remaining outcome is one side winning
@@ -280,6 +273,7 @@ contract ChessWager is Ownable {
     string betId,
     string gameId,
     bool didUser1Pay,
-    bool didUser2Pay
+    bool didUser2Pay,
+    string winningSide
   );
 }

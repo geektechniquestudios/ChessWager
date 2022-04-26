@@ -1,72 +1,53 @@
-import { useEffect, useState } from "react"
+import "./style/index.scss"
+import "./style/scrollbar.scss"
+import "./config"
+
 import { BettingLobby } from "./components/lobby/BettingLobby"
 import { ChessGame } from "./components/game/ChessGame"
 import { MainHeader } from "./components/header/MainHeader"
 import { GlobalChat } from "./components/chat/GlobalChat"
-import "./style/index.scss"
-import "./config"
-import "firebase/compat/firestore"
-import "firebase/compat/auth"
-import firebase from "firebase/compat"
-import { Auth } from "./components/containers/Auth"
+import { FundedBets } from "./components/funded-bets/FundedBets"
+import { DarkMode } from "./components/containers/DarkMode"
+import { ChatToggle } from "./components/containers/ChatToggle"
+import { ShowChatButton } from "./components/body/ShowChatButton"
 
 export const App: React.FC = () => {
-  const { auth } = Auth.useContainer()
+  const { isDarkOn } = DarkMode.useContainer()
+  const { showChat } = ChatToggle.useContainer()
 
-  const [isDarkOn, setIsDarkOn] = useState(
-    localStorage.getItem("darkMode") === "true" ||
-      localStorage.getItem("darkMode") === "false"
-      ? JSON.parse(localStorage.getItem("darkMode")!)
-      : true,
-  )
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (
-        user &&
-        localStorage.getItem("darkMode") !== "true" &&
-        localStorage.getItem("darkMode") !== "false"
-      ) {
-        const userRef: firebase.firestore.DocumentReference = firebase
-          .firestore()
-          .collection("users")
-          .doc(user.uid)
-
-        userRef
-          .get()
-          .then((doc) => doc.data()?.darkMode ?? true)
-          .then((darkMode) => {
-            setIsDarkOn(darkMode)
-          })
-          .catch(console.error)
-      }
-      return unsubscribe()
-    })
-  }, [auth])
-
+  const dark = isDarkOn ? "dark" : ""
 
   return (
-    <div className={isDarkOn ? "dark" : ""}>
-      <section className="color-shift" id="page">
-        <header
-          className="  
-          color-shift
-        bg-secondary-secondaryDark
-        dark:bg-secondary
-        "
-        >
-          <MainHeader isDarkOn={isDarkOn} setIsDarkOn={setIsDarkOn} />
+    <div className={`${dark} h-full w-full overflow-y-hidden grid global-font`}>
+      <div
+        className="color-shift grid bg-stone-300 dark:bg-black overflow-hidden"
+        id="page"
+      >
+        <header className="color-shift bg-stone-50 dark:bg-stone-800 border-b border-stone-400 dark:border-stone-700 flex items-center">
+          <MainHeader />
         </header>
-        <nav>
-          <BettingLobby />
-        </nav>
-        <main>
-          <ChessGame />
+
+        <main className="scrollbar overflow-y-auto flex justify-center">
+          <div className="w-full">
+            <ShowChatButton />
+            <div className="flex flex-col w-auto">
+              <div className="scrollbar flex overflow-y-hidden overflow-x-visible">
+                <FundedBets />
+                <ChessGame />
+              </div>
+            </div>
+            <BettingLobby />
+          </div>
         </main>
-        <aside>
-          <GlobalChat />
-        </aside>
-      </section>
+
+        <div>
+          {showChat && (
+            <aside className="h-full">
+              <GlobalChat />
+            </aside>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

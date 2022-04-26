@@ -7,7 +7,7 @@ services:
   ancillary-stream:
     build:
       context: ./
-      dockerfile: Dockerfile.ancillary-stream-processor
+      dockerfile: Dockerfile.ancillary-stream-processor.local
     restart: always
     healthcheck:
       test: curl -sS http://127.0.0.1 || exit 1
@@ -20,7 +20,7 @@ services:
   primary-stream:
     build:
       context: ./
-      dockerfile: Dockerfile.primary-stream-processor
+      dockerfile: Dockerfile.primary-stream-processor.local
     restart: always
     healthcheck:
       test: curl -sS http://127.0.0.1 || exit 1
@@ -33,7 +33,7 @@ services:
   contract-listener:
     build:
       context: ./
-      dockerfile: ./Dockerfile.contract-listener
+      dockerfile: ./Dockerfile.contract-listener.local
     restart: always
     healthcheck:
       test: curl -sS http://127.0.0.1 || exit 1
@@ -42,7 +42,3 @@ services:
       retries: 3
     volumes:
       - stream_data:/data
-    # logging:
-    #   driver: gcplogs
-    # ports:
-    #   - "80:8080"

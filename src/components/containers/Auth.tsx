@@ -1,14 +1,20 @@
-import firebase from "firebase/compat/app"
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { createContainer } from "unstated-next"
-import { ethers } from "ethers"
-const firestore = firebase.firestore()
+import { BigNumber, ethers } from "ethers"
+import { parseEther } from "ethers/lib/utils"
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { firebaseApp } from "../../config"
+import {
+  getFirestore,
+  doc,
+  updateDoc,
+  serverTimestamp,
+  runTransaction,
+} from "firebase/firestore"
 
 declare let window: any
-
-const userCollectionRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
-  firestore.collection("users")
+const db = getFirestore(firebaseApp)
 
 const useAuth = () => {
   const [walletAddress, setWalletAddress] = useState(
@@ -22,14 +28,14 @@ const useAuth = () => {
       : false,
   )
 
-  const auth: firebase.auth.Auth = firebase.auth()
-  const [user]: [
-    firebase.User | null | undefined,
-    boolean,
-    firebase.auth.Error | undefined,
-  ] = useAuthState(auth)
+  const auth = getAuth(firebaseApp)
+
+  const [user] = useAuthState(auth)
+
+  const [isWalletConnecting, setIsWalletConnecting] = useState(false)
+
   const connectWallet = async () => {
-    if (!auth.currentUser) {
+    if (!user) {
       signInWithGoogle()
       return
     }
@@ -38,63 +44,102 @@ const useAuth = () => {
       return
     }
     try {
+      setIsWalletConnecting(true)
       const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
       await provider.send("eth_requestAccounts", [])
       const signer = provider.getSigner()
       const walletAddress = await signer.getAddress()
-      userCollectionRef
-        .doc(auth.currentUser?.uid)
-        .update({ walletAddress: walletAddress })
-      setIsWalletConnected(true)
-      setWalletAddress(walletAddress)
-      localStorage.setItem("walletAddress", walletAddress)
-      localStorage.setItem("isWalletConnected", "true")
+      const userDoc = doc(db, "users", auth.currentUser!.uid)
+      updateDoc(userDoc, {
+        walletAddress,
+      })
+        .then(() => {
+          setIsWalletConnected(true)
+          setIsWalletConnecting(false)
+          setWalletAddress(walletAddress)
+          localStorage.setItem("walletAddress", walletAddress)
+          localStorage.setItem("isWalletConnected", "true")
+        })
+        .then(() => {
+          alert("Wallet connected")
+        })
+        .catch((error) => {
+          console.error(error)
+          alert("Error connecting to wallet")
+          setIsWalletConnected(false)
+        })
     } catch (error) {
       console.error(error)
-      alert("You need to install Metamask")
+      alert("Error connecting to wallet.")
+      setIsWalletConnecting(false)
     }
   }
 
   const disconnectWallet = async () => {
-    setWalletAddress("")
-    setIsWalletConnected(false)
-    localStorage.setItem("walletAddress", "")
-    localStorage.setItem("isWalletConnected", "false")
-    userCollectionRef.doc(auth.currentUser?.uid).update({ walletAddress: "" })
+    if (!auth.currentUser) return
+    const userDoc = doc(db, "users", auth.currentUser!.uid)
+    updateDoc(userDoc, {
+      walletAddress,
+    })
+      .then(() => {
+        setWalletAddress("")
+        setIsWalletConnected(false)
+        localStorage.setItem("walletAddress", "")
+        localStorage.setItem("isWalletConnected", "false")
+      })
+      .catch(() => {
+        alert("Error disconnecting wallet")
+      })
   }
 
   const signInWithGoogle = async () => {
     const addToUsers = () => {
       if (auth.currentUser) {
-        const usersCollectionRef = firestore.collection("users")
-        const userDoc = usersCollectionRef.doc(auth.currentUser.uid)
-        userDoc.get().then((doc) => {
-          if (!doc.exists) {
-            userDoc
-              .set({
-                betAcceptedCount: 0,
-                betFundedCount: 0,
-                blocked: [],
-                walletAddress: "",
-              })
-              .catch(console.error)
+        const userDoc = doc(db, "users", auth.currentUser!.uid)
+        runTransaction(db, async (transaction) => {
+          const doc = await transaction.get(userDoc)
+          if (!doc.exists()) {
+            transaction.set(userDoc, {
+              betAcceptedCount: 0,
+              betFundedCount: 0,
+              walletAddress: "",
+              photoURL: auth.currentUser!.photoURL,
+              displayName: auth.currentUser!.displayName,
+              searchableDisplayName:
+                auth.currentUser!.displayName?.toLowerCase(),
+              id: auth.currentUser!.uid,
+              amountBet: 0,
+              amountWon: 0,
+              betWinCount: 0,
+              hasNewMessage: false,
+              hasNewNotifications: false,
+              blockedUsers: [],
+              sentFriendRequests: [],
+              redactedFriendRequests: [],
+              friends: [],
+              joinDate: serverTimestamp(),
+            })
           }
-          if (doc.data()!.walletAddress !== "") {
+          if (doc.data()?.walletAddress ?? "" !== "") {
             setIsWalletConnected(true)
             localStorage.setItem("isWalletConnected", "true")
             setWalletAddress(doc.data()!.walletAddress)
             localStorage.setItem("walletAddress", doc.data()!.walletAddress)
           }
         })
+          .catch(console.error)
+          .then(() => {
+            alert(
+              "This website is under development. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
+            )
+          })
       }
     }
-    const provider = new firebase.auth.GoogleAuthProvider()
-    auth
-      .signInWithPopup(provider)
-      .then(() => {
-        addToUsers()
-      })
-      .catch(console.error)
+
+    const provider = new GoogleAuthProvider()
+    const auth = getAuth(firebaseApp)
+
+    signInWithPopup(auth, provider).then(addToUsers).catch(console.error)
   }
   const signOutWithGoogle = async () => {
     auth.signOut()
@@ -102,6 +147,15 @@ const useAuth = () => {
     setWalletAddress("")
     localStorage.setItem("isWalletConnected", "false")
     localStorage.setItem("walletAddress", "")
+  }
+
+  const doesUserHaveEnoughAvax = async (price: number) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
+    const balance: BigNumber = await provider.getBalance(walletAddress!)
+    if (balance.gte(parseEther(price.toString()))) {
+      return true
+    }
+    return false
   }
 
   return {
@@ -115,6 +169,8 @@ const useAuth = () => {
     setWalletAddress,
     signInWithGoogle,
     signOutWithGoogle,
+    isWalletConnecting,
+    doesUserHaveEnoughAvax,
   }
 }
 

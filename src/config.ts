@@ -1,14 +1,11 @@
-import firebase from "firebase/compat/app"
-require("dotenv").config({ path: "../.env" })
+import { initializeApp } from "firebase/app"
 
-firebase.initializeApp({
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+export const firebaseApp = initializeApp({
+  apiKey: (import.meta.env.VITE_API_KEY! as string)!,
+  authDomain: (import.meta.env.VITE_AUTH_DOMAIN! as string)!,
+  projectId: (import.meta.env.VITE_PROJECT_ID! as string)!,
+  storageBucket: (import.meta.env.VITE_STORAGE_BUCKET! as string)!,
+  messagingSenderId: (import.meta.env.VITE_MESSAGING_SENDER_ID! as string)!,
+  appId: (import.meta.env.VITE_APP_ID! as string)!,
+  measurementId: (import.meta.env.VITE_MEASUREMENT_ID! as string)!,
 })
-
-export const config = () => firebase
