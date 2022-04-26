@@ -51,17 +51,17 @@ export const ChatForm: React.FC<Props> = ({
 
   return (
     <fieldset
-      // disabled={!auth.currentUser}
+      disabled={!auth.currentUser}
       className="fieldset justify-center flex"
     >
       <form onSubmit={sendMessage} className="form justify-center w-full pb-1">
         <TextareaAutosize
-          value={auth.currentUser ? formValue : "Sign in to Chat"}
+          value={formValue}
           onChange={(e) => {
             setFormValue(e.target.value)
           }}
           className="scrollbar break-words inline-block resize-none outline-none text-lg w-full p-2 bg-stone-200 dark:bg-stone-800 dark:text-stone-50"
-          placeholder="Send a Message"
+          placeholder={auth.currentUser ? "Send a Message" : "Sign in to Chat"}
           maxRows={4}
           onKeyDown={(e) => {
             e.key === "Enter" && sendMessage(e)

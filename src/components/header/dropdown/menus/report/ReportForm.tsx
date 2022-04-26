@@ -55,7 +55,7 @@ export const ReportForm: React.FC<Props> = ({}) => {
           className="form justify-between w-full flex"
         >
           <TextareaAutosize
-            value={auth.currentUser ? reportFormValue : "Sign in to Chat"}
+            value={reportFormValue}
             onChange={(e) => {
               setReportFormValue(e.target.value)
             }}

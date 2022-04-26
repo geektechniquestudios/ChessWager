@@ -4,6 +4,7 @@ import { DropdownButton } from "./DropdownButton"
 import { Auth } from "../../../../../containers/Auth"
 import { firebaseApp } from "../../../../../../config"
 import {
+  addDoc,
   doc,
   getDoc,
   getFirestore,
@@ -35,7 +36,16 @@ export const SendMessageButton: React.FC<Props> = ({
   const convoDoc = doc(db, "conversations", docId)
 
   const createConvoDoc = async () => {
+    const loadConvoMenu = () => {
+      setUserIdFromMessages(id)
+      setUsernameFromMessages(displayName)
+      setActiveMenu("conversation")
+      setMenuStack([...menuStack, "conversation"])
+    }
+
+    // this will be removed in favor of storing all coversationIds in an arr in the user doc
     const convo = await getDoc(convoDoc)
+
     if (!convo.exists()) {
       setDoc(convoDoc, {
         messageThumbnail: "",
@@ -56,6 +66,10 @@ export const SendMessageButton: React.FC<Props> = ({
         doesUser1HaveUnreadMessages: false,
         doesUser2HaveUnreadMessages: false,
       })
+        .then(loadConvoMenu)
+        .catch(console.error)
+    } else {
+      loadConvoMenu()
     }
   }
 
@@ -63,11 +77,7 @@ export const SendMessageButton: React.FC<Props> = ({
     <DropdownButton
       content={<RiMailSendLine />}
       onClick={() => {
-        setActiveMenu("conversation")
-        setMenuStack([...menuStack, "conversation"])
         createConvoDoc()
-        setUserIdFromMessages(id)
-        setUsernameFromMessages(displayName)
       }}
       title="Send Direct Message"
     />

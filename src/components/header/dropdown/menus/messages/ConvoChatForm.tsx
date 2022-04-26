@@ -3,39 +3,36 @@ import { Auth } from "../../../../containers/Auth"
 import "../../../../../style/dropdown.scss"
 import { BiSend } from "react-icons/bi"
 import {
-  addDoc,
-  CollectionReference,
+  collection,
   doc,
-  DocumentData,
-  DocumentReference,
-  getDoc,
   getFirestore,
   serverTimestamp,
   writeBatch,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
+import { UserMenuState } from "../../../../containers/UserMenuState"
+import { ChatFormData } from "../../../../containers/ChatFormData"
+import { ConversationsState } from "../../../../containers/ConversationsState"
 const db = getFirestore(firebaseApp)
 
 interface Props {
   dummy: React.RefObject<HTMLInputElement>
-  messagesRef: CollectionReference<DocumentData>
-  formValue: string
-  setFormValue:
-    | React.Dispatch<React.SetStateAction<string>>
-    | ((formValue: string) => void)
-  conversationDocRef: DocumentReference<DocumentData>
-  convoId: string
 }
 
-export const ConvoChatForm: React.FC<Props> = ({
-  dummy,
-  messagesRef,
-  formValue,
-  setFormValue,
-  conversationDocRef,
-  convoId,
-}) => {
+export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
+  const { convoFormValue, setConvoFormValue } = ChatFormData.useContainer()
+
   const { user, auth } = Auth.useContainer()
+  const { userIdFromMessages } = UserMenuState.useContainer()
+  const convoId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
+  const setFormValue = (formValue: string) => {
+    const newMap = new Map(convoFormValue)
+    newMap.set(convoId, formValue)
+    setConvoFormValue(newMap)
+  }
+  const formValue = convoFormValue.get(convoId) ?? ""
+
+  const { conversations } = ConversationsState.useContainer()
 
   const sendMessage = async (
     e:
@@ -46,8 +43,11 @@ export const ConvoChatForm: React.FC<Props> = ({
     if (formValue.trim() === "" || !user || !auth.currentUser) return
 
     const { uid, photoURL, displayName } = auth.currentUser
-
     const batch = writeBatch(db)
+    const messagesRef = collection(
+      doc(db, "conversations", convoId),
+      "messages",
+    )
 
     batch.set(doc(messagesRef), {
       text: formValue,
@@ -58,7 +58,9 @@ export const ConvoChatForm: React.FC<Props> = ({
       convoId,
     })
 
-    const conversation = (await getDoc(conversationDocRef)).data() // I think we already call this in the Conversations state component, could be massively improved
+    const conversationDocRef = doc(db, "conversations", convoId)
+
+    const conversation = conversations?.find((c) => c.id === convoId)
 
     const isUser1 =
       (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")
@@ -105,7 +107,7 @@ export const ConvoChatForm: React.FC<Props> = ({
           className="form justify-between w-full flex"
         >
           <TextareaAutosize
-            value={auth.currentUser ? formValue : "Sign in to Chat"}
+            value={formValue}
             onChange={(e) => {
               setFormValue(e.target.value)
             }}

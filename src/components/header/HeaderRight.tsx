@@ -11,7 +11,6 @@ import { doc, getFirestore, updateDoc } from "firebase/firestore"
 import { firebaseApp } from "../../config"
 import { DropdownMenu } from "./dropdown/DropdownMenu"
 import { DropdownState } from "../containers/DropdownState"
-import { motion } from "framer-motion"
 
 const db = getFirestore(firebaseApp)
 
