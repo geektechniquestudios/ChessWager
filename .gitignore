@@ -55,9 +55,7 @@ ChessWager.dbg.json
 !artifacts/contracts/ChessWager.sol/ChessWager.json
 
 # firebase admin credentials
-chess-wager-develop-firebase-adminsdk-z02bi-9bab414c8a.json
-chess-wager-main-firebase-adminsdk-bgzkv-95b4357651.json
-chess-wager-test-firebase-adminsdk-hl438-9c361ba626.json
+chess-wager-*-firebase-adminsdk-*.json
 
 # yarn
 .pnp.*
