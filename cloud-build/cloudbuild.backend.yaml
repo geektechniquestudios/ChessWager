@@ -10,9 +10,6 @@ steps:
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
 
-  # - id: Running tests
-  #   name: "gcr.io/cloud-builders/npm"
-  #   args: ["run", "test", "--", "--watchAll=false"]
   # Build docker images for k8s
   - id: Building contract listener
     name: gcr.io/cloud-builders/docker

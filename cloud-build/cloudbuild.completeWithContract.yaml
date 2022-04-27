@@ -14,16 +14,16 @@ steps:
     name: "gcr.io/cloud-builders/yarn"
     args: ["install"]
   - id: Installing firebase tools
-    name: "gcr.io/cloud-builders/yarn"
+    name: "gcr.io/cloud-builders/npm"
     args: ["install", "-g", "firebase-tools"]
   - id: Installing firebase
     name: "gcr.io/cloud-builders/yarn"
-    args: ["install", "--save", "firebase"]
+    args: ["add", "firebase"]
   - id: Installing hardhat
     name: "gcr.io/cloud-builders/yarn"
-    args: ["install", "--save-dev", "hardhat"]
+    args: ["add", "-D", "hardhat"]
   - id: Installing firebase functions
-    name: "gcr.io/cloud-builders/yarn"
+    name: "gcr.io/cloud-builders/npm"
     args: ["run", "functions-install"]
 
   - id: Running tests
