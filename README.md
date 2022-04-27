@@ -30,12 +30,17 @@ Here's quick overview video of the project:
 
 - Phase 2: Minimum Viable Product 
   - All core features:
-    - rate limiting
-    - admin accounts
-    - chat reply in global chat
-    - killswitch in case of emergency
-  - Graphical Desgin
-    - 
+    - To Do:
+      - rate limiting
+      - admin accounts
+      - chat reply in global chat
+      - killswitch in case of emergency
+    - Complete:
+      - graphical design
+      - security
+      - messaging
+      - friending
+      - blocking
 
 - Phase 3: 
 

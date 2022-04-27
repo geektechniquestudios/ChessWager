@@ -84,7 +84,7 @@ steps:
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - apply
-      - "--filename=kubernetes/$BRANCH_NAME/stream-data-persistentvolumeclaim.yaml"
+      - "--filename=kubernetes/stream-data-persistentvolumeclaim.yaml"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
