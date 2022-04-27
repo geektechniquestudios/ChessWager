@@ -66,7 +66,8 @@ module.exports = {
     avalancheMainnet: {
       url: process.env.VITE_AVALANCHE_MAINNET_RPC_URL,
       gasPrice: 225000000000,
-      chainId: 43114,
+      // chainId: 43114, // use this on mainnet launch
+      chainId: 43113,
       accounts: [accountKey],
     },
   },
