@@ -10,9 +10,9 @@
     "test-cypress": "cypress run",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy-contract-develop": "npm hardhat run hardhat/scripts/deploy.js --network fuji",
-    "deploy-contract-test": "npm hardhat run hardhat/scripts/deploy.js --network fuji",
-    "deploy-contract-main": "npm hardhat run hardhat/scripts/deploy.js --network avalancheMainnet",
+    "deploy-contract-develop": "npx hardhat run hardhat/scripts/deploy.js --network fuji",
+    "deploy-contract-test": "npx hardhat run hardhat/scripts/deploy.js --network fuji",
+    "deploy-contract-main": "npx hardhat run hardhat/scripts/deploy.js --network avalancheMainnet",
     "deploy-firebase": "firebase deploy --debug --token \"$FIREBASE_TOKEN\"",
     "predeploy-encrypt": "gcloud config set project chess-wager-test && gcloud kms encrypt --plaintext-file=env/.env.test --ciphertext-file=env/.env.test.enc --location=global --keyring=chess-wager --key=chess-wager-test && gcloud config set project chess-wager-main && gcloud kms encrypt --plaintext-file=env/.env.main --ciphertext-file=env/.env.main.enc --location=global --keyring=chess-wager --key=chess-wager-main",
     "functions-install": "cd functions && npm install && cd .."
