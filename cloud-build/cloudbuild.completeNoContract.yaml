@@ -28,7 +28,7 @@ steps:
     
   - id: Running tests
     name: "gcr.io/cloud-builders/npm"
-    args: ["run", "test", "--", "--watchAll=false"]
+    args: ["run", "test"]
 
     # Build docker images for k8s
   - id: Building contract listener
