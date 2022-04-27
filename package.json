@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
-    "test": "jest && hardhat test",
-    "test-jest": "jest",
+    "test": "jest --watchAll=false && hardhat test",
+    "test-jest": "jest --watchAll=false",
     "test-hardhat": "hardhat test",
     "test-cypress": "cypress run",
     "build": "tsc && vite build",
