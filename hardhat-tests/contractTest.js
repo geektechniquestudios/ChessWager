@@ -70,65 +70,65 @@ describe("Placing Bets", async () => {
     ;[owner, account1, account2] = await ethers.getSigners()
     await chessWager.deployed(owner.address)
   })
-  it("Should send bet data to contract and pay winners", async () => {
-    const multiplier = 1
-    const gameId = randomUUID()
-    const timestamp = new Date() / 1000
-    const amount = ethers.utils.parseEther("0.1")
-    const bigAmount = ethers.utils.parseEther(amount.toString())
-    const betUser1 = {
-      // amount: ethers.utils.parseEther(amount.toString()),
-      amount: bigAmount,
-      betSide: "white",
-      user1Id: "testUid1",
-      user1Metamask: account1.address,
-      user2Id: "testUid2",
-      user2Metamask: account2.address,
-      multiplier: multiplier * 100,
-      gameId: gameId,
-      timestamp: BigNumber.from(timestamp.toFixed(0)),
-    }
-    // const betUser2 = {
-    // amount: ethers.utils.parseEther(amount.toString()),
-    // betSide: "white",
-    // user1Id: "testUid1",
-    // user1Metamask: account1.address,
-    // user2Id: "testUid2",
-    // user2Metamask: account2.address,
-    // multiplier: multiplier * 100,
-    // gameId: gameId,
-    // timestamp: timestamp,
-    // }
+  // it("Should send bet data to contract and pay winners", async () => {
+  //   const multiplier = 1
+  //   const gameId = randomUUID()
+  //   const timestamp = new Date() / 1000
+  //   const amount = ethers.utils.parseEther("0.1")
+  //   const bigAmount = ethers.utils.parseEther(amount.toString())
+  //   const betUser1 = {
+  //     // amount: ethers.utils.parseEther(amount.toString()),
+  //     amount: bigAmount,
+  //     betSide: "white",
+  //     user1Id: "testUid1",
+  //     user1Metamask: account1.address,
+  //     user2Id: "testUid2",
+  //     user2Metamask: account2.address,
+  //     multiplier: multiplier * 100,
+  //     gameId: gameId,
+  //     timestamp: BigNumber.from(timestamp.toFixed(0)),
+  //   }
+  //   // const betUser2 = {
+  //   // amount: ethers.utils.parseEther(amount.toString()),
+  //   // betSide: "white",
+  //   // user1Id: "testUid1",
+  //   // user1Metamask: account1.address,
+  //   // user2Id: "testUid2",
+  //   // user2Metamask: account2.address,
+  //   // multiplier: multiplier * 100,
+  //   // gameId: gameId,
+  //   // timestamp: timestamp,
+  //   // }
 
-    const betId = randomUUID()
-    const overrides = {
-      value: bigAmount,
-    }
+  //   const betId = randomUUID()
+  //   const overrides = {
+  //     value: bigAmount,
+  //   }
 
-    const balance1 = await ethers.provider.getBalance(account1.address)
-    const balance2 = await ethers.provider.getBalance(account2.address)
+  //   const balance1 = await ethers.provider.getBalance(account1.address)
+  //   const balance2 = await ethers.provider.getBalance(account2.address)
 
-    // console.log(balance1.toString(), balance2.toString())
-    expect(balance1).to.equal(balance2)
+  //   // console.log(balance1.toString(), balance2.toString())
+  //   expect(balance1).to.equal(balance2)
 
-    // chessWager.payWinners(gameId, "white").then(() => {
-    //   expect(waffle.provider.getBalance(address1.address)).to.equal(
-    //     waffle.provider.getBalance(address2.address),
-    //   )
-    // })
+  //   // chessWager.payWinners(gameId, "white").then(() => {
+  //   //   expect(waffle.provider.getBalance(address1.address)).to.equal(
+  //   //     waffle.provider.getBalance(address2.address),
+  //   //   )
+  //   // })
 
-    chessWager
-      .connect(account1)
-      .placeBet(betUser1, betId, overrides)
-      .catch(console.error)
+  //   chessWager
+  //     .connect(account1)
+  //     .placeBet(betUser1, betId, overrides)
+  //     .catch(console.error)
 
-    //   chessWager.connect(address2).placeBet(betUser2, betId, { value: 1 })
-    //   chessWager.payWinners(gameId, "white").then(() => {
-    //     expect(hre.ethers.provider.getBalance(address1)).to.not.equal(
-    //       hre.ethers.provider.getBalance(address2),
-    //     )
-    //   })
-  })
+  //   //   chessWager.connect(address2).placeBet(betUser2, betId, { value: 1 })
+  //   //   chessWager.payWinners(gameId, "white").then(() => {
+  //   //     expect(hre.ethers.provider.getBalance(address1)).to.not.equal(
+  //   //       hre.ethers.provider.getBalance(address2),
+  //   //     )
+  //   //   })
+  // })
 
   it("Should work with a mulitplier", async () => {})
   it("Shouldn't allow bets on already paid out games", async () => {})
