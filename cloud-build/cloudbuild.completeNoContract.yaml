@@ -25,7 +25,7 @@ steps:
   - id: Installing firebase functions
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "functions-install"]
-    
+
   - id: Running tests
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "test"]
@@ -84,7 +84,7 @@ steps:
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - apply
-      - "--filename=kubernetes/stream-data-persistentvolumeclaim.yaml"
+      - "--filename=kubernetes/$BRANCH_NAME/stream-data-persistentvolumeclaim.yaml"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
@@ -92,7 +92,7 @@ steps:
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
-      - "--filename=kubernetes/contract-listener-deployment.yaml"
+      - "--filename=kubernetes/$BRANCH_NAME/contract-listener-deployment.yaml"
       - "--image=$_IMAGE_NAME_CL:$COMMIT_SHA"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
@@ -107,7 +107,7 @@ steps:
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
-      - "--filename=kubernetes/ancillary-stream-deployment.yaml"
+      - "--filename=kubernetes/$BRANCH_NAME/ancillary-stream-deployment.yaml"
       - "--image=$_IMAGE_NAME_AS:$COMMIT_SHA"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
@@ -138,6 +138,7 @@ steps:
   - id: Deploying to firebase
     name: "gcr.io/$PROJECT_ID/firebase"
     args: ["deploy", "--project=$PROJECT_ID"]
+
 timeout: 3600s
 options:
   substitutionOption: ALLOW_LOOSE
@@ -163,3 +164,6 @@ substitutions:
   _K8S_APP_NAME: chess-wager-${BRANCH_NAME}-env
   _OUTPUT_BUCKET_PATH: chess-wager-${BRANCH_NAME}_cloudbuild/deploy
   _GKE_LOCATION: us-central1-a
+tags:
+  - gcp-cloud-build-deploy
+  - $_K8S_APP_NAME
