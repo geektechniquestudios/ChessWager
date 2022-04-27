@@ -122,7 +122,7 @@ steps:
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
-      - "--filename=kubernetes/primary-stream-deployment.yaml"
+      - "--filename=kubernetes/$BRANCH_NAME/primary-stream-deployment.yaml"
       - "--image=$_IMAGE_NAME_PS:$COMMIT_SHA"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
