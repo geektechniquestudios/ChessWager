@@ -61,23 +61,43 @@ export const MetamaskPrompt: React.FC<Props> = ({
     gasLimit: 1000000,
   }
 
+
+  // use this version for mainnet inclusion
+  // const isCorrectBlockchain = async (
+  //   provider: ethers.providers.Web3Provider,
+  // ) => {
+  //   const { chainId } = await provider.getNetwork()
+  //   if (isLocal && chainId !== 43113) {
+  //     alert("You are on the wrong network. Please switch to the fuji network.")
+  //     return false
+  //   } 
+  //   else if (!isLocal && chainId !== 43114) {
+  //     alert(
+  //       "You are on the wrong network. Please switch to the avalanche mainnet.",
+  //     )
+  //     return false
+  //   } 
+  //   else {
+  //     return true
+  //   }
+  // }
+
+  //
+  // use this version until mainnet
   const isCorrectBlockchain = async (
     provider: ethers.providers.Web3Provider,
   ) => {
     const { chainId } = await provider.getNetwork()
-    if (isLocal && chainId !== 43113) {
+    if (chainId !== 43113) {
       alert("You are on the wrong network. Please switch to the fuji network.")
       return false
-    } else if (!isLocal && chainId !== 43114) {
-      alert(
-        "You are on the wrong network. Please switch to the avalanche mainnet.",
-      )
-      return false
-    } else {
+    } 
+    else {
       return true
     }
   }
 
+  
   const sendBet = async (): Promise<void> => {
     if (typeof window.ethereum !== undefined) {
       await window.ethereum.request({ method: "eth_requestAccounts" })

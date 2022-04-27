@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
-    "test": "jest && hardhat test && cypress run",
+    "test": "jest && hardhat test",
     "test-jest": "jest",
     "test-hardhat": "hardhat test",
     "test-cypress": "cypress run",
