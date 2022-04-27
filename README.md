@@ -7,6 +7,10 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
 
 
-ChessWager is live, and you can visit https://chesswager.io/ and play right now, however it is still in early development. 
+ChessWager is live. You can visit https://chesswager.io/ and play right now, however it is still in early development, and you can't bet with real currency yet. The currency we are planning to use for our mainnet launch is Avalanche, so we are running our systems on the Avalanche Fuji Testnet. 
 
-This app features social systems
+
+Here's quick overview video of the project:
+
+
+
