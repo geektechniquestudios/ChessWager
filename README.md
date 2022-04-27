@@ -26,15 +26,18 @@ Here's quick overview video of the project:
 - Phase 1: Proof of concept
   - Build a smart contract that pays users based on the result of an api call
   - Create a minimal frontend with the basic features required to pair users on a bet
-  -
+  - Design global chat room, authentication, and general core user features
 
-- Establish Minimum Viable Product 
+- Phase 2: Minimum Viable Product 
   - All core features:
     - rate limiting
     - admin accounts
     - chat reply in global chat
     - killswitch in case of emergency
+  - Graphical Desgin
+    - 
 
+- Phase 3: 
 
 - security audit
 - legal statement
