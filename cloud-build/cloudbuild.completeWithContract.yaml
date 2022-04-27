@@ -12,7 +12,7 @@ steps:
       - --key=chess-wager-$BRANCH_NAME
   - id: Installing dependencies for frontend
     name: "gcr.io/cloud-builders/yarn"
-    args: ["install", "--no-optional", "-f"]
+    args: ["install"]
   - id: Installing firebase tools
     name: "gcr.io/cloud-builders/yarn"
     args: ["install", "-g", "firebase-tools"]
