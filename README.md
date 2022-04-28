@@ -6,17 +6,17 @@
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
 
-ChessWager is live. You can visit https://chesswager.io/ and play right now, however it is still in early development, and you can't bet with real currency yet. The currency we are planning to use for our mainnet launch is Avalanche, so we are running our systems on the Avalanche Fuji Testnet.
+ChessWager is live. You can visit https://chesswager.io/ and play right now, however it is still in early development, and you can't bet with real currency yet. The currency we are planning to use for our mainnet launch is Avalanche AVAX, so we are running our systems on the Avalanche Fuji Testnet.
 
 Here's quick overview video of the project:
 
 ### How it works
 
 - Primary Tech used in this project:
-  - Frontend: React, Typescript, Unstated, Tailwind, scss, Web3, Ethersjs
+  - Frontend: React, Typescript, Unstated, Tailwind, Web3, Ethersjs
   - Backend: Firebase, Solidity, Node-Typescript, Ethersjs
   - Testing: Jest, Cypress, Hardhat, Waffle
-  - CI/CD: Docker, Docker Compose, Kubernetes, Google Cloud Build, Google Kubernetes Engine
+  - CI/CD: Docker, Kubernetes, Google Cloud Build, Google Kubernetes Engine
   - Other Tooling: Vite, Yarn
 
 -Diagram here-
@@ -37,6 +37,7 @@ Here's quick overview video of the project:
     - onboarding "how to"
     - contact
     - faqs
+    - end-to-end testing
   - Complete:
     - UI/UX Design and implementation
     - Security
@@ -45,10 +46,14 @@ Here's quick overview video of the project:
     - Blocking
     - Profiles
     - Build Pipeline
-- Phase: 3: Launch Features
-  - Shift to agile
-  - Technical guides for contributing, bug reports, and 
+- Phase: 3: Launch Prep
+  - Develop clear code of ethics and customer service
+  - Shift to agile, goal - weekly laurch
+  - Technical guides for contributing, bug reports
   - Aggressive feature testing and bug hunting
-  - security audit
-  - legal statement
-  - 
+  - Security audit
+  - Legal statement and TOS
+- Phase 4: Primary Launch
+  - Advertising
+- Phase 5: Mobile Platform
+- Phase 6: 
