@@ -26,6 +26,7 @@ steps:
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "functions-install"]
 
+    # Testing
   - id: Running tests
     name: "gcr.io/cloud-builders/yarn"
     args: ["run", "test"]

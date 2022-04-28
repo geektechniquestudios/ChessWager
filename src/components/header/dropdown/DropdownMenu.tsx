@@ -78,6 +78,7 @@ export const DropdownMenu = () => {
         backdropFilter: blur,
       }}
       ref={dropdownRef}
+      id="dropdown-menu"
     >
       <div className="flex justify-center">
         <Main />

@@ -13,10 +13,10 @@ Here's quick overview video of the project:
 ### How it works
 
 - Primary Tech used in this project:
-  - Frontend: React, Typescript, Unstated, Tailwind, Web3, Ethersjs
+  - Frontend: React, Typescript, Unstated, Tailwind, scss, Web3, Ethersjs
   - Backend: Firebase, Solidity, Node-Typescript, Ethersjs
   - Testing: Jest, Cypress, Hardhat, Waffle
-  - CI/CD: Docker, Kubernetes, Google Cloud Build, Google Kubernetes Engine
+  - CI/CD: Docker, Docker Compose, Kubernetes, Google Cloud Build, Google Kubernetes Engine
   - Other Tooling: Vite, Yarn
 
 -Diagram here-

@@ -50,10 +50,7 @@ export const ChatForm: React.FC<Props> = ({
   }
 
   return (
-    <fieldset
-      disabled={!auth.currentUser}
-      className="fieldset justify-center flex"
-    >
+    <fieldset className="fieldset justify-center flex">
       <form onSubmit={sendMessage} className="form justify-center w-full pb-1">
         <TextareaAutosize
           value={formValue}
@@ -71,6 +68,7 @@ export const ChatForm: React.FC<Props> = ({
           <button
             className="rounded-md border bg-stone-200 dark:bg-stone-900 hover:bg-white hover:text-stone-800  hover:border-black dark:hover:bg-stone-800 dark:hover:text-stone-300 dark:hover:border-stone-300 border-stone-500 dark:border-stone-500 text-stone-800 dark:text-stone-300 font-bold px-2 py-1 color-shift clickable"
             type="submit"
+            disabled={false}
           >
             Chat
           </button>

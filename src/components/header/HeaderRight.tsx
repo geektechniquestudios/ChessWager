@@ -104,6 +104,7 @@ export const HeaderRight: React.FC = () => {
       />
       <SignInButton />
       <MainHeaderButton
+        id="main-header-button"
         title="Menu"
         openToMenu="main"
         icon={<BiChevronDown size="21" />}
