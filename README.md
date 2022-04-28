@@ -5,6 +5,9 @@
 ##### Chesswager is a hybrid dApp that uses smart contracts to securely facilitate trustless betting on the top games being played on [LichessTV](https://lichess.org/tv).
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
+[![Lines of Code](https://img.shields.io/tokei/lines/github/geektechniquestudios/ChessWager)](#)
+[![License](https://img.shields.io/github/license/geektechniquestudios/ChessWager)](#)
+
 
 ChessWager is live. You can visit https://chesswager.io/ and play right now, however it is still in early development, and you can't bet with real currency yet. The currency we are planning to use for our mainnet launch is Avalanche AVAX, so we are running our systems on the Avalanche Fuji Testnet.
 
@@ -47,13 +50,18 @@ Here's quick overview video of the project:
     - Profiles
     - Build Pipeline
 - Phase: 3: Launch Prep
-  - Develop clear code of ethics and customer service
+  - Develop clear WRITTEN code of ethics and customer service standards
   - Shift to agile, goal - weekly laurch
   - Technical guides for contributing, bug reports
   - Aggressive feature testing and bug hunting
   - Security audit
+  - UI/UX polish, animations
   - Legal statement and TOS
+  - Establish LLC 
 - Phase 4: Primary Launch
   - Advertising
+  - 24/7 monitoring of chat and services
+  - Gather analytics, refactor based on data
+  - 
 - Phase 5: Mobile Platform
-- Phase 6: 
+- Phase 6: Feature Growth
