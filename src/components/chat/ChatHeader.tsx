@@ -9,6 +9,7 @@ export const ChatHeader: React.FC = () => {
   return (
     <header className="global-chat-header flex bg-stone-200 dark:bg-stone-700 border-b border-stone-400 dark:border-stone-700 justify-between">
       <button
+        id="hide-chat-button"
         onClick={() => {
           setShowChat(false)
           localStorage.setItem("showChat", "false")
