@@ -68,5 +68,5 @@ chess-wager-*-firebase-adminsdk-*.json
 .yarn/install-state.gz
 
 # cypress
-cypress/videos
-cypress/screenshots
+cypress/videos/*
+cypress/screenshots/*
