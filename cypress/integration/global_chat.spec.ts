@@ -7,8 +7,8 @@ describe("chat body", () => {
   it("should open persona of user if their chat title is clicked", () => {})
 })
 
-describe("open and close chat buttons show and hide chat body", () => {
-  it("should close then open global chat", () => {
+describe("show/hide chat body buttons", () => {
+  it("should open and close global chat", () => {
     cy.get('div[id="global-chat"]').should("exist")
     cy.get('button[id="hide-chat-button"]').click()
     cy.get('div[id="global-chat"]').should("not.exist")
