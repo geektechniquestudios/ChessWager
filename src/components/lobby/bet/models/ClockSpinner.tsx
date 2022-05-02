@@ -7,7 +7,7 @@ export const ClockSpinner: React.FC = () => {
   const stroke = isDarkOn ? "#d6d3d1" : "#1c1917"
   return (
     <>
-      <div className="grid place-content-center" title="Waiting for an Oponent">
+      <div className="grid place-content-center m-0.5" title="Waiting for an Oponent">
         <svg
           version="1.1"
           id="L2"
@@ -16,8 +16,8 @@ export const ClockSpinner: React.FC = () => {
           y="0px"
           viewBox="0 0 100 100"
           enableBackground="new 0 0 100 100"
-          width={25}
-          height={25}
+          width={21}
+          height={21}
         >
           <circle
             fill="none"

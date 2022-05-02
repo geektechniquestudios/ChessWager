@@ -37,7 +37,7 @@ export const RightButtons: React.FC<Props> = ({
   return (
     <>
       {isSelected && (
-        <div className="flex justify-between flex-grow h-full">
+        <div className="flex justify-between h-full">
           <div className="flex">
             <User2Metamask
               betId={id}

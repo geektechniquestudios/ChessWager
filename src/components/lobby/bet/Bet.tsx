@@ -126,30 +126,30 @@ export const Bet: React.FC<Props> = ({
   }
 
   return (
-    <div className="w-full flex justify-center align-middle overflow-x-hidden">
+    <div className="w-full flex justify-center align-middle overflow-x-hidden p-0.5">
       <div
-        className={`${pointerEvents} h-11 flex justify-center align-middle w-full px-1 border-b border-stone-400 dark:border-stone-700 color-shift ${selectedStyle} ${disabledStyle}`}
+        className={`${pointerEvents} h-11 flex justify-center align-middle w-full px-1 rounded-lg border border-stone-400 dark:border-stone-700 color-shift ${selectedStyle} ${disabledStyle}`}
         onClick={updateSelectedStatus}
       >
         {id !== "" && (
           <>
-            <LeftButtons
-              user1Id={user1Id}
-              status={status}
-              id={id}
-              amount={amount}
-              betSide={betSide}
-              multiplier={multiplier}
-              user1Metamask={user1Metamask}
-              hasUser1Paid={hasUser1Paid}
-              user2Id={user2Id}
-              user2Metamask={user2Metamask}
-              gameId={gameId}
-              timestamp={timestamp}
-              contractAddress={contractAddress}
-              isSelected={isSelected}
-            />
-            <div className="flex gap-0.5">
+            <div className="w-full flex justify-end">
+              <LeftButtons
+                user1Id={user1Id}
+                status={status}
+                id={id}
+                amount={amount}
+                betSide={betSide}
+                multiplier={multiplier}
+                user1Metamask={user1Metamask}
+                hasUser1Paid={hasUser1Paid}
+                user2Id={user2Id}
+                user2Metamask={user2Metamask}
+                gameId={gameId}
+                timestamp={timestamp}
+                contractAddress={contractAddress}
+                isSelected={isSelected}
+              />
               <User1Data
                 user1FollowThrough={user1FollowThrough}
                 user1PhotoURL={user1PhotoURL}
@@ -161,7 +161,9 @@ export const Bet: React.FC<Props> = ({
                 hasUser1Paid={hasUser1Paid}
                 user1Id={user1Id}
               />
-              <CenterOfBet potSize={potSize} betSide={betSide} />
+            </div>
+            <CenterOfBet potSize={potSize} betSide={betSide} />
+            <div className="w-full flex justify-start">
               <User2Data
                 user2FollowThrough={user2FollowThrough}
                 user2PhotoURL={user2PhotoURL}
@@ -175,23 +177,23 @@ export const Bet: React.FC<Props> = ({
                 id={id}
                 hasUser2Paid={hasUser2Paid}
               />
+              <RightButtons
+                user2Id={user2Id}
+                status={status}
+                user1Id={user1Id}
+                id={id}
+                amount={amount}
+                betSide={betSide}
+                multiplier={multiplier}
+                user2Metamask={user2Metamask}
+                hasUser2Paid={hasUser2Paid}
+                user1Metamask={user1Metamask}
+                gameId={gameId}
+                timestamp={timestamp}
+                contractAddress={contractAddress}
+                isSelected={isSelected}
+              />
             </div>
-            <RightButtons
-              user2Id={user2Id}
-              status={status}
-              user1Id={user1Id}
-              id={id}
-              amount={amount}
-              betSide={betSide}
-              multiplier={multiplier}
-              user2Metamask={user2Metamask}
-              hasUser2Paid={hasUser2Paid}
-              user1Metamask={user1Metamask}
-              gameId={gameId}
-              timestamp={timestamp}
-              contractAddress={contractAddress}
-              isSelected={isSelected}
-            />
           </>
         )}
       </div>

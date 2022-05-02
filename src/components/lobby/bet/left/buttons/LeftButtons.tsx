@@ -37,7 +37,7 @@ export const LeftButtons: React.FC<Props> = ({
   return (
     <>
       {isSelected && (
-        <div className="flex justify-between flex-grow h-full">
+        <div className="flex justify-between h-full">
           <div className="flex">
             <DeleteBetButton user1Id={user1Id} status={status} id={id} />
           </div>

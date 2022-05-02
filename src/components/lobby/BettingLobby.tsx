@@ -13,7 +13,7 @@ export const BettingLobby: React.FC = () => {
       <main className="w-full">
         <div className="overflow-y-hidden">
           <LobbyHeader />
-          <div className="overflow-y-hidden h-full overflow-x-auto">
+          <div className="overflow-y-hidden h-full overflow-x-auto pt-0.5">
             <CreatedByUserBets />
             {isRealTime ? <RealtimeBets /> : <RefreshingBets />}
           </div>

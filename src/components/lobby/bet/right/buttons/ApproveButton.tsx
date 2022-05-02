@@ -35,17 +35,13 @@ export const ApproveButton: React.FC<Props> = ({ betId, user1Id, user2Id }) => {
   const { isDarkOn } = DarkMode.useContainer()
 
   return (
-    <>
-      <div className="flex flex-col justify-center">
-        <button
-          type="button"
-          className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-800 rounded-md animate-pulse"
-          onClick={approve}
-          title="Accept"
-        >
-          <FiUserCheck color={isDarkOn ? "#bbf7d0" : "#14532d"} size="19" />
-        </button>
-      </div>
-    </>
+    <button
+      type="button"
+      className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-800 rounded-md animate-pulse"
+      onClick={approve}
+      title="Accept"
+    >
+      <FiUserCheck color={isDarkOn ? "#bbf7d0" : "#14532d"} size="19" />
+    </button>
   )
 }
