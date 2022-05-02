@@ -1,4 +1,5 @@
 describe("Betting Lobby", () => {
+  
   it("should allow logged in users to click on a bet, making it selected", () => {})
   it("shouldn't allow unauthenticated users to click bets", () => {})
   it("should keep selected bets in place as other bets move around", () => {})

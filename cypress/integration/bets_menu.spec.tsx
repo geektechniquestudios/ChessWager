@@ -1,6 +1,6 @@
 describe("Bets Menu", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/#")
+    cy.visit("/")
   })
   it("should open to a specific bet if a bet item is clicked", () => {})
   it("should open to persona if user tile is clicked", () => {})
