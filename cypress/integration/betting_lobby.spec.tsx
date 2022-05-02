@@ -1,4 +1,4 @@
-describe("Betting Lobby", () => {
+describe("betting lobby", () => {
   
   it("should allow logged in users to click on a bet, making it selected", () => {})
   it("shouldn't allow unauthenticated users to click bets", () => {})

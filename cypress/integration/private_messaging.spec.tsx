@@ -1,4 +1,4 @@
-describe("Private Messaging", () => {
+describe("private messaging", () => {
   it("should create a conversation", () => {})
   it("should send a message", () => {})
   it("should recieve a message", () => {})

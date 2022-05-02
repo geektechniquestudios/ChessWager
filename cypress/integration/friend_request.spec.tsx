@@ -1,4 +1,4 @@
-describe("Friend Requesting", () => {
+describe("friend requesting", () => {
   it("should send friend request to user", () => {})
   it("should send notification to user only first time button is clicked", () => {})
   it("should rescend friend request", () => {})
