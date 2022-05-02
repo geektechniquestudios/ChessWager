@@ -1,6 +1,6 @@
 describe("dark mode toggle", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/#")
+    cy.visit("/")
   })
   it("should toggle light and dark mode", () => {
     cy.get('div[id="app"]').should("have.class", "dark")
