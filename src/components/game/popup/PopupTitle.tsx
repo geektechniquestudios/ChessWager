@@ -19,13 +19,15 @@ export const PopupTitle: React.FC<Props> = ({
       target="_blank"
     >
       <p className="font-bold">{playerRating}</p>
-      <p>{playerName}</p>
-      <FaChessKing
-        className={color === "white" ? "text-stone-100" : "text-black"}
-        stroke={color === "white" ? "black" : "white"}
-        strokeWidth={8}
-        size={20}
-      />
+      <p className="overflow-hidden text-sm">{playerName}</p>
+      <div className="w-4 h-full m-1">
+        <FaChessKing
+          className={color === "white" ? "text-stone-100" : "text-black"}
+          stroke={color === "white" ? "black" : "white"}
+          strokeWidth={8}
+          size={20}
+        />
+      </div>
     </a>
   )
 }

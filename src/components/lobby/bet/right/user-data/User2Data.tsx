@@ -35,7 +35,7 @@ export const User2Data: React.FC<Props> = ({
 }) => {
   const { user } = Auth.useContainer()
   return (
-    <div className="color-shift flex justify-center w-full border-none text-stone-900 dark:text-stone-300 px-1 gap-2.5">
+    <div className="color-shift flex justify-center border border-stone-400 dark:border-stone-500 rounded-md bg-stone-200 dark:bg-stone-700 m-0.5 text-stone-900 dark:text-stone-300 px-0.5 text-xs">
       <User2BetAmount amount={amount} multiplier={multiplier} />
       <User2FollowThrough
         user2FollowThrough={user2FollowThrough}

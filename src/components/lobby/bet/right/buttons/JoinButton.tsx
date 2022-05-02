@@ -76,7 +76,7 @@ export const JoinButton: React.FC<Props> = ({
               }}
               type="button"
               title="Join Bet"
-              className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-700 rounded-md ml-2"
+              className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-900 rounded-md ml-2"
             >
               <BsBoxArrowInLeft
                 color={isDarkOn ? "#bbf7d0" : "#14532d"}

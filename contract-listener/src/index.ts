@@ -261,9 +261,7 @@ contract.on(
               isRead: false,
             })
           }
-        }
-
-        if (doc.data().status === "approved") {
+        } else if (doc.data().status === "approved") {
           if (didUser1Pay) {
             // if only user1 paid
             usersCollectionRef.doc(doc.data().user1Id).update({
