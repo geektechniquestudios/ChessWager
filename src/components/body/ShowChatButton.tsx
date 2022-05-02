@@ -10,6 +10,7 @@ export const ShowChatButton: React.FC<Props> = ({}) => {
     <>
       {!showChat && (
         <button
+          id="show-chat-button"
           onClick={() => {
             setShowChat(true)
             localStorage.setItem("showChat", "true")
