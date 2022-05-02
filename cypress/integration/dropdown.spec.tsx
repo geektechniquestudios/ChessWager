@@ -1,6 +1,6 @@
 describe("dropdown", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/#")
+    cy.visit("/")
   })
   it("should open the dropdown menu if header button is clicked", () => {
     cy.get('div[id="dropdown-menu"]').should("not.exist")

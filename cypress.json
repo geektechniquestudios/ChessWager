@@ -1,1 +1,10 @@
-{}
+{
+  "testFiles": "**/*.spec.tsx",
+  "componentFolder": "src",
+  "baseUrl": "http://localhost:3000",
+  "env": {
+    "cypress-react-selector": {
+      "root": "#root"
+    }
+  }
+}

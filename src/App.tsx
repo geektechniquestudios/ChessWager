@@ -18,7 +18,10 @@ export const App: React.FC = () => {
   const dark = isDarkOn ? "dark" : ""
 
   return (
-    <div className={`${dark} h-full w-full overflow-y-hidden grid global-font`}>
+    <div
+      className={`${dark} h-full w-full overflow-y-hidden grid global-font`}
+      id="app"
+    >
       <div
         className="color-shift grid bg-stone-300 dark:bg-black overflow-hidden"
         id="page"
