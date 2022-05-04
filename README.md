@@ -78,12 +78,12 @@ Here's quick overview video of ChessWage:
   - Real-time arbitered betting on arbitrary events
   - NFTs maybe, keeping emphasis on usefulness
 
-<!-- 
+
 ### Git Structure
 
-  This repository's branch structure is designed similarly to the standard [gitflow](https://github.com/nvie/gitflow) model, with a test branch between develop and main. 
+  This repository's branch structure is designed similarly to the standard [gitflow](https://github.com/nvie/gitflow) model, with a "test" branch between develop and main. 
   
-  -Diagram here- -->
+  ![](readme-assets/git-model.png)
   
 
   
