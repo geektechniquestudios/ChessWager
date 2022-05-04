@@ -3,10 +3,10 @@
 ### Bet on live professional chess games and get paid instantly
 
 ##### Chesswager is a hybrid dApp that uses smart contracts to securely facilitate betting on the top games being played on [LichessTV](https://lichess.org/tv).
+<!-- [![Lines of Code](https://img.shields.io/tokei/lines/github/geektechniquestudios/ChessWager)](#) -->
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
-[![Lines of Code](https://img.shields.io/tokei/lines/github/geektechniquestudios/ChessWager)](#)
 [![License](https://img.shields.io/github/license/geektechniquestudios/ChessWager)](#)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
 [![Build](https://img.shields.io/github/checks-status/geektechniquestudios/ChessWager/main)](#)
 
 
@@ -37,11 +37,12 @@ Here's quick overview video of ChessWage:
     - admin accounts
     - chat reply in global chat
     - killswitch in case of emergency
+    - layout responsiveness
     - onboarding "how to"
     - contact
     - faqs
     - end-to-end testing
-    - user onboarding/ getting started / how to
+    - user onboarding/ getting started / how to / help
   - Complete:
     - UI/UX design and implementation
     - User search
@@ -64,6 +65,7 @@ Here's quick overview video of ChessWage:
   - Advertising
   - 24/7 monitoring of chat and services
   - Gather analytics; refactor and plan ahead based on data
+  - Pay down tech debt as much as possible
   - Optimize backend
   - Actively design defense against fraud and hacking
   - Build user engagement systems, like achievements and badges
@@ -75,3 +77,14 @@ Here's quick overview video of ChessWage:
   - Adapt tech to other api based games, including irl sports
   - Real-time arbitered betting on arbitrary events
   - NFTs maybe, keeping emphasis on usefulness
+
+<!-- 
+### Git Structure
+
+  This repository's branch structure is designed similarly to the standard [gitflow](https://github.com/nvie/gitflow) model, with a test branch between develop and main. 
+  
+  -Diagram here- -->
+  
+
+  
+
