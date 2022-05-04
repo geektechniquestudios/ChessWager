@@ -9,12 +9,29 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
 [![Build](https://img.shields.io/github/checks-status/geektechniquestudios/ChessWager/main)](#)
 
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
+![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
+![cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=for-the-badge&logo=cypress&logoColor=058a5e)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)
+
+
+
+<br><br>
 
 ChessWager is live. You can visit https://chesswager.io/ and play right now. You can't bet with real currency yet, but you can play on the Avalanche testnet.
 
-Here's quick overview video of ChessWage:
+ <details>
+  <summary>
+   How it works
+  </summary>
+ <br>
 
-### How it works
 
 - Primary Tech used in this project:
   - Frontend: React, Typescript, Unstated, Tailwind, Web3, Ethersjs
@@ -25,7 +42,13 @@ Here's quick overview video of ChessWage:
 
 -Diagram here-
 
-### Roadmap
+  </details>
+  
+ <details>
+  <summary>
+   Roadmap
+  </summary>
+ <br>
 
 - Phase 1: Proof of concept
   - Build a smart contract that pays users based on the result of a live chess game
@@ -78,13 +101,24 @@ Here's quick overview video of ChessWage:
   - Real-time arbitered betting on arbitrary events
   - NFTs maybe, keeping emphasis on usefulness
 
+</details>
 
-### Git Structure
 
-  This repository's branch structure is designed similarly to the standard [gitflow](https://github.com/nvie/gitflow) model, with a "test" branch between develop and main. 
+ <details>
+  <summary>
+   Branch Structure
+  </summary>
+ <br>
+This repository's branch structure is designed similarly to the standard [gitflow](https://github.com/nvie/gitflow) model with the addition of a "test" branch between develop and release. The develop, test, and main branches each have their own backend environment.
+
+![](readme-assets/git-model.png)
+
+
+  - *Develop* could have any backend changes at any time.
+  - *Test* will only have user testing and controlled tests running on its environment during the build process.
+  - *Main* of course operates on the production environment.
   
-  ![](readme-assets/git-model.png)
-  
+</details>
 
   
 
