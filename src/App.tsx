@@ -10,10 +10,12 @@ import { FundedBets } from "./components/funded-bets/FundedBets"
 import { DarkMode } from "./components/containers/DarkMode"
 import { ChatToggle } from "./components/containers/ChatToggle"
 import { ShowChatButton } from "./components/body/ShowChatButton"
+import { WindowSize } from "./components/containers/WindowSize"
 
 export const App: React.FC = () => {
   const { isDarkOn } = DarkMode.useContainer()
   const { showChat } = ChatToggle.useContainer()
+  const { width, height } = WindowSize.useContainer()
 
   const dark = isDarkOn ? "dark" : ""
 
