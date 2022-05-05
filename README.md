@@ -9,20 +9,6 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
 [![Build](https://img.shields.io/github/checks-status/geektechniquestudios/ChessWager/main)](#)
 
-<!-- https://github.com/Ileriayo/markdown-badges -->
-![TypeScript](https://badges.aleen42.com/src/typescript.svg)
-![React](https://badges.aleen42.com/src/react.svg)
-![TailwindCSS](https://badges.aleen42.com/src/tailwindcss.svg)
-![NodeJS](https://badges.aleen42.com/src/node.svg)
-![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=flat&logo=firebase&labelColor=525252)
-![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=flat&logo=google-cloud&logoColor=white&prefix=test&labelColor=525252)
-![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=flat&logo=solidity&logoColor=white&labelColor=525252)
-![cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=flat&logo=cypress&logoColor=058a5e&labelColor=52525b)
-![Docker](https://badges.aleen42.com/src/docker.svg)
-![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=flat&logo=kubernetes&logoColor=white&labelColor=525252)
-![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=flat&logo=yarn&logoColor=white&labelColor=525252)
-![Vite](https://badges.aleen42.com/src/vitejs.svg)
-
 <br>
 
 ChessWager is live. You can visit https://chesswager.io/ and play right now. You can't bet with real currency yet, but you can play on the Avalanche testnet.
@@ -34,14 +20,27 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
  <br>
 
 
-- Primary Tech used in this project:
-  - Frontend: React, Typescript, Unstated, Tailwind, Web3, Ethersjs
-  - Backend: Firebase, Solidity, TS-Node, Ethersjs
-  - Testing: Cypress, Hardhat, Waffle
-  - CI/CD: Docker, Google Cloud Build, Kubernetes, Google Kubernetes Engine
-  - Package Management: Vite, Yarn
+### Primary Tech used in this project:
+  <!-- https://github.com/Ileriayo/markdown-badges -->
+ ![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=flat&logo=yarn&logoColor=white&labelColor=525252)
+ ![Vite](https://badges.aleen42.com/src/vitejs.svg)
 
--Diagram here-
+ ![TypeScript](https://badges.aleen42.com/src/typescript.svg)
+ ![React](https://badges.aleen42.com/src/react.svg)
+ ![TailwindCSS](https://badges.aleen42.com/src/tailwindcss.svg)
+ ![NodeJS](https://badges.aleen42.com/src/node.svg)
+ ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=flat&logo=solidity&logoColor=white&labelColor=525252)
+
+ ![cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=flat&logo=cypress&logoColor=058a5e&labelColor=52525b)
+ ![Docker](https://badges.aleen42.com/src/docker.svg)
+ ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=flat&logo=kubernetes&logoColor=white&labelColor=525252)
+ ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=flat&logo=firebase&labelColor=525252)
+ ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=flat&logo=google-cloud&logoColor=white&prefix=test&labelColor=525252)
+
+### Data Flow
+  
+ ![](readme-assets/data-flow.png)
+
 
   </details>
   
