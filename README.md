@@ -3,26 +3,27 @@
 ### Bet on live professional chess games and get paid instantly
 
 ##### Chesswager is a hybrid dApp that uses smart contracts to securely facilitate betting on the top games being played on [LichessTV](https://lichess.org/tv).
-<!-- [![Lines of Code](https://img.shields.io/tokei/lines/github/geektechniquestudios/ChessWager)](#) -->
 
+<!-- https://shields.io/ -->
 [![License](https://img.shields.io/github/license/geektechniquestudios/ChessWager)](#)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
 [![Build](https://img.shields.io/github/checks-status/geektechniquestudios/ChessWager/main)](#)
 
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
-![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
-![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white)
-![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
-![cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=for-the-badge&logo=cypress&logoColor=058a5e)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)
+<!-- https://github.com/Ileriayo/markdown-badges -->
+![TypeScript](https://badges.aleen42.com/src/typescript.svg)
+![React](https://badges.aleen42.com/src/react.svg)
+![TailwindCSS](https://badges.aleen42.com/src/tailwindcss.svg)
+![NodeJS](https://badges.aleen42.com/src/node.svg)
+![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=flat&logo=firebase&labelColor=525252)
+![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=flat&logo=google-cloud&logoColor=white&prefix=test&labelColor=525252)
+![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=flat&logo=solidity&logoColor=white&labelColor=525252)
+![cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=flat&logo=cypress&logoColor=058a5e&labelColor=52525b)
+![Docker](https://badges.aleen42.com/src/docker.svg)
+![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=flat&logo=kubernetes&logoColor=white&labelColor=525252)
+![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=flat&logo=yarn&logoColor=white&labelColor=525252)
+![Vite](https://badges.aleen42.com/src/vitejs.svg)
 
-
-
-<br><br>
+<br>
 
 ChessWager is live. You can visit https://chesswager.io/ and play right now. You can't bet with real currency yet, but you can play on the Avalanche testnet.
 
