@@ -17,7 +17,8 @@ export const AvaxPriceButton: React.FC = () => {
           title="Price from CoinGecko"
           data-toggle="tooltip"
           target="_blank"
-          rel="noreferrer"
+          rel="noreferrer noopener"
+          id="avax-price-button"
         >
           <p
             style={{ textDecoration: "underline solid #9f1239 3px" }}

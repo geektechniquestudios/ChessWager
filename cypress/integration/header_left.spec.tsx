@@ -2,16 +2,27 @@ beforeEach(() => {
   cy.visit("/")
 })
 
-describe("lichess button", () => {
-  it("should open to the lichess tv link in a new tab", () => {
-    cy.get('a[id="lichess-button"]').should("have.attr", "target", "_blank")
-    cy.get('a[id="lichess-button"]').then((res) => {
-      const url = res.prop("href")
-      cy.request(url)
+const linkTest = (link: string, id: string, componentToTest: string) => {
+  describe(componentToTest, () => {
+    it("should open to the link in a new tab", () => {
+      cy.get(`a[id=${id}]`).should("have.attr", "target", "_blank")
+      cy.get(`a[id=${id}]`).should("have.attr", "rel", "noreferrer noopener")
+    })
+    it("should respond with a positive status code", () => {
+      cy.get(`a[id=${id}]`).then((res) => {
+        const url = res.prop("href")
+        cy.request(url)
+      })
+    })
+    it("should open to the correct url", () => {
+      cy.get(`a[id=${id}]`).should("have.attr", "href", link)
     })
   })
-})
+}
 
-describe("avax price button", () => {
-  it("should open to coingecko's avax price page", () => {})
-})
+linkTest("https://lichess.org/tv", "lichess-button", "Lichess button")
+linkTest(
+  "https://www.coingecko.com/en/coins/avalanche",
+  "avax-price-button",
+  "AVAX button",
+)

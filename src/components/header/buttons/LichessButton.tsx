@@ -11,7 +11,7 @@ export const LichessButton: React.FC<Props> = ({}) => {
       title="Watch on Lichess"
       data-toggle="tooltip"
       target="_blank"
-      rel="noreferrer"
+      rel="noreferrer noopener"
     >
       <SiLichess size="19" title="Watch on Lichess" />
     </a>
