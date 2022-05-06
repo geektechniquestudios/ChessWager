@@ -40,7 +40,11 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
 ### Data Flow
   
  ![](readme-assets/data-flow.png)
+ 
+ Starting with the 
 
+ 
+ 
 
   </details>
   
@@ -109,6 +113,7 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
    Branch Structure
   </summary>
  <br>
+ 
 This repository's branch structure is designed similarly to the standard [gitflow](https://github.com/nvie/gitflow) model with the addition of a "test" branch between develop and release. The develop, test, and main branches each have their own backend environment.
 
 ![](readme-assets/git-model.png)
