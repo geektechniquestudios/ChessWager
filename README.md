@@ -15,42 +15,42 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
 
  <details>
   <summary>
-   How it works
+   <h3>How it works</h3>
   </summary>
- <br>
+  <br>
 
+  ### Data Flow
 
-### Primary Tech used in this project:
-  <!-- https://github.com/Ileriayo/markdown-badges -->
- ![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=flat&logo=yarn&logoColor=white&labelColor=525252)
- ![Vite](https://badges.aleen42.com/src/vitejs.svg)
+  ![](readme-assets/data-flow.png)
 
- ![TypeScript](https://badges.aleen42.com/src/typescript.svg)
- ![React](https://badges.aleen42.com/src/react.svg)
- ![TailwindCSS](https://badges.aleen42.com/src/tailwindcss.svg)
- ![NodeJS](https://badges.aleen42.com/src/node.svg)
- ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=flat&logo=solidity&logoColor=white&labelColor=525252)
+  The client relies on a firestore serverless infrastructure. When a page loads, the client subscribes to the Lichess tv API and loads real-time data about chats, bets, and users from the firestore database. 
 
- ![cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=flat&logo=cypress&logoColor=058a5e&labelColor=52525b)
- ![Docker](https://badges.aleen42.com/src/docker.svg)
- ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=flat&logo=kubernetes&logoColor=white&labelColor=525252)
- ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=flat&logo=firebase&labelColor=525252)
- ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=flat&logo=google-cloud&logoColor=white&prefix=test&labelColor=525252)
+  A few distinct programs run in an isolated cloud environment to interact with the smart contract. One of those programs, our "contract listener", listens for user payments. Once 2 users agree to a wager, their smart wallets will prompt each user with the appropriate amount. When a user sends a transaction to the contract, the contract listener writes an update to the firestore database. These changes are reflected immediately in the UI visually informing users their payment was recieved. When a bet is matched, the conditions of the bet are compared in the smart contract. If the values don't perfectly match, the transaction is rejected. 
 
-### Data Flow
-  
- ![](readme-assets/data-flow.png)
- 
- Starting with the 
-
- 
+  Another isolated backend program subscribes to the Lichess API. At the end of each game, that program interacts with with the smart contract, telling it to complete the bet transactions and pay the winners or refund users in the event of a draw.
  
 
+  ### Primary Tech used in this project:
+    <!-- https://github.com/Ileriayo/markdown-badges -->
+   ![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=flat&logo=yarn&logoColor=white&labelColor=525252)
+   ![Vite](https://badges.aleen42.com/src/vitejs.svg)
+
+   ![TypeScript](https://badges.aleen42.com/src/typescript.svg)
+   ![React](https://badges.aleen42.com/src/react.svg)
+   ![TailwindCSS](https://badges.aleen42.com/src/tailwindcss.svg)
+   ![NodeJS](https://badges.aleen42.com/src/node.svg)
+   ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=flat&logo=solidity&logoColor=white&labelColor=525252)
+
+   ![cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=flat&logo=cypress&logoColor=058a5e&labelColor=52525b)
+   ![Docker](https://badges.aleen42.com/src/docker.svg)
+   ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=flat&logo=kubernetes&logoColor=white&labelColor=525252)
+   ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=flat&logo=firebase&labelColor=525252)
+   ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=flat&logo=google-cloud&logoColor=white&prefix=test&labelColor=525252)
   </details>
   
  <details>
   <summary>
-   Roadmap
+   <h3>Roadmap</h3>
   </summary>
  <br>
 
@@ -110,7 +110,7 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
 
  <details>
   <summary>
-   Branch Structure
+   <h3>Branch Structure</h3>
   </summary>
  <br>
  
