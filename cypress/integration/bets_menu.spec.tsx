@@ -2,10 +2,9 @@ describe("Bets Menu", () => {
   beforeEach(() => {
     cy.visit("/")
     cy.login()
-    cy.get('button[title="Bets"]').click()
   })
-
   it("should open to a specific bet if a bet item is clicked", () => {
+    cy.get('button[title="Bets"]').click()
     cy.get('div[id="bets"]').should("exist")
     cy.get('div[id="bet"]').should("not.exist")
     cy.get('div[id="bets-list"]').within(() => {
@@ -14,6 +13,9 @@ describe("Bets Menu", () => {
     cy.get('div[id="bet"]').should("exist")
   })
   it("should open to persona if user tile is clicked", () => {
+    cy.get('button[title="Bets"]').click()
+    cy.get('div[id="bets"]').should("exist")
+    cy.get('div[id="bet"]').should("not.exist")
     cy.get('div[id="bets-list"]').within(() => {
       cy.get("a").first().click()
     })

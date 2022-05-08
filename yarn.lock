@@ -5912,6 +5912,7 @@ __metadata:
     postcss: ^8.4.6
     prettier: ^2.5.1
     prettier-plugin-solidity: ^1.0.0-beta.18
+    prettier-plugin-tailwindcss: ^0.1.10
     rc-slider: ^9.7.2
     react: ^18.1.0
     react-currency-input-field: ^3.5.1
@@ -13048,6 +13049,15 @@ __metadata:
   peerDependencies:
     prettier: ^2.3.0
   checksum: 3c43bb7404c380091310e59be718ec0161d268e4674e5e658723f7a7bc9b0f541df9816a8e7bd93b9e73a289f1e13ea1eab58027d4ee51d25460ea6e63c0c99e
+  languageName: node
+  linkType: hard
+
+"prettier-plugin-tailwindcss@npm:^0.1.10":
+  version: 0.1.10
+  resolution: "prettier-plugin-tailwindcss@npm:0.1.10"
+  peerDependencies:
+    prettier: ">=2.2.0"
+  checksum: 465a7e02bd2224f9773f35190b6b4d19f281848d0492d4d43eabf403b33117303222faf775d8d569d0ce8bbb75336aa4db005db1935bb78c551ff711a8f89537
   languageName: node
   linkType: hard
 

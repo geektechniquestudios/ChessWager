@@ -14,6 +14,7 @@ export const SearchArea: React.FC<Props> = ({ search, setSearch }) => {
   }, [])
   return (
     <input
+      id="search-users-input"
       ref={searchInput}
       type="search"
       value={search}
