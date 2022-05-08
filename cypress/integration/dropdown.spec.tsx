@@ -1,5 +1,3 @@
-import { before } from "mocha"
-
 beforeEach(() => {
   cy.visit("/")
   cy.login()

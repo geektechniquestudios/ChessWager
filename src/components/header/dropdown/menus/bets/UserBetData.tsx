@@ -34,7 +34,9 @@ export const UserBetData: React.FC<Props> = ({
   const { userData } = UserDataState.useContainer()
   const isUserBlocked = userData.blockedUsers.includes(id)
   return (
-    <div className="flex flex-col items-start rounded-md bg-stone-300 dark:bg-stone-500 text-sm w-28 relative border border-stone-400 dark:border-stone-800 overflow-clip">
+    <div
+      className="flex flex-col items-start rounded-md bg-stone-300 dark:bg-stone-500 text-sm w-28 relative border border-stone-400 dark:border-stone-800 overflow-clip"
+    >
       <div className="flex justify-center w-full my-2">
         {isUserBlocked ? (
           <MdBlockFlipped className="h-8 w-8" />
@@ -59,6 +61,7 @@ export const UserBetData: React.FC<Props> = ({
           </p>
         ) : (
           <button
+            id="user-bet-data-button"
             className="flex hover:underline"
             onClick={() => {
               setClickedUserById(id)

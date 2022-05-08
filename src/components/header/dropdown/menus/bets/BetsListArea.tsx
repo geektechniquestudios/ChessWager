@@ -33,7 +33,7 @@ export const BetsListArea: React.FC = ({}) => {
           className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden ml-0.5"
           style={{ direction: "rtl" }}
         >
-          <div style={{ direction: "ltr" }}>
+          <div style={{ direction: "ltr" }} id="bets-list">
             {bets
               ?.sort((a, b) => b.createdAt - a.createdAt)
               .filter(
