@@ -33,7 +33,7 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
 
   return (
     <div
-      className="scrollbar flex flex-col-reverse pt-3 overflow-y-auto overflow-x-hidden px-1 h-full"
+      className="scrollbar flex h-full flex-col-reverse overflow-y-auto overflow-x-hidden px-1 pt-3"
       style={{ direction: "rtl" }}
     >
       <div style={{ direction: "ltr" }}>

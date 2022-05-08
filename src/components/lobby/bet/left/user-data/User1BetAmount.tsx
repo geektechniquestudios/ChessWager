@@ -9,7 +9,7 @@ export const User1BetAmount: React.FC<Props> = ({ amount, multiplier }) => {
   const { avaxPrice } = Price.useContainer()
 
   return (
-    <div className="flex flex-col p-0.5 justify-center">
+    <div className="flex flex-col justify-center p-0.5">
       <div>{`$${(amount * avaxPrice)
         .toFixed(2)
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}</div>

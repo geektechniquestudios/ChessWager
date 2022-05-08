@@ -21,14 +21,14 @@ export const UserImage: React.FC<Props> = ({
   const { user } = Auth.useContainer()
   const disabledStyle = !user ? "pointer-events-none" : ""
   return (
-    <div className={`flex px-1 gap-2 ${sideFlip}`}>
+    <div className={`flex gap-2 px-1 ${sideFlip}`}>
       <div className="flex flex-col justify-center align-middle">
-        <div className="rounded-full w-8 h-8 grid place-content-center">
+        <div className="grid h-8 w-8 place-content-center rounded-full">
           <img src={photoURL} alt="" className="h-6 w-6 rounded-full" />
         </div>
       </div>
       <a
-        className={`text-xs mx-1 flex flex-col justify-center text-stone-900 dark:text-stone-300 hover:underline ${disabledStyle}`}
+        className={`mx-1 flex flex-col justify-center text-xs text-stone-900 hover:underline dark:text-stone-300 ${disabledStyle}`}
         onClick={(e) => {
           e.stopPropagation()
           setClickedUserById(userId)

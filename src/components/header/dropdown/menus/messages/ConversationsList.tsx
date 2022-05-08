@@ -55,7 +55,7 @@ export const ConversationsList: React.FC = ({}) => {
 
   const { menuStack, setMenuStack } = DropdownState.useContainer()
   return (
-    <div className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden dark:text-stone-400 text-stone-400 ml-0.5">
+    <div className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden text-stone-400 dark:text-stone-400">
       {!isLoading && (
         <>
           <>
@@ -79,7 +79,7 @@ export const ConversationsList: React.FC = ({}) => {
                       <img
                         src={user.photoURL}
                         alt=""
-                        className="w-6 h-6 rounded-full grid place-content-center"
+                        className="grid h-6 w-6 place-content-center rounded-full"
                       />
                     }
                     goToMenu="conversation"
@@ -95,7 +95,7 @@ export const ConversationsList: React.FC = ({}) => {
           </>
           <>
             {(conversations?.length ?? 0) === 0 && (
-              <div className="mt-10 w-full justify-center flex">
+              <div className="mt-10 flex w-full justify-center">
                 No messages yet
               </div>
             )}

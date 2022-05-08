@@ -30,10 +30,10 @@ export const BetsListArea: React.FC = ({}) => {
     <>
       {(bets?.length ?? 0) > 0 || isLoading ? (
         <div
-          className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden ml-0.5"
+          className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
           style={{ direction: "rtl" }}
         >
-          <div style={{ direction: "ltr" }}>
+          <div style={{ direction: "ltr" }} id="bets-list">
             {bets
               ?.sort((a, b) => b.createdAt - a.createdAt)
               .filter(
@@ -45,7 +45,7 @@ export const BetsListArea: React.FC = ({}) => {
           </div>
         </div>
       ) : (
-        <div className="h-72 mt-10 w-full justify-center flex dark:text-stone-400 text-stone-400">
+        <div className="mt-10 flex h-72 w-full justify-center text-stone-400 dark:text-stone-400">
           No bets yet
         </div>
       )}

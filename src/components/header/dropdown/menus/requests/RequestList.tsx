@@ -22,7 +22,7 @@ export const RequestList: React.FC<Props> = ({}) => {
       {!isLoading ? (
         requests?.length ?? 0 > 0 ? (
           <div
-            className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden ml-0.5"
+            className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
             style={{ direction: "rtl" }}
           >
             {requests?.map((request: FriendRequest) => (
@@ -30,7 +30,7 @@ export const RequestList: React.FC<Props> = ({}) => {
             ))}
           </div>
         ) : (
-          <div className="h-72 mt-10 w-64 justify-center flex dark:text-stone-400 text-stone-400">
+          <div className="mt-10 flex h-72 w-64 justify-center text-stone-400 dark:text-stone-400">
             No friend requests yet
           </div>
         )

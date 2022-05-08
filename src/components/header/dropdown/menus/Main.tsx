@@ -37,6 +37,7 @@ export const Main: React.FC = () => {
     <Menu
       menuItems={[
         <DropdownItem
+          id="Social"
           leftIcon={<BsShare />}
           goToMenu="social"
           text="Social"
@@ -95,6 +96,7 @@ export const Main: React.FC = () => {
         <div>
           {!user && (
             <DropdownItem
+              id="dropdown-sign-in-button"
               onClick={() => {
                 signInWithGoogle()
               }}

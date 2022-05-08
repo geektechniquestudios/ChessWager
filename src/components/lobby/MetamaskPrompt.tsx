@@ -134,7 +134,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
   return (
     <div className={`flex flex-col justify-center ${borderStyle}}`}>
       <button
-        className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-800 rounded-md animate-pulse mx-2"
+        className="color-shift mx-2 grid h-8 w-8 animate-pulse place-content-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-800"
         onClick={sendBet}
       >
         <BiWallet

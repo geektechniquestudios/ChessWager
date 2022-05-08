@@ -25,6 +25,9 @@ const useConversationsState = () => {
     conversationsCollectionRef,
     where("userIds", "array-contains", auth.currentUser?.uid ?? ""),
   )
+
+  // causes error on page load
+
   const [conversations, isLoading] =
     useCollectionData<[Conversation[], boolean] | any>(q, { idField: "id" }) ??
     []

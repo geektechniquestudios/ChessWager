@@ -8,7 +8,7 @@ import { DarkMode } from "../../containers/DarkMode"
 export const LobbyHeaderButtons: React.FC = () => {
   const { isDarkOn } = DarkMode.useContainer()
   return (
-    <div className="flex justify-between w-full px-20">
+    <div className="flex w-full justify-between px-20">
       <HeaderButton buttonName="Side" buttonIcon={<GiYinYang />} />
       <HeaderButton buttonName="Trust" buttonIcon={<FaRegHandshake />} />
       <HeaderButton buttonName="Prize" buttonIcon={<BsPiggyBank />} />

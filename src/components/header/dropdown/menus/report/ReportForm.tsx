@@ -45,21 +45,22 @@ export const ReportForm: React.FC<Props> = ({}) => {
     })
   }
   return (
-    <div className="flex-col justify-start w-full grow pb-2">
+    <div className="w-full grow flex-col justify-start pb-2">
       <fieldset
         disabled={!auth.currentUser}
-        className="fieldset justify-center flex"
+        className="fieldset flex justify-center"
       >
         <form
           onSubmit={sendMessage}
-          className="form justify-between w-full flex"
+          className="form flex w-full justify-between"
         >
           <TextareaAutosize
+            id="report-form"
             value={reportFormValue}
             onChange={(e) => {
               setReportFormValue(e.target.value)
             }}
-            className="scrollbar break-words inline-block resize-none outline-none text-md grow p-2 bg-stone-300 dark:bg-stone-800 dark:text-stone-50 rounded-md ml-2"
+            className="scrollbar text-md ml-2 inline-block grow resize-none break-words rounded-md bg-stone-300 p-2 outline-none dark:bg-stone-800 dark:text-stone-50"
             placeholder="Send a Message"
             maxRows={4}
             onKeyDown={(e) => {
@@ -68,7 +69,7 @@ export const ReportForm: React.FC<Props> = ({}) => {
           />
           <div className="flex flex-col-reverse">
             <button
-              className="grid place-content-center mr-2 ml-1.5 mb-1 rounded-full p-1.5 hover:bg-stone-400 dark:hover:bg-stone-800 color-shift"
+              className="color-shift mr-2 ml-1.5 mb-1 grid place-content-center rounded-full p-1.5 hover:bg-stone-400 dark:hover:bg-stone-800"
               title="Press Enter to Send"
             >
               <BiSend size="25" />

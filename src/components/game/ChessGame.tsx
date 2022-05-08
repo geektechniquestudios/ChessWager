@@ -124,15 +124,15 @@ export const ChessGame: React.FC = () => {
   }, [updateTitles])
 
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex w-full justify-center">
       <div
-        className="rounded-sm overflow-hidden resize-x justify-center flex-col align-middle bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-300 my-10 p-2.5 w-1/2 shadow-lg border border-stone-500 color-shift min-w-min"
+        className="color-shift my-10 w-1/2 min-w-min resize-x flex-col justify-center overflow-hidden rounded-sm border border-stone-500 bg-stone-100 p-2.5 align-middle text-stone-900 shadow-lg dark:bg-stone-800 dark:text-stone-300"
         style={{ minWidth: "17em", maxWidth: "80vh" }}
       >
-        <div className="resize flex w-full h-full justify-center align-middle relative">
+        <div className="relative flex h-full w-full resize justify-center align-middle">
           <GameResultPopup orientation={orientation} />
-          <div className="flex justify-center flex-col align-middle w-full bg-stone-200 dark:bg-stone-700 border border-stone-500 dark:border-stone-700">
-            <div className="flex justify-center w-full">
+          <div className="flex w-full flex-col justify-center border border-stone-500 bg-stone-200 align-middle dark:border-stone-700 dark:bg-stone-700">
+            <div className="flex w-full justify-center">
               <PlayerData
                 side={orientation === "white" ? "black" : "white"}
                 title={orientation === "white" ? blackTitle : whiteTitle}
@@ -143,7 +143,7 @@ export const ChessGame: React.FC = () => {
                 isNewGame={isNewGame}
               />
             </div>
-            <div className="aspect-w-1 aspect-h-1 border-t border-b dark:border-stone-400 border-stone-600">
+            <div className="aspect-w-1 aspect-h-1 border-t border-b border-stone-600 dark:border-stone-400">
               <Chessground
                 contained={true}
                 config={{

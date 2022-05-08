@@ -89,7 +89,7 @@ export const WagerForm: React.FC = () => {
   }
 
   return (
-    <div className="flex h-full shadow-2xl bg-stone-200 dark:bg-stone-900  border-r border-b border-stone-400 dark:border-stone-700 rounded-b-md">
+    <div className="flex h-full rounded-b-md border-r border-b  border-stone-400 bg-stone-200 shadow-2xl dark:border-stone-700 dark:bg-stone-900">
       <div className="flex w-full p-2">
         <fieldset className="flex w-full">
           <form
@@ -124,7 +124,7 @@ export const WagerForm: React.FC = () => {
                 setSliderVal={setSliderVal}
               />
             </div>
-            <div className="flex flex-row justify-between mt-4 gap-2">
+            <div className="mt-4 flex flex-row justify-between gap-2">
               <Total betAmount={betAmount} multiplier={multiplier} />
               <PlaceBet />
             </div>

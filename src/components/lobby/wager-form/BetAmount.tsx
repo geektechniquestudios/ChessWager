@@ -31,19 +31,19 @@ export const BetAmount: React.FC<Props> = ({
 
   return (
     <div
-      className={`border flex px-1 color-shift bg-stone-300 dark:bg-stone-700 rounded-md ${borderWarning}`}
+      className={`color-shift flex rounded-md border bg-stone-300 px-1 dark:bg-stone-700 ${borderWarning}`}
     >
-      <p className="grid place-content-center m-2 text-stone-900 dark:text-stone-300 font-bold">
+      <p className="m-2 grid place-content-center font-bold text-stone-900 dark:text-stone-300">
         Your Bet
       </p>
-      <div className="border m-2 border-stone-900 dark:border-stone-500" />
+      <div className="m-2 border border-stone-900 dark:border-stone-500" />
       <div>
-        <div className="flex justify-between my-1">
-          <div className="flex justify-center flex-col font-bold m-1 text-stone-900 dark:text-stone-300 text-xs">
+        <div className="my-1 flex justify-between">
+          <div className="m-1 flex flex-col justify-center text-xs font-bold text-stone-900 dark:text-stone-300">
             USD
           </div>
           <CurrencyInput
-            className="ml-1 p-1 rounded-md bg-stone-100 dark:bg-stone-800 dark:text-stone-300 text-stone-900"
+            className="ml-1 rounded-md bg-stone-100 p-1 text-stone-900 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue=""
@@ -73,12 +73,12 @@ export const BetAmount: React.FC<Props> = ({
             }}
           />
         </div>
-        <div className="flex justify-between my-1">
-          <div className="flex justify-center flex-col font-bold m-1 text-stone-900 dark:text-stone-300 text-xs">
+        <div className="my-1 flex justify-between">
+          <div className="m-1 flex flex-col justify-center text-xs font-bold text-stone-900 dark:text-stone-300">
             AVAX
           </div>
           <CurrencyInput
-            className="ml-1 p-1 rounded-md bg-stone-100 dark:bg-stone-800 dark:text-stone-300"
+            className="ml-1 rounded-md bg-stone-100 p-1 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue=""

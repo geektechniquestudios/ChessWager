@@ -8,13 +8,13 @@ interface Props {
 export const TheirBet: React.FC<Props> = ({ multiplier, betAmount }) => {
   const { avaxPrice } = Price.useContainer()
   return (
-    <div className="flex border px-1 border-stone-400 dark:border-stone-500 bg-stone-300 dark:bg-stone-700 color-shift rounded-md">
-      <p className="grid place-content-center m-2 text-stone-900 dark:text-stone-300 font-bold">
+    <div className="color-shift flex rounded-md border border-stone-400 bg-stone-300 px-1 dark:border-stone-500 dark:bg-stone-700">
+      <p className="m-2 grid place-content-center font-bold text-stone-900 dark:text-stone-300">
         Their Bet
       </p>
-      <div className="border m-2 border-stone-900 dark:border-stone-500" />
+      <div className="m-2 border border-stone-900 dark:border-stone-500" />
       <div className="w-full">
-        <div className="flex justify-center my-1">
+        <div className="my-1 flex justify-center">
           <p
             style={{ textDecoration: "underline solid #134e4a 2px" }}
             className="m-1 text-stone-900 dark:text-stone-300"
@@ -22,7 +22,7 @@ export const TheirBet: React.FC<Props> = ({ multiplier, betAmount }) => {
             .toFixed(2)
             .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}`}</p>
         </div>
-        <div className="flex justify-center my-1">
+        <div className="my-1 flex justify-center">
           <p
             style={{ textDecoration: "underline solid #9f1239 2px" }}
             className="m-1 text-stone-900 dark:text-stone-300"

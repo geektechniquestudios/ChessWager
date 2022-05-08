@@ -6,7 +6,7 @@ export const BetsMenu: React.FC = () => {
   return (
     <Menu
       menuItems={[<DropdownArea content={<BetsListArea />} />]}
-      thisMenu={"bets"}
+      thisMenu="bets"
     />
   )
 }

@@ -7,7 +7,7 @@ export const Contact: React.FC = ({}) => {
       menuItems={[
         <DropdownArea
           content={
-            <div className="h-24 w-full flex justify-center my-2">
+            <div className="my-2 flex h-24 w-full justify-center">
               Not made yet
             </div>
           }

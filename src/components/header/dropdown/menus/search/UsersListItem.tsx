@@ -10,7 +10,7 @@ export const UsersListItem: React.FC<User> = (user: User) => {
       leftIcon={
         <img
           src={user.photoURL}
-          className="w-6 h-6 rounded-full grid place-content-center"
+          className="grid h-6 w-6 place-content-center rounded-full"
         />
       }
       text={user.displayName}

@@ -1,7 +1,8 @@
-describe("lichess button", () => {
-  it("should open to the lichess tv link in a new tab", () => {})
-})
+import { linkTest } from "./link_test"
 
-describe("avax price button", () => {
-  it("should open to coingecko's avax price page", () => {})
-})
+linkTest("https://lichess.org/tv", "lichess-button", "Lichess button")
+linkTest(
+  "https://www.coingecko.com/en/coins/avalanche",
+  "avax-price-button",
+  "AVAX button",
+)

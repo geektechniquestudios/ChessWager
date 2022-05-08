@@ -23,4 +23,3 @@ describe("clicking the chat button", () => {
   it("should attempt to log user in if not authenticated", () => {})
   it("should submit the message if they are authenticated", () => {})
 })
-

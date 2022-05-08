@@ -12,8 +12,8 @@ export const FollowThrough: React.FC<Props> = ({
 }) => {
   const { isDarkOn } = DarkMode.useContainer()
   return (
-    <div className="flex flex-col justify-center w-16">
-      <div className="text-xs flex justify-center align-middle">
+    <div className="flex w-16 flex-col justify-center">
+      <div className="flex justify-center align-middle text-xs">
         {followThrough[0]} / {followThrough[1]}
       </div>
       <div className="flex justify-center align-middle">

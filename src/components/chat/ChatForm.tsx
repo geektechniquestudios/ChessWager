@@ -50,23 +50,24 @@ export const ChatForm: React.FC<Props> = ({
   }
 
   return (
-    <fieldset className="fieldset justify-center flex">
-      <form onSubmit={sendMessage} className="form justify-center w-full pb-1">
+    <fieldset className="fieldset flex justify-center">
+      <form onSubmit={sendMessage} className="form w-full justify-center pb-1">
         <TextareaAutosize
+          id="chat-form"
           value={formValue}
           onChange={(e) => {
             setFormValue(e.target.value)
           }}
-          className="scrollbar break-words inline-block resize-none outline-none text-lg w-full p-2 bg-stone-200 dark:bg-stone-800 dark:text-stone-50"
+          className="scrollbar inline-block w-full resize-none break-words bg-stone-200 p-2 text-lg outline-none dark:bg-stone-800 dark:text-stone-50"
           placeholder={auth.currentUser ? "Send a Message" : "Sign in to Chat"}
           maxRows={4}
           onKeyDown={(e) => {
             e.key === "Enter" && sendMessage(e)
           }}
         />
-        <div className="w-full flex justify-end p-2">
+        <div className="flex w-full justify-end p-2">
           <button
-            className="rounded-md border bg-stone-200 dark:bg-stone-900 hover:bg-white hover:text-stone-800  hover:border-black dark:hover:bg-stone-800 dark:hover:text-stone-300 dark:hover:border-stone-300 border-stone-500 dark:border-stone-500 text-stone-800 dark:text-stone-300 font-bold px-2 py-1 color-shift clickable"
+            className="color-shift clickable rounded-md border border-stone-500 bg-stone-200  px-2 py-1 font-bold text-stone-800 hover:border-black hover:bg-white hover:text-stone-800 dark:border-stone-500 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-300"
             type="submit"
             disabled={false}
           >

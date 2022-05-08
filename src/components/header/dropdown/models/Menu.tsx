@@ -66,7 +66,7 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
       unmountOnExit
       onEnter={calcHeight}
     >
-      <div className="w-64">
+      <div className="w-64" id={thisMenu}>
         {[
           ...menuHeader,
           menuItems.map((item: React.ReactNode, index) => (

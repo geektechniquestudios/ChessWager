@@ -7,10 +7,11 @@ export const SignInButton: React.FC = () => {
   return (
     <>
       {!user && (
-        <div className="flex flex-col justify-center mx-2">
+        <div className="mx-2 flex flex-col justify-center">
           <button
+            id="header-sign-in-button"
             onClick={signInWithGoogle}
-            className="color-shift p-2 h-9 rounded-md grid place-content-center color-shift clickable border hover:bg-stone-300 dark:hover:bg-stone-900 hover:text-black hover:border-black dark:hover:text-white dark:hover:border-white border-stone-400 dark:border-stone-500 text-stone-800 dark:text-stone-300"
+            className="color-shift color-shift clickable grid h-9 place-content-center rounded-md border border-stone-400 p-2 text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-500 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-900 dark:hover:text-white"
           >
             Sign in with Google
           </button>

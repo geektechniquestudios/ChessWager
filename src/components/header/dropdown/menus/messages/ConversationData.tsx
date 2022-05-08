@@ -8,7 +8,7 @@ export const ConversationData: React.FC<Props> = ({}) => {
   const dummy = useRef<HTMLInputElement>(null)
 
   return (
-    <div className="flex flex-col-reverse h-96">
+    <div className="flex h-96 flex-col-reverse">
       <ConvoChatForm dummy={dummy} />
       <span ref={dummy} />
       <ConvoChatBody />

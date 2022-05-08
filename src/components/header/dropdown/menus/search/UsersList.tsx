@@ -46,10 +46,10 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
   const { userData } = UserDataState.useContainer()
   return (
     <div
-      className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden ml-0.5"
+      className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
       style={{ direction: "rtl" }}
     >
-      <div style={{ direction: "ltr" }}>
+      <div style={{ direction: "ltr" }} id="search-users-results">
         {users
           ?.filter(
             (user: User) =>

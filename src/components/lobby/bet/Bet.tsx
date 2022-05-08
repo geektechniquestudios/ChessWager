@@ -126,14 +126,14 @@ export const Bet: React.FC<Props> = ({
   }
 
   return (
-    <div className="w-full flex justify-center align-middle overflow-x-hidden p-0.5">
+    <div className="flex w-full justify-center overflow-x-hidden p-0.5 align-middle">
       <div
-        className={`${pointerEvents} h-11 flex justify-center align-middle w-full px-1 rounded-lg border border-stone-400 dark:border-stone-700 color-shift ${selectedStyle} ${disabledStyle}`}
+        className={`${pointerEvents} color-shift flex h-11 w-full justify-center rounded-lg border border-stone-400 px-1 align-middle dark:border-stone-700 ${selectedStyle} ${disabledStyle}`}
         onClick={updateSelectedStatus}
       >
         {id !== "" && (
           <>
-            <div className="w-full flex justify-end">
+            <div className="flex w-full justify-end">
               <LeftButtons
                 user1Id={user1Id}
                 status={status}
@@ -163,7 +163,7 @@ export const Bet: React.FC<Props> = ({
               />
             </div>
             <CenterOfBet potSize={potSize} betSide={betSide} />
-            <div className="w-full flex justify-start">
+            <div className="flex w-full justify-start">
               <User2Data
                 user2FollowThrough={user2FollowThrough}
                 user2PhotoURL={user2PhotoURL}
