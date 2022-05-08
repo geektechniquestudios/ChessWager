@@ -2,8 +2,9 @@
   "compilerOptions": {
     "jsx": "react",
     "target": "es5",
+    "esModuleInterop": true,
     "lib": ["es5", "dom"],
     "types": ["cypress", "node", "cypress-react-selector"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "plugins/index.js"]
+  "include": ["**/*.ts", "**/*.tsx", "plugins/index.ts", "support/commands.ts"]
 }

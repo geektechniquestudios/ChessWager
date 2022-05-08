@@ -8,7 +8,7 @@ interface Props {
   openToMenu: string
   icon: React.ReactNode
   onClick?: () => void
-  authRequired: boolean
+  authRequired?: boolean
 }
 
 export const MainHeaderButton: React.FC<Props> = ({
@@ -16,7 +16,7 @@ export const MainHeaderButton: React.FC<Props> = ({
   openToMenu,
   icon,
   onClick,
-  authRequired,
+  authRequired = false,
   id,
 }) => {
   const { user } = Auth.useContainer()

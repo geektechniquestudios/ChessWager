@@ -84,7 +84,7 @@ export const BetsListItem: React.FC<Props> = ({
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
-      rel="noreferrer"
+      rel="noreferrer noopener"
       className={`h-14 w-64 flex items-center hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-600 dark:hover:text-stone-200 color-shift ${clickedStyle}`}
       onClick={() => {
         setBet(bet)

@@ -53,6 +53,7 @@ export const ChatForm: React.FC<Props> = ({
     <fieldset className="fieldset justify-center flex">
       <form onSubmit={sendMessage} className="form justify-center w-full pb-1">
         <TextareaAutosize
+          id="chat-form"
           value={formValue}
           onChange={(e) => {
             setFormValue(e.target.value)

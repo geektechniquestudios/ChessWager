@@ -44,12 +44,7 @@ export const HeaderRight: React.FC = () => {
   }
   const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
   return (
-    <div
-      className="flex-auto justify-end align-middle items-center flex mx-3 gap-1.5"
-      // initial={{ opacity: 0 }}
-      // animate={{ opacity: 1 }}
-      // transition={{ delay: 0.2, duration: 0.6}}
-    >
+    <div className="flex-auto justify-end align-middle items-center flex mx-3 gap-1.5">
       <MainHeaderButton
         title="Search Users"
         openToMenu="searchUsers"
@@ -72,7 +67,7 @@ export const HeaderRight: React.FC = () => {
           setNewNotificationsToFalse()
           setMenuStack(["notifications"])
         }}
-        authRequired={true}
+        authRequired
       />
       <MainHeaderButton
         title="Messages"
@@ -82,13 +77,14 @@ export const HeaderRight: React.FC = () => {
           setNewMessagesToFalse()
           setMenuStack(["messages"])
         }}
-        authRequired={true}
+        authRequired
       />
       <MainHeaderButton
+        id="bets"
         title="Bets"
         openToMenu="bets"
         icon={<FaRegGem size="20" />}
-        authRequired={true}
+        authRequired
         onClick={() => {
           setMenuStack(["bets"])
         }}
@@ -97,7 +93,7 @@ export const HeaderRight: React.FC = () => {
         title="Persona"
         openToMenu="persona"
         icon={<CgProfile size="21" />}
-        authRequired={true}
+        authRequired
         onClick={() => {
           setMenuStack(["persona"])
         }}
@@ -108,7 +104,6 @@ export const HeaderRight: React.FC = () => {
         title="Menu"
         openToMenu="main"
         icon={<BiChevronDown size="21" />}
-        authRequired={false}
         onClick={() => {
           setMenuStack(["main"])
         }}

@@ -1,6 +1,11 @@
+import { before } from "mocha"
+
 beforeEach(() => {
   cy.visit("/")
+  cy.login()
 })
+
+after(cy.logout)
 
 describe("main dropdown button", () => {
   it("should open the dropdown menu if header button is clicked", () => {
@@ -22,30 +27,42 @@ describe("main dropdown button", () => {
   })
 })
 
-describe("social dropdown button", () => {
-  it("should open social menu", () => {})
-})
-
-describe("help button", () => {
-  it("should open help menu", () => {})
-})
-
 describe("persona dropdown button", () => {
-  it("should open persona menu", () => {})
+  it("should open persona menu", () => {
+    cy.get('div[id="persona"]').should("not.exist")
+    cy.get('button[title="Persona"]').click()
+    cy.get('div[id="persona"]').should("exist")
+  })
 })
 
 describe("bets dropdown button", () => {
-  it("should open bets menu", () => {})
+  it("should open bets menu", () => {
+    cy.get('div[id="bets"]').should("not.exist")
+    cy.get('button[title="Bets"]').click()
+    cy.get('div[id="bets"]').should("exist")
+  })
 })
 
 describe("messages dropdown button", () => {
-  it("should open messages menu", () => {})
+  it("should open messages menu", () => {
+    cy.get('div[id="messages"]').should("not.exist")
+    cy.get('button[title="Messages"]').click()
+    cy.get('div[id="messages"]').should("exist")
+  })
 })
 
 describe("notifications dropdown button", () => {
-  it("should open notifications menu", () => {})
+  it("should open notifications menu", () => {
+    cy.get('div[id="notifications"]').should("not.exist")
+    cy.get('button[title="Notifications"]').click()
+    cy.get('div[id="notifications"]').should("exist")
+  })
 })
 
 describe("search dropdown button", () => {
-  it("should open search menu", () => {})
+  it("should open search menu", () => {
+    cy.get('div[id="searchUsers"]').should("not.exist")
+    cy.get('button[title="Search Users"]').click()
+    cy.get('div[id="searchUsers"]').should("exist")
+  })
 })

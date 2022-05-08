@@ -8,9 +8,11 @@ interface Props {
   url?: string
   onClick?: () => void
   isBackButton?: boolean
+  id?: string
 }
 
 export const DropdownItem: React.FC<Props> = ({
+  id,
   text,
   leftIcon,
   rightIcon,
@@ -26,9 +28,10 @@ export const DropdownItem: React.FC<Props> = ({
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
+      id={id}
       href={address}
       target={url ? "_blank" : ""}
-      rel="noreferrer"
+      rel="noreferrer noopener"
       className={`w-64 px-4 flex items-center hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift ${backStyle}`}
       onClick={() => {
         onClick && onClick()
