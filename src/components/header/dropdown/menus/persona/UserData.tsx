@@ -52,11 +52,11 @@ export const UserData: React.FC<Props> = ({
 
   const trust = `${betFundedCount} / ${betAcceptedCount}`
   return (
-    <div className="flex flex-col items-center justify-between py-1.5 h-96 w-64">
+    <div className="flex h-96 w-64 flex-col items-center justify-between py-1.5">
       {isLoading ? (
         <UserDataLoading />
       ) : (
-        <div className="w-60 h-96 flex flex-col justify-between items-center">
+        <div className="flex h-96 w-60 flex-col items-center justify-between">
           <UserButtonsArea
             id={id ?? ""}
             displayName={displayName ?? ""}
@@ -65,10 +65,10 @@ export const UserData: React.FC<Props> = ({
           />
           <img
             src={photoURL}
-            className="w-24 h-24 rounded-full grid place-content-center border border-stone-400 dark:border-stone-500"
+            className="grid h-24 w-24 place-content-center rounded-full border border-stone-400 dark:border-stone-500"
           />
 
-          <div className="my-2 flex flex-col justify-center items-center gap-0.5">
+          <div className="my-2 flex flex-col items-center justify-center gap-0.5">
             <p className="text-lg">{displayName ?? ""}</p>
             {joinDate && (
               <p className="text-xs text-stone-500 dark:text-stone-400">
@@ -79,7 +79,7 @@ export const UserData: React.FC<Props> = ({
             )}
           </div>
 
-          <div className="w-full grid gap-1.5 grid-cols-2 mb-1 text-sm">
+          <div className="mb-1 grid w-full grid-cols-2 gap-1.5 text-sm">
             <UserDataTile data={trust} name="Trust" icon={<FaRegHandshake />} />
             <UserDataTile
               data={friends?.length ?? 0}

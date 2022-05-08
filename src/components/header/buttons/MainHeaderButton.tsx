@@ -29,7 +29,7 @@ export const MainHeaderButton: React.FC<Props> = ({
       {(user || !authRequired) && (
         <button
           id={id}
-          className={`w-9 h-9 rounded-md grid place-content-center color-shift clickable border-none hover:bg-stone-300 dark:hover:bg-stone-700 hover:text-black hover:border-black dark:hover:text-white dark:hover:border-white border-stone-800 dark:border-stone-300 text-stone-800 dark:text-stone-300 ${activeStyle}`}
+          className={`color-shift clickable grid h-9 w-9 place-content-center rounded-md border-none border-stone-800 text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white ${activeStyle}`}
           title={title}
           onClick={() => {
             setIsDropdownOpen(true)

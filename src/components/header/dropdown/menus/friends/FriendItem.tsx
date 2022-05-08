@@ -15,7 +15,7 @@ export const FriendItem: React.FC<Friend> = ({
         leftIcon={
           <img
             src={photoURL}
-            className="w-6 h-6 rounded-full grid place-content-center"
+            className="grid h-6 w-6 place-content-center rounded-full"
           />
         }
         text={userName}

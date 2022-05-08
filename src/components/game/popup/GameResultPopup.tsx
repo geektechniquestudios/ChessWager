@@ -55,32 +55,32 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
     <>
       {count > 0 && (
         <div
-          className={`${firefoxColors} w-64 rounded-md border border-stone-600 dark:border-stone-800 bg-stone-200 absolute z-40 overflow-hidden drop-shadow-2xl top-1/2 -translate-y-1/2`}
+          className={`${firefoxColors} absolute top-1/2 z-40 w-64 -translate-y-1/2 overflow-hidden rounded-md border border-stone-600 bg-stone-200 drop-shadow-2xl dark:border-stone-800`}
           style={{
             background: bgColor,
             backdropFilter: blur,
           }}
         >
-          <header className="w-full h-6 flex justify-between p-1 bg-stone-300 dark:bg-stone-600 border-b border-stone-400 dark:border-stone-500">
+          <header className="flex h-6 w-full justify-between border-b border-stone-400 bg-stone-300 p-1 dark:border-stone-500 dark:bg-stone-600">
             <PopupCounter count={count} setCount={setCount} />
             <DropdownButton
               content={<BsX />}
-              className="w-4 h-4"
+              className="h-4 w-4"
               onClick={() => {
                 setCount(0)
                 setOutcome("")
               }}
             />
           </header>
-          <main className="h-full w-full flex flex-col">
-            <div className="border border-stone-400 dark:border-stone-500 flex flex-col justify-between p-2 m-2 rounded-md bg-stone-200 dark:bg-stone-600">
+          <main className="flex h-full w-full flex-col">
+            <div className="m-2 flex flex-col justify-between rounded-md border border-stone-400 bg-stone-200 p-2 dark:border-stone-500 dark:bg-stone-600">
               <PopupTitle
                 playerName={whitePlayer}
                 playerRating={whiteRating}
                 color="white"
               />
-              <div className="flex justify-center w-full items-center gap-3">
-                <p className="justify-center flex font-bold">vs</p>
+              <div className="flex w-full items-center justify-center gap-3">
+                <p className="flex justify-center font-bold">vs</p>
               </div>
               <PopupTitle
                 playerName={blackPlayer}
@@ -89,7 +89,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
               />
             </div>
             <a
-              className="flex justify-center text-center pb-2 text-xs font-bold hover:underline hover:text-black dark:hover:text-white"
+              className="flex justify-center pb-2 text-center text-xs font-bold hover:text-black hover:underline dark:hover:text-white"
               href={`https://lichess.org/${linkId}/${orientation}`}
               rel="noreferrer"
               title="View game"

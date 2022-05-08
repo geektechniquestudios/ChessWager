@@ -6,7 +6,7 @@ interface Props {
 export const DropdownArea: React.FC<Props> = ({ content, className }) => {
   return (
     <div
-      className={`w-64 flex items-center dark:text-stone-200 color-shift ${className}`}
+      className={`color-shift flex w-64 items-center dark:text-stone-200 ${className}`}
     >
       {content}
     </div>

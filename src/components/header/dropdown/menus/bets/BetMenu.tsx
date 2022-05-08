@@ -72,7 +72,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
       menuItems={[
         <div className="w-64">
           {bet && (
-            <div className="flex flex-col w-full h-full justify-between p-2 dark:text-stone-300 text-stone-900 gap-2">
+            <div className="flex h-full w-full flex-col justify-between gap-2 p-2 text-stone-900 dark:text-stone-300">
               <div className="flex w-full justify-between ">
                 <UserBetData
                   photoURL={user1PhotoURL!}
@@ -93,30 +93,30 @@ export const BetMenu: React.FC<Props> = ({}) => {
                   funded={hasUser2Paid!}
                 />
               </div>
-              <div className="flex p-2 w-full justify-center border h-12 rounded-md bg-white dark:bg-stone-600 border-stone-400 dark:border-stone-800 items-center gap-2">
+              <div className="flex h-12 w-full items-center justify-center gap-2 rounded-md border border-stone-400 bg-white p-2 dark:border-stone-800 dark:bg-stone-600">
                 <p>Outcome: </p>
                 <p
-                  className={`font-bold text-sm text-center ${resultStyle} ${animateStyle}`}
+                  className={`text-center text-sm font-bold ${resultStyle} ${animateStyle}`}
                 >
                   {outcome}
                 </p>
               </div>
               <div className="flex flex-col items-center">
-                <div className="flex w-full flex-col bg-white dark:bg-stone-600 rounded-md p-2 gap-0.5 text-sm border border-stone-400 dark:border-stone-800">
+                <div className="flex w-full flex-col gap-0.5 rounded-md border border-stone-400 bg-white p-2 text-sm dark:border-stone-800 dark:bg-stone-600">
                   <div className="flex items-center justify-center">
-                    <p className="rounded-full bg-stone-50 dark:bg-stone-700 w-5 h-5 grid place-content-center text-xs mr-2 border border-stone-600 dark:border-stone-800">
+                    <p className="mr-2 grid h-5 w-5 place-content-center rounded-full border border-stone-600 bg-stone-50 text-xs dark:border-stone-800 dark:bg-stone-700">
                       x{multiplier}
                     </p>
                     <p className="text-sm">Multiplier</p>
                   </div>
-                  <div className="flex justify-between w-full">
+                  <div className="flex w-full justify-between">
                     <div>
-                      <div className="text-xs my-2">
+                      <div className="my-2 text-xs">
                         <div>{betAmount.toFixed(6)} AVAX</div>
                         <div>${(betAmount * avaxPrice).toFixed(2)} USD</div>
                       </div>
                     </div>
-                    <div className="flex flex-col justify-center items-end">
+                    <div className="flex flex-col items-end justify-center">
                       <p>
                         {new Date(createdAt!.seconds * 1000).toLocaleTimeString(
                           "en-US",
@@ -130,10 +130,10 @@ export const BetMenu: React.FC<Props> = ({}) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-between w-full mt-1">
+                <div className="mt-1 flex w-full items-center justify-between">
                   <a
                     href={"https://snowtrace.io/address/" + contractAddress}
-                    className="rounded-full border border-stone-400 dark:border-stone-800 py-1 px-2 bg-white hover:underline dark:bg-stone-800 dark:hover:text-stone-200 text-xs color-shift hover:text-black hover:border-black dark:hover:border-white"
+                    className="color-shift rounded-full border border-stone-400 bg-white py-1 px-2 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-800 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
                     title="View Contract on Snowtrace"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -147,7 +147,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
                   <div className="flex grow justify-center">
                     <a
                       href={`https://lichess.org/${gameId}`}
-                      className="rounded-full grid place-content-center color-shift clickable border border-stone-400 dark:border-stone-800 hover:text-black hover:border-black dark:hover:text-white dark:hover:border-white text-stone-800 dark:text-stone-300 p-1 bg-white dark:bg-stone-800"
+                      className="color-shift clickable grid place-content-center rounded-full border border-stone-400 bg-white p-1 text-stone-800 hover:border-black hover:text-black dark:border-stone-800 dark:bg-stone-800 dark:text-stone-300 dark:hover:border-white dark:hover:text-white"
                       title="Game Source"
                       rel="noopener noreferrer"
                       target="_blank"

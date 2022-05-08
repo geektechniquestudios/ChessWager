@@ -12,5 +12,3 @@ describe("place bet button", () => {
   it("should alert the user if their wallet is not connected", () => {})
   it("should make the border around the bet amount area red if user hasn't selected an amount", () => {})
 })
-
-

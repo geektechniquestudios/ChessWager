@@ -13,7 +13,7 @@ export const DropdownButton: React.FC<Props> = ({
 }) => {
   return (
     <button
-      className={`rounded-full grid place-content-center color-shift clickable border border-stone-400 dark:border-stone-800 hover:text-black hover:border-black dark:hover:text-white dark:hover:border-white text-stone-800 dark:text-stone-300 p-1 bg-white dark:bg-stone-800 ${className}`}
+      className={`color-shift clickable grid place-content-center rounded-full border border-stone-400 bg-white p-1 text-stone-800 hover:border-black hover:text-black dark:border-stone-800 dark:bg-stone-800 dark:text-stone-300 dark:hover:border-white dark:hover:text-white ${className}`}
       onClick={onClick}
       title={title ?? ""}
     >

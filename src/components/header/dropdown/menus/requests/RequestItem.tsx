@@ -70,7 +70,7 @@ export const RequestItem: React.FC<Props> = ({
   const { setClickedUserById } = UserMenuState.useContainer()
   return (
     <a
-      className="h-12 w-64 px-4 flex items-center justify-between hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift gap-3"
+      className="color-shift flex h-12 w-64 items-center justify-between gap-3 px-4 text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200"
       style={{ direction: "ltr" }}
       onClick={() => {
         setClickedUserById(id)
@@ -78,7 +78,7 @@ export const RequestItem: React.FC<Props> = ({
         setMenuStack([...menuStack, "clickedUser"])
       }}
     >
-      <img src={photoURL} className="rounded-full w-7 h-7" />
+      <img src={photoURL} className="h-7 w-7 rounded-full" />
       <p>{userName}</p>
       <div className="flex items-center justify-center gap-3">
         <DropdownButton
@@ -88,7 +88,7 @@ export const RequestItem: React.FC<Props> = ({
           }}
           content={<BsCheck2 />}
           title="Accept"
-          className="w-4 h-4"
+          className="h-4 w-4"
         />
         <DropdownButton
           onClick={(e) => {
@@ -97,7 +97,7 @@ export const RequestItem: React.FC<Props> = ({
           }}
           content={<BsX />}
           title="Decline"
-          className="w-4 h-4"
+          className="h-4 w-4"
         />
       </div>
     </a>

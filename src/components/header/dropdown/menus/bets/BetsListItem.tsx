@@ -85,7 +85,7 @@ export const BetsListItem: React.FC<Props> = ({
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       rel="noreferrer noopener"
-      className={`h-14 w-64 flex items-center hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-600 dark:hover:text-stone-200 color-shift ${clickedStyle}`}
+      className={`color-shift flex h-14 w-64 items-center text-stone-600 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${clickedStyle}`}
       onClick={() => {
         setBet(bet)
         setActiveMenu("bet")
@@ -96,21 +96,21 @@ export const BetsListItem: React.FC<Props> = ({
       <div className="flex h-full w-64 justify-between gap-2 p-2">
         <div className="flex flex-col justify-center gap-2">
           {isUser1Blocked ? (
-            <MdBlockFlipped className="w-4 h-4 rounded-full" />
+            <MdBlockFlipped className="h-4 w-4 rounded-full" />
           ) : (
-            <img className="w-4 h-4 rounded-full" src={user1PhotoURL} />
+            <img className="h-4 w-4 rounded-full" src={user1PhotoURL} />
           )}
           {isUser2Blocked ? (
-            <MdBlockFlipped className="w-4 h-4 rounded-full" />
+            <MdBlockFlipped className="h-4 w-4 rounded-full" />
           ) : (
-            <img className="w-4 h-4 rounded-full" src={user2PhotoURL} />
+            <img className="h-4 w-4 rounded-full" src={user2PhotoURL} />
           )}
         </div>
-        <div className="flex flex-col justify-center h-full overflow-hidden text-sm text-stone-900 dark:text-stone-400 whitespace-nowrap gap-1">
+        <div className="flex h-full flex-col justify-center gap-1 overflow-hidden whitespace-nowrap text-sm text-stone-900 dark:text-stone-400">
           <div>{isUser1Blocked ? "Blocked User" : user1DisplayName}</div>
           <div>{isUser2Blocked ? "Blocked User" : user2DisplayName}</div>
         </div>
-        <div className="flex flex-col justify-center text-xs gap-1">
+        <div className="flex flex-col justify-center gap-1 text-xs">
           <div>${(betTotal * avaxPrice).toFixed(2)} USD</div>
           {new Date(createdAt!.seconds * 1000).toLocaleDateString("en-US")}
         </div>

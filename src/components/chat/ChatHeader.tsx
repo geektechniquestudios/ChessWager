@@ -7,21 +7,21 @@ export const ChatHeader: React.FC = () => {
   const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
   const { setShowChat } = ChatToggle.useContainer()
   return (
-    <header className="global-chat-header flex bg-stone-200 dark:bg-stone-700 border-b border-stone-400 dark:border-stone-700 justify-between">
+    <header className="global-chat-header flex justify-between border-b border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-700">
       <button
         id="hide-chat-button"
         onClick={() => {
           setShowChat(false)
           localStorage.setItem("showChat", "false")
         }}
-        className=" hover:bg-stone-400 dark:hover:bg-stone-800 rounded-md color-shift m-2"
+        className=" color-shift m-2 rounded-md hover:bg-stone-400 dark:hover:bg-stone-800"
       >
         <BiArrowFromLeft
           size="1.3em"
-          className="text-stone-900 dark:text-stone-50 m-1 color-shift"
+          className="color-shift m-1 text-stone-900 dark:text-stone-50"
         />
       </button>
-      <div className="text-stone-900 dark:text-stone-50 grid place-content-center text-bold text-md">
+      <div className="text-bold text-md grid place-content-center text-stone-900 dark:text-stone-50">
         GLOBAL CHAT
       </div>
       <div className="w-11" />

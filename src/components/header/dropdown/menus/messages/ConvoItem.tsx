@@ -36,7 +36,7 @@ export const ConvoItem: React.FC<Props> = ({
       href={url ?? "#"}
       target={url ? "_blank" : ""}
       rel="noreferrer"
-      className={`h-12 w-64 flex items-center hover:bg-stone-300 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift ${unreadStyle}`}
+      className={`color-shift flex h-12 w-64 items-center text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${unreadStyle}`}
       onClick={() => {
         onClick && onClick()
         goToMenu && setActiveMenu(goToMenu)
@@ -44,11 +44,11 @@ export const ConvoItem: React.FC<Props> = ({
       }}
     >
       <div className="flex h-full w-full">
-        <div className="flex flex-col justify-center w-6 mx-3">{leftIcon}</div>
+        <div className="mx-3 flex w-6 flex-col justify-center">{leftIcon}</div>
         <div className="flex flex-col justify-center">
           <p className="flex">{userName}</p>
           <div className="flex w-44">
-            <p className="overflow-hidden text-sm text-stone-500 dark:text-stone-400 whitespace-nowrap">
+            <p className="overflow-hidden whitespace-nowrap text-sm text-stone-500 dark:text-stone-400">
               {messageThumbnail.length > 20
                 ? messageThumbnail.substring(0, 20) + "..."
                 : messageThumbnail}

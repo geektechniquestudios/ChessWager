@@ -27,8 +27,8 @@ export const PlayerData: React.FC<Props> = ({
         target="_blank"
         className="flex flex-col justify-center overflow-hidden hover:text-stone-900 dark:hover:text-white "
       >
-        <div className="flex justify-center mx-1.5">
-          <p className="flex mx-1 font-bold text-teal-700">{title}</p>
+        <div className="mx-1.5 flex justify-center">
+          <p className="mx-1 flex font-bold text-teal-700">{title}</p>
           <div className="flex gap-2 hover:underline">
             <p>{name}</p>
             <p className="font-bold">{rating !== 0 ? rating : ""}</p>

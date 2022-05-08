@@ -18,7 +18,7 @@ export const ConvoUserTitle: React.FC<Props> = ({
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
-      className="flex gap-1 mr-1 float-left"
+      className="float-left mr-1 flex gap-1"
       onClick={() => {
         setClickedUserById(uid)
         setActiveMenu("clickedUser")
@@ -29,9 +29,9 @@ export const ConvoUserTitle: React.FC<Props> = ({
         src={photoURL}
         alt=""
         title={userName}
-        className="w-4 h-4 rounded-full"
+        className="h-4 w-4 rounded-full"
       />
-      <p className="text-xs font-bold text-stone-900 dark:text-stone-300 hover:underline">{`${userName}:`}</p>
+      <p className="text-xs font-bold text-stone-900 hover:underline dark:text-stone-300">{`${userName}:`}</p>
     </a>
   )
 }
