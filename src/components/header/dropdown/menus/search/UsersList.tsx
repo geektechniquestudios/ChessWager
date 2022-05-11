@@ -36,7 +36,7 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
 
   const friendsOnlyQuery = query(
     usersCollectionRef,
-    where("friends", "array-contains", auth.currentUser!.uid),
+    where("friends", "array-contains", auth.currentUser?.uid ?? ""),
     limit(10),
   )
 

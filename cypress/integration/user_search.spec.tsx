@@ -33,11 +33,39 @@ describe("user search", () => {
     cy.get('div[id="clickedUser"]').should("exist")
   })
   it("should list friend if 'friends only' is selected", () => {
+    cy.callFirestore("update", `users/XGXaJZxzR9gArv6wKEHZ5MuvSnd2`, {
+      sentFriendRequests: [],
+      redactedFriendRequests: [],
+      friends: [],
+      blockedUsers: [],
+    })
+    cy.callFirestore("update", `users/${Cypress.env("CYPRESS_TEST_UID")}`, {
+      sentFriendRequests: [],
+      redactedFriendRequests: [],
+      friends: [],
+      blockedUsers: [],
+    })
+    cy.get('button[title="Search Users"]').click()
+    cy.get('input[id="search-users-input"]').type("sumpro molar")
+    cy.get('div[id="search-users-results"]').within(() => {
+      cy.get("a").first().click()
+    })
+    cy.get('button[title="Add Friend"]').click()
+    cy.logout()
+
+    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
+    cy.get('button[title="Notifications"]').click()
+    cy.get('div[id="notification-list"]').find("a").eq(0).click()
+    cy.get('div[id="requests"]').within(() => {
+      cy.get("a").first().get('button[title="Accept"]').click()
+    })
     cy.get('button[title="Search Users"]').click()
     cy.get("p").contains("Friends Only").click()
+    cy.get('input[id="search-users-input"]').clear()
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").should("exist")
     })
+    cy.logout()
   })
   it("should not show self in search results", () => {
     cy.get('button[title="Search Users"]').click()

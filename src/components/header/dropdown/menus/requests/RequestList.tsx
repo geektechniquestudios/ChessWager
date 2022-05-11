@@ -24,6 +24,7 @@ export const RequestList: React.FC<Props> = ({}) => {
           <div
             className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
             style={{ direction: "rtl" }}
+            id="requests"
           >
             {requests?.map((request: FriendRequest) => (
               <RequestItem {...request} key={request.id} />

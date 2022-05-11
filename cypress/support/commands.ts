@@ -30,9 +30,6 @@ import "firebase/compat/database"
 import "firebase/compat/firestore"
 import { attachCustomCommands } from "cypress-firebase"
 
-console.log(Cypress.env("CYPRESS_TEST_UID"))
-console.log(Cypress.env("VITE_BRANCH_ENV"))
-
 firebase.initializeApp({
   apiKey: Cypress.env("VITE_API_KEY"),
   authDomain: Cypress.env("VITE_AUTH_DOMAIN"),
