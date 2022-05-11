@@ -32,9 +32,13 @@ describe("user search", () => {
     })
     cy.get('div[id="clickedUser"]').should("exist")
   })
-  // it("should list friend if 'friends only' is selected", () => {
-
-  // })
+  it("should list friend if 'friends only' is selected", () => {
+    cy.get('button[title="Search Users"]').click()
+    cy.get("p").contains("Friends Only").click()
+    cy.get('div[id="search-users-results"]').within(() => {
+      cy.get("a").should("exist")
+    })
+  })
   it("should not show self in search results", () => {
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').type("geek technique")
