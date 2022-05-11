@@ -4,6 +4,7 @@ cy.on("uncaught:exception", (err) => {
 })
 
 describe("friend requesting", () => {
+  before(cy.logout)
   beforeEach(() => {
     cy.callFirestore("update", `users/${Cypress.env("CYPRESS_TEST_UID")}`, {
       sentFriendRequests: [],
@@ -11,13 +12,13 @@ describe("friend requesting", () => {
       friends: [],
       blockedUsers: [],
     })
-
     cy.callFirestore("update", `users/XGXaJZxzR9gArv6wKEHZ5MuvSnd2`, {
       sentFriendRequests: [],
       redactedFriendRequests: [],
       friends: [],
       blockedUsers: [],
     })
+
     cy.callFirestore(
       "delete",
       `users/XGXaJZxzR9gArv6wKEHZ5MuvSnd2/notifications`,
@@ -27,27 +28,25 @@ describe("friend requesting", () => {
       `users/${Cypress.env("CYPRESS_TEST_UID")}/notifications`,
     )
 
-    cy.logout()
     cy.visit("/")
+    cy.login()
   })
 
   it("should send and cancel friend request to user", () => {
-    cy.login()
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').type("sumpro molar")
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
     cy.get('button[title="Cancel Request"]').should("not.exist")
-    cy.get('button[title="Add Friend"]').click()
+    cy.get('button[title="Add Friend"]').click().wait(1000)
     cy.get('button[title="Cancel Request"]').should("exist")
-    cy.get('button[title="Cancel Request"]').click()
+    cy.get('button[title="Cancel Request"]').click().wait(1000)
     cy.get('button[title="Add Friend"]').should("exist")
     cy.logout()
   })
 
   it("should send notification to user only first time button is clicked", () => {
-    cy.login()
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').type("sumpro molar")
     cy.get('div[id="search-users-results"]').within(() => {
@@ -57,6 +56,7 @@ describe("friend requesting", () => {
     cy.get('button[title="Cancel Request"]').click()
     cy.get('button[title="Add Friend"]').click()
     cy.get('button[title="Cancel Request"]').click()
+    cy.get('div[id="header-middle"]').click().wait(1000)
     cy.logout()
 
     cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
@@ -66,16 +66,16 @@ describe("friend requesting", () => {
   })
 
   it("should accept friend request from other user", () => {
-    cy.login()
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').type("sumpro molar")
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Add Friend"]').click().wait(2000)
+    cy.get('button[title="Add Friend"]').click().wait(1000)
+    cy.get('div[id="header-middle"]').click()
     cy.logout()
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(2000)
+    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').find("a").eq(0).click()
     cy.get('div[id="requests"]').within(() => {
@@ -91,18 +91,16 @@ describe("friend requesting", () => {
   })
 
   it("should unfriend user", () => {
-    cy.login()
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').type("sumpro molar")
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Add Friend"]').click().wait(2000)
+    cy.get('button[title="Add Friend"]').click().wait(1000)
     cy.get('div[id="header-middle"]').click()
     cy.logout()
 
-    cy.visit("/")
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(2000)
+    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').within(() => {
       cy.get("a").first().click()
@@ -125,5 +123,4 @@ describe("friend requesting", () => {
     })
     cy.logout()
   })
-  // it("should generate friend request item in requests menu", () => {})
 })
