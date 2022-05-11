@@ -1,8 +1,7 @@
+before(cy.login)
 beforeEach(() => {
   cy.visit("/")
-  cy.login()
 })
-
 after(cy.logout)
 
 describe("main dropdown button", () => {

@@ -1,11 +1,11 @@
 import { before } from "mocha"
 
 describe("user search", () => {
+  before(cy.login)
   beforeEach(() => {
     cy.visit("/")
-    cy.login()
   })
-  afterEach(cy.logout)
+  after(cy.logout)
   it("should allow the user to type in the search menu", () => {
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]')

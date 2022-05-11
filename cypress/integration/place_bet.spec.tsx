@@ -9,6 +9,6 @@ describe("place bet button", () => {
       expect(text).to.contains("You must be logged in to bet")
     })
   })
-  it("should alert the user if their wallet is not connected", () => {})
   it("should make the border around the bet amount area red if user hasn't selected an amount", () => {})
+  it("should allow the user to place a bet", () => {})
 })

@@ -36,7 +36,7 @@ export const NotificationsList: React.FC = ({}) => {
             className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
             style={{ direction: "rtl" }}
           >
-            <div style={{ direction: "ltr" }}>
+            <div style={{ direction: "ltr" }} id="notification-list">
               {notifications?.map((notification: Notification) => (
                 <NotificationItem {...notification} key={notification.id} />
               ))}

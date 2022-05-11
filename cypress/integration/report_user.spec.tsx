@@ -1,11 +1,9 @@
 describe("reporting users", () => {
+  before(cy.login)
   beforeEach(() => {
     cy.visit("/")
-    cy.login()
   })
-  afterEach(() => {
-    cy.logout()
-  })
+  after(cy.logout)
 
   it("should allow the user to type in the report field", () => {
     cy.get('button[title="Search Users"]').click()
