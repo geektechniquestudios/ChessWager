@@ -43,7 +43,9 @@ describe("betting lobby", () => {
     // check for join button within 
     // click join button
   })
-  // it("should allow bet creator to delete own bet", () => {})
+  it("should allow bet creator to delete own bet", () => {
+    
+  })
   // it("should allow bet creator to kick other user", () => {})
   // it("should allow bet creator to accept other user", () => {})
   // it("should open the persona menu if a user title is clicked", () => {})

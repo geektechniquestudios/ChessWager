@@ -1,12 +1,12 @@
 import { before } from "mocha"
 
 describe("user search", () => {
-  before(cy.login)
   beforeEach(() => {
+    cy.login()
     cy.visit("/")
   })
-  after(cy.logout)
-  
+  afterEach(cy.logout)
+
   it("should allow the user to type in the search menu", () => {
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]')
@@ -53,7 +53,7 @@ describe("user search", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Add Friend"]').click()
+    cy.get('button[title="Add Friend"]').click().wait(2000)
     cy.logout()
 
     cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
@@ -68,9 +68,8 @@ describe("user search", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").should("exist")
     })
-    cy.logout()
   })
-  
+
   it("should not show self in search results", () => {
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').type("geek technique")
