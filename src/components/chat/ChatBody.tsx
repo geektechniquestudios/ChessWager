@@ -27,7 +27,10 @@ export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
   )
   const [messages] = useCollectionData<Message[] | any>(q)
   return (
-    <div className="scrollbar flex flex-col-reverse overflow-y-auto overflow-x-hidden px-1 pb-3">
+    <div
+      className="scrollbar flex flex-col-reverse overflow-y-auto overflow-x-hidden px-1 pb-3"
+      id="global-chat-body"
+    >
       {messages
         ?.filter((message) => {
           if (userData) return !userData.blockedUsers.includes(message.uid)
