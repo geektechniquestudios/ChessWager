@@ -10,7 +10,7 @@ describe("place bet button", () => {
     })
   })
   it("should make the border around the bet amount area red if user hasn't selected an amount", () => {
-    cy.login()
+    cy.login().wait(1000)
     cy.get('div[id="bet-amount"]').should(
       "not.have.css",
       "border-color",
