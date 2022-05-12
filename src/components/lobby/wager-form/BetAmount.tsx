@@ -31,6 +31,7 @@ export const BetAmount: React.FC<Props> = ({
 
   return (
     <div
+      id="bet-amount"
       className={`color-shift flex rounded-md border bg-stone-300 px-1 dark:bg-stone-700 ${borderWarning}`}
     >
       <p className="m-2 grid place-content-center font-bold text-stone-900 dark:text-stone-300">
