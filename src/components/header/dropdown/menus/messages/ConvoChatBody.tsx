@@ -36,7 +36,7 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
       className="scrollbar flex h-full flex-col-reverse overflow-y-auto overflow-x-hidden px-1 pt-3"
       style={{ direction: "rtl" }}
     >
-      <div style={{ direction: "ltr" }}>
+      <div style={{ direction: "ltr" }} id="convo-body">
         {messages
           ?.filter(
             (bet) =>

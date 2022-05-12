@@ -58,7 +58,7 @@ export const ConversationsList: React.FC = ({}) => {
     <div className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden text-stone-400 dark:text-stone-400">
       {!isLoading && (
         <>
-          <>
+          <div id="conversations-list">
             {(conversations?.length ?? 0) > 0 &&
               conversations
                 ?.filter(
@@ -92,7 +92,7 @@ export const ConversationsList: React.FC = ({}) => {
                     messageThumbnail={conversation.messageThumbnail}
                   />
                 ))}
-          </>
+          </div>
           <>
             {(conversations?.length ?? 0) === 0 && (
               <div className="mt-10 flex w-full justify-center">

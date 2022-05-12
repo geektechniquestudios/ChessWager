@@ -107,6 +107,7 @@ export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
           className="form flex w-full justify-between"
         >
           <TextareaAutosize
+            id="direct-message-input"
             value={formValue}
             onChange={(e) => {
               setFormValue(e.target.value)
