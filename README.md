@@ -33,7 +33,7 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
 
   ### Primary Tech used in this project:
    ###### Build & Package Management
-   ![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=flat&logo=yarn&logoColor=white&labelColor=525252)
+   ![Yarn](https://img.shields.io/badge/Yarn-%232C8EBB.svg?style=flat&logo=yarn&logoColor=white&labelColor=525252)
    ![Vite](https://badges.aleen42.com/src/vitejs.svg)
 <!--  google cloud build   -->
 
@@ -46,12 +46,12 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
    ![TypeScript](https://badges.aleen42.com/src/typescript.svg)
    ![NodeJS](https://badges.aleen42.com/src/node.svg)
    ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=flat&logo=solidity&logoColor=white&labelColor=525252)
-   ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=flat&logo=firebase&labelColor=525252)
+   ![Firebase](https://img.shields.io/badge/Firebase-%23039BE5.svg?style=flat&logo=firebase&labelColor=525252)
 
 
    ###### Testing
-   ![cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=flat&logo=cypress&logoColor=058a5e&labelColor=52525b)
-   ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=flat&logo=jest&logoColor=white&labelColor=52525b)
+   ![cypress](https://img.shields.io/badge/-Cypress-%23E5E5E5?style=flat&logo=cypress&logoColor=058a5e&labelColor=52525b)
+   ![Jest](https://img.shields.io/badge/-Jest-%23C21325?style=flat&logo=jest&logoColor=white&labelColor=52525b)
    Hardhat,
    Waffle
 <!--    ![Hardhat](https://img.shields.io/badge/-jest-%23C21325?style=flat&logo=jest&logoColor=white&labelColor=52525b) -->
@@ -59,7 +59,7 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
  
    ###### Cloud
    ![Docker](https://badges.aleen42.com/src/docker.svg)
-   ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=flat&logo=kubernetes&logoColor=white&labelColor=525252)
+   ![Kubernetes](https://img.shields.io/badge/Kubernetes-%23326ce5.svg?style=flat&logo=kubernetes&logoColor=white&labelColor=525252)
    ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=flat&logo=google-cloud&logoColor=white&prefix=test&labelColor=525252) 
    GKE, 
    Cloud build
@@ -72,6 +72,8 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
    <h3>Roadmap</h3>
   </summary>
  <br>
+ 
+  ![](readme-assets/roadmap.png)
 
 - Phase 1: Proof of concept
   - Build a smart contract that pays users based on the result of a live chess game
