@@ -29,23 +29,42 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
 
   Another isolated backend program subscribes to the Lichess API. At the end of each game, that program interacts with with the smart contract, telling it to complete the bet transactions and pay the winners or refund users in the event of a draw.
  
+ <!-- -->
 
   ### Primary Tech used in this project:
-    <!-- https://github.com/Ileriayo/markdown-badges -->
+   ###### Build & Package Management
    ![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=flat&logo=yarn&logoColor=white&labelColor=525252)
    ![Vite](https://badges.aleen42.com/src/vitejs.svg)
+<!--  google cloud build   -->
 
+   ###### Frontend
    ![TypeScript](https://badges.aleen42.com/src/typescript.svg)
    ![React](https://badges.aleen42.com/src/react.svg)
    ![TailwindCSS](https://badges.aleen42.com/src/tailwindcss.svg)
+
+   ###### Backend
+   ![TypeScript](https://badges.aleen42.com/src/typescript.svg)
    ![NodeJS](https://badges.aleen42.com/src/node.svg)
    ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=flat&logo=solidity&logoColor=white&labelColor=525252)
+   ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=flat&logo=firebase&labelColor=525252)
 
+
+   ###### Testing
    ![cypress](https://img.shields.io/badge/-cypress-%23E5E5E5?style=flat&logo=cypress&logoColor=058a5e&labelColor=52525b)
+   ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=flat&logo=jest&logoColor=white&labelColor=52525b)
+   Hardhat,
+   Waffle
+<!--    ![Hardhat](https://img.shields.io/badge/-jest-%23C21325?style=flat&logo=jest&logoColor=white&labelColor=52525b) -->
+ 
+ 
+   ###### Cloud
    ![Docker](https://badges.aleen42.com/src/docker.svg)
    ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=flat&logo=kubernetes&logoColor=white&labelColor=525252)
-   ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=flat&logo=firebase&labelColor=525252)
-   ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=flat&logo=google-cloud&logoColor=white&prefix=test&labelColor=525252)
+   ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=flat&logo=google-cloud&logoColor=white&prefix=test&labelColor=525252) 
+   GKE, 
+   Cloud build
+   
+ 
   </details>
   
  <details>
@@ -119,11 +138,9 @@ This repository's branch structure is designed similarly to the standard [gitflo
 ![](readme-assets/git-model.png)
 
 
-  - *Develop* could have any backend changes at any time.
+  - *Develop* could have any environmental changes at any time.
   - *Test* will only have user testing and controlled tests running on its environment during the build process.
-  - *Main* of course operates on the production environment.
+  - *Main* operates on the production environment.
   
 </details>
-
-  
 
