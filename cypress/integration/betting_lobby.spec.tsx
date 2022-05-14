@@ -3,7 +3,8 @@
 
 // This module cannot be tested currently because of some technical hurdles
 // We need to be able to use metamask in the test to click on bet buttons, which isn't easy. Synpress does not seem to work
-// we need to be able to control the game. Lichess has an api for controlling bots, but it is not straightforword
+// we need to be able to control the chess game. Lichess has an api for controlling bots, but I can't find a way to make 2 bots join a game with each other.
+// Unreasonably difficult at this stage, will require a significant time investment
 
 
 // need to replace chesstv api with specific game api using env variables
