@@ -18,11 +18,6 @@
 
 ChessWager is live. You can visit https://chesswager.io/ and play right now. You can't bet with real currency yet, but you can play on the Avalanche testnet.
 
- <details>
-  <summary>
-   <h3>How it works</h3>
-  </summary>
-  <br>
 
   ### Data Flow
 
