@@ -16,12 +16,13 @@
 
 <br>
 
-ChessWager is live. You can visit https://chesswager.io/ and play right now. You can't bet with real currency yet, but you can play on the Avalanche testnet.
+ChessWager is live. You can visit https://chesswager.io/ and play right now. You can't bet with real currency yet, but you can play on the Avalanche testnet. Download [Metamask](https://metamask.io/download/), switch to the [Avalanche Testnet](https://umbria.network/connect/avalanche-fuji-testnet), and [add some funds](https://faucet.avax-test.network/) to play.
 
+### Watch A Demo Video
 
-  ### Data Flow
+### Data Flow
 
-  [![](readme-assets/data-flow.png)](#)
+![](readme-assets/data-flow.png)
 
   The client relies on a firestore serverless infrastructure. When a page loads, the client subscribes to the Lichess tv API and loads real-time data about chats, bets, and users from the firestore database. 
 
@@ -69,15 +70,12 @@ ChessWager is live. You can visit https://chesswager.io/ and play right now. You
 ![](readme-assets/roadmap.png)
 
 
- <details>
-  <summary>
-   <h3>Branch Structure</h3>
-  </summary>
- <br>
+### Branch Structure
+
  
 This repository's branch structure is designed similarly to the standard [gitflow](https://github.com/nvie/gitflow) model with the addition of a "test" branch between develop and release. The develop, test, and main branches each have their own backend environment.
 
-[![](readme-assets/git-model.png)](#)
+![](readme-assets/git-model.png)
 
 
   - *Develop* could have any environmental changes at any time.
