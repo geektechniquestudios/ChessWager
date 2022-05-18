@@ -1,4 +1,4 @@
-# [ChessWager](https://chesswager.io/)
+[![](readme-assets/banner.png)](https://chesswager.io/)
 
 
 
