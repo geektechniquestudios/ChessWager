@@ -22,7 +22,7 @@ const genericBet: Bet = {
   amount: 0,
   betSide: "black",
   multiplier: 0,
-  status: "",
+  status: "ready",
   user1Id: "",
   user1Metamask: "",
   user1PhotoURL: "",
