@@ -31,7 +31,7 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
      
 ### Roadmap
 
-We are currently near the end of phase 2. Our primary features are all functional and complete. Most behaviors are thoroughly tested. All that remains are a few tests, new user onboarding guides, and some customer service options, such as a way to let us know if something goes wrong.
+We are currently near the end of phase 2. Our primary features are functional and complete. Most behaviors are thoroughly tested. All that remains are a few tests, making some elements look better on smaller displays, new user onboarding guides, and some customer service options, such as a way to let us know if something goes wrong.
 
 ![](readme-assets/roadmap.png)
 
@@ -79,6 +79,6 @@ This repository's branch structure is designed similarly to the standard [gitflo
 
 If you would like to contribute to this repo, start by opening an issue so we can discuss the feature. Create a feature branch from develop and make a pull request into develop when you're done.
 
-For style and linting, there is a prettier config file as well as a tailwind plugin for prettier in the dev dependencies. We use Cypress for our frontend testing, Jest for the backend, and hardhat+waffle on smart contracts. The general testing philosophy is that all behaviors be tested.
+For style and linting, there is a prettier config file as well as a tailwind plugin for prettier in the dev dependencies. We use Cypress for our frontend testing, Jest for the backend, and hardhat+waffle on smart contracts. The testing requirements are that all behaviors should be tested before release, not necessarily every line of code.
 
 ###### Feedback is welcome
