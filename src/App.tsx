@@ -15,7 +15,6 @@ import { WindowSize } from "./components/containers/WindowSize"
 export const App: React.FC = () => {
   const { isDarkOn } = DarkMode.useContainer()
   const { showChat } = ChatToggle.useContainer()
-  const { width, height } = WindowSize.useContainer()
 
   const dark = isDarkOn ? "dark" : ""
 

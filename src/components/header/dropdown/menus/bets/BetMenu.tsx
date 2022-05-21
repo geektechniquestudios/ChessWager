@@ -104,7 +104,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
               <div className="flex flex-col items-center">
                 <div className="flex w-full flex-col gap-0.5 rounded-md border border-stone-400 bg-white p-2 text-sm dark:border-stone-800 dark:bg-stone-600">
                   <div className="flex items-center justify-center">
-                    <p className="mr-2 grid h-5 w-5 place-content-center rounded-full border border-stone-600 bg-stone-50 text-xs dark:border-stone-800 dark:bg-stone-700">
+                    <p className="mr-2 grid h-5 place-content-center rounded-full p-1 text-xs">
                       x{multiplier}
                     </p>
                     <p className="text-sm">Multiplier</p>

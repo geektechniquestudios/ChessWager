@@ -148,7 +148,7 @@ contract.on(
     gameId: string,
     didUser1Pay: boolean,
     didUser2Pay: boolean,
-    winningSide: "white" | "black" | "draw" | "none",
+    winningSide: "white" | "black" | "draw" | "none" | any,
   ) => {
     console.log(`PayoutStatus: \n\tgameId: ${gameId} \n\t betId: ${betId} 
     user1 payment: ${didUser1Pay} 
