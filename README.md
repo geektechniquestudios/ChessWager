@@ -81,4 +81,14 @@ If you would like to contribute to this repo, start by opening an issue so we ca
 
 For style and linting, there is a prettier config file as well as a tailwind plugin for prettier in the dev dependencies. We use Cypress for our frontend testing, Jest for the backend, and hardhat+waffle on smart contracts. The testing requirements are that all behaviors should be tested before release, not necessarily every line of code.
 
+
+### Values
+
+Values are subject to evolve and change at this point, but it is important to establish a desired culture early. You may have heard of some of these before, but I'm taking what I like from top companies:
+
+  1. Customer Obsession - Amazon is famous for this. Without any customers, there's no business. Customers are simply the most important part of the equation. That means keeping our services clean and friendly. We will always do our best to deliver the best customer experience through customer service and our product.
+  2. Code Standards - Robert "Uncle Bob" Martin influenced this one. We promise to never release code who's behavior is not well tested. A bug will never knowingly make its way into production.
+  3. Don't Be Evil - Google used to say this, and we agree that it is very important to not leave a negative impact. We will never implement anti-consumer mechanisms or knowingly cause harm.
+  4. Treat Everyone with Respect and Dignity - We will always treat everyone respectfully, even in the face of obscenity. Regardless of who someone is, we're all people. It doesn't matter the situation.
+
 ###### Feedback is welcome
