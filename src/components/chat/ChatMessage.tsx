@@ -15,7 +15,7 @@ export const ChatMessage: React.FC<Props> = ({
   userName,
 }) => {
   return (
-    <div className="w-full hover:bg-stone-300 dark:hover:bg-black color-shift gap-1.5 p-2 rounded-md color-shift">
+    <div className="color-shift color-shift w-full gap-1.5 rounded-md p-2 hover:bg-stone-300 dark:hover:bg-black">
       <UserTitle photoURL={photoURL} userName={userName} uid={uid} />
       <MessageBody text={text} />
     </div>

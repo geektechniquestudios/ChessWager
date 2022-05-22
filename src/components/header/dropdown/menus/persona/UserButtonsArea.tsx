@@ -54,7 +54,7 @@ export const UserButtonsArea: React.FC<Props> = ({
                 !userData!.redactedFriendRequests.includes(id) &&
                 !isFriend && (
                   <CancelPendingRequestButton
-                    className="text-green-700 dark:text-green-300 hover:text-green-700 dark:hover:text-green-300"
+                    className="text-green-700 hover:text-green-700 dark:text-green-300 dark:hover:text-green-300"
                     id={id}
                   />
                 )}
@@ -75,14 +75,14 @@ export const UserButtonsArea: React.FC<Props> = ({
       </>
       <>
         {isUser && (
-          <div className="flex justify-between w-full">
+          <div className="flex w-full justify-between">
             <div className="flex gap-2">
               <FriendRequestsButton />
               <BlockedButton />
             </div>
             {isWalletConnected ? (
               <a
-                className="rounded-full border border-stone-400 dark:border-stone-800 py-1 px-2 bg-white hover:underline dark:bg-stone-800 dark:hover:text-stone-200 text-xs color-shift hover:text-black hover:border-black dark:hover:border-white"
+                className="color-shift rounded-full border border-stone-400 bg-white py-1 px-2 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-800 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
                 title={"View Wallet on Snowtrace"}
                 href={"https://snowtrace.io/address/" + walletAddress}
                 rel="noopener noreferrer"
@@ -101,7 +101,7 @@ export const UserButtonsArea: React.FC<Props> = ({
               </a>
             ) : (
               <a
-                className="rounded-full border border-stone-400 dark:border-stone-800 py-1 px-2 bg-white hover:underline dark:bg-stone-800 dark:hover:text-stone-200 text-xs color-shift hover:text-black hover:border-black dark:hover:border-white"
+                className="color-shift rounded-full border border-stone-400 bg-white py-1 px-2 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-800 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
                 title={"Connect Wallet"}
                 onClick={connectWallet}
                 rel="noopener noreferrer"

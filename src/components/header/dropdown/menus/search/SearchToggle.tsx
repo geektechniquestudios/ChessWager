@@ -13,7 +13,7 @@ export const SearchToggle: React.FC<Props> = ({
   setFriendsOrEveryone,
 }) => {
   return (
-    <div className="flex flex-col p-1.5 gap-1">
+    <div className="flex flex-col gap-1 p-1.5">
       <SearchToggleButton
         thisMenu="everyone"
         friendsOrEveryone={friendsOrEveryone}

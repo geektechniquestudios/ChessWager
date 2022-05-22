@@ -148,7 +148,7 @@ contract.on(
     gameId: string,
     didUser1Pay: boolean,
     didUser2Pay: boolean,
-    winningSide: "white" | "black" | "draw" | "none",
+    winningSide: "white" | "black" | "draw" | "none" | any,
   ) => {
     console.log(`PayoutStatus: \n\tgameId: ${gameId} \n\t betId: ${betId} 
     user1 payment: ${didUser1Pay} 
@@ -180,7 +180,7 @@ contract.on(
           .doc(bet.user2Id)
           .collection("notifications")
         const winner =
-          winningSide === "draw"
+          winningSide !== "white" && winningSide !== "black"
             ? "draw"
             : winningSide === bet.betSide
             ? "user1"
@@ -261,9 +261,7 @@ contract.on(
               isRead: false,
             })
           }
-        }
-
-        if (doc.data().status === "approved") {
+        } else if (doc.data().status === "approved") {
           if (didUser1Pay) {
             // if only user1 paid
             usersCollectionRef.doc(doc.data().user1Id).update({

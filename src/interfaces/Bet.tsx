@@ -5,7 +5,7 @@ export type Bet = {
   amount: number
   betSide: "black" | "white"
   multiplier: number
-  status: string
+  status: "ready" | "pending" | "approved" | "funded"
   user1Id: string
   user1Metamask: string
   user1PhotoURL: string

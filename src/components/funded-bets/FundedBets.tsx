@@ -32,10 +32,10 @@ export const FundedBets: React.FC<Props> = () => {
 
   return (
     <div
-      className="w-52 overflow-y-hidden flex flex-col overflow-x-visible shrink-0"
+      className="flex w-52 shrink-0 flex-col overflow-y-hidden overflow-x-visible"
       style={{ direction: "rtl" }}
     >
-      <div className="flex w-full justify-between px-0.5 py-1 bg-gradient-to-r from-stone-300 via-stone-300 to-transparent dark:from-stone-800 dark:via-stone-800 dark:to-transparent dark:text-stone-50">
+      <div className="flex w-full justify-between bg-gradient-to-r from-stone-300 via-stone-300 to-transparent px-0.5 py-1 dark:from-stone-800 dark:via-stone-800 dark:to-transparent dark:text-stone-50">
         <div />
         <div
           className="mx-1 text-sm"
@@ -43,13 +43,13 @@ export const FundedBets: React.FC<Props> = () => {
         >{`$${amountAtStake} at Stake`}</div>
       </div>
       <div className="h-0.5 bg-gradient-to-r from-stone-600 to-transparent" />
-      <div className="overflow-y-hidden overflow-x-visible flex flex-col h-full">
+      <div className="flex h-full flex-col overflow-y-hidden overflow-x-visible">
         <div
           style={{ direction: "rtl" }}
-          className="scrollbar-funded overflow-y-auto overflow-x-visible h-full flex flex-col"
+          className="scrollbar-funded flex h-full flex-col overflow-y-auto overflow-x-visible"
         >
           <div
-            className="overflow-x-visible h-0 flex flex-col"
+            className="flex h-0 flex-col overflow-x-visible"
             style={{ direction: "ltr" }}
           >
             {bets
@@ -72,7 +72,7 @@ export const FundedBets: React.FC<Props> = () => {
               ))}
           </div>
           <div
-            className="overflow-x-visible h-0 flex flex-col"
+            className="flex h-0 flex-col overflow-x-visible"
             style={{ direction: "ltr" }}
           >
             {bets

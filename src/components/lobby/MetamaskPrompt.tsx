@@ -61,7 +61,6 @@ export const MetamaskPrompt: React.FC<Props> = ({
     gasLimit: 1000000,
   }
 
-
   // use this version for mainnet inclusion
   // const isCorrectBlockchain = async (
   //   provider: ethers.providers.Web3Provider,
@@ -70,13 +69,13 @@ export const MetamaskPrompt: React.FC<Props> = ({
   //   if (isLocal && chainId !== 43113) {
   //     alert("You are on the wrong network. Please switch to the fuji network.")
   //     return false
-  //   } 
+  //   }
   //   else if (!isLocal && chainId !== 43114) {
   //     alert(
   //       "You are on the wrong network. Please switch to the avalanche mainnet.",
   //     )
   //     return false
-  //   } 
+  //   }
   //   else {
   //     return true
   //   }
@@ -91,13 +90,11 @@ export const MetamaskPrompt: React.FC<Props> = ({
     if (chainId !== 43113) {
       alert("You are on the wrong network. Please switch to the fuji network.")
       return false
-    } 
-    else {
+    } else {
       return true
     }
   }
 
-  
   const sendBet = async (): Promise<void> => {
     if (typeof window.ethereum !== undefined) {
       await window.ethereum.request({ method: "eth_requestAccounts" })
@@ -128,8 +125,8 @@ export const MetamaskPrompt: React.FC<Props> = ({
   const isUser1 = auth.currentUser?.uid === user1Id
   const isUser2 = auth.currentUser?.uid === user2Id
 
-  const borderRight = isUser1 ? "border-r" : ""
-  const borderLeft = isUser2 ? "border-l" : ""
+  const borderRight = isUser1 ? "" : ""
+  const borderLeft = isUser2 ? "" : ""
   const borderStyle = `${borderRight} ${borderLeft} border-stone-400 dark:border-stone-700`
 
   const { isDarkOn } = DarkMode.useContainer()
@@ -137,7 +134,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
   return (
     <div className={`flex flex-col justify-center ${borderStyle}}`}>
       <button
-        className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-800 rounded-md animate-pulse mx-2"
+        className="color-shift mx-2 grid h-8 w-8 animate-pulse place-content-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-800"
         onClick={sendBet}
       >
         <BiWallet

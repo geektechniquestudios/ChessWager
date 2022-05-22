@@ -16,7 +16,7 @@ export const SideChooserButton: React.FC<Props> = ({
     <button
       title={thisSide.charAt(0).toUpperCase() + thisSide.slice(1)}
       type="button"
-      className={`color-shift rounded-md w-8 h-8 grid place-content-center border ${
+      className={`color-shift grid h-8 w-8 place-content-center rounded-md border ${
         thisSide === "black"
           ? "hover:bg-stone-400 dark:hover:bg-stone-500"
           : "hover:bg-stone-500 dark:hover:bg-stone-800"
@@ -24,8 +24,8 @@ export const SideChooserButton: React.FC<Props> = ({
         isSelected
           ? ` ${
               thisSide === "black"
-                ? "bg-stone-400 dark:bg-stone-500 border-stone-600 dark:border-stone-800  "
-                : "bg-stone-500 dark:bg-stone-800 border-stone-200 dark:border-stone-500  "
+                ? "border-stone-600 bg-stone-400 dark:border-stone-800 dark:bg-stone-500  "
+                : "border-stone-200 bg-stone-500 dark:border-stone-500 dark:bg-stone-800  "
             }`
           : "border-transparent"
       }

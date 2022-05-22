@@ -20,21 +20,21 @@ export const Total: React.FC<Props> = ({ betAmount, multiplier }) => {
   }
 
   return (
-    <div className="border flex border-stone-400 dark:border-stone-500 dark:bg-stone-700 bg-stone-300 color-shift rounded-md">
-      <p className="grid place-content-center m-2 border-r-2 pr-2 border-stone-900 dark:border-stone-500 text-stone-900 dark:text-stone-300 font-bold">
+    <div className="color-shift flex rounded-md border border-stone-400 bg-stone-300 dark:border-stone-500 dark:bg-stone-700">
+      <p className="m-2 grid place-content-center border-r-2 border-stone-900 pr-2 font-bold text-stone-900 dark:border-stone-500 dark:text-stone-300">
         Pot Size
       </p>
       <div className="p-1.5">
-        <div className="flex justify-between my-1">
-          <div className="flex justify-end w-full">
+        <div className="my-1 flex justify-between">
+          <div className="flex w-full justify-end">
             <p className="mr-1 text-stone-900 dark:text-stone-300">
               {formatUsd(usdTotal)}
             </p>
             <p className="font-bold text-stone-900 dark:text-stone-300">USD</p>
           </div>
         </div>
-        <div className="flex justify-between my-1">
-          <div className="flex justify-end w-full">
+        <div className="my-1 flex justify-between">
+          <div className="flex w-full justify-end">
             <p className="mr-1 text-stone-900 dark:text-stone-300">
               {formatAvax(avaxTotal)}
             </p>

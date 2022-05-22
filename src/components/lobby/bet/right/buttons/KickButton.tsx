@@ -33,16 +33,12 @@ export const KickButton: React.FC<Props> = ({ betId }) => {
   }
   const { isDarkOn } = DarkMode.useContainer()
   return (
-    <>
-      <div className="flex flex-col justify-center">
-        <button
-          className="color-shift w-8 h-8 grid place-content-center hover:bg-stone-300 dark:hover:bg-stone-800 rounded-md animate-pulse"
-          onClick={kick}
-          title="Kick User"
-        >
-          <FiUserMinus color={isDarkOn ? "#fecaca" : "#7f1d1d"} size="19" />
-        </button>
-      </div>
-    </>
+    <button
+      className="color-shift grid h-8 w-8 animate-pulse place-content-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-800"
+      onClick={kick}
+      title="Kick User"
+    >
+      <FiUserMinus color={isDarkOn ? "#fecaca" : "#7f1d1d"} size="19" />
+    </button>
   )
 }

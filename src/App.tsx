@@ -10,6 +10,7 @@ import { FundedBets } from "./components/funded-bets/FundedBets"
 import { DarkMode } from "./components/containers/DarkMode"
 import { ChatToggle } from "./components/containers/ChatToggle"
 import { ShowChatButton } from "./components/body/ShowChatButton"
+import { WindowSize } from "./components/containers/WindowSize"
 
 export const App: React.FC = () => {
   const { isDarkOn } = DarkMode.useContainer()
@@ -18,19 +19,22 @@ export const App: React.FC = () => {
   const dark = isDarkOn ? "dark" : ""
 
   return (
-    <div className={`${dark} h-full w-full overflow-y-hidden grid global-font`}>
+    <div
+      className={`${dark} global-font grid h-full w-full overflow-y-hidden`}
+      id="app"
+    >
       <div
-        className="color-shift grid bg-stone-300 dark:bg-black overflow-hidden"
+        className="color-shift grid overflow-hidden bg-stone-300 dark:bg-black"
         id="page"
       >
-        <header className="color-shift bg-stone-50 dark:bg-stone-800 border-b border-stone-400 dark:border-stone-700 flex items-center">
+        <header className="color-shift flex items-center border-b border-stone-400 bg-stone-50 dark:border-stone-700 dark:bg-stone-800">
           <MainHeader />
         </header>
 
-        <main className="scrollbar overflow-y-auto flex justify-center">
+        <main className="scrollbar flex justify-center overflow-y-auto">
           <div className="w-full">
             <ShowChatButton />
-            <div className="flex flex-col w-auto">
+            <div className="flex w-auto flex-col">
               <div className="scrollbar flex overflow-y-hidden overflow-x-visible">
                 <FundedBets />
                 <ChessGame />

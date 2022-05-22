@@ -71,13 +71,14 @@ export const DropdownMenu = () => {
 
   return (
     <div
-      className={`${firefoxColors} dropdown absolute w-64 text-stone-800 dark:text-stone-200 overflow-hidden right-5 top-10 z-50 rounded-md shadow-lg border border-stone-400  dark:border-stone-500`}
+      className={`${firefoxColors} dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border border-stone-400 text-stone-800 shadow-lg dark:border-stone-500  dark:text-stone-200`}
       style={{
         height: menuHeight,
         background: bgColor,
         backdropFilter: blur,
       }}
       ref={dropdownRef}
+      id="dropdown-menu"
     >
       <div className="flex justify-center">
         <Main />

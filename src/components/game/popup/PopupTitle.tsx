@@ -15,17 +15,19 @@ export const PopupTitle: React.FC<Props> = ({
     <a
       href={`https://lichess.org/@/${playerName}`}
       rel="noreferrer"
-      className="flex justify-between p-2 rounded-md items-center gap-2 w-full hover:bg-white bg-stone-100 dark:bg-stone-700 dark:hover:bg-stone-800 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift border border-stone-400 dark:border-stone-500 "
+      className="color-shift flex w-full items-center justify-between gap-2 rounded-md border border-stone-400 bg-stone-100 p-2 text-stone-900 hover:bg-white dark:border-stone-500 dark:bg-stone-700 dark:text-stone-200 dark:hover:bg-stone-800 dark:hover:text-stone-200 "
       target="_blank"
     >
       <p className="font-bold">{playerRating}</p>
-      <p>{playerName}</p>
-      <FaChessKing
-        className={color === "white" ? "text-stone-100" : "text-black"}
-        stroke={color === "white" ? "black" : "white"}
-        strokeWidth={8}
-        size={20}
-      />
+      <p className="overflow-hidden text-sm">{playerName}</p>
+      <div className="m-1 h-full w-4">
+        <FaChessKing
+          className={color === "white" ? "text-stone-100" : "text-black"}
+          stroke={color === "white" ? "black" : "white"}
+          strokeWidth={8}
+          size={20}
+        />
+      </div>
     </a>
   )
 }

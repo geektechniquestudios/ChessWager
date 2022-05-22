@@ -4,7 +4,10 @@ interface Props {
 
 export const MessageBody: React.FC<Props> = ({ text }) => {
   return (
-    <p className="text-stone-900 dark:text-stone-300 text-sm break-words">
+    <p
+      className="break-words text-sm text-stone-900 dark:text-stone-300"
+      id="message"
+    >
       {text}
     </p>
   )

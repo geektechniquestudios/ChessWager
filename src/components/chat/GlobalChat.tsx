@@ -18,7 +18,8 @@ export const GlobalChat: React.FC = () => {
   const { chatFormValue, setChatFormValue } = ChatFormData.useContainer()
   return (
     <div
-      className="global-chat flex flex-col border-l border-stone-400 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 color-shift"
+      id="global-chat"
+      className="global-chat color-shift flex flex-col border-l border-stone-400 bg-stone-50 dark:border-stone-700 dark:bg-stone-900"
       style={{ width: "21em" }}
     >
       <ChatHeader />

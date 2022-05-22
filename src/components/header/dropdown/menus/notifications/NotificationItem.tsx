@@ -45,10 +45,10 @@ export const NotificationItem: React.FC<Props> = ({
     })
   }
 
-  const unreadStyle = isRead ? "" : "bg-stone-400 dark:bg-stone-800"
+  const unreadStyle = isRead ? "" : "bg-stone-100 dark:bg-stone-700"
   return (
     <a
-      className={`h-12 w-64 px-4 flex items-center justify-between hover:bg-stone-200 dark:hover:bg-stone-600 dark:text-stone-200 text-stone-900 dark:hover:text-stone-200 color-shift ${unreadStyle}`}
+      className={`color-shift flex h-12 w-64 items-center justify-between px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${unreadStyle}`}
       style={{ direction: "ltr" }}
       onClick={() => {
         clickedUserId && setClickedUserById(clickedUserId)
@@ -61,7 +61,7 @@ export const NotificationItem: React.FC<Props> = ({
         setAsRead()
       }}
     >
-      <p className="text-xs pointer-events-auto text-left">{text}</p>
+      <p className="pointer-events-auto text-left text-xs">{text}</p>
       <DropdownButton
         content={<BsX />}
         className="h-4 w-4"
