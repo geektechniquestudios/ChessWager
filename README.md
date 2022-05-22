@@ -12,9 +12,7 @@
 
 ChessWager is live. A mainnet currency is not supported yet, but you can play on the Avalanche testnet. Download [Metamask](https://metamask.io/download/), switch to the [Avalanche Testnet](https://umbria.network/connect/avalanche-fuji-testnet), and [add some test currency](https://faucet.avax-test.network/) to play at https://chesswager.io/.
 
-### Watch A Demo
-
---Video here--
+## [Watch A Demo](https://youtu.be/YG4CmSdyx3Y)
 
 ### Data Flow
 
