@@ -180,7 +180,7 @@ contract.on(
           .doc(bet.user2Id)
           .collection("notifications")
         const winner =
-          winningSide === "draw"
+          winningSide !== "white" && winningSide !== "black"
             ? "draw"
             : winningSide === bet.betSide
             ? "user1"
