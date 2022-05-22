@@ -11,24 +11,25 @@ steps:
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
   - id: Installing dependencies for frontend
-    name: "gcr.io/cloud-builders/npm"
-    args: ["install", "--no-optional", "-f"]
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["install"]
   - id: Installing firebase tools
     name: "gcr.io/cloud-builders/npm"
     args: ["install", "-g", "firebase-tools"]
   - id: Installing firebase
-    name: "gcr.io/cloud-builders/npm"
-    args: ["install", "--save", "firebase"]
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["add", "firebase"]
   - id: Installing hardhat
-    name: "gcr.io/cloud-builders/npm"
-    args: ["install", "--save-dev", "hardhat"]
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["add", "-D", "hardhat"]
   - id: Installing firebase functions
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "functions-install"]
-    
+
+    # Testing
   - id: Running tests
-    name: "gcr.io/cloud-builders/npm"
-    args: ["run", "test", "--", "--watchAll=false"]
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["run", "test"]
 
     # Build docker images for k8s
   - id: Building contract listener
@@ -92,7 +93,7 @@ steps:
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
-      - "--filename=kubernetes/contract-listener-deployment.yaml"
+      - "--filename=kubernetes/$BRANCH_NAME/contract-listener-deployment.yaml"
       - "--image=$_IMAGE_NAME_CL:$COMMIT_SHA"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
@@ -107,7 +108,7 @@ steps:
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
-      - "--filename=kubernetes/ancillary-stream-deployment.yaml"
+      - "--filename=kubernetes/$BRANCH_NAME/ancillary-stream-deployment.yaml"
       - "--image=$_IMAGE_NAME_AS:$COMMIT_SHA"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
@@ -122,7 +123,7 @@ steps:
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
-      - "--filename=kubernetes/primary-stream-deployment.yaml"
+      - "--filename=kubernetes/$BRANCH_NAME/primary-stream-deployment.yaml"
       - "--image=$_IMAGE_NAME_PS:$COMMIT_SHA"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
@@ -130,7 +131,7 @@ steps:
 
   # Building and deploying frontend
   - id: Building frontend
-    name: "gcr.io/cloud-builders/npm"
+    name: "gcr.io/cloud-builders/yarn"
     args: ["run", "build"]
   - id: Selecting firebase env
     name: "gcr.io/$PROJECT_ID/firebase"
@@ -138,6 +139,7 @@ steps:
   - id: Deploying to firebase
     name: "gcr.io/$PROJECT_ID/firebase"
     args: ["deploy", "--project=$PROJECT_ID"]
+
 timeout: 3600s
 options:
   substitutionOption: ALLOW_LOOSE
@@ -163,3 +165,6 @@ substitutions:
   _K8S_APP_NAME: chess-wager-${BRANCH_NAME}-env
   _OUTPUT_BUCKET_PATH: chess-wager-${BRANCH_NAME}_cloudbuild/deploy
   _GKE_LOCATION: us-central1-a
+tags:
+  - gcp-cloud-build-deploy
+  - $_K8S_APP_NAME

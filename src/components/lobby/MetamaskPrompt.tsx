@@ -1,8 +1,10 @@
 import { BigNumber, ethers } from "ethers"
-import { useEffect } from "react"
+import { BiWallet } from "react-icons/bi"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
-require("dotenv").config({ path: ".env" })
+import "../../style/buttons.scss"
+import { DarkMode } from "../containers/DarkMode"
+const isLocal = import.meta.env.VITE_BRANCH_ENV === "develop"
 
 interface Props {
   betId: string
@@ -33,8 +35,6 @@ export const MetamaskPrompt: React.FC<Props> = ({
   timestamp,
   contractAddress,
 }) => {
-  // const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS!
-
   const { auth } = Auth.useContainer()
 
   const bigAmount = ethers.utils.parseEther(amount.toString())
@@ -45,7 +45,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
       : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
 
   const bet = {
-    amount: ethers.utils.parseEther(amount.toString()),
+    amount: bigAmount,
     betSide: betSide,
     user1Id: user1Id,
     user1Metamask: user1Metamask,
@@ -61,46 +61,88 @@ export const MetamaskPrompt: React.FC<Props> = ({
     gasLimit: 1000000,
   }
 
-  let contract: ethers.Contract
+  // use this version for mainnet inclusion
+  // const isCorrectBlockchain = async (
+  //   provider: ethers.providers.Web3Provider,
+  // ) => {
+  //   const { chainId } = await provider.getNetwork()
+  //   if (isLocal && chainId !== 43113) {
+  //     alert("You are on the wrong network. Please switch to the fuji network.")
+  //     return false
+  //   }
+  //   else if (!isLocal && chainId !== 43114) {
+  //     alert(
+  //       "You are on the wrong network. Please switch to the avalanche mainnet.",
+  //     )
+  //     return false
+  //   }
+  //   else {
+  //     return true
+  //   }
+  // }
 
-  const sendBet = async () => {
+  //
+  // use this version until mainnet
+  const isCorrectBlockchain = async (
+    provider: ethers.providers.Web3Provider,
+  ) => {
+    const { chainId } = await provider.getNetwork()
+    if (chainId !== 43113) {
+      alert("You are on the wrong network. Please switch to the fuji network.")
+      return false
+    } else {
+      return true
+    }
+  }
+
+  const sendBet = async (): Promise<void> => {
     if (typeof window.ethereum !== undefined) {
       await window.ethereum.request({ method: "eth_requestAccounts" })
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer: any = provider.getSigner()
-      contract = new ethers.Contract(contractAddress, ChessWager.abi, signer)
-
+      const contract = new ethers.Contract(
+        contractAddress,
+        ChessWager.abi,
+        signer,
+      )
       try {
+        if (!(await isCorrectBlockchain(provider))) {
+          return
+        }
         const transaction = await contract.placeBet(bet, betId, overrides)
-        await transaction.wait()
-      } catch (e) {
-        console.error(e)
+        transaction.wait().then(() => {
+          contract.removeAllListeners()
+        })
+      } catch (err) {
+        contract.removeAllListeners()
+        console.error(err)
       }
     } else {
       console.log("window.eth undefined!") // tell user to install metamask
     }
   }
 
-  useEffect(() => {
-    // wait 2 seconds before sending the bet
-    sendBet()
-    return () => {
-      try {
-        contract.removeAllListeners()
-      } catch (e) {
-        console.error(e)
-      }
-    }
-  }, []) //@todo fix dep issue, ?useCallback
+  const isUser1 = auth.currentUser?.uid === user1Id
+  const isUser2 = auth.currentUser?.uid === user2Id
+
+  const borderRight = isUser1 ? "" : ""
+  const borderLeft = isUser2 ? "" : ""
+  const borderStyle = `${borderRight} ${borderLeft} border-stone-400 dark:border-stone-700`
+
+  const { isDarkOn } = DarkMode.useContainer()
 
   return (
-    <button
-      className="bet-button"
-      onClick={() => {
-        sendBet()
-      }}
-    >
-      Metamask
-    </button>
+    <div className={`flex flex-col justify-center ${borderStyle}}`}>
+      <button
+        className="color-shift mx-2 grid h-8 w-8 animate-pulse place-content-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-800"
+        onClick={sendBet}
+      >
+        <BiWallet
+          size="24"
+          title="Send Wager"
+          color={isDarkOn ? "#bbf7d0" : "#14532d"}
+        />
+      </button>
+    </div>
   )
 }

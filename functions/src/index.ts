@@ -1,242 +1,276 @@
-// import firebase from "firebase/compat/app"
-//: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> = db.collection("lobby")
+// // import firebase from "firebase/compat/app"
+// //: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> = db.collection("lobby")
+// // const ethers = require("ethers")
+// const fs = require("fs")
+// // const ChessWager = require("../ChessWager.json")
+// // const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
+// // const ChessWager = JSON.parse(fs.readFileSync("../ChessWager.json"))
+// // import * as ChessWager from "../../src/artifacts/contracts/ChessWager.sol/ChessWager.json"
+// const functions = require("firebase-functions")
+// const admin = require("firebase-admin")
+// admin.initializeApp()
+// const db = admin.firestore()
+// const lobbyCollectionRef = db.collection("lobby")
 // const ethers = require("ethers")
-// const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
-// import * as ChessWager from "../../src/artifacts/contracts/ChessWager.sol/ChessWager.json"
-const functions = require("firebase-functions")
-const admin = require("firebase-admin")
-admin.initializeApp()
-const db = admin.firestore()
-const lobbyCollectionRef = db.collection("lobby")
-const ethers = require("ethers")
-// const fetch = require("node-fetch")
+// // const fetch = require("node-fetch")
 
-require("dotenv").config({ path: "../../.env" })
+// require("dotenv").config({ path: "../../.env" })
 
-const authCheck = (context: any) => {
-  if (!context.auth) {
-    throw new functions.https.HttpsError(
-      "failed-precondition",
-      "The function must be called while authenticated.",
-    )
-  }
-}
+// const authCheck = (context: any) => {
+//   if (!context.auth) {
+//     throw new functions.https.HttpsError(
+//       "failed-precondition",
+//       "The function must be called while authenticated.",
+//     )
+//   }
+// }
 
-const specialAuthCheck = (context: any) => {
-  authCheck(context)
-  // make sure user is admin
-  // if (!context.auth.token.admin) {
-  //   throw new functions.https.HttpsError(
-  //     "failed-precondition",
-  //     "The function must be called by an admin.",
-  //   )
-  // }
+// const specialAuthCheck = (context: any) => {
+//   authCheck(context)
+//   // make sure user is admin
+//   // if (!context.auth.token.admin) {
+//   //   throw new functions.https.HttpsError(
+//   //     "failed-precondition",
+//   //     "the function must be called by an admin.",
+//   //   )
+//   // }
 
-  if (context.auth.uid !== "6SUBYXdrZUgKxmePHAzPFT1XLR73") {
-    throw new functions.https.HttpsError(
-      "failed-precondition",
-      "The function must be called by an admin.",
-    )
-  }
-}
+//   if (context.auth.uid !== "6SUBYXdrZUgKxmePHAzPFT1XLR73") {
+//     throw new functions.https.HttpsError(
+//       "failed-precondition",
+//       "The function must be called by an admin.",
+//     )
+//   }
+// }
 
-interface CreateArgs {
-  amount: number
-  betSide: string
-  gameId: string
-  multiplier: number
-  status: string
-  user1Id: string
-  user1Metamask: string
-  user1PhotoURL: string
-  contractAddress: string
-}
+// interface CreateArgs {
+//   amount: number
+//   betSide: string
+//   gameId: string
+//   multiplier: number
+//   status: string
+//   user1Id: string
+//   user1Metamask: string
+//   user1PhotoURL: string
+//   user1DisplayName: string
+//   contractAddress: string
+// }
 
-exports.createBet = functions.https.onCall(
-  async (
-    {
-      amount,
-      betSide,
-      gameId,
-      multiplier,
-      status,
-      user1Id,
-      user1Metamask,
-      user1PhotoURL,
-      contractAddress,
-    }: CreateArgs,
-    context: any,
-  ): Promise<string> => {
-    authCheck(context)
+// exports.createBet = functions.https.onCall(
+//   async (
+//     {
+//       amount,
+//       betSide,
+//       gameId,
+//       multiplier,
+//       status,
+//       user1Id,
+//       user1Metamask,
+//       user1PhotoURL,
+//       user1DisplayName,
+//       contractAddress,
+//     }: CreateArgs,
+//     context: any,
+//   ): Promise<string> => {
+//     authCheck(context)
 
-    // if user is not banned
-    const bannedCollectionRef = db.collection("banned")
-    const bannedUserDocRef = bannedCollectionRef.doc(context.auth.uid)
-    if (bannedUserDocRef.get().exists) {
-      return "user is banned"
-    }
+//     // if user is not banned
+//     const bannedCollectionRef = db.collection("banned")
+//     const bannedUserDocRef = bannedCollectionRef.doc(context.auth.uid)
+//     if (bannedUserDocRef.get().exists) {
+//       return "user is banned"
+//     }
 
-    lobbyCollectionRef.add({
-      amount: amount,
-      betSide: betSide,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      gameId: gameId,
-      multiplier: multiplier,
-      status: status,
-      user1Id: user1Id,
-      user1Metamask: user1Metamask,
-      user1PhotoURL: user1PhotoURL,
-      contractAddress: contractAddress,
-    })
+//     db.collection("users")
+//       .doc(user1Id)
+//       .get()
+//       .then((doc: any) => {
+//         const user1FollowThrough = [
+//           doc.data().betFundedCount,
+//           doc.data().betAcceptedCount,
+//         ]
+//         return user1FollowThrough
+//       })
+//       .then((user1FollowThrough: number[]) => {
+//         lobbyCollectionRef.add({
+//           amount: amount,
+//           betSide: betSide,
+//           createdAt: admin.firestore.FieldValue.serverTimestamp(),
+//           gameId: gameId,
+//           multiplier: multiplier,
+//           status: status,
+//           user1Id: user1Id,
+//           user1Metamask: user1Metamask,
+//           user1PhotoURL: user1PhotoURL,
+//           user1DisplayName: user1DisplayName,
+//           user1FollowThrough: user1FollowThrough,
+//           contractAddress: contractAddress,
+//         })
+//       })
 
-    return "success"
-  },
-)
+//     return "success"
+//   },
+// )
 
-interface AcceptArgs {
-  betId: string
-  photoURL: string
-  hostUid: string
-  user2Metamask: string
-}
+// interface AcceptArgs {
+//   betId: string
+//   photoURL: string
+//   hostUid: string
+//   user2Metamask: string
+//   user2DisplayName: string
+// }
 
-exports.acceptBet = functions.https.onCall(
-  async (
-    { betId, photoURL, hostUid, user2Metamask }: AcceptArgs,
-    context: any,
-  ): Promise<string> => {
-    authCheck(context)
-    const betDocRef = lobbyCollectionRef.doc(betId)
+// exports.acceptBet = functions.https.onCall(
+//   async (
+//     { betId, photoURL, hostUid, user2Metamask, user2DisplayName }: AcceptArgs,
+//     context: any,
+//   ): Promise<string> => {
+//     authCheck(context)
+//     const betDocRef = lobbyCollectionRef.doc(betId)
 
-    const userDocRef = db.collection("users").doc(hostUid)
-    let isPlayerBlocked = false
-    await userDocRef.get().then((doc: any) => {
-      const blocked: string[] = doc.data().blocked
-      isPlayerBlocked = blocked.includes(context.auth.uid)
-    })
-    if (isPlayerBlocked) {
-      return "You are blocked from joining this lobby"
-    }
+//     const userDocRef = db.collection("users").doc(hostUid)
+//     let isPlayerBlocked = false
+//     await userDocRef.get().then((doc: any) => {
+//       const blocked: string[] = doc.data().blocked
+//       isPlayerBlocked = blocked.includes(context.auth.uid)
+//     })
+//     if (isPlayerBlocked) {
+//       return "You are blocked from joining this lobby"
+//     }
 
-    return await betDocRef.get().then((doc: any) => {
-      if (
-        doc.data().user2Id === null ||
-        doc.data().user2Id === "" ||
-        doc.data().user2Id === undefined
-      ) {
-        // if someone else hasn't already joined
-        betDocRef.update({
-          status: "pending",
-          user2Id: context.auth.uid,
-          user2Metamask: user2Metamask,
-          user2PhotoURL: photoURL,
-        })
-        return "bet written"
-      } else {
-        return "bet already full"
-      }
-    })
-  },
-)
+//     return await betDocRef.get().then((doc: any) => {
+//       if (
+//         (doc.data().user2Id === null ||
+//           doc.data().user2Id === "" ||
+//           doc.data().user2Id === undefined) &&
+//         doc.data().user1Id !== context.auth.uid
+//       ) {
+//         // if someone else hasn't already joined
+//         db.collection("users")
+//           .doc(context.auth.uid)
+//           .get()
+//           .then((doc: any) => {
+//             const user2FollowThrough = [
+//               doc.data().betFundedCount,
+//               doc.data().betAcceptedCount,
+//             ]
+//             return user2FollowThrough
+//           })
+//           .then((user2FollowThrough: number[]) => {
+//             betDocRef.update({
+//               status: "pending",
+//               user2Id: context.auth.uid,
+//               user2Metamask: user2Metamask,
+//               user2PhotoURL: photoURL,
+//               user2FollowThrough: user2FollowThrough,
+//               user2DisplayName: user2DisplayName,
+//             })
+//           })
+//         return "bet written"
+//       } else {
+//         return "bet already full"
+//       }
+//     })
+//   },
+// )
 
-interface CancelArgs {
-  betId: string
-}
+// interface CancelArgs {
+//   betId: string
+// }
 
-exports.cancelBet = functions.https.onCall(
-  async ({ betId }: CancelArgs, context: any): Promise<void> => {
-    authCheck(context)
-    const betDocRef = lobbyCollectionRef.doc(betId)
+// exports.cancelBet = functions.https.onCall(
+//   async ({ betId }: CancelArgs, context: any): Promise<void> => {
+//     authCheck(context)
+//     const betDocRef = lobbyCollectionRef.doc(betId)
 
-    await betDocRef.get().then((doc: any) => {
-      if (context.auth.uid === doc.data().user2Id) {
-        betDocRef.update({
-          status: "ready",
-          user2Id: "",
-          user2Metamask: "",
-          user2PhotoURL: "",
-        })
-      }
-    })
-    return
-  },
-)
+//     await betDocRef.get().then((doc: any) => {
+//       if (context.auth.uid === doc.data().user2Id) {
+//         betDocRef.update({
+//           status: "ready",
+//           user2Id: "",
+//           user2Metamask: "",
+//           user2PhotoURL: "",
+//         })
+//       }
+//     })
+//     return
+//   },
+// )
 
-interface ApproveArgs {
-  betId: string
-}
+// interface ApproveArgs {
+//   betId: string
+// }
 
-exports.approveBet = functions.https.onCall(
-  async ({ betId }: ApproveArgs, context: any): Promise<void> => {
-    authCheck(context)
-    const betDocRef = lobbyCollectionRef.doc(betId)
-    const userCollectionRef = db.collection("users")
+// exports.approveBet = functions.https.onCall(
+//   async ({ betId }: ApproveArgs, context: any): Promise<void> => {
+//     authCheck(context)
+//     const betDocRef = lobbyCollectionRef.doc(betId)
+//     const userCollectionRef = db.collection("users")
 
-    await betDocRef.get().then((doc: any) => {
-      if (context.auth.uid === doc.data().user1Id) {
-        betDocRef.update({
-          status: "approved",
-          timestamp: admin.firestore.FieldValue.serverTimestamp(),
-        })
+//     await betDocRef.get().then((doc: any) => {
+//       if (context.auth.uid === doc.data().user1Id) {
+//         betDocRef.update({
+//           status: "approved",
+//           timestamp: admin.firestore.FieldValue.serverTimestamp(),
+//         })
 
-        const user1DocRef = userCollectionRef.doc(context.auth.uid)
-        const user2DocRef = userCollectionRef.doc(doc.data().user2Id)
-        user1DocRef.update({
-          bets: admin.firestore.FieldValue.arrayUnion(doc.id),
-        })
-        user2DocRef.update({
-          bets: admin.firestore.FieldValue.arrayUnion(doc.id),
-        })
-      }
-    })
+//         const user1DocRef = userCollectionRef.doc(context.auth.uid)
+//         const user2DocRef = userCollectionRef.doc(doc.data().user2Id)
+//         user1DocRef.update({
+//           bets: admin.firestore.FieldValue.arrayUnion(doc.id),
+//         })
+//         user2DocRef.update({
+//           bets: admin.firestore.FieldValue.arrayUnion(doc.id),
+//         })
+//       }
+//     })
+//     return
+//   },
+// )
 
-    return
-  },
-)
+// interface CompleteArgs {
+//   betId: string
+// }
 
-interface CompleteArgs {
-  betId: string
-}
+// exports.deleteBet = functions.https.onCall(
+//   async ({ betId }: CompleteArgs, context: any): Promise<void> => {
+//     authCheck(context)
+//     const betDocRef = lobbyCollectionRef.doc(betId)
 
-exports.deleteBet = functions.https.onCall(
-  async ({ betId }: CompleteArgs, context: any): Promise<void> => {
-    authCheck(context)
-    const betDocRef = lobbyCollectionRef.doc(betId)
+//     await betDocRef.get().then((doc: any) => {
+//       if (
+//         context.auth.uid === doc.data().user1Id &&
+//         doc.data().status !== "approved"
+//       ) {
+//         betDocRef.update({
+//           status: "deleted",
+//           gameId: "",
+//         })
+//       }
+//     })
+//     return
+//   },
+// )
 
-    await betDocRef.get().then((doc: any) => {
-      if (
-        context.auth.uid === doc.data().user1Id &&
-        doc.data().status !== "approved"
-      ) {
-        betDocRef.update({
-          status: "deleted",
-          gameId: "",
-        })
-      }
-    })
-    return
-  },
-)
+// exports.kickUser = functions.https.onCall(
+//   async ({ betId }: CompleteArgs, context: any): Promise<void> => {
+//     authCheck(context)
 
-exports.kickUser = functions.https.onCall(
-  async ({ betId }: CompleteArgs, context: any): Promise<void> => {
-    authCheck(context)
+//     const betDocRef = lobbyCollectionRef.doc(betId)
 
-    const betDocRef = lobbyCollectionRef.doc(betId)
-
-    await betDocRef.get().then((doc: any) => {
-      if (context.auth.uid === doc.data().user1Id) {
-        betDocRef.update({
-          status: "ready",
-          user2Id: "",
-          user2Metamask: "",
-          user2PhotoURL: "",
-        })
-      }
-    })
-    return
-  },
-)
+//     await betDocRef.get().then((doc: any) => {
+//       if (context.auth.uid === doc.data().user1Id) {
+//         betDocRef.update({
+//           status: "ready",
+//           user2Id: "",
+//           user2Metamask: "",
+//           user2PhotoURL: "",
+//         })
+//       }
+//     })
+//     return
+//   },
+// )
 
 // exports.releaseStuckFunds = functions.https.onCall(
 //   async (gameId: string, context: any): Promise<void> => {
@@ -313,7 +347,7 @@ exports.kickUser = functions.https.onCall(
 //           gameIdHistoryRef.doc(gameId).set({
 //             outcome: "black wins",
 //           })
-//           payWinnersContractCall(gameId, "black")
+//            payWinnersContractCall(gameId, "black")
 //         }
 //       } else if (
 //         gameData.status === "draw" ||
@@ -329,4 +363,4 @@ exports.kickUser = functions.https.onCall(
 //       }
 //     })
 //     .catch(console.error)
-// }
+// // }

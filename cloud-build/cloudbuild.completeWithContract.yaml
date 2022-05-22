@@ -11,28 +11,29 @@ steps:
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
   - id: Installing dependencies for frontend
-    name: "gcr.io/cloud-builders/npm"
-    args: ["install", "--no-optional", "-f"]
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["install"]
   - id: Installing firebase tools
     name: "gcr.io/cloud-builders/npm"
     args: ["install", "-g", "firebase-tools"]
   - id: Installing firebase
-    name: "gcr.io/cloud-builders/npm"
-    args: ["install", "--save", "firebase"]
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["add", "firebase"]
   - id: Installing hardhat
-    name: "gcr.io/cloud-builders/npm"
-    args: ["install", "--save-dev", "hardhat"]
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["add", "-D", "hardhat"]
   - id: Installing firebase functions
     name: "gcr.io/cloud-builders/npm"
     args: ["run", "functions-install"]
 
+    # Testing
   - id: Running tests
-    name: "gcr.io/cloud-builders/npm"
-    args: ["run", "test", "--", "--watchAll=false"]
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["run", "test"]
 
     # Dependent step
   - id: Deploying contract
-    name: "gcr.io/cloud-builders/npm"
+    name: "gcr.io/cloud-builders/yarn"
     args: ["run", "deploy-contract-$BRANCH_NAME"]
 
     # Build docker images for k8s
@@ -135,7 +136,7 @@ steps:
 
   # Building and deploying frontend
   - id: Building frontend
-    name: "gcr.io/cloud-builders/npm"
+    name: "gcr.io/cloud-builders/yarn"
     args: ["run", "build"]
   - id: Selecting firebase env
     name: "gcr.io/$PROJECT_ID/firebase"

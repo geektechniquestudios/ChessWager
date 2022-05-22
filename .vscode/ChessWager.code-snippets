@@ -1,0 +1,34 @@
+// to use snippets, use ctrl+shift+p and type "snippet".
+{
+  "trafce": {
+    "prefix": "trafce",
+    "body": [
+      "interface Props {$0}",
+      "",
+      "export const ${TM_FILENAME_BASE}: React.FC<Props> = ({$1}) => {",
+      "\treturn <> </>",
+      "}"
+    ],
+    "description": "A standard for react typescript components in ChessWager"
+  },
+  "af": {
+    "prefix": "af",
+    "body": ["const ${1:FunctionName} = ($2) => {$0}"],
+    "description": "A standard for react typescript arrow functions in ChessWager"
+  },
+  "self-prop": {
+    "prefix": "self-prop",
+    "body": ["$1={$1}"],
+    "description": "A standard for react typescript arrow functions in ChessWager"
+  },
+  "it": {
+    "prefix": "it",
+    "body": ["it(\"${1:should}\", () => {$0})"],
+    "description": "A standard for react typescript arrow functions in ChessWager"
+  },
+  "describe": {
+    "prefix": "describe",
+    "body": ["describe(\"${1:description}\", () => {$0})"],
+    "description": "A standard for react typescript arrow functions in ChessWager"
+  }
+}

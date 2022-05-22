@@ -10,6 +10,7 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -34,7 +35,7 @@ typechain
 .firebase
 
 
-# Hardhat files
+# hardhat files
 cache
 
 src/artifacts/@openzeppelin/
@@ -42,7 +43,7 @@ src/artifacts/build-info/
 src/artifacts/hardhat/
 
 
-# Only need the abi from ChessWager.json, not the binaries
+# only need the abi from ChessWager.json, not the binaries
 artifacts/*
 !artifacts/**/
 artifacts/contracts/*
@@ -54,7 +55,18 @@ ChessWager.dbg.json
 !artifacts/contracts/ChessWager.sol/ChessWager.json
 
 # firebase admin credentials
-chess-wager-develop-firebase-adminsdk-z02bi-9bab414c8a.json
-chess-wager-main-firebase-adminsdk-bgzkv-95b4357651.json
-chess-wager-test-firebase-adminsdk-hl438-9c361ba626.json
+chess-wager-*-firebase-adminsdk-*.json
 
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.yarn/install-state.gz
+
+# cypress
+cypress/videos/*
+cypress/screenshots/*

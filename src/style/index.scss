@@ -16,45 +16,33 @@ code {
     monospace;
 }
 
+.global-font {
+  font-family: "Helvetica Neue", sans-serif;
+}
+
 #page {
-  /* height: 100vh; */
-  display: grid;
-  gap: 1rem;
-  grid-template-areas: 
-  /* @todo should probably make this 2x4 instead of 3x4 */
-    "head  head  head"
-    "game  game  chat"
-    "game  game  chat"
-    "lobby lobby chat"
-    "lobby lobby chat";
-  grid-template-columns: minmax(10em, 3fr) minmax(10em, 3fr) minmax(16em, 2fr);
-  grid-template-rows:
-    minmax(1em, 1fr) minmax(auto, 5fr) minmax(auto, 5fr) minmax(1em, 6fr)
-    minmax(1em, 1fr);
-  /* justify-items: center; */
-  /* align-items: center; */
-  @apply bg-primary
-  dark:bg-primary-primaryDark;
+  $gap-size: 0rem;
+  $header-size: 3em;
+  gap: $gap-size;
+  grid-template-areas:
+    "header  header"
+    "game  chat";
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  grid-template-rows: $header-size calc(100vh - $header-size - $gap-size);
 }
 
 #page > header {
-  grid-area: head;
+  grid-area: header;
 }
 
-#page > nav {
-  grid-area: lobby;
-}
 #page > main {
   grid-area: game;
 }
+
 #page > aside {
   grid-area: chat;
 }
 
-.user-img {
-  @apply w-8 h-8 rounded-full;
-}
-
 .color-shift {
-  @apply transition-colors ease-in-out duration-700;
+  @apply transition-colors ease-in-out duration-300;
 }

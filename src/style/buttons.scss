@@ -1,0 +1,6 @@
+@import "index.scss";
+
+.clickable:active {
+  transform: translate(0px, 0.1rem);
+  transform: scale(0.98);
+}
