@@ -885,8 +885,8 @@
     tough-cookie "~2.5.0"
     tunnel-agent "^0.6.0"
     uuid "^8.3.2"
-
-"@cypress/vite-dev-server@^2.2.2":
+    
+"@cypress/vite-dev-server@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@cypress/vite-dev-server/-/vite-dev-server-2.2.3.tgz#7b21031f94d92b338860ead3a8c73f23c96c4e1d"
   dependencies:
