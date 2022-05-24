@@ -885,7 +885,7 @@
     tough-cookie "~2.5.0"
     tunnel-agent "^0.6.0"
     uuid "^8.3.2"
-
+    
 "@cypress/vite-dev-server@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@cypress/vite-dev-server/-/vite-dev-server-2.2.3.tgz#7b21031f94d92b338860ead3a8c73f23c96c4e1d"
@@ -8782,7 +8782,7 @@ react-test-renderer@^18.0.0:
     react-shallow-renderer "^16.15.0"
     scheduler "^0.22.0"
 
-react-textarea-autosize@^8.3.3:
+react-textarea-autosize@^8.3.4:
   version "8.3.4"
   resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-8.3.4.tgz#270a343de7ad350534141b02c9cb78903e553524"
   dependencies:
