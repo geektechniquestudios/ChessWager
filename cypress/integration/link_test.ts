@@ -18,7 +18,11 @@ export const linkTest = (
     it("should respond with a positive status code", () => {
       cy.get(`a[id=${id}]`).then((res) => {
         const url = res.prop("href")
-        cy.request(url)
+        cy.request({
+          method: "GET",
+          url,
+          retryOnStatusCodeFailure: true,
+        })
       })
     })
 
