@@ -26,7 +26,7 @@
     "@openzeppelin/contracts": "^4.3.2",
     "@react-chess/chessground": "^1.2.2",
     "@tailwindcss/aspect-ratio": "^0.4.0",
-    "@truffle/hdwallet-provider": "^1.5.1",
+    "@truffle/hdwallet-provider": "^2.0.8",
     "can-ndjson-stream": "^1.0.2",
     "cypress-react-selector": "^2.3.17",
     "dotenv": "^16.0.0",
