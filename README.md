@@ -90,4 +90,5 @@ Values are subject to evolve and change at this point, but it is paramount to es
   3. **Don't Be Evil** - Google used to say this, and we agree that businesses should not leave a negative impact. We will never implement anti-consumer mechanisms or knowingly cause harm.
   4. **Treat Everyone with Respect and Dignity** - We will always be respectful internally and externally, even in the face of obscenity. That means customers, employees, and strangers.
 
+
 ###### Feedback is welcome
