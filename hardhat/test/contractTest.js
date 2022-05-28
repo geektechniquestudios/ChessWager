@@ -11,7 +11,7 @@ const Wallet = hre.ethers.Wallet
 const Contract = hre.ethers.Contract
 const providers = hre.ethers.providers
 
-const ChessWager = require("../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
+const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
 const { randomUUID } = require("crypto")
 const { BigNumber } = require("ethers")
 const contractABI = ChessWager.abi
@@ -23,7 +23,7 @@ const wallet = new Wallet(metamaskKey, provider)
 
 let cred
 if (isLocal) {
-  const serviceAccount = require(`../${adminSdk}`)
+  const serviceAccount = require(`../../${adminSdk}`)
   cred = admin.credential.cert(serviceAccount)
 } else {
   cred = admin.credential.applicationDefault()
