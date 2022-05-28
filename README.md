@@ -1,6 +1,6 @@
 [![](readme-assets/banner.png)](https://chesswager.io/)
 
-##### Chesswager is a hybrid dApp that uses smart contracts to securely facilitate betting on the top professional games being played on [LichessTV](https://lichess.org/tv)
+##### Chesswager is a highly performant hybrid dApp that uses smart contracts to securely facilitate betting on the top professional games being played on [LichessTV](https://lichess.org/tv)
 ---
 
 
@@ -14,8 +14,14 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
 
 ## [Watch A Demo](https://youtu.be/YG4CmSdyx3Y)
 
-### Data Flow
+### Performance
+  - Users can consistently expect payout within 5 seconds of a game ending and often even faster. Thanks Avalanche.
+  - Database load times averarge between 50-100ms. Thanks Firebase.
+  - The dev server should launch in less than 1 second, even on low performance machines. Thanks Vite.
+  - The bundle size is 384.36KiB, mostly from Firebase. All code is tree-shakable. 
+  - Less than 25MB of system memory is used to run the app, even with over 100 bets on-screen.
 
+### Data Flow
 
   The client relies on a Firestore serverless infrastructure. When a page loads, the client subscribes to the LichessTV API and loads real-time data about chats, bets, and users from the Firestore database. For performance reasons, the browser never loads data directly from the contract.
 
@@ -29,11 +35,11 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
      
 ### Roadmap
 
-We are currently near the end of phase 2. Our primary features are functional and complete. Most behaviors are thoroughly tested. All that remains are a few tests, making some elements look better on smaller displays, new user onboarding guides, and some customer service options, such as a way to let us know if something goes wrong.
+We are nearing the end of phase 2. Our primary features are functional and complete. Most behaviors are thoroughly tested. All that remains are a few tests, making some elements responsive so they look better on smaller displays, new user onboarding guides, and some customer service options so we can know if something goes wrong.
 
 ![](readme-assets/roadmap.png)
 
- ### Primary Tech used in this project:
+ ### Primary Technologies
    ###### Build & Package Management
    [![Yarn](https://img.shields.io/badge/Yarn-%232C8EBB.svg?style=flat&logo=yarn&logoColor=white&labelColor=525252)](#)
    [![Vite](https://badges.aleen42.com/src/vitejs.svg)](#)
