@@ -16,16 +16,15 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
 
 ### Performance
 
-[![](lighthouse1.png)](#)
+[![](readme-assets/lighthouse1.png)](#)
+###### Accessibility improvements coming soon
 
   - Users can consistently expect payout within 5 seconds of a game ending.
-  - Database load times average between 50-100ms. 
+  - Database load times are ususally between 50-100ms. 
   - The bundle size is 384.36KiB. All code is tree-shakable. 
   - Less than 25MB of the client's system memory is used under peak loads.
 
-[![](lighthouse2.png)](#)
-
-The accessibility score will be drastically improved soon.
+[![](readme-assets/lighthouse2.png)](#)
 
 ### Data Flow
 
