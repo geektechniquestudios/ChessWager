@@ -15,10 +15,17 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
 ## [Watch A Demo](https://youtu.be/YG4CmSdyx3Y)
 
 ### Performance
+
+[![](lighthouse1.png)](#)
+
   - Users can consistently expect payout within 5 seconds of a game ending.
-  - Database load times averarge between 50-100ms. 
-  - The bundle size is 384.36KiB, mostly from Firebase. All code is tree-shakable. 
-  - Less than 25MB of system memory is used to run the app, even with over 100 bets on-screen.
+  - Database load times average between 50-100ms. 
+  - The bundle size is 384.36KiB. All code is tree-shakable. 
+  - Less than 25MB of the client's system memory is used under peak loads.
+
+[![](lighthouse2.png)](#)
+
+The accessibility score will be drastically improved soon.
 
 ### Data Flow
 
@@ -88,10 +95,10 @@ For style and linting, there is a prettier config file as well as a tailwind plu
 
 ### Values
 
-Values are subject to evolve and change at this point, but it is paramount to establish a desired culture early. You may have heard of some of these before, but I'm taking what I like from top companies:
+Values are subject to evolution and change at this point, but it is paramount to establish the desired culture early. You may have heard of some of these before, but I'm taking what I like from top companies:
 
-  1. **Customer Obsession** - Amazon is famous for this. Without any customers, there's no business. Customers are simply the most important part of the equation. That means keeping our services clean and friendly. We will always do our best to deliver the best customer experience through customer service and the best product.
-  2. **Code Standards** - Robert "Uncle Bob" Martin influenced this one. We promise never to release code who's behavior is not well tested. A bug will never knowingly make its way into production.
+  1. **Customer Obsession** - Amazon is famous for this. Without any customers, there's no business. Customers are simply the most important part of the equation. That means keeping our services clean and friendly. We will strive to deliver the best experience through customer service and a quality product.
+  2. **Code Standards** - Robert "Uncle Bob" Martin influenced this one. We promise never to release code whose behavior is not well tested. A bug will never knowingly make its way into production.
   3. **Don't Be Evil** - Google used to say this, and we agree that businesses should not leave a negative impact. We will never implement anti-consumer mechanisms or knowingly cause harm.
   4. **Treat Everyone with Respect and Dignity** - We will always be respectful internally and externally, even in the face of obscenity. That means customers, employees, and strangers.
 
