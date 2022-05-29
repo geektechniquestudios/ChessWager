@@ -15,7 +15,7 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
 ## [Watch A Demo](https://youtu.be/YG4CmSdyx3Y)
 
 ### Performance
-  - Users can consistently expect payout within 5 seconds of a game ending and often even faster.
+  - Users can consistently expect payout within 5 seconds of a game ending.
   - Database load times averarge between 50-100ms. 
   - The bundle size is 384.36KiB, mostly from Firebase. All code is tree-shakable. 
   - Less than 25MB of system memory is used to run the app, even with over 100 bets on-screen.
