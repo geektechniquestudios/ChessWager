@@ -1,6 +1,6 @@
 [![](readme-assets/banner.png)](https://chesswager.io/)
 
-##### Chesswager is a highly performant hybrid dApp that uses smart contracts to securely facilitate betting on the top professional games being played on [LichessTV](https://lichess.org/tv)
+##### ChessWager is a highly performant hybrid dApp that uses smart contracts to securely facilitate betting on the top professional games being played on [LichessTV](https://lichess.org/tv)
 ---
 
 
