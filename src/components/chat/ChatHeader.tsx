@@ -19,6 +19,7 @@ export const ChatHeader: React.FC = () => {
         <BiArrowFromLeft
           size="1.3em"
           className="color-shift m-1 text-stone-900 dark:text-stone-50"
+          title="Hide Chat"
         />
       </button>
       <div className="text-bold text-md grid place-content-center text-stone-900 dark:text-stone-50">
