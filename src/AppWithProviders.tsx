@@ -2,9 +2,6 @@ import { App } from "./App"
 import { Auth } from "./components/containers/Auth"
 import { GameState } from "./components/containers/GameState"
 import { Price } from "./components/containers/Price"
-import { ThemeProvider } from "@mui/system"
-import { createTheme } from "@mui/material/styles"
-import { teal } from "@mui/material/colors"
 import { ChatFormData } from "./components/containers/ChatFormData"
 import { ChatToggle } from "./components/containers/ChatToggle"
 import { DarkMode } from "./components/containers/DarkMode"
@@ -17,11 +14,7 @@ import { ConversationsState } from "./components/containers/ConversationsState"
 import { UserDataState } from "./components/containers/UserDataState"
 import { WindowSize } from "./components/containers/WindowSize"
 
-const theme = createTheme({
-  palette: {
-    primary: teal,
-  },
-})
+
 
 export const AppWithProviders: React.FC = () => {
   return (
@@ -39,9 +32,7 @@ export const AppWithProviders: React.FC = () => {
                           <BetsState.Provider>
                             <ConversationsState.Provider>
                               <UserDataState.Provider>
-                                <ThemeProvider theme={theme}>
-                                  <App />
-                                </ThemeProvider>
+                                <App />
                               </UserDataState.Provider>
                             </ConversationsState.Provider>
                           </BetsState.Provider>
