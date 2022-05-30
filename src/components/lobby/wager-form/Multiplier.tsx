@@ -77,6 +77,7 @@ export const Multiplier: React.FC<Props> = ({
             max={0.99}
             step={0.01}
             size="small"
+            aria-label="multiplier-slider"
           />
           <p className="flex justify-center">
             <CurrencyInput
@@ -91,6 +92,7 @@ export const Multiplier: React.FC<Props> = ({
               onKeyPress={(e) => {
                 e.key === "Enter" && e.currentTarget.blur()
               }}
+              aria-label="multiplier-number-input"
             />
           </p>
         </div>
