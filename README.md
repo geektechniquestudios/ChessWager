@@ -17,7 +17,6 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
 ### Performance
 
 ![](readme-assets/lighthouse1.png)
-###### Accessibility improvements coming soon
 
 - Users can consistently expect payout within 5 seconds of a game ending.
 - Database load times are ususally between 50-100ms.
