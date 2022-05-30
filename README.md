@@ -1,7 +1,6 @@
 [![](readme-assets/banner.png)](https://chesswager.io/)
 
-##### Chesswager is a highly performant hybrid dApp that uses smart contracts to securely facilitate betting on the top professional games being played on [LichessTV](https://lichess.org/tv)
-
+##### ChessWager is a highly performant hybrid dApp that uses smart contracts to securely facilitate betting on the top professional games being played on [LichessTV](https://lichess.org/tv)
 ---
 
 <!-- https://shields.io/ -->
@@ -17,13 +16,14 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
 
 ### Performance
 
-[![](readme-assets/lighthouse1.png)](#)
+![](readme-assets/lighthouse1.png)
+###### Accessibility improvements coming soon
 
 - Users can consistently expect payout within 5 seconds of a game ending.
 - Database load times are ususally between 50-100ms.
 - Less than 25MB of the client's system memory is used under peak loads.
 
-[![](readme-assets/lighthouse2.png)](#)
+![](readme-assets/lighthouse2.png)
 
 ###### lighthouse warns "There may be stored data affecting loading performance in this location: IndexedDB". There seems to be no way to test this app without getting that warning even in a private tab.
 ###### lighthouse warns "The page loaded too slowly to finish within the time limit. Results may be incomplete." This is because of the continuous data stream from lichess never closing.
