@@ -16,6 +16,8 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
 
 ### Performance
 
+###### These results are from Google's [Lighthouse](https://developers.google.com/web/tools/lighthouse) benchmark
+
 ![](readme-assets/lighthouse1.png)
 
 - Users can consistently expect payout within 5 seconds of a game ending.
