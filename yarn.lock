@@ -1939,9 +1939,9 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@metamask/safe-event-emitter/-/safe-event-emitter-2.0.0.tgz#af577b477c683fad17c619a78208cede06f9605c"
 
-"@mui/base@5.0.0-alpha.82":
-  version "5.0.0-alpha.82"
-  resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.82.tgz#19645af6790a79587517a5782ee32bf9ab7f7ac8"
+"@mui/base@5.0.0-alpha.83":
+  version "5.0.0-alpha.83"
+  resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.83.tgz#8ac60dc7315f8ae001233e8e10398e31833625bd"
   dependencies:
     "@babel/runtime" "^7.17.2"
     "@emotion/is-prop-valid" "^1.1.2"
@@ -1952,18 +1952,18 @@
     prop-types "^15.8.1"
     react-is "^17.0.2"
 
-"@mui/material@^5.2.7":
-  version "5.8.1"
-  resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.8.1.tgz#ff3c0dc65cf975362f8b141d4713a6d88b9f08e9"
+"@mui/material@^5.8.2":
+  version "5.8.2"
+  resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.8.2.tgz#13547df6bb6991e064f42ee71ce17c30629e263a"
   dependencies:
     "@babel/runtime" "^7.17.2"
-    "@mui/base" "5.0.0-alpha.82"
-    "@mui/system" "^5.8.1"
+    "@mui/base" "5.0.0-alpha.83"
+    "@mui/system" "^5.8.2"
     "@mui/types" "^7.1.3"
     "@mui/utils" "^5.8.0"
     "@types/react-transition-group" "^4.4.4"
     clsx "^1.1.1"
-    csstype "^3.0.11"
+    csstype "^3.1.0"
     hoist-non-react-statics "^3.3.2"
     prop-types "^15.8.1"
     react-is "^17.0.2"
@@ -1985,7 +1985,7 @@
     "@emotion/cache" "^11.7.1"
     prop-types "^15.8.1"
 
-"@mui/system@^5.8.1", "@mui/system@^5.8.2":
+"@mui/system@^5.8.2":
   version "5.8.2"
   resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.8.2.tgz#b6d889051caec1efe31a87f0bb96d52f003e517d"
   dependencies:
@@ -4236,7 +4236,7 @@ cssesc@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
 
-csstype@^3.0.11, csstype@^3.0.2, csstype@^3.1.0:
+csstype@^3.0.2, csstype@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.0.tgz#4ddcac3718d787cf9df0d1b7d15033925c8f29f2"
 
