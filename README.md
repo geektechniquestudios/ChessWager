@@ -16,7 +16,7 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
 
 ### Performance
 
-###### These benchmark results are from Google's [Lighthouse](https://developers.google.com/web/tools/lighthouse) tool.
+###### These benchmark results are from Google's [Lighthouse](https://developers.google.com/web/tools/lighthouse) auditing tool.
 
 ![](readme-assets/lighthouse1.png)
 
@@ -26,7 +26,7 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
 
 ![](readme-assets/lighthouse2.png)
 
-###### Lighthouse warns "There may be stored data affecting loading performance in this location: IndexedDB". There seems to be no way to test this app without getting that warning even in a private tab.
+###### Lighthouse warns "There may be stored data affecting loading performance in this location: IndexedDB". There seems to be no way to test this app without getting that warning, even in a private tab.
 ###### Lighthouse warns "The page loaded too slowly to finish within the time limit. Results may be incomplete". This is because the continuous data stream from lichess stays open.
 
 ### Data Flow
