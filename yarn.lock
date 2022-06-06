@@ -3242,15 +3242,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-chess/chessground@npm:^1.2.4":
-  version: 1.2.4
-  resolution: "@react-chess/chessground@npm:1.2.4"
+"@react-chess/chessground@npm:^1.2.2":
+  version: 1.2.3
+  resolution: "@react-chess/chessground@npm:1.2.3"
   dependencies:
     chessground: 7.12.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0
     react-dom: ^16.8.0 || ^17.0.0
-  checksum: 36fd347205a3dab631fc0910cdf6453fd1c33a3f1135e87f00906eac5044543b46c379730ad604228aa950d1fad67030748f023d0b9b6136193f9da79528cd84
+  checksum: 195d5d79625518a75b49e6584b4538bf7ba8e2884c4c042a04dc7d4970ea127460d8a875c6bd5b1e644562f6e299431e5eb186bbfc93943f1bfaa4194781eec4
   languageName: node
   linkType: hard
 
@@ -5916,7 +5916,7 @@ __metadata:
     "@nomiclabs/hardhat-ethers": ^2.0.2
     "@nomiclabs/hardhat-waffle": ^2.0.1
     "@openzeppelin/contracts": ^4.3.2
-    "@react-chess/chessground": ^1.2.4
+    "@react-chess/chessground": ^1.2.2
     "@tailwindcss/aspect-ratio": ^0.4.0
     "@truffle/hdwallet-provider": ^2.0.8
     "@types/cypress-dotenv": ^2.0.0
