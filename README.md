@@ -14,19 +14,6 @@ ChessWager is live. A mainnet currency is not supported yet, but you can play on
 
 ## [Watch A Demo](https://youtu.be/YG4CmSdyx3Y)
 
-### Performance
-
-![](readme-assets/lighthouse1.png)
-
-- Users can consistently expect payout within 5 seconds of a game ending.
-- Database load times are ususally between 50-100ms.
-- Less than 25MB of the client's system memory is used under peak loads.
-
-![](readme-assets/lighthouse2.png)
-
-###### Lighthouse warns "There may be stored data affecting loading performance in this location: IndexedDB". There seems to be no way to test this app without getting that warning even in a private tab.
-###### Lighthouse warns "The page loaded too slowly to finish within the time limit. Results may be incomplete". This is because the continuous data stream from lichess stays open.
-
 ### Data Flow
 
 The client relies on a Firestore serverless infrastructure. When a page loads, the client subscribes to the LichessTV API and loads real-time data about chats, bets, and users from the Firestore database. For performance reasons, the browser never loads data directly from the contract.
@@ -38,6 +25,22 @@ Another isolated backend program subscribes to the LichessTV API. At the end of 
 ![](readme-assets/data-flow.png)
 
 This system emphasizes speed and responsiveness by using centralized systems for bet pairing and user interactions. However, many benefits of decentralization are maintained through the smart contracts, ensuring that users' funds are secured and only payable to the respective accounts that placed the bet. The service is entirely non-custodial, meaning that chesswager never actually possesses your funds; they are instead stored in the smart contract on the blockchain for the duration of the bet.
+
+### Performance
+
+###### These benchmark results are from Google's [Lighthouse](https://developers.google.com/web/tools/lighthouse) auditing tool.
+
+![](readme-assets/lighthouse1.png)
+
+- Users can consistently expect payout within 5 seconds of a game ending.
+- Database load times are ususally between 50-100ms.
+- Less than 25MB of the client's system memory is used under peak loads.
+
+![](readme-assets/lighthouse2.png)
+
+###### Lighthouse warns "There may be stored data affecting loading performance in this location: IndexedDB". There seems to be no way to test this app without getting that warning, even in a private tab.
+###### Lighthouse warns "The page loaded too slowly to finish within the time limit. Results may be incomplete". This is because the continuous data stream from lichess stays open.
+
 
 ### Roadmap
 
