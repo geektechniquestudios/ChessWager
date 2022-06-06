@@ -188,19 +188,183 @@ describe("Placing Bets", async () => {
     expect(balance1AfterBet).to.be.lt(balance1AfterPay)
   })
 
-  it("Shouldn't allow bets on already paid out games", async () => {})
+  it("Shouldn't allow bets on already paid out games", async () => {
+    const multiplier = 1
+    const gameId = randomUUID()
+    const timestamp = new Date() / 1000
+    const amount = "100"
+    const bigAmount = ethers.utils.parseEther(amount.toString())
+    const betUser1 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betUser2 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betId = randomUUID()
+    const overrides = {
+      value: bigAmount,
+    }
+
+    const balance1BeforeBet = await ethers.provider.getBalance(account1.address)
+    const balance2BeforeBet = await ethers.provider.getBalance(account2.address)
+
+    expect(balance1BeforeBet).to.equal(balance2BeforeBet)
+
+    await contract
+      .connect(account1)
+      .placeBet(betUser1, betId, overrides)
+      .catch(console.error)
+
+    await contract
+      .connect(account2)
+      .placeBet(betUser2, betId, overrides)
+      .catch(console.error)
+
+    const balance1AfterBet = await ethers.provider.getBalance(account1.address)
+    const balance2AfterBet = await ethers.provider.getBalance(account2.address)
+
+    expect(balance1BeforeBet).to.equal(balance1BeforeBet)
+    expect(balance1BeforeBet).to.not.equal(balance1AfterBet)
+    expect(balance2BeforeBet).to.not.equal(balance2AfterBet)
+
+    await contract.payWinners(gameId, "white").catch(console.error)
+
+    const balance1AfterPay = await ethers.provider.getBalance(account1.address)
+
+    expect(balance1AfterBet).to.be.lt(balance1AfterPay)
+
+    await expect(contract.payWinners(gameId, "white")).to.be.reverted
+  })
 })
 
 describe("Balances", () => {
-  it("Should increase after 2 users bet on a game and get paid", async () => {})
-  it("Should allow withdrawls", async () => {
-    // 2 players should bet
-    // payout should happen
-    // check balance from contract
-    // check balance of owner
-    contract.withdrawChessWagerBalance()
-    // check owner balance, should be equal to balance of owner + balance from contract - gas
+  it("Should increase after 2 users bet on a game and get paid", async () => {
+    expect(await contract.viewChessWagerBalance()).to.equal(0)
+    const multiplier = 1
+    const gameId = randomUUID()
+    const timestamp = new Date() / 1000
+    const amount = "100"
+    const bigAmount = ethers.utils.parseEther(amount.toString())
+    const betUser1 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betUser2 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betId = randomUUID()
+    const overrides = {
+      value: bigAmount,
+    }
+
+    await contract
+      .connect(account1)
+      .placeBet(betUser1, betId, overrides)
+      .catch(console.error)
+
+    await contract
+      .connect(account2)
+      .placeBet(betUser2, betId, overrides)
+      .catch(console.error)
+
+    await contract.payWinners(gameId, "white").catch(console.error)
+
+    expect(await contract.viewChessWagerBalance()).to.be.gt(0)
   })
+
+  it("Should allow withdrawls", async () => {
+    const multiplier = 1
+    const gameId = randomUUID()
+    const timestamp = new Date() / 1000
+    const amount = "100"
+    const bigAmount = ethers.utils.parseEther(amount.toString())
+    const betUser1 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betUser2 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betId = randomUUID()
+    const overrides = {
+      value: bigAmount,
+    }
+
+    await contract
+      .connect(account1)
+      .placeBet(betUser1, betId, overrides)
+      .catch(console.error)
+
+    await contract
+      .connect(account2)
+      .placeBet(betUser2, betId, overrides)
+      .catch(console.error)
+
+    await contract.payWinners(gameId, "white")
+
+    expect(await contract.viewChessWagerBalance()).to.be.gt(0)
+    
+    const originalOwnerBalance = await ethers.provider.getBalance(owner.address)
+    contract.withdrawChessWagerBalance()
+
+    expect(await contract.viewChessWagerBalance()).to.equal(0)
+
+    const newOwnerBalance = await ethers.provider.getBalance(owner.address)
+    expect(newOwnerBalance).to.be.gt(originalOwnerBalance)
+  })
+
   it("Should allow balance checking", async () => {
     expect(await contract.viewChessWagerBalance()).to.equal(0)
   })
