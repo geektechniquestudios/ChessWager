@@ -14,7 +14,7 @@ export const PopupTitle: React.FC<Props> = ({
   return (
     <a
       href={`https://lichess.org/@/${playerName}`}
-      rel="noreferrer"
+      rel="noreferrer noopener"
       className="color-shift flex w-full items-center justify-between gap-2 rounded-md border border-stone-400 bg-stone-100 p-2 text-stone-900 hover:bg-white dark:border-stone-500 dark:bg-stone-700 dark:text-stone-200 dark:hover:bg-stone-800 dark:hover:text-stone-200 "
       target="_blank"
     >
