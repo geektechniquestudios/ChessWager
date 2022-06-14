@@ -16,7 +16,7 @@ const db = getFirestore(firebaseApp)
 
 interface Props {}
 
-export const ReportForm: React.FC<Props> = ({}) => {
+export const ContactForm: React.FC<Props> = ({}) => {
   const { user, auth } = Auth.useContainer()
   const { reportedUserId } = UserMenuState.useContainer()
   const { reportFormValue, setReportFormValue } = ChatFormData.useContainer()
@@ -29,7 +29,7 @@ export const ReportForm: React.FC<Props> = ({}) => {
     if (reportFormValue.trim() === "" || !user || !auth.currentUser) return
 
     const { uid, photoURL, displayName } = auth.currentUser
-    const reportsRef = collection(db, "reports")
+    const reportsRef = collection(db, "contacts")
 
     addDoc(reportsRef, {
       text: reportFormValue,
@@ -41,7 +41,7 @@ export const ReportForm: React.FC<Props> = ({}) => {
       resolved: false,
     }).then(() => {
       setReportFormValue("")
-      alert("Your report has been sent")
+      alert("Your message has been sent")
     })
   }
   return (

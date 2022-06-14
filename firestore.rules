@@ -811,5 +811,35 @@ service cloud.firestore {
       allow create: if canCreate() && isReportCreateDataValid() && isReportCreateKeyValid();
       // need to allow update to resolved status if moderator or admin
     }
+
+    match /contacts/{contactId} {
+      function isContactCreateDataValid() {
+        let requestData = request.resource.data;
+        return 
+          requestData.text is string &&
+          requestData.createdAt is timestamp &&
+          requestData.uid is string &&
+          requestData.photoURL is string &&
+          requestData.userName is string &&
+          requestData.reportedUserId is string &&
+          requestData.resolved is bool &&
+
+          requestData.createdAt == request.time &&
+          requestData.photoURL != "" &&
+          requestData.reportedUserId != "" &&
+          requestData.resolved == false &&
+          requestData.text != "" &&
+          requestData.uid == request.auth.uid &&
+          requestData.userName == request.auth.token.name;
+      }
+
+      function isContactCreateKeyValid() {
+        return
+           request.resource.data.keys().hasAll(["createdAt", "photoURL", "reportedUserId", "resolved", "text", "uid", "userName"]) &&
+          request.resource.data.keys().hasOnly(["createdAt", "photoURL", "reportedUserId", "resolved", "text", "uid", "userName"]);
+      }
+
+      allow create: if canCreate() && isContactCreateDataValid() && isContactCreateKeyValid();
+    }
   }
 }

@@ -91,7 +91,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
             <a
               className="flex justify-center pb-2 text-center text-xs font-bold hover:text-black hover:underline dark:hover:text-white"
               href={`https://lichess.org/${linkId}/${orientation}`}
-              rel="noreferrer"
+              rel="noreferrer noopener"
               title="View game"
               target="_blank"
             >

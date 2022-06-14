@@ -17,12 +17,6 @@ export const HelpMenu: React.FC = () => {
             onClick={() => setMenuStack([...menuStack, "howToPlay"])}
           />,
           <DropdownItem
-            goToMenu="faq"
-            leftIcon={<AiOutlineInfoCircle />}
-            text="FAQs"
-            onClick={() => setMenuStack([...menuStack, "faq"])}
-          />,
-          <DropdownItem
             goToMenu="contact"
             leftIcon={<BiMessageRoundedError />}
             text="Contact Us"
