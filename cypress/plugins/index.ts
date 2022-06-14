@@ -13,6 +13,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 import path from "path"
+//@ts-ignore
 import { startDevServer } from "@cypress/vite-dev-server"
 import dotenv from "dotenv"
 dotenv.config({ path: ".env" })
