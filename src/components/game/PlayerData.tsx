@@ -23,7 +23,7 @@ export const PlayerData: React.FC<Props> = ({
     <div className="flex w-full justify-between overflow-clip">
       <a
         href={`https://lichess.org/@/${name}`}
-        rel="noreferrer"
+        rel="noreferrer noopener"
         target="_blank"
         className="flex flex-col justify-center overflow-hidden hover:text-stone-900 dark:hover:text-white "
       >

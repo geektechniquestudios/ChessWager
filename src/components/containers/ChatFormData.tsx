@@ -7,6 +7,7 @@ const useChatFormData = () => {
     new Map(),
   )
   const [reportFormValue, setReportFormValue] = useState("")
+  const [contactFormValue, setContactFormValue] = useState("")
   return {
     chatFormValue,
     setChatFormValue,
@@ -14,6 +15,8 @@ const useChatFormData = () => {
     setConvoFormValue,
     reportFormValue,
     setReportFormValue,
+    contactFormValue,
+    setContactFormValue,
   }
 }
 
