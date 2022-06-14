@@ -63,7 +63,7 @@
     "cypress-dotenv": "^2.0.0",
     "cypress-firebase": "^2.2.1",
     "ethereum-waffle": "^3.4.0",
-    "firebase-admin": "^10.0.2",
+    "firebase-admin": "^10.3.0",
     "hardhat": "^2.9.9",
     "postcss": "^8.4.6",
     "prettier": "^2.5.1",
