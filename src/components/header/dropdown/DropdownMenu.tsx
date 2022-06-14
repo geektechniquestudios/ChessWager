@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react"
 import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 import { Contact } from "./menus/help/Contact"
-import { Faq } from "./menus/help/Faq"
 import { HelpMenu } from "./menus/main/HelpMenu"
 import { HowToPlay } from "./menus/help/HowToPlay"
 import { Main } from "./menus/Main"
@@ -86,7 +85,6 @@ export const DropdownMenu = () => {
         <HelpMenu />
         <SearchUsersMenu />
         <HowToPlay />
-        <Faq />
         <Contact />
         {user && (
           <>
