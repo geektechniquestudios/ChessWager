@@ -103,7 +103,7 @@ export const WagerForm: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex h-full justify-between border-b border-stone-400 bg-stone-200 shadow-2xl dark:border-stone-700 dark:bg-stone-800 sm:rounded-b-md sm:border-r">
+      <div className="flex h-full justify-between border-b border-stone-400 shadow-2xl dark:border-stone-700 sm:rounded-b-md sm:border-r">
         {width < 640 && <FundedBets />}
         <fieldset className="flex border-l dark:border-stone-700 sm:border-none">
           <form
