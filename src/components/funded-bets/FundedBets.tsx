@@ -78,7 +78,7 @@ export const FundedBets: React.FC<Props> = () => {
             {bets
               ?.filter(
                 (bet: Bet) =>
-                  // bet.status === "funded" &&
+                  bet.status === "funded" &&
                   isBetRelatedToUser(bet) &&
                   (!userData?.blockedUsers.includes(bet.user1Id) ?? false) &&
                   (!userData?.blockedUsers.includes(bet.user2Id) ?? false),
