@@ -1,6 +1,7 @@
 [![](readme-assets/banner.png)](https://chesswager.io/)
 
 ##### ChessWager is a highly performant hybrid dApp that uses smart contracts to securely facilitate betting on the top professional games being played on [LichessTV](https://lichess.org/tv)
+
 ---
 
 <!-- https://shields.io/ -->
@@ -24,7 +25,7 @@ Another isolated backend program subscribes to the LichessTV API. At the end of 
 
 ![](readme-assets/data-flow.png)
 
-This system emphasizes speed and responsiveness by using centralized systems for bet pairing and user interactions. However, many benefits of decentralization are maintained through the smart contracts, ensuring that users' funds are secured and only payable to the respective accounts that placed the bet. The service is entirely non-custodial, meaning that chesswager never actually possesses your funds; they are instead stored in the smart contract on the blockchain for the duration of the bet.
+This system emphasizes speed and responsiveness by using centralized systems for bet pairing and user interactions. However, many benefits of decentralization are maintained through the smart contracts ensuring that users' funds are secured and only payable to the respective accounts that placed the bet. The service is entirely non-custodial, meaning that chesswager never actually possesses your funds; they are instead stored in the smart contract on the blockchain for the duration of the bet.
 
 ### Performance
 
@@ -39,8 +40,8 @@ This system emphasizes speed and responsiveness by using centralized systems for
 ![](readme-assets/lighthouse2.png)
 
 ###### Lighthouse warns "There may be stored data affecting loading performance in this location: IndexedDB". There seems to be no way to test this app without getting that warning, even in a private tab.
-###### Lighthouse warns "The page loaded too slowly to finish within the time limit. Results may be incomplete". This is because the continuous data stream from lichess stays open.
 
+###### Lighthouse warns "The page loaded too slowly to finish within the time limit. Results may be incomplete". This is because the continuous data stream from lichess stays open.
 
 ### Roadmap
 

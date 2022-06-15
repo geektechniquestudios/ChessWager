@@ -126,7 +126,7 @@ export const ChessGame: React.FC = () => {
   return (
     <div className="flex w-full justify-center">
       <div
-        className="color-shift my-10 w-1/2 min-w-min resize-x flex-col justify-center overflow-hidden rounded-sm border border-stone-500 bg-stone-100 p-2.5 align-middle text-stone-900 shadow-lg dark:bg-stone-800 dark:text-stone-300"
+        className="color-shift mt-14 mb-5 w-full min-w-min sm:resize-x flex-col justify-center overflow-hidden rounded-sm border border-stone-500 bg-stone-100 p-2.5 align-middle text-stone-900 shadow-lg dark:bg-stone-800 dark:text-stone-300 sm:w-1/2"
         style={{ minWidth: "17em", maxWidth: "80vh" }}
       >
         <div className="relative flex h-full w-full resize justify-center align-middle">
