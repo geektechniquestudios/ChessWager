@@ -33,7 +33,7 @@ export const MiniBet: React.FC<Props> = ({
 
   const { avaxPrice } = Price.useContainer()
   return (
-    <div className="text-stone-900 dark:text-stone-300">
+    <div className="text-stone-900 dark:text-stone-300 text-xs">
       <div className="flex justify-between p-1">
         <div className="mx-1 flex items-center gap-1">
           <div className="grid h-5 w-5 place-content-center rounded-md border border-stone-700 bg-stone-600">

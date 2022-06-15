@@ -19,6 +19,8 @@ import { UserDataState } from "../../containers/UserDataState"
 import { createTheme } from "@mui/material/styles"
 import { ThemeProvider } from "@mui/system"
 import { DarkMode } from "../../containers/DarkMode"
+import { FundedBets } from "../../funded-bets/FundedBets"
+import { WindowSize } from "../../containers/WindowSize"
 const db = getFirestore(firebaseApp)
 
 export const WagerForm: React.FC = () => {
@@ -69,6 +71,7 @@ export const WagerForm: React.FC = () => {
     return true
   }
   const { userData } = UserDataState.useContainer()
+  const { width } = WindowSize.useContainer()
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -100,11 +103,12 @@ export const WagerForm: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex h-full border-b border-stone-400 bg-stone-200 shadow-2xl dark:border-stone-700 dark:bg-stone-800 sm:rounded-b-md sm:border-r">
-        <fieldset className="flex w-full">
+      <div className="flex h-full justify-between border-b border-stone-400 bg-stone-200 shadow-2xl dark:border-stone-700 dark:bg-stone-800 sm:rounded-b-md sm:border-r">
+        {width < 640 && <FundedBets />}
+        <fieldset className="flex border-l sm:border-none dark:border-stone-700">
           <form
             onSubmit={createWager}
-            className="mx-auto border bg-stone-200 p-2 dark:border-l-stone-600 dark:border-r-stone-600 dark:bg-stone-900 sm:border-none"
+            className="bg-stone-200 p-2 dark:bg-stone-900 sm:border-none"
             onKeyPress={(e) => {
               e.key === "Enter" && e.preventDefault()
             }}
