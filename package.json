@@ -28,7 +28,7 @@
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@truffle/hdwallet-provider": "^2.0.9",
     "can-ndjson-stream": "^1.0.2",
-    "cypress-react-selector": "^2.3.17",
+    "cypress-react-selector": "^2.3.20",
     "dotenv": "^16.0.0",
     "ethers": "^5.5.0",
     "firebase": "^9.8.3",
