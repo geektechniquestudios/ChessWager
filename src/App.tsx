@@ -10,12 +10,10 @@ import { FundedBets } from "./components/funded-bets/FundedBets"
 import { DarkMode } from "./components/containers/DarkMode"
 import { ChatToggle } from "./components/containers/ChatToggle"
 import { ShowChatButton } from "./components/body/ShowChatButton"
-import { WindowSize } from "./components/containers/WindowSize"
 
 export const App: React.FC = () => {
   const { isDarkOn } = DarkMode.useContainer()
   const { showChat } = ChatToggle.useContainer()
-  const { width } = WindowSize.useContainer()
 
   const dark = isDarkOn ? "dark" : ""
 
@@ -36,8 +34,8 @@ export const App: React.FC = () => {
           <div className="w-full">
             <ShowChatButton />
             <div className="flex w-auto flex-col">
-              <div className="scrollbar flex overflow-y-hidden overflow-x-visible">
-                {width >= 640 && <FundedBets />}
+              <div className="scrollbar overflow-y-hidden overflow-x-visible sm:flex">
+                <FundedBets />
                 <ChessGame />
               </div>
             </div>

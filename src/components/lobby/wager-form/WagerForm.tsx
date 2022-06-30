@@ -95,6 +95,7 @@ export const WagerForm: React.FC = () => {
         userData!.betFundedCount,
         userData!.betAcceptedCount,
       ],
+      //@ts-ignore
       contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
       hasUser1SeenUpdate: false,
       hasUser2SeenUpdate: false,
@@ -103,12 +104,11 @@ export const WagerForm: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex h-full justify-between border-b border-stone-400 shadow-2xl dark:border-stone-700 sm:rounded-b-md sm:border-r">
-        {width < 640 && <FundedBets />}
-        <fieldset className="flex border-l dark:border-stone-700 sm:border-none">
+      <div className="flex h-full justify-between border-stone-400 shadow-2xl dark:border-stone-700 sm:rounded-b-md">
+        <fieldset className="mx-auto flex">
           <form
             onSubmit={createWager}
-            className="bg-stone-200 p-2 dark:bg-stone-900 sm:border-none"
+            className="border-l border-r border-b border-stone-400 bg-stone-200 p-2 dark:border-stone-700 dark:bg-stone-900"
             onKeyPress={(e) => {
               e.key === "Enter" && e.preventDefault()
             }}

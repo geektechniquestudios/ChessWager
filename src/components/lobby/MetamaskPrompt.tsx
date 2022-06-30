@@ -4,6 +4,7 @@ import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json
 import { Auth } from "../containers/Auth"
 import "../../style/buttons.scss"
 import { DarkMode } from "../containers/DarkMode"
+//@ts-ignore
 const isLocal = import.meta.env.VITE_BRANCH_ENV === "develop"
 
 interface Props {
