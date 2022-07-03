@@ -3290,10 +3290,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/contracts@npm:^4.3.2":
-  version: 4.6.0
-  resolution: "@openzeppelin/contracts@npm:4.6.0"
-  checksum: 1de06211b279d7aef2bb9abbdd58eb80c71256f7e888a10855ea23bb06ef8723b22fb550d06af60247dfbd7f0f23de9821732012d7541a823339070a8442d1db
+"@openzeppelin/contracts@npm:^4.7.0":
+  version: 4.7.0
+  resolution: "@openzeppelin/contracts@npm:4.7.0"
+  checksum: ac917e668505ffbd300fcb00fd2f39b5f1153f77f82d482988336a881134b806b2d820f4293962691ef4d6f9f8ee5ecc71da82c6eb6ad2f02810511e90fa0d96
   languageName: node
   linkType: hard
 
@@ -6078,7 +6078,7 @@ __metadata:
     "@mui/system": ^5.8.3
     "@nomiclabs/hardhat-ethers": ^2.0.2
     "@nomiclabs/hardhat-waffle": ^2.0.1
-    "@openzeppelin/contracts": ^4.3.2
+    "@openzeppelin/contracts": ^4.7.0
     "@react-chess/chessground": ^1.2.2
     "@tailwindcss/aspect-ratio": ^0.4.0
     "@truffle/hdwallet-provider": ^2.0.9
@@ -6122,7 +6122,7 @@ __metadata:
     typescript: ^4.7.4
     unstated-next: ^1.1.0
     vite: ^2.9.13
-    vite-plugin-pwa: ^0.12.0
+    vite-plugin-pwa: ^0.12.2
     web-vitals: ^2.1.4
   languageName: unknown
   linkType: soft
@@ -14556,7 +14556,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.43.1, rollup@npm:^2.59.0, rollup@npm:^2.70.2":
+"rollup@npm:^2.43.1, rollup@npm:^2.59.0":
   version: 2.75.5
   resolution: "rollup@npm:2.75.5"
   dependencies:
@@ -14567,6 +14567,20 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: fa3e61959efbc88cda75315dc22f035489be9dda3ae7d45a3a474f19efc3661ef6f9849486c7ca51e1a3e2aedef91f4e3223e8123bbeaf155913533d071994d1
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^2.75.5":
+  version: 2.75.7
+  resolution: "rollup@npm:2.75.7"
+  dependencies:
+    fsevents: ~2.3.2
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: a6331d46b01062b184efdcb42ce12caf2e1575f989963944534b02f5855f6f3bc239ed0c1a18893572d7695af6d83166f3aef59dbd0365084e1531cb67824674
   languageName: node
   linkType: hard
 
@@ -16527,21 +16541,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-pwa@npm:^0.12.0":
-  version: 0.12.0
-  resolution: "vite-plugin-pwa@npm:0.12.0"
+"vite-plugin-pwa@npm:^0.12.2":
+  version: 0.12.2
+  resolution: "vite-plugin-pwa@npm:0.12.2"
   dependencies:
     debug: ^4.3.4
     fast-glob: ^3.2.11
     pretty-bytes: ^6.0.0
-    rollup: ^2.70.2
+    rollup: ^2.75.5
     workbox-build: ^6.5.3
     workbox-window: ^6.5.3
   peerDependencies:
-    vite: ^2.0.0
+    vite: ^2.0.0 || ^3.0.0-0
     workbox-build: ^6.4.0
     workbox-window: ^6.4.0
-  checksum: f66e405ca1c884566c37791c518a86880b63b57f51bd21c9498d0bca28f5385bdee1a29885284c9d70eb6d36d9e800de867c816ff190f79456a6f05e90618dde
+  checksum: 4bddb8d9dff2ff777adeef864ea5f3145a9c14807a6912f1d6aaa17c785724f84100ec4a7a55c1e9bd8644d42b6707f49faa6c1070d47800e4383013cc34716f
   languageName: node
   linkType: hard
 

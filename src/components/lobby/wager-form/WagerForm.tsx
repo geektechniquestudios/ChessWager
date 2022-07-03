@@ -108,7 +108,7 @@ export const WagerForm: React.FC = () => {
         <fieldset className="mx-auto flex">
           <form
             onSubmit={createWager}
-            className="border-l border-r border-b border-stone-400 bg-stone-200 p-2 dark:border-stone-700 dark:bg-stone-900"
+            className="border-l border-r border-stone-400 bg-stone-200 p-2 dark:border-stone-700 dark:bg-stone-900 sm:rounded-b-md sm:border-b"
             onKeyPress={(e) => {
               e.key === "Enter" && e.preventDefault()
             }}
