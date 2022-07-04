@@ -27,7 +27,7 @@ export const User1Data: React.FC<Props> = ({
   user1Id,
 }) => {
   return (
-    <div className="color-shift m-0.5 flex justify-center rounded-md border border-stone-400 bg-stone-200 px-0.5  text-xs text-stone-900 dark:border-stone-500 dark:bg-stone-700 dark:text-stone-300">
+    <div className="color-shift m-0.5 flex justify-center rounded-md border border-stone-400 bg-stone-200 px-0.5 text-xs text-stone-900 dark:border-stone-500 dark:bg-stone-700 dark:text-stone-300">
       <User1Spinner user2Id={user2Id} status={status} />
       <UserImage
         photoURL={user1PhotoURL}
