@@ -23,7 +23,7 @@ export const ApproveKickWrapper: React.FC<Props> = ({
         auth.currentUser &&
         user1Id === auth.currentUser.uid &&
         status === "pending" && (
-          <div className="flex h-full items-center justify-between gap-2 border-l border-stone-400 px-2 dark:border-stone-600">
+          <div className="flex h-full items-center justify-evenly gap-2 border-t border-stone-400 px-2 dark:border-stone-600 lg:border-r">
             <ApproveButton betId={id} user1Id={user1Id} user2Id={user2Id} />
             <KickButton betId={id} />
           </div>

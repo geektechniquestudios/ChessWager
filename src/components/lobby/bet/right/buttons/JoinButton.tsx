@@ -68,7 +68,7 @@ export const JoinButton: React.FC<Props> = ({
   return (
     <>
       {isSelected && status === "ready" && !isUser1 && (
-        <div className="flex h-full animate-pulse flex-col justify-center">
+        <div className="my-1 flex h-full animate-pulse flex-col justify-center lg:m-0">
           <div className="flex">
             <button
               onClick={(event) => {

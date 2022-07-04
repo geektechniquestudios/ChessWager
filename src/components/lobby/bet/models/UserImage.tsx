@@ -21,7 +21,9 @@ export const UserImage: React.FC<Props> = ({
   const { user } = Auth.useContainer()
   const disabledStyle = !user ? "pointer-events-none" : ""
   return (
-    <div className={`flex gap-2 px-1 ${sideFlip}`}>
+    <div
+      className={`flex gap-2 px-1 py-0.5 ${sideFlip} rounded-md border dark:border-stone-600 dark:bg-stone-800`}
+    >
       <div className="flex flex-col justify-center align-middle">
         <div className="grid h-8 w-8 place-content-center rounded-full">
           <img src={photoURL} alt="" className="h-6 w-6 rounded-full" />
