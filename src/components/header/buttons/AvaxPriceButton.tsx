@@ -22,7 +22,7 @@ export const AvaxPriceButton: React.FC = () => {
         >
           <p
             style={{ textDecoration: "underline solid #9f1239 3px" }}
-            className="m-1 underline"
+            className="m-1 text-xs underline sm:text-sm"
           >
             {`AVAX $${price
               ?.toFixed(2)

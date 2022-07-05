@@ -7,8 +7,9 @@ import { RealtimeBets } from "./RealtimeBets"
 
 export const BettingLobby: React.FC = () => {
   const { isRealTime } = LobbyHeaderState.useContainer()
+
   return (
-    <div className="flex border-t border-stone-400 dark:border-stone-600">
+    <div className="border-t border-stone-400 dark:border-stone-600 sm:flex">
       <WagerForm />
       <main className="w-full">
         <div className="overflow-y-hidden">
