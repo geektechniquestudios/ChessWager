@@ -4,6 +4,11 @@ import { VitePWA } from "vite-plugin-pwa"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  esbuild: {
+    define: {
+      this: "window", // temporary fix caused by esbuild
+    },
+  },
   plugins: [
     react(),
     VitePWA({
