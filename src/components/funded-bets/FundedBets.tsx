@@ -5,6 +5,7 @@ import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
 import type { Bet } from "../../interfaces/Bet"
 import { UserDataState } from "../containers/UserDataState"
+import { WindowSize } from "../containers/WindowSize"
 
 interface Props {}
 
@@ -30,12 +31,14 @@ export const FundedBets: React.FC<Props> = () => {
     .toFixed(2)
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
+  const { width } = WindowSize.useContainer()
+  const ltrOrRtl: "ltr" | "rtl" = width < 640 ? "ltr" : "rtl"
   return (
     <div
-      className="flex w-52 shrink-0 flex-col overflow-y-hidden overflow-x-visible"
+      className="flex shrink flex-col overflow-y-hidden overflow-x-visible sm:w-52"
       style={{ direction: "rtl" }}
     >
-      <div className="flex w-full justify-between bg-gradient-to-r from-stone-300 via-stone-300 to-transparent px-0.5 py-1 dark:from-stone-800 dark:via-stone-800 dark:to-transparent dark:text-stone-50">
+      <div className="flex w-full justify-between bg-gradient-to-r from-stone-300 via-stone-300 to-stone-300 px-0.5 py-1 dark:from-stone-800 dark:via-stone-800 dark:to-stone-800 dark:text-stone-50 sm:to-transparent sm:dark:to-transparent">
         <div />
         <div
           className="mx-1 text-sm"
@@ -45,11 +48,11 @@ export const FundedBets: React.FC<Props> = () => {
       <div className="h-0.5 bg-gradient-to-r from-stone-600 to-transparent" />
       <div className="flex h-full flex-col overflow-y-hidden overflow-x-visible">
         <div
-          style={{ direction: "rtl" }}
-          className="scrollbar-funded flex h-full flex-col overflow-y-auto overflow-x-visible"
+          style={{ direction: ltrOrRtl }}
+          className="scrollbar-funded flex h-full overflow-y-auto overflow-x-visible sm:flex-col"
         >
           <div
-            className="flex h-0 flex-col overflow-x-visible"
+            className="flex overflow-x-visible sm:h-0 sm:flex-col"
             style={{ direction: "ltr" }}
           >
             {bets
@@ -72,14 +75,14 @@ export const FundedBets: React.FC<Props> = () => {
               ))}
           </div>
           <div
-            className="flex h-0 flex-col overflow-x-visible"
+            className="flex overflow-x-visible sm:h-0 sm:flex-col"
             style={{ direction: "ltr" }}
           >
             {bets
               ?.filter(
                 (bet: Bet) =>
                   bet.status === "funded" &&
-                  isBetRelatedToUser(bet) &&
+                  !isBetRelatedToUser(bet) &&
                   (!userData?.blockedUsers.includes(bet.user1Id) ?? false) &&
                   (!userData?.blockedUsers.includes(bet.user2Id) ?? false),
               )

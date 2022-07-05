@@ -9,5 +9,9 @@ interface Props {
 export const User2Spinner: React.FC<Props> = ({ status, user1Id }) => {
   const { auth } = Auth.useContainer()
   const isUser1 = auth.currentUser?.uid === user1Id
-  return <>{status === "ready" && isUser1 && <ClockSpinner />}</>
+  return (
+    <div className="m-0.5 grid place-content-center">
+      {status === "ready" && isUser1 && <ClockSpinner />}
+    </div>
+  )
 }

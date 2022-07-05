@@ -5,7 +5,6 @@ import {
   orderBy,
   query,
 } from "firebase/firestore"
-import { useEffect } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { firebaseApp } from "../../../../../config"
 import type { Message } from "../../../../../interfaces/Message"
@@ -26,10 +25,6 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
   const q = query(messagesRef, orderBy("createdAt", "asc"))
   const [messages] = useCollectionData<[Message[]] | any>(q, { idField: "id" })
   const { userData } = UserDataState.useContainer()
-
-  useEffect(() => {
-    console.log("convo chat body")
-  }, [userIdFromMessages])
 
   return (
     <div

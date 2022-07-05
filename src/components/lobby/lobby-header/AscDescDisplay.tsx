@@ -10,6 +10,7 @@ export const AscDescDisplay: React.FC = () => {
       onClick={() => {
         setIsDescending(!isDescending)
       }}
+      title="Sort"
       aria-label="sorting-order-button"
     >
       <>

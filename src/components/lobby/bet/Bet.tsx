@@ -128,7 +128,7 @@ export const Bet: React.FC<Props> = ({
   return (
     <div className="flex w-full justify-center overflow-x-hidden p-0.5 align-middle">
       <div
-        className={`${pointerEvents} color-shift flex h-11 w-full justify-center rounded-lg border border-stone-400 px-1 align-middle dark:border-stone-700 ${selectedStyle} ${disabledStyle}`}
+        className={`${pointerEvents} color-shift flex w-full justify-center rounded-lg border border-stone-400 px-1 align-middle dark:border-stone-700 ${selectedStyle} ${disabledStyle}`}
         onClick={updateSelectedStatus}
       >
         {id !== "" && (
