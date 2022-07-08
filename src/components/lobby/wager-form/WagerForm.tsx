@@ -19,8 +19,6 @@ import { UserDataState } from "../../containers/UserDataState"
 import { createTheme } from "@mui/material/styles"
 import { ThemeProvider } from "@mui/system"
 import { DarkMode } from "../../containers/DarkMode"
-import { FundedBets } from "../../funded-bets/FundedBets"
-import { WindowSize } from "../../containers/WindowSize"
 const db = getFirestore(firebaseApp)
 
 export const WagerForm: React.FC = () => {
@@ -71,7 +69,6 @@ export const WagerForm: React.FC = () => {
     return true
   }
   const { userData } = UserDataState.useContainer()
-  const { width } = WindowSize.useContainer()
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
