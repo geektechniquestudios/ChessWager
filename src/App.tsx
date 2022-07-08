@@ -1,6 +1,5 @@
 import "./style/index.scss"
 import "./style/scrollbar.scss"
-import "./config"
 
 import { BettingLobby } from "./components/lobby/BettingLobby"
 import { ChessGame } from "./components/game/ChessGame"
