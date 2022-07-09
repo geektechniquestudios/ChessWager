@@ -3,6 +3,7 @@ import {
   collection,
   getFirestore,
   limit,
+  Query,
   query,
   where,
 } from "firebase/firestore"
@@ -21,10 +22,9 @@ export const BetsListArea: React.FC = ({}) => {
     betsRef,
     where("users", "array-contains", auth.currentUser?.uid ?? ""),
     limit(10),
-  )
+  ) as Query<Bet>
 
-  const [bets, isLoading] =
-    useCollectionData<[Bet[], boolean] | any>(q, { idField: "id" }) ?? []
+  const [bets, isLoading] = useCollectionData<Bet>(q, { idField: "id" }) ?? []
 
   return (
     <>
@@ -35,7 +35,9 @@ export const BetsListArea: React.FC = ({}) => {
         >
           <div style={{ direction: "ltr" }} id="bets-list">
             {bets
-              ?.sort((a, b) => b.createdAt - a.createdAt)
+              ?.sort(
+                (a, b) => b.createdAt.nanoseconds - a.createdAt.nanoseconds,
+              )
               .filter(
                 (bet) => bet.status === "approved" || bet.status === "funded",
               )

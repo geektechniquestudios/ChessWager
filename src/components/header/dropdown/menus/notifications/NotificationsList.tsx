@@ -5,6 +5,7 @@ import {
   getFirestore,
   limit,
   orderBy,
+  Query,
   query,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
@@ -23,9 +24,9 @@ export const NotificationsList: React.FC = ({}) => {
     notificationsCollection,
     orderBy("createdAt", "desc"),
     limit(25),
-  )
+  ) as Query<Notification>
   const [notifications, isLoading] =
-    useCollectionData<any | Notification>(q, {
+    useCollectionData<Notification>(q, {
       idField: "id",
     }) ?? []
   return (

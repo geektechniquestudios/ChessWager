@@ -1,6 +1,11 @@
 import "../../../../../style/scrollbar.scss"
 import { Auth } from "../../../../containers/Auth"
-import { collection, doc, getFirestore } from "firebase/firestore"
+import {
+  collection,
+  CollectionReference,
+  doc,
+  getFirestore,
+} from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore"
 import { Friend } from "../../../../../interfaces/Friend"
@@ -10,17 +15,17 @@ const db = getFirestore(firebaseApp)
 export const FriendsList: React.FC = ({}) => {
   const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
-  const userFriendsRef = collection(userRef, "friends")
-  const [friends, isLoading] = useCollectionDataOnce<Friend[] | any>(
-    userFriendsRef,
-    {
-      idField: "id",
-    },
-  )
+  const userFriendsRef = collection(
+    userRef,
+    "friends",
+  ) as CollectionReference<Friend>
+  const [friends, isLoading] = useCollectionDataOnce<Friend>(userFriendsRef, {
+    idField: "id",
+  })
   return (
     <>
       {!isLoading ? (
-        friends?.length ?? 0 > 0 ? (
+        (friends?.length ?? 0) > 0 ? (
           <div
             className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
             style={{ direction: "rtl" }}

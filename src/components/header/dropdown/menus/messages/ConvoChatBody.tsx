@@ -2,11 +2,11 @@ import { createTheme, LinearProgress, ThemeProvider } from "@mui/material"
 import {
   collection,
   doc,
-  DocumentData,
   getDocs,
   getFirestore,
   limit,
   orderBy,
+  Query,
   query,
   startAfter,
   Timestamp,
@@ -46,14 +46,13 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
     messagesRef,
     orderBy("createdAt", "desc"),
     where("createdAt", ">", timestamp),
-  )
+  ) as Query<Message>
 
-  const [messages] =
-    useCollectionData<[Message[]] | any>(q, { idField: "id" }) ?? []
+  const [messages] = useCollectionData<Message>(q, { idField: "id" }) ?? []
 
   const [hasMore, setHasMore] = useState(true)
 
-  const [oldMessages, setOldMessages] = useState<Message[] | DocumentData[]>([])
+  const [oldMessages, setOldMessages] = useState<Message[]>([])
   const fullMessages = [...(messages ?? []), ...oldMessages]
 
   const loadMoreMessages = async () => {
@@ -64,7 +63,9 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
       limit(15),
       startAfter(lastVisible),
     )
-    const moreOldMessages = (await getDocs(q2)).docs.map((d) => d.data())
+    const moreOldMessages = (await getDocs(q2)).docs.map((d) =>
+      d.data(),
+    ) as Message[]
     setOldMessages([...oldMessages, ...moreOldMessages])
     if (moreOldMessages.length < 15) setHasMore(false)
   }
@@ -99,11 +100,7 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
         <div style={{ direction: "ltr" }} id="convo-body" className="pt-2">
           {fullMessages
             .reverse()
-            ?.filter(
-              (message) =>
-                !userData.blockedUsers.includes(message.user1Id) &&
-                !userData.blockedUsers.includes(message.user2Id),
-            )
+            ?.filter((message) => !userData.blockedUsers.includes(message.uid))
             .map((message: Message) => (
               <ConvoChatMessage
                 key={message.createdAt.toMillis()}

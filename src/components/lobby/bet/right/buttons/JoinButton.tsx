@@ -12,6 +12,7 @@ import {
   updateDoc,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
+import { User } from "../../../../../interfaces/User"
 
 const db = getFirestore(firebaseApp)
 
@@ -30,11 +31,11 @@ export const JoinButton: React.FC<Props> = ({
 }) => {
   const { auth, walletAddress } = Auth.useContainer()
   const isUser1 = auth.currentUser?.uid === user1Id
-  const userDoc: DocumentReference<DocumentData> = doc(
+  const userDoc = doc(
     db,
     "users",
     auth.currentUser!.uid,
-  )
+  ) as DocumentReference<User>
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
 
   const user2DisplayName = auth.currentUser?.displayName
@@ -43,10 +44,10 @@ export const JoinButton: React.FC<Props> = ({
   const accept = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
     getDoc(userDoc)
-      .then((doc: any) => {
+      .then((doc) => {
         const user2FollowThrough = [
-          doc.data().betFundedCount,
-          doc.data().betAcceptedCount,
+          doc.data()?.betFundedCount ?? 0,
+          doc.data()?.betAcceptedCount ?? 0,
         ]
         return user2FollowThrough
       })

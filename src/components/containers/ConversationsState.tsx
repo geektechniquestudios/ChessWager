@@ -7,7 +7,7 @@ import {
   collection,
   doc,
   getFirestore,
-  orderBy,
+  Query,
   query,
   updateDoc,
   where,
@@ -24,10 +24,9 @@ const useConversationsState = () => {
   const q = query(
     conversationsCollectionRef,
     where("userIds", "array-contains", auth.currentUser?.uid ?? ""),
-  )
+  ) as Query<Conversation>
   const [conversations, isLoading] =
-    useCollectionData<[Conversation[], boolean] | any>(q, { idField: "id" }) ??
-    []
+    useCollectionData<Conversation>(q, { idField: "id" }) ?? []
 
   const specificConvoCollectionRef = (docId: string) =>
     collection(doc(db, "conversations", docId), "messages")

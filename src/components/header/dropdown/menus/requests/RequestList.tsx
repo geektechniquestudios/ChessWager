@@ -1,4 +1,9 @@
-import { collection, doc, getFirestore } from "firebase/firestore"
+import {
+  collection,
+  CollectionReference,
+  doc,
+  getFirestore,
+} from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { firebaseApp } from "../../../../../config"
 import { FriendRequest } from "../../../../../interfaces/FriendRequest"
@@ -12,9 +17,12 @@ interface Props {}
 export const RequestList: React.FC<Props> = ({}) => {
   const { auth } = Auth.useContainer()
   const targetUserRef = doc(db, "users", auth.currentUser!.uid)
-  const requestsCollection = collection(targetUserRef, "requests")
+  const requestsCollection = collection(
+    targetUserRef,
+    "requests",
+  ) as CollectionReference<FriendRequest>
   const [requests, isLoading] =
-    useCollectionData<FriendRequest[] | any>(requestsCollection, {
+    useCollectionData<FriendRequest>(requestsCollection, {
       idField: "id",
     }) ?? []
   return (

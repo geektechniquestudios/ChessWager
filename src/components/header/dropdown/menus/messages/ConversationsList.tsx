@@ -63,10 +63,12 @@ export const ConversationsList: React.FC = ({}) => {
               conversations
                 ?.filter(
                   (conversation: Conversation) =>
-                    !userData.blockedUsers.includes(conversation.user1.id) &&
-                    !userData.blockedUsers.includes(conversation.user2.id),
+                    !userData?.blockedUsers.includes(conversation.user1.id) &&
+                    !userData?.blockedUsers.includes(conversation.user2.id),
                 )
-                .sort((a, b) => b.modifiedAt - a.modifiedAt)
+                .sort(
+                  (a, b) => b.modifiedAt.nanoseconds - a.modifiedAt.nanoseconds,
+                )
                 .map(convoToConvoAndUser)
                 .map(([conversation, user], index: number) => (
                   <ConvoItem

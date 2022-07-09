@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { MutableRefObject, useEffect, useRef } from "react"
 import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 import { Contact } from "./menus/help/Contact"
@@ -22,7 +22,7 @@ import { MessagesMenu } from "./menus/messages/MessagesMenu"
 
 export const DropdownMenu = () => {
   const { setMenuStack } = DropdownState.useContainer()
-  const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
+  const CloseMenuListener = (ref: MutableRefObject<any>) => {
     const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
     useEffect(() => {
       const handleClickOutside = (event: Event) => {

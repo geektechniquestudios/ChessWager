@@ -10,6 +10,7 @@ import {
   collection,
   getFirestore,
   limit,
+  Query,
   query,
   Timestamp,
   where,
@@ -44,9 +45,12 @@ const genericBet: Bet = {
 const useBetState = () => {
   const { gameId } = GameState.useContainer()
   const lobbyCollectionRef = collection(db, "lobby")
-  const q = query(lobbyCollectionRef, where("gameId", "==", gameId), limit(20))
-  const [bets, isLoading] =
-    useCollectionData<[Bet[], boolean] | any>(q, { idField: "id" }) ?? []
+  const q = query(
+    lobbyCollectionRef,
+    where("gameId", "==", gameId),
+    limit(20),
+  ) as Query<Bet>
+  const [bets, isLoading] = useCollectionData<Bet>(q, { idField: "id" }) ?? []
   const [selectedBetMap, setSelectedBetMap] = useState(
     new Map<string, BetData>(),
   )

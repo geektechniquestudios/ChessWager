@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { SiLichess } from "react-icons/si"
+import { GameData } from "../../../../../interfaces/GameData"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { GameState } from "../../../../containers/GameState"
@@ -44,7 +45,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
     if (!gameId) return
     fetch(`https://lichess.org/api/game/${gameId}`)
       .then((res) => res.json())
-      .then((gameData: any) => {
+      .then((gameData: GameData) => {
         setOutcome(buildOutcomeMessage(gameData) ?? "")
       })
       .catch(console.error)

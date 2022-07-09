@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { BsX } from "react-icons/bs"
+import { GameData } from "../../../interfaces/GameData"
 import { DarkMode } from "../../containers/DarkMode"
 import { GameState } from "../../containers/GameState"
 import { DropdownButton } from "../../header/dropdown/menus/persona/buttons/DropdownButton"
@@ -16,7 +17,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
   const { prevGameId, gameId, buildOutcomeMessage } = GameState.useContainer()
 
   const [outcome, setOutcome] = useState<string>("")
-  const [gameData, setGameData] = useState<any>()
+  const [gameData, setGameData] = useState<GameData>()
   const [linkId, setLinkId] = useState<string>("")
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
     if (prevGameId === "") return
     fetch(`https://lichess.org/api/game/${prevGameId}`)
       .then((res) => res.json())
-      .then((gameData: any) => {
+      .then((gameData: GameData) => {
         setGameData(gameData)
         if (gameData.status === "started") return
         setOutcome(buildOutcomeMessage(gameData))
@@ -35,10 +36,10 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
 
   const [count, setCount] = useState(0)
 
-  const whitePlayer = gameData?.players.white.userId
-  const whiteRating = gameData?.players.white.rating
-  const blackPlayer = gameData?.players.black.userId
-  const blackRating = gameData?.players.black.rating
+  const whitePlayer = gameData?.players?.white.userId ?? ""
+  const whiteRating = gameData?.players?.white.rating ?? 0
+  const blackPlayer = gameData?.players?.black.userId ?? ""
+  const blackRating = gameData?.players?.black.rating ?? 0
 
   const bgColor = !isFirefox
     ? isDarkOn
