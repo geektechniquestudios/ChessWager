@@ -100,7 +100,7 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
         <div style={{ direction: "ltr" }} id="convo-body" className="pt-2">
           {fullMessages
             .reverse()
-            ?.filter((message) => !userData.blockedUsers.includes(message.uid))
+            ?.filter((message) => !userData?.blockedUsers.includes(message.uid))
             .map((message: Message) => (
               <ConvoChatMessage
                 key={message.createdAt.toMillis()}
