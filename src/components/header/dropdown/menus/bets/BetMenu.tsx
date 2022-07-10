@@ -42,6 +42,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
   const { buildOutcomeMessage } = GameState.useContainer()
 
   useEffect(() => {
+    setOutcome("")
     if (!gameId) return
     fetch(`https://lichess.org/api/game/${gameId}`)
       .then((res) => res.json())
@@ -49,7 +50,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
         setOutcome(buildOutcomeMessage(gameData) ?? "")
       })
       .catch(console.error)
-  }, [id])
+  }, [id, gameId])
 
   const isOnWinningSide =
     (betSide === "white" && outcome === "White Wins") ||
