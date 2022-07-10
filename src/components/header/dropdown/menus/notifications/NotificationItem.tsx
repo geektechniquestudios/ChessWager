@@ -38,8 +38,9 @@ export const NotificationItem: React.FC<Props> = ({
   const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const notifications = collection(userRef, "notifications")
-  const notificationRef = doc(notifications, id)
+  const notificationRef = id ? doc(notifications, id) : null
   const setAsRead = () => {
+    if (!notificationRef) return
     updateDoc(notificationRef, {
       isRead: true,
     })
@@ -48,7 +49,7 @@ export const NotificationItem: React.FC<Props> = ({
   const unreadStyle = isRead ? "" : "bg-stone-100 dark:bg-stone-700"
   return (
     <a
-      className={`color-shift flex h-12 w-64 items-center justify-between px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${unreadStyle}`}
+      className={`color-shift flex h-12 w-64 items-center justify-between gap-1 px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${unreadStyle}`}
       style={{ direction: "ltr" }}
       onClick={() => {
         clickedUserId && setClickedUserById(clickedUserId)
@@ -67,7 +68,7 @@ export const NotificationItem: React.FC<Props> = ({
         className="h-4 w-4"
         onClick={(e) => {
           e.stopPropagation()
-          deleteDoc(notificationRef)
+          notificationRef && deleteDoc(notificationRef)
         }}
         title="Dismiss"
       />

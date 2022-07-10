@@ -37,6 +37,7 @@ export const BetsListArea: React.FC = ({}) => {
 
   const [hasMore, setHasMore] = useState(true)
   const [bets, setBets] = useState<Bet[]>()
+  const [isLoading, setIsLoading] = useState(true)
   const [timestamp] = useState<Timestamp>(Timestamp.now())
 
   const loadMoreBets = async () => {
@@ -55,7 +56,7 @@ export const BetsListArea: React.FC = ({}) => {
   }
 
   useEffect(() => {
-    loadMoreBets()
+    loadMoreBets().then(() => setIsLoading(false))
   }, [])
 
   return (
@@ -64,33 +65,39 @@ export const BetsListArea: React.FC = ({}) => {
       style={{ direction: "rtl" }}
       id="bets-scroll-div"
     >
-      <InfiniteScroll
-        scrollThreshold="200px"
-        scrollableTarget="bets-scroll-div"
-        dataLength={bets?.length ?? 0}
-        next={loadMoreBets}
-        hasMore={hasMore}
-        loader={
-          <ThemeProvider theme={theme}>
-            <LinearProgress />
-          </ThemeProvider>
-        }
-        className="flex flex-col"
-      >
-        <div style={{ direction: "ltr" }} id="bets-list">
-          {bets
-            ?.filter(
-              (bet) => bet.status === "approved" || bet.status === "funded",
-            )
-            .map((bet: Bet) => (
-              <BetsListItem
-                key={bet.timestamp.nanoseconds}
-                {...bet}
-                bet={bet}
-              />
-            ))}
+      {(bets?.length ?? 0) > 0 ? (
+        <InfiniteScroll
+          scrollThreshold="200px"
+          scrollableTarget="bets-scroll-div"
+          dataLength={bets?.length ?? 0}
+          next={loadMoreBets}
+          hasMore={hasMore}
+          loader={
+            <ThemeProvider theme={theme}>
+              <LinearProgress />
+            </ThemeProvider>
+          }
+          className="flex flex-col"
+        >
+          <div style={{ direction: "ltr" }} id="bets-list">
+            {bets
+              ?.filter(
+                (bet) => bet.status === "approved" || bet.status === "funded",
+              )
+              .map((bet: Bet) => (
+                <BetsListItem
+                  key={bet.createdAt.nanoseconds}
+                  {...bet}
+                  bet={bet}
+                />
+              ))}
+          </div>
+        </InfiniteScroll>
+      ) : (
+        <div className="mt-10 flex h-72 w-full justify-center text-stone-400 dark:text-stone-400">
+          {!isLoading && "No bets yet"}
         </div>
-      </InfiniteScroll>
+      )}
     </div>
   )
 }
