@@ -56,18 +56,19 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
   const fullMessages = [...(messages ?? []), ...oldMessages]
 
   const loadMoreMessages = async () => {
+    const amountToLoad = 15
     const lastVisible = fullMessages?.[0]?.createdAt ?? timestamp
     const q2 = query(
       messagesRef,
       orderBy("createdAt", "desc"),
-      limit(15),
+      limit(amountToLoad),
       startAfter(lastVisible),
     )
     const moreOldMessages = (await getDocs(q2)).docs.map((d) =>
       d.data(),
     ) as Message[]
     setOldMessages([...oldMessages, ...moreOldMessages])
-    if (moreOldMessages.length < 15) setHasMore(false)
+    if (moreOldMessages.length < amountToLoad) setHasMore(false)
   }
 
   useEffect(() => {
@@ -80,12 +81,12 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
     <div
       className="scrollbar flex h-96 flex-col-reverse justify-between overflow-y-auto overflow-x-hidden"
       style={{ direction: "rtl" }}
-      id="scroll-div"
+      id="convo-scroll-div"
       ref={scrollRef}
     >
       <InfiniteScroll
         scrollThreshold="200px"
-        scrollableTarget="scroll-div"
+        scrollableTarget="convo-scroll-div"
         dataLength={fullMessages?.length ?? 0}
         next={loadMoreMessages}
         hasMore={hasMore}
@@ -94,7 +95,7 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
             <LinearProgress />
           </ThemeProvider>
         }
-        inverse={true}
+        inverse
         className="flex flex-col-reverse"
       >
         <div style={{ direction: "ltr" }} id="convo-body" className="pt-2">

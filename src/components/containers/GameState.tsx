@@ -15,7 +15,7 @@ const useGameState = () => {
     const isDraw = gameData.status === "draw" || (!whiteWins && !blackWins)
     const draw = isDraw ? "Game ended in a draw" : ""
     const isStalemate = gameData.status === "stalemate"
-    const stalemate = isStalemate ? " by stalemate" : ""
+    const stalemate = isStalemate ? "by stalemate" : ""
     const resign = gameData.status === "resign" ? "resignation" : ""
     const timeout =
       gameData.status === "timeout" || gameData.status === "outoftime"
