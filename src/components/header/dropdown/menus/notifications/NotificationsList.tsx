@@ -52,11 +52,15 @@ export const NotificationsList: React.FC = ({}) => {
       limit(amountToLoad),
       startAfter(lastVisible),
     ) as Query<Notification>
-    const oldNotifications = (await getDocs(q)).docs.map((d) =>
-      d.data(),
-    ) as Notification[]
-    setNotifications([...(notifications ?? []), ...oldNotifications])
-    if (oldNotifications.length < amountToLoad) setHasMore(false)
+
+    const oldNotifications = (await getDocs(q)).docs.map((doc) => {
+      let notification = doc.data() as Notification
+      notification.id = doc.id
+      return notification
+    }) as Notification[]
+
+    setNotifications([...(notifications ?? []), ...(oldNotifications ?? [])])
+    if ((oldNotifications?.length ?? 0) < amountToLoad) setHasMore(false)
   }
 
   useEffect(() => {
@@ -77,17 +81,21 @@ export const NotificationsList: React.FC = ({}) => {
           next={loadMoreNotifications}
           hasMore={hasMore}
           loader={
-            <ThemeProvider theme={theme}>
-              <LinearProgress />
-            </ThemeProvider>
+            notifications.length > 6 && (
+              <ThemeProvider theme={theme}>
+                <LinearProgress />
+              </ThemeProvider>
+            )
           }
           className="flex flex-col"
         >
           <div style={{ direction: "ltr" }} id="notification-list">
-            {notifications?.map((notification) => (
+            {notifications?.map((notification, index) => (
               <NotificationItem
                 {...notification}
-                key={notification.createdAt.nanoseconds}
+                key={notification.id}
+                setNotifications={setNotifications}
+                notifications={notifications}
               />
             ))}
           </div>

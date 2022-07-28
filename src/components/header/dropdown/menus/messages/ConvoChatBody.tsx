@@ -53,7 +53,7 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
   const [hasMore, setHasMore] = useState(true)
 
   const [oldMessages, setOldMessages] = useState<Message[]>([])
-  const fullMessages = [...(messages ?? []), ...oldMessages]
+  const fullMessages = [...(messages ?? []), ...(oldMessages ?? [])]
 
   const loadMoreMessages = async () => {
     const amountToLoad = 15
@@ -67,6 +67,7 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
     const moreOldMessages = (await getDocs(q2)).docs.map((d) =>
       d.data(),
     ) as Message[]
+
     setOldMessages([...oldMessages, ...moreOldMessages])
     if (moreOldMessages.length < amountToLoad) setHasMore(false)
   }

@@ -12,6 +12,7 @@ import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { DropdownButton } from "../persona/buttons/DropdownButton"
+import { Notification } from "../../../../../interfaces/Notification"
 
 const db = getFirestore(firebaseApp)
 
@@ -22,6 +23,8 @@ interface Props {
   createdAt: Timestamp
   isRead: boolean
   id: string
+  setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>
+  notifications: Notification[]
 }
 
 export const NotificationItem: React.FC<Props> = ({
@@ -31,19 +34,28 @@ export const NotificationItem: React.FC<Props> = ({
   createdAt,
   isRead,
   id,
+  setNotifications,
+  notifications,
 }) => {
   const { setActiveMenu, menuStack, setMenuStack } =
     DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
-  const notifications = collection(userRef, "notifications")
-  const notificationRef = id ? doc(notifications, id) : null
+  const notificationsCollection = collection(userRef, "notifications")
+  const notificationRef = doc(notificationsCollection, id)
+
   const setAsRead = () => {
-    if (!notificationRef) return
     updateDoc(notificationRef, {
       isRead: true,
     })
+  }
+
+  const updateNotifications = () => {
+    const tempNotifications = notifications.filter(
+      (notification) => notification.id !== id,
+    )
+    setNotifications(tempNotifications)
   }
 
   const unreadStyle = isRead ? "" : "bg-stone-100 dark:bg-stone-700"
@@ -68,7 +80,8 @@ export const NotificationItem: React.FC<Props> = ({
         className="h-4 w-4"
         onClick={(e) => {
           e.stopPropagation()
-          notificationRef && deleteDoc(notificationRef)
+          deleteDoc(notificationRef!)
+          updateNotifications()
         }}
         title="Dismiss"
       />
