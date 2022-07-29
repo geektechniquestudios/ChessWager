@@ -117,6 +117,8 @@ const useConversationsState = () => {
 
   return {
     fullConversations,
+    oldConversations,
+    setOldConversations,
     isLoading,
     setIsLoading,
     hasMore,

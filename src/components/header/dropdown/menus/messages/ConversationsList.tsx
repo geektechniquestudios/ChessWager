@@ -17,6 +17,8 @@ const db = getFirestore(firebaseApp)
 export const ConversationsList: React.FC = ({}) => {
   const {
     fullConversations,
+    oldConversations,
+    setOldConversations,
     isLoading,
     setIsLoading,
     specificConvoCollectionRef,
@@ -37,20 +39,37 @@ export const ConversationsList: React.FC = ({}) => {
       : [conversation, conversation.user1]
 
   const setAsRead = (conversation: Conversation) => {
-    const conversationDocRef = doc(db, "conversations", conversation.id)
-    const isUser1 =
-      (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")
-    const isUser2 =
-      (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
-    if (isUser1) {
-      updateDoc(conversationDocRef, {
-        doesUser1HaveUnreadMessages: false,
-      })
-    } else if (isUser2) {
-      updateDoc(conversationDocRef, {
-        doesUser2HaveUnreadMessages: false,
-      })
+    const setAsReadOnFrontend = (conversation: Conversation) => {
+      const oldConversationsCopy = [...oldConversations]
+      const index = oldConversationsCopy.findIndex(
+        (c) => c.id === conversation.id,
+      )
+      if (index !== -1) {
+        oldConversationsCopy[index].doesUser1HaveUnreadMessages = false
+        oldConversationsCopy[index].doesUser2HaveUnreadMessages = false
+        setOldConversations(oldConversationsCopy)
+      }
     }
+    
+    const setAsReadOnBackend = (conversation: Conversation) => {
+      const conversationDocRef = doc(db, "conversations", conversation.id)
+      const isUser1 =
+        (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")
+      const isUser2 =
+        (conversation?.user2.id ?? "") === (auth.currentUser?.uid ?? " ")
+      if (isUser1) {
+        updateDoc(conversationDocRef, {
+          doesUser1HaveUnreadMessages: false,
+        })
+      } else if (isUser2) {
+        updateDoc(conversationDocRef, {
+          doesUser2HaveUnreadMessages: false,
+        })
+      }
+    }
+
+    setAsReadOnFrontend(conversation)
+    setAsReadOnBackend(conversation)
   }
 
   useEffect(() => {
