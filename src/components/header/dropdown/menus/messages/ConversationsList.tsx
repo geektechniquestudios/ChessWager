@@ -11,7 +11,6 @@ import { DropdownState } from "../../../../containers/DropdownState"
 import { useEffect } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { LinearProgress } from "@mui/material"
-import { DarkMode } from "../../../../containers/DarkMode"
 
 const db = getFirestore(firebaseApp)
 
@@ -26,7 +25,6 @@ export const ConversationsList: React.FC = ({}) => {
     hasInitialLoad,
     setHasInitialLoad,
   } = ConversationsState.useContainer()
-  const { isDarkOn } = DarkMode.useContainer()
   const { setUserIdFromMessages, setUsernameFromMessages } =
     UserMenuState.useContainer()
   const { userData } = UserDataState.useContainer()
