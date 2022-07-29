@@ -63,6 +63,7 @@ const useConversationsState = () => {
     )
     return uniqueConversations
   }
+
   const fullConversations = buildFullConversations()
 
   const loadMoreConversations = async () => {

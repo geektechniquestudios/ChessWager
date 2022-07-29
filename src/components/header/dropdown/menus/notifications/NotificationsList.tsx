@@ -10,6 +10,7 @@ import {
   query,
   startAfter,
   Timestamp,
+  where,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { Auth } from "../../../../containers/Auth"
@@ -18,6 +19,7 @@ import { NotificationItem } from "./NotificationItem"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { LinearProgress } from "@mui/material"
 import { useEffect, useState } from "react"
+import { useCollectionData } from "react-firebase-hooks/firestore"
 
 const db = getFirestore(firebaseApp)
 
@@ -31,18 +33,32 @@ export const NotificationsList: React.FC = ({}) => {
   const [isLoading, setIsLoading] = useState(true)
   const [timestamp] = useState<Timestamp>(Timestamp.now())
 
+  const q = query(
+    notificationsCollection,
+    orderBy("createdAt", "desc"),
+    where("createdAt", ">", timestamp),
+  ) as Query<Notification>
+
+  const [liveNotifications] =
+    useCollectionData<Notification>(q, { idField: "id" }) ?? []
+
+  const fullNotifications = [
+    ...(liveNotifications ?? []),
+    ...(notifications ?? []),
+  ]
+
   const loadMoreNotifications = async () => {
     const amountToLoad = 7
     const lastVisible =
       notifications?.[notifications.length - 1]?.createdAt ?? timestamp
-    const q = query(
+    const q2 = query(
       notificationsCollection,
       orderBy("createdAt", "desc"),
       limit(amountToLoad),
       startAfter(lastVisible),
     ) as Query<Notification>
 
-    const oldNotifications = (await getDocs(q)).docs.map((doc) => {
+    const oldNotifications = (await getDocs(q2)).docs.map((doc) => {
       let notification = doc.data() as Notification
       notification.id = doc.id
       return notification
@@ -62,7 +78,7 @@ export const NotificationsList: React.FC = ({}) => {
       style={{ direction: "rtl" }}
       id="notifications-scroll-div"
     >
-      {(notifications?.length ?? 0) > 0 ? (
+      {(fullNotifications?.length ?? 0) > 0 ? (
         <InfiniteScroll
           scrollThreshold="200px"
           scrollableTarget="notifications-scroll-div"
@@ -73,7 +89,7 @@ export const NotificationsList: React.FC = ({}) => {
           className="flex flex-col"
         >
           <div style={{ direction: "ltr" }} id="notification-list">
-            {notifications?.map((notification, index) => (
+            {fullNotifications?.map((notification, index) => (
               <NotificationItem
                 {...notification}
                 key={notification.id}
