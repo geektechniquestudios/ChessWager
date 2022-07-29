@@ -9,6 +9,7 @@ import { FundedBets } from "./components/funded-bets/FundedBets"
 import { DarkMode } from "./components/containers/DarkMode"
 import { ChatToggle } from "./components/containers/ChatToggle"
 import { ShowChatButton } from "./components/body/ShowChatButton"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
 
 export const App: React.FC = () => {
   const { isDarkOn } = DarkMode.useContainer()
@@ -17,39 +18,49 @@ export const App: React.FC = () => {
   const dark = isDarkOn ? "dark" : ""
 
   return (
-    <div
-      className={`${dark} global-font grid h-full w-full overflow-y-hidden`}
-      id="app"
+    <ThemeProvider
+      theme={createTheme({
+        palette: {
+          primary: {
+            main: isDarkOn ? "#34d399" : "#166534",
+          },
+        },
+      })}
     >
       <div
-        className="color-shift grid overflow-hidden bg-stone-300 dark:bg-black"
-        id="page"
+        className={`${dark} global-font grid h-full w-full overflow-y-hidden`}
+        id="app"
       >
-        <header className="color-shift flex items-center border-b border-stone-400 bg-stone-50 dark:border-stone-700 dark:bg-stone-800">
-          <MainHeader />
-        </header>
+        <div
+          className="color-shift grid overflow-hidden bg-stone-300 dark:bg-black"
+          id="page"
+        >
+          <header className="color-shift flex items-center border-b border-stone-400 bg-stone-50 dark:border-stone-700 dark:bg-stone-800">
+            <MainHeader />
+          </header>
 
-        <main className="scrollbar flex justify-center overflow-y-auto">
-          <div className="w-full">
-            <ShowChatButton />
-            <div className="flex w-auto flex-col">
-              <div className="scrollbar overflow-y-hidden overflow-x-visible sm:flex">
-                <FundedBets />
-                <ChessGame />
+          <main className="scrollbar flex justify-center overflow-y-auto">
+            <div className="w-full">
+              <ShowChatButton />
+              <div className="flex w-auto flex-col">
+                <div className="scrollbar overflow-y-hidden overflow-x-visible sm:flex">
+                  <FundedBets />
+                  <ChessGame />
+                </div>
               </div>
+              <BettingLobby />
             </div>
-            <BettingLobby />
-          </div>
-        </main>
+          </main>
 
-        <div>
-          {showChat && (
-            <aside className="h-full">
-              <GlobalChat />
-            </aside>
-          )}
+          <div>
+            {showChat && (
+              <aside className="h-full">
+                <GlobalChat />
+              </aside>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   )
 }

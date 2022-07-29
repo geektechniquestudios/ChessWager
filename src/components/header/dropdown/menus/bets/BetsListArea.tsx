@@ -17,22 +17,12 @@ import { Bet } from "../../../../../interfaces/Bet"
 import { BetsListItem } from "./BetsListItem"
 import { useEffect, useState } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { createTheme, ThemeProvider } from "@mui/system"
 import { LinearProgress } from "@mui/material"
-import { DarkMode } from "../../../../containers/DarkMode"
 
 const db = getFirestore(firebaseApp)
 
 export const BetsListArea: React.FC = ({}) => {
   const { auth } = Auth.useContainer()
-  const { isDarkOn } = DarkMode.useContainer()
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: isDarkOn ? "#34d399" : "#166534",
-      },
-    },
-  })
   const betsRef = collection(db, "lobby")
 
   const [hasMore, setHasMore] = useState(true)
@@ -72,11 +62,7 @@ export const BetsListArea: React.FC = ({}) => {
           dataLength={bets?.length ?? 0}
           next={loadMoreBets}
           hasMore={hasMore}
-          loader={
-            <ThemeProvider theme={theme}>
-              <LinearProgress />
-            </ThemeProvider>
-          }
+          loader={<LinearProgress />}
           className="flex flex-col"
         >
           <div style={{ direction: "ltr" }} id="bets-list">

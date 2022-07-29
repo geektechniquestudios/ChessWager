@@ -10,7 +10,6 @@ import { UserDataState } from "../../../../containers/UserDataState"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { useEffect } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { createTheme, ThemeProvider } from "@mui/system"
 import { LinearProgress } from "@mui/material"
 import { DarkMode } from "../../../../containers/DarkMode"
 
@@ -28,13 +27,6 @@ export const ConversationsList: React.FC = ({}) => {
     setHasInitialLoad,
   } = ConversationsState.useContainer()
   const { isDarkOn } = DarkMode.useContainer()
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: isDarkOn ? "#34d399" : "#166534",
-      },
-    },
-  })
   const { setUserIdFromMessages, setUsernameFromMessages } =
     UserMenuState.useContainer()
   const { userData } = UserDataState.useContainer()
@@ -97,11 +89,7 @@ export const ConversationsList: React.FC = ({}) => {
             dataLength={fullConversations?.length ?? 0}
             next={loadMoreConversations}
             hasMore={hasMore}
-            loader={
-              <ThemeProvider theme={theme}>
-                <LinearProgress />
-              </ThemeProvider>
-            }
+            loader={<LinearProgress />}
             className="flex flex-col"
           >
             <div style={{ direction: "ltr" }} id="conversations-list">

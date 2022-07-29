@@ -16,24 +16,13 @@ import { Auth } from "../../../../containers/Auth"
 import { Notification } from "../../../../../interfaces/Notification"
 import { NotificationItem } from "./NotificationItem"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { createTheme, ThemeProvider } from "@mui/system"
 import { LinearProgress } from "@mui/material"
-import { DarkMode } from "../../../../containers/DarkMode"
 import { useEffect, useState } from "react"
 
 const db = getFirestore(firebaseApp)
 
 export const NotificationsList: React.FC = ({}) => {
   const { auth } = Auth.useContainer()
-  const { isDarkOn } = DarkMode.useContainer()
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: isDarkOn ? "#34d399" : "#166534",
-      },
-    },
-  })
-
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const notificationsCollection = collection(userRef, "notifications")
 
@@ -80,13 +69,7 @@ export const NotificationsList: React.FC = ({}) => {
           dataLength={notifications?.length ?? 0}
           next={loadMoreNotifications}
           hasMore={hasMore}
-          loader={
-            notifications.length > 6 && (
-              <ThemeProvider theme={theme}>
-                <LinearProgress />
-              </ThemeProvider>
-            )
-          }
+          loader={notifications.length > 6 && <LinearProgress />}
           className="flex flex-col"
         >
           <div style={{ direction: "ltr" }} id="notification-list">

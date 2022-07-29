@@ -14,8 +14,6 @@ import { ConversationsState } from "./components/containers/ConversationsState"
 import { UserDataState } from "./components/containers/UserDataState"
 import { WindowSize } from "./components/containers/WindowSize"
 
-
-
 export const AppWithProviders: React.FC = () => {
   return (
     <WindowSize.Provider>

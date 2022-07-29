@@ -16,20 +16,9 @@ import {
 } from "firebase/firestore"
 import { firebaseApp } from "../../../config"
 import { UserDataState } from "../../containers/UserDataState"
-import { createTheme } from "@mui/material/styles"
-import { ThemeProvider } from "@mui/system"
-import { DarkMode } from "../../containers/DarkMode"
 const db = getFirestore(firebaseApp)
 
 export const WagerForm: React.FC = () => {
-  const { isDarkOn } = DarkMode.useContainer()
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: isDarkOn ? "#34d399" : "#166534",
-      },
-    },
-  })
   const { gameId } = GameState.useContainer()
   const {
     walletAddress,
@@ -100,48 +89,46 @@ export const WagerForm: React.FC = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className="flex h-full justify-between border-stone-400 shadow-2xl dark:border-stone-700 sm:rounded-b-md">
-        <fieldset className="mx-auto flex">
-          <form
-            onSubmit={createWager}
-            className="border-l border-r border-stone-400 bg-stone-200 p-2 dark:border-stone-700 dark:bg-stone-900 sm:rounded-b-md sm:border-b"
-            onKeyPress={(e) => {
-              e.key === "Enter" && e.preventDefault()
-            }}
-          >
-            <div className="flex flex-col justify-around gap-4">
-              <SideChooser betSide={betSide} setBetSide={setBetSide} />
-              <QuickBet
-                setBetAmount={setBetAmount}
-                setLocalAvaxAmount={setLocalAvaxAmount}
-                setLocalUsdAmount={setLocalUsdAmount}
-                setIsAmountEmpty={setIsAmountEmpty}
-              />
-              <BetAmount
-                betAmount={betAmount}
-                setBetAmount={setBetAmount}
-                localAvaxAmount={localAvaxAmount}
-                setLocalAvaxAmount={setLocalAvaxAmount}
-                localUsdAmount={localUsdAmount}
-                setLocalUsdAmount={setLocalUsdAmount}
-                isAmountEmpty={isAmountEmpty}
-                setIsAmountEmpty={setIsAmountEmpty}
-              />
-              <TheirBet multiplier={multiplier} betAmount={betAmount} />
-              <Multiplier
-                setMultiplier={setMultiplier}
-                sliderVal={sliderVal}
-                setSliderVal={setSliderVal}
-              />
-            </div>
-            <div className="mt-4 flex flex-row justify-between gap-2">
-              <Total betAmount={betAmount} multiplier={multiplier} />
-              <PlaceBet />
-            </div>
-          </form>
-        </fieldset>
-      </div>
-    </ThemeProvider>
+    <div className="flex h-full justify-between border-stone-400 shadow-2xl dark:border-stone-700 sm:rounded-b-md">
+      <fieldset className="mx-auto flex">
+        <form
+          onSubmit={createWager}
+          className="border-l border-r border-stone-400 bg-stone-200 p-2 dark:border-stone-700 dark:bg-stone-900 sm:rounded-b-md sm:border-b"
+          onKeyPress={(e) => {
+            e.key === "Enter" && e.preventDefault()
+          }}
+        >
+          <div className="flex flex-col justify-around gap-4">
+            <SideChooser betSide={betSide} setBetSide={setBetSide} />
+            <QuickBet
+              setBetAmount={setBetAmount}
+              setLocalAvaxAmount={setLocalAvaxAmount}
+              setLocalUsdAmount={setLocalUsdAmount}
+              setIsAmountEmpty={setIsAmountEmpty}
+            />
+            <BetAmount
+              betAmount={betAmount}
+              setBetAmount={setBetAmount}
+              localAvaxAmount={localAvaxAmount}
+              setLocalAvaxAmount={setLocalAvaxAmount}
+              localUsdAmount={localUsdAmount}
+              setLocalUsdAmount={setLocalUsdAmount}
+              isAmountEmpty={isAmountEmpty}
+              setIsAmountEmpty={setIsAmountEmpty}
+            />
+            <TheirBet multiplier={multiplier} betAmount={betAmount} />
+            <Multiplier
+              setMultiplier={setMultiplier}
+              sliderVal={sliderVal}
+              setSliderVal={setSliderVal}
+            />
+          </div>
+          <div className="mt-4 flex flex-row justify-between gap-2">
+            <Total betAmount={betAmount} multiplier={multiplier} />
+            <PlaceBet />
+          </div>
+        </form>
+      </fieldset>
+    </div>
   )
 }

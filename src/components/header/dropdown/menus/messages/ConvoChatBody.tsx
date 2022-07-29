@@ -1,4 +1,4 @@
-import { createTheme, LinearProgress, ThemeProvider } from "@mui/material"
+import { LinearProgress } from "@mui/material"
 import {
   collection,
   doc,
@@ -18,7 +18,6 @@ import InfiniteScroll from "react-infinite-scroll-component"
 import { firebaseApp } from "../../../../../config"
 import type { Message } from "../../../../../interfaces/Message"
 import { Auth } from "../../../../containers/Auth"
-import { DarkMode } from "../../../../containers/DarkMode"
 import { UserDataState } from "../../../../containers/UserDataState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { ConvoChatMessage } from "./ConvoChatMessage"
@@ -27,14 +26,6 @@ const db = getFirestore(firebaseApp)
 interface Props {}
 
 export const ConvoChatBody: React.FC<Props> = ({}) => {
-  const { isDarkOn } = DarkMode.useContainer()
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: isDarkOn ? "#34d399" : "#166534",
-      },
-    },
-  })
   const { userData } = UserDataState.useContainer()
   const { auth } = Auth.useContainer()
   const { userIdFromMessages } = UserMenuState.useContainer()
@@ -91,11 +82,7 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
         dataLength={fullMessages?.length ?? 0}
         next={loadMoreMessages}
         hasMore={hasMore}
-        loader={
-          <ThemeProvider theme={theme}>
-            <LinearProgress />
-          </ThemeProvider>
-        }
+        loader={<LinearProgress />}
         inverse
         className="flex flex-col-reverse"
       >
