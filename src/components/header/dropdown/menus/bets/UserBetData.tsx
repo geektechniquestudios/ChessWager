@@ -32,7 +32,7 @@ export const UserBetData: React.FC<Props> = ({
     DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { userData } = UserDataState.useContainer()
-  const isUserBlocked = userData.blockedUsers.includes(id)
+  const isUserBlocked = userData?.blockedUsers.includes(id) ?? false
   return (
     <div className="relative flex w-28 flex-col items-start overflow-clip rounded-md border border-stone-400 bg-stone-300 text-sm dark:border-stone-800 dark:bg-stone-500">
       <div className="my-2 flex w-full justify-center">
