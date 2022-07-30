@@ -7,6 +7,7 @@ import {
   collection,
   getFirestore,
   limit,
+  Query,
   query,
   where,
 } from "firebase/firestore"
@@ -40,8 +41,10 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
     limit(10),
   )
 
-  const [users] = useCollectionData<[User[]] | any>(
-    friendsOrEveryone === "everyone" ? allUsersQuery : friendsOnlyQuery,
+  const [users] = useCollectionData<User>(
+    (friendsOrEveryone === "everyone"
+      ? allUsersQuery
+      : friendsOnlyQuery) as Query<User>,
   )
   const { userData } = UserDataState.useContainer()
   return (

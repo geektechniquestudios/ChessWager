@@ -5,6 +5,7 @@ import {
   CollectionReference,
   DocumentData,
   orderBy,
+  Query,
   query,
   Timestamp,
   where,
@@ -24,8 +25,8 @@ export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
     messagesRef,
     orderBy("createdAt", "desc"),
     where("createdAt", ">", timestamp),
-  )
-  const [messages] = useCollectionData<Message[] | any>(q)
+  ) as Query<Message>
+  const [messages] = useCollectionData<Message>(q)
   return (
     <div
       className="scrollbar flex flex-col-reverse overflow-y-auto overflow-x-hidden px-1 pb-3"

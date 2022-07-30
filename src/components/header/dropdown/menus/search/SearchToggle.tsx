@@ -18,14 +18,14 @@ export const SearchToggle: React.FC<Props> = ({
         thisMenu="everyone"
         friendsOrEveryone={friendsOrEveryone}
         setFriendsOrEveryone={setFriendsOrEveryone}
-        icon={<RiUserHeartLine />}
+        icon={<FiUsers />}
         text="Everyone"
       />
       <SearchToggleButton
         thisMenu="friends"
         friendsOrEveryone={friendsOrEveryone}
         setFriendsOrEveryone={setFriendsOrEveryone}
-        icon={<FiUsers />}
+        icon={<RiUserHeartLine />}
         text="Friends Only"
       />
     </div>

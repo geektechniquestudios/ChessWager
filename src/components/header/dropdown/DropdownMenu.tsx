@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { MutableRefObject, useEffect, useRef } from "react"
 import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 import { Contact } from "./menus/help/Contact"
@@ -22,7 +22,7 @@ import { MessagesMenu } from "./menus/messages/MessagesMenu"
 
 export const DropdownMenu = () => {
   const { setMenuStack } = DropdownState.useContainer()
-  const CloseMenuListener = (ref: React.MutableRefObject<any>) => {
+  const CloseMenuListener = (ref: MutableRefObject<any>) => {
     const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
     useEffect(() => {
       const handleClickOutside = (event: Event) => {
@@ -70,7 +70,7 @@ export const DropdownMenu = () => {
 
   return (
     <div
-      className={`${firefoxColors} dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border border-stone-400 text-stone-800 shadow-lg dark:border-stone-500  dark:text-stone-200`}
+      className={`${firefoxColors} dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border-2 border-stone-400 text-stone-800 shadow-lg dark:border-stone-500  dark:text-stone-200`}
       style={{
         height: menuHeight,
         background: bgColor,

@@ -100,7 +100,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
     if (typeof window.ethereum !== undefined) {
       await window.ethereum.request({ method: "eth_requestAccounts" })
       const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer: any = provider.getSigner()
+      const signer: ethers.providers.JsonRpcSigner = provider.getSigner()
       const contract = new ethers.Contract(
         contractAddress,
         ChessWager.abi,

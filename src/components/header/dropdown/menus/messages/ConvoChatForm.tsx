@@ -32,7 +32,7 @@ export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
   }
   const formValue = convoFormValue.get(convoId) ?? ""
 
-  const { conversations } = ConversationsState.useContainer()
+  const { fullConversations } = ConversationsState.useContainer()
 
   const sendMessage = async (
     e:
@@ -60,7 +60,7 @@ export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
 
     const conversationDocRef = doc(db, "conversations", convoId)
 
-    const conversation = conversations?.find((c) => c.id === convoId)
+    const conversation = fullConversations?.find((c) => c.id === convoId)
 
     const isUser1 =
       (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")

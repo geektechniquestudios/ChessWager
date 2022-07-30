@@ -70,7 +70,7 @@ export const Countdown: React.FC<Props> = ({ fen, side, time, isNewGame }) => {
 
   return (
     <p
-      className={`border-l border-stone-900 p-1.5 text-2xl text-stone-900 dark:text-stone-200 ${buildStyles()} `}
+      className={`flex w-20 justify-center border-l border-stone-900 p-1.5 text-2xl text-stone-900 dark:text-stone-200 ${buildStyles()}`}
     >
       {!isNewGame ? formatTime(secondsToShow(time - count - 1)) : "??:??"}
     </p>
