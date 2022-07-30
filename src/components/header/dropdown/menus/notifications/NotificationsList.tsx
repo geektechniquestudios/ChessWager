@@ -51,6 +51,7 @@ export const NotificationsList: React.FC = ({}) => {
     const amountToLoad = 7
     const lastVisible =
       notifications?.[notifications.length - 1]?.createdAt ?? timestamp
+
     const q2 = query(
       notificationsCollection,
       orderBy("createdAt", "desc"),
@@ -89,7 +90,7 @@ export const NotificationsList: React.FC = ({}) => {
           className="flex flex-col"
         >
           <div style={{ direction: "ltr" }} id="notification-list">
-            {fullNotifications?.map((notification, index) => (
+            {fullNotifications?.map((notification) => (
               <NotificationItem
                 {...notification}
                 key={notification.id}

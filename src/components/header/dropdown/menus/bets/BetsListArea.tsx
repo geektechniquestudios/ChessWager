@@ -26,7 +26,7 @@ export const BetsListArea: React.FC = ({}) => {
   const betsRef = collection(db, "lobby")
 
   const [hasMore, setHasMore] = useState(true)
-  const [bets, setBets] = useState<Bet[]>()
+  const [bets, setBets] = useState<Bet[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [timestamp] = useState<Timestamp>(Timestamp.now())
 
@@ -40,8 +40,12 @@ export const BetsListArea: React.FC = ({}) => {
       limit(amountToLoad),
       startAfter(lastVisible),
     ) as Query<Bet>
-    const oldBets = (await getDocs(q)).docs.map((d) => d.data()) as Bet[]
-    setBets([...(bets ?? []), ...oldBets])
+    const oldBets: Bet[] = (await getDocs(q)).docs.map((d) => {
+      let bet = d.data()
+      bet.id = d.id
+      return bet
+    }) as Bet[]
+    setBets([...(bets ?? []), ...(oldBets ?? [])])
     if (oldBets.length < amountToLoad) setHasMore(false)
   }
 

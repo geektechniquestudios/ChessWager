@@ -22,12 +22,16 @@ const useGameState = () => {
         ? "by timeout"
         : ""
     const checkmate = gameData.status === "mate" ? "by checkmate" : ""
-
-    const outcome =
-      isDraw || isStalemate
-        ? `${draw}${stalemate}`
-        : `${whiteWins}${blackWins} ${resign}${timeout}${checkmate}`
-
+    const isGameOver = gameData.status !== "started"
+    let outcome = ""
+    if (isGameOver) {
+      outcome =
+        isDraw || isStalemate
+          ? `${draw}${stalemate}`
+          : `${whiteWins}${blackWins} ${resign}${timeout}${checkmate}`
+    } else {
+      outcome = "Game in progress"
+    }
     return outcome
   }
 
