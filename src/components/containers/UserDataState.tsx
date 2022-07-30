@@ -1,4 +1,9 @@
-import { doc, getFirestore, updateDoc } from "firebase/firestore"
+import {
+  doc,
+  DocumentReference,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore"
 import { useEffect } from "react"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { createContainer } from "unstated-next"
@@ -12,8 +17,9 @@ const db = getFirestore(firebaseApp)
 export const useUserDataState = () => {
   const { auth } = Auth.useContainer()
   let userRef
-  if (auth.currentUser?.uid) userRef = doc(db, "users", auth.currentUser?.uid)
-  const [userData] = useDocumentData<User | any>(userRef) ?? []
+  if (auth.currentUser?.uid)
+    userRef = doc(db, "users", auth.currentUser?.uid) as DocumentReference<User>
+  const [userData] = useDocumentData<User>(userRef) ?? []
   const { isDropdownOpen, activeMenu } = DropdownState.useContainer()
 
   useEffect(() => {

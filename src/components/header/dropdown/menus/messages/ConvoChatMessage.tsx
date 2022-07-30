@@ -15,7 +15,7 @@ export const ConvoChatMessage: React.FC<Props> = ({
   userName,
 }) => {
   return (
-    <div className="w-full gap-1.5 p-1">
+    <div className="w-full gap-1.5 px-2 py-1">
       <ConvoUserTitle photoURL={photoURL} userName={userName} uid={uid} />
       <MessageBody text={text} />
     </div>

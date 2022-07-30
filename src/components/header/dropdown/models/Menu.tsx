@@ -16,7 +16,7 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
   const { activeMenu, setMenuHeight, menuStack } = DropdownState.useContainer()
   const { clickedUser } = UserMenuState.useContainer()
 
-  const calcHeight = (el: any) => {
+  const calcHeight = (el: HTMLElement) => {
     const height = el.offsetHeight
     setMenuHeight(height)
   }

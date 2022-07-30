@@ -10,28 +10,28 @@ import { UserDataState } from "../../../../containers/UserDataState"
 const db = getFirestore(firebaseApp)
 
 interface Props {
-  id: string
-  amount: number
-  betSide: "black" | "white"
-  multiplier: number
-  status: string
-  user1Id: string
-  user1Metamask: string
-  user1PhotoURL: string
-  user1DisplayName: string
-  hasUser1Paid: boolean
-  user2Id: string
-  user2Metamask: string
-  user2PhotoURL: string
-  user2DisplayName: string
-  hasUser2Paid: boolean
-  createdAt: Timestamp
-  gameId: string
-  timestamp: Timestamp
-  contractAddress: string
-  user1FollowThrough: number[]
-  user2FollowThrough: number[]
-  bet: Bet
+  id?: string
+  amount?: number
+  betSide?: "black" | "white"
+  multiplier?: number
+  status?: string
+  user1Id?: string
+  user1Metamask?: string
+  user1PhotoURL?: string
+  user1DisplayName?: string
+  hasUser1Paid?: boolean
+  user2Id?: string
+  user2Metamask?: string
+  user2PhotoURL?: string
+  user2DisplayName?: string
+  hasUser2Paid?: boolean
+  createdAt?: Timestamp
+  gameId?: string
+  timestamp?: Timestamp
+  contractAddress?: string
+  user1FollowThrough?: number[]
+  user2FollowThrough?: number[]
+  bet?: Bet
   hasUser1SeenUpdate?: boolean
   hasUser2SeenUpdate?: boolean
 }
@@ -52,24 +52,26 @@ export const BetsListItem: React.FC<Props> = ({
   const { setActiveMenu, setBet, menuStack, setMenuStack } =
     DropdownState.useContainer()
   const { auth } = Auth.useContainer()
-  const betTotal = bet.amount + bet.amount * bet.multiplier
+  const betTotal =
+    bet?.amount ?? 0 + (bet?.amount ?? 0) * (bet?.multiplier ?? 0)
   const { avaxPrice } = Price.useContainer()
   const { userData } = UserDataState.useContainer()
 
-  const isUser1Blocked = userData.blockedUsers.includes(user1Id)
-  const isUser2Blocked = userData.blockedUsers.includes(user2Id)
+  const isUser1Blocked = userData?.blockedUsers.includes(user1Id ?? "") ?? false
+  const isUser2Blocked = userData?.blockedUsers.includes(user2Id ?? "") ?? false
 
   const isUser1 = user1Id === auth.currentUser!.uid
   const isUser2 = user2Id === auth.currentUser!.uid
 
   const clickedStyle =
     (isUser1 && !hasUser1SeenUpdate) || (isUser2 && !hasUser2SeenUpdate)
-      ? "bg-stone-100 dark:bg-stone-700"
+      ? "bg-stone-100 dark:bg-stone-800"
       : ""
 
-  const betRef = doc(db, "lobby", id)
+  const betRef = id ? doc(db, "lobby", id ?? "") : null
 
   const markBetAsRead = () => {
+    if (!betRef) return
     if (isUser1 && !hasUser1SeenUpdate) {
       updateDoc(betRef, {
         hasUser1SeenUpdate: true,
@@ -87,7 +89,7 @@ export const BetsListItem: React.FC<Props> = ({
       rel="noreferrer noopener"
       className={`color-shift flex h-14 w-64 items-center text-stone-600 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${clickedStyle}`}
       onClick={() => {
-        setBet(bet)
+        setBet(bet!)
         setActiveMenu("bet")
         setMenuStack([...menuStack, "bet"])
         markBetAsRead()

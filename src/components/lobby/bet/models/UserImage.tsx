@@ -22,7 +22,7 @@ export const UserImage: React.FC<Props> = ({
   const disabledStyle = !user ? "pointer-events-none" : ""
   return (
     <div
-      className={`flex gap-2 px-1 py-0.5 ${sideFlip} rounded-md border dark:border-stone-600 dark:bg-stone-800`}
+      className={`${sideFlip} flex gap-2 rounded-md border bg-stone-100 px-1 py-0.5 dark:border-stone-600 dark:bg-stone-800`}
     >
       <div className="flex flex-col justify-center align-middle">
         <div className="grid h-8 w-8 place-content-center rounded-full">
@@ -30,7 +30,7 @@ export const UserImage: React.FC<Props> = ({
         </div>
       </div>
       <a
-        className={`mx-1 flex flex-col justify-center text-xs text-stone-900 hover:underline dark:text-stone-300 ${disabledStyle}`}
+        className={`${disabledStyle} mx-1 flex flex-col justify-center text-xs text-stone-900 hover:underline dark:text-stone-300`}
         onClick={(e) => {
           e.stopPropagation()
           setClickedUserById(userId)

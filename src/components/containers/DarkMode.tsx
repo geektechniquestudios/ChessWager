@@ -2,7 +2,7 @@ import { useState } from "react"
 import { createContainer } from "unstated-next"
 
 const useDarkMode = () => {
-  const [isDarkOn, setIsDarkOn] = useState(
+  const [isDarkOn, setIsDarkOn] = useState<boolean>(
     localStorage.getItem("darkMode") === "true" ||
       localStorage.getItem("darkMode") === "false"
       ? JSON.parse(localStorage.getItem("darkMode")!)

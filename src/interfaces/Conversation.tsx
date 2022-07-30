@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore"
+import { CollectionReference, Timestamp } from "firebase/firestore"
 
 export type User = {
   id: string
@@ -16,6 +16,6 @@ export type Conversation = {
   doesUser1HaveUnreadMessages: boolean
   doesUser2HaveUnreadMessages: boolean
   modifiedAt: Timestamp
-  messages: any
+  messages: CollectionReference
   messageThumbnail: string
 }
