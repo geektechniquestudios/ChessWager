@@ -121,7 +121,9 @@ const useConversationsState = () => {
     setOldConversations([])
     setTimestamp(Timestamp.now())
     setHasMore(true)
-    loadMoreConversations()
+    if (auth.currentUser) {
+      loadMoreConversations()
+    }
   }, [auth.currentUser])
 
   return {
