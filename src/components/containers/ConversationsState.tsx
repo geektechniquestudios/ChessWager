@@ -36,7 +36,7 @@ const useConversationsState = () => {
 
   const [hasMore, setHasMore] = useState(true)
   const [isLoading, setIsLoading] = useState(true)
-  const [timestamp] = useState<Timestamp>(Timestamp.now())
+  const [timestamp, setTimestamp] = useState<Timestamp>(Timestamp.now())
   const [hasInitialLoad, setHasInitialLoad] = useState(false)
 
   const q = query(
@@ -115,6 +115,12 @@ const useConversationsState = () => {
         })
     }
   }, [oldConversations])
+
+  useEffect(() => {
+    setOldConversations([])
+    setTimestamp(Timestamp.now())
+    loadMoreConversations()
+  }, [auth.currentUser])
 
   return {
     fullConversations,
