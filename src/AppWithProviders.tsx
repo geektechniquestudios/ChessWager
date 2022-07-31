@@ -13,6 +13,7 @@ import { BetsState } from "./components/containers/BetsState"
 import { ConversationsState } from "./components/containers/ConversationsState"
 import { UserDataState } from "./components/containers/UserDataState"
 import { WindowSize } from "./components/containers/WindowSize"
+import { GlobalChatState } from "./components/containers/GlobalChatState"
 
 export const AppWithProviders: React.FC = () => {
   return (
@@ -30,7 +31,9 @@ export const AppWithProviders: React.FC = () => {
                           <BetsState.Provider>
                             <ConversationsState.Provider>
                               <UserDataState.Provider>
-                                <App />
+                                <GlobalChatState.Provider>
+                                  <App />
+                                </GlobalChatState.Provider>
                               </UserDataState.Provider>
                             </ConversationsState.Provider>
                           </BetsState.Provider>
