@@ -117,8 +117,10 @@ const useConversationsState = () => {
   }, [oldConversations])
 
   useEffect(() => {
+    if (!hasInitialLoad) return
     setOldConversations([])
     setTimestamp(Timestamp.now())
+    setHasMore(true)
     loadMoreConversations()
   }, [auth.currentUser])
 
