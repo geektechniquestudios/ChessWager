@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
+    "@emotion/styled": "^11.10.0",
     "@mui/material": "^5.8.7",
     "@mui/system": "^5.8.7",
     "@openzeppelin/contracts": "^4.7.1",
