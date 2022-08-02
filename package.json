@@ -19,7 +19,7 @@
     "functions-install": "cd functions && npm install && cd .."
   },
   "dependencies": {
-    "@emotion/react": "^11.9.3",
+    "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.9.3",
     "@mui/material": "^5.8.7",
     "@mui/system": "^5.8.7",
