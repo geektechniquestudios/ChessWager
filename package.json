@@ -62,7 +62,7 @@
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.2",
     "chai": "^4.3.6",
-    "cypress": "10.3.0",
+    "cypress": "10.3.1",
     "cypress-dotenv": "^2.0.0",
     "cypress-firebase": "^2.2.1",
     "ethereum-waffle": "^3.4.0",
