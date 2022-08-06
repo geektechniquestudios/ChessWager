@@ -375,10 +375,7 @@ service cloud.firestore {
           request.resource.data.status == "approved" &&
           resource.data.status == "pending" &&
           request.resource.data.timestamp is timestamp &&
-          request.resource.data.users is list &&
-          request.resource.data.users.length == 2 &&
-          request.resource.data.users.hasOnly(["user1Id", "user2Id"]) &&
-          request.resource.data.users.hasAll(["user1Id", "user2Id"]);
+          request.resource.data.users is list;
       }
 
       function areViewKeysFromUser1Valid() {
