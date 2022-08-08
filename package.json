@@ -55,7 +55,7 @@
     "@nomiclabs/hardhat-waffle": "^2.0.1",
     "@types/cypress-dotenv": "^2.0.0",
     "@types/node": "^18.0.0",
-    "@types/react": "^18.0.15",
+    "@types/react": "^18.0.16",
     "@types/react-dom": "^18.0.6",
     "@types/react-toggle": "^4.0.3",
     "@types/react-transition-group": "^4.4.4",
