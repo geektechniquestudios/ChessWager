@@ -118,6 +118,7 @@ const useAuth = () => {
               redactedFriendRequests: [],
               friends: [],
               joinDate: serverTimestamp(),
+              moderatorLevel: 0,
             })
           }
           if (doc.data()?.walletAddress ?? "" !== "") {
