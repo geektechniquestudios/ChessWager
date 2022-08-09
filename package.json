@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "vite",
     "cy:run": "cypress run",
-    "cy:test": "start-server-and-test dev http-get://localhost:3000 cy:run",
+    "cy:test": "start-server-and-test dev http-get://localhost:5173 cy:run",
     "test-hardhat": "hardhat test",
-    "test": "hardhat test && start-server-and-test dev http-get://localhost:3000 cy:run",
+    "test": "hardhat test && start-server-and-test dev http-get://localhost:5173 cy:run",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "deploy-contract-develop": "yarn hardhat run hardhat/scripts/deploy.js --network fuji",
@@ -21,7 +21,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@mui/material": "^5.8.7",
+    "@mui/material": "^5.10.0",
     "@mui/system": "^5.9.3",
     "@openzeppelin/contracts": "^4.7.1",
     "@react-chess/chessground": "^1.2.2",
