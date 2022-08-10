@@ -1,5 +1,8 @@
 describe("private messaging", () => {
   beforeEach(() => {
+    cy.visit("/").wait(2000)
+    cy.login().wait(1000)
+
     cy.callFirestore(
       "delete",
       "conversations/XGXaJZxzR9gArv6wKEHZ5MuvSnd2-l4UCe97h60ZCgqlZBh42rajEBp73/messages",
@@ -8,9 +11,6 @@ describe("private messaging", () => {
       "delete",
       "conversations/XGXaJZxzR9gArv6wKEHZ5MuvSnd2-l4UCe97h60ZCgqlZBh42rajEBp73",
     ).wait(2000)
-
-    cy.visit("/").wait(2000)
-    cy.login().wait(1000)
   })
   afterEach(cy.logout)
 
@@ -48,11 +48,11 @@ describe("private messaging", () => {
     cy.get('button[title="Send Direct Message"]').click()
     cy.get('textArea[id="direct-message-input"]').type("test message")
     cy.get('button[title="Press Enter to Send"]').click()
-    cy.get('button[id="main-header-button"]').click()
     cy.logout().wait(1000)
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
+    cy.get('button[id="main-header-button"]').click().wait(1000)
 
+    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
     cy.get('button[title="Messages"]').click()
     cy.get('div[id="conversations-list"]').within(() => {
       cy.get("a").first().click().wait(2000)
@@ -71,9 +71,9 @@ describe("private messaging", () => {
     cy.get('button[title="Send Direct Message"]').click().wait(1000)
     cy.get('textArea[id="direct-message-input"]').type("test message")
     cy.get('button[title="Press Enter to Send"]').click().wait(1000)
+    cy.get('button[id="main-header-button"]').click().wait(1000)
     cy.logout()
 
-    cy.get('button[id="main-header-button"]').click().wait(1000)
 
     cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
     cy.get('button[title="Messages"]').click().wait(2000)
