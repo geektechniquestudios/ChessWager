@@ -7,33 +7,33 @@ describe("user search", () => {
   })
   afterEach(cy.logout)
 
-  it("should allow the user to type in the search menu", () => {
-    cy.get('button[title="Search Users"]').click()
-    cy.get('input[id="search-users-input"]')
-      .type("lo")
-      .should("have.value", "lo")
-  })
+  // it("should allow the user to type in the search menu", () => {
+  //   cy.get('button[title="Search Users"]').click()
+  //   cy.get('input[id="search-users-input"]')
+  //     .type("lo")
+  //     .should("have.value", "lo")
+  // })
 
-  it("should show users when searched", () => {
-    cy.get('button[title="Search Users"]').click()
-    cy.get('input[id="search-users-input"]')
-      .type("ter")
-      .should("have.value", "ter")
-    cy.get('div[id="search-users-results"]').within(() => {
-      cy.get("a").first().should("exist")
-    })
-  })
+  // it("should show users when searched", () => {
+  //   cy.get('button[title="Search Users"]').click()
+  //   cy.get('input[id="search-users-input"]')
+  //     .type("ter")
+  //     .should("have.value", "ter")
+  //   cy.get('div[id="search-users-results"]').within(() => {
+  //     cy.get("a").first().should("exist")
+  //   })
+  // })
 
-  it("should open to clicked user menu if list item is clicked", () => {
-    cy.get('button[title="Search Users"]').click()
-    cy.get('input[id="search-users-input"]')
-      .type("ter")
-      .should("have.value", "ter")
-    cy.get('div[id="search-users-results"]').within(() => {
-      cy.get("a").first().click()
-    })
-    cy.get('div[id="clickedUser"]').should("exist")
-  })
+  // it("should open to clicked user menu if list item is clicked", () => {
+  //   cy.get('button[title="Search Users"]').click()
+  //   cy.get('input[id="search-users-input"]')
+  //     .type("ter")
+  //     .should("have.value", "ter")
+  //   cy.get('div[id="search-users-results"]').within(() => {
+  //     cy.get("a").first().click()
+  //   })
+  //   cy.get('div[id="clickedUser"]').should("exist")
+  // })
 
   it("should list friend if 'friends only' is selected", () => {
     cy.callFirestore("update", `users/XGXaJZxzR9gArv6wKEHZ5MuvSnd2`, {
@@ -55,6 +55,8 @@ describe("user search", () => {
     })
     cy.get('button[title="Add Friend"]').click().wait(2000)
     cy.logout()
+
+    cy.get('button[id="main-header-button"]').click().wait(1000)
 
     cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
     cy.get('button[title="Notifications"]').click()

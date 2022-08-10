@@ -63,16 +63,17 @@ describe("private messaging", () => {
   })
 
   it("should mark unread messages as read when clicked", () => {
-    cy.get('button[title="Search Users"]').click()
+    cy.get('button[title="Search Users"]').click().wait(1000)
     cy.get('input[id="search-users-input"]').type("sumpro molar")
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Send Direct Message"]').click()
+    cy.get('button[title="Send Direct Message"]').click().wait(1000)
     cy.get('textArea[id="direct-message-input"]').type("test message")
     cy.get('button[title="Press Enter to Send"]').click().wait(1000)
-    cy.get('button[id="main-header-button"]').click()
     cy.logout()
+
+    cy.get('button[id="main-header-button"]').click().wait(1000)
 
     cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
     cy.get('button[title="Messages"]').click().wait(2000)
