@@ -59,7 +59,6 @@ export const UserButtonsArea: React.FC<Props> = ({
                   />
                 )}
             </div>
-
             <div className="flex gap-3">
               {isFriend && <RemoveFriendButton id={id} />}
               <BlockUserButton
@@ -101,7 +100,7 @@ export const UserButtonsArea: React.FC<Props> = ({
               </a>
             ) : (
               <a
-                className="color-shift rounded-full border border-stone-400 bg-white py-1 px-2 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-800 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
+                className="color-shift rounded-full border border-stone-600 bg-white py-1 px-2 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-400 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
                 title={"Connect Wallet"}
                 onClick={connectWallet}
                 rel="noopener noreferrer"

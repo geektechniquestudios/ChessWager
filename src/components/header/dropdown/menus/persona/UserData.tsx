@@ -5,6 +5,7 @@ import { FiPercent, FiUsers } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
 import { RiHandCoinLine } from "react-icons/ri"
 import { DarkMode } from "../../../../containers/DarkMode"
+import { BanUserButton } from "./buttons/BanUserButton"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtonsArea } from "./UserButtonsArea"
 import { UserDataTile } from "./UserDataTile"
@@ -63,10 +64,15 @@ export const UserData: React.FC<Props> = ({
             photoURL={photoURL!}
             walletAddress={walletAddress!}
           />
-          <img
-            src={photoURL}
-            className="grid h-24 w-24 place-content-center rounded-full border border-stone-400 dark:border-stone-500"
-          />
+          <div className="relative">
+            <div className="absolute bottom-0 right-0 translate-x-7 translate-y-1.5">
+              <BanUserButton id={id ?? ""} displayName={displayName ?? ""} />
+            </div>
+            <img
+              src={photoURL}
+              className="grid h-24 w-24 place-content-center rounded-full border border-stone-400 dark:border-stone-500"
+            />
+          </div>
 
           <div className="my-2 flex flex-col items-center justify-center gap-0.5">
             <p className="text-lg">{displayName ?? ""}</p>
