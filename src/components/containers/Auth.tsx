@@ -119,6 +119,7 @@ const useAuth = () => {
               friends: [],
               joinDate: serverTimestamp(),
               moderatorLevel: 0,
+              isBanned: false,
             })
           }
           if (doc.data()?.walletAddress ?? "" !== "") {

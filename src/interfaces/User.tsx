@@ -19,4 +19,5 @@ export type User = {
   friends: string[]
   joinDate: Timestamp
   moderatorLevel: 0 | 1 | 2
+  isBanned: boolean
 }

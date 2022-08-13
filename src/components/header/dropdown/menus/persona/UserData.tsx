@@ -5,6 +5,7 @@ import { FiPercent, FiUsers } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
 import { RiHandCoinLine } from "react-icons/ri"
 import { DarkMode } from "../../../../containers/DarkMode"
+import { UserDataState } from "../../../../containers/UserDataState"
 import { BanUserButton } from "./buttons/BanUserButton"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtonsArea } from "./UserButtonsArea"
@@ -52,6 +53,8 @@ export const UserData: React.FC<Props> = ({
       : 0
 
   const trust = `${betFundedCount} / ${betAcceptedCount}`
+  const { userData } = UserDataState.useContainer()
+
   return (
     <div className="flex h-96 w-64 flex-col items-center justify-between py-1.5">
       {isLoading ? (
@@ -66,7 +69,12 @@ export const UserData: React.FC<Props> = ({
           />
           <div className="relative">
             <div className="absolute bottom-0 right-0 translate-x-7 translate-y-1.5">
-              <BanUserButton id={id ?? ""} displayName={displayName ?? ""} />
+              {id &&
+                displayName &&
+                (userData?.moderatorLevel ?? 0) > 0 &&
+                id !== (userData?.id ?? "") && (
+                  <BanUserButton id={id} displayName={displayName} />
+                )}
             </div>
             <img
               src={photoURL}
