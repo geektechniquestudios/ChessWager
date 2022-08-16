@@ -1445,18 +1445,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/mount-utils@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@cypress/mount-utils@npm:2.0.0"
-  checksum: b0bedcc29cd654c65078113a8e943c14b6ba2c363af21d5149ec97691df171ba8e5b95657339c89aa9808fe23134c6e749968fa98239e647b45de79bc2634799
+"@cypress/mount-utils@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@cypress/mount-utils@npm:2.0.1"
+  checksum: a5e720b73d3db582daf732e37cc33b0cd5140c43dd41cd2a23c16bc99275f762e89a181c683e7c94af961e9fb89631e028313e53f2edb2e72316075fd96d0ec4
   languageName: node
   linkType: hard
 
-"@cypress/react@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "@cypress/react@npm:6.0.0"
-  dependencies:
-    debug: ^4.3.2
+"@cypress/react@npm:^6.1.0":
+  version: 6.1.1
+  resolution: "@cypress/react@npm:6.1.1"
   peerDependencies:
     "@types/react": ^16.9.16 || ^17.0.0
     cypress: "*"
@@ -1465,7 +1463,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 8793504200a1bdd654a9668ffd19d4c6a5731216afe2f2d9c0a402382f31cea0fcf24147c36e1c687e4e743467b311d1a6091ba508b45a2fda695bda24273885
+  checksum: 42ccc6685895f6bc50778fd07dec0415070d94cfd008596b68d9581c65d36a576ab0d71f834f03e9fd13a96749f02050e39ff081d77145496ce4458c1aa65527
   languageName: node
   linkType: hard
 
@@ -1495,15 +1493,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/vite-dev-server@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@cypress/vite-dev-server@npm:3.0.0"
+"@cypress/vite-dev-server@npm:^3.1.0":
+  version: 3.1.1
+  resolution: "@cypress/vite-dev-server@npm:3.1.1"
   dependencies:
     debug: 4.3.3
     find-up: 6.3.0
     local-pkg: 0.4.1
+    node-html-parser: 5.3.3
     pathe: 0.2.0
-  checksum: c3ec4da153bde99e54fd9a3feb8903fd3a56911b852b20e6280a17168c290a9550f6786ff18838af3a21a43e1e25660f3af70dac53c40cc98c31d60696259d22
+  checksum: 0112dd315b2e951f48b5df3bab1174d2c7171b3b361d41e07b5e35320cc9c672787d4bc2df038cb298050556d549ff5d11d709c6eddeedbd5f63777d44230f96
   languageName: node
   linkType: hard
 
@@ -5619,6 +5618,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"boolbase@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "boolbase@npm:1.0.0"
+  checksum: 3e25c80ef626c3a3487c73dbfc70ac322ec830666c9ad915d11b701142fab25ec1e63eff2c450c74347acfd2de854ccde865cd79ef4db1683f7c7b046ea43bb0
+  languageName: node
+  linkType: hard
+
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
   resolution: "brace-expansion@npm:1.1.11"
@@ -6114,9 +6120,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "chess-wager@workspace:."
   dependencies:
-    "@cypress/mount-utils": ^2.0.0
-    "@cypress/react": ^6.0.0
-    "@cypress/vite-dev-server": ^3.0.0
+    "@cypress/mount-utils": ^2.0.1
+    "@cypress/react": ^6.1.0
+    "@cypress/vite-dev-server": ^3.1.0
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@mui/material": ^5.9.3
@@ -6141,7 +6147,7 @@ __metadata:
     cypress: 10.4.0
     cypress-dotenv: ^2.0.0
     cypress-firebase: ^2.2.1
-    cypress-react-selector: ^2.3.20
+    cypress-react-selector: ^3.0.0
     dotenv: ^16.0.0
     ethereum-waffle: ^3.4.0
     ethers: ^5.6.9
@@ -6770,6 +6776,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-select@npm:^4.2.1":
+  version: 4.3.0
+  resolution: "css-select@npm:4.3.0"
+  dependencies:
+    boolbase: ^1.0.0
+    css-what: ^6.0.1
+    domhandler: ^4.3.1
+    domutils: ^2.8.0
+    nth-check: ^2.0.1
+  checksum: d6202736839194dd7f910320032e7cfc40372f025e4bf21ca5bf6eb0a33264f322f50ba9c0adc35dadd342d3d6fae5ca244779a4873afbfa76561e343f2058e0
+  languageName: node
+  linkType: hard
+
+"css-what@npm:^6.0.1":
+  version: 6.1.0
+  resolution: "css-what@npm:6.1.0"
+  checksum: b975e547e1e90b79625918f84e67db5d33d896e6de846c9b584094e529f0c63e2ab85ee33b9daffd05bff3a146a1916bec664e18bb76dd5f66cbff9fc13b2bbe
+  languageName: node
+  linkType: hard
+
 "cssesc@npm:^3.0.0":
   version: 3.0.0
   resolution: "cssesc@npm:3.0.0"
@@ -6809,12 +6835,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-react-selector@npm:^2.3.20":
-  version: 2.3.20
-  resolution: "cypress-react-selector@npm:2.3.20"
+"cypress-react-selector@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "cypress-react-selector@npm:3.0.0"
   dependencies:
     resq: 1.10.2
-  checksum: f7e8139ba6fb652f094a27f10d77cfb37fa0faa37eeddef1fe5d862368a2f72649e0c33ec7594ae241c7ab3c9742bbf8737640364d13b5428cc3222585ea25d0
+  checksum: ab0f04a34dc9232fa79ea7a867575838129bae5321677c295db08afb5fc45e6023d298cd5b5caf1ed8dc302125066e143c541836fd7ab9cf3e68c4e015431658
   languageName: node
   linkType: hard
 
@@ -7209,10 +7235,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dom-serializer@npm:^1.0.1":
+  version: 1.4.1
+  resolution: "dom-serializer@npm:1.4.1"
+  dependencies:
+    domelementtype: ^2.0.1
+    domhandler: ^4.2.0
+    entities: ^2.0.0
+  checksum: fbb0b01f87a8a2d18e6e5a388ad0f7ec4a5c05c06d219377da1abc7bb0f674d804f4a8a94e3f71ff15f6cb7dcfc75704a54b261db672b9b3ab03da6b758b0b22
+  languageName: node
+  linkType: hard
+
 "dom-walk@npm:^0.1.0":
   version: 0.1.2
   resolution: "dom-walk@npm:0.1.2"
   checksum: 19eb0ce9c6de39d5e231530685248545d9cd2bd97b2cb3486e0bfc0f2a393a9addddfd5557463a932b52fdfcf68ad2a619020cd2c74a5fe46fbecaa8e80872f3
+  languageName: node
+  linkType: hard
+
+"domelementtype@npm:^2.0.1, domelementtype@npm:^2.2.0":
+  version: 2.3.0
+  resolution: "domelementtype@npm:2.3.0"
+  checksum: ee837a318ff702622f383409d1f5b25dd1024b692ef64d3096ff702e26339f8e345820f29a68bcdcea8cfee3531776b3382651232fbeae95612d6f0a75efb4f6
+  languageName: node
+  linkType: hard
+
+"domhandler@npm:^4.2.0, domhandler@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "domhandler@npm:4.3.1"
+  dependencies:
+    domelementtype: ^2.2.0
+  checksum: 4c665ceed016e1911bf7d1dadc09dc888090b64dee7851cccd2fcf5442747ec39c647bb1cb8c8919f8bbdd0f0c625a6bafeeed4b2d656bbecdbae893f43ffaaa
+  languageName: node
+  linkType: hard
+
+"domutils@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "domutils@npm:2.8.0"
+  dependencies:
+    dom-serializer: ^1.0.1
+    domelementtype: ^2.2.0
+    domhandler: ^4.2.0
+  checksum: abf7434315283e9aadc2a24bac0e00eab07ae4313b40cc239f89d84d7315ebdfd2fb1b5bf750a96bc1b4403d7237c7b2ebf60459be394d625ead4ca89b934391
   languageName: node
   linkType: hard
 
@@ -7413,6 +7477,13 @@ __metadata:
   version: 2.2.0
   resolution: "ent@npm:2.2.0"
   checksum: f588b5707d6fef36011ea10d530645912a69530a1eb0831f8708c498ac028363a7009f45cfadd28ceb4dafd9ac17ec15213f88d09ce239cd033cfe1328dd7d7d
+  languageName: node
+  linkType: hard
+
+"entities@npm:^2.0.0":
+  version: 2.2.0
+  resolution: "entities@npm:2.2.0"
+  checksum: 19010dacaf0912c895ea262b4f6128574f9ccf8d4b3b65c7e8334ad0079b3706376360e28d8843ff50a78aabcb8f08f0a32dbfacdc77e47ed77ca08b713669b3
   languageName: node
   linkType: hard
 
@@ -12595,6 +12666,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-html-parser@npm:5.3.3":
+  version: 5.3.3
+  resolution: "node-html-parser@npm:5.3.3"
+  dependencies:
+    css-select: ^4.2.1
+    he: 1.2.0
+  checksum: 57c61d5c34fd8c6139ef497cd8d7a4b1b8f4c127986d7a8624f83ba31d3e4a5fdea2684b021989f6bf920d517f8075068f05f031e8813e84fc42569906704cad
+  languageName: node
+  linkType: hard
+
 "node-releases@npm:^2.0.6":
   version: 2.0.6
   resolution: "node-releases@npm:2.0.6"
@@ -12664,6 +12745,15 @@ __metadata:
     gauge: ^4.0.3
     set-blocking: ^2.0.0
   checksum: ae238cd264a1c3f22091cdd9e2b106f684297d3c184f1146984ecbe18aaa86343953f26b9520dedd1b1372bc0316905b736c1932d778dbeb1fcf5a1001390e2a
+  languageName: node
+  linkType: hard
+
+"nth-check@npm:^2.0.1":
+  version: 2.1.1
+  resolution: "nth-check@npm:2.1.1"
+  dependencies:
+    boolbase: ^1.0.0
+  checksum: 5afc3dafcd1573b08877ca8e6148c52abd565f1d06b1eb08caf982e3fa289a82f2cae697ffb55b5021e146d60443f1590a5d6b944844e944714a5b549675bcd3
   languageName: node
   linkType: hard
 

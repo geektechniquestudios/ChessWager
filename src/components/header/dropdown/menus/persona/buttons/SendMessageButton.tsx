@@ -4,11 +4,9 @@ import { DropdownButton } from "./DropdownButton"
 import { Auth } from "../../../../../containers/Auth"
 import { firebaseApp } from "../../../../../../config"
 import {
-  addDoc,
   doc,
   getDoc,
   getFirestore,
-  runTransaction,
   serverTimestamp,
   setDoc,
 } from "firebase/firestore"

@@ -3,9 +3,9 @@ import { BsPiggyBank } from "react-icons/bs"
 import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
 import { FiPercent, FiUsers } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
+import { MdBlockFlipped } from "react-icons/md"
 import { RiHandCoinLine } from "react-icons/ri"
 import { DarkMode } from "../../../../containers/DarkMode"
-import { UserDataState } from "../../../../containers/UserDataState"
 import { BanUserButton } from "./buttons/BanUserButton"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtonsArea } from "./UserButtonsArea"
@@ -29,6 +29,8 @@ interface Props {
   redactedFriendRequests?: string[]
   friends?: string[]
   joinDate?: Timestamp
+  isBanned?: boolean
+  moderatorLevel?: 0 | 1 | 2
   isLoading?: boolean
 }
 
@@ -44,6 +46,8 @@ export const UserData: React.FC<Props> = ({
   betWinCount = 0,
   friends,
   joinDate,
+  isBanned,
+  moderatorLevel,
   isLoading,
 }) => {
   const { isDarkOn } = DarkMode.useContainer()
@@ -53,7 +57,6 @@ export const UserData: React.FC<Props> = ({
       : 0
 
   const trust = `${betFundedCount} / ${betAcceptedCount}`
-  const { userData } = UserDataState.useContainer()
 
   return (
     <div className="flex h-96 w-64 flex-col items-center justify-between py-1.5">
@@ -69,12 +72,17 @@ export const UserData: React.FC<Props> = ({
           />
           <div className="relative">
             <div className="absolute bottom-0 right-0 translate-x-7 translate-y-1.5">
-              {id &&
-                displayName &&
-                (userData?.moderatorLevel ?? 0) > 0 &&
-                id !== (userData?.id ?? "") && (
-                  <BanUserButton id={id} displayName={displayName} />
-                )}
+              <BanUserButton
+                id={id}
+                displayName={displayName}
+                isBanned={isBanned}
+                moderatorLevel={moderatorLevel}
+              />
+            </div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+              {isBanned && (
+                <MdBlockFlipped color="red" size={90} title="User Is Banned" />
+              )}
             </div>
             <img
               src={photoURL}
@@ -89,6 +97,14 @@ export const UserData: React.FC<Props> = ({
                 {`Joined ${new Date(
                   joinDate!.seconds * 1000,
                 ).toLocaleDateString("en-US")}`}
+              </p>
+            )}
+            {(moderatorLevel ?? 0) == 1 && (
+              <p className="text-xs font-extrabold text-green-600">MOD</p>
+            )}
+            {(moderatorLevel ?? 0) == 2 && (
+              <p className="text-xs font-extrabold text-purple-700 dark:text-yellow-400">
+                SUPER MOD
               </p>
             )}
           </div>
