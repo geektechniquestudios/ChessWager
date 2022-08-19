@@ -9,7 +9,7 @@ export const BettingLobby: React.FC = () => {
   const { isRealTime } = LobbyHeaderState.useContainer()
 
   return (
-    <div className="border-t border-stone-400 bg-stone-400 dark:border-stone-600 dark:bg-stone-800 sm:flex">
+    <div className="border-white-400 border-t bg-white dark:border-stone-600 dark:bg-stone-800 sm:flex">
       <WagerForm />
       <main className="w-full">
         <div className="overflow-y-hidden">
