@@ -676,13 +676,9 @@ service cloud.firestore {
           request.resource.data.isBanned == true;
       }
 
-      function isSenderModerator() {
+      function isSenderModLevelHigher() {
         let userData = getUserData();
-        return userData.moderatorLevel > 0;
-      }
-
-      function isReceiverModerator() {
-        return resource.data.moderatorLevel > 0;
+        return userData.moderatorLevel > resource.data.moderatorLevel;
       }
 
       allow update: if canCreate() &&
@@ -696,7 +692,7 @@ service cloud.firestore {
         (!doesProfileBelongToUser() && isTargetFriendRequestAcceptDataValid() && isTargetFriendRequestAcceptKeyValid()) || // other user accepts request
         (doesProfileBelongToUser() && isUserNotificationUpdateKeyValid() && isUserNotificationUpdateDataValid()) || // user clicks notification button
         (isRemoveFriendUpdateKeyValid() && isRemoveFriendUpdateDataValid()) ||  // removeFriend button click
-        (isBanUserUpdateKeyValid() && isBanUserUpdateDataValid() && isSenderModerator() && !isReceiverModerator()) // ban user button click
+        (isBanUserUpdateKeyValid() && isBanUserUpdateDataValid() && isSenderModLevelHigher()) // ban user button click
       );
     }
  

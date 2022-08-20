@@ -37,7 +37,7 @@ export const BanUserButton: React.FC<Props> = ({
     <>
       {id &&
         displayName &&
-        (userData?.moderatorLevel ?? 0) > 0 &&
+        (userData?.moderatorLevel ?? 0) > (moderatorLevel ?? 0) &&
         id !== (userData?.id ?? "") &&
         (!isBanned ?? true) && (
           <DropdownButton
