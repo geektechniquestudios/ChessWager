@@ -11,6 +11,7 @@ import { RemoveFriendButton } from "./buttons/RemoveFriendButton"
 import { CancelPendingRequestButton } from "./buttons/CancelPendingRequestButton"
 import { FriendRequestsButton } from "./buttons/FriendRequestsButton"
 import { UserDataState } from "../../../../containers/UserDataState"
+import { ContractDataButton } from "./buttons/ContractDataButton"
 
 const db = getFirestore(firebaseApp)
 
@@ -78,6 +79,7 @@ export const UserButtonsArea: React.FC<Props> = ({
             <div className="flex gap-2">
               <FriendRequestsButton />
               <BlockedButton />
+              <ContractDataButton />
             </div>
             {isWalletConnected ? (
               <a

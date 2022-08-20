@@ -119,7 +119,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
         console.error(err)
       }
     } else {
-      console.log("window.eth undefined!") // tell user to install metamask
+      alert("Please install MetaMask to place a bet.")
     }
   }
 
