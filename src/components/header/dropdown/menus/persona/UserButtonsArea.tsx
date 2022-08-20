@@ -81,7 +81,7 @@ export const UserButtonsArea: React.FC<Props> = ({
             </div>
             {isWalletConnected ? (
               <a
-                className="color-shift rounded-full border border-stone-400 bg-white py-1 px-2 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-800 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
+                className="color-shift rounded-full border border-stone-600 bg-white py-1 px-2 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-400 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
                 title={"View Wallet on Snowtrace"}
                 href={"https://snowtrace.io/address/" + walletAddress}
                 rel="noopener noreferrer"
