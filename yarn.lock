@@ -1452,7 +1452,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/react@npm:^6.1.0":
+"@cypress/react@npm:^6.1.1":
   version: 6.1.1
   resolution: "@cypress/react@npm:6.1.1"
   peerDependencies:
@@ -1493,7 +1493,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/vite-dev-server@npm:^3.1.0":
+"@cypress/vite-dev-server@npm:^3.1.1":
   version: 3.1.1
   resolution: "@cypress/vite-dev-server@npm:3.1.1"
   dependencies:
@@ -3288,13 +3288,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomiclabs/hardhat-ethers@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@nomiclabs/hardhat-ethers@npm:2.1.0"
+"@nomiclabs/hardhat-ethers@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@nomiclabs/hardhat-ethers@npm:2.1.1"
   peerDependencies:
     ethers: ^5.0.0
     hardhat: ^2.0.0
-  checksum: 16fcde7fbce0b953daa3520148b0054d4951434d39d454b13dedb795d10b89893b199f1c3ed2856c196a229fc470c6cbd3ceff5895a94f52996b99a55515525d
+  checksum: c702ffcd2830cdd4eda90e0f6ee191be327bb4c0293d90631eb7e44442662ff4f7282725f0e2f8f456cd2a3dbf7590a682ef31f5c6c141ba6b562870a02e1523
   languageName: node
   linkType: hard
 
@@ -6121,13 +6121,13 @@ __metadata:
   resolution: "chess-wager@workspace:."
   dependencies:
     "@cypress/mount-utils": ^2.0.1
-    "@cypress/react": ^6.1.0
-    "@cypress/vite-dev-server": ^3.1.0
+    "@cypress/react": ^6.1.1
+    "@cypress/vite-dev-server": ^3.1.1
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@mui/material": ^5.9.3
     "@mui/system": ^5.9.3
-    "@nomiclabs/hardhat-ethers": ^2.1.0
+    "@nomiclabs/hardhat-ethers": ^2.1.1
     "@nomiclabs/hardhat-waffle": ^2.0.1
     "@openzeppelin/contracts": ^4.7.3
     "@react-chess/chessground": ^1.2.2
@@ -6144,7 +6144,7 @@ __metadata:
     autoprefixer: ^10.4.2
     can-ndjson-stream: ^1.0.2
     chai: ^4.3.6
-    cypress: 10.4.0
+    cypress: 10.6.0
     cypress-dotenv: ^2.0.0
     cypress-firebase: ^2.2.1
     cypress-react-selector: ^3.0.0
@@ -6153,7 +6153,7 @@ __metadata:
     ethers: ^5.6.9
     firebase: ^9.9.2
     firebase-admin: ^11.0.1
-    hardhat: ^2.10.1
+    hardhat: ^2.10.2
     postcss: ^8.4.16
     prettier: ^2.7.0
     prettier-plugin-solidity: ^1.0.0-beta.18
@@ -6844,9 +6844,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:10.4.0":
-  version: 10.4.0
-  resolution: "cypress@npm:10.4.0"
+"cypress@npm:10.6.0":
+  version: 10.6.0
+  resolution: "cypress@npm:10.6.0"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -6892,7 +6892,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 3f7385e076ac936683d1d1d104a7183f2e61ad0f4c901aff07146ae2e10197e8314019dcdfb6c188312fbf1be05484291f1cf8d49c4c37cf6485103c4ac5303e
+  checksum: 53993d2d712222df13ef4802db051fee8a7ac59b180ed11b22e6f10d36f5d9b2c2622f1bbfa012f61c7756139287a976abd075275ddd37191b13f40ec8deaa85
   languageName: node
   linkType: hard
 
@@ -9722,9 +9722,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:^2.10.1":
-  version: 2.10.1
-  resolution: "hardhat@npm:2.10.1"
+"hardhat@npm:^2.10.2":
+  version: 2.10.2
+  resolution: "hardhat@npm:2.10.2"
   dependencies:
     "@ethereumjs/block": ^3.6.2
     "@ethereumjs/blockchain": ^5.5.2
@@ -9784,7 +9784,7 @@ __metadata:
       optional: true
   bin:
     hardhat: internal/cli/cli.js
-  checksum: ca9060a25fc620f7be412eb49496603dbb311e2eff0a5d689aa632ff7947aa433009fe4155250acb81daaa6557fb075602174e8313460659891233768881f368
+  checksum: 3034a213d25d2727fc80e4b45a6e82dc0ae01ec7b9fb669ee3650fa8a1ba8d38f29f689440826b8747fb2647882da15efb524d077e18c7e9eb55ebd574b9052a
   languageName: node
   linkType: hard
 
