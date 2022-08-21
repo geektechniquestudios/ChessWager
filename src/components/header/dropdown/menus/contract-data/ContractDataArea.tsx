@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { BigNumber, ethers } from "ethers"
 import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 
+//@ts-ignore
 const contractAddress = import.meta.env.VITE_METAMASK_ACCOUNT_ADDRESS
 
 interface Props {}
@@ -11,6 +12,10 @@ declare let window: any
 export const ContractDataArea: React.FC<Props> = ({}) => {
   const [contractBalanceUSD, setContractBalanceUSD] = useState<number>(0)
   const [contractBalanceAVAX, setContractBalanceAVAX] = useState<number>(0)
+
+  const overrides = {
+    gasLimit: 1000000,
+  }
 
   // use this version for mainnet inclusion
   // const isCorrectBlockchain = async (
@@ -82,7 +87,7 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   }
 
   const withdrawBalance = async (contract: ethers.Contract) => {
-    return contract.withdrawChessWagerBalance()
+    return contract.withdrawChessWagerBalance(overrides)
   }
 
   useEffect(() => {
@@ -90,7 +95,7 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   }, [])
 
   return (
-    <div className="h-60 justify-center flex w-full">
+    <div className="flex h-60 w-full justify-center">
       <div className="flex flex-col justify-evenly">
         <div className="flex flex-col gap-2">
           <p className="flex justify-center text-3xl">
