@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
-import { BigNumber, ethers } from "ethers"
+import { ethers } from "ethers"
 import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
+import { Price } from "../../../../containers/Price"
 
 //@ts-ignore
-const contractAddress = import.meta.env.VITE_METAMASK_ACCOUNT_ADDRESS
+const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
 
 interface Props {}
 
@@ -13,9 +14,7 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   const [contractBalanceUSD, setContractBalanceUSD] = useState<number>(0)
   const [contractBalanceAVAX, setContractBalanceAVAX] = useState<number>(0)
 
-  const overrides = {
-    gasLimit: 1000000,
-  }
+  const { avaxPrice } = Price.useContainer()
 
   // use this version for mainnet inclusion
   // const isCorrectBlockchain = async (
@@ -53,7 +52,7 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   }
 
   const callContract = async (
-    contractCall: (contract: ethers.Contract) => any,
+    contractCallFunction: (contract: ethers.Contract) => any,
   ) => {
     if (typeof window.ethereum === undefined)
       alert("Please install MetaMask to place a bet.")
@@ -70,28 +69,31 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
       if (!(await isCorrectBlockchain(provider))) {
         return
       }
-      // const transaction = await contract.viewChessWagerBalance()
-      const transaction = await contractCall(contract)
-      console.log(transaction)
-      transaction.wait().then(() => {
-        contract.removeAllListeners()
-      })
+      await contractCallFunction(contract)
+      contract.removeAllListeners()
     } catch (err) {
       contract.removeAllListeners()
       console.error(err)
     }
   }
 
-  const balanceCheck = async (contract: ethers.Contract) => {
-    return contract.viewChessWagerBalance()
+  const getBalance = async (contract: ethers.Contract) => {
+    const balance = await contract.viewChessWagerBalance()
+    const balanceAVAX = Number(
+      (Number(balance.toString()) / 10 ** 18).toFixed(6),
+    )
+    const balanceUSD = Number((balanceAVAX * avaxPrice).toFixed(2))
+
+    setContractBalanceAVAX(balanceAVAX)
+    setContractBalanceUSD(balanceUSD)
   }
 
   const withdrawBalance = async (contract: ethers.Contract) => {
-    return contract.withdrawChessWagerBalance(overrides)
+    return await contract.withdrawChessWagerBalance()
   }
 
   useEffect(() => {
-    callContract(balanceCheck)
+    callContract(getBalance)
   }, [])
 
   return (
@@ -99,10 +101,12 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
       <div className="flex flex-col justify-evenly">
         <div className="flex flex-col gap-2">
           <p className="flex justify-center text-3xl">
+            <p className="p-0.5 text-sm">$</p>
             {contractBalanceUSD.toFixed(2)}
           </p>
           <p className="flex justify-center text-3xl">
             {contractBalanceAVAX.toFixed(6)}
+            <p className="flex flex-col-reverse p-0.5 text-sm">AVAX</p>
           </p>
         </div>
         <button
