@@ -1,5 +1,8 @@
 describe("private messaging", () => {
   beforeEach(() => {
+    cy.visit("/").wait(2000)
+    cy.login().wait(1000)
+
     cy.callFirestore(
       "delete",
       "conversations/XGXaJZxzR9gArv6wKEHZ5MuvSnd2-l4UCe97h60ZCgqlZBh42rajEBp73/messages",
@@ -8,9 +11,6 @@ describe("private messaging", () => {
       "delete",
       "conversations/XGXaJZxzR9gArv6wKEHZ5MuvSnd2-l4UCe97h60ZCgqlZBh42rajEBp73",
     ).wait(2000)
-
-    cy.visit("/")
-    cy.login().wait(1000)
   })
   afterEach(cy.logout)
 
@@ -36,6 +36,7 @@ describe("private messaging", () => {
     cy.get('div[id="convo-body"]').within(() => {
       cy.get('p[id="message"]').first().should("contain", "test message")
     })
+    cy.get('button[id="main-header-button"]').click()
   })
 
   it("should recieve a message", () => {
@@ -46,11 +47,13 @@ describe("private messaging", () => {
     })
     cy.get('button[title="Send Direct Message"]').click()
     cy.get('textArea[id="direct-message-input"]').type("test message")
-    cy.get('button[title="Press Enter to Send"]').click().wait(1000)
-    cy.logout()
+    cy.get('button[title="Press Enter to Send"]').click()
+    cy.logout().wait(1000)
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
-    cy.get('button[title="Messages"]').click().wait(1000)
+    cy.get('button[id="main-header-button"]').click().wait(1000)
+
+    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
+    cy.get('button[title="Messages"]').click()
     cy.get('div[id="conversations-list"]').within(() => {
       cy.get("a").first().click().wait(2000)
     })
@@ -60,18 +63,20 @@ describe("private messaging", () => {
   })
 
   it("should mark unread messages as read when clicked", () => {
-    cy.get('button[title="Search Users"]').click()
+    cy.get('button[title="Search Users"]').click().wait(1000)
     cy.get('input[id="search-users-input"]').type("sumpro molar")
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Send Direct Message"]').click()
+    cy.get('button[title="Send Direct Message"]').click().wait(1000)
     cy.get('textArea[id="direct-message-input"]').type("test message")
     cy.get('button[title="Press Enter to Send"]').click().wait(1000)
+    cy.get('button[id="main-header-button"]').click().wait(1000)
     cy.logout()
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
-    cy.get('button[title="Messages"]').click().wait(1000)
+
+    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
+    cy.get('button[title="Messages"]').click().wait(2000)
     cy.get('div[id="conversations-list"]').within(() => {
       cy.get("a")
         .first()
@@ -82,7 +87,7 @@ describe("private messaging", () => {
     cy.get('div[id="conversations-list"]').within(() => {
       cy.get("a")
         .first()
-        .should("have.css", "background-color", "rgba(0, 0, 0, 0)")
+        .should("have.css", "background-color", "rgba(0, 0, 0, 0)") //@todo
     })
   })
 

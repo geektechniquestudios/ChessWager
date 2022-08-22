@@ -59,8 +59,8 @@ describe("friend requesting", () => {
     cy.get('div[id="header-middle"]').click().wait(1000)
     cy.logout()
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
-    cy.get('button[title="Notifications"]').click()
+    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
+    cy.get('button[title="Notifications"]').click().wait(1000)
     cy.get('div[id="notification-list"]').find("a").should("have.length", 1)
     cy.logout()
   })

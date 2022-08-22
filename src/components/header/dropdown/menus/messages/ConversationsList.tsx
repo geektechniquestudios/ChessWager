@@ -39,7 +39,7 @@ export const ConversationsList: React.FC = ({}) => {
       : [conversation, conversation.user1]
 
   const setAsRead = (conversation: Conversation) => {
-    const setAsReadOnFrontend = (conversation: Conversation) => {
+    const setAsReadOnFrontend = async (conversation: Conversation) => {
       const oldConversationsCopy = [...oldConversations]
       const index = oldConversationsCopy.findIndex(
         (c) => c.id === conversation.id,
@@ -51,7 +51,7 @@ export const ConversationsList: React.FC = ({}) => {
       }
     }
     
-    const setAsReadOnBackend = (conversation: Conversation) => {
+    const setAsReadOnBackend = async (conversation: Conversation) => {
       const conversationDocRef = doc(db, "conversations", conversation.id)
       const isUser1 =
         (conversation?.user1.id ?? "") === (auth.currentUser?.uid ?? " ")

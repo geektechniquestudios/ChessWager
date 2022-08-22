@@ -1,33 +1,24 @@
-beforeEach(() => {
-  cy.visit("/")
-})
+beforeEach(() => {})
 
-export const linkTest = (
-  link: string,
-  id: string,
-  componentToTest: string,
-  functionToRender?: () => void,
-) => {
-  if (functionToRender) beforeEach(functionToRender)
+export const linkTest = (link: string, id: string, componentToTest: string) => {
+  const openToSocialsMenu = () => {
+    cy.get('button[id="main-header-button"]').click().wait(1000)
+    cy.get('a[id="Social"]').click().wait(1000)
+  }
+
   describe(componentToTest, () => {
+    beforeEach(() => {
+      cy.visit("/")
+    })
+    beforeEach(openToSocialsMenu)
+
     it("should open to the link in a new tab", () => {
       cy.get(`a[id=${id}]`).should("have.attr", "target", "_blank")
       cy.get(`a[id=${id}]`).should("have.attr", "rel", "noreferrer noopener")
     })
 
-    it("should respond with a positive status code", () => {
-      cy.get(`a[id=${id}]`).then((res) => {
-        const url = res.prop("href")
-        cy.request({
-          method: "GET",
-          url,
-          retryOnStatusCodeFailure: true,
-        })
-      })
-    })
-
     it("should open to the correct url", () => {
-      cy.get(`a[id=${id}]`).should("have.attr", "href", link)
+      cy.get(`a[id=${id}]`).should("have.attr", "href", link).wait(1000)
     })
   })
 }

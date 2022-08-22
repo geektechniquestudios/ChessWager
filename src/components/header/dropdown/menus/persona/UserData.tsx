@@ -3,8 +3,10 @@ import { BsPiggyBank } from "react-icons/bs"
 import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
 import { FiPercent, FiUsers } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
+import { MdBlockFlipped } from "react-icons/md"
 import { RiHandCoinLine } from "react-icons/ri"
 import { DarkMode } from "../../../../containers/DarkMode"
+import { BanUserButton } from "./buttons/BanUserButton"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtonsArea } from "./UserButtonsArea"
 import { UserDataTile } from "./UserDataTile"
@@ -27,6 +29,8 @@ interface Props {
   redactedFriendRequests?: string[]
   friends?: string[]
   joinDate?: Timestamp
+  isBanned?: boolean
+  moderatorLevel?: 0 | 1 | 2
   isLoading?: boolean
 }
 
@@ -42,6 +46,8 @@ export const UserData: React.FC<Props> = ({
   betWinCount = 0,
   friends,
   joinDate,
+  isBanned,
+  moderatorLevel,
   isLoading,
 }) => {
   const { isDarkOn } = DarkMode.useContainer()
@@ -51,6 +57,7 @@ export const UserData: React.FC<Props> = ({
       : 0
 
   const trust = `${betFundedCount} / ${betAcceptedCount}`
+
   return (
     <div className="flex h-96 w-64 flex-col items-center justify-between py-1.5">
       {isLoading ? (
@@ -63,10 +70,25 @@ export const UserData: React.FC<Props> = ({
             photoURL={photoURL!}
             walletAddress={walletAddress!}
           />
-          <img
-            src={photoURL}
-            className="grid h-24 w-24 place-content-center rounded-full border border-stone-400 dark:border-stone-500"
-          />
+          <div className="relative">
+            <div className="absolute bottom-0 right-0 translate-x-7 translate-y-1.5">
+              <BanUserButton
+                id={id}
+                displayName={displayName}
+                isBanned={isBanned}
+                moderatorLevel={moderatorLevel}
+              />
+            </div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+              {isBanned && (
+                <MdBlockFlipped color="red" size={90} title="User Is Banned" />
+              )}
+            </div>
+            <img
+              src={photoURL}
+              className="grid h-24 w-24 place-content-center rounded-full border border-stone-400 dark:border-stone-500"
+            />
+          </div>
 
           <div className="my-2 flex flex-col items-center justify-center gap-0.5">
             <p className="text-lg">{displayName ?? ""}</p>
@@ -75,6 +97,14 @@ export const UserData: React.FC<Props> = ({
                 {`Joined ${new Date(
                   joinDate!.seconds * 1000,
                 ).toLocaleDateString("en-US")}`}
+              </p>
+            )}
+            {(moderatorLevel ?? 0) == 1 && (
+              <p className="text-xs font-extrabold text-green-600">MOD</p>
+            )}
+            {(moderatorLevel ?? 0) == 2 && (
+              <p className="text-xs font-extrabold text-purple-700 dark:text-yellow-400">
+                SUPER MOD
               </p>
             )}
           </div>

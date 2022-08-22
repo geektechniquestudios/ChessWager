@@ -39,7 +39,7 @@ export const ApproveButton: React.FC<Props> = ({ betId, user1Id, user2Id }) => {
       type="button"
       className="color-shift grid h-8 w-8 animate-pulse place-content-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-800"
       onClick={approve}
-      title="Accept"
+      title="Approve"
     >
       <FiUserCheck color={isDarkOn ? "#bbf7d0" : "#14532d"} size="19" />
     </button>
