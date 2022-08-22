@@ -84,6 +84,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
 
   //
   // use this version until mainnet
+
   const isCorrectBlockchain = async (
     provider: ethers.providers.Web3Provider,
   ) => {
@@ -119,7 +120,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
         console.error(err)
       }
     } else {
-      console.log("window.eth undefined!") // tell user to install metamask
+      alert("Please install MetaMask to place a bet.")
     }
   }
 

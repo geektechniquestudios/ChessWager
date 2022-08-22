@@ -21,7 +21,7 @@ export const SocialMenu: React.FC = () => {
             id="Instagram"
           />,
           <DropdownItem
-            url="https://www.facebook.com/profile.php?id=100073643917469"
+            url="http://www.facebook.com/profile.php?id=100073643917469"
             leftIcon={<RiFacebookCircleLine />}
             text="Facebook"
             id="Facebook"
