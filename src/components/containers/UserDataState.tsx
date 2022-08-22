@@ -19,7 +19,7 @@ export const useUserDataState = () => {
   let userRef
   if (auth.currentUser?.uid)
     userRef = doc(db, "users", auth.currentUser?.uid) as DocumentReference<User>
-  const [userData] = useDocumentData<User>(userRef) ?? []
+  const [userData, isLoading] = useDocumentData<User>(userRef) ?? []
   const { isDropdownOpen, activeMenu } = DropdownState.useContainer()
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const useUserDataState = () => {
     }
   }, [userData?.hasNewNotifications])
 
-  return { userData }
+  return { userData, isLoading }
 }
 
 export const UserDataState = createContainer(useUserDataState)

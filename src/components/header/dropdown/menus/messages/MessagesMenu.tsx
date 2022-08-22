@@ -5,7 +5,7 @@ import { ConversationsList } from "./ConversationsList"
 export const MessagesMenu: React.FC = ({}) => {
   return (
     <Menu
-      menuItems={[<DropdownArea key={2} content={<ConversationsList />} />]}
+      menuItems={[<DropdownArea content={<ConversationsList />} />]}
       thisMenu={"messages"}
     />
   )

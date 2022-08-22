@@ -84,6 +84,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
 
   //
   // use this version until mainnet
+
   const isCorrectBlockchain = async (
     provider: ethers.providers.Web3Provider,
   ) => {
