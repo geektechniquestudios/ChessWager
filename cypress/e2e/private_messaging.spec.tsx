@@ -31,7 +31,7 @@ describe("private messaging", () => {
       cy.get("a").first().click().wait(2000)
     })
     cy.get('button[title="Send Direct Message"]').click()
-    cy.get('textArea[id="direct-message-input"]').type("test message")
+    cy.get('textArea[id="direct-message-input"]').type("test message").wait(1000)
     cy.get('button[title="Press Enter to Send"]').click().wait(1000)
     cy.get('div[id="convo-body"]').within(() => {
       cy.get('p[id="message"]').first().should("contain", "test message")
