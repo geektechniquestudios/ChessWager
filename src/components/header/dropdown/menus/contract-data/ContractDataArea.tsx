@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ethers } from "ethers"
+import { ethers, Transaction } from "ethers"
 import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Price } from "../../../../containers/Price"
 
@@ -89,11 +89,14 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   }
 
   const withdrawBalance = async (contract: ethers.Contract) => {
-    return await contract.withdrawChessWagerBalance()
+    await contract.withdrawChessWagerBalance()
   }
 
   useEffect(() => {
-    callContract(getBalance)
+    const interval = setInterval(() => {
+      callContract(getBalance)
+    }, 3000)
+    return () => clearInterval(interval)
   }, [])
 
   return (
