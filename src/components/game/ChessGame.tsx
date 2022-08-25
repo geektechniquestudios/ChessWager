@@ -6,6 +6,11 @@ import { GameState } from "../containers/GameState"
 import Chessground from "@react-chess/chessground"
 import { GameResultPopup } from "./popup/GameResultPopup"
 
+// import "chessground/assets/chessground.base.css"
+// import "chessground/assets/chessground.brown.css"
+// import "chessground/assets/chessground.cburnett.css"
+// import "chessground/assets/chessground.base.css"
+
 interface Res {
   value: {
     t: string

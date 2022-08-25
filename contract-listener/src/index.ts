@@ -1,9 +1,4 @@
-import {
-  collection,
-  serverTimestamp,
-  setDoc,
-  Timestamp,
-} from "firebase/firestore"
+import { Timestamp } from "firebase/firestore"
 import fs from "fs"
 import firebase from "firebase/compat/app"
 const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
