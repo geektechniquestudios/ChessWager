@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ethers, Transaction } from "ethers"
+import { ethers } from "ethers"
 import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Price } from "../../../../containers/Price"
 

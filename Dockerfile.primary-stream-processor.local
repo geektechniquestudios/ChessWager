@@ -6,8 +6,8 @@ COPY ./chess-data-stream-processor/primary-stream ./chess-data-stream-processor/
 COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/contracts/ChessWager.sol/ChessWager.json
 
 # only in local
-# COPY ./chess-wager-develop-firebase-adminsdk-z02bi-dfa580a7a5.json ./
-COPY ./chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json ./
+COPY ./chess-wager-develop-firebase-adminsdk-z02bi-dfa580a7a5.json ./
+# COPY ./chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json ./
 
 COPY .env ./
 
