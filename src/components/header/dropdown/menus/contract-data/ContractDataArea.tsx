@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { ethers } from "ethers"
 import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Price } from "../../../../containers/Price"
-import { CircularProgress, LinearProgress } from "@mui/material"
+import { CircularProgress } from "@mui/material"
 
 //@ts-ignore
 const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS

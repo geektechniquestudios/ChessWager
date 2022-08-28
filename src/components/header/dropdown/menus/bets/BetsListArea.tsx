@@ -76,7 +76,7 @@ export const BetsListArea: React.FC = ({}) => {
               )
               .map((bet: Bet) => (
                 <BetsListItem
-                  key={bet.createdAt.nanoseconds}
+                  key={bet.id}
                   {...bet}
                   bet={bet}
                 />
