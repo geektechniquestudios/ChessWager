@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { ethers } from "ethers"
 import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Price } from "../../../../containers/Price"
-import { LinearProgress } from "@mui/material"
+import { CircularProgress, LinearProgress } from "@mui/material"
 
 //@ts-ignore
 const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
@@ -108,16 +108,19 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
       <div className="flex flex-col justify-evenly">
         <>
           {isLoading ? (
-            <LinearProgress />
+            <div className="flex justify-center">
+              <CircularProgress />
+            </div>
           ) : (
             <div className="flex flex-col gap-2">
-              <div className="flex text-3xl">
+              <div className="flex justify-end text-3xl">
                 <p className="p-0.5 text-sm">$</p>
                 {contractBalanceUSD.toFixed(2)}
+                <p className="flex w-12 flex-col-reverse p-0.5 text-sm">USD</p>
               </div>
               <div className="flex text-3xl">
                 {contractBalanceAVAX.toFixed(6)}
-                <p className="flex flex-col-reverse p-0.5 text-sm">AVAX</p>
+                <p className="flex w-12 flex-col-reverse p-0.5 text-sm">AVAX</p>
               </div>
             </div>
           )}
