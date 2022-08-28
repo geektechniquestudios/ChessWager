@@ -66,7 +66,7 @@ export const BetsListItem: React.FC<Props> = ({
   const clickedStyle =
     (isUser1 && !hasUser1SeenUpdate) || (isUser2 && !hasUser2SeenUpdate)
       ? "font-bold dark:text-stone-300 text-stone-900"
-      : "dark:text-stone-400 text-stone-700"
+      : "dark:text-stone-400 text-stone-600"
 
   const betRef = id ? doc(db, "lobby", id ?? "") : null
 
