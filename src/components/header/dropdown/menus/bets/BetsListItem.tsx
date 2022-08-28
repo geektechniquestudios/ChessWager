@@ -71,13 +71,13 @@ export const BetsListItem: React.FC<Props> = ({
   const betRef = id ? doc(db, "lobby", id ?? "") : null
 
   const markBetAsRead = () => {
-    if (!betRef) return
+    if (!id) return
     if (isUser1 && !hasUser1SeenUpdate) {
-      updateDoc(betRef, {
+      updateDoc(betRef!, {
         hasUser1SeenUpdate: true,
       })
     } else if (isUser2 && !hasUser2SeenUpdate) {
-      updateDoc(betRef, {
+      updateDoc(betRef!, {
         hasUser2SeenUpdate: true,
       })
     }

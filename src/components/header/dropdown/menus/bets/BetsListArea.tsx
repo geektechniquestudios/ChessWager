@@ -41,7 +41,7 @@ export const BetsListArea: React.FC = ({}) => {
       startAfter(lastVisible),
     ) as Query<Bet>
     const oldBets: Bet[] = (await getDocs(q)).docs.map((d) => {
-      let bet = d.data()
+      let bet = d.data() as Bet
       bet.id = d.id
       return bet
     }) as Bet[]
