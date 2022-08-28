@@ -9,7 +9,7 @@ import { FundedBets } from "./components/funded-bets/FundedBets"
 import { DarkMode } from "./components/containers/DarkMode"
 import { ChatToggle } from "./components/containers/ChatToggle"
 import { ShowChatButton } from "./components/body/ShowChatButton"
-import { createTheme, ThemeProvider } from "@mui/material/styles"
+import { createTheme, ThemeProvider } from "@mui/material"
 
 export const App: React.FC = () => {
   const { isDarkOn } = DarkMode.useContainer()
