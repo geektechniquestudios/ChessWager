@@ -3,10 +3,10 @@ import { UserData } from "../persona/UserData"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 
 export const ClickedUserMenu: React.FC = ({}) => {
-  const { clickedUser } = UserMenuState.useContainer()
+  const { clickedUser, isLoading } = UserMenuState.useContainer()
   return (
     <Menu
-      menuItems={[<UserData key={2} {...clickedUser} />]}
+      menuItems={[<UserData {...clickedUser} isLoading={isLoading} />]}
       thisMenu={"clickedUser"}
     />
   )

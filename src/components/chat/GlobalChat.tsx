@@ -30,7 +30,7 @@ export const GlobalChat: React.FC = () => {
           setFormValue={setChatFormValue}
         />
         <span ref={dummy} />
-        <ChatBody messagesRef={messagesRef} />
+        <ChatBody />
       </main>
     </div>
   )

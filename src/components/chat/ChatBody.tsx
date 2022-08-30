@@ -1,32 +1,14 @@
 import "../../style/scrollbar.scss"
-import { useCollectionData } from "react-firebase-hooks/firestore"
 import { ChatMessage } from "./ChatMessage"
-import {
-  CollectionReference,
-  DocumentData,
-  orderBy,
-  Query,
-  query,
-  Timestamp,
-  where,
-} from "firebase/firestore"
 import type { Message } from "../../interfaces/Message"
-import { useState } from "react"
 import { UserDataState } from "../containers/UserDataState"
+import { GlobalChatState } from "../containers/GlobalChatState"
 
-interface Props {
-  messagesRef: CollectionReference<DocumentData>
-}
+interface Props {}
 
-export const ChatBody: React.FC<Props> = ({ messagesRef }) => {
-  const [timestamp] = useState<Timestamp>(Timestamp.now())
+export const ChatBody: React.FC<Props> = ({}) => {
   const { userData } = UserDataState.useContainer()
-  const q = query(
-    messagesRef,
-    orderBy("createdAt", "desc"),
-    where("createdAt", ">", timestamp),
-  ) as Query<Message>
-  const [messages] = useCollectionData<Message>(q)
+  const { messages } = GlobalChatState.useContainer()
   return (
     <div
       className="scrollbar flex flex-col-reverse overflow-y-auto overflow-x-hidden px-1 pb-3"

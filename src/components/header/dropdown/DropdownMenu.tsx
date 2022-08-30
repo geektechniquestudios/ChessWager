@@ -19,6 +19,7 @@ import { BlockedMenu } from "./menus/blocked/BlockedMenu"
 import { RequestMenu } from "./menus/requests/RequestMenu"
 import { ReportMenu } from "./menus/report/ReportMenu"
 import { MessagesMenu } from "./menus/messages/MessagesMenu"
+import { ContractDataMenu } from "./menus/contract-data/ContractDataMenu"
 
 export const DropdownMenu = () => {
   const { setMenuStack } = DropdownState.useContainer()
@@ -99,6 +100,7 @@ export const DropdownMenu = () => {
             <FriendsMenu />
             <RequestMenu />
             <ReportMenu />
+            <ContractDataMenu />
           </>
         )}
       </div>

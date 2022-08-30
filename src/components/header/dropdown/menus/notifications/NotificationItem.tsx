@@ -58,7 +58,10 @@ export const NotificationItem: React.FC<Props> = ({
     setNotifications(tempNotifications)
   }
 
-  const unreadStyle = isRead ? "" : "bg-stone-100 dark:bg-stone-800"
+  const unreadStyle = isRead
+    ? "dark:text-stone-400 text-stone-600"
+    : "font-bold dark:text-stone-300 text-stone-900"
+
   return (
     <a
       className={`color-shift flex h-12 w-64 items-center justify-between gap-1 px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${unreadStyle}`}

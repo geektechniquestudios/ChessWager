@@ -29,7 +29,10 @@ export const ConvoItem: React.FC<Props> = ({
 }) => {
   const { setActiveMenu, menuStack, setMenuStack } =
     DropdownState.useContainer()
-  const unreadStyle = isRead ? "" : "bg-stone-400 dark:bg-stone-800"
+  const unreadStyle = isRead
+    ? "dark:text-stone-400 text-stone-600"
+    : "font-bold dark:text-stone-300 text-stone-900"
+
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a

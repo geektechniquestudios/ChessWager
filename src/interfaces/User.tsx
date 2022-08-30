@@ -18,4 +18,6 @@ export type User = {
   redactedFriendRequests: string[]
   friends: string[]
   joinDate: Timestamp
+  moderatorLevel: 0 | 1 | 2
+  isBanned: boolean
 }

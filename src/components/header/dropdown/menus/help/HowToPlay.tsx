@@ -7,7 +7,6 @@ export const HowToPlay: React.FC = ({}) => {
     <Menu
       menuItems={[
         <DropdownArea
-          key={2}
           content={
             <div className="my-2 flex w-full flex-col justify-center gap-2 px-2">
               <SectionWrapper

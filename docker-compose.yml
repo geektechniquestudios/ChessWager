@@ -16,6 +16,7 @@ services:
       retries: 3
     volumes:
       - stream_data:/data
+    image: geektechnique/ancillary-stream-processor:latest
 
   primary-stream:
     build:
@@ -29,6 +30,7 @@ services:
       retries: 3
     volumes:
       - stream_data:/data
+    image: geektechnique/primary-stream-processor:latest
 
   contract-listener:
     build:
@@ -42,3 +44,4 @@ services:
       retries: 3
     volumes:
       - stream_data:/data
+    image: geektechnique/contract-listener:latest
