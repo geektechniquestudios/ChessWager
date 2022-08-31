@@ -118,8 +118,8 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
                 {contractBalanceUSD.toFixed(2)}
                 <p className="flex w-12 flex-col-reverse p-0.5 text-sm">USD</p>
               </div>
-              <div className="flex text-3xl">
-                {contractBalanceAVAX.toFixed(6)}
+              <div className="flex justify-end text-3xl">
+                {contractBalanceAVAX.toFixed(4)}
                 <p className="flex w-12 flex-col-reverse p-0.5 text-sm">AVAX</p>
               </div>
             </div>
