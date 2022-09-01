@@ -80,14 +80,14 @@ describe("private messaging", () => {
     cy.get('div[id="conversations-list"]').within(() => {
       cy.get("a")
         .first()
-        .should("have.css", "background-color", "rgb(41, 37, 36)")
+        .should("have.css", "font-weight", "700")
         .click()
     })
     cy.get('button[title="Messages"]').click().wait(1000)
     cy.get('div[id="conversations-list"]').within(() => {
       cy.get("a")
         .first()
-        .should("have.css", "background-color", "rgba(0, 0, 0, 0)") //@todo
+        .should("have.css", "font-weight", "400")
     })
   })
 
