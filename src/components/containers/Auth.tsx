@@ -40,6 +40,7 @@ const useAuth = () => {
   const [user] = useAuthState(auth)
 
   const [isWalletConnecting, setIsWalletConnecting] = useState(false)
+  const [isFirstLogin, setIsFirstLogin] = useState(false)
 
   const connectWallet = async () => {
     if (!user) {
@@ -137,6 +138,8 @@ const useAuth = () => {
           setWalletAddress(doc.data().walletAddress)
           localStorage.setItem("walletAddress", doc.data().walletAddress)
         }
+      }).then(() => {
+        setIsFirstLogin(true)
       })
     }
 
@@ -183,6 +186,7 @@ const useAuth = () => {
     signOutWithGoogle,
     isWalletConnecting,
     doesUserHaveEnoughAvax,
+    isFirstLogin,
   }
 }
 
