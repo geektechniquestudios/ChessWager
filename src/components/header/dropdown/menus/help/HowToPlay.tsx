@@ -1,10 +1,6 @@
-import { ethers } from "ethers"
-import { useEffect, useState } from "react"
 import { DropdownArea } from "../../models/DropdownArea"
 import { Menu } from "../../models/Menu"
 import { SectionWrapper } from "./SectionWrapper"
-
-declare let window: any
 
 export const HowToPlay: React.FC = ({}) => {
   // use this version for mainnet inclusion
@@ -29,7 +25,6 @@ export const HowToPlay: React.FC = ({}) => {
 
   //
   // use this version until mainnet
-  
 
   return (
     <Menu
