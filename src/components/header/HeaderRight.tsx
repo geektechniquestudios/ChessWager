@@ -58,10 +58,7 @@ export const HeaderRight: React.FC = () => {
         title="Notifications"
         openToMenu="notifications"
         icon={
-          <RiNotification3Line
-            size="21"
-            className={`${greenNotificationStyle}`}
-          />
+          <RiNotification3Line size="21" className={greenNotificationStyle} />
         }
         onClick={() => {
           setNewNotificationsToFalse()
@@ -72,7 +69,7 @@ export const HeaderRight: React.FC = () => {
       <MainHeaderButton
         title="Messages"
         openToMenu="messages"
-        icon={<RiChat2Line size="21" className={`${greenMessageStyle}`} />}
+        icon={<RiChat2Line size="21" className={greenMessageStyle} />}
         onClick={() => {
           setNewMessagesToFalse()
           setMenuStack(["messages"])
