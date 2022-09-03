@@ -31,7 +31,7 @@ export const ConvoItem: React.FC<Props> = ({
     DropdownState.useContainer()
   const unreadStyle = isRead
     ? "dark:text-stone-400 text-stone-600"
-    : "font-bold dark:text-stone-300 text-stone-900"
+    : "font-bold dark:text-stone-300 text-stone-700"
 
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid

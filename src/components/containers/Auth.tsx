@@ -40,7 +40,7 @@ const useAuth = () => {
   const [user] = useAuthState(auth)
 
   const [isWalletConnecting, setIsWalletConnecting] = useState(false)
-  const [isFirstLogin, setIsFirstLogin] = useState(false)
+  const [isFirstLogin, setIsFirstLogin] = useState(true)
 
   const connectWallet = async () => {
     if (!user) {

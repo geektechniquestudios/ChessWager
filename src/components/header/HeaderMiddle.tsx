@@ -10,7 +10,7 @@ export const HeaderMiddle: React.FC<Props> = ({}) => {
     DropdownState.useContainer()
 
   return (
-    <div className="flex-auto" id="header-middle">
+    <div className="w-1/3 flex-auto" id="header-middle">
       <div className="flex justify-center">
         {isFirstLogin && (
           <button
