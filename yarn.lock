@@ -1355,9 +1355,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/react@npm:^6.1.1":
-  version: 6.1.1
-  resolution: "@cypress/react@npm:6.1.1"
+"@cypress/react@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@cypress/react@npm:6.2.0"
   peerDependencies:
     "@types/react": ^16.9.16 || ^17.0.0
     cypress: "*"
@@ -1366,7 +1366,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 42ccc6685895f6bc50778fd07dec0415070d94cfd008596b68d9581c65d36a576ab0d71f834f03e9fd13a96749f02050e39ff081d77145496ce4458c1aa65527
+  checksum: ba9d68c09b25ae5fcde18344ff5fa457aecaa516217b79bc9eb3f63eec8d9ee57a81e169de4b00eb6c318cd880041c12f1f269fb0700a598a78c80844f6ba30a
   languageName: node
   linkType: hard
 
@@ -1490,7 +1490,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:^11.10.4":
+"@emotion/react@npm:^11.10.0":
   version: 11.10.4
   resolution: "@emotion/react@npm:11.10.4"
   dependencies:
@@ -3618,12 +3618,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/aspect-ratio@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@tailwindcss/aspect-ratio@npm:0.4.0"
+"@tailwindcss/aspect-ratio@npm:^0.4.1":
+  version: 0.4.2
+  resolution: "@tailwindcss/aspect-ratio@npm:0.4.2"
   peerDependencies:
     tailwindcss: ">=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1"
-  checksum: 106ee15ce10445006a0b6cfb70bf37fc9b47b4e4e146455e61ed6c0c6b6d18255175d8f6991df9ee686d9b5afe4edc3158a22266f22a6b6e8878fd73212efef5
+  checksum: e998fcb0c1a55cae4e83c4510fed0d4d1cba845b7ed79a18451f55377d4a177050c2401af59222662a216aa9c407ef49c475c93db8e13246e0bb3f1ed42f78f8
   languageName: node
   linkType: hard
 
@@ -6027,9 +6027,9 @@ __metadata:
   resolution: "chess-wager@workspace:."
   dependencies:
     "@cypress/mount-utils": ^2.0.1
-    "@cypress/react": ^6.1.1
+    "@cypress/react": ^6.2.0
     "@cypress/vite-dev-server": ^3.1.1
-    "@emotion/react": ^11.10.4
+    "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@mui/material": ^5.10.2
     "@mui/system": ^5.9.3
@@ -6037,7 +6037,7 @@ __metadata:
     "@nomiclabs/hardhat-waffle": ^2.0.1
     "@openzeppelin/contracts": ^4.7.3
     "@react-chess/chessground": ^1.2.2
-    "@tailwindcss/aspect-ratio": ^0.4.0
+    "@tailwindcss/aspect-ratio": ^0.4.1
     "@truffle/hdwallet-provider": ^2.0.14
     "@types/cypress-dotenv": ^2.0.0
     "@types/node": ^18.0.0
@@ -6081,8 +6081,8 @@ __metadata:
     typescript: ^4.7.4
     unstated-next: ^1.1.0
     vite: ^3.0.9
-    vite-plugin-pwa: ^0.12.2
-    web-vitals: ^2.1.4
+    vite-plugin-pwa: ^0.12.4
+    web-vitals: ^3.0.1
   languageName: unknown
   linkType: soft
 
@@ -16493,9 +16493,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-pwa@npm:^0.12.2":
-  version: 0.12.3
-  resolution: "vite-plugin-pwa@npm:0.12.3"
+"vite-plugin-pwa@npm:^0.12.4":
+  version: 0.12.6
+  resolution: "vite-plugin-pwa@npm:0.12.6"
   dependencies:
     debug: ^4.3.4
     fast-glob: ^3.2.11
@@ -16507,7 +16507,7 @@ __metadata:
     vite: ^2.0.0 || ^3.0.0-0
     workbox-build: ^6.4.0
     workbox-window: ^6.4.0
-  checksum: 95cb06de0f4f9025462423fbaa7839f0197616082276d3ec4fd57fa3cc3b2bf47347a186c964594f18e230b2f07fcd18a065fc98f3b7be9a8980c3ca5abfe513
+  checksum: b3577d401ede64c6937a940eca447e64f6f19f74f4588cdd8f201081ed73c1a87e1cb2defa47f7d6f33adb618f5dd7623e7b99d27fc5605ed175d678e64f8e71
   languageName: node
   linkType: hard
 
@@ -16558,10 +16558,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-vitals@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "web-vitals@npm:2.1.4"
-  checksum: 03d3f47dbf55c3dce07beb0ff5de8ddd52e2d0a53a8df5c84e7a16dda93543341d67231fa79b1d9772b091419af4ec0fd395b8bcf451a0e26846e3f76b3d0efc
+"web-vitals@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "web-vitals@npm:3.0.1"
+  checksum: 7990d14812b599601146db6a179008deff16c165f355e93764968748a416101ef4120fd4d562d45b235b683b96ea8d00f06529bfd8708d04effcb57723949c3b
   languageName: node
   linkType: hard
 
