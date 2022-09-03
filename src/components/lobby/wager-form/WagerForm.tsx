@@ -26,6 +26,7 @@ export const WagerForm: React.FC = () => {
     auth,
     connectWallet,
     doesUserHaveEnoughAvax,
+    setHasFirstBetBeenPlaced,
   } = Auth.useContainer()
 
   const user1Metamask = walletAddress
@@ -85,7 +86,11 @@ export const WagerForm: React.FC = () => {
       contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
       hasUser1SeenUpdate: false,
       hasUser2SeenUpdate: false,
-    }).catch(console.error)
+    })
+      .then(() => {
+        setHasFirstBetBeenPlaced(true)
+      })
+      .catch(console.error)
   }
 
   return (

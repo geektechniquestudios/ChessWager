@@ -16,9 +16,9 @@ const db = getFirestore(firebaseApp)
 
 export const useUserDataState = () => {
   const { auth } = Auth.useContainer()
-  let userRef
-  if (auth.currentUser?.uid)
-    userRef = doc(db, "users", auth.currentUser?.uid) as DocumentReference<User>
+  const userRef = auth?.currentUser?.uid
+    ? (doc(db, "users", auth.currentUser!.uid) as DocumentReference<User>)
+    : null
   const [userData, isLoading] = useDocumentData<User>(userRef) ?? []
   const { isDropdownOpen, activeMenu } = DropdownState.useContainer()
 

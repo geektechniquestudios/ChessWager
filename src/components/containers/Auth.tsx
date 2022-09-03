@@ -17,6 +17,7 @@ import {
   serverTimestamp,
   runTransaction,
   DocumentReference,
+  getDoc,
 } from "firebase/firestore"
 import { User } from "../../interfaces/User"
 
@@ -40,7 +41,7 @@ const useAuth = () => {
   const [user] = useAuthState(auth)
 
   const [isWalletConnecting, setIsWalletConnecting] = useState(false)
-  const [isFirstLogin, setIsFirstLogin] = useState(true)
+  const [hasFirstBetBeenPlaced, setHasFirstBetBeenPlaced] = useState(true)
 
   const connectWallet = async () => {
     if (!user) {
@@ -132,14 +133,13 @@ const useAuth = () => {
             moderatorLevel: 0,
             isBanned: false,
           })
+          setHasFirstBetBeenPlaced(false)
         } else if (doc.data().walletAddress ?? "" !== "") {
           setIsWalletConnected(true)
           localStorage.setItem("isWalletConnected", "true")
           setWalletAddress(doc.data().walletAddress)
           localStorage.setItem("walletAddress", doc.data().walletAddress)
         }
-      }).then(() => {
-        setIsFirstLogin(true)
       })
     }
 
@@ -150,6 +150,11 @@ const useAuth = () => {
       .then(addToUsers)
       .catch(console.error)
       .finally(() => {
+        if (!auth.currentUser) return
+        const userDoc = doc(db, "users", auth.currentUser!.uid)
+        getDoc(userDoc).then((doc) => {
+          setHasFirstBetBeenPlaced(doc.data()?.amountBet !== 0)
+        })
         alert(
           "This website is under development. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
         )
@@ -162,6 +167,7 @@ const useAuth = () => {
     setWalletAddress("")
     localStorage.setItem("isWalletConnected", "false")
     localStorage.setItem("walletAddress", "")
+    setHasFirstBetBeenPlaced(true)
   }
 
   const doesUserHaveEnoughAvax = async (price: number) => {
@@ -186,7 +192,8 @@ const useAuth = () => {
     signOutWithGoogle,
     isWalletConnecting,
     doesUserHaveEnoughAvax,
-    isFirstLogin,
+    hasFirstBetBeenPlaced,
+    setHasFirstBetBeenPlaced,
   }
 }
 

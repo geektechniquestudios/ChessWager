@@ -5,14 +5,14 @@ import { DropdownState } from "../containers/DropdownState"
 interface Props {}
 
 export const HeaderMiddle: React.FC<Props> = ({}) => {
-  const { isFirstLogin } = Auth.useContainer()
+  const { hasFirstBetBeenPlaced } = Auth.useContainer()
   const { menuStack, setMenuStack, openDropdownToMenu } =
     DropdownState.useContainer()
 
   return (
     <div className="w-1/3 flex-auto" id="header-middle">
       <div className="flex justify-center">
-        {isFirstLogin && (
+        {!hasFirstBetBeenPlaced && (
           <button
             onClick={() => {
               setMenuStack([...menuStack, "howToPlay"])
