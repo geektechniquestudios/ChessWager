@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0",
+    "@emotion/styled": "^11.10.4",
     "@mui/material": "^5.10.2",
     "@mui/system": "^5.9.3",
     "@openzeppelin/contracts": "^4.7.3",
@@ -31,7 +31,7 @@
     "can-ndjson-stream": "^1.0.2",
     "dotenv": "^16.0.0",
     "ethers": "^5.7.0",
-    "firebase": "^9.9.3",
+    "firebase": "^9.9.4",
     "rc-slider": "^10.0.0",
     "react": "^18.2.0",
     "react-currency-input-field": "^3.5.1",
@@ -47,7 +47,7 @@
     "web-vitals": "^3.0.1"
   },
   "devDependencies": {
-    "@cypress/mount-utils": "^2.0.1",
+    "@cypress/mount-utils": "^2.1.0",
     "@cypress/react": "^6.2.0",
     "@cypress/vite-dev-server": "^3.1.1",
     "@nomiclabs/hardhat-ethers": "^2.1.1",
@@ -67,7 +67,7 @@
     "cypress-react-selector": "^3.0.0",
     "ethereum-waffle": "^3.4.0",
     "firebase-admin": "^11.0.1",
-    "hardhat": "^2.10.2",
+    "hardhat": "^2.11.0",
     "postcss": "^8.4.16",
     "prettier": "^2.7.0",
     "prettier-plugin-solidity": "^1.0.0-beta.18",
