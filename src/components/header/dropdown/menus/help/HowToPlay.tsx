@@ -32,17 +32,18 @@ export const HowToPlay: React.FC = ({}) => {
   // use this version until mainnet
 
   const checkNetowrk = async () => {
-    await window.ethereum.request({ method: "eth_requestAccounts" })
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const { chainId } = await provider.getNetwork()
-    return chainId === 43113
+    // await window.ethereum.request({ method: "eth_requestAccounts" })
+    // const provider = new ethers.providers.Web3Provider(window.ethereum)
+    // const { chainId } = await provider.getNetwork()
+    // return chainId === 43113
+    return true
   }
 
   const [isCorrectNetwork, setIsCorrectNetwork] = useState(false)
 
-  // useEffect(() => {
-  //   checkNetowrk().then(setIsCorrectNetwork)
-  // }, [])
+  useEffect(() => {
+    checkNetowrk().then(setIsCorrectNetwork)
+  }, [])
 
   const isWalletBalancePositive = () => {
     return true
@@ -69,8 +70,8 @@ export const HowToPlay: React.FC = ({}) => {
               <SectionWrapper
                 text="3. Fund your wallet"
                 href="https://app.pangolin.exchange/#/buy"
-                // isComplete={isWalletBalancePositive()}
-                isComplete={true}
+                isComplete={isWalletBalancePositive()}
+                // isComplete={true}
               /> 
                <SectionWrapper
                 text="4. Connect your wallet"
