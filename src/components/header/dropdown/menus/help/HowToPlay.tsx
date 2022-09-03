@@ -40,9 +40,9 @@ export const HowToPlay: React.FC = ({}) => {
 
   const [isCorrectNetwork, setIsCorrectNetwork] = useState(false)
 
-  useEffect(() => {
-    checkNetowrk().then(setIsCorrectNetwork)
-  })
+  // useEffect(() => {
+  //   checkNetowrk().then(setIsCorrectNetwork)
+  // }, [])
 
   const isWalletBalancePositive = () => {
     return true
@@ -69,12 +69,13 @@ export const HowToPlay: React.FC = ({}) => {
               <SectionWrapper
                 text="3. Fund your wallet"
                 href="https://app.pangolin.exchange/#/buy"
-                isComplete={isWalletBalancePositive()}
-              />
-              <SectionWrapper
+                // isComplete={isWalletBalancePositive()}
+                isComplete={true}
+              /> 
+               <SectionWrapper
                 text="4. Connect your wallet"
                 onClick={() => {
-                  connectWallet()
+                  // connectWallet()
                 }}
                 isComplete={true}
               />
