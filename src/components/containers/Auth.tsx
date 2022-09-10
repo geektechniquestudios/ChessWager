@@ -102,7 +102,7 @@ const useAuth = () => {
   }
 
   const signInWithGoogle = async (): Promise<void> => {
-    const addToUsers = async (userCred: UserCredential | any) => {
+    const addToUsers = async (userCred: UserCredential | null) => {
       if (!userCred?.user?.uid || !auth.currentUser) return
       const userDoc = doc(
         db,
@@ -144,9 +144,8 @@ const useAuth = () => {
     }
 
     const provider = new GoogleAuthProvider()
-    const firebaseAuth = getAuth(firebaseApp)
 
-    signInWithPopup(firebaseAuth, provider)
+    signInWithPopup(auth, provider)
       .then(addToUsers)
       .catch(console.error)
       .finally(() => {
