@@ -9,8 +9,7 @@ interface Props {
 }
 
 export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
-  const { openDropdownToMenu, menuStack, setMenuStack } =
-    DropdownState.useContainer()
+  const { goToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { user } = Auth.useContainer()
   const disabledStyle = !user ? "pointer-events-none" : ""
@@ -20,8 +19,7 @@ export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
       className={`float-left mr-1 flex gap-1 ${disabledStyle}`}
       onClick={() => {
         setClickedUserById(uid)
-        openDropdownToMenu("clickedUser")
-        setMenuStack([...menuStack, "clickedUser"])
+        goToMenu("clickedUser")
       }}
     >
       <img

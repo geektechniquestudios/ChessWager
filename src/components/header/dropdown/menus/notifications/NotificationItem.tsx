@@ -37,8 +37,7 @@ export const NotificationItem: React.FC<Props> = ({
   setNotifications,
   notifications,
 }) => {
-  const { setActiveMenu, menuStack, setMenuStack } =
-    DropdownState.useContainer()
+  const { goToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
@@ -69,10 +68,7 @@ export const NotificationItem: React.FC<Props> = ({
       onClick={() => {
         clickedUserId && setClickedUserById(clickedUserId)
         if (openToMenu && openToMenu !== "") {
-          setActiveMenu(openToMenu)
-          const tempMenuStack = menuStack
-          tempMenuStack.push(openToMenu)
-          setMenuStack(tempMenuStack)
+          goToMenu(openToMenu)
         }
         setAsRead()
       }}

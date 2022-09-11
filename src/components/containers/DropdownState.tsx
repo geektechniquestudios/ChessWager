@@ -14,6 +14,11 @@ const useDropdownState = () => {
     setIsDropdownOpen(true)
   }
 
+  const goToMenu = (menu: string) => {
+    setActiveMenu(menu)
+    setMenuStack([...menuStack, menu])
+  }
+
   return {
     isDropdownOpen,
     setIsDropdownOpen,
@@ -26,6 +31,7 @@ const useDropdownState = () => {
     setBet,
     menuStack,
     setMenuStack,
+    goToMenu,
   }
 }
 

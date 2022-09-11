@@ -49,8 +49,7 @@ export const BetsListItem: React.FC<Props> = ({
   user2DisplayName,
   createdAt,
 }) => {
-  const { setActiveMenu, setBet, menuStack, setMenuStack } =
-    DropdownState.useContainer()
+  const { goToMenu, setBet } = DropdownState.useContainer()
   const { auth } = Auth.useContainer()
   const betTotal =
     bet?.amount ?? 0 + (bet?.amount ?? 0) * (bet?.multiplier ?? 0)
@@ -90,8 +89,7 @@ export const BetsListItem: React.FC<Props> = ({
       className={`color-shift flex h-14 w-64 items-center text-stone-600 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${clickedStyle}`}
       onClick={() => {
         setBet(bet!)
-        setActiveMenu("bet")
-        setMenuStack([...menuStack, "bet"])
+        goToMenu("bet")
         markBetAsRead()
       }}
     >

@@ -7,7 +7,6 @@ import { Auth } from "../../../../containers/Auth"
 import { doc, getFirestore, updateDoc } from "firebase/firestore"
 import { firebaseApp } from "../../../../../config"
 import { UserDataState } from "../../../../containers/UserDataState"
-import { DropdownState } from "../../../../containers/DropdownState"
 import { useEffect } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { LinearProgress } from "@mui/material"
@@ -50,7 +49,7 @@ export const ConversationsList: React.FC = ({}) => {
         setOldConversations(oldConversationsCopy)
       }
     }
-    
+
     const setAsReadOnBackend = async (conversation: Conversation) => {
       const conversationDocRef = doc(db, "conversations", conversation.id)
       const isUser1 =
@@ -91,7 +90,6 @@ export const ConversationsList: React.FC = ({}) => {
     )
   }
 
-  const { menuStack, setMenuStack } = DropdownState.useContainer()
   return (
     <div
       className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden text-stone-400 dark:text-stone-400"
@@ -137,7 +135,6 @@ export const ConversationsList: React.FC = ({}) => {
                         setUserIdFromMessages(user.id)
                         setUsernameFromMessages(user.displayName)
                         setAsRead(conversation)
-                        setMenuStack([...menuStack, "conversation"])
                       }}
                       messageThumbnail={conversation.messageThumbnail}
                     />
