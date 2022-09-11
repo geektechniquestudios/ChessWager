@@ -4,11 +4,11 @@ import { MissedPaymentArea } from "./MissedPaymentArea"
 
 interface Props {}
 
-export const MissedPaymentMenu: React.FC<Props> = ({}) => {
+export const MissedPaymentsMenu: React.FC<Props> = ({}) => {
   return (
     <Menu
       menuItems={[<DropdownArea content={<MissedPaymentArea />} />]}
-      thisMenu="missedPayment"
+      thisMenu="missedPayments"
     />
   )
 }
