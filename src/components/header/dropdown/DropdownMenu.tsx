@@ -20,6 +20,7 @@ import { RequestMenu } from "./menus/requests/RequestMenu"
 import { ReportMenu } from "./menus/report/ReportMenu"
 import { MessagesMenu } from "./menus/messages/MessagesMenu"
 import { ContractDataMenu } from "./menus/contract-data/ContractDataMenu"
+import { MissedPaymentMenu } from "./menus/missed-payments/MissedPaymentMenu"
 
 export const DropdownMenu = () => {
   const { setMenuStack } = DropdownState.useContainer()
@@ -101,6 +102,7 @@ export const DropdownMenu = () => {
             <RequestMenu />
             <ReportMenu />
             <ContractDataMenu />
+            <MissedPaymentMenu />
           </>
         )}
       </div>
