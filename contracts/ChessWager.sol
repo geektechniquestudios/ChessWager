@@ -211,58 +211,6 @@ contract ChessWager is Ownable {
     }
   }
 
-  // function payToSpecificBet(
-  //   string calldata _betId,
-  //   string calldata _winningSide
-  // ) external payable onlyOwner {
-  //   Bet memory bet = betIdToBetData[_betId];
-  //   uint256 prizePool = betIdToPrizePool[_betId];
-
-  //   if (
-  //     // bet is not matched
-  //     betIdToIsBetMatched[_betId] == false
-  //   ) {
-  //     // return money to user that bet first
-  //     if (
-  //       // user1 was the only one that paid
-  //       keccak256(abi.encodePacked(betIdToWhoBetFirst[_betId])) ==
-  //       keccak256(abi.encodePacked("user1"))
-  //     ) {
-  //       bet.user1Metamask.transfer(prizePool);
-  //     } else {
-  //       // user2 was the only one that paid
-  //       bet.user2Metamask.transfer((prizePool * bet.multiplier) / 100);
-  //     }
-  //   }
-
-  //   // if game is a draw, then return money to both users
-  //   if (
-  //     keccak256(abi.encodePacked(_winningSide)) ==
-  //     keccak256(abi.encodePacked("draw"))
-  //   ) {
-  //     uint256 user1BetAmount = (prizePool / (1 + (bet.multiplier / 100)));
-  //     bet.user1Metamask.transfer(user1BetAmount);
-  //     bet.user2Metamask.transfer(prizePool - user1BetAmount);
-  //   }
-
-  //   // all checks done, only remaining outcome is one side winning
-  //   // subtract 4.5% vig from prize pool
-  //   uint256 vig = ((prizePool * 9) / 2) / 100;
-  //   chessWagerBalance += vig;
-  //   prizePool -= vig;
-
-  //   // if bet is on winning side
-  //   // remember user1 created the bet, so winningSide is from their perspective
-  //   if (
-  //     keccak256(abi.encodePacked(bet.betSide)) ==
-  //     keccak256(abi.encodePacked(_winningSide))
-  //   ) {
-  //     bet.user1Metamask.transfer(prizePool);
-  //   } else {
-  //     bet.user2Metamask.transfer(prizePool);
-  //   }
-  // }
-
   function withdrawChessWagerBalance() external payable onlyOwner {
     chessWagerAddress.transfer(chessWagerBalance);
     chessWagerBalance = 0;
