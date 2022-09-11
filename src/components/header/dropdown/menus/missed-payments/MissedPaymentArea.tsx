@@ -13,7 +13,7 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
   const [gameId, setGameId] = useState<string>("")
   const [winningSide, setWinningSide] = useState<"white" | "black">("white")
 
-    // use this version for mainnet inclusion
+  // use this version for mainnet inclusion
   // const isCorrectBlockchain = async (
   //   provider: ethers.providers.Web3Provider,
   // ) => {
@@ -88,7 +88,11 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
           }}
         >
           <div className="w-48">
-            <SideChooser betSide={winningSide} setBetSide={setWinningSide} />
+            <SideChooser
+              betSide={winningSide}
+              setBetSide={setWinningSide}
+              title="Winning Side"
+            />
           </div>
           <input
             type="text"
