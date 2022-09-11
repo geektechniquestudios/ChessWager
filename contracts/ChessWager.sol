@@ -119,6 +119,7 @@ contract ChessWager is Ownable {
     }
   }
 
+  // winning side can be "white", "black", or "draw"
   function payWinners(string calldata _gameId, string calldata winningSide)
     external
     payable

@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { SideChooser } from "../../../../lobby/wager-form/SideChooser"
-import { BigNumber, ethers } from "ethers"
+import { ethers } from "ethers"
 
 import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
+import { GameData } from "../../../../../interfaces/GameData"
 
 declare let window: any
 const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
@@ -49,31 +49,50 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
   }
 
   const sendPayment = async () => {
-    if (typeof window.ethereum !== undefined) {
-      await window.ethereum.request({ method: "eth_requestAccounts" })
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer: ethers.providers.JsonRpcSigner = provider.getSigner()
-      const contract = new ethers.Contract(
-        contractAddress,
-        ChessWager.abi,
-        signer,
-      )
-      try {
-        if (!(await isCorrectBlockchain(provider))) {
-          return
-        }
-        const transaction = await contract.payWinners(gameId, winningSide)
-        transaction.wait().then(() => {
-          contract.removeAllListeners()
+    const fetchWinner = async () => {
+      const winner = await fetch(`https://lichess.org/api/game/${gameId}`)
+        .then((res) => res.json())
+        .then((gameData: GameData) => {
+          if (gameData.winner === "white") return "white"
+          else if (gameData.winner === "black") return "black"
+          else if (gameData.status === "draw") return "draw"
+          else throw Error("Game is not over yet.")
         })
-      } catch (err) {
-        contract.removeAllListeners()
-        console.error(err)
-      }
-    } else {
-      alert("Metamask not connected.")
+        .catch(console.error)
+      if (winner === undefined) throw Error("winner is undefined")
+      return winner as "white" | "black" | "draw"
     }
+
+    const callSmartContract = async (winner: "white" | "black" | "draw") => {
+      if (typeof window.ethereum !== undefined) {
+        await window.ethereum.request({ method: "eth_requestAccounts" })
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer: ethers.providers.JsonRpcSigner = provider.getSigner()
+        const contract = new ethers.Contract(
+          contractAddress,
+          ChessWager.abi,
+          signer,
+        )
+        try {
+          if (!(await isCorrectBlockchain(provider))) {
+            return
+          }
+          const transaction = await contract.payWinners(gameId, winner)
+          transaction.wait().then(() => {
+            contract.removeAllListeners()
+          })
+        } catch (err) {
+          contract.removeAllListeners()
+          console.error(err)
+        }
+      } else {
+        alert("Metamask not connected.")
+      }
+    }
+
+    fetchWinner().then(callSmartContract)
   }
+
   return (
     <div className="flex h-60 w-full justify-center rounded-md border-stone-300">
       <fieldset className="mx-auto flex">
@@ -87,13 +106,9 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
             }
           }}
         >
-          <div className="w-48">
-            <SideChooser
-              betSide={winningSide}
-              setBetSide={setWinningSide}
-              title="Winning Side"
-            />
-          </div>
+          {/* <div className="w-48">
+            <SideChooser betSide={winningSide} setBetSide={setWinningSide} />
+          </div> */}
           <input
             type="text"
             value={gameId}
