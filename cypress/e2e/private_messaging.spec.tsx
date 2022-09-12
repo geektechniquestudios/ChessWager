@@ -31,7 +31,9 @@ describe("private messaging", () => {
       cy.get("a").first().click().wait(2000)
     })
     cy.get('button[title="Send Direct Message"]').click()
-    cy.get('textArea[id="direct-message-input"]').type("test message").wait(1000)
+    cy.get('textArea[id="direct-message-input"]')
+      .type("test message")
+      .wait(1000)
     cy.get('button[title="Press Enter to Send"]').click().wait(1000)
     cy.get('div[id="convo-body"]').within(() => {
       cy.get('p[id="message"]').first().should("contain", "test message")
@@ -74,20 +76,14 @@ describe("private messaging", () => {
     cy.get('button[id="main-header-button"]').click().wait(1000)
     cy.logout()
 
-
     cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
     cy.get('button[title="Messages"]').click().wait(2000)
     cy.get('div[id="conversations-list"]').within(() => {
-      cy.get("a")
-        .first()
-        .should("have.css", "font-weight", "700")
-        .click()
+      cy.get("a").first().should("have.css", "font-weight", "700").click()
     })
     cy.get('button[title="Messages"]').click().wait(1000)
     cy.get('div[id="conversations-list"]').within(() => {
-      cy.get("a")
-        .first()
-        .should("have.css", "font-weight", "400")
+      cy.get("a").first().should("have.css", "font-weight", "400")
     })
   })
 

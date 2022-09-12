@@ -1,5 +1,3 @@
-import { before } from "mocha"
-
 describe("user search", () => {
   beforeEach(() => {
     cy.login()

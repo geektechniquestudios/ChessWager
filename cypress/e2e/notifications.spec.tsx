@@ -7,7 +7,7 @@ describe("notifications", () => {
     cy.visit("/")
   })
   after(cy.logout)
-  
+
   it("should show the notification list", () => {
     cy.callFirestore(
       "set",

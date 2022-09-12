@@ -1,5 +1,3 @@
-beforeEach(() => {})
-
 export const linkTest = (link: string, id: string, componentToTest: string) => {
   const openToSocialsMenu = () => {
     cy.get('button[id="main-header-button"]').click().wait(1000)
