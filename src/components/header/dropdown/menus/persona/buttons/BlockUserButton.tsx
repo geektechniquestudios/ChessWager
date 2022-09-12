@@ -5,8 +5,6 @@ import {
   DocumentData,
   getFirestore,
   serverTimestamp,
-  setDoc,
-  updateDoc,
   writeBatch,
 } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"

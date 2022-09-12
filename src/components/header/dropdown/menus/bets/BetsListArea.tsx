@@ -75,11 +75,7 @@ export const BetsListArea: React.FC = ({}) => {
                 (bet) => bet.status === "approved" || bet.status === "funded",
               )
               .map((bet: Bet) => (
-                <BetsListItem
-                  key={bet.id}
-                  {...bet}
-                  bet={bet}
-                />
+                <BetsListItem key={bet.id} {...bet} bet={bet} />
               ))}
           </div>
         </InfiniteScroll>

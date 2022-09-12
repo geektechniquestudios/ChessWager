@@ -28,7 +28,7 @@ export const RequestList: React.FC<Props> = ({}) => {
   return (
     <>
       {!isLoading ? (
-        requests?.length ?? 0 > 0 ? (
+        (requests?.length ?? 0) > 0 ? (
           <div
             className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
             style={{ direction: "rtl" }}

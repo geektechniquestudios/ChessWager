@@ -1,10 +1,8 @@
 import {
   arrayUnion,
   collection,
-  deleteDoc,
   doc,
   getFirestore,
-  updateDoc,
   writeBatch,
 } from "firebase/firestore"
 import { RiUserFollowLine } from "react-icons/ri"
