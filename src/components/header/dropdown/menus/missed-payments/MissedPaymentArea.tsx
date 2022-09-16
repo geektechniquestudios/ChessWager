@@ -106,9 +106,6 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
             }
           }}
         >
-          {/* <div className="w-48">
-            <SideChooser betSide={winningSide} setBetSide={setWinningSide} />
-          </div> */}
           <input
             type="text"
             value={gameId}

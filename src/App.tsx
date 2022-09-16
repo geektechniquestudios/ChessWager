@@ -35,9 +35,7 @@ export const App: React.FC = () => {
           className="color-shift grid overflow-hidden bg-stone-300 dark:bg-black"
           id="page"
         >
-          <header className="color-shift flex items-center border-b border-stone-400 bg-stone-50 dark:border-stone-700 dark:bg-stone-800">
-            <MainHeader />
-          </header>
+          <MainHeader />
 
           <main className="scrollbar flex justify-center overflow-y-auto">
             <div className="w-full">
