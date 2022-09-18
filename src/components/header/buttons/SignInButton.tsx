@@ -1,8 +1,7 @@
 import { Auth } from "../../containers/Auth"
 
 export const SignInButton: React.FC = () => {
-  const { signInWithGoogle } = Auth.useContainer()
-  const { user } = Auth.useContainer()
+  const { signInWithGoogle, user } = Auth.useContainer()
 
   return (
     <>

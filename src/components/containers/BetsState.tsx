@@ -91,14 +91,10 @@ const useBetState = () => {
       case "Multiplier": {
         return sortBasedOnDescending(a.multiplier, b.multiplier)
       }
-      case "Time": {
-        return sortBasedOnDescending(a.createdAt, b.createdAt)
-      }
-      case "": {
-        return 0
-      }
+      case "Time":
+      case "":
       default: {
-        return 0
+        return sortBasedOnDescending(a.createdAt, b.createdAt)
       }
     }
   }

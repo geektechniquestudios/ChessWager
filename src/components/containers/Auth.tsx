@@ -17,7 +17,6 @@ import {
   serverTimestamp,
   runTransaction,
   DocumentReference,
-  getDoc,
 } from "firebase/firestore"
 import { User } from "../../interfaces/User"
 
