@@ -38,7 +38,7 @@ export const App: React.FC = () => {
           <MainHeader />
 
           <main className="scrollbar flex justify-center overflow-y-auto">
-            <div className="w-full">
+            <div className="flex flex-col w-full h-full">
               <ShowChatButton />
               <div className="flex w-auto flex-col">
                 <div className="scrollbar overflow-y-hidden overflow-x-visible sm:flex">

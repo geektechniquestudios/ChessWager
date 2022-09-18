@@ -98,7 +98,7 @@ export const WagerForm: React.FC = () => {
   }
 
   return (
-    <div className="flex h-full justify-between border-stone-400 shadow-2xl dark:border-stone-700 sm:rounded-b-md">
+    <div className="flex flex-col justify-between border-stone-400 dark:border-stone-700 sm:rounded-b-md">
       <fieldset className="mx-auto flex">
         <form
           onSubmit={createWager}
