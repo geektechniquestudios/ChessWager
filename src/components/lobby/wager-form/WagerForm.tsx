@@ -11,8 +11,10 @@ import { TheirBet } from "./TheirBet"
 import {
   addDoc,
   collection,
+  doc,
   getFirestore,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../config"
 import { UserDataState } from "../../containers/UserDataState"
@@ -26,7 +28,6 @@ export const WagerForm: React.FC = () => {
     auth,
     connectWallet,
     doesUserHaveEnoughAvax,
-    setHasFirstBetBeenPlaced,
   } = Auth.useContainer()
 
   const user1Metamask = walletAddress
@@ -41,6 +42,7 @@ export const WagerForm: React.FC = () => {
   const [isAmountEmpty, setIsAmountEmpty] = useState(false)
 
   const lobbyRef = collection(db, "lobby")
+  const userRef = collection(db, "users")
 
   const canUserBet: () => Promise<boolean> = async () => {
     if (!auth.currentUser) {
@@ -88,7 +90,9 @@ export const WagerForm: React.FC = () => {
       hasUser2SeenUpdate: false,
     })
       .then(() => {
-        setHasFirstBetBeenPlaced(true)
+        if (!(auth.currentUser ?? false)) return
+        const userDoc = doc(userRef, auth.currentUser!.uid)
+        updateDoc(userDoc, { hasFirstBetBeenPlaced: true })
       })
       .catch(console.error)
   }

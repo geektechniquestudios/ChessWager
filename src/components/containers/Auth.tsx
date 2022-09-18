@@ -41,7 +41,6 @@ const useAuth = () => {
   const [user] = useAuthState(auth)
 
   const [isWalletConnecting, setIsWalletConnecting] = useState(false)
-  const [hasFirstBetBeenPlaced, setHasFirstBetBeenPlaced] = useState(true)
 
   const connectWallet = async () => {
     if (!user) {
@@ -88,7 +87,7 @@ const useAuth = () => {
     if (!auth.currentUser) return
     const userDoc = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userDoc, {
-      walletAddress,
+      walletAddress: "",
     })
       .then(() => {
         setWalletAddress("")
@@ -132,8 +131,8 @@ const useAuth = () => {
             joinDate: serverTimestamp(),
             moderatorLevel: 0,
             isBanned: false,
+            hasFirstBetBeenPlaced: false,
           })
-          setHasFirstBetBeenPlaced(false)
         } else if (doc.data().walletAddress ?? "" !== "") {
           setIsWalletConnected(true)
           localStorage.setItem("isWalletConnected", "true")
@@ -150,10 +149,6 @@ const useAuth = () => {
       .catch(console.error)
       .finally(() => {
         if (!auth.currentUser) return
-        const userDoc = doc(db, "users", auth.currentUser!.uid)
-        getDoc(userDoc).then((doc) => {
-          setHasFirstBetBeenPlaced(doc.data()?.amountBet !== 0)
-        })
         alert(
           "This website is under development. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
         )
@@ -166,7 +161,6 @@ const useAuth = () => {
     setWalletAddress("")
     localStorage.setItem("isWalletConnected", "false")
     localStorage.setItem("walletAddress", "")
-    setHasFirstBetBeenPlaced(true)
   }
 
   const doesUserHaveEnoughAvax = async (price: number) => {
@@ -191,8 +185,6 @@ const useAuth = () => {
     signOutWithGoogle,
     isWalletConnecting,
     doesUserHaveEnoughAvax,
-    hasFirstBetBeenPlaced,
-    setHasFirstBetBeenPlaced,
   }
 }
 

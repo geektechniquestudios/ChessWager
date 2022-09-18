@@ -20,4 +20,5 @@ export type User = {
   joinDate: Timestamp
   moderatorLevel: 0 | 1 | 2
   isBanned: boolean
+  hasFirstBetBeenPlaced: boolean
 }
