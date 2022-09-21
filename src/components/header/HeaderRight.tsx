@@ -11,7 +11,6 @@ import { doc, getFirestore, updateDoc } from "firebase/firestore"
 import { firebaseApp } from "../../config"
 import { DropdownMenu } from "./dropdown/DropdownMenu"
 import { DropdownState } from "../containers/DropdownState"
-import { motion } from "framer-motion"
 
 const db = getFirestore(firebaseApp)
 
@@ -46,12 +45,7 @@ export const HeaderRight: React.FC = () => {
   const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.7, delay: 0.3 }}
-      className="mx-3 flex w-1/3 flex-auto items-center justify-end gap-1.5 align-middle"
-    >
+    <div className="mx-3 flex w-1/3 flex-auto items-center justify-end gap-1.5 align-middle">
       <MainHeaderButton
         title="Search Users"
         openToMenu="searchUsers"
@@ -60,6 +54,7 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setMenuStack(["searchUsers"])
         }}
+        animationOffset={1}
       />
       <MainHeaderButton
         title="Notifications"
@@ -72,6 +67,7 @@ export const HeaderRight: React.FC = () => {
           setMenuStack(["notifications"])
         }}
         authRequired
+        animationOffset={2}
       />
       <MainHeaderButton
         title="Messages"
@@ -82,6 +78,7 @@ export const HeaderRight: React.FC = () => {
           setMenuStack(["messages"])
         }}
         authRequired
+        animationOffset={3}
       />
       <MainHeaderButton
         id="bets"
@@ -92,6 +89,7 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setMenuStack(["bets"])
         }}
+        animationOffset={4}
       />
       <MainHeaderButton
         title="Persona"
@@ -101,6 +99,7 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setMenuStack(["persona"])
         }}
+        animationOffset={5}
       />
       <SignInButton />
       <MainHeaderButton
@@ -111,8 +110,9 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setMenuStack(["main"])
         }}
+        animationOffset={10}
       />
       {isDropdownOpen && <DropdownMenu />}
-    </motion.div>
+    </div>
   )
 }

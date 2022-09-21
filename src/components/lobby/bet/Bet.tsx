@@ -80,17 +80,18 @@ export const Bet: React.FC<Props> = ({
   )
 
   useEffect(() => {
-    if (
-      (isUser1 || isUser2) &&
-      auth.currentUser &&
-      status !== "funded" &&
-      status !== "pending"
-    ) {
-      setIsSelected(true)
-    } else {
-      setIsSelected(false)
-    }
-  }, [auth.currentUser])
+    setIsSelected(
+      !!(user1Id && user2Id) ||
+        ((isUser1 || isUser2) &&
+          auth.currentUser &&
+          status !== "funded" &&
+          status !== "pending"),
+    )
+  }, [auth.currentUser, user1Id, user2Id, status])
+
+  useEffect(() => {
+    setSelectedBetMap(new Map())
+  }, [gameId])
 
   const selectedStyle =
     isSelected || id === ""
@@ -132,7 +133,7 @@ export const Bet: React.FC<Props> = ({
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         exit={{ scale: 0 }}
-        className="flex w-full justify-center overflow-x-hidden p-0.5 align-middle"
+        className="h-26 flex w-full justify-center overflow-x-hidden p-0.5 align-middle lg:h-14"
       >
         <div
           className={`${pointerEvents} color-shift flex w-full justify-center rounded-lg border border-stone-400 px-1 align-middle dark:border-stone-700 ${selectedStyle} ${disabledStyle}`}
