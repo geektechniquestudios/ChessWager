@@ -22,7 +22,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.4",
     "@mui/material": "^5.10.5",
-    "@mui/system": "^5.10.5",
+    "@mui/system": "^5.10.6",
     "@openzeppelin/contracts": "^4.7.3",
     "@react-chess/chessground": "^1.2.2",
     "@tailwindcss/aspect-ratio": "^0.4.1",
