@@ -1293,7 +1293,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.19.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
   version: 7.19.0
   resolution: "@babel/runtime@npm:7.19.0"
   dependencies:
@@ -3003,6 +3003,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mui/private-theming@npm:^5.10.6":
+  version: 5.10.6
+  resolution: "@mui/private-theming@npm:5.10.6"
+  dependencies:
+    "@babel/runtime": ^7.19.0
+    "@mui/utils": ^5.10.6
+    prop-types: ^15.8.1
+  peerDependencies:
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 2095e9f1dbe04815c17488d54bb81aa909c840c281a41f15b07325e182e317b7f8439532b51cf88123847a6ee92c67761ca91819da916794dd32a29f5767f4ef
+  languageName: node
+  linkType: hard
+
 "@mui/styled-engine@npm:^5.10.5":
   version: 5.10.5
   resolution: "@mui/styled-engine@npm:5.10.5"
@@ -3021,6 +3038,27 @@ __metadata:
     "@emotion/styled":
       optional: true
   checksum: a509f37d395afeb8a9630897ef20094a6f1cc167e9a3b3d1f0d7ac46c4c92a5884cb1912adc94e4840051fe2e1554bc05d7490ad3addbe2faef65fdfdc767bfc
+  languageName: node
+  linkType: hard
+
+"@mui/styled-engine@npm:^5.10.7":
+  version: 5.10.7
+  resolution: "@mui/styled-engine@npm:5.10.7"
+  dependencies:
+    "@babel/runtime": ^7.19.0
+    "@emotion/cache": ^11.10.3
+    csstype: ^3.1.1
+    prop-types: ^15.8.1
+  peerDependencies:
+    "@emotion/react": ^11.4.1
+    "@emotion/styled": ^11.3.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/react":
+      optional: true
+    "@emotion/styled":
+      optional: true
+  checksum: e194f1a1891966cbcad3fd6de5e4a0de05f55af2553add3239b98d849bd5ab4b0f489625e7fce24fe2e2ce3ed5c35d52db975be7a4f6c12dff96f62784768b1e
   languageName: node
   linkType: hard
 
@@ -3052,6 +3090,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mui/system@npm:^5.10.7":
+  version: 5.10.7
+  resolution: "@mui/system@npm:5.10.7"
+  dependencies:
+    "@babel/runtime": ^7.19.0
+    "@mui/private-theming": ^5.10.6
+    "@mui/styled-engine": ^5.10.7
+    "@mui/types": ^7.2.0
+    "@mui/utils": ^5.10.6
+    clsx: ^1.2.1
+    csstype: ^3.1.1
+    prop-types: ^15.8.1
+  peerDependencies:
+    "@emotion/react": ^11.5.0
+    "@emotion/styled": ^11.3.0
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/react":
+      optional: true
+    "@emotion/styled":
+      optional: true
+    "@types/react":
+      optional: true
+  checksum: 32b67ecade09fd822e9b4fbe3147658767175c0cb6881189a5857d23ed4984d8d8c82806347d7e5d340ed3979a5e48e704bc247a0c045cf063c0ee2cb0679b52
+  languageName: node
+  linkType: hard
+
 "@mui/types@npm:^7.2.0":
   version: 7.2.0
   resolution: "@mui/types@npm:7.2.0"
@@ -3076,6 +3142,21 @@ __metadata:
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
   checksum: 591f45a31751092621af120f58a7116e87aa0ca616fb38ba5dc31f2a86534b90c10cc94ede5a7758d04a12c3fa0d4b3d878ebf4ca590b1531c32d4ee9227080a
+  languageName: node
+  linkType: hard
+
+"@mui/utils@npm:^5.10.6":
+  version: 5.10.6
+  resolution: "@mui/utils@npm:5.10.6"
+  dependencies:
+    "@babel/runtime": ^7.19.0
+    "@types/prop-types": ^15.7.5
+    "@types/react-is": ^16.7.1 || ^17.0.0
+    prop-types: ^15.8.1
+    react-is: ^18.2.0
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+  checksum: 794d856b820d3b65f74af32f479fc3ace9693473ae19c54c4d64d655fd162e8e6a16b7429a87d9fa81081bacb70e1c488851599692644124b4b312bbbcaacba4
   languageName: node
   linkType: hard
 
@@ -4832,12 +4913,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.4.11":
-  version: 10.4.11
-  resolution: "autoprefixer@npm:10.4.11"
+"autoprefixer@npm:^10.4.12":
+  version: 10.4.12
+  resolution: "autoprefixer@npm:10.4.12"
   dependencies:
-    browserslist: ^4.21.3
-    caniuse-lite: ^1.0.30001399
+    browserslist: ^4.21.4
+    caniuse-lite: ^1.0.30001407
     fraction.js: ^4.2.0
     normalize-range: ^0.1.2
     picocolors: ^1.0.0
@@ -4846,7 +4927,7 @@ __metadata:
     postcss: ^8.1.0
   bin:
     autoprefixer: bin/autoprefixer
-  checksum: fb8b2abbb0ce5e3c6bc957ffb714b84aa2e6a9f24cf9c139bcfec33ba5e3334f61a132c606a621e04097d026c1f653fe1bda2d1c3dc47b87c9f6b00d90732daa
+  checksum: 6ae79cbacd31fb3d464ec64eb6ad2600f4f689c3080bbe62c5536d539b41b472083a2e941ef99d14aa11142370d6c16e8b05a62f077374933ed991aceb5943d2
   languageName: node
   linkType: hard
 
@@ -5881,7 +5962,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.21.3":
+"browserslist@npm:^4.21.3, browserslist@npm:^4.21.4":
   version: 4.21.4
   resolution: "browserslist@npm:4.21.4"
   dependencies:
@@ -6182,10 +6263,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30000844, caniuse-lite@npm:^1.0.30001399, caniuse-lite@npm:^1.0.30001400":
+"caniuse-lite@npm:^1.0.30000844, caniuse-lite@npm:^1.0.30001400":
   version: 1.0.30001400
   resolution: "caniuse-lite@npm:1.0.30001400"
   checksum: 984e29d3c02fd02a59cc92ef4a5e9390fce250de3791056362347cf901f0d91041246961a57cfa8fed800538d03ee341bc4f7eaed19bf7be0ef8a181d94cd848
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001407":
+  version: 1.0.30001414
+  resolution: "caniuse-lite@npm:1.0.30001414"
+  checksum: 97210cfd15ded093b20c33d35bef9711a88402c3345411dad420c991a41a3e38ad17fd66721e8334c86e9b2e4aa2c1851d3631f1441afb73b92d93b2b8ca890d
   languageName: node
   linkType: hard
 
@@ -6285,7 +6373,7 @@ __metadata:
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.4
     "@mui/material": ^5.10.5
-    "@mui/system": ^5.10.5
+    "@mui/system": ^5.10.7
     "@nomiclabs/hardhat-ethers": ^2.1.1
     "@nomiclabs/hardhat-waffle": ^2.0.1
     "@openzeppelin/contracts": ^4.7.3
@@ -6300,7 +6388,7 @@ __metadata:
     "@types/react-toggle": ^4.0.3
     "@types/react-transition-group": ^4.4.5
     "@vitejs/plugin-react": ^2.0.1
-    autoprefixer: ^10.4.11
+    autoprefixer: ^10.4.12
     can-ndjson-stream: ^1.0.2
     chai: ^4.3.6
     cypress: 10.8.0
@@ -6312,7 +6400,7 @@ __metadata:
     ethers: ^5.7.0
     firebase: ^9.9.4
     firebase-admin: ^11.0.1
-    framer-motion: ^7.3.5
+    framer-motion: ^7.4.0
     hardhat: ^2.11.0
     postcss: ^8.4.16
     prettier: ^2.7.0
@@ -6333,7 +6421,7 @@ __metadata:
     tailwindcss: ^3.1.8
     typescript: ^4.8.3
     unstated-next: ^1.1.0
-    vite: ^3.0.9
+    vite: ^3.1.4
     vite-plugin-pwa: ^0.12.4
     web-vitals: ^3.0.1
   languageName: unknown
@@ -6970,7 +7058,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.0.2, csstype@npm:^3.1.0":
+"csstype@npm:^3.0.2, csstype@npm:^3.1.0, csstype@npm:^3.1.1":
   version: 3.1.1
   resolution: "csstype@npm:3.1.1"
   checksum: 1f7b4f5fdd955b7444b18ebdddf3f5c699159f13e9cf8ac9027ae4a60ae226aef9bbb14a6e12ca7dba3358b007cee6354b116e720262867c398de6c955ea451d
@@ -9267,9 +9355,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^7.3.5":
-  version: 7.3.5
-  resolution: "framer-motion@npm:7.3.5"
+"framer-motion@npm:^7.4.0":
+  version: 7.5.1
+  resolution: "framer-motion@npm:7.5.1"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     "@motionone/dom": 10.13.1
@@ -9284,7 +9372,7 @@ __metadata:
   dependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
-  checksum: cf424759774baec082d4ab6912d5dedb97fa3e2fcf53bd8948b7dc9f22d296d1411c4de7b0608a5dcb95e4664856a8dcfbcd5ada6b5a005a1e3acd9781d7348f
+  checksum: 7785459f34b09b9c0d6534b39f7a0f5ba5748d061a0d9c5ba68fa1bc5a3e0873205f628347218873948be187b8c4e6f037837a35e73d642ea18c509253dcda02
   languageName: node
   linkType: hard
 
@@ -16694,9 +16782,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.0.9":
-  version: 3.1.1
-  resolution: "vite@npm:3.1.1"
+"vite@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "vite@npm:3.1.4"
   dependencies:
     esbuild: ^0.15.6
     fsevents: ~2.3.2
@@ -16722,7 +16810,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: a7f402e1b07d62dc46254d3b38b24b0174e77318900fb72a9623d38b58217ab93f79a3b10594368d64f08d1e080e50e0f07b171202c6141de8b1be1144ada011
+  checksum: f3e532952b896ca7f746de0e51fc8c98ac482b2a5f0b89538ec89ac615f6edbfe45628fe4fbabab4c5fe07f6e4c2e624360af00d8c5c454af31771952b8c6e72
   languageName: node
   linkType: hard
 
