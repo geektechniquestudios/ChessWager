@@ -96,6 +96,7 @@ export const NotificationsList: React.FC = ({}) => {
                 key={notification.id}
                 setNotifications={setNotifications}
                 notifications={notifications}
+                openToMenu={notification.openToMenu}
               />
             ))}
           </div>
