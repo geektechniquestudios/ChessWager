@@ -3786,7 +3786,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solidity-parser/parser@npm:^0.14.3":
+"@solidity-parser/parser@npm:^0.14.5":
   version: 0.14.5
   resolution: "@solidity-parser/parser@npm:0.14.5"
   dependencies:
@@ -6381,7 +6381,7 @@ __metadata:
     hardhat: ^2.12.2
     postcss: ^8.4.18
     prettier: ^2.7.1
-    prettier-plugin-solidity: ^1.0.0-beta.24
+    prettier-plugin-solidity: ^1.0.0-rc.1
     prettier-plugin-tailwindcss: ^0.1.13
     react: ^18.2.0
     react-currency-input-field: ^3.6.9
@@ -13850,11 +13850,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-solidity@npm:^1.0.0-beta.24":
-  version: 1.0.0-dev.24
-  resolution: "prettier-plugin-solidity@npm:1.0.0-dev.24"
+"prettier-plugin-solidity@npm:^1.0.0-rc.1":
+  version: 1.0.0-rc.1
+  resolution: "prettier-plugin-solidity@npm:1.0.0-rc.1"
   dependencies:
-    "@solidity-parser/parser": ^0.14.3
+    "@solidity-parser/parser": ^0.14.5
     emoji-regex: ^10.1.0
     escape-string-regexp: ^4.0.0
     semver: ^7.3.7
@@ -13862,7 +13862,7 @@ __metadata:
     string-width: ^4.2.3
   peerDependencies:
     prettier: ^2.3.0
-  checksum: 526bc7bfee1dde875bc9ac68e35f85578390ac69cac8180c6e522ed9df10775d8f4ec33440a5d267f69d55389aace9ff4c684eb1de637aabab8c3657a65e2324
+  checksum: 8f8edc921b3d89048c688dcb3e6fef2bedcb94de622d5777e83de329d80caf76fc453b9c747bf91d2ad961d8577b10703bd8db259653bd6479c3cd1095973745
   languageName: node
   linkType: hard
 
