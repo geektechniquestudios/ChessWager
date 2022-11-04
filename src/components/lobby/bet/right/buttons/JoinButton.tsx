@@ -12,7 +12,7 @@ import {
   runTransaction,
   updateDoc,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { User } from "../../../../../interfaces/User"
 
 const db = getFirestore(firebaseApp)

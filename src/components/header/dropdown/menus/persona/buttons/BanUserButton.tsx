@@ -1,5 +1,5 @@
 import { doc, getFirestore, updateDoc } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../config"
+import { firebaseApp } from "../../../../../../../firestore.config"
 import { DropdownState } from "../../../../../containers/DropdownState"
 import { UserDataState } from "../../../../../containers/UserDataState"
 import { DropdownButton } from "./DropdownButton"

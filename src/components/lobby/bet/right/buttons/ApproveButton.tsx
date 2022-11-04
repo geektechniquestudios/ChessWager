@@ -8,7 +8,7 @@ import {
   getFirestore,
 } from "firebase/firestore"
 import { FiUserCheck } from "react-icons/fi"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { LobbyState } from "../../../../containers/LobbyState"
 interface Props {

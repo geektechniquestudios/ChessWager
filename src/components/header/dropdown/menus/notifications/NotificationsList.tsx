@@ -12,7 +12,7 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
 import { Notification } from "../../../../../interfaces/Notification"
 import { NotificationItem } from "./NotificationItem"

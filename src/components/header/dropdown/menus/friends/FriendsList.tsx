@@ -6,7 +6,7 @@ import {
   doc,
   getFirestore,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore"
 import { Friend } from "../../../../../interfaces/Friend"
 import { FriendItem } from "./FriendItem"

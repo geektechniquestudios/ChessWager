@@ -9,7 +9,7 @@ import {
   serverTimestamp,
   writeBatch,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { ConversationsState } from "../../../../containers/ConversationsState"

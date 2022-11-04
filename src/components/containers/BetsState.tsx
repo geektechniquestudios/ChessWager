@@ -5,7 +5,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useState } from "react"
 import { Auth } from "./Auth"
 import { LobbyHeaderState } from "./LobbyHeaderState"
-import { firebaseApp } from "../../config"
+import { firebaseApp } from "../../../firestore.config"
 import {
   collection,
   getFirestore,

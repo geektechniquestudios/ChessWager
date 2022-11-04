@@ -2,7 +2,7 @@ import { RiMailSendLine } from "react-icons/ri"
 import { DropdownState } from "../../../../../containers/DropdownState"
 import { DropdownButton } from "./DropdownButton"
 import { Auth } from "../../../../../containers/Auth"
-import { firebaseApp } from "../../../../../../config"
+import { firebaseApp } from "../../../../../../../firestore.config"
 import {
   doc,
   getDoc,

@@ -8,7 +8,7 @@ import {
   getFirestore,
   serverTimestamp,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 

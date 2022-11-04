@@ -2,7 +2,7 @@ import "../../../../../style/scrollbar.scss"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { UsersListItem } from "./UsersListItem"
 import type { User } from "../../../../../interfaces/User"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import {
   collection,
   getFirestore,

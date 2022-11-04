@@ -1,6 +1,6 @@
 import { doc, getFirestore, Timestamp, updateDoc } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { Bet } from "../../../../../interfaces/Bet"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"

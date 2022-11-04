@@ -7,7 +7,7 @@ import {
   updateDoc,
 } from "firebase/firestore"
 import { BsX } from "react-icons/bs"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../containers/UserMenuState"

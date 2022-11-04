@@ -5,7 +5,7 @@ import {
   getFirestore,
 } from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { FriendRequest } from "../../../../../interfaces/FriendRequest"
 import { Auth } from "../../../../containers/Auth"
 import { RequestItem } from "./RequestItem"

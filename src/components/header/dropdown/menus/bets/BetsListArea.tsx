@@ -11,7 +11,7 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
 import { Bet } from "../../../../../interfaces/Bet"
 import { BetsListItem } from "./BetsListItem"

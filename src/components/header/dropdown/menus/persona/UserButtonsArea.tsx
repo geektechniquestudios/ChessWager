@@ -1,5 +1,5 @@
 import { collection, doc, getFirestore } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
 import { AddFriendButton } from "./buttons/AddFriendButton"
 import { BlockUserButton } from "./buttons/BlockUserButton"

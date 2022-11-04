@@ -16,7 +16,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../config"
+import { firebaseApp } from "../../../../firestore.config"
 import { UserDataState } from "../../containers/UserDataState"
 const db = getFirestore(firebaseApp)
 

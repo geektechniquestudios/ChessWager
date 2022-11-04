@@ -8,7 +8,7 @@ import { CgProfile } from "react-icons/cg"
 import { UserDataState } from "../containers/UserDataState"
 import { Auth } from "../containers/Auth"
 import { doc, getFirestore, updateDoc } from "firebase/firestore"
-import { firebaseApp } from "../../config"
+import { firebaseApp } from "../../../firestore.config"
 import { DropdownMenu } from "./dropdown/DropdownMenu"
 import { DropdownState } from "../containers/DropdownState"
 

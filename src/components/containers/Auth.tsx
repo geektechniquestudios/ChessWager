@@ -9,7 +9,7 @@ import {
   signInWithPopup,
   UserCredential,
 } from "firebase/auth"
-import { firebaseApp } from "../../config"
+import { firebaseApp } from "../../../firestore.config"
 import {
   getFirestore,
   doc,
