@@ -6371,6 +6371,7 @@ __metadata:
     cypress-dotenv: ^2.0.0
     cypress-firebase: ^2.2.2
     cypress-react-selector: ^3.0.0
+    dotenv: ^16.0.3
     ethereum-waffle: ^3.4.4
     ethers: ^5.7.2
     firebase: ^9.13.0
@@ -7526,6 +7527,13 @@ __metadata:
     debug: ^4.3.1
     is-string-and-not-blank: ^0.0.2
   checksum: b68bd5e94358443c746d49a9d3f6d7142ef3929700c4f48a7fd7ea1ce78262eda3bb2ad8c896fe5a59048783aafde73094926ce8a3f03b3051b9db356c2979cd
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.0.3":
+  version: 16.0.3
+  resolution: "dotenv@npm:16.0.3"
+  checksum: afcf03f373d7a6d62c7e9afea6328e62851d627a4e73f2e12d0a8deae1cd375892004f3021883f8aec85932cd2834b091f568ced92b4774625b321db83b827f8
   languageName: node
   linkType: hard
 

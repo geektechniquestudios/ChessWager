@@ -28,6 +28,7 @@
     "@truffle/hdwallet-provider": "^2.1.0",
     "@types/react-infinite-scroller": "^1.2.3",
     "can-ndjson-stream": "^1.0.2",
+    "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
     "firebase": "^9.13.0",
     "framer-motion": "^7.6.4",
