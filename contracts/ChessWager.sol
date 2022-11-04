@@ -29,7 +29,7 @@ contract ChessWager is Ownable {
   }
   uint256 private chessWagerBalance;
   address payable private chessWagerAddress;
-  uint256 public totalWagered; // overall amount spent of contract
+  uint256 public totalWagered; // overall amount spent on contract
 
   constructor() {
     // store chesswageraddress
@@ -37,7 +37,7 @@ contract ChessWager is Ownable {
     chessWagerBalance = 0;
   }
 
-  function placeBet(Bet calldata _bet, string calldata _betId) public payable {
+  function placeBet(Bet calldata _bet, string calldata _betId) external payable {
     // ensure no more than 20 seconds has passed since the bet timestamp
     // require(block.timestamp - _bet.timestamp < 20000);
     require(gameIdToIsGameOver[_bet.gameId] != true);
