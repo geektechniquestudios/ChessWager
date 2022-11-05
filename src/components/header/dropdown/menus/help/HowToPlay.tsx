@@ -3,29 +3,6 @@ import { Menu } from "../../models/Menu"
 import { SectionWrapper } from "./SectionWrapper"
 
 export const HowToPlay: React.FC = ({}) => {
-  // use this version for mainnet inclusion
-  // const isCorrectBlockchain = async (
-  //   provider: ethers.providers.Web3Provider,
-  // ) => {
-  //   const { chainId } = await provider.getNetwork()
-  //   if (isLocal && chainId !== 43113) {
-  //     alert("You are on the wrong network. Please switch to the fuji network.")
-  //     return false
-  //   }
-  //   else if (!isLocal && chainId !== 43114) {
-  //     alert(
-  //       "You are on the wrong network. Please switch to the avalanche mainnet.",
-  //     )
-  //     return false
-  //   }
-  //   else {
-  //     return true
-  //   }
-  // }
-
-  //
-  // use this version until mainnet
-
   return (
     <Menu
       menuItems={[
@@ -42,13 +19,13 @@ export const HowToPlay: React.FC = ({}) => {
               />
               <SectionWrapper
                 text="3. Fund your wallet"
-                href="https://app.pangolin.exchange/#/buy"
+                href="https://www.coinbase.com/price/avalanche"
               />
             </div>
           }
         />,
       ]}
-      thisMenu={"howToPlay"}
+      thisMenu="howToPlay"
     />
   )
 }
