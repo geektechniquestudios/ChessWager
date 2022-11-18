@@ -3786,7 +3786,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solidity-parser/parser@npm:^0.14.3":
+"@solidity-parser/parser@npm:^0.14.5":
   version: 0.14.5
   resolution: "@solidity-parser/parser@npm:0.14.5"
   dependencies:
@@ -6380,7 +6380,7 @@ __metadata:
     hardhat: ^2.12.2
     postcss: ^8.4.18
     prettier: ^2.7.1
-    prettier-plugin-solidity: ^1.0.0-beta.24
+    prettier-plugin-solidity: ^1.0.0
     prettier-plugin-tailwindcss: ^0.1.13
     react: ^18.2.0
     react-currency-input-field: ^3.6.9
@@ -7640,7 +7640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emoji-regex@npm:^10.1.0":
+"emoji-regex@npm:^10.2.1":
   version: 10.2.1
   resolution: "emoji-regex@npm:10.2.1"
   checksum: 1aa2d16881c56531fdfc03d0b36f5c2b6221cc4097499a5665b88b711dc3fb4d5b8804f0ca6f00c56e5dcf89bac75f0487eee85da1da77df3a33accc6ecbe426
@@ -13848,19 +13848,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-solidity@npm:^1.0.0-beta.24":
-  version: 1.0.0-dev.24
-  resolution: "prettier-plugin-solidity@npm:1.0.0-dev.24"
+"prettier-plugin-solidity@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "prettier-plugin-solidity@npm:1.0.0"
   dependencies:
-    "@solidity-parser/parser": ^0.14.3
-    emoji-regex: ^10.1.0
+    "@solidity-parser/parser": ^0.14.5
+    emoji-regex: ^10.2.1
     escape-string-regexp: ^4.0.0
-    semver: ^7.3.7
+    semver: ^7.3.8
     solidity-comments-extractor: ^0.0.7
     string-width: ^4.2.3
   peerDependencies:
     prettier: ^2.3.0
-  checksum: 526bc7bfee1dde875bc9ac68e35f85578390ac69cac8180c6e522ed9df10775d8f4ec33440a5d267f69d55389aace9ff4c684eb1de637aabab8c3657a65e2324
+  checksum: 2ca347d66f12dcb397ce3fcf441563c0413f17c8835bea6422625fb190458a6edbdb7c5775ccc8347f049f55f15443361b8fd3ea546a426b4f521c59a16aaf84
   languageName: node
   linkType: hard
 
@@ -15129,7 +15129,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.1.2, semver@npm:^7.3.2, semver@npm:^7.3.5, semver@npm:^7.3.7":
+"semver@npm:^7.1.2, semver@npm:^7.3.2, semver@npm:^7.3.5, semver@npm:^7.3.8":
   version: 7.3.8
   resolution: "semver@npm:7.3.8"
   dependencies:
