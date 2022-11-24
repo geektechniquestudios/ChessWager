@@ -3841,32 +3841,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@truffle/hdwallet-provider@npm:^2.1.0":
-  version: 2.1.0
-  resolution: "@truffle/hdwallet-provider@npm:2.1.0"
+"@truffle/hdwallet-provider@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@truffle/hdwallet-provider@npm:2.1.2"
   dependencies:
     "@ethereumjs/common": ^2.4.0
     "@ethereumjs/tx": ^3.3.0
     "@metamask/eth-sig-util": 4.0.1
-    "@truffle/hdwallet": ^0.1.0
+    "@truffle/hdwallet": ^0.1.1
     "@types/web3": ^1.0.20
     ethereum-cryptography: 1.1.2
     ethereum-protocol: ^1.0.1
     ethereumjs-util: ^7.1.5
     web3: 1.7.4
     web3-provider-engine: 16.0.3
-  checksum: 904dc037575a545058f43827bb986807c889ca9d10bea2aa90a0e1dd5fa5bf78d7db1e8ed00b203d35fdde12d41ad456301654ca13214418343174663ef387a8
+  checksum: 94e4caf3964deacffe39511bb53c3d4b3acda34d26dbca651c27aa990e8410a26b9c4e54c4470e2c1208c8a426599c3584a1e9b32a80899de34ef226bcbf79b5
   languageName: node
   linkType: hard
 
-"@truffle/hdwallet@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@truffle/hdwallet@npm:0.1.0"
+"@truffle/hdwallet@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@truffle/hdwallet@npm:0.1.1"
   dependencies:
     ethereum-cryptography: 1.1.2
     keccak: 3.0.2
     secp256k1: 4.0.3
-  checksum: c17f4af575929851f46812837d5df5f80fbd7a27deb70fb0b291297b599342513e667f251c0c8a5a8e8319f72e62f36352e67902b5a26e73c09e368a5d0adb2d
+  checksum: 2a8b0aba5c874a0cc16daba4240a3841497a29cd24cad0b0f1da04efabaaeefb390c38b10371ad04079c6273d9ce0ca8782f04929bb1daaaef0bb7e97c0dec87
   languageName: node
   linkType: hard
 
@@ -6355,7 +6355,7 @@ __metadata:
     "@openzeppelin/contracts": ^4.7.3
     "@react-chess/chessground": ^1.2.2
     "@tailwindcss/aspect-ratio": ^0.4.2
-    "@truffle/hdwallet-provider": ^2.1.0
+    "@truffle/hdwallet-provider": ^2.1.2
     "@types/cypress-dotenv": ^2.0.0
     "@types/node": ^18.11.9
     "@types/react": ^18.0.24
