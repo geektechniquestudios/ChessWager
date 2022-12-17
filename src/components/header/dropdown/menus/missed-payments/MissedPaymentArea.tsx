@@ -36,18 +36,6 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
   //
   // use this version until mainnet
 
-  const isCorrectBlockchain = async (
-    provider: ethers.providers.Web3Provider,
-  ) => {
-    const { chainId } = await provider.getNetwork()
-    if (chainId !== 43113) {
-      alert("You are on the wrong network. Please switch to the fuji network.")
-      return false
-    } else {
-      return true
-    }
-  }
-
   const sendPayment = async () => {
     const fetchWinner = async () => {
       const winner = await fetch(`https://lichess.org/api/game/${gameId}`)
@@ -64,6 +52,20 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
     }
 
     const callSmartContract = async (winner: "white" | "black" | "draw") => {
+      const isCorrectBlockchain = async (
+        provider: ethers.providers.Web3Provider,
+      ) => {
+        const { chainId } = await provider.getNetwork()
+        if (chainId !== 43113) {
+          alert(
+            "You are on the wrong network. Please switch to the fuji network.",
+          )
+          return false
+        } else {
+          return true
+        }
+      }
+      
       if (typeof window.ethereum !== undefined) {
         await window.ethereum.request({ method: "eth_requestAccounts" })
         const provider = new ethers.providers.Web3Provider(window.ethereum)
