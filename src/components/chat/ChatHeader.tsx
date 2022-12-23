@@ -1,10 +1,7 @@
 import { BiArrowFromLeft } from "react-icons/bi"
-import { RiChatSettingsLine } from "react-icons/ri"
 import { ChatToggle } from "../containers/ChatToggle"
-import { DropdownState } from "../containers/DropdownState"
 
 export const ChatHeader: React.FC = () => {
-  const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
   const { setShowChat } = ChatToggle.useContainer()
   return (
     <header className="global-chat-header flex justify-between border-b border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-700">

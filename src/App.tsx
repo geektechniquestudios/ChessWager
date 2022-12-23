@@ -35,12 +35,10 @@ export const App: React.FC = () => {
           className="color-shift grid overflow-hidden bg-stone-300 dark:bg-black"
           id="page"
         >
-          <header className="color-shift flex items-center border-b border-stone-400 bg-stone-50 dark:border-stone-700 dark:bg-stone-800">
-            <MainHeader />
-          </header>
+          <MainHeader />
 
           <main className="scrollbar flex justify-center overflow-y-auto">
-            <div className="w-full">
+            <div className="flex flex-col w-full h-full">
               <ShowChatButton />
               <div className="flex w-auto flex-col">
                 <div className="scrollbar overflow-y-hidden overflow-x-visible sm:flex">

@@ -7,7 +7,7 @@ import { ChatForm } from "./ChatForm"
 import { ChatBody } from "./ChatBody"
 import { ChatFormData } from "../containers/ChatFormData"
 import { collection, getFirestore } from "firebase/firestore"
-import { firebaseApp } from "../../config"
+import { firebaseApp } from "../../../firestore.config"
 
 const db = getFirestore(firebaseApp)
 

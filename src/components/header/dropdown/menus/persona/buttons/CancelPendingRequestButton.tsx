@@ -1,14 +1,12 @@
 import {
   arrayUnion,
   collection,
-  deleteDoc,
   doc,
   getFirestore,
-  updateDoc,
   writeBatch,
 } from "firebase/firestore"
 import { RiUserFollowLine } from "react-icons/ri"
-import { firebaseApp } from "../../../../../../config"
+import { firebaseApp } from "../../../../../../../firestore.config"
 import { Auth } from "../../../../../containers/Auth"
 import { DropdownButton } from "./DropdownButton"
 

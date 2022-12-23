@@ -4,14 +4,15 @@ import { BsBoxArrowInLeft } from "react-icons/bs"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { LobbyState } from "../../../../containers/LobbyState"
 import {
+  collection,
   doc,
   DocumentData,
   DocumentReference,
-  getDoc,
   getFirestore,
+  runTransaction,
   updateDoc,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { User } from "../../../../../interfaces/User"
 
 const db = getFirestore(firebaseApp)
@@ -29,7 +30,9 @@ export const JoinButton: React.FC<Props> = ({
   isSelected,
   status,
 }) => {
-  const { auth, walletAddress } = Auth.useContainer()
+  const { auth, walletAddress, connectWallet } = Auth.useContainer()
+  const { refreshLobby } = LobbyState.useContainer()
+
   const isUser1 = auth.currentUser?.uid === user1Id
   const userDoc = doc(
     db,
@@ -39,29 +42,37 @@ export const JoinButton: React.FC<Props> = ({
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
 
   const user2DisplayName = auth.currentUser?.displayName
-  const { refreshLobby } = LobbyState.useContainer()
+  const { isWalletConnected } = Auth.useContainer()
 
-  const accept = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const accept = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     event.stopPropagation()
-    getDoc(userDoc)
-      .then((doc) => {
-        const user2FollowThrough = [
-          doc.data()?.betFundedCount ?? 0,
-          doc.data()?.betAcceptedCount ?? 0,
-        ]
-        return user2FollowThrough
+    if (!isWalletConnected) await connectWallet()
+    runTransaction(db, async (transaction) => {
+      const doc = await transaction.get(userDoc)
+      const user2FollowThrough = [
+        doc.data()?.betFundedCount ?? 0,
+        doc.data()?.betAcceptedCount ?? 0,
+      ]
+      transaction.update(betDoc, {
+        status: "pending",
+        user2Id: auth.currentUser?.uid,
+        user2Metamask: walletAddress,
+        user2PhotoURL: auth.currentUser?.photoURL,
+        user2FollowThrough: user2FollowThrough,
+        user2DisplayName: user2DisplayName,
       })
-      .then((user2FollowThrough: number[]) => {
-        updateDoc(betDoc, {
-          status: "pending",
-          user2Id: auth.currentUser?.uid,
-          user2Metamask: walletAddress,
-          user2PhotoURL: auth.currentUser?.photoURL,
-          user2FollowThrough: user2FollowThrough,
-          user2DisplayName: user2DisplayName,
-        })
-          .then(refreshLobby)
-          .catch(console.error)
+    })
+      .then(() => {
+        refreshLobby()
+        if (!(auth.currentUser ?? false)) return
+        const userRef = collection(db, "users")
+        const userDoc = doc(userRef, auth.currentUser!.uid)
+        updateDoc(userDoc, { hasFirstBetBeenPlaced: true })
+      })
+      .catch(() => {
+        alert("Something went wrong. Try reconnecting your wallet.")
       })
   }
 

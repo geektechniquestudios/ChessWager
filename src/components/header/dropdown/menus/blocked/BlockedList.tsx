@@ -1,6 +1,6 @@
 import { collection, doc, getFirestore, Query } from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { BlockedUser } from "../../../../../interfaces/BlockedUser"
 import { Auth } from "../../../../containers/Auth"
 import { BlockedUserItem } from "./BlockedUserItem"

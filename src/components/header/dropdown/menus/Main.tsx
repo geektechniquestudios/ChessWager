@@ -22,13 +22,8 @@ export const Main: React.FC = () => {
     isWalletConnected,
     disconnectWallet,
   } = Auth.useContainer()
-  const {
-    setIsDropdownOpen,
-    setMenuHeight,
-    setActiveMenu,
-    menuStack,
-    setMenuStack,
-  } = DropdownState.useContainer()
+  const { setIsDropdownOpen, setMenuHeight, setActiveMenu, goToMenu } =
+    DropdownState.useContainer()
   const { isDarkOn, setIsDarkOn } = DarkMode.useContainer()
   const updateUserDarkPref = (isChecked: boolean) => {
     localStorage.setItem("darkMode", isChecked.toString())
@@ -41,13 +36,13 @@ export const Main: React.FC = () => {
           leftIcon={<BsShare />}
           goToMenu="social"
           text="Social"
-          onClick={() => setMenuStack([...menuStack, "social"])}
+          onClick={() => goToMenu("social")}
         />,
         <DropdownItem
           leftIcon={<BiHelpCircle />}
           goToMenu="help"
           text="Help"
-          onClick={() => setMenuStack([...menuStack, "help"])}
+          onClick={() => goToMenu("help")}
         />,
         <div id="dark-mode">
           <DropdownItem

@@ -15,7 +15,7 @@ import {
 import { useEffect, useRef, useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import type { Message } from "../../../../../interfaces/Message"
 import { Auth } from "../../../../containers/Auth"
 import { UserDataState } from "../../../../containers/UserDataState"

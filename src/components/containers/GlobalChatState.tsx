@@ -11,7 +11,7 @@ import { useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { createContainer } from "unstated-next"
 import { Message } from "../../interfaces/Message"
-import { firebaseApp } from "../../config"
+import { firebaseApp } from "../../../firestore.config"
 
 const db = getFirestore(firebaseApp)
 

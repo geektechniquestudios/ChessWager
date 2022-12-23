@@ -28,8 +28,7 @@ export const UserBetData: React.FC<Props> = ({
   funded,
 }) => {
   const { avaxPrice } = Price.useContainer()
-  const { setActiveMenu, menuStack, setMenuStack } =
-    DropdownState.useContainer()
+  const { goToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { userData } = UserDataState.useContainer()
   const isUserBlocked = userData?.blockedUsers.includes(id) ?? false
@@ -63,8 +62,7 @@ export const UserBetData: React.FC<Props> = ({
             className="flex hover:underline"
             onClick={() => {
               setClickedUserById(id)
-              setActiveMenu("clickedUser")
-              setMenuStack([...menuStack, "clickedUser"])
+              goToMenu("clickedUser")
             }}
           >
             {displayName}

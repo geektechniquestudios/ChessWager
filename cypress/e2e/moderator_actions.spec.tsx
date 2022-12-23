@@ -1,4 +1,3 @@
-import firebase from "firebase/compat/app"
 import "firebase/compat/firestore"
 
 describe("moderators", () => {
@@ -11,7 +10,6 @@ describe("moderators", () => {
   it("should be able to ban other users", () => {})
 
   it("should not be able to be banned by other moderators", () => {})
-
 })
 
 describe("super moderators", () => {
@@ -28,5 +26,4 @@ describe("super moderators", () => {
   it("should be able to ban other moderators", () => {})
 
   it("should be able to unban other moderators", () => {})
-
 })

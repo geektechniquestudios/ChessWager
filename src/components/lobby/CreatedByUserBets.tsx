@@ -18,9 +18,9 @@ export const CreatedByUserBets: React.FC<Props> = ({}) => {
               bet.gameId !== "" &&
               bet.status !== "funded",
           )
-          .map((bet: Bet, index: number) => (
+          .map((bet: Bet) => (
             <BetComponent
-              key={bet.id + index}
+              key={bet.id}
               {...bet}
               timestamp={bet.timestamp?.seconds}
             />

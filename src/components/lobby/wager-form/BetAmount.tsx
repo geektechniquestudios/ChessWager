@@ -86,7 +86,7 @@ export const BetAmount: React.FC<Props> = ({
             decimalsLimit={6}
             value={localAvaxAmount}
             onValueChange={(value) => {
-              setLocalAvaxAmount(Number(value!) === 0 ? "" : value!)
+              setLocalAvaxAmount(value!)
             }}
             allowNegativeValue={false}
             onBlur={(e) => {

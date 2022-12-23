@@ -7,7 +7,7 @@ import {
 import { useEffect } from "react"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { createContainer } from "unstated-next"
-import { firebaseApp } from "../../config"
+import { firebaseApp } from "../../../firestore.config"
 import { User } from "../../interfaces/User"
 import { Auth } from "./Auth"
 import { DropdownState } from "./DropdownState"
@@ -16,9 +16,9 @@ const db = getFirestore(firebaseApp)
 
 export const useUserDataState = () => {
   const { auth } = Auth.useContainer()
-  let userRef
-  if (auth.currentUser?.uid)
-    userRef = doc(db, "users", auth.currentUser?.uid) as DocumentReference<User>
+  const userRef = auth?.currentUser?.uid
+    ? (doc(db, "users", auth.currentUser!.uid) as DocumentReference<User>)
+    : null
   const [userData, isLoading] = useDocumentData<User>(userRef) ?? []
   const { isDropdownOpen, activeMenu } = DropdownState.useContainer()
 

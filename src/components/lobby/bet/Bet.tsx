@@ -9,6 +9,7 @@ import { RightButtons } from "./right/buttons/RightButtons"
 import { CenterOfBet } from "./center/CenterOfBet"
 import { useEffect, useState } from "react"
 import { BetsState } from "../../containers/BetsState"
+import { AnimatePresence, motion } from "framer-motion"
 
 interface Props {
   id: string
@@ -79,17 +80,18 @@ export const Bet: React.FC<Props> = ({
   )
 
   useEffect(() => {
-    if (
-      (isUser1 || isUser2) &&
-      auth.currentUser &&
-      status !== "funded" &&
-      status !== "pending"
-    ) {
-      setIsSelected(true)
-    } else {
-      setIsSelected(false)
-    }
-  }, [auth.currentUser])
+    setIsSelected(
+      !!(user1Id && user2Id) ||
+        ((isUser1 || isUser2) &&
+          auth.currentUser &&
+          status !== "funded" &&
+          status !== "pending"),
+    )
+  }, [auth.currentUser, user1Id, user2Id, status])
+
+  useEffect(() => {
+    setSelectedBetMap(new Map())
+  }, [gameId])
 
   const selectedStyle =
     isSelected || id === ""
@@ -126,77 +128,84 @@ export const Bet: React.FC<Props> = ({
   }
 
   return (
-    <div className="flex w-full justify-center overflow-x-hidden p-0.5 align-middle">
-      <div
-        className={`${pointerEvents} color-shift flex w-full justify-center rounded-lg border border-stone-400 px-1 align-middle dark:border-stone-700 ${selectedStyle} ${disabledStyle}`}
-        onClick={updateSelectedStatus}
+    <AnimatePresence>
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0 }}
+        className="h-26 flex w-full justify-center overflow-x-hidden p-0.5 align-middle lg:h-14"
       >
-        {id !== "" && (
-          <>
-            <div className="flex w-full justify-end">
-              <LeftButtons
-                user1Id={user1Id}
-                status={status}
-                id={id}
-                amount={amount}
-                betSide={betSide}
-                multiplier={multiplier}
-                user1Metamask={user1Metamask}
-                hasUser1Paid={hasUser1Paid}
-                user2Id={user2Id}
-                user2Metamask={user2Metamask}
-                gameId={gameId}
-                timestamp={timestamp}
-                contractAddress={contractAddress}
-                isSelected={isSelected}
-              />
-              <User1Data
-                user1FollowThrough={user1FollowThrough}
-                user1PhotoURL={user1PhotoURL}
-                user1DisplayName={user1DisplayName}
-                amount={amount}
-                multiplier={multiplier}
-                user2Id={user2Id}
-                status={status}
-                hasUser1Paid={hasUser1Paid}
-                user1Id={user1Id}
-              />
-            </div>
-            <CenterOfBet potSize={potSize} betSide={betSide} />
-            <div className="flex w-full justify-start">
-              <User2Data
-                user2FollowThrough={user2FollowThrough}
-                user2PhotoURL={user2PhotoURL}
-                user2DisplayName={user2DisplayName}
-                user1Id={user1Id}
-                user2Id={user2Id}
-                amount={amount}
-                multiplier={multiplier}
-                status={status}
-                isSelected={isSelected}
-                id={id}
-                hasUser2Paid={hasUser2Paid}
-              />
-              <RightButtons
-                user2Id={user2Id}
-                status={status}
-                user1Id={user1Id}
-                id={id}
-                amount={amount}
-                betSide={betSide}
-                multiplier={multiplier}
-                user2Metamask={user2Metamask}
-                hasUser2Paid={hasUser2Paid}
-                user1Metamask={user1Metamask}
-                gameId={gameId}
-                timestamp={timestamp}
-                contractAddress={contractAddress}
-                isSelected={isSelected}
-              />
-            </div>
-          </>
-        )}
-      </div>
-    </div>
+        <div
+          className={`${pointerEvents} color-shift flex w-full justify-center rounded-lg border border-stone-400 px-1 align-middle dark:border-stone-700 ${selectedStyle} ${disabledStyle}`}
+          onClick={updateSelectedStatus}
+        >
+          {id !== "" && (
+            <>
+              <div className="flex w-full justify-end">
+                <LeftButtons
+                  user1Id={user1Id}
+                  status={status}
+                  id={id}
+                  amount={amount}
+                  betSide={betSide}
+                  multiplier={multiplier}
+                  user1Metamask={user1Metamask}
+                  hasUser1Paid={hasUser1Paid}
+                  user2Id={user2Id}
+                  user2Metamask={user2Metamask}
+                  gameId={gameId}
+                  timestamp={timestamp}
+                  contractAddress={contractAddress}
+                  isSelected={isSelected}
+                />
+                <User1Data
+                  user1FollowThrough={user1FollowThrough}
+                  user1PhotoURL={user1PhotoURL}
+                  user1DisplayName={user1DisplayName}
+                  amount={amount}
+                  multiplier={multiplier}
+                  user2Id={user2Id}
+                  status={status}
+                  hasUser1Paid={hasUser1Paid}
+                  user1Id={user1Id}
+                />
+              </div>
+              <CenterOfBet potSize={potSize} betSide={betSide} />
+              <div className="flex w-full justify-start">
+                <User2Data
+                  user2FollowThrough={user2FollowThrough}
+                  user2PhotoURL={user2PhotoURL}
+                  user2DisplayName={user2DisplayName}
+                  user1Id={user1Id}
+                  user2Id={user2Id}
+                  amount={amount}
+                  multiplier={multiplier}
+                  status={status}
+                  isSelected={isSelected}
+                  id={id}
+                  hasUser2Paid={hasUser2Paid}
+                />
+                <RightButtons
+                  user2Id={user2Id}
+                  status={status}
+                  user1Id={user1Id}
+                  id={id}
+                  amount={amount}
+                  betSide={betSide}
+                  multiplier={multiplier}
+                  user2Metamask={user2Metamask}
+                  hasUser2Paid={hasUser2Paid}
+                  user1Metamask={user1Metamask}
+                  gameId={gameId}
+                  timestamp={timestamp}
+                  contractAddress={contractAddress}
+                  isSelected={isSelected}
+                />
+              </div>
+            </>
+          )}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   )
 }

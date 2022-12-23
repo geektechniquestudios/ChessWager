@@ -5,12 +5,10 @@ import {
   DocumentData,
   getFirestore,
   serverTimestamp,
-  setDoc,
-  updateDoc,
   writeBatch,
 } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
-import { firebaseApp } from "../../../../../../config"
+import { firebaseApp } from "../../../../../../../firestore.config"
 import { Auth } from "../../../../../containers/Auth"
 import { DropdownState } from "../../../../../containers/DropdownState"
 import { DropdownButton } from "./DropdownButton"

@@ -27,11 +27,11 @@ export const ConvoItem: React.FC<Props> = ({
   messageThumbnail,
   onClick,
 }) => {
-  const { setActiveMenu, menuStack, setMenuStack } =
-    DropdownState.useContainer()
   const unreadStyle = isRead
     ? "dark:text-stone-400 text-stone-600"
-    : "font-bold dark:text-stone-300 text-stone-900"
+    : "font-bold dark:text-stone-300 text-stone-700"
+
+  const { goToMenu: goToMenuDropdown } = DropdownState.useContainer()
 
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
@@ -42,8 +42,7 @@ export const ConvoItem: React.FC<Props> = ({
       className={`color-shift flex h-12 w-64 items-center text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${unreadStyle}`}
       onClick={() => {
         onClick && onClick()
-        goToMenu && setActiveMenu(goToMenu)
-        goToMenu && setMenuStack([...menuStack, goToMenu])
+        goToMenu && goToMenuDropdown(goToMenu)
       }}
     >
       <div className="flex h-full w-full">

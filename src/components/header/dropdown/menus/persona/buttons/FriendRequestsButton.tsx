@@ -5,14 +5,12 @@ import { DropdownButton } from "./DropdownButton"
 interface Props {}
 
 export const FriendRequestsButton: React.FC<Props> = ({}) => {
-  const { setActiveMenu } = DropdownState.useContainer()
-  const { menuStack, setMenuStack } = DropdownState.useContainer()
+  const { goToMenu } = DropdownState.useContainer()
   return (
     <DropdownButton
       content={<FiUsers />}
       onClick={() => {
-        setActiveMenu("requests")
-        setMenuStack([...menuStack, "requests"])
+        goToMenu("requests")
       }}
       title="Friend Requests"
     />

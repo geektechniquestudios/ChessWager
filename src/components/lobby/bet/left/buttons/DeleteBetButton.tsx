@@ -8,7 +8,7 @@ import {
   DocumentReference,
   getFirestore,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 
 const db = getFirestore(firebaseApp)
 

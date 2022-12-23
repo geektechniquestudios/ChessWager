@@ -108,9 +108,8 @@ export const MetamaskPrompt: React.FC<Props> = ({
         signer,
       )
       try {
-        if (!(await isCorrectBlockchain(provider))) {
-          return
-        }
+        if (!(await isCorrectBlockchain(provider))) return
+
         const transaction = await contract.placeBet(bet, betId, overrides)
         transaction.wait().then(() => {
           contract.removeAllListeners()

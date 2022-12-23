@@ -7,7 +7,7 @@ import {
   setDoc,
 } from "firebase/firestore"
 import { CgUnblock } from "react-icons/cg"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
 
 const db = getFirestore(firebaseApp)

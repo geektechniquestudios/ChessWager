@@ -11,10 +11,12 @@ import { TheirBet } from "./TheirBet"
 import {
   addDoc,
   collection,
+  doc,
   getFirestore,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../config"
+import { firebaseApp } from "../../../../firestore.config"
 import { UserDataState } from "../../containers/UserDataState"
 const db = getFirestore(firebaseApp)
 
@@ -40,6 +42,7 @@ export const WagerForm: React.FC = () => {
   const [isAmountEmpty, setIsAmountEmpty] = useState(false)
 
   const lobbyRef = collection(db, "lobby")
+  const userRef = collection(db, "users")
 
   const canUserBet: () => Promise<boolean> = async () => {
     if (!auth.currentUser) {
@@ -85,11 +88,17 @@ export const WagerForm: React.FC = () => {
       contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
       hasUser1SeenUpdate: false,
       hasUser2SeenUpdate: false,
-    }).catch(console.error)
+    })
+      .then(() => {
+        if (!(auth.currentUser ?? false)) return
+        const userDoc = doc(userRef, auth.currentUser!.uid)
+        updateDoc(userDoc, { hasFirstBetBeenPlaced: true })
+      })
+      .catch(console.error)
   }
 
   return (
-    <div className="flex h-full justify-between border-stone-400 shadow-2xl dark:border-stone-700 sm:rounded-b-md">
+    <div className="flex flex-col justify-between border-stone-400 dark:border-stone-700 sm:rounded-b-md">
       <fieldset className="mx-auto flex">
         <form
           onSubmit={createWager}

@@ -6,6 +6,7 @@ export type User = {
   photoURL: string
   hasNewMessages: boolean
 }
+
 export type Conversation = {
   id: string
   userIds: string[]

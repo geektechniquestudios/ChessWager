@@ -3,6 +3,7 @@ import { ethers } from "ethers"
 import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Price } from "../../../../containers/Price"
 import { CircularProgress } from "@mui/material"
+import { DropdownState } from "../../../../containers/DropdownState"
 
 //@ts-ignore
 const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
@@ -103,6 +104,8 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
     return () => clearInterval(interval)
   }, [])
 
+  const { goToMenu } = DropdownState.useContainer()
+
   return (
     <div className="flex h-60 w-full justify-center">
       <div className="flex flex-col justify-evenly">
@@ -118,8 +121,8 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
                 {contractBalanceUSD.toFixed(2)}
                 <p className="flex w-12 flex-col-reverse p-0.5 text-sm">USD</p>
               </div>
-              <div className="flex text-3xl">
-                {contractBalanceAVAX.toFixed(6)}
+              <div className="flex justify-end text-3xl">
+                {contractBalanceAVAX.toFixed(4)}
                 <p className="flex w-12 flex-col-reverse p-0.5 text-sm">AVAX</p>
               </div>
             </div>
@@ -132,6 +135,14 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
           }}
         >
           Withdraw Balance
+        </button>
+        <button
+          className="color-shift clickable rounded-md border border-stone-500 bg-stone-200 px-2 py-1.5 font-bold text-stone-800 hover:border-black hover:bg-white hover:text-stone-800 dark:border-stone-500 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-300"
+          onClick={() => {
+            goToMenu("missedPayments")
+          }}
+        >
+          Missed Payments
         </button>
       </div>
     </div>

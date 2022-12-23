@@ -3,6 +3,7 @@ import { BetsState } from "../containers/BetsState"
 import { Bet as BetComponent } from "./bet/Bet"
 import { LobbyHeaderState } from "../containers/LobbyHeaderState"
 import { UserDataState } from "../containers/UserDataState"
+import { GameState } from "../containers/GameState"
 
 interface Props {}
 
@@ -13,12 +14,13 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
     BetsState.useContainer()
 
   const { userData } = UserDataState.useContainer()
+  const { gameId } = GameState.useContainer()
 
   useEffect(() => {
     updateRealTimeBets()
   }, [bets, mostRecentButton, isDescending])
 
-  useEffect(clearMapForLobbyChange, [isRealTime])
+  useEffect(clearMapForLobbyChange, [isRealTime, gameId])
   return (
     <>
       {realTimeBets
@@ -30,7 +32,7 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
         )
         .map((bet, index) => (
           <BetComponent
-            key={bet.id + index}
+            key={bet.id}
             {...bet}
             timestamp={bet.timestamp?.seconds}
             index={index}
