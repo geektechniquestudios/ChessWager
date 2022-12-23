@@ -6687,7 +6687,7 @@ __metadata:
     react: ^18.2.0
     react-currency-input-field: ^3.6.9
     react-dom: ^18.2.0
-    react-firebase-hooks: ^4.0.2
+    react-firebase-hooks: ^5.1.1
     react-icons: ^4.7.1
     react-infinite-scroll-component: ^6.1.0
     react-test-renderer: ^18.2.0
@@ -14453,13 +14453,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-firebase-hooks@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "react-firebase-hooks@npm:4.0.2"
+"react-firebase-hooks@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "react-firebase-hooks@npm:5.1.1"
   peerDependencies:
     firebase: ">= 9.0.0"
     react: ">= 16.8.0"
-  checksum: d7160ccf18e32c39c4286e44708f64c8584b8aec2267cb35eacc4ae682521726e24ad045288f655efa184d5ffbc9073ef37a12ef8b6bbd1fa6aceaac23da70a2
+  checksum: f7dbc42202082e35a4bbd60e6b729cf7a1a14ca300850f35dbcbda3fe3ecef0c1f8157c5dec711edfd3d6e021f2626e768241296598896731a56ce768bab829b
   languageName: node
   linkType: hard
 
