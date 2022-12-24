@@ -11,7 +11,6 @@ interface Props {}
 
 export const MissedPaymentArea: React.FC<Props> = ({}) => {
   const [gameId, setGameId] = useState<string>("")
-  const [winningSide, setWinningSide] = useState<"white" | "black">("white")
 
   // use this version for mainnet inclusion
   // const isCorrectBlockchain = async (
