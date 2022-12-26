@@ -9,7 +9,7 @@ import {
   getFirestore,
   updateDoc,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 const db = getFirestore(firebaseApp)
 
 interface Props {

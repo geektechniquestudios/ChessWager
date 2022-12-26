@@ -38,7 +38,7 @@
 }
 
 .toggle.react-toggle--checked .react-toggle-thumb {
-  @apply bg-stone-800 pointer-events-none border-stone-700;
+  @apply pointer-events-none border-stone-700 bg-stone-800;
 }
 
 .filter-toggle.react-toggle--checked .react-toggle-track {
@@ -46,9 +46,9 @@
 }
 
 .filter-toggle.react-toggle .react-toggle-track {
-  @apply bg-gradient-to-r bg-stone-800 to-stone-300;
+  @apply bg-stone-800 bg-gradient-to-r to-stone-300;
 }
 
 .filter-toggle.react-toggle--checked .react-toggle-thumb {
-  @apply bg-stone-800 pointer-events-none border-stone-700;
+  @apply pointer-events-none border-stone-700 bg-stone-800;
 }

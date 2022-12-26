@@ -4,6 +4,7 @@ import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json
 import { Auth } from "../containers/Auth"
 import "../../style/buttons.scss"
 import { DarkMode } from "../containers/DarkMode"
+import { CustomSwal } from "../popups/CustomSwal"
 //@ts-ignore
 const isLocal = import.meta.env.VITE_BRANCH_ENV === "develop"
 
@@ -68,13 +69,19 @@ export const MetamaskPrompt: React.FC<Props> = ({
   // ) => {
   //   const { chainId } = await provider.getNetwork()
   //   if (isLocal && chainId !== 43113) {
-  //     alert("You are on the wrong network. Please switch to the fuji network.")
+  // Swal.fire({
+  //   icon: "error",
+  //   title: "Wrong network!",
+  //   text: `You are on the wrong network. Please switch to the fuji network.`,
+  // })
   //     return false
   //   }
   //   else if (!isLocal && chainId !== 43114) {
-  //     alert(
-  //       "You are on the wrong network. Please switch to the avalanche mainnet.",
-  //     )
+  // Swal.fire({
+  //   icon: "error",
+  //   title: "Wrong network!",
+  //   text: `You are on the wrong network. Please switch to the fuji network.`,
+  // })
   //     return false
   //   }
   //   else {
@@ -90,7 +97,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
   ) => {
     const { chainId } = await provider.getNetwork()
     if (chainId !== 43113) {
-      alert("You are on the wrong network. Please switch to the fuji network.")
+      CustomSwal("error", "Wrong network", "Please switch to the Fuji network.")
       return false
     } else {
       return true
@@ -108,9 +115,8 @@ export const MetamaskPrompt: React.FC<Props> = ({
         signer,
       )
       try {
-        if (!(await isCorrectBlockchain(provider))) {
-          return
-        }
+        if (!(await isCorrectBlockchain(provider))) return
+
         const transaction = await contract.placeBet(bet, betId, overrides)
         transaction.wait().then(() => {
           contract.removeAllListeners()
@@ -120,7 +126,11 @@ export const MetamaskPrompt: React.FC<Props> = ({
         console.error(err)
       }
     } else {
-      alert("Please install MetaMask to place a bet.")
+      CustomSwal(
+        "error",
+        "Metamask not detected",
+        "Please install MetaMask to place a bet.",
+      )
     }
   }
 

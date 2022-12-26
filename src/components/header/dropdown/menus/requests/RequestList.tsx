@@ -5,7 +5,7 @@ import {
   getFirestore,
 } from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { FriendRequest } from "../../../../../interfaces/FriendRequest"
 import { Auth } from "../../../../containers/Auth"
 import { RequestItem } from "./RequestItem"
@@ -28,7 +28,7 @@ export const RequestList: React.FC<Props> = ({}) => {
   return (
     <>
       {!isLoading ? (
-        requests?.length ?? 0 > 0 ? (
+        (requests?.length ?? 0) > 0 ? (
           <div
             className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
             style={{ direction: "rtl" }}

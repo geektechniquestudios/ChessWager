@@ -8,7 +8,7 @@ import { CgProfile } from "react-icons/cg"
 import { UserDataState } from "../containers/UserDataState"
 import { Auth } from "../containers/Auth"
 import { doc, getFirestore, updateDoc } from "firebase/firestore"
-import { firebaseApp } from "../../config"
+import { firebaseApp } from "../../../firestore.config"
 import { DropdownMenu } from "./dropdown/DropdownMenu"
 import { DropdownState } from "../containers/DropdownState"
 
@@ -43,8 +43,9 @@ export const HeaderRight: React.FC = () => {
     updateDoc(userRef, { hasNewNotifications: false })
   }
   const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
+
   return (
-    <div className="mx-3 flex flex-auto items-center justify-end gap-1.5 align-middle">
+    <div className="mx-3 flex w-1/3 flex-auto items-center justify-end gap-1.5 align-middle">
       <MainHeaderButton
         title="Search Users"
         openToMenu="searchUsers"
@@ -53,31 +54,31 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setMenuStack(["searchUsers"])
         }}
+        animationOffset={1}
       />
       <MainHeaderButton
         title="Notifications"
         openToMenu="notifications"
         icon={
-          <RiNotification3Line
-            size="21"
-            className={`${greenNotificationStyle}`}
-          />
+          <RiNotification3Line size="21" className={greenNotificationStyle} />
         }
         onClick={() => {
           setNewNotificationsToFalse()
           setMenuStack(["notifications"])
         }}
         authRequired
+        animationOffset={2}
       />
       <MainHeaderButton
         title="Messages"
         openToMenu="messages"
-        icon={<RiChat2Line size="21" className={`${greenMessageStyle}`} />}
+        icon={<RiChat2Line size="21" className={greenMessageStyle} />}
         onClick={() => {
           setNewMessagesToFalse()
           setMenuStack(["messages"])
         }}
         authRequired
+        animationOffset={3}
       />
       <MainHeaderButton
         id="bets"
@@ -88,6 +89,7 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setMenuStack(["bets"])
         }}
+        animationOffset={4}
       />
       <MainHeaderButton
         title="Persona"
@@ -97,6 +99,7 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setMenuStack(["persona"])
         }}
+        animationOffset={5}
       />
       <SignInButton />
       <MainHeaderButton
@@ -107,6 +110,7 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setMenuStack(["main"])
         }}
+        animationOffset={10}
       />
       {isDropdownOpen && <DropdownMenu />}
     </div>

@@ -21,8 +21,12 @@ export const DropdownItem: React.FC<Props> = ({
   onClick,
   isBackButton,
 }) => {
-  const { setActiveMenu, menuStack, setMenuStack } =
-    DropdownState.useContainer()
+  const {
+    setActiveMenu,
+    menuStack,
+    setMenuStack,
+    goToMenu: goToMenuDropdown,
+  } = DropdownState.useContainer()
   const address = url ?? "#"
   const backStyle = isBackButton ? "h-8 text-sm" : "h-12"
   return (
@@ -35,8 +39,7 @@ export const DropdownItem: React.FC<Props> = ({
       className={`color-shift flex w-64 items-center px-4 text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${backStyle}`}
       onClick={() => {
         onClick && onClick()
-        goToMenu && setActiveMenu(goToMenu)
-        goToMenu && setMenuStack([...menuStack, goToMenu])
+        goToMenu && goToMenuDropdown(goToMenu)
         isBackButton && setActiveMenu(menuStack[menuStack.length - 2])
         isBackButton && setMenuStack(menuStack.slice(0, -1))
       }}

@@ -9,7 +9,7 @@ import {
   writeBatch,
 } from "firebase/firestore"
 import { BsCheck2, BsX } from "react-icons/bs"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
@@ -65,8 +65,7 @@ export const RequestItem: React.FC<Props> = ({
     deleteDoc(doc(requestsCollection, id))
   }
 
-  const { setActiveMenu, menuStack, setMenuStack } =
-    DropdownState.useContainer()
+  const { goToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   return (
     <a
@@ -74,8 +73,7 @@ export const RequestItem: React.FC<Props> = ({
       style={{ direction: "ltr" }}
       onClick={() => {
         setClickedUserById(id)
-        setActiveMenu("clickedUser")
-        setMenuStack([...menuStack, "clickedUser"])
+        goToMenu("clickedUser")
       }}
     >
       <img src={photoURL} className="h-7 w-7 rounded-full" />

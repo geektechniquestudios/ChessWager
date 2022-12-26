@@ -5,15 +5,13 @@ import { DropdownButton } from "./DropdownButton"
 interface Props {}
 
 export const BlockedButton: React.FC<Props> = ({}) => {
-  const { setActiveMenu, menuStack, setMenuStack } =
-    DropdownState.useContainer()
+  const { goToMenu } = DropdownState.useContainer()
 
   return (
     <DropdownButton
       content={<MdBlockFlipped />}
       onClick={() => {
-        setActiveMenu("blocked")
-        setMenuStack([...menuStack, "blocked"])
+        goToMenu("blocked")
       }}
       title="Blocked Users"
     />

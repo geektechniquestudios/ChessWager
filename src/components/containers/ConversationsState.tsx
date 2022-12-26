@@ -2,7 +2,7 @@ import { createContainer } from "unstated-next"
 import type { Conversation } from "../../interfaces/Conversation"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { Auth } from "./Auth"
-import { firebaseApp } from "../../config"
+import { firebaseApp } from "../../../firestore.config"
 import {
   collection,
   doc,

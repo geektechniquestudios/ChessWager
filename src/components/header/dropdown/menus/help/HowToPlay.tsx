@@ -19,13 +19,13 @@ export const HowToPlay: React.FC = ({}) => {
               />
               <SectionWrapper
                 text="3. Fund your wallet"
-                href="https://app.pangolin.exchange/#/buy"
+                href="https://www.coinbase.com/price/avalanche"
               />
             </div>
           }
         />,
       ]}
-      thisMenu={"howToPlay"}
+      thisMenu="howToPlay"
     />
   )
 }

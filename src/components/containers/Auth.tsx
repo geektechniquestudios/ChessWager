@@ -3,15 +3,23 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import { createContainer } from "unstated-next"
 import { BigNumber, ethers } from "ethers"
 import { parseEther } from "ethers/lib/utils"
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
-import { firebaseApp } from "../../config"
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  UserCredential,
+} from "firebase/auth"
+import { firebaseApp } from "../../../firestore.config"
 import {
   getFirestore,
   doc,
   updateDoc,
   serverTimestamp,
   runTransaction,
+  DocumentReference,
 } from "firebase/firestore"
+import { User } from "../../interfaces/User"
+import { CustomSwal } from "../popups/CustomSwal"
 
 declare let window: any
 const db = getFirestore(firebaseApp)
@@ -40,7 +48,7 @@ const useAuth = () => {
       return
     }
     if (typeof window.ethereum === undefined) {
-      alert("Metamask not installed")
+      CustomSwal("error", "Error", "Metamask is not installed")
       return
     }
     try {
@@ -61,16 +69,16 @@ const useAuth = () => {
           localStorage.setItem("isWalletConnected", "true")
         })
         .then(() => {
-          alert("Wallet connected")
+          CustomSwal("success", "Success", "Wallet connected")
         })
         .catch((error) => {
           console.error(error)
-          alert("Error connecting to wallet")
+          CustomSwal("error", "Can't Place Bet", "Error connecting to wallet.")
           setIsWalletConnected(false)
         })
     } catch (error) {
       console.error(error)
-      alert("Error connecting to wallet.")
+      CustomSwal("error", "Can't Place Bet", "Error connecting to wallet.")
       setIsWalletConnecting(false)
     }
   }
@@ -79,7 +87,7 @@ const useAuth = () => {
     if (!auth.currentUser) return
     const userDoc = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userDoc, {
-      walletAddress,
+      walletAddress: "",
     })
       .then(() => {
         setWalletAddress("")
@@ -88,61 +96,69 @@ const useAuth = () => {
         localStorage.setItem("isWalletConnected", "false")
       })
       .catch(() => {
-        alert("Error disconnecting wallet")
+        CustomSwal("error", "Error", "Error disconnecting wallet")
       })
   }
 
-  const signInWithGoogle = async () => {
-    const addToUsers = () => {
-      if (auth.currentUser) {
-        const userDoc = doc(db, "users", auth.currentUser!.uid)
-        runTransaction(db, async (transaction) => {
-          const doc = await transaction.get(userDoc)
-          if (!doc.exists()) {
-            transaction.set(userDoc, {
-              betAcceptedCount: 0,
-              betFundedCount: 0,
-              walletAddress: "",
-              photoURL: auth.currentUser!.photoURL,
-              displayName: auth.currentUser!.displayName,
-              searchableDisplayName:
-                auth.currentUser!.displayName?.toLowerCase(),
-              id: auth.currentUser!.uid,
-              amountBet: 0,
-              amountWon: 0,
-              betWinCount: 0,
-              hasNewMessage: false,
-              hasNewNotifications: false,
-              blockedUsers: [],
-              sentFriendRequests: [],
-              redactedFriendRequests: [],
-              friends: [],
-              joinDate: serverTimestamp(),
-              moderatorLevel: 0,
-              isBanned: false,
-            })
-          }
-          if (doc.data()?.walletAddress ?? "" !== "") {
-            setIsWalletConnected(true)
-            localStorage.setItem("isWalletConnected", "true")
-            setWalletAddress(doc.data()!.walletAddress)
-            localStorage.setItem("walletAddress", doc.data()!.walletAddress)
-          }
-        })
-          .catch(console.error)
-          .then(() => {
-            alert(
-              "This website is under development. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
-            )
+  const signInWithGoogle = async (): Promise<void> => {
+    const addToUsers = async (userCred: UserCredential | null) => {
+      if (!userCred?.user?.uid || !auth.currentUser) return
+      const userDoc = doc(
+        db,
+        "users",
+        auth.currentUser!.uid,
+      ) as DocumentReference<User>
+      runTransaction(db, async (transaction) => {
+        const doc = await transaction.get(userDoc)
+        if (!doc.exists()) {
+          transaction.set(userDoc, {
+            betAcceptedCount: 0,
+            betFundedCount: 0,
+            walletAddress: "",
+            photoURL: auth.currentUser!.photoURL!,
+            displayName: auth.currentUser!.displayName!,
+            searchableDisplayName: auth.currentUser!.displayName!.toLowerCase(),
+            id: auth.currentUser!.uid,
+            amountBet: 0,
+            amountWon: 0,
+            betWinCount: 0,
+            hasNewMessage: false,
+            hasNewNotifications: false,
+            blockedUsers: [],
+            sentFriendRequests: [],
+            redactedFriendRequests: [],
+            friends: [],
+            joinDate: serverTimestamp(),
+            moderatorLevel: 0,
+            isBanned: false,
+            hasFirstBetBeenPlaced: false,
           })
-      }
+        } else if (doc.data().walletAddress ?? "" !== "") {
+          setIsWalletConnected(true)
+          localStorage.setItem("isWalletConnected", "true")
+          setWalletAddress(doc.data().walletAddress)
+          localStorage.setItem("walletAddress", doc.data().walletAddress)
+        }
+      })
     }
 
     const provider = new GoogleAuthProvider()
-    const auth = getAuth(firebaseApp)
 
-    signInWithPopup(auth, provider).then(addToUsers).catch(console.error)
+    signInWithPopup(auth, provider)
+      .then(addToUsers)
+      .catch(console.error)
+      .finally(() => {
+        if (!auth.currentUser) return
+        CustomSwal(
+          "warning",
+          "Website Under Construction",
+          "While betting is fully functional, this website is still undergoing changes. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
+          "Proceeding means you agree to our" +
+            "<a href='https://github.com/geektechniquestudios/ChessWager/blob/main/guides/TOS.md' class='underline hover:text-slate-400 mx-2' target='_blank' rel='noreferrer'>terms of service</a>",
+        )
+      })
   }
+
   const signOutWithGoogle = async () => {
     auth.signOut()
     setIsWalletConnected(false)
@@ -154,10 +170,7 @@ const useAuth = () => {
   const doesUserHaveEnoughAvax = async (price: number) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
     const balance: BigNumber = await provider.getBalance(walletAddress!)
-    if (balance.gte(parseEther(price.toString()))) {
-      return true
-    }
-    return false
+    return balance.gte(parseEther(price.toString()))
   }
 
   return {

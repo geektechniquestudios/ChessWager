@@ -6,7 +6,7 @@ import { VitePWA } from "vite-plugin-pwa"
 export default defineConfig({
   esbuild: {
     define: {
-      this: "window", // temporary fix caused by esbuild
+      this: "window",
     },
   },
   plugins: [

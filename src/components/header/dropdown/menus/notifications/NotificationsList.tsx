@@ -12,7 +12,7 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
 import { Notification } from "../../../../../interfaces/Notification"
 import { NotificationItem } from "./NotificationItem"
@@ -96,6 +96,7 @@ export const NotificationsList: React.FC = ({}) => {
                 key={notification.id}
                 setNotifications={setNotifications}
                 notifications={notifications}
+                openToMenu={notification.openToMenu}
               />
             ))}
           </div>

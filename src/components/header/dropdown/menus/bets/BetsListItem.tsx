@@ -1,6 +1,6 @@
 import { doc, getFirestore, Timestamp, updateDoc } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { Bet } from "../../../../../interfaces/Bet"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
@@ -49,8 +49,7 @@ export const BetsListItem: React.FC<Props> = ({
   user2DisplayName,
   createdAt,
 }) => {
-  const { setActiveMenu, setBet, menuStack, setMenuStack } =
-    DropdownState.useContainer()
+  const { goToMenu, setBet } = DropdownState.useContainer()
   const { auth } = Auth.useContainer()
   const betTotal =
     bet?.amount ?? 0 + (bet?.amount ?? 0) * (bet?.multiplier ?? 0)
@@ -90,13 +89,12 @@ export const BetsListItem: React.FC<Props> = ({
       className={`color-shift flex h-14 w-64 items-center text-stone-600 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${clickedStyle}`}
       onClick={() => {
         setBet(bet!)
-        setActiveMenu("bet")
-        setMenuStack([...menuStack, "bet"])
+        goToMenu("bet")
         markBetAsRead()
       }}
     >
-      <div className="flex h-full w-64 justify-between gap-2 p-2">
-        <div className="flex flex-col justify-center gap-2">
+      <div className="flex h-14 w-full justify-between gap-2 p-2">
+        <div className="flex w-6 flex-col items-start justify-center gap-2">
           {isUser1Blocked ? (
             <MdBlockFlipped className="h-4 w-4 rounded-full" />
           ) : (
@@ -108,15 +106,16 @@ export const BetsListItem: React.FC<Props> = ({
             <img className="h-4 w-4 rounded-full" src={user2PhotoURL} />
           )}
         </div>
-        <div className="flex h-full flex-col justify-center gap-1 overflow-hidden whitespace-nowrap text-sm">
-          <div>{isUser1Blocked ? "Blocked User" : user1DisplayName}</div>
-          <div>{isUser2Blocked ? "Blocked User" : user2DisplayName}</div>
+        <div className="mx-3 flex w-full justify-between">
+          <div className="flex h-full flex-col justify-center gap-1 overflow-hidden whitespace-nowrap text-sm">
+            <div>{isUser1Blocked ? "Blocked User" : user1DisplayName}</div>
+            <div>{isUser2Blocked ? "Blocked User" : user2DisplayName}</div>
+          </div>
+          <div className="flex flex-col items-end justify-center gap-1 text-xs">
+            <div>${(betTotal * avaxPrice).toFixed(2)} USD</div>
+            {new Date(createdAt!.seconds * 1000).toLocaleDateString("en-US")}
+          </div>
         </div>
-        <div className="flex flex-col justify-center gap-1 text-xs">
-          <div>${(betTotal * avaxPrice).toFixed(2)} USD</div>
-          {new Date(createdAt!.seconds * 1000).toLocaleDateString("en-US")}
-        </div>
-        <div></div>
       </div>
     </a>
   )

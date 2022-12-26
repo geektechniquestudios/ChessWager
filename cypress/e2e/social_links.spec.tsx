@@ -1,6 +1,5 @@
 import { linkTest } from "./link_test"
 
-
 linkTest(
   "https://www.instagram.com/chesswager/",
   "Instagram",

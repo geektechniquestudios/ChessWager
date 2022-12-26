@@ -2,5 +2,5 @@
 
 a:hover {
   @extend .color-shift;
-  @apply text-black cursor-pointer;
+  @apply cursor-pointer text-black;
 }

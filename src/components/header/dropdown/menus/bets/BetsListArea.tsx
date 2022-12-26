@@ -11,7 +11,7 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../config"
+import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
 import { Bet } from "../../../../../interfaces/Bet"
 import { BetsListItem } from "./BetsListItem"
@@ -75,11 +75,7 @@ export const BetsListArea: React.FC = ({}) => {
                 (bet) => bet.status === "approved" || bet.status === "funded",
               )
               .map((bet: Bet) => (
-                <BetsListItem
-                  key={bet.id}
-                  {...bet}
-                  bet={bet}
-                />
+                <BetsListItem key={bet.id} {...bet} bet={bet} />
               ))}
           </div>
         </InfiniteScroll>
