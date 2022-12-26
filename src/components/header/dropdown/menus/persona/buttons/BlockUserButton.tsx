@@ -12,6 +12,7 @@ import { firebaseApp } from "../../../../../../../firestore.config"
 import { Auth } from "../../../../../containers/Auth"
 import { DropdownState } from "../../../../../containers/DropdownState"
 import { DropdownButton } from "./DropdownButton"
+import Swal from "sweetalert2"
 
 const db = getFirestore(firebaseApp)
 
@@ -44,7 +45,11 @@ export const BlockUserButton: React.FC<Props> = ({
       blockedUsers: arrayUnion(id),
     })
     batch.commit().then(() => {
-      alert(`${displayName} has been blocked.`)
+      Swal.fire({
+        icon: "error",
+        title: "Blocked!",
+        text: `${displayName} has been blocked.`,
+      })
       setIsDropdownOpen(false)
       setMenuHeight(0)
     })
