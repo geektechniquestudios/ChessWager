@@ -64,9 +64,9 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
         const { chainId } = await provider.getNetwork()
         if (chainId !== 43113) {
           CustomSwal(
+            "error",
             "Wrong Network",
             "You are on the wrong network. Please switch to the Fuji network.",
-            "error",
           )
           return false
         } else {
