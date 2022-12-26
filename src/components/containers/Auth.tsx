@@ -19,6 +19,7 @@ import {
   DocumentReference,
 } from "firebase/firestore"
 import { User } from "../../interfaces/User"
+import Swal from "sweetalert2"
 
 declare let window: any
 const db = getFirestore(firebaseApp)
@@ -47,7 +48,11 @@ const useAuth = () => {
       return
     }
     if (typeof window.ethereum === undefined) {
-      alert("Metamask not installed")
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Metamask is not installed",
+      })
       return
     }
     try {
@@ -68,16 +73,28 @@ const useAuth = () => {
           localStorage.setItem("isWalletConnected", "true")
         })
         .then(() => {
-          alert("Wallet connected")
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Wallet connected",
+          })
         })
         .catch((error) => {
           console.error(error)
-          alert("Error connecting to wallet")
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Error connecting to wallet",
+          })
           setIsWalletConnected(false)
         })
     } catch (error) {
       console.error(error)
-      alert("Error connecting to wallet.")
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Error connecting to wallet",
+      })
       setIsWalletConnecting(false)
     }
   }
@@ -95,7 +112,11 @@ const useAuth = () => {
         localStorage.setItem("isWalletConnected", "false")
       })
       .catch(() => {
-        alert("Error disconnecting wallet")
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error disconnecting wallet",
+        })
       })
   }
 
@@ -148,9 +169,11 @@ const useAuth = () => {
       .catch(console.error)
       .finally(() => {
         if (!auth.currentUser) return
-        alert(
-          "This website is under development. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
-        )
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "This website is under development. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
+        })
       })
   }
 

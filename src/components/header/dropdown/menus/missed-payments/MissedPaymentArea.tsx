@@ -3,6 +3,7 @@ import { ethers } from "ethers"
 
 import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { GameData } from "../../../../../interfaces/GameData"
+import Swal from "sweetalert2"
 
 declare let window: any
 const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
@@ -18,13 +19,19 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
   // ) => {
   //   const { chainId } = await provider.getNetwork()
   //   if (isLocal && chainId !== 43113) {
-  //     alert("You are on the wrong network. Please switch to the fuji network.")
+  // Swal.fire({
+  //   icon: "error",
+  //   title: "Wrong network!",
+  //   text: "You are on the wrong network. Please switch to the fuji network.",
+  // })
   //     return false
   //   }
   //   else if (!isLocal && chainId !== 43114) {
-  //     alert(
-  //       "You are on the wrong network. Please switch to the avalanche mainnet.",
-  //     )
+  // Swal.fire({
+  //   icon: "error",
+  //   title: "Wrong network!",
+  //   text: "You are on the wrong network. Please switch to the fuji network.",
+  // })
   //     return false
   //   }
   //   else {
@@ -56,15 +63,17 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
       ) => {
         const { chainId } = await provider.getNetwork()
         if (chainId !== 43113) {
-          alert(
-            "You are on the wrong network. Please switch to the fuji network.",
-          )
+          Swal.fire({
+            icon: "error",
+            title: "Wrong network!",
+            text: "You are on the wrong network. Please switch to the fuji network.",
+          })
           return false
         } else {
           return true
         }
       }
-      
+
       if (typeof window.ethereum !== undefined) {
         await window.ethereum.request({ method: "eth_requestAccounts" })
         const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -87,7 +96,11 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
           console.error(err)
         }
       } else {
-        alert("Metamask not connected.")
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "Metamask not connected.",
+        })
       }
     }
 
