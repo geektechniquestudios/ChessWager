@@ -3,7 +3,7 @@ import { firebaseApp } from "../../../../../../../firestore.config"
 import { DropdownState } from "../../../../../containers/DropdownState"
 import { UserDataState } from "../../../../../containers/UserDataState"
 import { DropdownButton } from "./DropdownButton"
-import Swal from "sweetalert2"
+import { CustomSwal } from "../../../../../popups/CustomSwal"
 
 const db = getFirestore(firebaseApp)
 
@@ -28,11 +28,7 @@ export const BanUserButton: React.FC<Props> = ({
     updateDoc(userDoc, {
       isBanned: true,
     }).then(() => {
-      Swal.fire({
-        icon: "error",
-        title: "Banned!",
-        text: `${displayName} has been banned.`,
-      })
+      CustomSwal("warning", "Banned", `${displayName} has been banned.`)
       setIsDropdownOpen(false)
       setMenuHeight(0)
     })

@@ -18,7 +18,7 @@ import {
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../firestore.config"
 import { UserDataState } from "../../containers/UserDataState"
-import Swal from "sweetalert2"
+import { CustomSwal } from "../../popups/CustomSwal"
 const db = getFirestore(firebaseApp)
 
 export const WagerForm: React.FC = () => {
@@ -47,11 +47,11 @@ export const WagerForm: React.FC = () => {
 
   const canUserBet: () => Promise<boolean> = async () => {
     if (!auth.currentUser) {
-      Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: `You must be logged in to bet`,
-      })
+      CustomSwal(
+        "error",
+        "Authentication Required!",
+        "You must be logged in to bet.",
+      )
       return false
     } else if (betAmount === 0) {
       setIsAmountEmpty(true)
@@ -60,11 +60,11 @@ export const WagerForm: React.FC = () => {
       connectWallet()
       return false
     } else if (!(await doesUserHaveEnoughAvax(betAmount))) {
-      Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: `Deposit more avax to place this bet`,
-      })
+      CustomSwal(
+        "error",
+        "Insufficient Funds",
+        "Deposit more Avax to place this bet.",
+      )
       return false
     }
     return true

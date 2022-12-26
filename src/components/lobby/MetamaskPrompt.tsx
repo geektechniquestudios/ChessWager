@@ -4,7 +4,7 @@ import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json
 import { Auth } from "../containers/Auth"
 import "../../style/buttons.scss"
 import { DarkMode } from "../containers/DarkMode"
-import Swal from "sweetalert2"
+import { CustomSwal } from "../popups/CustomSwal"
 //@ts-ignore
 const isLocal = import.meta.env.VITE_BRANCH_ENV === "develop"
 
@@ -97,11 +97,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
   ) => {
     const { chainId } = await provider.getNetwork()
     if (chainId !== 43113) {
-      Swal.fire({
-        icon: "error",
-        title: "Wrong network!",
-        text: `You are on the wrong network. Please switch to the fuji network.`,
-      })
+      CustomSwal("error", "Wrong network", "Please switch to the Fuji network.")
       return false
     } else {
       return true
@@ -130,11 +126,11 @@ export const MetamaskPrompt: React.FC<Props> = ({
         console.error(err)
       }
     } else {
-      Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: `Please install MetaMask to place a bet.`,
-      })
+      CustomSwal(
+        "error",
+        "Metamask not detected",
+        "Please install MetaMask to place a bet.",
+      )
     }
   }
 

@@ -4,7 +4,7 @@ import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessW
 import { Price } from "../../../../containers/Price"
 import { CircularProgress } from "@mui/material"
 import { DropdownState } from "../../../../containers/DropdownState"
-import Swal from "sweetalert2"
+import { CustomSwal } from "../../../../popups/CustomSwal"
 
 //@ts-ignore
 const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
@@ -54,11 +54,11 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   ) => {
     const { chainId } = await provider.getNetwork()
     if (chainId !== 43113) {
-      Swal.fire({
-        icon: "error",
-        title: "Wrong Network!",
-        text: "You are on the wrong network. Please switch to the fuji network.",
-      })
+      CustomSwal(
+        "error",
+        "Wrong Network",
+        "You are on the wrong network. Please switch to the Fuji network.",
+      )
       return false
     } else {
       return true
@@ -69,11 +69,7 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
     contractCallFunction: (contract: ethers.Contract) => any,
   ) => {
     if (typeof window.ethereum === undefined) {
-      Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: "Please install MetaMask to place a bet.",
-      })
+      CustomSwal("error", "Error", "Please install MetaMask to place a bet.")
     }
     await window.ethereum.request({ method: "eth_requestAccounts" })
     const provider = new ethers.providers.Web3Provider(window.ethereum)

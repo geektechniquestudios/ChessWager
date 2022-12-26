@@ -19,7 +19,7 @@ import {
   DocumentReference,
 } from "firebase/firestore"
 import { User } from "../../interfaces/User"
-import Swal from "sweetalert2"
+import { CustomSwal } from "../popups/CustomSwal"
 
 declare let window: any
 const db = getFirestore(firebaseApp)
@@ -48,11 +48,7 @@ const useAuth = () => {
       return
     }
     if (typeof window.ethereum === undefined) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Metamask is not installed",
-      })
+      CustomSwal("error", "Error", "Metamask is not installed")
       return
     }
     try {
@@ -73,28 +69,16 @@ const useAuth = () => {
           localStorage.setItem("isWalletConnected", "true")
         })
         .then(() => {
-          Swal.fire({
-            icon: "success",
-            title: "Success",
-            text: "Wallet connected",
-          })
+          CustomSwal("success", "Success", "Wallet connected")
         })
         .catch((error) => {
           console.error(error)
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Error connecting to wallet",
-          })
+          CustomSwal("error", "Can't Place Bet", "Error connecting to wallet.")
           setIsWalletConnected(false)
         })
     } catch (error) {
       console.error(error)
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Error connecting to wallet",
-      })
+      CustomSwal("error", "Can't Place Bet", "Error connecting to wallet.")
       setIsWalletConnecting(false)
     }
   }
@@ -112,11 +96,7 @@ const useAuth = () => {
         localStorage.setItem("isWalletConnected", "false")
       })
       .catch(() => {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Error disconnecting wallet",
-        })
+        CustomSwal("error", "Error", "Error disconnecting wallet")
       })
   }
 
@@ -169,11 +149,13 @@ const useAuth = () => {
       .catch(console.error)
       .finally(() => {
         if (!auth.currentUser) return
-        Swal.fire({
-          icon: "error",
-          title: "Error!",
-          text: "This website is under development. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
-        })
+        CustomSwal(
+          "warning",
+          "Website Under Construction",
+          "While betting is fully functional, this website is still undergoing changes. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
+          "Proceeding means you agree to our" +
+            "<a href='https://github.com/geektechniquestudios/ChessWager/blob/main/guides/TOS.md' class='underline hover:text-slate-400 mx-2' target='_blank' rel='noreferrer'>terms of service</a>",
+        )
       })
   }
 

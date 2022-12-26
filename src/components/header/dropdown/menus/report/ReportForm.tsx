@@ -11,7 +11,7 @@ import {
 import { firebaseApp } from "../../../../../../firestore.config"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { UserMenuState } from "../../../../containers/UserMenuState"
-import Swal from "sweetalert2"
+import { CustomSwal } from "../../../../popups/CustomSwal"
 
 const db = getFirestore(firebaseApp)
 
@@ -42,11 +42,7 @@ export const ReportForm: React.FC<Props> = ({}) => {
       resolved: false,
     }).then(() => {
       setReportFormValue("")
-      Swal.fire({
-        icon: "success",
-        title: "Report Sent!",
-        text: `Your report has been sent`,
-      })
+      CustomSwal("success", "Report Sent", "Your report will be reviewed soon.")
     })
   }
   return (

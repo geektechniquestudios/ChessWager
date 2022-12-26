@@ -14,7 +14,7 @@ import {
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../../firestore.config"
 import { User } from "../../../../../interfaces/User"
-import Swal from "sweetalert2"
+import { CustomSwal } from "../../../../popups/CustomSwal"
 
 const db = getFirestore(firebaseApp)
 
@@ -73,11 +73,11 @@ export const JoinButton: React.FC<Props> = ({
         updateDoc(userDoc, { hasFirstBetBeenPlaced: true })
       })
       .catch(() => {
-        Swal.fire({
-          icon: "error",
-          title: "Reconnecting wallet!",
-          text: `Something went wrong. Try reconnecting your wallet`,
-        })
+        CustomSwal(
+          "error",
+          "Couldn't join",
+          "Something went wrong. Try reconnecting your wallet",
+        )
       })
   }
 

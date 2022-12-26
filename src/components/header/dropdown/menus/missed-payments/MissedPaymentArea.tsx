@@ -3,7 +3,7 @@ import { ethers } from "ethers"
 
 import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { GameData } from "../../../../../interfaces/GameData"
-import Swal from "sweetalert2"
+import { CustomSwal } from "../../../../popups/CustomSwal"
 
 declare let window: any
 const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
@@ -63,11 +63,11 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
       ) => {
         const { chainId } = await provider.getNetwork()
         if (chainId !== 43113) {
-          Swal.fire({
-            icon: "error",
-            title: "Wrong network!",
-            text: "You are on the wrong network. Please switch to the fuji network.",
-          })
+          CustomSwal(
+            "Wrong Network",
+            "You are on the wrong network. Please switch to the Fuji network.",
+            "error",
+          )
           return false
         } else {
           return true
@@ -96,11 +96,7 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
           console.error(err)
         }
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error!",
-          text: "Metamask not connected.",
-        })
+        CustomSwal("error", "Wallet Error", "Metamask not connected.")
       }
     }
 
