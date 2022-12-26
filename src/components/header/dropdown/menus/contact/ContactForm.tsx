@@ -11,6 +11,7 @@ import {
 import { firebaseApp } from "../../../../../../firestore.config"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { UserMenuState } from "../../../../containers/UserMenuState"
+import { CustomSwal } from "../../../../popups/CustomSwal"
 
 const db = getFirestore(firebaseApp)
 
@@ -41,7 +42,11 @@ export const ContactForm: React.FC<Props> = ({}) => {
       resolved: false,
     }).then(() => {
       setReportFormValue("")
-      alert("Your message has been sent")
+      CustomSwal(
+        "success",
+        "Message Sent",
+        "Your message will be reviewed soon.",
+      )
     })
   }
   return (

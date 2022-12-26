@@ -5,6 +5,7 @@ import { PlayerData } from "./PlayerData"
 import { GameState } from "../containers/GameState"
 import Chessground from "@react-chess/chessground"
 import { GameResultPopup } from "./popup/GameResultPopup"
+import { CustomSwal } from "../popups/CustomSwal"
 
 // import "chessground/assets/chessground.base.css"
 // import "chessground/assets/chessground.brown.css"
@@ -121,7 +122,9 @@ export const ChessGame: React.FC = () => {
         })
       })
       .catch((err) => {
-        alert(
+        CustomSwal(
+          "error",
+          "Can't Load Game",
           "Error fetching game data from lichess.org. Please reload the page or try again later.",
         )
         console.error(err)

@@ -4,6 +4,7 @@ import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessW
 import { Price } from "../../../../containers/Price"
 import { CircularProgress } from "@mui/material"
 import { DropdownState } from "../../../../containers/DropdownState"
+import { CustomSwal } from "../../../../popups/CustomSwal"
 
 //@ts-ignore
 const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
@@ -24,14 +25,20 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   //   provider: ethers.providers.Web3Provider,
   // ) => {
   //   const { chainId } = await provider.getNetwork()
-  //   if (isLocal && chainId !== 43113) {
-  //     alert("You are on the wrong network. Please switch to the fuji network.")
-  //     return false
-  //   }
+  // if (isLocal && chainId !== 43113) {
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Wrong Network!",
+  //     text: "You are on the wrong network. Please switch to the fuji network.",
+  //   })
+  //   return false
+  // }
   //   else if (!isLocal && chainId !== 43114) {
-  //     alert(
-  //       "You are on the wrong network. Please switch to the avalanche mainnet.",
-  //     )
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Wrong Network!",
+  //     text: "You are on the wrong network. Please switch to the avalanche mainnet.",
+  //   })
   //     return false
   //   }
   //   else {
@@ -47,7 +54,11 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   ) => {
     const { chainId } = await provider.getNetwork()
     if (chainId !== 43113) {
-      alert("You are on the wrong network. Please switch to the fuji network.")
+      CustomSwal(
+        "error",
+        "Wrong Network",
+        "You are on the wrong network. Please switch to the Fuji network.",
+      )
       return false
     } else {
       return true
@@ -57,9 +68,9 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   const callContract = async (
     contractCallFunction: (contract: ethers.Contract) => any,
   ) => {
-    if (typeof window.ethereum === undefined)
-      alert("Please install MetaMask to place a bet.")
-
+    if (typeof window.ethereum === undefined) {
+      CustomSwal("error", "Error", "Please install MetaMask to place a bet.")
+    }
     await window.ethereum.request({ method: "eth_requestAccounts" })
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer: ethers.providers.JsonRpcSigner = provider.getSigner()
