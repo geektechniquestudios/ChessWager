@@ -169,9 +169,11 @@ const useAuth = () => {
       .catch(console.error)
       .finally(() => {
         if (!auth.currentUser) return
-        alert(
-          "This website is under development. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
-        )
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "This website is under development. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
+        })
       })
   }
 
