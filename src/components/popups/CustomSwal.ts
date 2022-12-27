@@ -10,8 +10,11 @@ export const CustomSwal = (
     icon,
     title,
     text,
-    customClass: "swal",
-    confirmButtonColor: "#0d9488",
+    customClass: {
+      container: "swal-container",
+      popup: "swal-popup",
+    },
+    
     footer,
   })
 }

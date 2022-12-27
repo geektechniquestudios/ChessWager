@@ -48,8 +48,12 @@ code {
 }
 
 // Has to be in traditional CSS because of the use of !important.
-.swal {
-  background-color: rgba(68, 64, 60, 0.6) !important;
+.swal-popup {
+  background-color: rgba(68, 64, 60, 0.95) !important;
   backdrop-filter: blur(40px) !important;
   color: rgb(231, 229, 228) !important;
+}
+
+.swal-container {
+  backdrop-filter: blur(4px) !important;
 }
