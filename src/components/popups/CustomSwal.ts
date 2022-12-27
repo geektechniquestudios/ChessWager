@@ -10,8 +10,7 @@ export const CustomSwal = (
     icon,
     title,
     text,
-    customClass:
-      "bg-stone-700 bg-opacity-60 text-stone-200 backdrop-blur-2xl backdrop-filter",
+    customClass: "swal",
     confirmButtonColor: "#0d9488",
     footer,
   })
