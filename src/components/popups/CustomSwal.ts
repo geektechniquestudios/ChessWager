@@ -14,7 +14,7 @@ export const CustomSwal = (
       container: "swal-container",
       popup: "swal-popup",
     },
-    
+    confirmButtonColor: "#0d9488",
     footer,
   })
 }

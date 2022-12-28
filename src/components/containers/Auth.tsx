@@ -152,7 +152,7 @@ const useAuth = () => {
         CustomSwal(
           "warning",
           "Website Under Construction",
-          "While betting is fully functional, this website is still undergoing changes. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
+          "While betting is fully functional, this website is still undergoing changes. Only the AVAX Fuji testnet is currently supported. Sending currency may result in the loss of funds.",
           "Proceeding means you agree to our" +
             "<a href='https://github.com/geektechniquestudios/ChessWager/blob/main/guides/TOS.md' class='underline hover:text-slate-400 mx-2' target='_blank' rel='noreferrer'>terms of service</a>",
         )
