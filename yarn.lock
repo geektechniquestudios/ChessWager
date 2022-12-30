@@ -6679,7 +6679,7 @@ __metadata:
     firebase: ^9.15.0
     firebase-admin: ^11.4.1
     framer-motion: ^8.0.2
-    hardhat: ^2.12.4
+    hardhat: ^2.12.5
     postcss: ^8.4.20
     prettier: ^2.8.1
     prettier-plugin-solidity: ^1.1.0
@@ -10167,9 +10167,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:^2.12.4":
-  version: 2.12.4
-  resolution: "hardhat@npm:2.12.4"
+"hardhat@npm:^2.12.5":
+  version: 2.12.5
+  resolution: "hardhat@npm:2.12.5"
   dependencies:
     "@ethersproject/abi": ^5.1.2
     "@metamask/eth-sig-util": ^4.0.0
@@ -10231,7 +10231,7 @@ __metadata:
       optional: true
   bin:
     hardhat: internal/cli/cli.js
-  checksum: 391ee2c62220957c6c9fcae62f94cf7943e429ec18aaac1ae00faf634cd4a29e0728efef6ddefa071c12a67befdd010bfba79d324a6ef067e77c0b5515aab768
+  checksum: 01afb4db4dd78068c7cfa95826297f727c1fc952cfaa4aea6b8235a1de051386c765c00c5fafb6377cac19df08944718d151aced4687e47c7d79bae0121a29a4
   languageName: node
   linkType: hard
 
