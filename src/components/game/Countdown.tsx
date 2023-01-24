@@ -32,7 +32,9 @@ export const Countdown: React.FC<Props> = ({ fen, side, time, isNewGame }) => {
       const interval = setInterval(() => {
         setCount(count + 1)
       }, 1000)
-      return () => clearInterval(interval)
+      return () => {
+        clearInterval(interval)
+      }
     } else {
       setIsPlayerTurn(false)
     }

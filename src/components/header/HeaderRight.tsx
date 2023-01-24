@@ -50,7 +50,7 @@ export const HeaderRight: React.FC = () => {
         title="Search Users"
         openToMenu="searchUsers"
         icon={<BiSearchAlt2 size="21" />}
-        authRequired={true}
+        authRequired
         onClick={() => {
           setMenuStack(["searchUsers"])
         }}

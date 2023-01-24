@@ -27,3 +27,5 @@ linkTest(
   "Github",
   "Github button",
 )
+
+linkTest("https://discord.gg/bMAQzKpDn7", "Discord", "Discord Button")
