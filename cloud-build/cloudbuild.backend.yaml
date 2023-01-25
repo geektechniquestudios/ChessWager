@@ -60,6 +60,14 @@ steps:
       - "$_IMAGE_NAME_PS:$COMMIT_SHA"
 
   # Deploying to k8s
+  - id: Creating persistent volume
+    name: gcr.io/cloud-builders/kubectl
+    args:
+      - apply
+      - "--filename=kubernetes/stream-data-persistentvolume.yaml"
+      - "--cluster=$_GKE_CLUSTER"
+      - "--location=$_GKE_LOCATION"
+      - "--namespace=$_K8S_NAMESPACE"
   - id: Applying shared volume to k8s
     name: gcr.io/cloud-builders/gke-deploy
     args:
