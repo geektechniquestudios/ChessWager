@@ -64,10 +64,11 @@ steps:
     name: gcr.io/cloud-builders/kubectl
     args:
       - apply
-      - "--filename=kubernetes/stream-data-persistentvolume.yaml"
-      - "--cluster=$_GKE_CLUSTER"
-      - "--location=$_GKE_LOCATION"
-      - "--namespace=$_K8S_NAMESPACE"
+      - -f
+      - kubernetes/stream-data-persistentvolume.yaml
+    env:
+      - "CLOUDSDK_COMPUTE_ZONE=$_GKE_LOCATION"
+      - "CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER"
   - id: Applying shared volume to k8s
     name: gcr.io/cloud-builders/gke-deploy
     args:
