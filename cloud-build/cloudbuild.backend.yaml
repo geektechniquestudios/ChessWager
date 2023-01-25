@@ -66,17 +66,19 @@ steps:
       - apply
       - -f
       - kubernetes/stream-data-persistentvolume.yaml
+      - -f
+      - kubernetes/stream-data-persistentvolumeclaim.yaml
     env:
       - "CLOUDSDK_COMPUTE_ZONE=$_GKE_LOCATION"
       - "CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER"
-  - id: Applying shared volume to k8s
-    name: gcr.io/cloud-builders/gke-deploy
-    args:
-      - apply
-      - "--filename=kubernetes/stream-data-persistentvolumeclaim.yaml"
-      - "--cluster=$_GKE_CLUSTER"
-      - "--location=$_GKE_LOCATION"
-      - "--namespace=$_K8S_NAMESPACE"
+  # - id: Applying shared volume to k8s
+  #   name: gcr.io/cloud-builders/gke-deploy
+  #   args:
+  #     - apply
+  #     - "--filename=kubernetes/stream-data-persistentvolumeclaim.yaml"
+  #     - "--cluster=$_GKE_CLUSTER"
+  #     - "--location=$_GKE_LOCATION"
+  #     - "--namespace=$_K8S_NAMESPACE"
   - id: Applying contract listener to k8s
     name: gcr.io/cloud-builders/gke-deploy
     args:
