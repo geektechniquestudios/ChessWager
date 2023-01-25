@@ -8,7 +8,6 @@ spec:
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
-  volumeType: gcePersistentDisk
   claimRef:
     name: stream-data
     namespace: default
