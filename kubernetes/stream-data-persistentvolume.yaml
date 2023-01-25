@@ -7,7 +7,6 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
-  volumeBindingMode: Immediate
   claimRef:
     name: stream-data
     namespace: default
