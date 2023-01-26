@@ -77,6 +77,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
+    timeout: 600s
   - id: Clearing build folder
     name: bash
     args:
@@ -92,6 +93,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
+    timeout: 600s
   - id: Clearing build folder again
     name: bash
     args:
@@ -107,6 +109,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
+    timeout: 600s
 timeout: 3600s
 options:
   substitutionOption: ALLOW_LOOSE
