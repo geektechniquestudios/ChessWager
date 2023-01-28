@@ -1,9 +1,12 @@
 import { Timestamp } from "firebase/firestore"
-import fs from "fs"
+import { createClient } from "redis"
 import firebase from "firebase/compat/app"
 const ChessWager = require("../../src/artifacts/contracts/ChessWager.sol/ChessWager.json")
 const ethers = require("ethers")
 const admin = require("firebase-admin")
+
+const redisClient = createClient({ url: "redis://redis:6379" })
+redisClient.connect().catch(console.error)
 
 require("dotenv").config({ path: "../.env" })
 const isLocal = process.env.VITE_BRANCH_ENV === "develop"
@@ -282,14 +285,9 @@ contract.on(
   },
 )
 
-const currentTimeFile = "/data/currentTime.txt"
-
 setInterval(() => {
-  let currentTime
-  try {
-    currentTime = fs.readFileSync(currentTimeFile, "utf8")
-  } catch (err) {
-    console.error(err)
-  }
-  console.log("currentTime: ", currentTime)
+  redisClient
+    .get("currentTime")
+    .then((time) => console.log(`Current Time: ${time}`))
+    .catch(console.error)
 }, 5000)

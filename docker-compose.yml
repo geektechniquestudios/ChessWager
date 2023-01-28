@@ -1,8 +1,4 @@
 version: "3"
-volumes:
-  stream_data:
-    external: true
-
 services:
   ancillary-stream:
     build:
@@ -14,8 +10,10 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
-    volumes:
-      - stream_data:/data
+    depends_on:
+      - redis
+    links:
+      - redis
     image: geektechnique/ancillary-stream-processor:latest
 
   primary-stream:
@@ -28,8 +26,10 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
-    volumes:
-      - stream_data:/data
+    depends_on:
+      - redis
+    links:
+      - redis
     image: geektechnique/primary-stream-processor:latest
 
   contract-listener:
@@ -42,6 +42,13 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
-    volumes:
-      - stream_data:/data
+    depends_on:
+      - redis
+    links:
+      - redis
     image: geektechnique/contract-listener:latest
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
