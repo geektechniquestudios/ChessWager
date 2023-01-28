@@ -74,6 +74,9 @@ steps:
       - apply
       - -f
       - kubernetes/redis-deployment.yaml
+      - "--cluster=$_GKE_CLUSTER"
+      - "--location=$_GKE_LOCATION"
+      - "--namespace=$_K8S_NAMESPACE"
     timeout: 600s
   - id: Applying contract listener to k8s
     name: gcr.io/cloud-builders/gke-deploy
