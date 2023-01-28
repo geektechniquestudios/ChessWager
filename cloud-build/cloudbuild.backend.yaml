@@ -69,11 +69,10 @@ steps:
   #     - "--location=$_GKE_LOCATION"
   #     - "--namespace=$_K8S_NAMESPACE"
   - id: Applying Redis server to k8s
-    name: gcr.io/cloud-builders/kubectl
+    name: gcr.io/cloud-builders/gke-deploy
     args:
-      - apply
-      - -f
-      - kubernetes/redis-deployment.yaml
+      - run
+      - "--filename=kubernetes/redis-deployment.yaml"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
