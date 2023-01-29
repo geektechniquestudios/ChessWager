@@ -52,7 +52,7 @@ const callLichessLiveTv = () => {
         lastGameId = gameId === "" ? obj.d.id : gameId // if gameId is empty, set it to the new game id
         gameId = obj.d.id
         redisClient.set("mostRecentGameId", gameId).catch(console.error)
-        payWinners(lastGameId)
+        payWinnersByGameId(lastGameId)
       } else {
         console.log("players moving ", obj)
       }
