@@ -5,8 +5,21 @@ import { payWinnersByGameId } from "../../payment-processor/src/index"
 require("dotenv").config({ path: "../../.env" })
 
 const redisClient = createClient({ url: "redis://redis:6379" })
-redisClient.connect().catch(console.error)
-0
+
+let isRedisConnected = false
+const attemptRedisConnection = () => {
+  console.log("attempting redis connection")
+  redisClient
+    .connect()
+    .then(() => {
+      isRedisConnected = true
+    })
+    .catch((err) => {
+      console.error(err)
+      isRedisConnected = false
+    })
+}
+
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
@@ -27,14 +40,15 @@ const defaultTime = 15
 let secondsUntilRestart = defaultTime
 
 let mostRecentGameIdSinceLastRestart = ""
+
+if (!isRedisConnected) attemptRedisConnection()
 redisClient
   .get("mostRecentGameId")
   .then((gameId) => (mostRecentGameIdSinceLastRestart = gameId ?? ""))
-
-// const payWinners = async (gameId: string) => {
-//   await new Promise((resolve) => setTimeout(resolve, 8000))
-//   payWinnersByGameId(gameId)
-// }
+  .catch((err) => {
+    console.error(err)
+    isRedisConnected = false
+  })
 
 const callLichessLiveTv = () => {
   let gameId = ""
@@ -44,14 +58,23 @@ const callLichessLiveTv = () => {
     .on("data", (obj: any) => {
       secondsUntilRestart = defaultTime
       const currentTime = Math.floor(Date.now() / 1000)
-      redisClient.set("currentTime", currentTime).catch(console.error)
+
+      if (!isRedisConnected) attemptRedisConnection()
+      redisClient.set("currentTime", currentTime).catch((err) => {
+        console.error(err)
+        isRedisConnected = false
+      })
 
       // new game
       if (obj.t === "featured") {
         console.log("new game: ", obj.d.id)
         lastGameId = gameId === "" ? obj.d.id : gameId // if gameId is empty, set it to the new game id
         gameId = obj.d.id
-        redisClient.set("mostRecentGameId", gameId).catch(console.error)
+        if (!isRedisConnected) attemptRedisConnection()
+        redisClient.set("mostRecentGameId", gameId).catch((err) => {
+          console.error(err)
+          isRedisConnected = false
+        })
         payWinnersByGameId(lastGameId)
       } else {
         console.log("players moving ", obj)
