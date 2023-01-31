@@ -5,7 +5,19 @@ import { payWinnersByGameId } from "../../payment-processor/src/index"
 require("dotenv").config({ path: "../../.env" })
 
 const redisClient = createClient({ url: "redis://redis:6379" })
-redisClient.connect().catch(console.error)
+let isRedisConnected = false
+const attemptRedisConnection = () => {
+  console.log("attempting redis connection")
+  redisClient
+    .connect()
+    .then(() => {
+      isRedisConnected = true
+    })
+    .catch((err) => {
+      console.error(err)
+      isRedisConnected = false
+    })
+}
 
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
@@ -63,10 +75,14 @@ setInterval(() => {
     console.log("\ntimeout detected, checking latest entry")
 
     let lastStoredTime = 0
+    if (!isRedisConnected) attemptRedisConnection()
     redisClient
       .get("currentTime")
       .then((currentTime) => (lastStoredTime = Number(currentTime) ?? 0))
-      .catch(console.error)
+      .catch((err) => {
+        console.error(err)
+        isRedisConnected = false
+      })
 
     if (currentTime < lastStoredTime - 20) {
       console.log("Primary stream is behind, restarting")

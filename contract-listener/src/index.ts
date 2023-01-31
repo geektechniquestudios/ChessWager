@@ -6,7 +6,20 @@ const ethers = require("ethers")
 const admin = require("firebase-admin")
 
 const redisClient = createClient({ url: "redis://redis:6379" })
-redisClient.connect().catch(console.error)
+
+let isRedisConnected = false
+const attemptRedisConnection = () => {
+  console.log("attempting redis connection")
+  redisClient
+    .connect()
+    .then(() => {
+      isRedisConnected = true
+    })
+    .catch((err) => {
+      console.error(err)
+      isRedisConnected = false
+    })
+}
 
 require("dotenv").config({ path: "../.env" })
 const isLocal = process.env.VITE_BRANCH_ENV === "develop"
@@ -286,8 +299,13 @@ contract.on(
 )
 
 setInterval(() => {
-  redisClient
-    .get("currentTime")
-    .then((time) => console.log(`Current Time: ${time}`))
-    .catch(console.error)
+  if (!isRedisConnected) attemptRedisConnection()
+  if (isRedisConnected)
+    redisClient
+      .get("currentTime")
+      .then((time) => console.log(`Current Time: ${time}`))
+      .catch((err) => {
+        console.error(err)
+        isRedisConnected = false
+      })
 }, 5000)
