@@ -36,9 +36,6 @@ spec:
             timeoutSeconds: 10
           name: primary-stream
           resources: {}
-          volumeMounts:
-            - mountPath: /data
-              name: stream-data
       terminationGracePeriodSeconds: 360
       restartPolicy: Always
 status: {}
