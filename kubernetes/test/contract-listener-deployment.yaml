@@ -41,8 +41,4 @@ spec:
               name: stream-data
       terminationGracePeriodSeconds: 360
       restartPolicy: Always
-      volumes:
-        - name: stream-data
-          persistentVolumeClaim:
-            claimName: stream-data
 status: {}
