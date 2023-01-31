@@ -36,10 +36,6 @@ spec:
             timeoutSeconds: 10
           name: contract-listener
           resources: {}
-          lifecycle:
-            preStop:
-              exec:
-                command: ["/bin/sh", "-c", "sleep 10m"]
           volumeMounts:
             - mountPath: /data
               name: stream-data
