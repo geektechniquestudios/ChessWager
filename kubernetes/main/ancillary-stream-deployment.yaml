@@ -40,13 +40,6 @@ spec:
             preStop:
               exec:
                 command: ["/bin/sh", "-c", "sleep 10m"]
-          volumeMounts:
-            - mountPath: /data
-              name: stream-data
       terminationGracePeriodSeconds: 360
       restartPolicy: Always
-      volumes:
-        - name: stream-data
-          persistentVolumeClaim:
-            claimName: stream-data
 status: {}
