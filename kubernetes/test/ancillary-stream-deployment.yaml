@@ -36,10 +36,6 @@ spec:
             timeoutSeconds: 10
           name: ancillary-stream
           resources: {}
-          lifecycle:
-            preStop:
-              exec:
-                command: ["/bin/sh", "-c", "sleep 10m"]
       terminationGracePeriodSeconds: 360
       restartPolicy: Always
 status: {}
