@@ -75,6 +75,7 @@ steps:
       - "-rf"
       - output
   - id: Applying contract listener to k8s
+    timeout: 600s
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
@@ -90,6 +91,7 @@ steps:
       - "-rf"
       - output
   - id: Applying ancillary stream to k8s
+    timeout: 600s
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
@@ -105,6 +107,7 @@ steps:
       - "-rf"
       - output
   - id: Applying primary stream to k8s
+    timeout: 600s
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
