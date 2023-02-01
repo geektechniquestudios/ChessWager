@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - env:
-          image: gcr.io/chess-wager-test/github.com/geektechniquestudios/chesswager/primary-stream
+          image: gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager/primary-stream
           livenessProbe:
             exec:
               command:
@@ -36,6 +36,10 @@ spec:
             timeoutSeconds: 10
           name: primary-stream
           resources: {}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 10m"]
       terminationGracePeriodSeconds: 360
       restartPolicy: Always
 status: {}

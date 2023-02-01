@@ -75,7 +75,6 @@ steps:
       - "-rf"
       - output
   - id: Applying contract listener to k8s
-    timeout: 600s
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
@@ -84,6 +83,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
+      - " --timeout=10m"
   - id: Clearing build folder from Redis
     name: bash
     args:
@@ -91,7 +91,6 @@ steps:
       - "-rf"
       - output
   - id: Applying ancillary stream to k8s
-    timeout: 600s
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
@@ -100,6 +99,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
+      - "--timeout=10m"
   - id: Clearing build folder again
     name: bash
     args:
@@ -107,7 +107,6 @@ steps:
       - "-rf"
       - output
   - id: Applying primary stream to k8s
-    timeout: 600s
     name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
@@ -116,6 +115,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
+      - "--timeout=10m"
 timeout: 3600s
 options:
   substitutionOption: ALLOW_LOOSE
