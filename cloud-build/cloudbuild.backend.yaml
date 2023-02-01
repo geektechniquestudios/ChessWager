@@ -84,6 +84,8 @@ steps:
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
       - " --timeout=10m"
+    substitutions:
+      BRANCH_NAME: "$BRANCH_NAME"
   - id: Clearing build folder from Redis
     name: bash
     args:
@@ -100,6 +102,8 @@ steps:
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
       - "--timeout=10m"
+    substitutions:
+      BRANCH_NAME: "$BRANCH_NAME"
   - id: Clearing build folder again
     name: bash
     args:
@@ -116,6 +120,8 @@ steps:
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
       - "--timeout=10m"
+    substitutions:
+      BRANCH_NAME: "$BRANCH_NAME"
 timeout: 3600s
 options:
   substitutionOption: ALLOW_LOOSE
