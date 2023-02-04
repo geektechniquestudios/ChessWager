@@ -72,7 +72,7 @@ export const DropdownMenu = () => {
 
   return (
     <div
-      className={`${firefoxColors} dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border-2 border-stone-400 text-stone-800 shadow-lg dark:border-stone-500  dark:text-stone-200`}
+      className={`${firefoxColors} dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border-2 border-stone-400 text-stone-800 shadow-lg dark:border-stone-500 dark:text-stone-200`}
       style={{
         height: menuHeight,
         background: bgColor,

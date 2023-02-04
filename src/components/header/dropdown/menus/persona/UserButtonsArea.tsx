@@ -12,6 +12,7 @@ import { CancelPendingRequestButton } from "./buttons/CancelPendingRequestButton
 import { FriendRequestsButton } from "./buttons/FriendRequestsButton"
 import { UserDataState } from "../../../../containers/UserDataState"
 import { ContractDataButton } from "./buttons/ContractDataButton"
+import { BanUserButton } from "./buttons/BanUserButton"
 
 const db = getFirestore(firebaseApp)
 
@@ -20,6 +21,8 @@ interface Props {
   displayName: string
   photoURL: string
   walletAddress: string
+  isBanned: boolean
+  moderatorLevel: 0 | 1 | 2
 }
 
 export const UserButtonsArea: React.FC<Props> = ({
@@ -27,6 +30,8 @@ export const UserButtonsArea: React.FC<Props> = ({
   displayName,
   photoURL,
   walletAddress,
+  isBanned,
+  moderatorLevel,
 }) => {
   const { userData } = UserDataState.useContainer()
   const { auth, isWalletConnected, connectWallet } = Auth.useContainer()
@@ -69,6 +74,12 @@ export const UserButtonsArea: React.FC<Props> = ({
                 blockedUsers={blockedUsers}
               />
               <ReportUserButton id={id ?? ""} />
+              <BanUserButton
+                id={id}
+                displayName={displayName}
+                isBanned={isBanned}
+                moderatorLevel={moderatorLevel}
+              />
             </div>
           </div>
         )}

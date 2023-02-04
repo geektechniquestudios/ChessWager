@@ -20,7 +20,7 @@ export const ChatHeader: React.FC = () => {
         />
       </button>
       <div className="text-bold text-md grid place-content-center text-stone-900 dark:text-stone-50">
-        GLOBAL CHAT
+        PUBLIC CHAT
       </div>
       <div className="w-11" />
     </header>
