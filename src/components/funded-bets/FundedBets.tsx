@@ -6,6 +6,7 @@ import { BetsState } from "../containers/BetsState"
 import type { Bet } from "../../interfaces/Bet"
 import { UserDataState } from "../containers/UserDataState"
 import { WindowSize } from "../containers/WindowSize"
+import { motion } from "framer-motion"
 
 interface Props {}
 
@@ -34,7 +35,8 @@ export const FundedBets: React.FC<Props> = () => {
   const { width } = WindowSize.useContainer()
   const ltrOrRtl: "ltr" | "rtl" = width < 640 ? "ltr" : "rtl"
   return (
-    <div
+    <motion.div
+      layout
       className="flex shrink flex-col overflow-y-hidden overflow-x-visible sm:w-52"
       style={{ direction: "rtl" }}
     >
@@ -102,6 +104,6 @@ export const FundedBets: React.FC<Props> = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

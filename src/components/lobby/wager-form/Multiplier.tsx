@@ -70,7 +70,7 @@ export const Multiplier: React.FC<Props> = ({
       <div className="flex w-full justify-center">
         <div className="flex w-full flex-col px-3 py-1">
           <Slider
-            className="w-full "
+            className="w-full"
             value={sliderVal}
             onChange={updateSlider}
             min={-0.99}

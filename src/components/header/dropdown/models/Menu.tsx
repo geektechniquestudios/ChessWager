@@ -23,6 +23,8 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
 
   const { auth } = Auth.useContainer()
 
+  // This map converts the stored menu name in code to the name that actually displays
+  // When you add a new menu, you need to add it here
   const menuTitle = new Map<string, string>()
   menuTitle.set("main", "Menu")
   menuTitle.set("social", "Social")

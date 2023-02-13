@@ -19,8 +19,8 @@ export const ChatHeader: React.FC = () => {
           title="Hide Chat"
         />
       </button>
-      <div className="text-bold text-md grid place-content-center text-stone-900 dark:text-stone-50">
-        GLOBAL CHAT
+      <div className="text-bold text-md grid place-content-center whitespace-nowrap text-stone-900 dark:text-stone-50">
+        PUBLIC CHAT
       </div>
       <div className="w-11" />
     </header>

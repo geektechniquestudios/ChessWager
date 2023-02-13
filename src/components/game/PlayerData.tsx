@@ -6,8 +6,9 @@ interface Props {
   time: number
   rating: number
   fen: string
-  side: string
+  side: "white" | "black"
   isNewGame: boolean
+  isTop: boolean
 }
 
 export const PlayerData: React.FC<Props> = ({
@@ -18,9 +19,14 @@ export const PlayerData: React.FC<Props> = ({
   fen,
   side,
   isNewGame,
+  isTop,
 }) => {
   return (
-    <div className="flex w-full justify-between overflow-clip">
+    <div
+      className={`flex w-full justify-between overflow-clip ${
+        isTop ? "rounded-t-lg" : "rounded-b-lg"
+      } `}
+    >
       <a
         href={`https://lichess.org/@/${name}`}
         rel="noreferrer noopener"

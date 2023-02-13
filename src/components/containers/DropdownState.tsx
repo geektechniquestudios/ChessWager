@@ -8,10 +8,18 @@ const useDropdownState = () => {
   const [menuHeight, setMenuHeight] = useState(0)
   const [bet, setBet] = useState<Bet | null>(null)
   const [menuStack, setMenuStack] = useState<string[]>([])
+  const [menuRefMap, setMenuRefMap] = useState(new Map())
 
   const openDropdownToMenu = (menu: string) => {
     setActiveMenu(menu)
     setIsDropdownOpen(true)
+  }
+
+  const closeDropdownMenu = () => {
+    setIsDropdownOpen(false)
+    setActiveMenu("")
+    setMenuHeight(0)
+    setMenuStack([])
   }
 
   const goToMenu = (menu: string) => {
@@ -22,6 +30,7 @@ const useDropdownState = () => {
   return {
     isDropdownOpen,
     setIsDropdownOpen,
+    closeDropdownMenu,
     activeMenu,
     setActiveMenu,
     menuHeight,
@@ -32,6 +41,8 @@ const useDropdownState = () => {
     menuStack,
     setMenuStack,
     goToMenu,
+    menuRefMap,
+    setMenuRefMap,
   }
 }
 

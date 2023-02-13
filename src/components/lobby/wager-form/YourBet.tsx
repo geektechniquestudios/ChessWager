@@ -13,7 +13,7 @@ interface Props {
   setIsAmountEmpty: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const BetAmount: React.FC<Props> = ({
+export const YourBet: React.FC<Props> = ({
   betAmount,
   setBetAmount,
   localAvaxAmount,
@@ -32,19 +32,20 @@ export const BetAmount: React.FC<Props> = ({
   return (
     <div
       id="bet-amount"
-      className={`color-shift flex rounded-md border bg-stone-300 px-1 dark:bg-stone-700 ${borderWarning}`}
+      className={`${borderWarning} color-shift flex rounded-md border bg-stone-300 px-1 dark:bg-stone-700`}
     >
       <p className="m-2 grid place-content-center font-bold text-stone-900 dark:text-stone-300">
         Your Bet
       </p>
       <div className="m-2 border border-stone-900 dark:border-stone-500" />
-      <div>
-        <div className="my-1 flex justify-between">
-          <div className="m-1 flex flex-col justify-center text-xs font-bold text-stone-900 dark:text-stone-300">
+      <div className="w-full">
+        <div className="my-1 flex justify-center">
+          <div className="m-1 flex w-8 items-center justify-end text-xs font-bold text-stone-900 dark:text-stone-300">
             USD
           </div>
+
           <CurrencyInput
-            className="ml-1 rounded-md bg-stone-100 p-1 text-stone-900 dark:bg-stone-800 dark:text-stone-300"
+            className="ml-1 w-28 grow rounded-md bg-stone-100 p-1 text-stone-900 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue=""
@@ -74,12 +75,12 @@ export const BetAmount: React.FC<Props> = ({
             }}
           />
         </div>
-        <div className="my-1 flex justify-between">
-          <div className="m-1 flex flex-col justify-center text-xs font-bold text-stone-900 dark:text-stone-300">
+        <div className="my-1 flex justify-center">
+          <div className="m-1 flex w-8 items-center justify-end text-xs font-bold text-stone-900 dark:text-stone-300">
             AVAX
           </div>
           <CurrencyInput
-            className="ml-1 rounded-md bg-stone-100 p-1 dark:bg-stone-800 dark:text-stone-300"
+            className="ml-1 w-28 grow rounded-md bg-stone-100 p-1 text-stone-900 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue=""

@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { Auth } from "../../containers/Auth"
+import "../../../style/buttons.scss"
 
 export const SignInButton: React.FC = () => {
   const { signInWithGoogle, user } = Auth.useContainer()
@@ -8,7 +9,7 @@ export const SignInButton: React.FC = () => {
     <>
       <AnimatePresence mode="wait">
         {!user && (
-          <div className="mx-2 flex flex-col justify-center absolute right-11">
+          <div className="absolute right-11 mx-2 flex flex-col justify-center">
             <motion.button
               initial={{ opacity: 0, translateY: -30 }}
               animate={{ opacity: [0, 0, 1], translateY: 0 }}

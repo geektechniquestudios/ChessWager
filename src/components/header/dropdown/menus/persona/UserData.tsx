@@ -1,15 +1,8 @@
 import { Timestamp } from "firebase/firestore"
-import { BsPiggyBank } from "react-icons/bs"
-import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
-import { FiPercent, FiUsers } from "react-icons/fi"
-import { GiPayMoney } from "react-icons/gi"
 import { MdBlockFlipped } from "react-icons/md"
-import { RiHandCoinLine } from "react-icons/ri"
-import { DarkMode } from "../../../../containers/DarkMode"
-import { BanUserButton } from "./buttons/BanUserButton"
 import { UserDataLoading } from "./LoadingUserData"
 import { UserButtonsArea } from "./UserButtonsArea"
-import { UserDataTile } from "./UserDataTile"
+import { UserTiles } from "./UserTiles"
 
 interface Props {
   betAcceptedCount?: number
@@ -50,14 +43,6 @@ export const UserData: React.FC<Props> = ({
   moderatorLevel,
   isLoading,
 }) => {
-  const { isDarkOn } = DarkMode.useContainer()
-  const winPercent =
-    betWinCount !== 0 && betFundedCount !== 0
-      ? ((betWinCount / betFundedCount) * 100).toFixed(2)
-      : 0
-
-  const trust = `${betFundedCount} / ${betAcceptedCount}`
-
   return (
     <div className="flex h-96 w-64 flex-col items-center justify-between py-1.5">
       {isLoading ? (
@@ -69,16 +54,10 @@ export const UserData: React.FC<Props> = ({
             displayName={displayName ?? ""}
             photoURL={photoURL!}
             walletAddress={walletAddress!}
+            isBanned={isBanned!}
+            moderatorLevel={moderatorLevel!}
           />
           <div className="relative">
-            <div className="absolute bottom-0 right-0 translate-x-7 translate-y-1.5">
-              <BanUserButton
-                id={id}
-                displayName={displayName}
-                isBanned={isBanned}
-                moderatorLevel={moderatorLevel}
-              />
-            </div>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
               {isBanned && (
                 <MdBlockFlipped color="red" size={90} title="User Is Banned" />
@@ -108,51 +87,14 @@ export const UserData: React.FC<Props> = ({
               </p>
             )}
           </div>
-
-          <div className="mb-1 grid w-full grid-cols-2 gap-1.5 text-sm">
-            <UserDataTile data={trust} name="Trust" icon={<FaRegHandshake />} />
-            <UserDataTile
-              data={friends?.length ?? 0}
-              name="Friends"
-              icon={<FiUsers />}
-            />
-            <UserDataTile
-              data={betWinCount ?? 0}
-              name="Bets Won"
-              icon={<FaRegHandPeace />}
-            />
-            <UserDataTile
-              data={betFundedCount - betWinCount}
-              name="Bets Lost"
-              icon={<FaRegHandPeace className="rotate-180" />}
-            />
-            <UserDataTile
-              data={winPercent}
-              name="Win Percent"
-              icon={<FiPercent />}
-            />
-            <UserDataTile
-              data={amountBet.toFixed(4) ?? 0}
-              name="Total Amount Bet"
-              icon={
-                <GiPayMoney
-                  strokeWidth={35}
-                  stroke={isDarkOn ? "#d6d3d1" : "#1c1917"}
-                  color="transparent"
-                />
-              }
-            />
-            <UserDataTile
-              name="Total AVAX Won"
-              icon={<RiHandCoinLine />}
-              data={parseFloat((amountWon ?? 0).toFixed(4))}
-            />
-            <UserDataTile
-              data={(amountWon - amountBet).toFixed(4) ?? 0}
-              name="Net Profit"
-              icon={<BsPiggyBank />}
-            />
-          </div>
+          <UserTiles
+            betWinCount={betWinCount}
+            betFundedCount={betFundedCount}
+            betAcceptedCount={betAcceptedCount}
+            friends={friends!}
+            amountBet={amountBet}
+            amountWon={amountWon}
+          />
         </div>
       )}
     </div>

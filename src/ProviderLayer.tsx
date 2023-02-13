@@ -15,7 +15,7 @@ import { UserDataState } from "./components/containers/UserDataState"
 import { WindowSize } from "./components/containers/WindowSize"
 import { GlobalChatState } from "./components/containers/GlobalChatState"
 
-export const AppWithProviders: React.FC = () => {
+export const ProviderLayer: React.FC = () => {
   return (
     <WindowSize.Provider>
       <LobbyState.Provider>

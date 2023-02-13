@@ -23,34 +23,41 @@ import { ContractDataMenu } from "./menus/contract-data/ContractDataMenu"
 import { MissedPaymentsMenu } from "./menus/missed-payments/MissedPaymentsMenu"
 
 export const DropdownMenu = () => {
-  const { setMenuStack } = DropdownState.useContainer()
-  const CloseMenuListener = (ref: MutableRefObject<any>) => {
-    const { setIsDropdownOpen, setActiveMenu } = DropdownState.useContainer()
+  const {
+    setIsDropdownOpen,
+    closeDropdownMenu,
+    menuRefMap,
+    activeMenu,
+    menuHeight,
+    setMenuHeight,
+  } = DropdownState.useContainer()
+
+  const { user } = Auth.useContainer()
+
+  const CloseMenuListener = (
+    selfRef: MutableRefObject<any>,
+    activeMenu: string,
+    menuRefMap: Map<any, any>,
+  ) => {
     useEffect(() => {
       const handleClickOutside = (event: Event) => {
-        if (ref.current?.contains(event.target)) {
+        if (
+          menuRefMap.get(activeMenu).current?.contains(event.target) ||
+          selfRef.current?.contains(event.target)
+        )
           return
-        }
-        if (ref.current && !ref.current.contains(event.target)) {
-          setIsDropdownOpen(false)
-          setActiveMenu("")
-          setMenuHeight(0)
-          setMenuStack([])
-        }
+        closeDropdownMenu()
       }
-
       document.addEventListener("mousedown", handleClickOutside)
       return () => {
         document.removeEventListener("mousedown", handleClickOutside)
       }
-    }, [ref, setIsDropdownOpen])
+    }, [selfRef, setIsDropdownOpen])
   }
+
   const dropdownRef = useRef<any>()
 
-  const { user } = Auth.useContainer()
-  const { menuHeight, setMenuHeight } = DropdownState.useContainer()
-
-  CloseMenuListener(dropdownRef)
+  CloseMenuListener(dropdownRef, activeMenu, menuRefMap)
 
   useEffect(() => {
     setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
@@ -72,7 +79,7 @@ export const DropdownMenu = () => {
 
   return (
     <div
-      className={`${firefoxColors} dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border-2 border-stone-400 text-stone-800 shadow-lg dark:border-stone-500  dark:text-stone-200`}
+      className={`${firefoxColors} dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border-2 border-stone-400 text-stone-800 shadow-lg dark:border-stone-500 dark:text-stone-200`}
       style={{
         height: menuHeight,
         background: bgColor,
