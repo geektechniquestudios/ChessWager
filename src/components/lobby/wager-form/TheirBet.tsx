@@ -14,19 +14,19 @@ export const TheirBet: React.FC<Props> = ({ multiplier, betAmount }) => {
       </p>
       <div className="m-2 border border-stone-900 dark:border-stone-500" />
       <div className="w-full">
-        <div className="my-1 flex justify-center">
-          <p
-            style={{ textDecoration: "underline solid #134e4a 2px" }}
-            className="m-1 text-stone-900 dark:text-stone-300"
-          >{`USD ${(multiplier * betAmount * avaxPrice)
+        <div className="my-1 flex justify-center font-bold">
+          <p className="m-1 text-stone-900 dark:text-stone-300">{`USD ${(
+            multiplier *
+            betAmount *
+            avaxPrice
+          )
             .toFixed(2)
             .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}`}</p>
         </div>
-        <div className="my-1 flex justify-center">
-          <p
-            style={{ textDecoration: "underline solid #9f1239 2px" }}
-            className="m-1 text-stone-900 dark:text-stone-300"
-          >{`AVAX ${(multiplier * betAmount)
+        <div className="my-1 flex justify-center font-bold">
+          <p className="m-1 text-stone-900 dark:text-stone-300">{`AVAX ${(
+            multiplier * betAmount
+          )
             .toFixed(6)
             .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}`}</p>
         </div>

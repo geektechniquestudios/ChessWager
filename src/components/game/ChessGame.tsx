@@ -6,6 +6,7 @@ import { GameState } from "../containers/GameState"
 import Chessground from "@react-chess/chessground"
 import { GameResultPopup } from "./popup/GameResultPopup"
 import { CustomSwal } from "../popups/CustomSwal"
+import { motion } from "framer-motion"
 
 // import "chessground/assets/chessground.base.css"
 // import "chessground/assets/chessground.brown.css"
@@ -132,14 +133,15 @@ export const ChessGame: React.FC = () => {
   }, [updateTitles])
 
   return (
-    <div className="flex w-full justify-center">
-      <div
-        className="color-shift mt-14 mb-10 w-full min-w-min resize-x flex-col justify-center overflow-hidden rounded-sm border border-stone-500 bg-stone-100 p-2.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 sm:w-1/2"
+    <div className="flex w-full justify-center p-2">
+      <motion.div
+        layout
+        className="color-shift resize-x flex-col justify-center overflow-hidden rounded-lg border border-stone-500 bg-stone-100 p-2.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 sm:w-1/2"
         style={{ minWidth: "17em", maxWidth: "80vh" }}
       >
         <div className="relative flex h-full w-full resize justify-center align-middle">
           <GameResultPopup orientation={orientation} />
-          <div className="flex w-full flex-col justify-center border border-stone-500 bg-stone-200 align-middle dark:border-stone-700 dark:bg-stone-700">
+          <div className="flex w-full flex-col justify-center rounded-lg border border-stone-500 bg-stone-200 align-middle dark:border-stone-700 dark:bg-stone-700">
             <div className="flex w-full justify-center">
               <PlayerData
                 side={orientation === "white" ? "black" : "white"}
@@ -149,11 +151,12 @@ export const ChessGame: React.FC = () => {
                 rating={orientation === "white" ? blackRating : whiteRating}
                 fen={fen}
                 isNewGame={isNewGame}
+                isTop
               />
             </div>
             <div className="aspect-w-1 aspect-h-1 border-t border-b border-stone-600 dark:border-stone-400">
               <Chessground
-                contained={true}
+                contained
                 config={{
                   fen,
                   orientation,
@@ -174,11 +177,12 @@ export const ChessGame: React.FC = () => {
                 rating={orientation === "black" ? blackRating : whiteRating}
                 fen={fen}
                 isNewGame={isNewGame}
+                isTop={false}
               />
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

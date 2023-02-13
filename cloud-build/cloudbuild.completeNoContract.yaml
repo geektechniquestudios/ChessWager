@@ -81,14 +81,20 @@ steps:
       - "$_IMAGE_NAME_PS:$COMMIT_SHA"
 
   # Deploying to k8s
-  - id: Applying shared volume to k8s
+  - id: Applying Redis server to k8s
     name: gcr.io/cloud-builders/gke-deploy
     args:
-      - apply
-      - "--filename=kubernetes/stream-data-persistentvolumeclaim.yaml"
+      - run
+      - "--filename=kubernetes/redis-deployment.yaml"
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
+  - id: Clearing build folder from Redis
+    name: bash
+    args:
+      - rm
+      - "-rf"
+      - output
   - id: Applying contract listener to k8s
     name: gcr.io/cloud-builders/gke-deploy
     args:

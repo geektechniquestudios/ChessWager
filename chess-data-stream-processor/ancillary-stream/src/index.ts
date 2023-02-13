@@ -50,6 +50,11 @@ redisClient
     isRedisConnected = false
   })
 
+const payWinnersWithDelay = async (gameId: string) => {
+  await new Promise((resolve) => setTimeout(resolve, 8000))
+  payWinnersByGameId(gameId)
+}
+
 const callLichessLiveTv = () => {
   let gameId = ""
   let lastGameId = ""
@@ -75,7 +80,7 @@ const callLichessLiveTv = () => {
           console.error(err)
           isRedisConnected = false
         })
-        payWinnersByGameId(lastGameId)
+        payWinnersWithDelay(lastGameId)
       } else {
         console.log("players moving ", obj)
       }

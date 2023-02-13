@@ -68,7 +68,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
-  - id: Clearing build folder
+  - id: Clearing build folder from Redis
     name: bash
     args:
       - rm
@@ -84,7 +84,7 @@ steps:
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
       - "--timeout=10m"
-  - id: Clearing build folder from Redis
+  - id: Clearing build folder
     name: bash
     args:
       - rm

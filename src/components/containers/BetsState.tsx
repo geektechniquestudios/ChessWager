@@ -193,6 +193,8 @@ const useBetState = () => {
     if (!isLoading) setSelectedBetMap(new Map())
   }
 
+  const [showWagerForm, setShowWagerForm] = useState(false)
+
   return {
     bets,
     selectedBetMap,
@@ -204,6 +206,8 @@ const useBetState = () => {
     setRefreshingBets,
     updateRealTimeBets,
     updateRefreshingBets,
+    showWagerForm,
+    setShowWagerForm,
   }
 }
 export const BetsState = createContainer(useBetState)

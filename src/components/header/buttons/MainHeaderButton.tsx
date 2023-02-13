@@ -1,7 +1,8 @@
 import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
-import "../../../style/buttons.scss"
 import { AnimatePresence, motion } from "framer-motion"
+import "../../../style/buttons.scss"
+import { useEffect, useRef } from "react"
 
 interface Props {
   id?: string
@@ -23,8 +24,20 @@ export const MainHeaderButton: React.FC<Props> = ({
   animationOffset,
 }) => {
   const { user } = Auth.useContainer()
-  const { setIsDropdownOpen, setActiveMenu, activeMenu } =
-    DropdownState.useContainer()
+  const {
+    activeMenu,
+    openDropdownToMenu,
+    closeDropdownMenu,
+    menuRefMap,
+    setMenuRefMap,
+  } = DropdownState.useContainer()
+
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const temp = menuRefMap.set(openToMenu, ref)
+    setMenuRefMap(temp)
+  }, [])
 
   const activeStyle =
     activeMenu === openToMenu ? "bg-stone-300 dark:bg-stone-700" : ""
@@ -33,6 +46,7 @@ export const MainHeaderButton: React.FC<Props> = ({
     <AnimatePresence mode="wait">
       {(user || !authRequired) && (
         <motion.button
+          ref={ref}
           initial={{ opacity: 0, translateY: -30 }}
           animate={{ opacity: [0, 0, 1], translateY: 0 }}
           exit={{ opacity: 0, translateY: -30 }}
@@ -46,8 +60,13 @@ export const MainHeaderButton: React.FC<Props> = ({
           className={`color-shift clickable grid h-9 w-9 place-content-center rounded-md border-none border-stone-800 text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white ${activeStyle}`}
           title={title}
           onClick={() => {
-            setIsDropdownOpen(true)
-            setActiveMenu(openToMenu)
+            // prevents opening new menu when header button is pressed that is already open
+            if (activeMenu === openToMenu) {
+              closeDropdownMenu()
+              return
+            }
+
+            openDropdownToMenu(openToMenu)
             onClick && onClick()
           }}
         >
