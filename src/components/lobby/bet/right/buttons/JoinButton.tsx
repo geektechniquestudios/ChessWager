@@ -1,4 +1,3 @@
-import "../../../../../style/buttons.scss"
 import { Auth } from "../../../../containers/Auth"
 import { BsBoxArrowInLeft } from "react-icons/bs"
 import { DarkMode } from "../../../../containers/DarkMode"

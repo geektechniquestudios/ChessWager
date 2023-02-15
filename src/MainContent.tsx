@@ -9,7 +9,7 @@ interface Props {}
 export const MainContent: React.FC<Props> = ({}) => {
   return (
     <motion.main className="scrollbar flex justify-center overflow-y-auto">
-      <div className="flex h-full w-[10rem] shrink grow flex-col">
+      <div className="relative flex h-full w-[10rem] shrink grow flex-col">
         <ShowChatButton />
         <div className="flex w-auto flex-col">
           <div className="scrollbar flex flex-col gap-2 overflow-hidden sm:flex-row">

@@ -1,6 +1,3 @@
-import "../../style/chat.scss"
-import "../../style/buttons.scss"
-
 import { useEffect, useRef, useState } from "react"
 import { ChatHeader } from "./ChatHeader"
 import { ChatForm } from "./ChatForm"
@@ -11,6 +8,7 @@ import { firebaseApp } from "../../../firestore.config"
 import { ChatToggle } from "../containers/ChatToggle"
 import { AnimatePresence, motion } from "framer-motion"
 import { WindowSize } from "../containers/WindowSize"
+import "../../style/chat.scss"
 
 const db = getFirestore(firebaseApp)
 

@@ -10,7 +10,6 @@ import { useRef } from "react"
 
 export const BettingLobby: React.FC = () => {
   const { isRealTime } = LobbyHeaderState.useContainer()
-
   const bettingLobbyRef = useRef<any>(null)
 
   return (
@@ -21,19 +20,18 @@ export const BettingLobby: React.FC = () => {
       >
         <main className="w-full">
           <LobbyHeader />
-          <div
-            className="scrollbar relative flex h-[36em] overflow-x-auto"
-            ref={bettingLobbyRef}
-          >
-            <CreateWagerButton />
-            <WagerForm bettingLobbyRef={bettingLobbyRef} />
-            <motion.div
-              className="scrollbar w-full overflow-x-auto pt-0.5 pl-[2.6rem]"
-              layout
-            >
-              <CreatedByUserBets />
-              {isRealTime ? <RealtimeBets /> : <RefreshingBets />}
-            </motion.div>
+          <div className="scrollbar relative flex h-[36em] overflow-x-hidden">
+            <div ref={bettingLobbyRef} className="h-full w-full">
+              <CreateWagerButton />
+              <WagerForm bettingLobbyRef={bettingLobbyRef} />
+              <motion.div
+                className="scrollbar w-full overflow-x-auto pt-0.5 pl-[2.6rem]"
+                layout
+              >
+                <CreatedByUserBets />
+                {isRealTime ? <RealtimeBets /> : <RefreshingBets />}
+              </motion.div>
+            </div>
           </div>
         </main>
       </motion.div>

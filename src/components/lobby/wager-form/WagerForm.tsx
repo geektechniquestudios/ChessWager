@@ -155,7 +155,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
           layout
           ref={wagerFormRef}
           initial={isFirstAnimation ? false : { width: 0 }}
-          animate={{ width: "21rem" }}
+          animate={{ width: "19rem" }}
           exit={{ width: 0 }}
           transition={{
             type: "spring",
@@ -166,7 +166,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
           <fieldset className="h-full">
             <form
               onSubmit={createWager}
-              className="flex h-full w-[21rem] flex-col justify-between rounded-bl-lg border-r border-stone-600 bg-stone-200 p-2 dark:bg-stone-900"
+              className="flex h-full w-[19rem] flex-col justify-between rounded-bl-lg border-r border-stone-400 dark:border-stone-600 bg-stone-200 p-2 dark:bg-stone-900"
               onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault()
               }}
@@ -192,6 +192,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
                 />
                 <TheirBet multiplier={multiplier} betAmount={betAmount} />
                 <Multiplier
+                  multiplier={multiplier}
                   setMultiplier={setMultiplier}
                   sliderVal={sliderVal}
                   setSliderVal={setSliderVal}

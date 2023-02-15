@@ -1,4 +1,3 @@
-import "../../../../../style/buttons.scss"
 import {
   DocumentData,
   DocumentReference,
@@ -11,6 +10,7 @@ import { FiUserCheck } from "react-icons/fi"
 import { firebaseApp } from "../../../../../../firestore.config"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { LobbyState } from "../../../../containers/LobbyState"
+
 interface Props {
   betId: string
   user1Id: string

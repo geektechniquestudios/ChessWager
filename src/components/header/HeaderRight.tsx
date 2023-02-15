@@ -110,7 +110,7 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setMenuStack(["main"])
         }}
-        animationOffset={10}
+        animationOffset={7}
       />
       {isDropdownOpen && <DropdownMenu />}
     </div>

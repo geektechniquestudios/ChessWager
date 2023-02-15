@@ -8,8 +8,9 @@ const useChatToggle = () => {
       ? JSON.parse(localStorage.getItem("showChat")!)
       : true,
   )
+  const [areNewMessages, setAreNewMessages] = useState(false)
 
-  return { showChat, setShowChat }
+  return { showChat, setShowChat, areNewMessages, setAreNewMessages }
 }
 
 export const ChatToggle = createContainer(useChatToggle)

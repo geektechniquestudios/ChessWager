@@ -3,17 +3,21 @@ import { useState } from "react"
 import CurrencyInput from "react-currency-input-field"
 
 interface Props {
+  multiplier: number
   setMultiplier: React.Dispatch<React.SetStateAction<number>>
   sliderVal: number
   setSliderVal: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const Multiplier: React.FC<Props> = ({
+  multiplier,
   setMultiplier,
   sliderVal,
   setSliderVal,
 }) => {
-  const [localMultiplier, setLocalMultiplier] = useState("1.00")
+  const [localMultiplier, setLocalMultiplier] = useState(
+    multiplier.toFixed(2).toString(),
+  )
 
   const calcMultiplier = (sliderVal: number) => {
     if (sliderVal <= 0) {
