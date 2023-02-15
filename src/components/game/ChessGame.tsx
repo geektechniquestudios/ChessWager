@@ -133,7 +133,7 @@ export const ChessGame: React.FC = () => {
   }, [updateTitles])
 
   return (
-    <div className="flex w-full justify-center p-2">
+    <div className="mt-12 mb-3 flex w-full justify-center">
       <motion.div
         layout
         className="color-shift resize-x flex-col justify-center overflow-hidden rounded-lg border border-stone-500 bg-stone-100 p-2.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 sm:w-1/2"

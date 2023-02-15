@@ -23,39 +23,35 @@ export const ShowChatButton: React.FC<Props> = ({}) => {
   }, [])
 
   return (
-    <AnimatePresence>
-      {!showChat && (
-        <motion.button
-          layout
-          initial={{ opacity: 0, x: 30 }}
-          animate={{
-            opacity: 1,
-            x: 0,
-            transition: { duration: 0.3, delay: isFirstLoad ? 0.9 : 0 },
-          }}
-          exit={{ opacity: 0, transition: { duration: 0.1 }, x: 30 }}
-          whileHover={{
-            scale: 1.05,
-            transition: {
-              duration: 0.1,
-            },
-          }}
-          id="show-chat-button"
-          onClick={() => {
-            setShowChat(true)
-            localStorage.setItem("showChat", "true")
-            setAreNewMessages(false)
-          }}
-          className="color-shift absolute right-0 top-0 z-30 mr-2 mt-11 rounded-md border border-stone-400 bg-stone-100 p-0.5 hover:bg-white dark:border-stone-600 dark:bg-stone-800 dark:hover:bg-stone-700 sm:mt-2"
-          title="Show Chat"
-        >
-          <MdOutlineChatBubbleOutline
-            size="1.4em"
-            className="color-shift m-1 text-stone-900 dark:text-stone-50"
-            color={areNewMessages ? (isDarkOn ? "#4ade80" : "#16a34a") : ""}
-          />
-        </motion.button>
-      )}
-    </AnimatePresence>
+    <div className="absolute right-4 top-[5.2em] grow overflow-clip sm:top-14">
+      <AnimatePresence>
+        {!showChat && (
+          <motion.button
+            layout
+            initial={{ opacity: 0, x: 30 }}
+            animate={{
+              opacity: 1,
+              x: 0,
+              transition: { duration: 0.3, delay: isFirstLoad ? 0.9 : 0 },
+            }}
+            exit={{ opacity: 0, transition: { duration: 0.1 }, x: 30 }}
+            id="show-chat-button"
+            onClick={() => {
+              setShowChat(true)
+              localStorage.setItem("showChat", "true")
+              setAreNewMessages(false)
+            }}
+            className="color-shift sticky z-30 rounded-md border border-stone-400 bg-stone-100 p-1.5 hover:bg-white dark:border-stone-600 dark:bg-stone-800 dark:hover:bg-stone-700"
+            title="Show Chat"
+          >
+            <MdOutlineChatBubbleOutline
+              size="1.4em"
+              className="color-shift text-stone-900 dark:text-stone-50"
+              color={areNewMessages ? (isDarkOn ? "#4ade80" : "#16a34a") : ""}
+            />
+          </motion.button>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }
