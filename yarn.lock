@@ -6742,7 +6742,7 @@ __metadata:
     ethers: ^5.7.2
     firebase: ^9.15.0
     firebase-admin: ^11.4.1
-    framer-motion: ^8.1.9
+    framer-motion: ^9.0.4
     hardhat: ^2.12.5
     postcss: ^8.4.20
     prettier: ^2.8.1
@@ -9633,9 +9633,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^8.1.9":
-  version: 8.1.9
-  resolution: "framer-motion@npm:8.1.9"
+"framer-motion@npm:^9.0.4":
+  version: 9.0.4
+  resolution: "framer-motion@npm:9.0.4"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     "@motionone/dom": ^10.15.3
@@ -9647,7 +9647,7 @@ __metadata:
   dependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
-  checksum: 6bb52e1daff78660b1c1610c02fa2a8ecf7ecf00c7b303dd2ce9672c56e4cb2636a2c2ee7a6d5b0443a451b39746c6cdfe4222df84c01f1871380abeb14373f4
+  checksum: 9ef23d81c78785dd2f7f278bad133d96c22fd3a9dcc310521ea220873b0a923ca927dc2d3e8000e221edfcc5bfd6272f752435472e3a8f9b1ef476202ede1ce2
   languageName: node
   linkType: hard
 
