@@ -10,7 +10,12 @@ const useChatToggle = () => {
   )
   const [areNewMessages, setAreNewMessages] = useState(false)
 
-  return { showChat, setShowChat, areNewMessages, setAreNewMessages }
+  return {
+    showChat,
+    setShowChat,
+    areNewMessages,
+    setAreNewMessages,
+  }
 }
 
 export const ChatToggle = createContainer(useChatToggle)

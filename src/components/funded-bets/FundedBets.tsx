@@ -37,13 +37,13 @@ export const FundedBets: React.FC<Props> = () => {
   return (
     <motion.div
       layout
-      className="flex shrink flex-col overflow-y-hidden overflow-x-visible sm:w-52"
+      className="flex w-full shrink flex-col overflow-y-hidden overflow-x-clip whitespace-nowrap rounded-lg border border-stone-400 bg-stone-50 dark:border-stone-600 dark:bg-stone-800 md:h-full md:w-52"
       style={{ direction: "rtl" }}
     >
-      <div className="flex w-full justify-between overflow-x-clip bg-gradient-to-r from-stone-300 via-stone-300 to-stone-300 px-0.5 py-1 dark:from-stone-800 dark:via-stone-800 dark:to-stone-800 dark:text-stone-50 sm:to-transparent sm:dark:to-transparent">
+      <div className="flex w-full justify-between overflow-x-clip bg-gradient-to-r from-stone-200 via-stone-200 to-stone-200 px-0.5 py-1 dark:from-stone-800 dark:via-stone-800 dark:to-stone-800 dark:text-stone-50 md:to-transparent md:dark:to-transparent">
         <div />
         <div
-          className="mx-1 text-sm sm:whitespace-nowrap"
+          className="text-md mx-1 md:whitespace-nowrap"
           style={{ direction: "ltr" }}
         >{`$${amountAtStake} at Stake`}</div>
       </div>
@@ -51,10 +51,10 @@ export const FundedBets: React.FC<Props> = () => {
       <div className="flex h-full flex-col overflow-y-hidden overflow-x-visible">
         <div
           style={{ direction: ltrOrRtl }}
-          className="scrollbar-funded flex h-full overflow-y-auto overflow-x-visible sm:flex-col"
+          className="scrollbar-funded flex h-full overflow-y-auto overflow-x-visible md:flex-col"
         >
           <div
-            className="flex overflow-x-visible sm:h-0 sm:flex-col"
+            className="flex overflow-x-visible md:h-0 md:flex-col"
             style={{ direction: "ltr" }}
           >
             {bets
@@ -77,7 +77,7 @@ export const FundedBets: React.FC<Props> = () => {
               ))}
           </div>
           <div
-            className="flex overflow-x-visible sm:h-0 sm:flex-col"
+            className="flex overflow-x-visible md:h-0 md:flex-col"
             style={{ direction: "ltr" }}
           >
             {bets

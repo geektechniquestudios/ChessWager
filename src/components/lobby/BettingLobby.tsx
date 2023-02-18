@@ -16,7 +16,7 @@ export const BettingLobby: React.FC = () => {
     <div className="flex grow justify-center">
       <motion.div
         layout
-        className="border-white-400 flex max-w-7xl grow rounded-lg border border-stone-400 bg-white dark:border-stone-600 dark:bg-stone-800"
+        className="border-white-400 flex w-full grow rounded-lg border border-stone-400 bg-white dark:border-stone-600 dark:bg-stone-800"
       >
         <main className="w-full">
           <LobbyHeader />

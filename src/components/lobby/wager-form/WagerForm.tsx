@@ -166,7 +166,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
           <fieldset className="h-full">
             <form
               onSubmit={createWager}
-              className="flex h-full w-[19rem] flex-col justify-between rounded-bl-lg border-r border-stone-400 dark:border-stone-600 bg-stone-200 p-2 dark:bg-stone-900"
+              className="flex h-full w-[19rem] flex-col justify-between rounded-bl-lg border-r border-stone-400 bg-stone-200 p-2 dark:border-stone-600 dark:bg-stone-900"
               onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault()
               }}

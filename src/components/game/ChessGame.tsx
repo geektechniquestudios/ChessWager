@@ -8,6 +8,7 @@ import { GameResultPopup } from "./popup/GameResultPopup"
 import { CustomSwal } from "../popups/CustomSwal"
 import { motion } from "framer-motion"
 
+// We use an old version of chessground. If we ever upgarde, uncomment the styles below.
 // import "chessground/assets/chessground.base.css"
 // import "chessground/assets/chessground.brown.css"
 // import "chessground/assets/chessground.cburnett.css"
@@ -32,8 +33,8 @@ interface Featured {
 interface Move {
   fen: string
   lm: string
-  wc: 90
-  bc: 133
+  wc: number
+  bc: number
 }
 
 interface Player {
@@ -133,10 +134,10 @@ export const ChessGame: React.FC = () => {
   }, [updateTitles])
 
   return (
-    <div className="mt-12 mb-3 flex w-full justify-center">
+    <div className="my-0 flex w-full justify-center">
       <motion.div
         layout
-        className="color-shift resize-x flex-col justify-center overflow-hidden rounded-lg border border-stone-500 bg-stone-100 p-2.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 sm:w-1/2"
+        className="color-shift w-full resize-x flex-col justify-center overflow-hidden rounded-lg border border-stone-500 bg-stone-100 p-2.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 sm:w-1/2"
         style={{ minWidth: "17em", maxWidth: "80vh" }}
       >
         <div className="relative flex h-full w-full resize justify-center align-middle">

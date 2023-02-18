@@ -9,7 +9,7 @@ export const HeaderMiddle: React.FC<Props> = ({}) => {
   const { openDropdownToMenu } = DropdownState.useContainer()
 
   return (
-    <div className="w-1/3 flex-auto" id="header-middle">
+    <div className="w-1/3 flex-auto shrink" id="header-middle">
       <div className="flex justify-center">
         {!(userData?.hasFirstBetBeenPlaced ?? true) && (
           <AnimatePresence>

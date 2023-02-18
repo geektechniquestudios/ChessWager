@@ -23,7 +23,7 @@ export const ShowChatButton: React.FC<Props> = ({}) => {
   }, [])
 
   return (
-    <div className="absolute right-4 top-[5.2em] grow overflow-clip sm:top-14">
+    <div className="absolute right-4 top-14 grow overflow-clip">
       <AnimatePresence>
         {!showChat && (
           <motion.button
@@ -32,8 +32,12 @@ export const ShowChatButton: React.FC<Props> = ({}) => {
             animate={{
               opacity: 1,
               x: 0,
-              transition: { duration: 0.3, delay: isFirstLoad ? 0.9 : 0 },
+              transition: {
+                duration: 0.3,
+                delay: isFirstLoad ? 0.8 : 0,
+              },
             }}
+            whileHover={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.1 }, x: 30 }}
             id="show-chat-button"
             onClick={() => {
@@ -41,7 +45,7 @@ export const ShowChatButton: React.FC<Props> = ({}) => {
               localStorage.setItem("showChat", "true")
               setAreNewMessages(false)
             }}
-            className="color-shift sticky z-30 rounded-md border border-stone-400 bg-stone-100 p-1.5 hover:bg-white dark:border-stone-600 dark:bg-stone-800 dark:hover:bg-stone-700"
+            className="color-shift sticky z-30 rounded-md border border-stone-400 bg-stone-100 p-1.5 mix-blend-screen hover:bg-white hover:mix-blend-normal dark:border-stone-600 dark:bg-stone-800 dark:hover:bg-stone-700"
             title="Show Chat"
           >
             <MdOutlineChatBubbleOutline
