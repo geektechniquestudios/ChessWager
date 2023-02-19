@@ -42,7 +42,8 @@ export const DropdownMenu = () => {
     useEffect(() => {
       const handleClickOutside = (event: Event) => {
         if (
-          menuRefMap.get(activeMenu).current?.contains(event.target) ||
+          (menuRefMap.get(activeMenu)?.current?.contains(event.target) ??
+            false) ||
           selfRef.current?.contains(event.target)
         )
           return
