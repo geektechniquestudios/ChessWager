@@ -37,7 +37,7 @@ export const FundedBets: React.FC<Props> = () => {
   return (
     <motion.div
       layout
-      className="flex w-full shrink flex-col overflow-y-hidden overflow-x-clip whitespace-nowrap rounded-lg border border-stone-400 bg-stone-50 dark:border-stone-600 dark:bg-stone-800 md:h-full md:w-52"
+      className="flex h-40 w-full shrink flex-col overflow-y-hidden overflow-x-clip whitespace-nowrap rounded-lg border border-stone-400 bg-stone-50 dark:border-stone-600 dark:bg-stone-800 md:h-full md:w-52"
       style={{ direction: "rtl" }}
     >
       <div className="flex w-full justify-between overflow-x-clip bg-gradient-to-r from-stone-200 via-stone-200 to-stone-200 px-0.5 py-1 dark:from-stone-800 dark:via-stone-800 dark:to-stone-800 dark:text-stone-50 md:to-transparent md:dark:to-transparent">
@@ -81,14 +81,14 @@ export const FundedBets: React.FC<Props> = () => {
             style={{ direction: "ltr" }}
           >
             {bets
-              ?.filter(
-                (bet: Bet) =>
-                  bet.status === "funded" &&
-                  !isBetRelatedToUser(bet) &&
-                  (!userData?.blockedUsers.includes(bet.user1Id) ?? false) &&
-                  (!userData?.blockedUsers.includes(bet.user2Id) ?? false),
-              )
-              .sort((a: Bet, b: Bet) => b.amount - a.amount)
+              // ?.filter(
+              //   (bet: Bet) =>
+              //     bet.status === "funded" &&
+              //     !isBetRelatedToUser(bet) &&
+              //     (!userData?.blockedUsers.includes(bet.user1Id) ?? false) &&
+              //     (!userData?.blockedUsers.includes(bet.user2Id) ?? false),
+              // )
+              ?.sort((a: Bet, b: Bet) => b.amount - a.amount)
               .map((bet: Bet) => (
                 <MiniBet
                   key={bet.id}

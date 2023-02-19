@@ -45,7 +45,7 @@ export const ShowChatButton: React.FC<Props> = ({}) => {
               localStorage.setItem("showChat", "true")
               setAreNewMessages(false)
             }}
-            className="color-shift sticky z-30 rounded-md border border-stone-400 bg-stone-100 p-1.5 mix-blend-screen hover:bg-white hover:mix-blend-normal dark:border-stone-600 dark:bg-stone-800 dark:hover:bg-stone-700"
+            className="color-shift sticky z-30 rounded-md border border-stone-400 bg-stone-100 p-1.5 mix-blend-screen hover:bg-white  dark:border-stone-600 dark:bg-stone-800 dark:hover:bg-stone-700"
             title="Show Chat"
           >
             <MdOutlineChatBubbleOutline

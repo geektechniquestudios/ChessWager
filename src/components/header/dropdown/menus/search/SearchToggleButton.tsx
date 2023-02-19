@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from "react"
-import { RiUserHeartLine } from "react-icons/ri"
 
 interface Props {
   thisMenu: "friends" | "everyone"
