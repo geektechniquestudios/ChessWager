@@ -1,8 +1,12 @@
+import { BetsState } from "../../../../containers/BetsState"
+import { DropdownState } from "../../../../containers/DropdownState"
 import { DropdownArea } from "../../models/DropdownArea"
 import { Menu } from "../../models/Menu"
 import { SectionWrapper } from "./SectionWrapper"
 
 export const HowToPlay: React.FC = ({}) => {
+  const { setShowWagerForm } = BetsState.useContainer()
+  const { closeDropdownMenu } = DropdownState.useContainer()
   return (
     <Menu
       menuItems={[
@@ -20,6 +24,13 @@ export const HowToPlay: React.FC = ({}) => {
               <SectionWrapper
                 text="3. Fund your wallet"
                 href="https://www.coinbase.com/price/avalanche"
+              />
+              <SectionWrapper
+                text="4. Place a bet"
+                onClick={() => {
+                  setShowWagerForm(true)
+                  closeDropdownMenu()
+                }}
               />
             </div>
           }

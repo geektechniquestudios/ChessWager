@@ -76,7 +76,6 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
   const [isAmountEmpty, setIsAmountEmpty] = useState(false)
 
   const lobbyRef = collection(db, "lobby")
-  const userRef = collection(db, "users")
 
   const { userData } = UserDataState.useContainer()
 
