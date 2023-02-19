@@ -13,6 +13,7 @@ const useDropdownState = () => {
   const openDropdownToMenu = (menu: string) => {
     setActiveMenu(menu)
     setIsDropdownOpen(true)
+    setMenuStack([menu])
   }
 
   const closeDropdownMenu = () => {
