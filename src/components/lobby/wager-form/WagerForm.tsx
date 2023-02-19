@@ -132,13 +132,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
       contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
       hasUser1SeenUpdate: false,
       hasUser2SeenUpdate: false,
-    })
-      .then(() => {
-        if (!(auth.currentUser ?? false)) return
-        const userDoc = doc(userRef, auth.currentUser!.uid)
-        updateDoc(userDoc, { hasFirstBetBeenPlaced: true })
-      })
-      .catch(console.error)
+    }).catch(console.error)
   }
 
   const [isFirstAnimation, setIsFirstAnimation] = useState<boolean>(true)

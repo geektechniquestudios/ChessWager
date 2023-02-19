@@ -31,6 +31,7 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
   menuTitle.set("help", "Help")
   menuTitle.set("bets", "Bets")
   menuTitle.set("bet", "Bet")
+  menuTitle.set("howToPlay", "How To Play")
   menuTitle.set("requests", "Requests")
   menuTitle.set("report", "Report")
   menuTitle.set("searchUsers", "Search")
