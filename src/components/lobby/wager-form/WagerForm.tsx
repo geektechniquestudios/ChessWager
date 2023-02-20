@@ -11,10 +11,8 @@ import { TheirBet } from "./TheirBet"
 import {
   addDoc,
   collection,
-  doc,
   getFirestore,
   serverTimestamp,
-  updateDoc,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../firestore.config"
 import { UserDataState } from "../../containers/UserDataState"

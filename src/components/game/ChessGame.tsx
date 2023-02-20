@@ -137,6 +137,9 @@ export const ChessGame: React.FC = () => {
     <div className="my-0 flex w-full justify-center">
       <motion.div
         layout
+        initial={{ opacity: 0.2 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
         className="color-shift w-full resize-x flex-col justify-center overflow-hidden rounded-lg border border-stone-500 bg-stone-100 p-2.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 sm:w-1/2"
         style={{ minWidth: "17em", maxWidth: "80vh" }}
       >

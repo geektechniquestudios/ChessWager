@@ -25,7 +25,7 @@ export const CreateWagerButton: React.FC<Props> = ({}) => {
   return (
     <motion.button
       layout="position"
-      className="absolute left-0 top-0 bottom-0 flex items-center justify-center rounded-bl-lg border-r border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-900"
+      className="absolute left-0 top-0 bottom-0 z-50 flex items-center justify-center rounded-bl-lg border-r border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-900"
       onClick={() => {
         setShowWagerForm(true)
       }}

@@ -56,7 +56,7 @@ export const DropdownMenu = () => {
     }, [selfRef, setIsDropdownOpen])
   }
 
-  const dropdownRef = useRef<any>()
+  const dropdownRef = useRef<any>(null)
 
   CloseMenuListener(dropdownRef, activeMenu, menuRefMap)
 

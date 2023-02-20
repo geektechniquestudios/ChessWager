@@ -66,7 +66,7 @@ export const YourBet: React.FC<Props> = ({
               setLocalAvaxAmount((newValue / avaxPrice).toFixed(6).toString())
               setIsUsdFocused(false)
             }}
-            onKeyPress={(e) => {
+            onKeyDown={(e) => {
               e.key === "Enter" && e.currentTarget.blur()
             }}
             onFocus={() => {
@@ -95,7 +95,7 @@ export const YourBet: React.FC<Props> = ({
               setBetAmount(newValue)
               setLocalUsdAmount((newValue * avaxPrice).toFixed(2).toString())
             }}
-            onKeyPress={(e) => {
+            onKeyDown={(e) => {
               e.key === "Enter" && e.currentTarget.blur()
             }}
             onFocus={() => {
