@@ -20,6 +20,7 @@ import { CustomSwal } from "../../popups/CustomSwal"
 import { AnimatePresence, motion } from "framer-motion"
 import { BetsState } from "../../containers/BetsState"
 import { WagerFormHeader } from "./WagerFormHeader"
+import { WindowSize } from "../../containers/WindowSize"
 
 const db = getFirestore(firebaseApp)
 
@@ -138,6 +139,9 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
     setIsFirstAnimation(false)
   }, [])
 
+  const { width } = WindowSize.useContainer()
+  const formWidth = width >= 768 ? "21rem" : "19rem"
+
   return (
     <AnimatePresence>
       {showWagerForm && (
@@ -146,7 +150,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
           layout
           ref={wagerFormRef}
           initial={isFirstAnimation ? false : { width: 0 }}
-          animate={{ width: "19rem" }}
+          animate={{ width: formWidth }}
           exit={{ width: 0 }}
           transition={{
             type: "spring",
@@ -155,9 +159,10 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
           }}
         >
           <fieldset className="h-full">
-            <form
+            <motion.form
+              animate={{ width: formWidth }}
               onSubmit={createWager}
-              className="flex h-full w-[19rem] flex-col justify-between rounded-bl-lg border-r border-stone-400 bg-stone-100 p-2 dark:border-stone-600 dark:bg-stone-900"
+              className={`flex h-full w-[${formWidth}] flex-col justify-between rounded-bl-lg border-r border-stone-400 bg-stone-100 p-2 dark:border-stone-600 dark:bg-stone-900`}
               onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault()
               }}
@@ -193,7 +198,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
                 <Total betAmount={betAmount} multiplier={multiplier} />
                 <PlaceBet />
               </div>
-            </form>
+            </motion.form>
           </fieldset>
         </motion.div>
       )}

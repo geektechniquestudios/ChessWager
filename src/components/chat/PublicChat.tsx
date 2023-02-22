@@ -33,7 +33,7 @@ export const PublicChat: React.FC = () => {
           className="z-40 h-full overflow-x-clip"
           layout
           initial={isFirstAnimation ? false : { width: 0 }}
-          animate={{ width: width > 640 ? "20rem" : width }}
+          animate={{ width: width >= 640 ? "20rem" : width }}
           exit={{ width: 0 }}
           transition={{
             type: "spring",
