@@ -4,6 +4,7 @@ import { Bet as BetComponent } from "./bet/Bet"
 import { LobbyHeaderState } from "../containers/LobbyHeaderState"
 import { UserDataState } from "../containers/UserDataState"
 import { GameState } from "../containers/GameState"
+import { AnimatePresence, motion } from "framer-motion"
 
 interface Props {}
 
@@ -22,23 +23,42 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
 
   useEffect(clearMapForLobbyChange, [isRealTime, gameId])
   return (
-    <>
-      {realTimeBets
-        ?.filter(
-          (bet) =>
-            (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
-            (!userData?.blockedUsers.includes(bet.user2Id) ?? true) &&
-            (bet.status ?? "") !== "funded",
-        )
-        .map((bet, index) => (
-          <BetComponent
-            key={bet.id}
-            {...bet}
-            timestamp={bet.timestamp?.seconds}
-            index={index}
-            isLobbyEnabled={true}
-          />
-        ))}
-    </>
+    <AnimatePresence>
+      {realTimeBets.length > 0 && (
+        <motion.div
+          layout="position"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.06,
+                when: "beforeChildren",
+                type: "tween",
+              },
+            },
+            hidden: { opacity: 0 },
+          }}
+        >
+          {realTimeBets
+            ?.filter(
+              (bet) =>
+                (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
+                (!userData?.blockedUsers.includes(bet.user2Id) ?? true) &&
+                (bet.status ?? "") !== "funded",
+            )
+            .map((bet, index) => (
+              <BetComponent
+                key={bet.id}
+                {...bet}
+                timestamp={bet.timestamp?.seconds}
+                index={index}
+                isLobbyEnabled
+              />
+            ))}
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }

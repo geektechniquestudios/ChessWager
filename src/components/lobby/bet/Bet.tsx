@@ -74,9 +74,7 @@ export const Bet: React.FC<Props> = ({
   const isUser2 = auth.currentUser?.uid === user2Id
   const { selectedBetMap, setSelectedBetMap } = BetsState.useContainer()
   const [isSelected, setIsSelected] = useState(
-    (isUser1 || isUser2) && status !== "funded" && status !== "pending"
-      ? true
-      : false,
+    (isUser1 || isUser2) && status !== "funded" && status !== "pending",
   )
 
   useEffect(() => {
@@ -130,9 +128,11 @@ export const Bet: React.FC<Props> = ({
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0 }}
+        layout
+        variants={{
+          visible: { opacity: 1, x: 0 },
+          hidden: { opacity: 0, x: -4 },
+        }}
         className="h-26 flex w-full justify-center overflow-x-hidden p-0.5 align-middle lg:h-14"
       >
         <div

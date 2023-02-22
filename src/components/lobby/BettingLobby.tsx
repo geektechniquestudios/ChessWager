@@ -25,7 +25,7 @@ export const BettingLobby: React.FC = () => {
               <CreateWagerButton />
               <WagerForm bettingLobbyRef={bettingLobbyRef} />
               <motion.div
-                className="scrollbar w-full overflow-x-auto pt-0.5 pl-[2.6rem]"
+                className="scrollbar h-full w-full overflow-y-auto overflow-x-clip pt-0.5 pl-[2.6rem]"
                 layout
               >
                 <CreatedByUserBets />
