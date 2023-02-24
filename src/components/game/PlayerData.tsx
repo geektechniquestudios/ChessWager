@@ -53,7 +53,7 @@ export const PlayerData: React.FC<Props> = ({
           >
             {title}
           </p>
-          <div className="flex gap-2">
+          <div className="flex gap-2 whitespace-nowrap">
             <p>{name}</p>
             <p className="font-bold">{rating !== 0 ? rating : ""}</p>
           </div>

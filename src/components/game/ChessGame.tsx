@@ -44,6 +44,7 @@ interface Player {
     title: string
   }
   rating: number
+  seconds: number
 }
 
 export const ChessGame: React.FC = () => {
