@@ -50,7 +50,7 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
             )
             .map((bet, index) => (
               <BetComponent
-                key={bet.id}
+                key={bet.id !== "" ? bet.id : index}
                 {...bet}
                 timestamp={bet.timestamp?.seconds}
                 index={index}
