@@ -187,7 +187,6 @@ const useBetState = () => {
   }
 
   const updateRealTimeBets = async () => {
-    console.log(selectedBetMap, bets)
     if (bets) setRealTimeBets(await updateLobby(bets))
   }
 
