@@ -5,7 +5,6 @@ import { PlayerData } from "./PlayerData"
 import { GameState } from "../containers/GameState"
 import Chessground from "@react-chess/chessground"
 import { GameResultPopup } from "./popup/GameResultPopup"
-import { CustomSwal } from "../popups/CustomSwal"
 import { motion } from "framer-motion"
 
 // We use an old version of chessground. If we ever upgarde, uncomment the styles below.
@@ -123,14 +122,7 @@ export const ChessGame: React.FC = () => {
           }
         })
       })
-      .catch((err) => {
-        CustomSwal(
-          "error",
-          "Can't Load Game",
-          "Error fetching game data from lichess.org. Please reload the page or try again later.",
-        )
-        console.error(err)
-      })
+      .catch(console.error)
   }, [updateTitles])
 
   return (

@@ -158,11 +158,16 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
             bounce: 0.7,
           }}
         >
-          <fieldset className="h-full">
+          <fieldset className="h-full w-full">
             <motion.form
               animate={{ width: formWidth }}
+              transition={{
+                type: "spring",
+                mass: 0.3,
+                bounce: 0.7,
+              }}
               onSubmit={createWager}
-              className={`flex h-full w-[${formWidth}] flex-col justify-between rounded-bl-lg border-r border-stone-400 bg-stone-100 p-2 dark:border-stone-600 dark:bg-stone-900`}
+              className={`w-[${formWidth}] flex h-full flex-col justify-between rounded-bl-lg border-r border-stone-400 bg-stone-100 p-2 dark:border-stone-600 dark:bg-stone-900`}
               onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault()
               }}

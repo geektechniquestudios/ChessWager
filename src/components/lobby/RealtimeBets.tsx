@@ -9,8 +9,7 @@ import { AnimatePresence, motion } from "framer-motion"
 interface Props {}
 
 export const RealtimeBets: React.FC<Props> = ({}) => {
-  const { mostRecentButton, isDescending, isRealTime } =
-    LobbyHeaderState.useContainer()
+  const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const { bets, updateRealTimeBets, realTimeBets, clearMapForLobbyChange } =
     BetsState.useContainer()
 
@@ -21,7 +20,8 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
     updateRealTimeBets()
   }, [bets, mostRecentButton, isDescending])
 
-  useEffect(clearMapForLobbyChange, [isRealTime, gameId])
+  useEffect(clearMapForLobbyChange, [gameId])
+
   return (
     <AnimatePresence>
       {realTimeBets.length > 0 && (

@@ -2,7 +2,7 @@ import { createContainer } from "unstated-next"
 import { GameState } from "./GameState"
 import type { Bet, BetData } from "../../interfaces/Bet"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Auth } from "./Auth"
 import { LobbyHeaderState } from "./LobbyHeaderState"
 import { firebaseApp } from "../../../firestore.config"
@@ -61,16 +61,13 @@ const useBetState = () => {
   const determineSortOrder = (
     a: number | string | Date | Timestamp,
     b: number | string | Date | Timestamp,
-  ): number => {
-    return +(a > b) || -(a < b)
-  }
+  ): number => +(a > b) || -(a < b)
 
   const sortBasedOnDescending = (
     a: number | string | Date | Timestamp,
     b: number | string | Date | Timestamp,
-  ): number => {
-    return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
-  }
+  ): number =>
+    isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
 
   const sortBasedOnRecentButton = (
     a: Bet,
@@ -107,6 +104,7 @@ const useBetState = () => {
       }
     }
   }
+
   const { user } = Auth.useContainer()
   const [realTimeBets, setRealTimeBets] = useState<Bet[]>([])
   const [refreshingBets, setRefreshingBets] = useState<Bet[]>([])
@@ -143,8 +141,8 @@ const useBetState = () => {
     ): Promise<(number | undefined)[]> => {
       return (
         selectedBets
-          .map((bet) => selectedBetMap.get(bet.id)?.index)
-          .sort((a, b) => determineSortOrder(b ?? 0, a ?? 0)) ?? []
+          .map((bet) => selectedBetMap.get(bet.id)!.index)
+          .sort((a, b) => determineSortOrder(b, a)) ?? []
       )
     }
 
@@ -152,7 +150,6 @@ const useBetState = () => {
       const notSelected = buildNotSelectedBets(bets)
       const selectedBets = await buildSelecteBets(bets)
       const selectedIndicies = buildSelectedBetIndicies(selectedBets)
-
       const [notSelectedBets, selectedBetIndicies] = await Promise.all([
         notSelected,
         selectedIndicies,
@@ -190,11 +187,12 @@ const useBetState = () => {
   }
 
   const updateRealTimeBets = async () => {
-    setRealTimeBets(await updateLobby(bets ?? []))
+    console.log(selectedBetMap, bets)
+    if (bets) setRealTimeBets(await updateLobby(bets))
   }
 
   const updateRefreshingBets = async () => {
-    setRefreshingBets(await updateLobby(bets ?? []))
+    if (bets) setRefreshingBets(await updateLobby(bets))
   }
 
   const clearMapForLobbyChange = () => () => {
@@ -212,6 +210,10 @@ const useBetState = () => {
           bet.status !== "funded",
       )
       .sort((a, b) => sortBasedOnRecentButton(a, b, mostRecentButton)) ?? []
+
+  useEffect(() => {
+    setSelectedBetMap(new Map())
+  }, [gameId])
 
   return {
     bets,

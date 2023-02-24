@@ -76,8 +76,6 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
   }
   useEffect(updateForNewGame, [gameId])
 
-  useEffect(clearMapForLobbyChange, [isRealTime])
-
   return (
     <AnimatePresence>
       {refreshingBets.length > 0 && (
