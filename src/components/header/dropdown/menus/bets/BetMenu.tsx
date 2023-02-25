@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { SiLichess } from "react-icons/si"
 import { GameData } from "../../../../../interfaces/GameData"
+import { Auth } from "../../../../containers/Auth"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { GameState } from "../../../../containers/GameState"
@@ -40,6 +41,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
   const { avaxPrice } = Price.useContainer()
   const [outcome, setOutcome] = useState<string>("")
   const { buildOutcomeMessage } = GameState.useContainer()
+  const { user } = Auth.useContainer()
 
   useEffect(() => {
     setOutcome("")
@@ -52,13 +54,17 @@ export const BetMenu: React.FC<Props> = ({}) => {
       .catch(console.error)
   }, [id, gameId])
 
-  const isOnWinningSide =
-    (betSide === "white" && outcome === "White Wins") ||
-    (betSide === "black" && outcome === "Black Wins")
+  const isUser1 = user?.uid === user1Id
+
+  const isOnWinningSide = isUser1
+    ? (betSide === "white" && outcome.startsWith("White won")) ||
+      (betSide === "black" && outcome.startsWith("Black won"))
+    : (betSide === "white" && outcome.startsWith("Black won")) ||
+      (betSide === "black" && outcome.startsWith("White won"))
 
   const { isDarkOn } = DarkMode.useContainer()
   const resultStyle =
-    outcome === "Draw" || outcome === "In progress"
+    outcome === "Game ended in a draw" || outcome === "Game in progress"
       ? ""
       : isOnWinningSide
       ? isDarkOn

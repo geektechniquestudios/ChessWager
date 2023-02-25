@@ -51,7 +51,10 @@ export const ChatForm: React.FC<Props> = ({
 
   return (
     <fieldset className="fieldset flex justify-center">
-      <form onSubmit={sendMessage} className="form w-full justify-center pb-1">
+      <form
+        onSubmit={sendMessage}
+        className="form w-full justify-center whitespace-nowrap pb-1"
+      >
         <TextareaAutosize
           id="chat-form"
           value={formValue}
@@ -61,8 +64,11 @@ export const ChatForm: React.FC<Props> = ({
           className="scrollbar inline-block w-full resize-none break-words bg-stone-200 p-2 text-lg outline-none dark:bg-stone-800 dark:text-stone-50"
           placeholder={auth.currentUser ? "Send a Message" : "Sign in to Chat"}
           maxRows={4}
+          minRows={1}
           onKeyDown={(e) => {
-            e.key === "Enter" && sendMessage(e)
+            if (!e.shiftKey && e.key === "Enter") {
+              sendMessage(e)
+            }
           }}
         />
         <div className="flex w-full justify-end p-2">

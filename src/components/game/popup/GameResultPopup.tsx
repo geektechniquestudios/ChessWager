@@ -66,7 +66,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
               type: "spring",
               stiffness: 40,
             }}
-            className={`${firefoxColors} absolute top-1/3 z-40 w-64 -translate-y-1/2 overflow-hidden rounded-md border border-stone-600 bg-stone-200 drop-shadow-2xl dark:border-stone-800`}
+            className={`${firefoxColors} absolute top-1/3 z-40 w-64 -translate-y-1/2 overflow-hidden rounded-md border border-stone-600 drop-shadow-2xl dark:border-stone-800`}
             style={{
               background: bgColor,
               backdropFilter: blur,

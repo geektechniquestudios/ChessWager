@@ -22,7 +22,7 @@ interface Props {
   clickedUserId?: string
   createdAt: Timestamp
   isRead: boolean
-  id: string
+  id?: string
   setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>
   notifications: Notification[]
 }

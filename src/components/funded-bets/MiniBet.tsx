@@ -35,9 +35,9 @@ export const MiniBet: React.FC<Props> = ({
   const { width } = WindowSize.useContainer()
   const { avaxPrice } = Price.useContainer()
   return (
-    <div className="m-0.5 rounded-md border border-stone-700 bg-stone-100 text-xs text-stone-900 dark:bg-stone-800 dark:text-stone-300 sm:m-0 sm:border-none sm:bg-transparent sm:dark:bg-transparent">
-      <div className="flex justify-between p-1">
-        <div className="mx-1 flex flex-col items-center gap-1 sm:flex-row">
+    <div className="m-0.5 grid shrink-0 place-content-center rounded-md border border-stone-700 bg-stone-100 text-xs text-stone-900 dark:bg-stone-800 dark:text-stone-300 md:m-0 md:border-none md:bg-transparent md:dark:bg-transparent">
+      <div className="flex shrink-0 justify-between p-1">
+        <div className="mx-1 flex flex-col items-center gap-1 md:flex-row">
           <div className="flex gap-1">
             <div className="grid h-5 w-5 place-content-center rounded-md border border-stone-700 bg-stone-600">
               <GiChessRook color={betSide} />
@@ -50,7 +50,7 @@ export const MiniBet: React.FC<Props> = ({
             />
           </div>
           <p className="font-bold">vs</p>
-          <div className="flex flex-row-reverse gap-1 sm:flex-row">
+          <div className="flex flex-row-reverse gap-1 md:flex-row">
             <img
               src={user2PhotoURL}
               alt=""
@@ -67,7 +67,7 @@ export const MiniBet: React.FC<Props> = ({
         </div>
       </div>
 
-      {width >= 640 && (
+      {width >= 768 && (
         <div className="h-0.5 bg-gradient-to-r from-stone-600 to-transparent" />
       )}
     </div>

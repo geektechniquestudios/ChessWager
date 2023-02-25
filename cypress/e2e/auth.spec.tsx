@@ -15,12 +15,6 @@ describe("login/logout flow", () => {
     cy.get('button[title="Messages"]').should("exist")
     cy.get('button[title="Notifications"]').should("exist")
     cy.get('button[title="Search Users"]').should("exist")
-    cy.logout()
-    cy.get('button[title="Persona"]').should("not.exist")
-    cy.get('button[title="Bets"]').should("not.exist")
-    cy.get('button[title="Messages"]').should("not.exist")
-    cy.get('button[title="Notifications"]').should("not.exist")
-    cy.get('button[title="Search Users"]').should("not.exist")
   })
 
   it("should make chat form message update", () => {

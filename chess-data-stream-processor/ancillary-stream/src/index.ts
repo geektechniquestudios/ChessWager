@@ -1,8 +1,24 @@
 // @ts-ignore
 import ndjson from "ndjson"
-import fs from "fs"
+import { createClient } from "redis"
 import { payWinnersByGameId } from "../../payment-processor/src/index"
 require("dotenv").config({ path: "../../.env" })
+
+const redisClient = createClient({ url: "redis://redis:6379" })
+
+let isRedisConnected = false
+const attemptRedisConnection = () => {
+  console.log("attempting redis connection")
+  redisClient
+    .connect()
+    .then(() => {
+      isRedisConnected = true
+    })
+    .catch((err) => {
+      console.error(err)
+      isRedisConnected = false
+    })
+}
 
 const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
@@ -22,19 +38,19 @@ admin.initializeApp({ credential: cred })
 
 const defaultTime = 15
 let secondsUntilRestart = defaultTime
-const currentTimeFile = "/data/currentTime.txt"
-const mostRecentGameIdFile = "/data/mostRecentGameId.txt"
-let mostRecentGameIdSinceLastRestart = ""
-try {
-  mostRecentGameIdSinceLastRestart = fs.readFileSync(
-    mostRecentGameIdFile,
-    "utf8",
-  )
-} catch (err) {
-  console.error(err)
-}
 
-const payWinners = async (gameId: string) => {
+let mostRecentGameIdSinceLastRestart = ""
+
+if (!isRedisConnected) attemptRedisConnection()
+redisClient
+  .get("mostRecentGameId")
+  .then((gameId) => (mostRecentGameIdSinceLastRestart = gameId ?? ""))
+  .catch((err) => {
+    console.error(err)
+    isRedisConnected = false
+  })
+
+const payWinnersWithDelay = async (gameId: string) => {
   await new Promise((resolve) => setTimeout(resolve, 8000))
   payWinnersByGameId(gameId)
 }
@@ -47,23 +63,24 @@ const callLichessLiveTv = () => {
     .on("data", (obj: any) => {
       secondsUntilRestart = defaultTime
       const currentTime = Math.floor(Date.now() / 1000)
-      try {
-        fs.writeFileSync(currentTimeFile, String(currentTime))
-      } catch (err) {
+
+      if (!isRedisConnected) attemptRedisConnection()
+      redisClient.set("currentTime", currentTime).catch((err) => {
         console.error(err)
-      }
+        isRedisConnected = false
+      })
 
       // new game
       if (obj.t === "featured") {
         console.log("new game: ", obj.d.id)
         lastGameId = gameId === "" ? obj.d.id : gameId // if gameId is empty, set it to the new game id
         gameId = obj.d.id
-        try {
-          fs.writeFileSync(mostRecentGameIdFile, gameId)
-        } catch (err) {
+        if (!isRedisConnected) attemptRedisConnection()
+        redisClient.set("mostRecentGameId", gameId).catch((err) => {
           console.error(err)
-        }
-        payWinners(lastGameId)
+          isRedisConnected = false
+        })
+        payWinnersWithDelay(lastGameId)
       } else {
         console.log("players moving ", obj)
       }

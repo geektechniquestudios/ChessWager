@@ -7,7 +7,9 @@ import {
   RiTwitterLine,
   RiRedditLine,
   RiYoutubeLine,
+  RiDiscordLine,
 } from "react-icons/ri"
+import { RxDiscordLogo } from "react-icons/rx"
 
 export const SocialMenu: React.FC = () => {
   return (
@@ -49,6 +51,12 @@ export const SocialMenu: React.FC = () => {
             leftIcon={<RiGithubLine />}
             text="Github"
             id="Github"
+          />,
+          <DropdownItem
+            url="https://discord.gg/bMAQzKpDn7"
+            leftIcon={<RxDiscordLogo />}
+            text="Discord"
+            id="Discord"
           />,
         ]}
         thisMenu={"social"}

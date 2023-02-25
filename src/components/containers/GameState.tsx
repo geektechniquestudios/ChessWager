@@ -16,22 +16,19 @@ const useGameState = () => {
     const draw = isDraw ? "Game ended in a draw" : ""
     const isStalemate = gameData.status === "stalemate"
     const stalemate = isStalemate ? " by stalemate" : ""
-    const resign = gameData.status === "resign" ? "resignation" : ""
+    const resign = gameData.status === "resign" ? "by resignation" : ""
     const timeout =
       gameData.status === "timeout" || gameData.status === "outoftime"
         ? "by timeout"
         : ""
     const checkmate = gameData.status === "mate" ? "by checkmate" : ""
     const isGameOver = gameData.status !== "started"
-    let outcome = ""
-    if (isGameOver) {
-      outcome =
-        isDraw || isStalemate
-          ? `${draw}${stalemate}`
-          : `${whiteWins}${blackWins} ${resign}${timeout}${checkmate}`
-    } else {
-      outcome = "Game in progress"
-    }
+    const outcome = isGameOver
+      ? isDraw || isStalemate
+        ? `${draw}${stalemate}`
+        : `${whiteWins}${blackWins} ${resign}${timeout}${checkmate}`
+      : "Game in progress"
+
     return outcome
   }
 

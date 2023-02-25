@@ -45,12 +45,12 @@ export const HeaderRight: React.FC = () => {
   const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
 
   return (
-    <div className="mx-3 flex w-1/3 flex-auto items-center justify-end gap-1.5 align-middle">
+    <div className="mx-3 flex flex-auto items-center justify-end gap-1.5 align-middle">
       <MainHeaderButton
         title="Search Users"
         openToMenu="searchUsers"
         icon={<BiSearchAlt2 size="21" />}
-        authRequired={true}
+        authRequired
         onClick={() => {
           setMenuStack(["searchUsers"])
         }}
@@ -110,7 +110,7 @@ export const HeaderRight: React.FC = () => {
         onClick={() => {
           setMenuStack(["main"])
         }}
-        animationOffset={10}
+        animationOffset={7}
       />
       {isDropdownOpen && <DropdownMenu />}
     </div>

@@ -2,7 +2,7 @@ import { createContainer } from "unstated-next"
 import { GameState } from "./GameState"
 import type { Bet, BetData } from "../../interfaces/Bet"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Auth } from "./Auth"
 import { LobbyHeaderState } from "./LobbyHeaderState"
 import { firebaseApp } from "../../../firestore.config"
@@ -55,22 +55,25 @@ const useBetState = () => {
     new Map<string, BetData>(),
   )
 
+  const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
+
   // This is for browser compatibility
   const determineSortOrder = (
     a: number | string | Date | Timestamp,
     b: number | string | Date | Timestamp,
-  ): number => {
-    return +(a > b) || -(a < b)
-  }
+  ): number => +(a > b) || -(a < b)
 
   const sortBasedOnDescending = (
     a: number | string | Date | Timestamp,
     b: number | string | Date | Timestamp,
-  ): number => {
-    return isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
-  }
+  ): number =>
+    isDescending ? determineSortOrder(a, b) : determineSortOrder(b, a)
 
-  const sortBasedOnRecentButton = (a: Bet, b: Bet): number => {
+  const sortBasedOnRecentButton = (
+    a: Bet,
+    b: Bet,
+    mostRecentButton: string,
+  ): number => {
     switch (mostRecentButton) {
       case "Side": {
         return sortBasedOnDescending(a.betSide, b.betSide)
@@ -94,12 +97,15 @@ const useBetState = () => {
       case "Time":
       case "":
       default: {
-        return sortBasedOnDescending(a.createdAt, b.createdAt)
+        return sortBasedOnDescending(
+          a?.createdAt?.seconds ?? Number.MAX_VALUE,
+          b?.createdAt?.seconds ?? Number.MAX_VALUE,
+        )
       }
     }
   }
+
   const { user } = Auth.useContainer()
-  const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const [realTimeBets, setRealTimeBets] = useState<Bet[]>([])
   const [refreshingBets, setRefreshingBets] = useState<Bet[]>([])
 
@@ -113,7 +119,7 @@ const useBetState = () => {
       return (
         bets
           ?.filter(filterOutFundedAndUserRelatedandSelected)
-          .sort((a, b) => sortBasedOnRecentButton(b, a)) ?? []
+          .sort((a, b) => sortBasedOnRecentButton(b, a, mostRecentButton)) ?? []
       )
     }
 
@@ -135,8 +141,8 @@ const useBetState = () => {
     ): Promise<(number | undefined)[]> => {
       return (
         selectedBets
-          .map((bet) => selectedBetMap.get(bet.id)?.index)
-          .sort((a, b) => determineSortOrder(b ?? 0, a ?? 0)) ?? []
+          .map((bet) => selectedBetMap.get(bet.id)!.index)
+          .sort((a, b) => determineSortOrder(b, a)) ?? []
       )
     }
 
@@ -144,7 +150,6 @@ const useBetState = () => {
       const notSelected = buildNotSelectedBets(bets)
       const selectedBets = await buildSelecteBets(bets)
       const selectedIndicies = buildSelectedBetIndicies(selectedBets)
-
       const [notSelectedBets, selectedBetIndicies] = await Promise.all([
         notSelected,
         selectedIndicies,
@@ -182,16 +187,32 @@ const useBetState = () => {
   }
 
   const updateRealTimeBets = async () => {
-    setRealTimeBets(await updateLobby(bets ?? []))
+    if (bets) setRealTimeBets(await updateLobby(bets))
   }
 
   const updateRefreshingBets = async () => {
-    setRefreshingBets(await updateLobby(bets ?? []))
+    if (bets) setRefreshingBets(await updateLobby(bets))
   }
 
   const clearMapForLobbyChange = () => () => {
     if (!isLoading) setSelectedBetMap(new Map())
   }
+
+  const [showWagerForm, setShowWagerForm] = useState(false)
+
+  const betsPlacedByUser =
+    bets
+      ?.filter(
+        (bet: Bet) =>
+          bet.user1Id === user?.uid &&
+          bet.gameId !== "" &&
+          bet.status !== "funded",
+      )
+      .sort((a, b) => sortBasedOnRecentButton(a, b, mostRecentButton)) ?? []
+
+  useEffect(() => {
+    setSelectedBetMap(new Map())
+  }, [gameId])
 
   return {
     bets,
@@ -204,6 +225,9 @@ const useBetState = () => {
     setRefreshingBets,
     updateRealTimeBets,
     updateRefreshingBets,
+    showWagerForm,
+    setShowWagerForm,
+    betsPlacedByUser,
   }
 }
 export const BetsState = createContainer(useBetState)

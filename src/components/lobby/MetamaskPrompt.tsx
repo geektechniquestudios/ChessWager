@@ -2,7 +2,6 @@ import { BigNumber, ethers } from "ethers"
 import { BiWallet } from "react-icons/bi"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Auth } from "../containers/Auth"
-import "../../style/buttons.scss"
 import { DarkMode } from "../containers/DarkMode"
 import { CustomSwal } from "../popups/CustomSwal"
 //@ts-ignore

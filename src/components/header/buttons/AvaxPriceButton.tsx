@@ -18,7 +18,7 @@ export const AvaxPriceButton: React.FC = () => {
           exit={{ opacity: 0, translateY: -30 }}
           transition={{
             duration: 0.7,
-            delay: 0.4,
+            delay: 0.3,
             type: "spring",
             stiffness: 40,
           }}
@@ -30,10 +30,7 @@ export const AvaxPriceButton: React.FC = () => {
           rel="noreferrer noopener"
           id="avax-price-button"
         >
-          <p
-            style={{ textDecoration: "underline solid #9f1239 3px" }}
-            className="m-1 text-xs underline sm:text-sm"
-          >
+          <p className="m-1 text-xs underline sm:text-sm">
             {`AVAX $${price
               ?.toFixed(2)
               .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}`}

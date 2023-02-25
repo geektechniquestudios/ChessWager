@@ -46,3 +46,19 @@ code {
 .color-shift {
   @apply transition-colors duration-300 ease-in-out;
 }
+
+// Has to be in traditional CSS because of the selective use of !important.
+.swal-popup {
+  background-color: rgba(68, 64, 60, 0.95) !important;
+  backdrop-filter: blur(40px) !important;
+  color: rgb(231, 229, 228) !important;
+}
+
+.swal-container {
+  backdrop-filter: blur(4px) !important;
+}
+
+.clickable:active {
+  transform: translate(0px, 0.1rem);
+  transform: scale(0.98);
+}
