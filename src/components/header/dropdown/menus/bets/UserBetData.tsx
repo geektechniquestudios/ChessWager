@@ -68,9 +68,11 @@ export const UserBetData: React.FC<Props> = ({
             {displayName}
           </button>
         )}
-        <div className="my-1">
-          <div className="flex text-xs">{amount?.toFixed(6)} AVAX</div>
-          <div className="flex text-xs">
+        <div className="my-1 rounded-md border border-stone-400 bg-stone-100 p-1 text-sm dark:border-stone-600 dark:bg-stone-700">
+          <div className="flex justify-end text-xs">
+            {amount?.toFixed(6)} AVAX
+          </div>
+          <div className="flex justify-end text-xs">
             ${(amount * avaxPrice).toFixed(2)} USD
           </div>
         </div>

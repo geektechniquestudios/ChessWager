@@ -158,7 +158,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
             bounce: 0.7,
           }}
         >
-          <fieldset className="h-full w-full">
+          <fieldset className="h-full">
             <motion.form
               animate={{ width: formWidth }}
               transition={{
