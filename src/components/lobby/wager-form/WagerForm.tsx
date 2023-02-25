@@ -160,6 +160,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
         >
           <fieldset className="h-full w-full">
             <motion.form
+              animate={{ width: formWidth }}
               transition={{
                 type: "spring",
                 mass: 0.3,
