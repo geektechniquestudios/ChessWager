@@ -10,6 +10,7 @@ import { CenterOfBet } from "./center/CenterOfBet"
 import { useEffect, useState } from "react"
 import { BetsState } from "../../containers/BetsState"
 import { AnimatePresence, motion } from "framer-motion"
+import { CustomSwal } from "../../popups/CustomSwal"
 
 interface Props {
   id: string
@@ -74,9 +75,7 @@ export const Bet: React.FC<Props> = ({
   const isUser2 = auth.currentUser?.uid === user2Id
   const { selectedBetMap, setSelectedBetMap } = BetsState.useContainer()
   const [isSelected, setIsSelected] = useState(
-    (isUser1 || isUser2) && status !== "funded" && status !== "pending"
-      ? true
-      : false,
+    (isUser1 || isUser2) && status !== "funded" && status !== "pending",
   )
 
   useEffect(() => {
@@ -89,10 +88,6 @@ export const Bet: React.FC<Props> = ({
     )
   }, [auth.currentUser, user1Id, user2Id, status])
 
-  useEffect(() => {
-    setSelectedBetMap(new Map())
-  }, [gameId])
-
   const selectedStyle =
     isSelected || id === ""
       ? "bg-stone-100 dark:bg-black"
@@ -104,6 +99,12 @@ export const Bet: React.FC<Props> = ({
     isLobbyEnabled || isSelected ? "" : "opacity-50 pointer-events-none"
 
   const updateSelectedStatus = () => {
+    if (!auth.currentUser)
+      CustomSwal(
+        "error",
+        "Authentication Required!",
+        "You must be logged in to bet.",
+      )
     if (
       !isUser1 &&
       !isUser2 &&
@@ -130,13 +131,15 @@ export const Bet: React.FC<Props> = ({
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0 }}
-        className="h-26 flex w-full justify-center overflow-x-hidden p-0.5 align-middle lg:h-14"
+        layout
+        variants={{
+          visible: { opacity: 1, x: 0 },
+          hidden: { opacity: 0, x: -4 },
+        }}
+        className="flex h-24 w-full justify-center overflow-x-hidden p-0.5 align-middle lg:h-14"
       >
         <div
-          className={`${pointerEvents} color-shift flex w-full justify-center rounded-lg border border-stone-400 px-1 align-middle dark:border-stone-700 ${selectedStyle} ${disabledStyle}`}
+          className={`${pointerEvents} ${selectedStyle} ${disabledStyle} color-shift flex w-full justify-center rounded-lg border border-stone-400 px-1 align-middle dark:border-stone-700`}
           onClick={updateSelectedStatus}
         >
           {id !== "" && (

@@ -10,11 +10,11 @@ describe("main dropdown button", () => {
     cy.get('button[id="main-header-button"]').click()
     cy.get('div[id="dropdown-menu"]').should("exist")
   })
-  it("should reopen the dropdown menu if header button is clicked again", () => {
+  it("should close the dropdown menu if header button is clicked again", () => {
     cy.get('button[id="main-header-button"]').click()
     cy.get('div[id="dropdown-menu"]').should("exist")
     cy.get('button[id="main-header-button"]').click()
-    cy.get('div[id="dropdown-menu"]').should("exist")
+    cy.get('div[id="dropdown-menu"]').should("not.exist")
   })
   it("should close the dropdown menu if clicked outside of", () => {
     cy.get('button[id="main-header-button"]').click()

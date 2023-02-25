@@ -2,16 +2,17 @@ import { BiArrowFromLeft } from "react-icons/bi"
 import { ChatToggle } from "../containers/ChatToggle"
 
 export const ChatHeader: React.FC = () => {
-  const { setShowChat } = ChatToggle.useContainer()
+  const { setShowChat, setAreNewMessages } = ChatToggle.useContainer()
   return (
     <header className="global-chat-header flex justify-between border-b border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-700">
       <button
         id="hide-chat-button"
         onClick={() => {
           setShowChat(false)
+          setAreNewMessages(false)
           localStorage.setItem("showChat", "false")
         }}
-        className=" color-shift m-2 rounded-md hover:bg-stone-400 dark:hover:bg-stone-800"
+        className="color-shift m-2 rounded-md hover:bg-stone-400 dark:hover:bg-stone-800"
       >
         <BiArrowFromLeft
           size="1.3em"

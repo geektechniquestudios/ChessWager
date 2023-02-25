@@ -17,9 +17,11 @@ import {
   serverTimestamp,
   runTransaction,
   DocumentReference,
+  Timestamp,
 } from "firebase/firestore"
 import { User } from "../../interfaces/User"
 import { CustomSwal } from "../popups/CustomSwal"
+import { Notification } from "../../interfaces/Notification"
 
 declare let window: any
 const db = getFirestore(firebaseApp)
@@ -129,6 +131,11 @@ const useAuth = () => {
         "users",
         auth.currentUser!.uid,
       ) as DocumentReference<User>
+      const notificationDoc = doc(
+        userDoc,
+        "notifications",
+        auth.currentUser.uid + Timestamp.now(),
+      ) as DocumentReference<Notification>
       runTransaction(db, async (transaction) => {
         const doc = await transaction.get(userDoc)
         if (!doc.exists()) {
@@ -144,7 +151,7 @@ const useAuth = () => {
             amountWon: 0,
             betWinCount: 0,
             hasNewMessage: false,
-            hasNewNotifications: false,
+            hasNewNotifications: true,
             blockedUsers: [],
             sentFriendRequests: [],
             redactedFriendRequests: [],
@@ -152,8 +159,23 @@ const useAuth = () => {
             joinDate: serverTimestamp(),
             moderatorLevel: 0,
             isBanned: false,
-            hasFirstBetBeenPlaced: false,
           })
+          transaction.set(notificationDoc, {
+            uid: auth.currentUser!.uid,
+            createdAt: serverTimestamp(),
+            text: "Welcome to Chess Wager. Get started by making your first bet!",
+            openToMenu: "howToPlay",
+            isRead: false,
+            clickedUserId: "",
+          })
+          if (!auth.currentUser) return
+          CustomSwal(
+            "warning",
+            "Website Under Construction",
+            "While betting is fully functional, this website is still undergoing core changes. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
+            "Proceeding means you agree to our" +
+              "<a href='https://github.com/geektechniquestudios/ChessWager/blob/main/guides/TOS.md' class='underline hover:text-slate-400 mx-2' target='_blank' rel='noreferrer'>terms of service</a>",
+          )
         } else if (doc.data().walletAddress ?? "" !== "") {
           setIsWalletConnected(true)
           localStorage.setItem("isWalletConnected", "true")
@@ -165,19 +187,7 @@ const useAuth = () => {
 
     const provider = new GoogleAuthProvider()
 
-    signInWithPopup(auth, provider)
-      .then(addToUsers)
-      .catch(console.error)
-      .finally(() => {
-        if (!auth.currentUser) return
-        CustomSwal(
-          "warning",
-          "Website Under Construction",
-          "While betting is fully functional, this website is still undergoing core changes. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
-          "Proceeding means you agree to our" +
-            "<a href='https://github.com/geektechniquestudios/ChessWager/blob/main/guides/TOS.md' class='underline hover:text-slate-400 mx-2' target='_blank' rel='noreferrer'>terms of service</a>",
-        )
-      })
+    signInWithPopup(auth, provider).then(addToUsers).catch(console.error)
   }
 
   const signOutWithGoogle = async () => {

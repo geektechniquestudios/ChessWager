@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { Auth } from "../../containers/Auth"
-import "../../../style/buttons.scss"
 
 export const SignInButton: React.FC = () => {
   const { signInWithGoogle, user } = Auth.useContainer()

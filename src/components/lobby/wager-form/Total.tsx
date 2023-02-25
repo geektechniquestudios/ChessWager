@@ -20,9 +20,9 @@ export const Total: React.FC<Props> = ({ betAmount, multiplier }) => {
   }
 
   return (
-    <div className="color-shift flex rounded-md border border-stone-400 bg-stone-300 dark:border-stone-500 dark:bg-stone-700">
-      <p className="m-2 grid place-content-center border-r-2 border-stone-900 pr-2 font-bold text-stone-900 dark:border-stone-500 dark:text-stone-300">
-        Pot Size
+    <div className="color-shift flex rounded-md border border-stone-400 bg-stone-200 dark:border-stone-500 dark:bg-stone-700">
+      <p className=" m-2 grid place-content-center border-r-2 border-stone-900 pr-2 font-bold text-stone-900 dark:border-stone-500 dark:text-stone-300">
+        Pot
       </p>
       <div className="p-1.5">
         <div className="my-1 flex justify-between">

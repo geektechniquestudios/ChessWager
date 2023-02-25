@@ -47,7 +47,7 @@ code {
   @apply transition-colors duration-300 ease-in-out;
 }
 
-// Has to be in traditional CSS because of the use of !important.
+// Has to be in traditional CSS because of the selective use of !important.
 .swal-popup {
   background-color: rgba(68, 64, 60, 0.95) !important;
   backdrop-filter: blur(40px) !important;
@@ -56,4 +56,9 @@ code {
 
 .swal-container {
   backdrop-filter: blur(4px) !important;
+}
+
+.clickable:active {
+  transform: translate(0px, 0.1rem);
+  transform: scale(0.98);
 }

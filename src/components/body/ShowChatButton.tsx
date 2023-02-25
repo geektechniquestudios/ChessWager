@@ -1,37 +1,61 @@
 import { AnimatePresence, motion } from "framer-motion"
-import { BiArrowFromRight } from "react-icons/bi"
+import { useEffect, useState } from "react"
+import { MdOutlineChatBubbleOutline } from "react-icons/md"
 import { ChatToggle } from "../containers/ChatToggle"
+import { DarkMode } from "../containers/DarkMode"
+import { GlobalChatState } from "../containers/GlobalChatState"
 
 interface Props {}
 
 export const ShowChatButton: React.FC<Props> = ({}) => {
-  const { showChat, setShowChat } = ChatToggle.useContainer()
+  const { showChat, setShowChat, areNewMessages, setAreNewMessages } =
+    ChatToggle.useContainer()
+  const { isDarkOn } = DarkMode.useContainer()
+  const { messages } = GlobalChatState.useContainer()
+
+  useEffect(() => {
+    if ((messages?.length ?? 0) > 0) setAreNewMessages(true)
+  }, [messages])
+
+  const [isFirstLoad, setIsFirstLoad] = useState(true)
+  useEffect(() => {
+    setIsFirstLoad(false)
+  }, [])
 
   return (
-    <AnimatePresence>
-      {!showChat && (
-        <motion.button
-          layout
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{
-            duration: 0.5,
-          }}
-          id="show-chat-button"
-          onClick={() => {
-            setShowChat(true)
-            localStorage.setItem("showChat", "true")
-          }}
-          className="color-shift absolute top-20 right-0 z-30 m-3 rounded-md hover:bg-stone-400 dark:hover:bg-stone-700 sm:top-12"
-          title="Show Chat"
-        >
-          <BiArrowFromRight
-            size="1.4em"
-            className="color-shift m-1 text-stone-900 dark:text-stone-50"
-          />
-        </motion.button>
-      )}
-    </AnimatePresence>
+    <div className="absolute right-4 top-14 grow overflow-clip">
+      <AnimatePresence>
+        {!showChat && (
+          <motion.button
+            layout
+            initial={{ opacity: 0, x: 30 }}
+            animate={{
+              opacity: 1,
+              x: 0,
+              transition: {
+                duration: 0.3,
+                delay: isFirstLoad ? 0.8 : 0,
+              },
+            }}
+            whileHover={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.1 }, x: 30 }}
+            id="show-chat-button"
+            onClick={() => {
+              setShowChat(true)
+              localStorage.setItem("showChat", "true")
+              setAreNewMessages(false)
+            }}
+            className="color-shift sticky z-30 rounded-md border border-stone-400 bg-stone-100 p-1.5 mix-blend-screen hover:bg-white  dark:border-stone-600 dark:bg-stone-800 dark:hover:bg-stone-700"
+            title="Show Chat"
+          >
+            <MdOutlineChatBubbleOutline
+              size="1.4em"
+              className="color-shift text-stone-900 dark:text-stone-50"
+              color={areNewMessages ? (isDarkOn ? "#4ade80" : "#16a34a") : ""}
+            />
+          </motion.button>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }

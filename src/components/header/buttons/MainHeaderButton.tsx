@@ -1,7 +1,6 @@
 import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 import { AnimatePresence, motion } from "framer-motion"
-import "../../../style/buttons.scss"
 import { useEffect, useRef } from "react"
 
 interface Props {
@@ -57,7 +56,7 @@ export const MainHeaderButton: React.FC<Props> = ({
             stiffness: 40,
           }}
           id={id}
-          className={`color-shift clickable grid h-9 w-9 place-content-center rounded-md border-none border-stone-800 text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white ${activeStyle}`}
+          className={`${activeStyle} color-shift clickable grid h-9 w-9 place-content-center rounded-md border-none border-stone-800 text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white`}
           title={title}
           onClick={() => {
             // prevents opening new menu when header button is pressed that is already open

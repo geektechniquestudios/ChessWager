@@ -42,7 +42,8 @@ export const DropdownMenu = () => {
     useEffect(() => {
       const handleClickOutside = (event: Event) => {
         if (
-          menuRefMap.get(activeMenu).current?.contains(event.target) ||
+          (menuRefMap.get(activeMenu)?.current?.contains(event.target) ??
+            false) ||
           selfRef.current?.contains(event.target)
         )
           return
@@ -55,7 +56,7 @@ export const DropdownMenu = () => {
     }, [selfRef, setIsDropdownOpen])
   }
 
-  const dropdownRef = useRef<any>()
+  const dropdownRef = useRef<any>(null)
 
   CloseMenuListener(dropdownRef, activeMenu, menuRefMap)
 

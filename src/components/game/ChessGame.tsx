@@ -5,9 +5,9 @@ import { PlayerData } from "./PlayerData"
 import { GameState } from "../containers/GameState"
 import Chessground from "@react-chess/chessground"
 import { GameResultPopup } from "./popup/GameResultPopup"
-import { CustomSwal } from "../popups/CustomSwal"
 import { motion } from "framer-motion"
 
+// We use an old version of chessground. If we ever upgarde, uncomment the styles below.
 // import "chessground/assets/chessground.base.css"
 // import "chessground/assets/chessground.brown.css"
 // import "chessground/assets/chessground.cburnett.css"
@@ -32,8 +32,8 @@ interface Featured {
 interface Move {
   fen: string
   lm: string
-  wc: 90
-  bc: 133
+  wc: number
+  bc: number
 }
 
 interface Player {
@@ -44,6 +44,7 @@ interface Player {
     title: string
   }
   rating: number
+  seconds: number
 }
 
 export const ChessGame: React.FC = () => {
@@ -122,21 +123,17 @@ export const ChessGame: React.FC = () => {
           }
         })
       })
-      .catch((err) => {
-        CustomSwal(
-          "error",
-          "Can't Load Game",
-          "Error fetching game data from lichess.org. Please reload the page or try again later.",
-        )
-        console.error(err)
-      })
+      .catch(console.error)
   }, [updateTitles])
 
   return (
-    <div className="flex w-full justify-center p-2">
+    <div className="my-0 flex w-full justify-center">
       <motion.div
         layout
-        className="color-shift resize-x flex-col justify-center overflow-hidden rounded-lg border border-stone-500 bg-stone-100 p-2.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 sm:w-1/2"
+        initial={{ opacity: 0.2 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        className="color-shift w-full resize-x flex-col justify-center overflow-hidden rounded-xl border border-stone-500 bg-stone-100 p-1.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 sm:w-1/2"
         style={{ minWidth: "17em", maxWidth: "80vh" }}
       >
         <div className="relative flex h-full w-full resize justify-center align-middle">

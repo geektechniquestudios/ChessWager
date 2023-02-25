@@ -1,4 +1,3 @@
-import "../../../../../style/buttons.scss"
 import { RiCloseFill } from "react-icons/ri"
 import { Auth } from "../../../../containers/Auth"
 import { LobbyState } from "../../../../containers/LobbyState"

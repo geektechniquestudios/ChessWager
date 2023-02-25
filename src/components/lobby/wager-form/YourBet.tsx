@@ -32,7 +32,7 @@ export const YourBet: React.FC<Props> = ({
   return (
     <div
       id="bet-amount"
-      className={`${borderWarning} color-shift flex rounded-md border bg-stone-300 px-1 dark:bg-stone-700`}
+      className={`${borderWarning} color-shift flex rounded-md border bg-stone-200 px-1 dark:bg-stone-700`}
     >
       <p className="m-2 grid place-content-center font-bold text-stone-900 dark:text-stone-300">
         Your Bet
@@ -66,7 +66,7 @@ export const YourBet: React.FC<Props> = ({
               setLocalAvaxAmount((newValue / avaxPrice).toFixed(6).toString())
               setIsUsdFocused(false)
             }}
-            onKeyPress={(e) => {
+            onKeyDown={(e) => {
               e.key === "Enter" && e.currentTarget.blur()
             }}
             onFocus={() => {
@@ -95,7 +95,7 @@ export const YourBet: React.FC<Props> = ({
               setBetAmount(newValue)
               setLocalUsdAmount((newValue * avaxPrice).toFixed(2).toString())
             }}
-            onKeyPress={(e) => {
+            onKeyDown={(e) => {
               e.key === "Enter" && e.currentTarget.blur()
             }}
             onFocus={() => {

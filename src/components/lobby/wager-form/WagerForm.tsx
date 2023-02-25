@@ -11,10 +11,8 @@ import { TheirBet } from "./TheirBet"
 import {
   addDoc,
   collection,
-  doc,
   getFirestore,
   serverTimestamp,
-  updateDoc,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../firestore.config"
 import { UserDataState } from "../../containers/UserDataState"
@@ -22,6 +20,7 @@ import { CustomSwal } from "../../popups/CustomSwal"
 import { AnimatePresence, motion } from "framer-motion"
 import { BetsState } from "../../containers/BetsState"
 import { WagerFormHeader } from "./WagerFormHeader"
+import { WindowSize } from "../../containers/WindowSize"
 
 const db = getFirestore(firebaseApp)
 
@@ -76,7 +75,6 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
   const [isAmountEmpty, setIsAmountEmpty] = useState(false)
 
   const lobbyRef = collection(db, "lobby")
-  const userRef = collection(db, "users")
 
   const { userData } = UserDataState.useContainer()
 
@@ -132,13 +130,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
       contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
       hasUser1SeenUpdate: false,
       hasUser2SeenUpdate: false,
-    })
-      .then(() => {
-        if (!(auth.currentUser ?? false)) return
-        const userDoc = doc(userRef, auth.currentUser!.uid)
-        updateDoc(userDoc, { hasFirstBetBeenPlaced: true })
-      })
-      .catch(console.error)
+    }).catch(console.error)
   }
 
   const [isFirstAnimation, setIsFirstAnimation] = useState<boolean>(true)
@@ -146,6 +138,9 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
   useEffect(() => {
     setIsFirstAnimation(false)
   }, [])
+
+  const { width } = WindowSize.useContainer()
+  const formWidth = width >= 768 ? "21rem" : "19rem"
 
   return (
     <AnimatePresence>
@@ -155,7 +150,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
           layout
           ref={wagerFormRef}
           initial={isFirstAnimation ? false : { width: 0 }}
-          animate={{ width: "21rem" }}
+          animate={{ width: formWidth }}
           exit={{ width: 0 }}
           transition={{
             type: "spring",
@@ -166,7 +161,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
           <fieldset className="h-full">
             <form
               onSubmit={createWager}
-              className="flex h-full w-[21rem] flex-col justify-between rounded-bl-lg border-r border-stone-600 bg-stone-200 p-2 dark:bg-stone-900"
+              className="flex h-full flex-col justify-between rounded-bl-lg border-r border-stone-400 bg-stone-100 p-2 dark:border-stone-600 dark:bg-stone-900"
               onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault()
               }}
@@ -192,6 +187,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
                 />
                 <TheirBet multiplier={multiplier} betAmount={betAmount} />
                 <Multiplier
+                  multiplier={multiplier}
                   setMultiplier={setMultiplier}
                   sliderVal={sliderVal}
                   setSliderVal={setSliderVal}

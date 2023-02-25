@@ -1,4 +1,3 @@
-import "../../../../../style/buttons.scss"
 import { Auth } from "../../../../containers/Auth"
 import { BsBoxArrowInLeft } from "react-icons/bs"
 import { DarkMode } from "../../../../containers/DarkMode"
@@ -67,10 +66,6 @@ export const JoinButton: React.FC<Props> = ({
     })
       .then(() => {
         refreshLobby()
-        if (!(auth.currentUser ?? false)) return
-        const userRef = collection(db, "users")
-        const userDoc = doc(userRef, auth.currentUser!.uid)
-        updateDoc(userDoc, { hasFirstBetBeenPlaced: true })
       })
       .catch(() => {
         CustomSwal(

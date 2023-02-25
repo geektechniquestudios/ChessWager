@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import { Countdown } from "./Countdown"
 
 interface Props {
@@ -27,22 +28,37 @@ export const PlayerData: React.FC<Props> = ({
         isTop ? "rounded-t-lg" : "rounded-b-lg"
       } `}
     >
-      <a
+      <motion.a
+        layout
+        transition={{
+          type: "spring",
+          mass: 0.4,
+          bounce: 0.1,
+          delay: isTop ? 0 : 0.15,
+        }}
         href={`https://lichess.org/@/${name}`}
         rel="noreferrer noopener"
         target="_blank"
-        className="flex flex-col justify-center overflow-hidden hover:text-stone-900 dark:hover:text-white "
+        className="color-shift my-2 mx-1 flex h-7 min-w-[1.75rem] flex-col justify-center overflow-hidden rounded-full border border-stone-500 bg-stone-100 px-1 text-sm hover:border-black hover:bg-white hover:text-stone-900 dark:border-stone-400 dark:bg-stone-600 dark:text-stone-100 dark:hover:border-white dark:hover:bg-stone-500 dark:hover:text-white"
       >
-        <div className="mx-1.5 flex justify-center">
-          <p className="mx-1 flex font-bold text-emerald-700 dark:text-emerald-500">
+        <motion.div
+          className="mx-1.5 flex justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: 0.5, delay: 0.4 } }}
+        >
+          <p
+            className={`${
+              (title?.length ?? 0) > 0 ? "mr-1" : ""
+            } flex font-bold text-emerald-700 dark:text-emerald-500`}
+          >
             {title}
           </p>
-          <div className="flex gap-2 hover:underline">
+          <div className="flex gap-2 whitespace-nowrap">
             <p>{name}</p>
             <p className="font-bold">{rating !== 0 ? rating : ""}</p>
           </div>
-        </div>
-      </a>
+        </motion.div>
+      </motion.a>
       <Countdown fen={fen} side={side} time={time} isNewGame={isNewGame} />
     </div>
   )

@@ -18,7 +18,7 @@ export const AvaxPriceButton: React.FC = () => {
           exit={{ opacity: 0, translateY: -30 }}
           transition={{
             duration: 0.7,
-            delay: 0.4,
+            delay: 0.3,
             type: "spring",
             stiffness: 40,
           }}
