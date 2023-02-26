@@ -10,17 +10,13 @@ interface Props {}
 
 export const RealtimeBets: React.FC<Props> = ({}) => {
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
-  const { bets, updateRealTimeBets, realTimeBets, clearMapForLobbyChange } =
-    BetsState.useContainer()
+  const { bets, updateRealTimeBets, realTimeBets } = BetsState.useContainer()
 
   const { userData } = UserDataState.useContainer()
-  const { gameId } = GameState.useContainer()
 
   useEffect(() => {
     updateRealTimeBets()
   }, [bets, mostRecentButton, isDescending])
-
-  useEffect(clearMapForLobbyChange, [gameId])
 
   return (
     <AnimatePresence>

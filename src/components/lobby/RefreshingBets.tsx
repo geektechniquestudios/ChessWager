@@ -20,7 +20,6 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
     setSelectedBetMap,
     refreshingBets,
     setRefreshingBets,
-    clearMapForLobbyChange,
   } = BetsState.useContainer()
 
   const [isLobbyEnabled, setIsLobbyEnabled] = useState(true)

@@ -4,6 +4,7 @@ import { BigNumber, ethers } from "ethers"
 import { GiChessRook } from "react-icons/gi"
 import { Price } from "../containers/Price"
 import { WindowSize } from "../containers/WindowSize"
+import { motion } from "framer-motion"
 
 interface Props {
   amount: number
@@ -45,7 +46,13 @@ export const MiniBet: React.FC<Props> = ({
   const { width } = WindowSize.useContainer()
   const { avaxPrice } = Price.useContainer()
   return (
-    <div className="m-0.5 grid shrink-0 place-content-center rounded-md border border-stone-400 bg-stone-100 text-xs text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-300 md:m-0 md:shrink md:place-content-start md:border-none md:bg-transparent md:dark:bg-transparent">
+    <motion.div
+      variants={{
+        visible: { opacity: 1, x: 0 },
+        hidden: { opacity: 0, x: -4 },
+      }}
+      className="m-0.5 grid shrink-0 place-content-center rounded-md border border-stone-400 bg-stone-100 text-xs text-stone-900 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-300 md:m-0 md:shrink md:place-content-start md:border-none md:bg-transparent md:dark:bg-transparent"
+    >
       <div className="mx-1 flex shrink-0 justify-between gap-1 p-1 md:mx-0">
         <div className="mx-0 flex flex-col items-center gap-1 rounded-md border border-stone-400 bg-stone-200 p-1 dark:border-stone-700 dark:bg-stone-800 md:flex-row md:border-none">
           <div className="flex gap-1">
@@ -76,10 +83,9 @@ export const MiniBet: React.FC<Props> = ({
           <p> {`$${formatDollars(Number(potSize) * avaxPrice)}`}</p>
         </div>
       </div>
-
       {width >= 768 && (
         <div className="h-0.5 bg-gradient-to-r from-stone-400 to-transparent dark:from-stone-600" />
       )}
-    </div>
+    </motion.div>
   )
 }

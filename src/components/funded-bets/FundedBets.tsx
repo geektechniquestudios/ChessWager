@@ -6,7 +6,7 @@ import { BetsState } from "../containers/BetsState"
 import type { Bet } from "../../interfaces/Bet"
 import { UserDataState } from "../containers/UserDataState"
 import { WindowSize } from "../containers/WindowSize"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 
 interface Props {}
 
@@ -53,55 +53,92 @@ export const FundedBets: React.FC<Props> = () => {
           style={{ direction: ltrOrRtl }}
           className="scrollbar-funded mx-1 flex h-full overflow-y-auto overflow-x-visible md:mx-0 md:flex-col"
         >
-          <div
-            className="flex grow overflow-x-visible md:h-0 md:flex-col"
-            style={{ direction: "ltr" }}
-          >
-            {bets
-              ?.filter(
-                (bet: Bet) =>
-                  bet.status === "funded" && isBetRelatedToUser(bet),
-              )
-              ?.sort((a: Bet, b: Bet) => b.amount - a.amount)
-              .map((bet: Bet) => (
-                <MiniBet
-                  key={bet.id}
-                  amount={bet.amount}
-                  betSide={bet.betSide}
-                  multiplier={bet.multiplier}
-                  user1PhotoURL={bet.user1PhotoURL}
-                  user2PhotoURL={bet.user2PhotoURL}
-                  user1DisplayName={bet.user1DisplayName}
-                  user2DisplayName={bet.user2DisplayName}
-                />
-              ))}
-          </div>
-          <div
-            className="flex grow overflow-x-visible md:h-0 md:flex-col"
-            style={{ direction: "ltr" }}
-          >
-            {bets
-              ?.filter(
-                (bet: Bet) =>
-                  bet.status === "funded" &&
-                  !isBetRelatedToUser(bet) &&
-                  (!userData?.blockedUsers.includes(bet.user1Id) ?? false) &&
-                  (!userData?.blockedUsers.includes(bet.user2Id) ?? false),
-              )
-              .sort((a: Bet, b: Bet) => b.amount - a.amount)
-              .map((bet: Bet) => (
-                <MiniBet
-                  key={bet.id}
-                  amount={bet.amount}
-                  betSide={bet.betSide}
-                  multiplier={bet.multiplier}
-                  user1PhotoURL={bet.user1PhotoURL}
-                  user2PhotoURL={bet.user2PhotoURL}
-                  user1DisplayName={bet.user1DisplayName}
-                  user2DisplayName={bet.user2DisplayName}
-                />
-              ))}
-          </div>
+          <AnimatePresence>
+            {bets && (bets?.length ?? 0) > 0 && (
+              <motion.div
+                layout="position"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.06,
+                      when: "beforeChildren",
+                      type: "tween",
+                    },
+                  },
+                  hidden: { opacity: 0 },
+                }}
+                className="flex grow overflow-x-visible md:h-0 md:flex-col"
+                style={{ direction: "ltr" }}
+              >
+                {bets
+                  .filter(
+                    (bet: Bet) =>
+                      bet.status === "funded" && isBetRelatedToUser(bet),
+                  )
+                  .sort((a: Bet, b: Bet) => b.amount - a.amount)
+                  .map((bet: Bet) => (
+                    <MiniBet
+                      key={bet.id}
+                      amount={bet.amount}
+                      betSide={bet.betSide}
+                      multiplier={bet.multiplier}
+                      user1PhotoURL={bet.user1PhotoURL}
+                      user2PhotoURL={bet.user2PhotoURL}
+                      user1DisplayName={bet.user1DisplayName}
+                      user2DisplayName={bet.user2DisplayName}
+                    />
+                  ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {bets && (bets?.length ?? 0) > 0 && (
+              <motion.div
+                layout="position"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.06,
+                      when: "beforeChildren",
+                      type: "tween",
+                    },
+                  },
+                  hidden: { opacity: 0 },
+                }}
+                className="flex grow overflow-x-visible md:h-0 md:flex-col"
+                style={{ direction: "ltr" }}
+              >
+                {bets
+                  .filter(
+                    (bet: Bet) =>
+                      bet.status === "funded" &&
+                      !isBetRelatedToUser(bet) &&
+                      (!userData?.blockedUsers.includes(bet.user1Id) ??
+                        false) &&
+                      (!userData?.blockedUsers.includes(bet.user2Id) ?? false),
+                  )
+                  .sort((a: Bet, b: Bet) => b.amount - a.amount)
+                  .map((bet: Bet) => (
+                    <MiniBet
+                      key={bet.id}
+                      amount={bet.amount}
+                      betSide={bet.betSide}
+                      multiplier={bet.multiplier}
+                      user1PhotoURL={bet.user1PhotoURL}
+                      user2PhotoURL={bet.user2PhotoURL}
+                      user1DisplayName={bet.user1DisplayName}
+                      user2DisplayName={bet.user2DisplayName}
+                    />
+                  ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </motion.div>
