@@ -33,11 +33,11 @@ export const FundedBets: React.FC<Props> = () => {
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
   const { width } = WindowSize.useContainer()
-  const ltrOrRtl: "ltr" | "rtl" = width < 640 ? "ltr" : "rtl"
+  const ltrOrRtl: "ltr" | "rtl" = width < 768 ? "ltr" : "rtl"
   return (
     <motion.div
       layout
-      className="flex h-40 w-full shrink flex-col overflow-y-hidden overflow-x-clip whitespace-nowrap rounded-lg border border-stone-400 bg-stone-50 dark:border-stone-600 dark:bg-stone-800 md:h-full md:w-52"
+      className="flex h-32 w-full shrink-0 grow-0 flex-col overflow-y-hidden overflow-x-clip whitespace-nowrap rounded-lg border border-stone-400 bg-stone-50 dark:border-stone-600 dark:bg-stone-800 md:h-full md:w-40"
       style={{ direction: "rtl" }}
     >
       <div className="flex w-full justify-between overflow-x-clip bg-gradient-to-r from-stone-200 via-stone-200 to-stone-200 px-0.5 py-1 dark:from-stone-800 dark:via-stone-800 dark:to-stone-800 dark:text-stone-50 md:to-transparent md:dark:to-transparent">
@@ -51,10 +51,10 @@ export const FundedBets: React.FC<Props> = () => {
       <div className="flex h-full flex-col overflow-y-hidden overflow-x-visible">
         <div
           style={{ direction: ltrOrRtl }}
-          className="scrollbar-funded flex h-full overflow-y-auto overflow-x-visible md:flex-col"
+          className="scrollbar-funded mx-1 flex h-full overflow-y-auto overflow-x-visible md:mx-0 md:flex-col"
         >
           <div
-            className="flex overflow-x-visible md:h-0 md:flex-col"
+            className="flex grow overflow-x-visible md:h-0 md:flex-col"
             style={{ direction: "ltr" }}
           >
             {bets
@@ -62,7 +62,7 @@ export const FundedBets: React.FC<Props> = () => {
                 (bet: Bet) =>
                   bet.status === "funded" && isBetRelatedToUser(bet),
               )
-              .sort((a: Bet, b: Bet) => b.amount - a.amount)
+              ?.sort((a: Bet, b: Bet) => b.amount - a.amount)
               .map((bet: Bet) => (
                 <MiniBet
                   key={bet.id}
@@ -77,7 +77,7 @@ export const FundedBets: React.FC<Props> = () => {
               ))}
           </div>
           <div
-            className="flex overflow-x-visible md:h-0 md:flex-col"
+            className="flex grow overflow-x-visible md:h-0 md:flex-col"
             style={{ direction: "ltr" }}
           >
             {bets
