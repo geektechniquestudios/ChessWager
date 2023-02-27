@@ -89,9 +89,11 @@ export const Bet: React.FC<Props> = ({
   }, [auth.currentUser, user1Id, user2Id, status])
 
   const selectedStyle =
-    isSelected || id === ""
-      ? "bg-stone-100 dark:bg-black"
-      : "hover:bg-stone-200 dark:hover:bg-stone-900 dark:bg-stone-800 bg-stone-300"
+    id !== ""
+      ? isSelected
+        ? "bg-stone-100 dark:bg-black"
+        : "hover:bg-stone-200 dark:hover:bg-stone-900 dark:bg-stone-800 bg-stone-300"
+      : "border-none"
 
   const pointerEvents = status === "ready" && !isUser1 ? "cursor-pointer" : ""
 

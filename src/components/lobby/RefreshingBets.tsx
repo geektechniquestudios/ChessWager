@@ -46,8 +46,7 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
   }
   useEffect(heartBeatCountdown, [count])
 
-  const { mostRecentButton, isDescending, isRealTime } =
-    LobbyHeaderState.useContainer()
+  const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const updateForButtonClick = () => {
     if (isLoading) return
     updateRefreshingBets()
