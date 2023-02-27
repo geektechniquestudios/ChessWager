@@ -3,7 +3,6 @@ import { BetsState } from "../containers/BetsState"
 import { Bet as BetComponent } from "./bet/Bet"
 import { LobbyHeaderState } from "../containers/LobbyHeaderState"
 import { UserDataState } from "../containers/UserDataState"
-import { GameState } from "../containers/GameState"
 import { AnimatePresence, motion } from "framer-motion"
 
 interface Props {}

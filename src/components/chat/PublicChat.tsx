@@ -38,7 +38,6 @@ export const PublicChat: React.FC = () => {
           transition={{
             type: "spring",
             mass: 0.3,
-            bounce: 0.7,
           }}
         >
           <div

@@ -154,8 +154,8 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
           exit={{ width: 0 }}
           transition={{
             type: "spring",
-            mass: 0.3,
-            bounce: 0.7,
+            duration: 0.35,
+            bounce: 0,
           }}
         >
           <fieldset className="h-full">
