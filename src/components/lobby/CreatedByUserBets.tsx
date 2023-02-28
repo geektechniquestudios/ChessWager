@@ -22,7 +22,9 @@ export const CreatedByUserBets: React.FC<Props> = ({}) => {
               transition: {
                 staggerChildren: 0.06,
                 when: "beforeChildren",
-                type: "tween",
+                type: "spring",
+                mass: 0.3,
+                duration: 0.4,
               },
             },
             hidden: { opacity: 0 },

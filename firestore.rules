@@ -267,6 +267,8 @@ service cloud.firestore {
         isFromUser1() &&
         doesCreateRequestDataMatchUser1Profile() &&
         isCreateTimeStampValid();
+        // (areThereFewerThan50Bets() || doesUserHaveBadge()) &&
+        // (!doesUserHaveActiveBets() || doesUserHaveBadge());
 
       function areJoinRequestKeysValid() {
           return 

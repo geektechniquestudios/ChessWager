@@ -187,16 +187,18 @@ const useBetState = () => {
   }
 
   const updateRealTimeBets = async () => {
-    if (bets) setRealTimeBets(await updateLobby(bets))
+    setRealTimeBets(await updateLobby(bets ?? []))
   }
 
   const updateRefreshingBets = async () => {
-    if (bets) setRefreshingBets(await updateLobby(bets))
+    setRefreshingBets(await updateLobby(bets ?? []))
   }
 
   const clearMapForLobbyChange = () => () => {
     if (!isLoading) setSelectedBetMap(new Map())
   }
+
+  useEffect(clearMapForLobbyChange, [gameId])
 
   const [showWagerForm, setShowWagerForm] = useState(false)
 
@@ -210,15 +212,10 @@ const useBetState = () => {
       )
       .sort((a, b) => sortBasedOnRecentButton(a, b, mostRecentButton)) ?? []
 
-  useEffect(() => {
-    setSelectedBetMap(new Map())
-  }, [gameId])
-
   return {
     bets,
     selectedBetMap,
     setSelectedBetMap,
-    clearMapForLobbyChange,
     isLoading,
     realTimeBets,
     refreshingBets,
