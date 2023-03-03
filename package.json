@@ -22,7 +22,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/material": "^5.11.3",
-    "@openzeppelin/contracts": "^4.8.0",
+    "@openzeppelin/contracts": "^4.8.2",
     "@react-chess/chessground": "^1.2.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@truffle/hdwallet-provider": "^2.1.4",
