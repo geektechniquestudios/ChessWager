@@ -88,43 +88,34 @@ const overrides = {
 }
 
 const payWinnersContractCall = async (gameId: string, winningSide: string) => {
-  gameIdHistoryRef
+  const contractDoc = gameIdHistoryRef
     .doc(gameId)
+    .collection("contracts")
+    .doc(contractAddress)
+
+  contractDoc
     .get()
-    .then((doc: any) => {
-      if (doc.exists) {
-        const contractDoc = gameIdHistoryRef
-          .doc(gameId)
-          .collection("contracts")
-          .doc(contractAddress)
-
-        contractDoc.get().then((cDoc: any) => {
-          if (!cDoc.exists) {
-            console.log("no document found for gameId: ", gameId)
-            return
-          }
-          if (!cDoc.data().needToPay) {
-            console.log("No bets placed on this game, skipping contract call")
-          } else if (cDoc.data().hasBeenPaid) {
-            console.log(
-              "Contract has already been paid, skipping contract call",
-            )
-          } else {
-            console.log("paying winners for gameId: ", gameId)
-            contractDoc.set({ hasBeenPaid: true }, { merge: true })
-
-            contract
-              .payWinners(gameId, winningSide, overrides)
-              .then((tx: any) => {
-                console.log("tx: ", tx)
-              })
-              .catch((err: any) => {
-                console.log("err: ", err)
-              })
-          }
-        })
+    .then((cDoc: any) => {
+      if (!cDoc.exists) {
+        console.log("No document found for gameId: ", gameId)
+        return
+      }
+      if (!cDoc.data().needToPay) {
+        console.log("No bets placed on this game, skipping contract call")
+      } else if (cDoc.data().hasBeenPaid) {
+        console.log("Contract has already been paid, skipping contract call")
       } else {
-        console.error("no such game document")
+        console.log("paying winners for gameId: ", gameId)
+        contractDoc.set({ hasBeenPaid: true }, { merge: true })
+
+        contract
+          .payWinners(gameId, winningSide, overrides)
+          .then((tx: any) => {
+            console.log("tx: ", tx)
+          })
+          .catch((err: any) => {
+            console.log("err: ", err)
+          })
       }
     })
     .catch(console.error)

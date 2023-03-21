@@ -80,16 +80,7 @@ export const FundedBets: React.FC<Props> = () => {
                   )
                   .sort((a: Bet, b: Bet) => b.amount - a.amount)
                   .map((bet: Bet) => (
-                    <MiniBet
-                      key={bet.id}
-                      amount={bet.amount}
-                      betSide={bet.betSide}
-                      multiplier={bet.multiplier}
-                      user1PhotoURL={bet.user1PhotoURL}
-                      user2PhotoURL={bet.user2PhotoURL}
-                      user1DisplayName={bet.user1DisplayName}
-                      user2DisplayName={bet.user2DisplayName}
-                    />
+                    <MiniBet key={bet.id} bet={bet} />
                   ))}
               </motion.div>
             )}
@@ -117,24 +108,11 @@ export const FundedBets: React.FC<Props> = () => {
                 {bets
                   .filter(
                     (bet: Bet) =>
-                      bet.status === "funded" &&
-                      !isBetRelatedToUser(bet) &&
-                      (!userData?.blockedUsers.includes(bet.user1Id) ??
-                        false) &&
-                      (!userData?.blockedUsers.includes(bet.user2Id) ?? false),
+                      bet.status === "funded" && !isBetRelatedToUser(bet),
                   )
                   .sort((a: Bet, b: Bet) => b.amount - a.amount)
                   .map((bet: Bet) => (
-                    <MiniBet
-                      key={bet.id}
-                      amount={bet.amount}
-                      betSide={bet.betSide}
-                      multiplier={bet.multiplier}
-                      user1PhotoURL={bet.user1PhotoURL}
-                      user2PhotoURL={bet.user2PhotoURL}
-                      user1DisplayName={bet.user1DisplayName}
-                      user2DisplayName={bet.user2DisplayName}
-                    />
+                    <MiniBet key={bet.id} bet={bet} />
                   ))}
               </motion.div>
             )}

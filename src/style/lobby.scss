@@ -4,3 +4,7 @@ a:hover {
   @extend .color-shift;
   @apply cursor-pointer text-black;
 }
+
+.bet:hover .bet-header {
+  @apply border-b-stone-400 bg-cyan-800;
+}

@@ -1,35 +1,29 @@
 import { Auth } from "../../../../containers/Auth"
-import { BsBoxArrowInLeft } from "react-icons/bs"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { LobbyState } from "../../../../containers/LobbyState"
 import {
-  collection,
   doc,
   DocumentData,
   DocumentReference,
   getFirestore,
   runTransaction,
-  updateDoc,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../../firestore.config"
 import { User } from "../../../../../interfaces/User"
 import { CustomSwal } from "../../../../popups/CustomSwal"
+import { Bet } from "../../../../../interfaces/Bet"
+import { GiJoint } from "react-icons/gi"
+import { AnimatePresence, motion } from "framer-motion"
 
 const db = getFirestore(firebaseApp)
 
 interface Props {
-  id: string
-  user1Id: string
+  bet: Bet
   isSelected: boolean
-  status: string
 }
 
-export const JoinButton: React.FC<Props> = ({
-  id,
-  user1Id,
-  isSelected,
-  status,
-}) => {
+export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
+  const { id, user1Id, status } = bet
   const { auth, walletAddress, connectWallet } = Auth.useContainer()
   const { refreshLobby } = LobbyState.useContainer()
 
@@ -77,27 +71,24 @@ export const JoinButton: React.FC<Props> = ({
   }
 
   const { isDarkOn } = DarkMode.useContainer()
+
   return (
-    <>
+    <AnimatePresence>
       {isSelected && status === "ready" && !isUser1 && (
-        <div className="my-1 flex h-full animate-pulse flex-col justify-center lg:m-0">
-          <div className="flex">
-            <button
-              onClick={(event) => {
-                accept(event)
-              }}
-              type="button"
-              title="Join Bet"
-              className="color-shift ml-2 grid h-8 w-8 place-content-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-900"
-            >
-              <BsBoxArrowInLeft
-                color={isDarkOn ? "#bbf7d0" : "#14532d"}
-                size="23"
-              />
-            </button>
-          </div>
-        </div>
+        <motion.button
+          initial={{ x: 20 }}
+          animate={{ x: -1 }}
+          exit={{ x: 70 }}
+          transition={{ duration: 0.1 }}
+          onClick={accept}
+          type="button"
+          title="Join Bet"
+          className="color-shift absolute bottom-1 right-1 flex h-6 shrink-0 animate-pulse items-center justify-center gap-1 rounded-md border bg-stone-800 px-1.5 font-bold text-stone-100 hover:bg-stone-300 dark:hover:bg-stone-600"
+        >
+          <div className="text-xs">Join</div>
+          <GiJoint size="12" color={isDarkOn ? "#bbf7d0" : "#14532d"} />
+        </motion.button>
       )}
-    </>
+    </AnimatePresence>
   )
 }

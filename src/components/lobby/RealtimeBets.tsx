@@ -2,8 +2,8 @@ import { useEffect } from "react"
 import { BetsState } from "../containers/BetsState"
 import { Bet } from "./bet/Bet"
 import { LobbyHeaderState } from "../containers/LobbyHeaderState"
-import { UserDataState } from "../containers/UserDataState"
 import { AnimatePresence, motion } from "framer-motion"
+import { Auth } from "../containers/Auth"
 
 interface Props {}
 
@@ -12,11 +12,11 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
   const { bets, updateRealTimeBets, realTimeBets, setSelectedBetMap } =
     BetsState.useContainer()
 
-  const { userData } = UserDataState.useContainer()
+  const { user } = Auth.useContainer()
 
   useEffect(() => {
     updateRealTimeBets()
-  }, [bets, mostRecentButton, isDescending])
+  }, [bets, mostRecentButton, isDescending, user])
 
   useEffect(() => {
     setSelectedBetMap(new Map())
@@ -41,22 +41,14 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
             hidden: { opacity: 0 },
           }}
         >
-          {realTimeBets
-            .filter(
-              (bet) =>
-                (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
-                (!userData?.blockedUsers.includes(bet.user2Id) ?? true) &&
-                (bet.status ?? "") !== "funded",
-            )
-            .map((bet, index) => (
-              <Bet
-                key={bet.id !== "" ? bet.id : index}
-                {...bet}
-                timestamp={bet.timestamp?.seconds}
-                index={index}
-                isLobbyEnabled
-              />
-            ))}
+          {realTimeBets.map((bet, index) => (
+            <Bet
+              key={bet.id !== "" ? bet.id : index}
+              bet={bet}
+              index={index}
+              isLobbyEnabled
+            />
+          ))}
         </motion.div>
       )}
     </AnimatePresence>

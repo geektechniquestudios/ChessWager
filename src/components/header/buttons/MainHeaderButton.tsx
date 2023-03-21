@@ -45,6 +45,7 @@ export const MainHeaderButton: React.FC<Props> = ({
     <AnimatePresence mode="wait">
       {(user || !authRequired) && (
         <motion.button
+          layout
           ref={ref}
           initial={{ opacity: 0, translateY: -30 }}
           animate={{ opacity: [0, 0, 1], translateY: 0 }}

@@ -22,17 +22,15 @@ export const CreatedByUserBets: React.FC<Props> = ({}) => {
               transition: {
                 staggerChildren: 0.06,
                 when: "beforeChildren",
-                type: "spring",
-                mass: 0.3,
-                duration: 0.4,
+                type: "tween",
               },
             },
             hidden: { opacity: 0 },
           }}
         >
           {user &&
-            betsPlacedByUser.map((bet) => (
-              <Bet key={bet.id} {...bet} timestamp={bet.timestamp?.seconds} />
+            betsPlacedByUser.map((bet, index) => (
+              <Bet key={bet.id} bet={bet} index={index} />
             ))}
         </motion.div>
       )}

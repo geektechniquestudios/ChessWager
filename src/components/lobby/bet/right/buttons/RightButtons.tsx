@@ -1,63 +1,23 @@
-import { LeaveButton } from "./LeaveButton"
-import { User2Metamask } from "./User2Metamask"
+import { Bet } from "../../../../../interfaces/Bet"
+import { Auth } from "../../../../containers/Auth"
+import { ApproveKickWrapper } from "./ApproveKickWrapper"
+import { JoinButton } from "./JoinButton"
+import { User2PayButton } from "./User2PayButton"
 
 interface Props {
-  user2Id: string
-  status: string
-  user1Id: string
-  id: string
-  amount: number
-  betSide: string
-  multiplier: number
-  user1Metamask: string
-  user2Metamask: string
-  gameId: string
-  timestamp: number
-  contractAddress: string
-  hasUser2Paid: boolean
+  bet: Bet
   isSelected: boolean
 }
 
-export const RightButtons: React.FC<Props> = ({
-  user2Id,
-  status,
-  user1Id,
-  id,
-  amount,
-  betSide,
-  multiplier,
-  user1Metamask,
-  user2Metamask,
-  gameId,
-  timestamp,
-  contractAddress,
-  hasUser2Paid,
-  isSelected,
-}) => {
+export const RightButtons: React.FC<Props> = ({ bet, isSelected }) => {
+  const { user } = Auth.useContainer()
   return (
     <>
-      {isSelected && (
-        <div className="flex h-full justify-between">
-          <div className="flex">
-            <User2Metamask
-              betId={id}
-              amount={amount}
-              betSide={betSide}
-              multiplier={multiplier}
-              user1Id={user1Id}
-              user1Metamask={user1Metamask}
-              user2Id={user2Id}
-              user2Metamask={user2Metamask}
-              gameId={gameId}
-              timestamp={timestamp}
-              contractAddress={contractAddress}
-              status={status}
-              hasUser2Paid={hasUser2Paid}
-            />
-          </div>
-          <div className="flex">
-            <LeaveButton user2Id={user2Id} status={status} id={id} />
-          </div>
+      {user && (
+        <div className="absolute bottom-0 right-0 flex w-full items-center justify-end">
+          <JoinButton bet={bet} isSelected={isSelected} />
+          <User2PayButton bet={bet} />
+          <ApproveKickWrapper bet={bet} />
         </div>
       )}
     </>

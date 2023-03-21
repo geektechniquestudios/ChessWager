@@ -63,6 +63,7 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
     user,
     dummy,
     isLoading,
+    user,
   ])
 
   const updateForNewGame = () => {
@@ -93,21 +94,14 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
             hidden: { opacity: 0 },
           }}
         >
-          {refreshingBets
-            ?.filter(
-              (bet) =>
-                (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
-                (!userData?.blockedUsers.includes(bet.user2Id) ?? true),
-            )
-            .map((bet, index) => (
-              <BetComponent
-                key={bet.id}
-                {...bet}
-                timestamp={bet.timestamp?.seconds}
-                index={index}
-                isLobbyEnabled={isLobbyEnabled}
-              />
-            ))}
+          {refreshingBets.map((bet, index) => (
+            <BetComponent
+              key={bet.id !== "" ? bet.id : index}
+              bet={bet}
+              index={index}
+              isLobbyEnabled={isLobbyEnabled}
+            />
+          ))}
         </motion.div>
       )}
     </AnimatePresence>

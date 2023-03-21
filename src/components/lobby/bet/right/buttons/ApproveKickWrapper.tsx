@@ -1,33 +1,27 @@
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion"
+import { Bet } from "../../../../../interfaces/Bet"
 import { Auth } from "../../../../containers/Auth"
 import { ApproveButton } from "./ApproveButton"
 import { KickButton } from "./KickButton"
 
 interface Props {
-  user1Id: string
-  user2Id: string
-  status: string
-  id: string
+  bet: Bet
 }
 
-export const ApproveKickWrapper: React.FC<Props> = ({
-  user1Id,
-  status,
-  id,
-  user2Id,
-}) => {
-  const { auth, user } = Auth.useContainer()
+export const ApproveKickWrapper: React.FC<Props> = ({ bet }) => {
+  const { user } = Auth.useContainer()
+  const { user1Id, status, id } = bet
 
   return (
-    <>
-      {user &&
-        auth.currentUser &&
-        user1Id === auth.currentUser.uid &&
-        status === "pending" && (
-          <div className="flex h-full items-center justify-evenly gap-2 border-t border-stone-400 px-2 dark:border-stone-600 lg:border-r">
-            <ApproveButton betId={id} user1Id={user1Id} user2Id={user2Id} />
-            <KickButton betId={id} />
-          </div>
-        )}
-    </>
+    <AnimatePresence>
+      {user && user1Id === user.uid && status === "pending" && (
+        <motion.div className="absolute bottom-0.5 right-0.5 flex flex-col items-end justify-evenly gap-0.5">
+          <LayoutGroup>
+            <KickButton id={id} />
+            <ApproveButton bet={bet} />
+          </LayoutGroup>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }

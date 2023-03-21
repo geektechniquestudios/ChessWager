@@ -357,7 +357,7 @@ service cloud.firestore {
           requestData.user2Id == "" &&
           requestData.user2Metamask == "" &&
           requestData.user2PhotoURL == "" &&
-          requestData.user2FollowThrough == [0, 0] &&
+          requestData.user2FollowThrough == [] &&
           requestData.user2DisplayName == "" &&
           requestData.status == "ready" &&
           resource.data.status == "pending";
@@ -368,7 +368,6 @@ service cloud.firestore {
          !(request.resource.data.diff(resource.data).affectedKeys().hasAny([          "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress",                       "hasUser1SeenUpdate", "hasUser2SeenUpdate"])) &&
                                       request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]) &&
                                        request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]);
-
       }
 
       function isApproveRequestDataValid() {

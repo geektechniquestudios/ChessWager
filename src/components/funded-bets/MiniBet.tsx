@@ -5,26 +5,26 @@ import { GiChessRook } from "react-icons/gi"
 import { Price } from "../containers/Price"
 import { WindowSize } from "../containers/WindowSize"
 import { motion } from "framer-motion"
+import { UserMenuState } from "../containers/UserMenuState"
+import { DropdownState } from "../containers/DropdownState"
+import { Bet } from "../../interfaces/Bet"
 
 interface Props {
-  amount: number
-  betSide: string
-  multiplier: number
-  user1PhotoURL: string
-  user1DisplayName: string
-  user2PhotoURL: string
-  user2DisplayName: string
+  bet: Bet
 }
 
-export const MiniBet: React.FC<Props> = ({
-  amount,
-  betSide,
-  multiplier,
-  user1PhotoURL,
-  user1DisplayName,
-  user2PhotoURL,
-  user2DisplayName,
-}) => {
+export const MiniBet: React.FC<Props> = ({ bet }) => {
+  const {
+    amount,
+    betSide,
+    multiplier,
+    user1Id,
+    user1PhotoURL,
+    user1DisplayName,
+    user2Id,
+    user2PhotoURL,
+    user2DisplayName,
+  } = bet
   const bigAmount = ethers.utils.parseEther(amount.toString())
   const potSize = ethers.utils.formatEther(
     bigAmount
@@ -42,7 +42,8 @@ export const MiniBet: React.FC<Props> = ({
       return num.toFixed(2)
     }
   }
-
+  const { openDropdownToMenu } = DropdownState.useContainer()
+  const { setClickedUserById } = UserMenuState.useContainer()
   const { width } = WindowSize.useContainer()
   const { avaxPrice } = Price.useContainer()
   return (
@@ -59,21 +60,38 @@ export const MiniBet: React.FC<Props> = ({
             <div className="grid h-5 w-5 place-content-center rounded-md border border-stone-700 bg-stone-600">
               <GiChessRook color={betSide} />
             </div>
-            <img
-              src={user1PhotoURL}
-              alt=""
-              className="h-5 w-5 rounded-full"
-              title={user1DisplayName}
-            />
+            <a
+              onClick={(e) => {
+                e.stopPropagation()
+                setClickedUserById(user1Id)
+                openDropdownToMenu("clickedUser")
+              }}
+            >
+              <img
+                src={user1PhotoURL}
+                alt=""
+                className="h-5 w-5 rounded-full"
+                title={user1DisplayName}
+              />
+            </a>
           </div>
+
           <p className="font-bold">vs</p>
           <div className="flex flex-row-reverse gap-1 md:flex-row">
-            <img
-              src={user2PhotoURL}
-              alt=""
-              className="h-5 w-5 rounded-full"
-              title={user2DisplayName}
-            />
+            <a
+              onClick={(e) => {
+                e.stopPropagation()
+                setClickedUserById(user2Id)
+                openDropdownToMenu("clickedUser")
+              }}
+            >
+              <img
+                src={user2PhotoURL}
+                alt=""
+                className="h-5 w-5 rounded-full"
+                title={user2DisplayName}
+              />
+            </a>
             <div className="grid h-5 w-5 place-content-center rounded-md border border-stone-700 bg-stone-400">
               <GiChessRook color={betSide === "white" ? "black" : "white"} />
             </div>

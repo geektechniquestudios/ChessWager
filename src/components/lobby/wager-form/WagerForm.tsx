@@ -146,7 +146,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
     <AnimatePresence>
       {showWagerForm && (
         <motion.div
-          className="absolute z-50 h-full overflow-x-clip"
+          className="absolute z-50 h-full select-none overflow-clip  border-r border-stone-400 dark:border-stone-600"
           layout
           ref={wagerFormRef}
           initial={isFirstAnimation ? false : { width: 0 }}
@@ -172,7 +172,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
             <motion.form
               layout
               onSubmit={createWager}
-              className={`flex h-full flex-col justify-between rounded-bl-lg border-r border-stone-400 bg-stone-100 p-2 dark:border-stone-600 dark:bg-stone-900`}
+              className={`flex h-full flex-col justify-between rounded-bl-lg bg-stone-100 p-2 dark:bg-stone-900`}
               onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault()
               }}

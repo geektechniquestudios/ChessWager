@@ -134,7 +134,7 @@ export const ChessGame: React.FC = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}
         className="color-shift w-full resize-x flex-col justify-center overflow-hidden rounded-xl border border-stone-500 bg-stone-100 p-1.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 sm:w-1/2"
-        style={{ minWidth: "17em", maxWidth: "80vh" }}
+        style={{ minWidth: "16.5em", maxWidth: "80vh" }}
       >
         <div className="relative flex h-full w-full resize justify-center align-middle">
           <GameResultPopup orientation={orientation} />

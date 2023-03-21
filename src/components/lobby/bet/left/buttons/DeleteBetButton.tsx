@@ -9,17 +9,18 @@ import {
   getFirestore,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../../firestore.config"
+import { Bet } from "../../../../../interfaces/Bet"
 
 const db = getFirestore(firebaseApp)
 
 interface Props {
-  user1Id: string
-  status: string
-  id: string
+  bet: Bet
+  isSelected: boolean
 }
 
-export const DeleteBetButton: React.FC<Props> = ({ user1Id, status, id }) => {
+export const DeleteBetButton: React.FC<Props> = ({ bet, isSelected }) => {
   const { user, auth } = Auth.useContainer()
+  const { id, user1Id, status } = bet
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
   const deleteCurrentBet = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -31,20 +32,18 @@ export const DeleteBetButton: React.FC<Props> = ({ user1Id, status, id }) => {
   return (
     <>
       {user &&
-        auth.currentUser &&
-        user1Id === auth.currentUser.uid &&
-        status !== "approved" && (
-          <div className="flex flex-col justify-center align-middle">
-            <button
-              type="button"
-              title="Delete Bet"
-              onClick={deleteCurrentBet}
-              className="color-shift clickable mx-1 grid transform place-content-center border-0 p-0.5 text-red-600 hover:text-red-600 dark:text-red-600 dark:hover:text-rose-300"
-              id="delete-button"
-            >
-              <RiCloseFill />
-            </button>
-          </div>
+        user1Id === auth.currentUser?.uid &&
+        status !== "approved" &&
+        isSelected && (
+          <button
+            type="button"
+            title="Delete"
+            onClick={deleteCurrentBet}
+            className="color-shift clickable absolute top-0.5 left-0.5 z-40 grid place-content-center rounded-full border border-stone-600 bg-white p-0.5 text-stone-800 hover:border-black hover:text-black dark:border-stone-400 dark:bg-stone-800 dark:text-stone-300 dark:hover:border-white dark:hover:text-white"
+            id="delete-button"
+          >
+            <RiCloseFill size={12} />
+          </button>
         )}
     </>
   )

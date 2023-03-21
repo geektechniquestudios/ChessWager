@@ -1,17 +1,23 @@
-import { Auth } from "../../../../containers/Auth"
-import { ClockSpinner } from "../../models/ClockSpinner"
+import { motion } from "framer-motion"
 
-interface Props {
-  status: string
-  user1Id: string
-}
+interface Props {}
 
-export const User2Spinner: React.FC<Props> = ({ status, user1Id }) => {
-  const { auth } = Auth.useContainer()
-  const isUser1 = auth.currentUser?.uid === user1Id
+export const User2Spinner: React.FC<Props> = ({}) => {
   return (
-    <div className="m-0.5 grid place-content-center">
-      {status === "ready" && isUser1 && <ClockSpinner />}
-    </div>
+    <motion.div
+    // className="absolute inset-0 h-9 w-9 rounded-full border"
+    // animate={{
+    //   scale: [1, 2, 2, 1, 1],
+    //   rotate: [0, 0, 180, 180, 0],
+    //   borderRadius: ["0%", "0%", "50%", "50%", "0%"]
+    // }}
+    // transition={{
+    //   duration: 2,
+    //   ease: "easeInOut",
+    //   times: [0, 0.2, 0.5, 0.8, 1],
+    //   repeat: Infinity,
+    //   repeatDelay: 1
+    // }}
+    />
   )
 }

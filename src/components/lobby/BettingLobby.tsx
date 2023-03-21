@@ -3,11 +3,10 @@ import { LobbyHeaderState } from "../containers/LobbyHeaderState"
 import { CreatedByUserBets } from "./CreatedByUserBets"
 import { RefreshingBets } from "./RefreshingBets"
 import { RealtimeBets } from "./RealtimeBets"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { WagerForm } from "./wager-form/WagerForm"
 import { CreateWagerButton } from "./wager-form/CreateWagerButton"
 import { useRef } from "react"
-import { BetsState } from "../containers/BetsState"
 
 export const BettingLobby: React.FC = () => {
   const { isRealTime } = LobbyHeaderState.useContainer()
