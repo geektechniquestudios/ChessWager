@@ -34,7 +34,7 @@ export const FollowThrough: React.FC<Props> = ({
     <motion.div
       initial={{ y: 8, x: 10, rotate: 40, opacity: 0 }}
       animate={{ y: 0, x: 0, rotate: 0, opacity: 1 }}
-      exit={{ y: 8, x: 10, rotate: 50, opacity: 0 }}
+      exit={isUser1 ? {} : { y: 8, x: 10, rotate: 50, opacity: 0 }}
       transition={{ type: "spring", duration: 0.3 }}
       title="Trust"
       className={`${colorStyle} ${userStyle} ${largeStyle} color-shift absolute -bottom-[0.55rem] flex h-4 items-center justify-center rounded-md border border-stone-500 font-bold text-stone-100`}

@@ -104,35 +104,35 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
     : "dark:bg-emerald-800 border-b-teal-300"
 
   return (
-    <AnimatePresence>
-      <motion.div
-        layout="position"
-        variants={{
-          visible: { opacity: 1, x: 0 },
-          hidden: { opacity: 0, x: -10 },
-        }}
-        transition={{
-          type: "just",
-        }}
-        className={`${outerSelectedStyle} color-shift flex h-16 w-full justify-center py-0.5 px-1 align-middle`}
-      >
-        {id !== "" && (
-          <motion.div
-            layout="position"
-            className={`${innerSelectedStyle} ${pointerEvents} ${disabledStyle} bet color-shift relative z-0 flex max-w-[38rem] grow select-none justify-center overflow-clip whitespace-nowrap rounded-lg border dark:bg-stone-700`}
-            onClick={updateSelectedStatus}
-          >
-            <BetHeader bet={bet} betHeaderStyle={betHeaderStyle} />
-            <User1Data bet={bet} isSelected={isSelected} />
-            <CenterOfBet
-              potSize={potSize}
-              status={status}
-              betHeaderStyle={betHeaderStyle}
-            />
-            <User2Data bet={bet} isSelected={isSelected} />
-          </motion.div>
-        )}
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      layout="position"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        visible: { opacity: 1, x: 0 },
+        hidden: { opacity: 0, x: -10 },
+      }}
+      transition={{
+        type: "just",
+      }}
+      className={`${outerSelectedStyle} color-shift flex h-16 w-full justify-center py-0.5 px-1 align-middle`}
+    >
+      {id !== "" && (
+        <motion.div
+          layout="position"
+          className={`${innerSelectedStyle} ${pointerEvents} ${disabledStyle} bet color-shift relative z-0 flex max-w-[38rem] grow select-none justify-center overflow-clip whitespace-nowrap rounded-lg border dark:bg-stone-700`}
+          onClick={updateSelectedStatus}
+        >
+          <BetHeader bet={bet} betHeaderStyle={betHeaderStyle} />
+          <User1Data bet={bet} isSelected={isSelected} />
+          <CenterOfBet
+            potSize={potSize}
+            status={status}
+            betHeaderStyle={betHeaderStyle}
+          />
+          <User2Data bet={bet} isSelected={isSelected} />
+        </motion.div>
+      )}
+    </motion.div>
   )
 }

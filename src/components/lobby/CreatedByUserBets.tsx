@@ -16,6 +16,7 @@ export const CreatedByUserBets: React.FC<Props> = ({}) => {
           layout="position"
           initial="hidden"
           animate="visible"
+          exit="hidden"
           variants={{
             visible: {
               opacity: 1,
