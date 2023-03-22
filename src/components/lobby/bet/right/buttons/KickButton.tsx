@@ -35,9 +35,9 @@ export const KickButton: React.FC<Props> = ({ id }) => {
   const { isDarkOn } = DarkMode.useContainer()
   return (
     <motion.button
-      layout
-      initial={{ x: 30 }}
+      initial={{ x: 70 }}
       animate={{ x: 0 }}
+      exit={{ x: 70 }}
       transition={{
         type: "spring",
         duration: 0.1,
