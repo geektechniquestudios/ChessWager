@@ -47,7 +47,7 @@ export const LeaveButton: React.FC<Props> = ({ bet }) => {
             <button
               title="Leave"
               onClick={cancel}
-              className="color-shift clickable absolute top-0.5 right-0.5 grid place-content-center rounded-full border border-stone-600 bg-white p-0.5 text-stone-800 hover:border-black hover:text-black dark:border-stone-400 dark:bg-stone-800 dark:text-stone-300 dark:hover:border-white dark:hover:text-white"
+              className="close-button color-shift clickable absolute top-0.5 right-0.5 grid place-content-center rounded-full border p-0.5"
               id="leave-button"
             >
               <RiCloseFill size={12} />

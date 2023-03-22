@@ -45,7 +45,7 @@ export const KickButton: React.FC<Props> = ({ id }) => {
         mass: 0.2,
         delay: 0.05,
       }}
-      className="color-shift flex animate-pulse items-center justify-center gap-1 rounded-md border bg-stone-800 px-1.5 text-stone-200 hover:bg-stone-300 dark:hover:border-white dark:hover:bg-stone-600 dark:hover:text-white"
+      className="bet-button color-shift flex animate-pulse items-center justify-center gap-1 rounded-md border px-1.5 font-bold"
       onClick={kick}
       title="Kick User"
     >

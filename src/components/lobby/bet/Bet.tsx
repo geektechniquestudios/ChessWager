@@ -7,7 +7,7 @@ import { User2Data } from "./right/user-data/User2Data"
 import { CenterOfBet } from "./center/CenterOfBet"
 import { useEffect, useState } from "react"
 import { BetsState } from "../../containers/BetsState"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { CustomSwal } from "../../popups/CustomSwal"
 import { Bet as BetInterface } from "../../../interfaces/Bet"
 import { BetHeader } from "./header/BetHeader"
@@ -83,13 +83,11 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
     }
   }
 
-  const outerSelectedStyle = id !== "" ? (isSelected ? "" : "") : "border-none"
-
   const innerSelectedStyle =
     id !== ""
       ? isSelected
-        ? "dark:border-teal-900"
-        : "dark:border-stone-600 dark:hover:border-zinc-600 "
+        ? "bet-selected"
+        : "bet-not-selected"
       : "border-none"
 
   const pointerEvents = status === "ready" && !isUser1 ? "cursor-pointer" : ""
@@ -99,9 +97,7 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
       ? "opacity-50 pointer-events-none"
       : ""
 
-  const betHeaderStyle = !isSelected
-    ? "bet-header"
-    : "dark:bg-emerald-800 border-b-teal-300"
+  const betHeaderStyle = isSelected ? "bet-header-selected" : "bet-header"
 
   return (
     <motion.div
@@ -115,12 +111,12 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
       transition={{
         type: "just",
       }}
-      className={`${outerSelectedStyle} color-shift flex h-16 w-full justify-center py-0.5 px-1 align-middle`}
+      className="color-shift flex h-16 w-full justify-center py-0.5 px-1 align-middle"
     >
       {id !== "" && (
         <motion.div
           layout="position"
-          className={`${innerSelectedStyle} ${pointerEvents} ${disabledStyle} bet color-shift relative z-0 flex max-w-[38rem] grow select-none justify-center overflow-clip whitespace-nowrap rounded-lg border dark:bg-stone-700`}
+          className={`${innerSelectedStyle} ${pointerEvents} ${disabledStyle} bet color-shift relative z-0 flex max-w-[38rem] grow select-none justify-center overflow-clip whitespace-nowrap rounded-lg border`}
           onClick={updateSelectedStatus}
         >
           <BetHeader bet={bet} betHeaderStyle={betHeaderStyle} />

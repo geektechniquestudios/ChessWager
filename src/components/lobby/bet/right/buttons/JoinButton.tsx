@@ -83,7 +83,7 @@ export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
           onClick={accept}
           type="button"
           title="Join Bet"
-          className="color-shift absolute bottom-1 right-1 flex h-6 shrink-0 animate-pulse items-center justify-center gap-1 rounded-md border bg-stone-800 px-1.5 font-bold text-stone-100 hover:bg-stone-300 dark:hover:bg-stone-600"
+          className="bet-button color-shift absolute bottom-1 right-1 flex h-6 shrink-0 animate-pulse items-center justify-center gap-1 rounded-md border px-1.5 font-bold"
         >
           <div className="text-xs">Join</div>
           <GiJoint size="12" color={isDarkOn ? "#bbf7d0" : "#14532d"} />

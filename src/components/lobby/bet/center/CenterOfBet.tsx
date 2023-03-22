@@ -34,13 +34,13 @@ export const CenterOfBet: React.FC<Props> = ({
     <div className="relative z-20 flex w-1/5 flex-col items-center justify-start text-xs text-stone-200">
       <motion.div
         layout="position"
-        className={`${betHeaderStyle} color-shift mb-1 grid place-content-center rounded-b-lg border-b border-stone-500 bg-stone-600 px-2 pt-1 font-bold`}
+        className={`${betHeaderStyle} color-shift mb-1 grid place-content-center rounded-b-lg border-b px-2 pt-1 font-bold`}
       >
         {status.toUpperCase()}
       </motion.div>
       <motion.div
         layout
-        className="grid place-content-center rounded-md border border-stone-400 bg-stone-200 px-1 text-base font-bold dark:border-stone-700 dark:bg-zinc-800"
+        className="total-bet-amount grid place-content-center rounded-md border px-1 text-base font-bold"
       >
         {`$${formatDollars(Number(potSize) * avaxPrice)}`}
       </motion.div>

@@ -15,9 +15,9 @@ export const User1Image: React.FC<Props> = ({ bet }) => {
   const { setClickedUserById } = UserMenuState.useContainer()
   const { user } = Auth.useContainer()
   const disabledStyle = !user ? "pointer-events-none" : ""
-  const ringStyle = betSide === "white" ? "border-white" : "border-stone-900"
+  const ringStyle = betSide === "white" ? "white-ring" : "black-ring"
   const ringBorderStyle =
-    betSide === "white" ? "border-stone-700" : "border-stone-600"
+    betSide === "white" ? "white-ring-border" : "black-ring-border"
 
   return (
     <div className={`${ringBorderStyle} relative shrink-0 rounded-full border`}>

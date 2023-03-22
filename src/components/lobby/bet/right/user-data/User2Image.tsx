@@ -18,16 +18,15 @@ export const User2Image: React.FC<Props> = ({ bet }) => {
   const { setClickedUserById } = UserMenuState.useContainer()
   const { user } = Auth.useContainer()
   const disabledStyle = !user ? "pointer-events-none" : ""
-  const ringStyle = betSide === "black" ? "border-white" : "border-stone-900"
+  const ringStyle = betSide === "black" ? "white-ring" : "black-ring"
   const ringBorderStyle =
-    betSide === "white" ? "border-stone-700" : "border-stone-600"
+    betSide === "black" ? "white-ring-border" : "black-ring-border"
   const { auth } = Auth.useContainer()
   const isUser1 = auth.currentUser?.uid === user1Id
 
   return (
     <div className={`${ringBorderStyle} relative shrink-0 rounded-full border`}>
-      {/* spinner is showing up on top of user image */}
-      {status === "ready" && isUser1 && <User2Spinner />}
+      {/* {status === "ready" && isUser1 && <User2Spinner />} */}
 
       {user2PhotoURL && (
         <motion.a
@@ -52,7 +51,7 @@ export const User2Image: React.FC<Props> = ({ bet }) => {
           className={`${disabledStyle} ${ringStyle} flex h-full w-full rounded-full border-4 font-extrabold`}
         >
           <div
-            className={`${ringBorderStyle} h-8 w-8 shrink-0 rounded-full border bg-stone-500`}
+            className={`${ringBorderStyle} ring-center h-8 w-8 shrink-0 rounded-full border`}
           />
         </motion.div>
       )}

@@ -137,7 +137,7 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
     <motion.button
       initial={{ x: isUser1 ? -20 : 20, y: -5 }}
       animate={{ x: isUser1 ? 5 : -5, y: -5 }}
-      className="color-shift flex h-6 -translate-y-1 animate-pulse items-center justify-center gap-1 rounded-md border bg-stone-800 px-1.5 text-stone-200 hover:bg-stone-300 dark:hover:border-white dark:hover:bg-stone-600 dark:hover:text-white"
+      className="bet-button color-shift flex h-6 -translate-y-1 animate-pulse items-center justify-center gap-1 rounded-md border px-1.5 font-bold"
       onClick={sendBet}
     >
       <BiWallet

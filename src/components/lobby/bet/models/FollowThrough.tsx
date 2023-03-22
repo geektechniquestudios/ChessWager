@@ -12,8 +12,8 @@ export const FollowThrough: React.FC<Props> = ({
   isUser1,
 }) => {
   const colorStyle = hasUserPaid
-    ? "dark:bg-green-700 bg-green-500"
-    : "bg-stone-700"
+    ? "follow-through-funded"
+    : "follow-through-not-funded"
   const userStyle = isUser1 ? "-left-0.5" : "-right-0.5"
   const largeStyle =
     followThrough[1] > 10000 ? "px-0.5 text-[0.6rem]" : "px-1 text-[0.75rem]"
@@ -37,7 +37,7 @@ export const FollowThrough: React.FC<Props> = ({
       exit={isUser1 ? {} : { y: 8, x: 10, rotate: 50, opacity: 0 }}
       transition={{ type: "spring", duration: 0.3 }}
       title="Trust"
-      className={`${colorStyle} ${userStyle} ${largeStyle} color-shift absolute -bottom-[0.55rem] flex h-4 items-center justify-center rounded-md border border-stone-500 font-bold text-stone-100`}
+      className={`${colorStyle} ${userStyle} ${largeStyle} follow-through color-shift absolute -bottom-[0.55rem] flex h-4 items-center justify-center rounded-md border font-bold`}
     >
       {formatFollowThrough(followThrough[0])}/
       {formatFollowThrough(followThrough[1])}

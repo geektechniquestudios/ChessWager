@@ -21,7 +21,7 @@ export const UserName: React.FC<Props> = ({ displayName, isUser1 }) => {
           layout
           className={`${justifyDirection} flex w-2/5 shrink-0 items-center text-xs font-extrabold text-stone-900 dark:text-stone-100`}
         >
-          <div className="shrink overflow-hidden overflow-ellipsis whitespace-nowrap">
+          <div className="user-name shrink overflow-hidden overflow-ellipsis whitespace-nowrap">
             {displayName}
           </div>
         </motion.p>
