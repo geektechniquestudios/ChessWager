@@ -93,6 +93,9 @@ export const Main: React.FC = () => {
             <DropdownItem
               id="dropdown-sign-in-button"
               onClick={() => {
+                setIsDropdownOpen(false)
+                setActiveMenu("")
+                setMenuHeight(0)
                 signInWithGoogle()
               }}
               leftIcon={<RiLoginCircleLine />}

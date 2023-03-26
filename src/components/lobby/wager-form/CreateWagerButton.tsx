@@ -9,14 +9,14 @@ export const CreateWagerButton: React.FC<Props> = ({}) => {
 
   const parentVariants: Variants = {
     variantA: {
-      width: "2.6rem",
+      width: "2.5rem",
       borderRadius: "0.5rem",
       borderBottomRightRadius: "0.5rem",
       borderTopRightRadius: "0.5rem",
       borderTopLeftRadius: "0.5rem",
-      top: 5,
-      bottom: 5,
-      left: showWagerForm ? -50 : 3,
+      top: 2,
+      bottom: 2,
+      left: showWagerForm ? -50 : 2,
       borderWidth: 1,
       transition: { type: "spring", bounce: 0.1 },
     },
@@ -70,7 +70,7 @@ export const CreateWagerButton: React.FC<Props> = ({}) => {
   return (
     <motion.button
       layout="position"
-      className="absolute left-0 top-0 bottom-0 z-50 flex items-center justify-center border-r border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-900"
+      className="absolute z-50 flex items-center justify-center border-r border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-900"
       onClick={() => {
         setShowWagerForm(true)
       }}
