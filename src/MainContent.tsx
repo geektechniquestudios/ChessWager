@@ -1,6 +1,5 @@
 import { BettingLobby } from "./components/lobby/BettingLobby"
 import { ChessGame } from "./components/game/ChessGame"
-import { FundedBets } from "./components/funded-bets/FundedBets"
 import { ShowChatButton } from "./components/body/ShowChatButton"
 import { motion } from "framer-motion"
 
@@ -13,10 +12,7 @@ export const MainContent: React.FC<Props> = ({}) => {
         <ShowChatButton />
         <div className="flex h-full w-auto flex-col">
           <div className="scrollbar flex h-full flex-col items-center justify-center gap-2 overflow-hidden p-2 md:flex-row">
-            <FundedBets />
-            <div className="flex h-full w-full flex-col justify-center overflow-hidden">
-              <ChessGame />
-            </div>
+            <ChessGame />
           </div>
         </div>
         <div className="flex flex-wrap justify-center gap-2 px-2 pb-2">

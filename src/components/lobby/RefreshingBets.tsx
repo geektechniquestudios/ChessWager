@@ -3,9 +3,8 @@ import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
 import { GameState } from "../containers/GameState"
 import { LobbyState } from "../containers/LobbyState"
-import { Bet as BetComponent } from "./bet/Bet"
+import { Bet } from "./bet/Bet"
 import { LobbyHeaderState } from "../containers/LobbyHeaderState"
-import { UserDataState } from "../containers/UserDataState"
 import { AnimatePresence, motion } from "framer-motion"
 
 interface Props {}
@@ -55,7 +54,6 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
   }
 
   const { dummy } = LobbyState.useContainer()
-  const { userData } = UserDataState.useContainer()
 
   useEffect(updateForButtonClick, [
     mostRecentButton,
@@ -95,14 +93,16 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
             hidden: { opacity: 0 },
           }}
         >
-          {refreshingBets.map((bet, index) => (
-            <BetComponent
-              key={bet.id !== "" ? bet.id : index}
-              bet={bet}
-              index={index}
-              isLobbyEnabled={isLobbyEnabled}
-            />
-          ))}
+          {refreshingBets
+            .filter((bet) => bet.status !== "funded")
+            .map((bet, index) => (
+              <Bet
+                key={bet.id !== "" ? bet.id : index}
+                bet={bet}
+                index={index}
+                isLobbyEnabled={isLobbyEnabled}
+              />
+            ))}
         </motion.div>
       )}
     </AnimatePresence>

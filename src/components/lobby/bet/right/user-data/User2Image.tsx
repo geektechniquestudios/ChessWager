@@ -5,7 +5,6 @@ import { DropdownState } from "../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { User2BetAmount } from "./User2BetAmount"
 import { User2FollowThrough } from "./User2FollowThrough"
-import { User2Spinner } from "./User2Spinner"
 
 interface Props {
   bet: Bet
@@ -13,7 +12,7 @@ interface Props {
 }
 
 export const User2Image: React.FC<Props> = ({ bet }) => {
-  const { user1Id, betSide, status, user2Id, user2PhotoURL } = bet
+  const { betSide, user2Id, user2PhotoURL } = bet
   const { openDropdownToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { user } = Auth.useContainer()
@@ -21,13 +20,9 @@ export const User2Image: React.FC<Props> = ({ bet }) => {
   const ringStyle = betSide === "black" ? "white-ring" : "black-ring"
   const ringBorderStyle =
     betSide === "black" ? "white-ring-border" : "black-ring-border"
-  const { auth } = Auth.useContainer()
-  const isUser1 = auth.currentUser?.uid === user1Id
 
   return (
     <div className={`${ringBorderStyle} relative shrink-0 rounded-full border`}>
-      {/* {status === "ready" && isUser1 && <User2Spinner />} */}
-
       {user2PhotoURL && (
         <motion.a
           initial={{ rotate: 90 }}

@@ -76,9 +76,9 @@ export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
     <AnimatePresence>
       {isSelected && status === "ready" && !isUser1 && (
         <motion.button
-          initial={{ x: 20 }}
-          animate={{ x: -1 }}
-          exit={{ x: 70 }}
+          initial={{ x: 20, opacity: 0 }}
+          animate={{ x: -1, opacity: 1 }}
+          exit={{ x: 70, opacity: 1 }}
           transition={{ duration: 0.1 }}
           onClick={accept}
           type="button"

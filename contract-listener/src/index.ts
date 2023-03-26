@@ -94,9 +94,12 @@ contract.on(
   "BetPlacedStatus",
   async (message: string, betId: string, gameId: string) => {
     console.log("BetPlacedStatus: ", message, betId)
-
     const gameDoc = gameIdHistoryRef.doc(gameId)
-    gameDoc.collection("contracts").doc(contractAddress).set(
+    const betDoc = lobbyRef.doc(betId)
+    const batch = db.batch()
+
+    batch.set(
+      gameDoc.collection("contracts").doc(contractAddress),
       {
         needToPay: true,
         hasBeenPaid: false,
@@ -104,29 +107,31 @@ contract.on(
       { merge: true },
     )
 
-    const betDoc = lobbyRef.doc(betId)
-
     if (message === "user1 has paid") {
-      await betDoc.set(
+      batch.set(
+        betDoc,
         {
           hasUser1Paid: true,
         },
         { merge: true },
       )
-      gameDoc.set(
+      batch.set(
+        gameDoc,
         {
           hasUser1Paid: true,
         },
         { merge: true },
       )
     } else if (message === "user2 has paid") {
-      await betDoc.set(
+      batch.set(
+        betDoc,
         {
           hasUser2Paid: true,
         },
         { merge: true },
       )
-      gameDoc.set(
+      batch.set(
+        gameDoc,
         {
           hasUser2Paid: true,
         },
@@ -136,17 +141,23 @@ contract.on(
       console.log("unknown message: ", message)
     }
 
-    betDoc.get().then((doc) => {
-      const data = doc.data() ?? {}
-      if (data.hasUser1Paid && data.hasUser2Paid) {
-        betDoc.set(
-          {
-            status: "funded",
-          },
-          { merge: true },
-        )
-      }
-    })
+    await batch.commit().catch(console.error)
+    betDoc
+      .get()
+      .then((doc) => {
+        const data = doc.data() ?? {}
+        if (data.hasUser1Paid && data.hasUser2Paid) {
+          betDoc
+            .set(
+              {
+                status: "funded",
+              },
+              { merge: true },
+            )
+            .catch(console.error)
+        }
+      })
+      .catch(console.error)
   },
 )
 
@@ -154,7 +165,7 @@ const usersCollectionRef = db.collection("users")
 
 contract.on(
   "PayoutStatus",
-  (
+  async (
     betId: string,
     gameId: string,
     didUser1Pay: boolean,
@@ -197,14 +208,17 @@ contract.on(
             ? "user1"
             : "user2"
 
+        const batch = db.batch()
+
         if (bet.status === "funded") {
-          usersCollectionRef.doc(bet.user1Id).update({
+          // Update player stats
+          batch.update(usersCollectionRef.doc(bet.user1Id), {
             betAcceptedCount: admin.firestore.FieldValue.increment(1),
             betFundedCount: admin.firestore.FieldValue.increment(1),
             amountBet: admin.firestore.FieldValue.increment(bet.amount),
             hasNewNotifications: true,
           })
-          usersCollectionRef.doc(bet.user2Id).update({
+          batch.update(usersCollectionRef.doc(bet.user2Id), {
             betAcceptedCount: admin.firestore.FieldValue.increment(1),
             betFundedCount: admin.firestore.FieldValue.increment(1),
             amountBet: admin.firestore.FieldValue.increment(
@@ -213,86 +227,85 @@ contract.on(
             hasNewNotifications: true,
           })
 
-          // update player stats
+          const winnerAmount = bet.amount * bet.multiplier + bet.amount
           if (winner === "user1") {
-            usersCollectionRef.doc(bet.user1Id).update({
+            const timestamp = Timestamp.now()
+            batch.update(usersCollectionRef.doc(bet.user1Id), {
               amountWon: admin.firestore.FieldValue.increment(
                 bet.amount * bet.multiplier + bet.amount,
               ),
               betWinCount: admin.firestore.FieldValue.increment(1),
             })
-            user1NotificationsRef.doc(bet.user1Id + Timestamp.now()).set({
+            batch.set(user1NotificationsRef.doc(bet.user2Id + timestamp), {
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
-              text: `You won ${(
-                bet.amount * bet.multiplier +
-                bet.amount
-              ).toFixed(6)} AVAX`,
+              text: `You won ${winnerAmount.toFixed(6)} AVAX`,
               openToMenu: "bets",
               isRead: false,
             })
-            user2NotificationsRef.doc(bet.user2Id + Timestamp.now()).set({
+            batch.set(user2NotificationsRef.doc(bet.user2Id + timestamp), {
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
               text: "You didn't win on your recent bet",
               openToMenu: "bets",
               isRead: false,
             })
           } else if (winner === "user2") {
-            usersCollectionRef.doc(bet.user2Id).update({
-              amountWon: admin.firestore.FieldValue.increment(
-                bet.amount * bet.multiplier + bet.amount,
-              ),
+            batch.update(usersCollectionRef.doc(bet.user2Id), {
+              amountWon: admin.firestore.FieldValue.increment(winnerAmount),
               betWinCount: admin.firestore.FieldValue.increment(1),
             })
-            user2NotificationsRef.doc(bet.user2Id + Timestamp.now()).set({
-              createdAt: admin.firestore.FieldValue.serverTimestamp(),
-              text: `You won ${(
-                bet.amount * bet.multiplier +
-                bet.amount
-              ).toFixed(6)} AVAX`,
-              openToMenu: "bets",
-              isRead: false,
-            })
-            user1NotificationsRef.doc(bet.user1Id + Timestamp.now()).set({
+
+            const timestamp = Timestamp.now()
+            batch.set(user1NotificationsRef.doc(bet.user1Id + timestamp), {
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
               text: "You didn't win on your recent bet",
               openToMenu: "bets",
               isRead: false,
             })
-          } else {
-            user2NotificationsRef.doc(bet.user2Id + Timestamp.now()).set({
+
+            batch.set(user2NotificationsRef.doc(bet.user2Id + timestamp), {
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
-              text: `Your recent bet ended in a draw`,
+              text: `You won ${winnerAmount.toFixed(6)} AVAX`,
               openToMenu: "bets",
               isRead: false,
             })
-            user1NotificationsRef.doc(bet.user1Id + Timestamp.now()).set({
+          } else {
+            const timestamp = Timestamp.now()
+            batch.set(user1NotificationsRef.doc(bet.user1Id + timestamp), {
+              createdAt: admin.firestore.FieldValue.serverTimestamp(),
+              text: "Your recent bet ended in a draw",
+              openToMenu: "bets",
+              isRead: false,
+            })
+
+            batch.set(user2NotificationsRef.doc(bet.user2Id + timestamp), {
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
               text: "Your recent bet ended in a draw",
               openToMenu: "bets",
               isRead: false,
             })
           }
-        } else if (doc.data().status === "approved") {
+        } else if (bet.status === "approved") {
           if (didUser1Pay) {
             // if only user1 paid
-            usersCollectionRef.doc(doc.data().user1Id).update({
+            batch.update(usersCollectionRef.doc(bet.user1Id), {
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
               betFundedCount: admin.firestore.FieldValue.increment(1),
             })
-            usersCollectionRef.doc(doc.data().user2Id).update({
+            batch.update(usersCollectionRef.doc(bet.user2Id), {
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
             })
           } else if (didUser2Pay) {
             // if only user2 paid
-            usersCollectionRef.doc(doc.data().user1Id).update({
+            batch.update(usersCollectionRef.doc(bet.user1Id), {
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
             })
-            usersCollectionRef.doc(doc.data().user2Id).update({
+            batch.update(usersCollectionRef.doc(bet.user2Id), {
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
               betFundedCount: admin.firestore.FieldValue.increment(1),
             })
           }
         }
+        batch.commit()
       })
       .catch(console.error)
   },

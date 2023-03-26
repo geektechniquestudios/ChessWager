@@ -42,14 +42,16 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
             hidden: { opacity: 0 },
           }}
         >
-          {realTimeBets.map((bet, index) => (
-            <Bet
-              key={bet.id !== "" ? bet.id : index}
-              bet={bet}
-              index={index}
-              isLobbyEnabled
-            />
-          ))}
+          {realTimeBets
+            .filter((bet) => bet.status !== "funded")
+            .map((bet, index) => (
+              <Bet
+                key={bet.id !== "" ? bet.id : index}
+                bet={bet}
+                index={index}
+                isLobbyEnabled
+              />
+            ))}
         </motion.div>
       )}
     </AnimatePresence>

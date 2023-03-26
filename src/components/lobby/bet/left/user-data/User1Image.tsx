@@ -21,7 +21,6 @@ export const User1Image: React.FC<Props> = ({ bet }) => {
 
   return (
     <div className={`${ringBorderStyle} relative shrink-0 rounded-full border`}>
-      {/* <User1Spinner user2Id={user2Id} status={status} /> */}
       <a
         className={`${disabledStyle} ${ringStyle} flex h-full w-full rounded-full border-4 font-extrabold`}
         onClick={(e) => {

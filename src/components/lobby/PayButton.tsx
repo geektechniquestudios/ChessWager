@@ -135,8 +135,9 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
 
   return (
     <motion.button
-      initial={{ x: isUser1 ? -20 : 20, y: -5 }}
-      animate={{ x: isUser1 ? 5 : -5, y: -5 }}
+      initial={{ x: isUser1 ? -70 : 70, y: -5, opacity: 0 }}
+      animate={{ x: isUser1 ? 5 : -5, y: -5, opacity: 1 }}
+      exit={{ x: isUser1 ? -70 : 70, y: -5, opacity: 0 }}
       className="bet-button color-shift flex h-6 -translate-y-1 animate-pulse items-center justify-center gap-1 rounded-md border px-1.5 font-bold"
       onClick={sendBet}
     >

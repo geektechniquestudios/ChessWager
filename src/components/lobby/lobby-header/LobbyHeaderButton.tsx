@@ -14,11 +14,11 @@ export const HeaderButton: React.FC<Props> = ({ buttonName, buttonIcon }) => {
   } = LobbyHeaderState.useContainer()
   return (
     <button
-      className={`color-shift my-0.5 grid place-content-center rounded-md border py-1 px-2 text-stone-900 hover:bg-stone-400 dark:text-stone-300 dark:hover:bg-stone-700
+      className={`color-shift clickable my-0.5 grid max-w-[7em] grow place-content-center rounded-md border py-1 px-2 text-stone-900 dark:text-stone-300
         ${
           mostRecentButton === buttonName
-            ? "border-stone-400 bg-stone-300 dark:border-stone-600 dark:bg-black"
-            : "border-transparent"
+            ? "border-stone-400 bg-stone-300 dark:border-stone-600 dark:bg-stone-900"
+            : "border-transparent hover:bg-stone-200 dark:hover:bg-stone-700"
         }`}
       onClick={() => {
         mostRecentButton === buttonName && setIsDescending(!isDescending)

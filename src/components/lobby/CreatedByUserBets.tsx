@@ -30,9 +30,11 @@ export const CreatedByUserBets: React.FC<Props> = ({}) => {
           }}
         >
           {user &&
-            betsPlacedByUser.map((bet, index) => (
-              <Bet key={bet.id} bet={bet} index={index} />
-            ))}
+            betsPlacedByUser
+              .filter((bet) => bet.status !== "funded")
+              .map((bet, index) => (
+                <Bet key={bet.id} bet={bet} index={index} />
+              ))}
         </motion.div>
       )}
     </AnimatePresence>

@@ -38,9 +38,9 @@ export const ApproveButton: React.FC<Props> = ({ bet }) => {
 
   return (
     <motion.button
-      initial={{ x: 90 }}
-      animate={{ x: 0 }}
-      exit={{ x: 90 }}
+      initial={{ x: 90, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 90, opacity: 1 }}
       transition={{ type: "spring", duration: 0.1, bounce: 0.5, mass: 0.2 }}
       type="button"
       className="bet-button color-shift flex animate-pulse items-center justify-center gap-1 rounded-md border px-1.5 font-bold"

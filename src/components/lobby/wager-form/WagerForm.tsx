@@ -146,7 +146,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
     <AnimatePresence>
       {showWagerForm && (
         <motion.div
-          className="absolute z-50 h-full select-none overflow-clip  border-r border-stone-400 dark:border-stone-600"
+          className="absolute left-0 top-0 bottom-0 z-50 h-full select-none overflow-clip border-r border-stone-400 dark:border-stone-600"
           layout
           ref={wagerFormRef}
           initial={isFirstAnimation ? false : { width: 0 }}

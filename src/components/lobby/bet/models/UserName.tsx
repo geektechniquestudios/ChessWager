@@ -13,7 +13,7 @@ export const UserName: React.FC<Props> = ({ displayName, isUser1 }) => {
   return (
     <AnimatePresence>
       {displayName && displayName !== "" && (
-        <motion.p
+        <motion.div
           initial={{ x: isUser1 ? -20 : 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: isUser1 ? -20 : 20, opacity: 0 }}
@@ -21,10 +21,10 @@ export const UserName: React.FC<Props> = ({ displayName, isUser1 }) => {
           layout
           className={`${justifyDirection} flex w-2/5 shrink-0 items-center text-xs font-extrabold text-stone-900 dark:text-stone-100`}
         >
-          <div className="user-name shrink overflow-hidden overflow-ellipsis whitespace-nowrap">
+          <p className="user-name shrink overflow-hidden overflow-ellipsis whitespace-nowrap">
             {displayName}
-          </div>
-        </motion.p>
+          </p>
+        </motion.div>
       )}
     </AnimatePresence>
   )

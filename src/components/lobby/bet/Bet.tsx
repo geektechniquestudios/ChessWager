@@ -21,6 +21,7 @@ interface Props {
 export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
   const { id, amount, multiplier, status, user1Id, user2Id } = bet
   const { auth, user } = Auth.useContainer()
+
   const bigAmount = ethers.utils.parseEther(amount.toString())
   const potSize = ethers.utils.formatEther(
     bigAmount
@@ -84,16 +85,12 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
   }
 
   const innerSelectedStyle =
-    id !== ""
-      ? isSelected
-        ? "bet-selected"
-        : "bet-not-selected"
-      : "border-none"
+    id === "" ? "border-none" : isSelected ? "bet-selected" : "bet-not-selected"
 
   const pointerEvents = status === "ready" && !isUser1 ? "cursor-pointer" : ""
 
   const disabledStyle =
-    !isLobbyEnabled || (user2Id && !isUser1 && !isUser2)
+    !isSelected && (!isLobbyEnabled || (user2Id && !isUser1 && !isUser2))
       ? "opacity-50 pointer-events-none"
       : ""
 

@@ -99,8 +99,8 @@ const useBetState = () => {
       case "":
       default: {
         return sortBasedOnDescending(
-          a?.createdAt ?? Number.MAX_VALUE,
-          b?.createdAt ?? Number.MAX_VALUE,
+          a?.createdAt?.toMillis() ?? Number.MAX_VALUE,
+          b?.createdAt?.toMillis() ?? Number.MAX_VALUE,
         )
       }
     }
