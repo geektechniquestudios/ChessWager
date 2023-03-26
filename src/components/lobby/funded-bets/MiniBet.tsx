@@ -7,6 +7,7 @@ import { Auth } from "../../containers/Auth"
 import { DropdownState } from "../../containers/DropdownState"
 import { Price } from "../../containers/Price"
 import { UserMenuState } from "../../containers/UserMenuState"
+import { formatDollars } from "../bet/models/formatDollars"
 
 interface Props {
   bet: Bet
@@ -32,15 +33,6 @@ export const MiniBet: React.FC<Props> = ({ bet }) => {
       .add(bigAmount),
   )
 
-  const formatDollars = (num: number): string => {
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "m"
-    } else if (num >= 1000) {
-      return (num / 1000).toFixed(1).replace(/\.0$/, "") + "k"
-    } else {
-      return num.toFixed(2)
-    }
-  }
   const { openDropdownToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { avaxPrice } = Price.useContainer()
