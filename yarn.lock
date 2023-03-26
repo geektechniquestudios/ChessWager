@@ -5866,7 +5866,7 @@ __metadata:
     chai: ^4.3.7
     cypress: ^12.8.1
     cypress-dotenv: ^2.0.0
-    cypress-firebase: ^2.2.3
+    cypress-firebase: ^3.0.1
     cypress-react-selector: ^3.0.0
     dotenv: ^16.0.3
     ethereum-waffle: ^4.0.10
@@ -6457,12 +6457,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-firebase@npm:^2.2.3":
-  version: 2.2.5
-  resolution: "cypress-firebase@npm:2.2.5"
+"cypress-firebase@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "cypress-firebase@npm:3.0.1"
   peerDependencies:
-    firebase-admin: ">=8"
-  checksum: aac1acafa6bb1a33bd39af49d7e0fa04e1867191c80f463b0cf387a53adbafe32c4603178525d77fc67edfefe12a05c58c372f66975a48795377d7f025134411
+    firebase-admin: ^11.0.0
+  checksum: 3852f5c5e4f32a05ec4a37fcc97cf384d392e0779a96cfb28558c0c0c2df0a92516f9d4e001a2dface311b13e9b87740082c4bf34e12ae2701f5fb50473de8bc
   languageName: node
   linkType: hard
 

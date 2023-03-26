@@ -63,7 +63,7 @@
     "chai": "^4.3.7",
     "cypress": "^12.8.1",
     "cypress-dotenv": "^2.0.0",
-    "cypress-firebase": "^2.2.3",
+    "cypress-firebase": "^3.0.1",
     "cypress-react-selector": "^3.0.0",
     "ethereum-waffle": "^4.0.10",
     "firebase-admin": "^11.5.0",
