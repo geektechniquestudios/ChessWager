@@ -152,8 +152,6 @@ service cloud.firestore {
           requestData.userName is string;
       }
 
-      //@todo check that photourl is correct address
-
       function isOwner() {
         return request.auth.uid == request.resource.data.uid;
       }
@@ -838,12 +836,10 @@ service cloud.firestore {
           requestData.uid is string &&
           requestData.photoURL is string &&
           requestData.userName is string &&
-          requestData.reportedUserId is string &&
           requestData.resolved is bool &&
 
           requestData.createdAt == request.time &&
           requestData.photoURL != "" &&
-          requestData.reportedUserId != "" &&
           requestData.resolved == false &&
           requestData.text != "" &&
           requestData.uid == request.auth.uid &&
@@ -852,8 +848,8 @@ service cloud.firestore {
 
       function isContactCreateKeyValid() {
         return
-           request.resource.data.keys().hasAll(["createdAt", "photoURL", "reportedUserId", "resolved", "text", "uid", "userName"]) &&
-          request.resource.data.keys().hasOnly(["createdAt", "photoURL", "reportedUserId", "resolved", "text", "uid", "userName"]);
+          request.resource.data.keys().hasAll(["createdAt", "photoURL", "resolved", "text", "uid", "userName"]) &&
+          request.resource.data.keys().hasOnly(["createdAt", "photoURL", "resolved", "text", "uid", "userName"]);
       }
 
       allow create: if canCreate() && isContactCreateDataValid() && isContactCreateKeyValid();
