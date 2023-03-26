@@ -10,7 +10,6 @@ import {
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../../firestore.config"
 import { ChatFormData } from "../../../../containers/ChatFormData"
-import { UserMenuState } from "../../../../containers/UserMenuState"
 import { CustomSwal } from "../../../../popups/CustomSwal"
 
 const db = getFirestore(firebaseApp)
@@ -19,7 +18,6 @@ interface Props {}
 
 export const ContactForm: React.FC<Props> = ({}) => {
   const { user, auth } = Auth.useContainer()
-  const { reportedUserId } = UserMenuState.useContainer()
   const { reportFormValue, setReportFormValue } = ChatFormData.useContainer()
   const sendMessage = async (
     e:
