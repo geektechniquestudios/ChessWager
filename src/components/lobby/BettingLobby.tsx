@@ -16,24 +16,22 @@ export const BettingLobby: React.FC = () => {
     <div className="flex grow justify-center">
       <motion.div
         layout
-        className="flex w-full max-w-7xl grow rounded-lg border border-stone-400 bg-white dark:border-stone-600 dark:bg-stone-800"
+        className="max-w-7xl grow rounded-lg border border-stone-400 bg-white dark:border-stone-600 dark:bg-stone-800"
       >
-        <main className="w-full">
-          <LobbyHeader />
-          <div className="scrollbar relative flex h-[36em] flex-col overflow-hidden">
-            <div ref={bettingLobbyRef} className="h-full w-full overflow-clip">
-              <CreateWagerButton />
-              <WagerForm bettingLobbyRef={bettingLobbyRef} />
-              <motion.div
-                layout
-                className="scrollbar h-full w-full overflow-y-auto overflow-x-clip pt-0.5 pl-[2.6rem]"
-              >
-                <CreatedByUserBets />
-                {isRealTime ? <RealtimeBets /> : <RefreshingBets />}
-              </motion.div>
-            </div>
+        <LobbyHeader />
+        <div className="scrollbar relative flex h-[36em] flex-col overflow-hidden">
+          <div ref={bettingLobbyRef} className="h-full w-full overflow-clip">
+            <CreateWagerButton />
+            <WagerForm bettingLobbyRef={bettingLobbyRef} />
+            <motion.div
+              layout
+              className="scrollbar h-full w-full overflow-y-auto overflow-x-clip pt-0.5 pl-[2.6rem]"
+            >
+              <CreatedByUserBets />
+              {isRealTime ? <RealtimeBets /> : <RefreshingBets />}
+            </motion.div>
           </div>
-        </main>
+        </div>
       </motion.div>
     </div>
   )
