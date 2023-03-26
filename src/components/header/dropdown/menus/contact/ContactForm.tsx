@@ -30,15 +30,14 @@ export const ContactForm: React.FC<Props> = ({}) => {
     if (reportFormValue.trim() === "" || !user || !auth.currentUser) return
 
     const { uid, photoURL, displayName } = auth.currentUser
-    const reportsRef = collection(db, "contacts")
+    const contactsRef = collection(db, "contacts")
 
-    addDoc(reportsRef, {
+    addDoc(contactsRef, {
       text: reportFormValue,
       createdAt: serverTimestamp(),
       uid,
       photoURL,
       userName: displayName,
-      reportedUserId,
       resolved: false,
     }).then(() => {
       setReportFormValue("")
