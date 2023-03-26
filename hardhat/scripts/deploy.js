@@ -20,18 +20,25 @@ admin.initializeApp({ credential: cred })
 const db = admin.firestore()
 
 function setEnvValue(key, value) {
-  // read file from hdd & split if from a linebreak to a array
-  const ENV_VARS = fs.readFileSync(".env", "utf8").split(os.EOL)
-  // find the env we want based on the key
-  const target = ENV_VARS.indexOf(
-    ENV_VARS.find((line) => {
-      return line.match(new RegExp(key))
-    }),
-  )
-  // replace the key/value with the new value
-  ENV_VARS.splice(target, 1, `${key}=${value}`)
-  // write everything back to the file system
-  fs.writeFileSync("./.env", ENV_VARS.join(os.EOL))
+  const filePath = ".env"
+  const fileContents = fs.readFileSync(filePath, "utf8")
+
+  // Split the file contents into an array of lines
+  const lines = fileContents.split(/\r?\n/)
+
+  // Find the index of the line that starts with the key
+  const targetLineIndex = lines.findIndex((line) => line.startsWith(`${key}=`))
+
+  if (targetLineIndex !== -1) {
+    // Replace the value of the target line with the new value
+    lines[targetLineIndex] = `${key}=${value}`
+  } else {
+    // Append the new key/value pair to the end of the file
+    lines.push(`${key}=${value}`)
+  }
+
+  // Write the modified contents back to the file
+  fs.writeFileSync(filePath, lines.join("\n"))
 }
 
 const contractRef = db.collection("contracts")

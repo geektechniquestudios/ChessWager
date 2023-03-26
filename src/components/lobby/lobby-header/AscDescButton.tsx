@@ -1,12 +1,12 @@
 import { BsArrowDown, BsArrowDownUp, BsArrowUp } from "react-icons/bs"
 import { LobbyHeaderState } from "../../containers/LobbyHeaderState"
 
-export const AscDescDisplay: React.FC = () => {
+export const AscDescButton: React.FC = () => {
   const { isDescending, mostRecentButton, setIsDescending } =
     LobbyHeaderState.useContainer()
   return (
     <button
-      className="color-shift grid w-11 place-content-center rounded-none rounded-tl-lg border-r border-stone-400 bg-stone-50 px-2 text-stone-900 hover:bg-stone-200 dark:border-stone-900 dark:bg-stone-700 dark:text-stone-300 dark:hover:bg-stone-600"
+      className="color-shift clickable my-0.5 grid place-content-center rounded-md py-1 px-2 text-stone-900 hover:bg-stone-300 dark:text-stone-300 dark:hover:bg-stone-700"
       onClick={() => {
         setIsDescending(!isDescending)
       }}

@@ -17,36 +17,36 @@ import { GlobalChatState } from "./components/containers/GlobalChatState"
 
 export const ProviderLayer: React.FC = () => {
   return (
-    <WindowSize.Provider>
-      <LobbyState.Provider>
-        <Auth.Provider>
-          <GameState.Provider>
-            <Price.Provider>
-              <ChatFormData.Provider>
-                <ChatToggle.Provider>
+    <ChatToggle.Provider>
+      <WindowSize.Provider>
+        <LobbyState.Provider>
+          <Auth.Provider>
+            <GameState.Provider>
+              <Price.Provider>
+                <ChatFormData.Provider>
                   <DarkMode.Provider>
                     <DropdownState.Provider>
                       <LobbyHeaderState.Provider>
                         <UserMenuState.Provider>
-                          <BetsState.Provider>
-                            <ConversationsState.Provider>
-                              <UserDataState.Provider>
-                                <GlobalChatState.Provider>
+                          <ConversationsState.Provider>
+                            <UserDataState.Provider>
+                              <GlobalChatState.Provider>
+                                <BetsState.Provider>
                                   <App />
-                                </GlobalChatState.Provider>
-                              </UserDataState.Provider>
-                            </ConversationsState.Provider>
-                          </BetsState.Provider>
+                                </BetsState.Provider>
+                              </GlobalChatState.Provider>
+                            </UserDataState.Provider>
+                          </ConversationsState.Provider>
                         </UserMenuState.Provider>
                       </LobbyHeaderState.Provider>
                     </DropdownState.Provider>
                   </DarkMode.Provider>
-                </ChatToggle.Provider>
-              </ChatFormData.Provider>
-            </Price.Provider>
-          </GameState.Provider>
-        </Auth.Provider>
-      </LobbyState.Provider>
-    </WindowSize.Provider>
+                </ChatFormData.Provider>
+              </Price.Provider>
+            </GameState.Provider>
+          </Auth.Provider>
+        </LobbyState.Provider>
+      </WindowSize.Provider>
+    </ChatToggle.Provider>
   )
 }

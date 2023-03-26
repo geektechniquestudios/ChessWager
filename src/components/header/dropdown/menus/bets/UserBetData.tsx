@@ -51,7 +51,7 @@ export const UserBetData: React.FC<Props> = ({
           )}
         </div>
       </div>
-      <div className="flex h-full w-full flex-col items-center justify-between rounded-b-md bg-white p-1 dark:bg-stone-800">
+      <div className="flex h-full w-full flex-col items-center justify-between bg-white p-1 dark:bg-stone-800">
         {isUserBlocked ? (
           <p className="font-bold text-red-600 dark:text-red-400">
             Blocked User
@@ -77,14 +77,16 @@ export const UserBetData: React.FC<Props> = ({
           </div>
         </div>
         <div className="flex">{hasUserPaid}</div>
-        <div className="flex w-full justify-between p-0.5">
-          <div>{betSide}</div>
-          <div
-            className={`grid h-5 w-5 place-content-center rounded-full border border-stone-400 dark:border-stone-800 ${
-              betSide === "White" ? "bg-white" : "bg-black"
-            }`}
-          />
-        </div>
+      </div>
+      <div className="flex w-full justify-between p-1">
+        <div>{betSide}</div>
+        <div
+          className={`grid h-5 w-5 place-content-center rounded-full border ${
+            betSide === "White"
+              ? "border-stone-900 bg-white"
+              : "border-stone-700 bg-black"
+          }`}
+        />
       </div>
     </div>
   )

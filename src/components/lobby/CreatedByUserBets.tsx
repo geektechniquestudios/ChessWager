@@ -16,6 +16,7 @@ export const CreatedByUserBets: React.FC<Props> = ({}) => {
           layout="position"
           initial="hidden"
           animate="visible"
+          exit="hidden"
           variants={{
             visible: {
               opacity: 1,
@@ -29,9 +30,11 @@ export const CreatedByUserBets: React.FC<Props> = ({}) => {
           }}
         >
           {user &&
-            betsPlacedByUser.map((bet) => (
-              <Bet key={bet.id} {...bet} timestamp={bet.timestamp?.seconds} />
-            ))}
+            betsPlacedByUser
+              .filter((bet) => bet.status !== "funded")
+              .map((bet, index) => (
+                <Bet key={bet.id} bet={bet} index={index} />
+              ))}
         </motion.div>
       )}
     </AnimatePresence>

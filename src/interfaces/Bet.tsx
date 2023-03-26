@@ -27,7 +27,7 @@ export type Bet = {
   hasUser2SeenUpdate?: boolean
 }
 
-export type BetData = {
+export type BetMetadata = {
   isSelected: boolean
   index: number
   id: string

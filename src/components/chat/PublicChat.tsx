@@ -38,12 +38,11 @@ export const PublicChat: React.FC = () => {
           transition={{
             type: "spring",
             mass: 0.3,
-            bounce: 0.7,
           }}
         >
           <div
             id="global-chat"
-            className="global-chat color-shift flex w-full flex-col border-l border-stone-400 bg-stone-50 dark:border-stone-700 dark:bg-stone-900"
+            className="color-shift flex w-full flex-col border-l border-stone-400 bg-stone-50 dark:border-stone-700 dark:bg-stone-900"
             style={{ minWidth: "20rem" }}
           >
             <ChatHeader />

@@ -9,15 +9,15 @@ import {
   updateDoc,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../../firestore.config"
+import { Bet } from "../../../../../interfaces/Bet"
 const db = getFirestore(firebaseApp)
 
 interface Props {
-  user2Id: string
-  status: string
-  id: string
+  bet: Bet
 }
 
-export const LeaveButton: React.FC<Props> = ({ user2Id, status, id }) => {
+export const LeaveButton: React.FC<Props> = ({ bet }) => {
+  const { id, user2Id, status } = bet
   const { user, auth } = Auth.useContainer()
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
 
@@ -30,6 +30,8 @@ export const LeaveButton: React.FC<Props> = ({ user2Id, status, id }) => {
       user2Id: "",
       user2Metamask: "",
       user2PhotoURL: "",
+      user2FollowThrough: [],
+      user2DisplayName: "",
     })
       .then(refreshLobby)
       .catch(console.error)
@@ -45,10 +47,10 @@ export const LeaveButton: React.FC<Props> = ({ user2Id, status, id }) => {
             <button
               title="Leave"
               onClick={cancel}
-              className="color-shift clickable mx-1 grid transform place-content-center border-0 p-0.5 text-red-600 hover:text-red-600 dark:text-red-600 dark:hover:text-rose-300"
+              className="close-button color-shift clickable absolute top-0.5 right-0.5 grid place-content-center rounded-full border p-0.5"
               id="leave-button"
             >
-              <RiCloseFill />
+              <RiCloseFill size={12} />
             </button>
           </div>
         )}

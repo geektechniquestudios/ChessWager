@@ -1,24 +1,22 @@
+import { AnimatePresence } from "framer-motion"
+import { Bet } from "../../../../../interfaces/Bet"
 import { FollowThrough } from "../../models/FollowThrough"
 
 interface Props {
-  status: string
-  user2FollowThrough: number[]
-  hasUser2Paid: boolean
+  bet: Bet
 }
 
-export const User2FollowThrough: React.FC<Props> = ({
-  status,
-  user2FollowThrough,
-  hasUser2Paid,
-}) => {
+export const User2FollowThrough: React.FC<Props> = ({ bet }) => {
+  const { status, user2FollowThrough, hasUser2Paid } = bet
   return (
-    <>
+    <AnimatePresence>
       {status !== "ready" && (
         <FollowThrough
           followThrough={user2FollowThrough}
           hasUserPaid={hasUser2Paid}
+          isUser1={false}
         />
       )}
-    </>
+    </AnimatePresence>
   )
 }

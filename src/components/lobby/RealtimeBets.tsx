@@ -1,26 +1,26 @@
 import { useEffect } from "react"
 import { BetsState } from "../containers/BetsState"
-import { Bet as BetComponent } from "./bet/Bet"
+import { Bet } from "./bet/Bet"
 import { LobbyHeaderState } from "../containers/LobbyHeaderState"
-import { UserDataState } from "../containers/UserDataState"
-import { GameState } from "../containers/GameState"
 import { AnimatePresence, motion } from "framer-motion"
+import { Auth } from "../containers/Auth"
 
 interface Props {}
 
 export const RealtimeBets: React.FC<Props> = ({}) => {
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
-  const { bets, updateRealTimeBets, realTimeBets, clearMapForLobbyChange } =
+  const { bets, updateRealTimeBets, realTimeBets, setSelectedBetMap } =
     BetsState.useContainer()
 
-  const { userData } = UserDataState.useContainer()
-  const { gameId } = GameState.useContainer()
+  const { user } = Auth.useContainer()
 
   useEffect(() => {
     updateRealTimeBets()
-  }, [bets, mostRecentButton, isDescending])
+  }, [bets, mostRecentButton, isDescending, user])
 
-  useEffect(clearMapForLobbyChange, [gameId])
+  useEffect(() => {
+    setSelectedBetMap(new Map())
+  }, [])
 
   return (
     <AnimatePresence>
@@ -29,6 +29,7 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
           layout="position"
           initial="hidden"
           animate="visible"
+          exit="hidden"
           variants={{
             visible: {
               opacity: 1,
@@ -42,17 +43,11 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
           }}
         >
           {realTimeBets
-            ?.filter(
-              (bet) =>
-                (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
-                (!userData?.blockedUsers.includes(bet.user2Id) ?? true) &&
-                (bet.status ?? "") !== "funded",
-            )
+            .filter((bet) => bet.status !== "funded")
             .map((bet, index) => (
-              <BetComponent
+              <Bet
                 key={bet.id !== "" ? bet.id : index}
-                {...bet}
-                timestamp={bet.timestamp?.seconds}
+                bet={bet}
                 index={index}
                 isLobbyEnabled
               />

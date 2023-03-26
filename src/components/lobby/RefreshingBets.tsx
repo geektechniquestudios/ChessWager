@@ -3,9 +3,8 @@ import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
 import { GameState } from "../containers/GameState"
 import { LobbyState } from "../containers/LobbyState"
-import { Bet as BetComponent } from "./bet/Bet"
+import { Bet } from "./bet/Bet"
 import { LobbyHeaderState } from "../containers/LobbyHeaderState"
-import { UserDataState } from "../containers/UserDataState"
 import { AnimatePresence, motion } from "framer-motion"
 
 interface Props {}
@@ -20,7 +19,6 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
     setSelectedBetMap,
     refreshingBets,
     setRefreshingBets,
-    clearMapForLobbyChange,
   } = BetsState.useContainer()
 
   const [isLobbyEnabled, setIsLobbyEnabled] = useState(true)
@@ -47,8 +45,7 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
   }
   useEffect(heartBeatCountdown, [count])
 
-  const { mostRecentButton, isDescending, isRealTime } =
-    LobbyHeaderState.useContainer()
+  const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const updateForButtonClick = () => {
     if (isLoading) return
     updateRefreshingBets()
@@ -57,7 +54,6 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
   }
 
   const { dummy } = LobbyState.useContainer()
-  const { userData } = UserDataState.useContainer()
 
   useEffect(updateForButtonClick, [
     mostRecentButton,
@@ -65,6 +61,7 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
     user,
     dummy,
     isLoading,
+    user,
   ])
 
   const updateForNewGame = () => {
@@ -83,6 +80,7 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
           layout="position"
           initial="hidden"
           animate="visible"
+          exit="hidden"
           variants={{
             visible: {
               opacity: 1,
@@ -96,16 +94,11 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
           }}
         >
           {refreshingBets
-            ?.filter(
-              (bet) =>
-                (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
-                (!userData?.blockedUsers.includes(bet.user2Id) ?? true),
-            )
+            .filter((bet) => bet.status !== "funded")
             .map((bet, index) => (
-              <BetComponent
-                key={bet.id}
-                {...bet}
-                timestamp={bet.timestamp?.seconds}
+              <Bet
+                key={bet.id !== "" ? bet.id : index}
+                bet={bet}
                 index={index}
                 isLobbyEnabled={isLobbyEnabled}
               />

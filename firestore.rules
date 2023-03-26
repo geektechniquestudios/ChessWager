@@ -152,8 +152,6 @@ service cloud.firestore {
           requestData.userName is string;
       }
 
-      //@todo check that photourl is correct address
-
       function isOwner() {
         return request.auth.uid == request.resource.data.uid;
       }
@@ -267,6 +265,8 @@ service cloud.firestore {
         isFromUser1() &&
         doesCreateRequestDataMatchUser1Profile() &&
         isCreateTimeStampValid();
+        // (areThereFewerThan50Bets() || doesUserHaveBadge()) &&
+        // (!doesUserHaveActiveBets() || doesUserHaveBadge());
 
       function areJoinRequestKeysValid() {
           return 
@@ -355,7 +355,7 @@ service cloud.firestore {
           requestData.user2Id == "" &&
           requestData.user2Metamask == "" &&
           requestData.user2PhotoURL == "" &&
-          requestData.user2FollowThrough == [0, 0] &&
+          requestData.user2FollowThrough == [] &&
           requestData.user2DisplayName == "" &&
           requestData.status == "ready" &&
           resource.data.status == "pending";
@@ -366,7 +366,6 @@ service cloud.firestore {
          !(request.resource.data.diff(resource.data).affectedKeys().hasAny([          "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress",                       "hasUser1SeenUpdate", "hasUser2SeenUpdate"])) &&
                                       request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]) &&
                                        request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]);
-
       }
 
       function isApproveRequestDataValid() {
@@ -837,12 +836,10 @@ service cloud.firestore {
           requestData.uid is string &&
           requestData.photoURL is string &&
           requestData.userName is string &&
-          requestData.reportedUserId is string &&
           requestData.resolved is bool &&
 
           requestData.createdAt == request.time &&
           requestData.photoURL != "" &&
-          requestData.reportedUserId != "" &&
           requestData.resolved == false &&
           requestData.text != "" &&
           requestData.uid == request.auth.uid &&
@@ -851,8 +848,8 @@ service cloud.firestore {
 
       function isContactCreateKeyValid() {
         return
-           request.resource.data.keys().hasAll(["createdAt", "photoURL", "reportedUserId", "resolved", "text", "uid", "userName"]) &&
-          request.resource.data.keys().hasOnly(["createdAt", "photoURL", "reportedUserId", "resolved", "text", "uid", "userName"]);
+          request.resource.data.keys().hasAll(["createdAt", "photoURL", "resolved", "text", "uid", "userName"]) &&
+          request.resource.data.keys().hasOnly(["createdAt", "photoURL", "resolved", "text", "uid", "userName"]);
       }
 
       allow create: if canCreate() && isContactCreateDataValid() && isContactCreateKeyValid();

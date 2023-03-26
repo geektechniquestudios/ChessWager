@@ -32,6 +32,7 @@ const usePrice = () => {
     const interval = setInterval(priceFetch, 20000)
     return () => clearInterval(interval)
   }, [])
+
   return { avaxPrice }
 }
 
