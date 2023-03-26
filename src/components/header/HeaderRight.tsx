@@ -38,7 +38,7 @@ export const HeaderRight: React.FC = () => {
   const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
 
   return (
-    <div className="mx-3 flex flex-auto items-center justify-end gap-1.5 align-middle">
+    <div className="mr-3 flex flex-auto items-center justify-end gap-1.5 align-middle">
       <LayoutGroup>
         <MainHeaderButton
           title="Search Users"
