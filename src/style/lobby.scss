@@ -2,5 +2,85 @@
 
 a:hover {
   @extend .color-shift;
-  @apply cursor-pointer text-black;
+  @apply cursor-pointer;
+}
+
+// colors only
+
+.bet {
+  @apply bg-stone-100 dark:bg-stone-700;
+}
+
+.bet-selected {
+  @apply border-teal-400 dark:border-teal-900;
+}
+
+.bet-not-selected {
+  @apply border-stone-300 hover:border-zinc-400 dark:border-stone-600 dark:hover:border-zinc-600;
+}
+
+.bet:hover .bet-header {
+  @apply border-b-stone-400 bg-white dark:border-b-stone-400 dark:bg-stone-500;
+}
+
+.bet-header {
+  @apply border-stone-400 bg-stone-50 text-stone-800 dark:border-stone-500 dark:bg-stone-600 dark:text-white;
+}
+
+.bet-header-selected {
+  @apply border-b-teal-500 bg-green-200 text-stone-800 dark:border-b-teal-300 dark:bg-emerald-800 dark:text-white;
+}
+
+.user-name {
+  @apply text-stone-700 dark:text-stone-100;
+}
+
+.user-bet-amount {
+  @apply border-stone-400 bg-zinc-50 text-green-600 dark:border-stone-500 dark:bg-zinc-700 dark:text-green-100;
+}
+
+.multiplier {
+  @apply border-stone-400 bg-stone-100 dark:border-stone-500 dark:bg-stone-600 dark:text-stone-200;
+}
+
+.follow-through {
+  @apply border-stone-400 text-stone-900 dark:border-stone-500 dark:text-stone-100;
+}
+
+.follow-through-funded {
+  @apply bg-green-500 dark:bg-green-700;
+}
+
+.follow-through-not-funded {
+  @apply bg-stone-50 dark:bg-stone-700;
+}
+
+.total-bet-amount {
+  @apply border-stone-400 bg-white text-stone-600 dark:border-stone-700 dark:bg-zinc-800 dark:text-stone-100;
+}
+
+.close-button {
+  @apply border-stone-600 bg-white text-stone-800 hover:border-black hover:text-black dark:border-stone-400 dark:bg-stone-800 dark:text-stone-300 dark:hover:border-white dark:hover:text-white;
+}
+
+.bet-button {
+  @apply border-stone-500 hover:bg-stone-300 dark:border-stone-300 dark:bg-stone-800 dark:text-stone-100 dark:hover:bg-stone-600;
+}
+
+.white-ring {
+  @apply border-white dark:border-white;
+}
+.white-ring-border {
+  @apply border-stone-700 dark:border-stone-700;
+}
+
+.black-ring {
+  @apply border-stone-900 dark:border-stone-900;
+}
+.black-ring-border {
+  @apply border-stone-600 dark:border-stone-600;
+}
+
+.ring-center {
+  @apply bg-stone-300 dark:bg-stone-500;
 }

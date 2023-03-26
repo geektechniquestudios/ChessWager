@@ -1,6 +1,8 @@
 import { BigNumber, ethers } from "ethers"
+import { motion } from "framer-motion"
 import { BiWallet } from "react-icons/bi"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
+import { Bet } from "../../interfaces/Bet"
 import { Auth } from "../containers/Auth"
 import { DarkMode } from "../containers/DarkMode"
 import { CustomSwal } from "../popups/CustomSwal"
@@ -8,34 +10,25 @@ import { CustomSwal } from "../popups/CustomSwal"
 const isLocal = import.meta.env.VITE_BRANCH_ENV === "develop"
 
 interface Props {
-  betId: string
-  amount: number
-  betSide: string
-  multiplier: number
-  user1Id: string
-  user1Metamask: string
-  user2Id: string
-  user2Metamask: string
-  gameId: string
-  timestamp: number
-  contractAddress: string
+  bet: Bet
 }
 
 declare let window: any
 
-export const MetamaskPrompt: React.FC<Props> = ({
-  betId,
-  amount,
-  betSide,
-  multiplier,
-  user1Id,
-  user1Metamask,
-  user2Id,
-  user2Metamask,
-  gameId,
-  timestamp,
-  contractAddress,
-}) => {
+export const PayButton: React.FC<Props> = ({ bet }) => {
+  const {
+    user1Id,
+    id,
+    amount,
+    betSide,
+    multiplier,
+    user1Metamask,
+    user2Id,
+    user2Metamask,
+    gameId,
+    timestamp,
+    contractAddress,
+  } = bet
   const { auth } = Auth.useContainer()
 
   const bigAmount = ethers.utils.parseEther(amount.toString())
@@ -45,7 +38,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
       ? bigAmount
       : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
 
-  const bet = {
+  const betForContract = {
     amount: bigAmount,
     betSide: betSide,
     user1Id: user1Id,
@@ -54,7 +47,7 @@ export const MetamaskPrompt: React.FC<Props> = ({
     user2Metamask: user2Metamask,
     multiplier: multiplier * 100,
     gameId: gameId,
-    timestamp: BigNumber.from(timestamp),
+    timestamp: BigNumber.from(timestamp.seconds),
   }
 
   const overrides = {
@@ -116,7 +109,11 @@ export const MetamaskPrompt: React.FC<Props> = ({
       try {
         if (!(await isCorrectBlockchain(provider))) return
 
-        const transaction = await contract.placeBet(bet, betId, overrides)
+        const transaction = await contract.placeBet(
+          betForContract,
+          id,
+          overrides,
+        )
         transaction.wait().then(() => {
           contract.removeAllListeners()
         })
@@ -134,26 +131,22 @@ export const MetamaskPrompt: React.FC<Props> = ({
   }
 
   const isUser1 = auth.currentUser?.uid === user1Id
-  const isUser2 = auth.currentUser?.uid === user2Id
-
-  const borderRight = isUser1 ? "" : ""
-  const borderLeft = isUser2 ? "" : ""
-  const borderStyle = `${borderRight} ${borderLeft} border-stone-400 dark:border-stone-700`
-
   const { isDarkOn } = DarkMode.useContainer()
 
   return (
-    <div className={`flex flex-col justify-center ${borderStyle}}`}>
-      <button
-        className="color-shift mx-2 grid h-8 w-8 animate-pulse place-content-center rounded-md hover:bg-stone-300 dark:hover:bg-stone-800"
-        onClick={sendBet}
-      >
-        <BiWallet
-          size="24"
-          title="Send Wager"
-          color={isDarkOn ? "#bbf7d0" : "#14532d"}
-        />
-      </button>
-    </div>
+    <motion.button
+      initial={{ x: isUser1 ? -70 : 70, y: -5, opacity: 0 }}
+      animate={{ x: isUser1 ? 5 : -5, y: -5, opacity: 1 }}
+      exit={{ x: isUser1 ? -70 : 70, y: -5, opacity: 0 }}
+      className="bet-button color-shift flex h-6 -translate-y-1 animate-pulse items-center justify-center gap-1 rounded-md border px-1.5 font-bold"
+      onClick={sendBet}
+    >
+      <BiWallet
+        size="14"
+        title="Send Wager"
+        color={isDarkOn ? "#bbf7d0" : "#14532d"}
+      />
+      <div className="text-xs font-bold">Pay</div>
+    </motion.button>
   )
 }

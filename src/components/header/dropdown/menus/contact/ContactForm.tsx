@@ -10,7 +10,6 @@ import {
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../../firestore.config"
 import { ChatFormData } from "../../../../containers/ChatFormData"
-import { UserMenuState } from "../../../../containers/UserMenuState"
 import { CustomSwal } from "../../../../popups/CustomSwal"
 
 const db = getFirestore(firebaseApp)
@@ -19,7 +18,6 @@ interface Props {}
 
 export const ContactForm: React.FC<Props> = ({}) => {
   const { user, auth } = Auth.useContainer()
-  const { reportedUserId } = UserMenuState.useContainer()
   const { reportFormValue, setReportFormValue } = ChatFormData.useContainer()
   const sendMessage = async (
     e:
@@ -30,15 +28,14 @@ export const ContactForm: React.FC<Props> = ({}) => {
     if (reportFormValue.trim() === "" || !user || !auth.currentUser) return
 
     const { uid, photoURL, displayName } = auth.currentUser
-    const reportsRef = collection(db, "contacts")
+    const contactsRef = collection(db, "contacts")
 
-    addDoc(reportsRef, {
+    addDoc(contactsRef, {
       text: reportFormValue,
       createdAt: serverTimestamp(),
       uid,
       photoURL,
       userName: displayName,
-      reportedUserId,
       resolved: false,
     }).then(() => {
       setReportFormValue("")

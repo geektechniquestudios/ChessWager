@@ -1,6 +1,6 @@
 import { createContainer } from "unstated-next"
 import { GameState } from "./GameState"
-import type { Bet, BetData } from "../../interfaces/Bet"
+import type { Bet, BetMetadata } from "../../interfaces/Bet"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useEffect, useState } from "react"
 import { Auth } from "./Auth"
@@ -15,6 +15,7 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore"
+import { UserDataState } from "./UserDataState"
 
 const db = getFirestore(firebaseApp)
 
@@ -52,7 +53,7 @@ const useBetState = () => {
   ) as Query<Bet>
   const [bets, isLoading] = useCollectionData<Bet>(q, { idField: "id" }) ?? []
   const [selectedBetMap, setSelectedBetMap] = useState(
-    new Map<string, BetData>(),
+    new Map<string, BetMetadata>(),
   )
 
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
@@ -98,27 +99,31 @@ const useBetState = () => {
       case "":
       default: {
         return sortBasedOnDescending(
-          a?.createdAt?.seconds ?? Number.MAX_VALUE,
-          b?.createdAt?.seconds ?? Number.MAX_VALUE,
+          a?.createdAt?.toMillis() ?? Number.MAX_VALUE,
+          b?.createdAt?.toMillis() ?? Number.MAX_VALUE,
         )
       }
     }
   }
 
   const { user } = Auth.useContainer()
+  const { userData } = UserDataState.useContainer()
+
   const [realTimeBets, setRealTimeBets] = useState<Bet[]>([])
   const [refreshingBets, setRefreshingBets] = useState<Bet[]>([])
 
   const updateLobby = async (bets: Bet[]) => {
     const buildNotSelectedBets = async (bets: Bet[]): Promise<Bet[]> => {
-      const filterOutFundedAndUserRelatedandSelected = (bet: Bet): boolean =>
+      const filterIrrelevantBets = (bet: Bet): boolean =>
         bet.status !== "funded" &&
         bet.user1Id !== user?.uid &&
         bet.gameId !== "" &&
+        (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
+        (!userData?.blockedUsers.includes(bet.user2Id) ?? true) &&
         !selectedBetMap.get(bet.id)?.isSelected
       return (
         bets
-          ?.filter(filterOutFundedAndUserRelatedandSelected)
+          ?.filter(filterIrrelevantBets)
           .sort((a, b) => sortBasedOnRecentButton(b, a, mostRecentButton)) ?? []
       )
     }
@@ -187,16 +192,18 @@ const useBetState = () => {
   }
 
   const updateRealTimeBets = async () => {
-    if (bets) setRealTimeBets(await updateLobby(bets))
+    setRealTimeBets(await updateLobby(bets ?? []))
   }
 
   const updateRefreshingBets = async () => {
-    if (bets) setRefreshingBets(await updateLobby(bets))
+    setRefreshingBets(await updateLobby(bets ?? []))
   }
 
   const clearMapForLobbyChange = () => () => {
     if (!isLoading) setSelectedBetMap(new Map())
   }
+
+  useEffect(clearMapForLobbyChange, [gameId, user])
 
   const [showWagerForm, setShowWagerForm] = useState(false)
 
@@ -210,15 +217,10 @@ const useBetState = () => {
       )
       .sort((a, b) => sortBasedOnRecentButton(a, b, mostRecentButton)) ?? []
 
-  useEffect(() => {
-    setSelectedBetMap(new Map())
-  }, [gameId])
-
   return {
     bets,
     selectedBetMap,
     setSelectedBetMap,
-    clearMapForLobbyChange,
     isLoading,
     realTimeBets,
     refreshingBets,

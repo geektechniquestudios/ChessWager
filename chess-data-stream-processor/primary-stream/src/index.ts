@@ -7,10 +7,11 @@ require("dotenv").config({ path: "../../.env" })
 const redisClient = createClient({ url: "redis://redis:6379" })
 let isRedisConnected = false
 const attemptRedisConnection = () => {
-  console.log("attempting redis connection")
+  console.log("Attempting redis connection")
   redisClient
     .connect()
     .then(() => {
+      console.log("Connected to Redis")
       isRedisConnected = true
     })
     .catch((err) => {
@@ -54,7 +55,7 @@ const callLichessLiveTv = () => {
         console.log("new game: ", obj.d.id)
         lastGameId = gameId === "" ? obj.d.id : gameId // if gameId is empty, set it to the new game id
         gameId = obj.d.id
-        payWinnersByGameId(lastGameId)
+        if (lastGameId !== "") payWinnersByGameId(lastGameId)
       } else {
         console.log("players moving ", obj)
       }
