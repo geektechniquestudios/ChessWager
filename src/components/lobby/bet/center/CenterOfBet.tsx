@@ -23,12 +23,9 @@ export const CenterOfBet: React.FC<Props> = ({
       >
         {status.toUpperCase()}
       </motion.div>
-      <motion.div
-        layout
-        className="total-bet-amount grid place-content-center rounded-md border px-1 text-base font-bold"
-      >
+      <div className="total-bet-amount grid place-content-center rounded-md border px-1 text-base font-bold">
         {`$${formatDollars(Number(potSize) * avaxPrice)}`}
-      </motion.div>
+      </div>
     </div>
   )
 }

@@ -51,6 +51,7 @@ const useBetState = () => {
     where("gameId", "==", gameId),
     limit(20),
   ) as Query<Bet>
+
   const [bets, isLoading] = useCollectionData<Bet>(q, { idField: "id" }) ?? []
   const [selectedBetMap, setSelectedBetMap] = useState(
     new Map<string, BetMetadata>(),
@@ -199,11 +200,13 @@ const useBetState = () => {
     setRefreshingBets(await updateLobby(bets ?? []))
   }
 
-  const clearMapForLobbyChange = () => () => {
+  const clearMapForLobbyChange = () => {
     if (!isLoading) setSelectedBetMap(new Map())
   }
 
-  useEffect(clearMapForLobbyChange, [gameId, user])
+  useEffect(() => {
+    clearMapForLobbyChange()
+  }, [gameId, user])
 
   const [showWagerForm, setShowWagerForm] = useState(false)
 

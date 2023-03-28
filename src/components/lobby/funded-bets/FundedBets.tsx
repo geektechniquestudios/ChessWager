@@ -13,8 +13,8 @@ interface Props {}
 export const FundedBets: React.FC<Props> = ({}) => {
   const { avaxPrice } = Price.useContainer()
   const { bets } = BetsState.useContainer()
-
   const { auth } = Auth.useContainer()
+
   const isBetRelatedToUser = (bet: Bet): boolean => {
     return (
       auth.currentUser?.uid === bet.user1Id ||

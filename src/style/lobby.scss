@@ -6,7 +6,6 @@ a:hover {
 }
 
 // colors only
-
 .bet {
   @apply bg-stone-100 dark:bg-stone-700;
 }
@@ -29,6 +28,14 @@ a:hover {
 
 .bet-header-selected {
   @apply border-b-teal-500 bg-green-200 text-stone-800 dark:border-b-teal-300 dark:bg-emerald-800 dark:text-white;
+}
+
+.bet-occupied {
+  @apply border-yellow-400 dark:border-yellow-500;
+}
+
+.bet-header-occupied {
+  @apply border-b-yellow-500 bg-yellow-200 text-stone-800 dark:border-b-yellow-200 dark:bg-yellow-600 dark:text-white;
 }
 
 .user-name {

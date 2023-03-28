@@ -10,6 +10,8 @@ import {
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../../firestore.config"
 import { Bet } from "../../../../../interfaces/Bet"
+import { motion } from "framer-motion"
+
 const db = getFirestore(firebaseApp)
 
 interface Props {
@@ -43,16 +45,13 @@ export const LeaveButton: React.FC<Props> = ({ bet }) => {
         auth.currentUser &&
         user2Id === auth.currentUser.uid &&
         status === "pending" && (
-          <div className="flex flex-col justify-center align-middle">
-            <button
-              title="Leave"
-              onClick={cancel}
-              className="close-button color-shift clickable absolute top-0.5 right-0.5 grid place-content-center rounded-full border p-0.5"
-              id="leave-button"
-            >
-              <RiCloseFill size={12} />
-            </button>
-          </div>
+          <button
+            onClick={cancel}
+            className="close-button color-shift clickable absolute top-0.5 right-0.5 grid place-content-center rounded-full border p-0.5"
+            id="leave-button"
+          >
+            <RiCloseFill size={12} />
+          </button>
         )}
     </>
   )

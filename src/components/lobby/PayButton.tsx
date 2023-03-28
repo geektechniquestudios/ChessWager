@@ -135,6 +135,7 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
 
   return (
     <motion.button
+      layout="position"
       initial={{ x: isUser1 ? -70 : 70, y: -5, opacity: 0 }}
       animate={{ x: isUser1 ? 5 : -5, y: -5, opacity: 1 }}
       exit={{ x: isUser1 ? -70 : 70, y: -5, opacity: 0 }}

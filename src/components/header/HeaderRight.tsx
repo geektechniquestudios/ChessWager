@@ -24,7 +24,7 @@ export const HeaderRight: React.FC = () => {
       ? "dark:text-green-400 text-green-600"
       : ""
 
-  const { auth } = Auth.useContainer()
+  const { auth, hasAuthCompleted } = Auth.useContainer()
   const setNewMessagesToFalse = () => {
     if (!userData?.hasNewMessage ?? true) return
     const userRef = doc(db, "users", auth.currentUser!.uid)
@@ -39,75 +39,80 @@ export const HeaderRight: React.FC = () => {
 
   return (
     <div className="mr-3 flex flex-auto items-center justify-end gap-1.5 align-middle">
-      <LayoutGroup>
-        <MainHeaderButton
-          title="Search Users"
-          openToMenu="searchUsers"
-          icon={<BiSearchAlt2 size="21" />}
-          authRequired
-          onClick={() => {
-            setMenuStack(["searchUsers"])
-          }}
-          animationOffset={1}
-        />
-        <MainHeaderButton
-          title="Notifications"
-          openToMenu="notifications"
-          icon={
-            <RiNotification3Line size="21" className={greenNotificationStyle} />
-          }
-          onClick={() => {
-            setNewNotificationsToFalse()
-            setMenuStack(["notifications"])
-          }}
-          authRequired
-          animationOffset={2}
-        />
-        <MainHeaderButton
-          title="Messages"
-          openToMenu="messages"
-          icon={<RiChat2Line size="21" className={greenMessageStyle} />}
-          onClick={() => {
-            setNewMessagesToFalse()
-            setMenuStack(["messages"])
-          }}
-          authRequired
-          animationOffset={3}
-        />
-        <MainHeaderButton
-          id="bets"
-          title="Bets"
-          openToMenu="bets"
-          icon={<FaRegGem size="20" />}
-          authRequired
-          onClick={() => {
-            setMenuStack(["bets"])
-          }}
-          animationOffset={4}
-        />
-        <MainHeaderButton
-          title="Persona"
-          openToMenu="persona"
-          icon={<CgProfile size="21" />}
-          authRequired
-          onClick={() => {
-            setMenuStack(["persona"])
-          }}
-          animationOffset={5}
-        />
-        <SignInButton />
-        <MainHeaderButton
-          id="main-header-button"
-          title="Menu"
-          openToMenu="main"
-          icon={<BiChevronDown size="21" />}
-          onClick={() => {
-            setMenuStack(["main"])
-          }}
-          animationOffset={7}
-        />
-        {isDropdownOpen && <DropdownMenu />}
-      </LayoutGroup>
+      {hasAuthCompleted && (
+        <LayoutGroup>
+          <MainHeaderButton
+            title="Search Users"
+            openToMenu="searchUsers"
+            icon={<BiSearchAlt2 size="21" />}
+            authRequired
+            onClick={() => {
+              setMenuStack(["searchUsers"])
+            }}
+            animationOffset={1}
+          />
+          <MainHeaderButton
+            title="Notifications"
+            openToMenu="notifications"
+            icon={
+              <RiNotification3Line
+                size="21"
+                className={greenNotificationStyle}
+              />
+            }
+            onClick={() => {
+              setNewNotificationsToFalse()
+              setMenuStack(["notifications"])
+            }}
+            authRequired
+            animationOffset={2}
+          />
+          <MainHeaderButton
+            title="Messages"
+            openToMenu="messages"
+            icon={<RiChat2Line size="21" className={greenMessageStyle} />}
+            onClick={() => {
+              setNewMessagesToFalse()
+              setMenuStack(["messages"])
+            }}
+            authRequired
+            animationOffset={3}
+          />
+          <MainHeaderButton
+            id="bets"
+            title="Bets"
+            openToMenu="bets"
+            icon={<FaRegGem size="20" />}
+            authRequired
+            onClick={() => {
+              setMenuStack(["bets"])
+            }}
+            animationOffset={4}
+          />
+          <MainHeaderButton
+            title="Persona"
+            openToMenu="persona"
+            icon={<CgProfile size="21" />}
+            authRequired
+            onClick={() => {
+              setMenuStack(["persona"])
+            }}
+            animationOffset={5}
+          />
+          <SignInButton />
+          <MainHeaderButton
+            id="main-header-button"
+            title="Menu"
+            openToMenu="main"
+            icon={<BiChevronDown size="21" />}
+            onClick={() => {
+              setMenuStack(["main"])
+            }}
+            animationOffset={7}
+          />
+          {isDropdownOpen && <DropdownMenu />}
+        </LayoutGroup>
+      )}
     </div>
   )
 }
