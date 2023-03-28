@@ -42,16 +42,17 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
   const [isSelected, setIsSelected] = useState(selectedState)
 
   useEffect(() => {
-    setIsSelected(selectedState)
-    // if (!selectedBetMap.get(id)) {
-    //   const newMap = new Map<string, BetData>(selectedBetMap)
+    // const newMap = new Map(selectedBetMap)
+    // if (!isSelected) {
     //   newMap.set(id, {
     //     isSelected: selectedState,
     //     index,
     //     id,
     //   })
-    //   setSelectedBetMap(newMap)
+    // } else {
+    //   newMap.delete(id)
     // }
+    // setSelectedBetMap(newMap)
   }, [auth.currentUser])
 
   const updateSelectedStatus = () => {
@@ -90,7 +91,9 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
       : status !== "ready" && !isUser1 && !isUser2
       ? "bet-occupied"
       : isSelected
-      ? "bet-selected"
+      ? isUser1
+        ? "bet-user1"
+        : "bet-selected"
       : "bet-not-selected"
 
   const pointerEvents = status === "ready" && !isUser1 ? "cursor-pointer" : ""
@@ -104,7 +107,9 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
     status !== "ready" && !isUser1 && !isUser2
       ? "bet-header-occupied"
       : isSelected
-      ? "bet-header-selected"
+      ? isUser1
+        ? "bet-header-user1"
+        : "bet-header-selected"
       : "bet-header"
 
   return (
@@ -116,7 +121,7 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
           layout="position"
           variants={{
             visible: { opacity: 1, x: 0 },
-            hidden: { opacity: 0, x: -4 },
+            hidden: { opacity: 0, x: -10 },
           }}
           transition={{
             type: "spring",
