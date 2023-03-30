@@ -11,7 +11,7 @@ a:hover {
 }
 
 .bet-selected {
-  @apply border-teal-400 dark:border-teal-900;
+  @apply z-10 border-teal-400 dark:border-teal-900;
 }
 
 .bet-user1 {

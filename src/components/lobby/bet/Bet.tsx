@@ -42,26 +42,25 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
   const [isSelected, setIsSelected] = useState(selectedState)
 
   useEffect(() => {
-    // const newMap = new Map(selectedBetMap)
-    // if (!isSelected) {
-    //   newMap.set(id, {
-    //     isSelected: selectedState,
-    //     index,
-    //     id,
-    //   })
-    // } else {
-    //   newMap.delete(id)
-    // }
-    // setSelectedBetMap(newMap)
+    if (isUser2 && status !== "funded") {
+      const temp = selectedBetMap.set(id, {
+        isSelected: true,
+        index,
+        id,
+      })
+      setSelectedBetMap(temp)
+    }
   }, [auth.currentUser])
 
   const updateSelectedStatus = () => {
-    if (!auth.currentUser)
+    if (!auth.currentUser) {
       CustomSwal(
         "error",
         "Authentication Required!",
         "You must be logged in to bet.",
       )
+      return
+    }
     if (
       !isUser1 &&
       !isUser2 &&

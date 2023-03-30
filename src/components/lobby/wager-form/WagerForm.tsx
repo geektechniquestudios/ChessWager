@@ -87,6 +87,13 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
           "You must be logged in to bet.",
         )
         return false
+      } else if (gameId === "") {
+        CustomSwal(
+          "error",
+          "Can't Connect to Lichess",
+          "Your browser can't fetch the current game from Lichess.",
+        )
+        return false
       } else if (betAmount === 0) {
         setIsAmountEmpty(true)
         return false

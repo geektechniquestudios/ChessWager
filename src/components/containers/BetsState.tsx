@@ -49,10 +49,11 @@ const useBetState = () => {
   const q = query(
     lobbyCollectionRef,
     where("gameId", "==", gameId),
-    limit(20),
+    limit(30),
   ) as Query<Bet>
 
-  const [bets, isLoading] = useCollectionData<Bet>(q, { idField: "id" }) ?? []
+  const [bets] = useCollectionData<Bet>(q, { idField: "id" })
+
   const [selectedBetMap, setSelectedBetMap] = useState(
     new Map<string, BetMetadata>(),
   )
@@ -201,7 +202,7 @@ const useBetState = () => {
   }
 
   const clearMapForLobbyChange = () => {
-    if (!isLoading) setSelectedBetMap(new Map())
+    setSelectedBetMap(new Map())
   }
 
   useEffect(() => {
@@ -218,13 +219,17 @@ const useBetState = () => {
           bet.gameId !== "" &&
           bet.status !== "funded",
       )
-      .sort((a, b) => sortBasedOnRecentButton(a, b, mostRecentButton)) ?? []
+      .sort((a, b) =>
+        determineSortOrder(
+          a?.createdAt?.toMillis() ?? Number.MAX_VALUE,
+          b?.createdAt?.toMillis() ?? Number.MAX_VALUE,
+        ),
+      ) ?? []
 
   return {
     bets,
     selectedBetMap,
     setSelectedBetMap,
-    isLoading,
     realTimeBets,
     refreshingBets,
     setRefreshingBets,

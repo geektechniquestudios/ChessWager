@@ -16,7 +16,6 @@ const usePrice = () => {
       const data = await response.json()
       return data["avalanche-2"].usd
     } catch (error) {
-      console.error(error)
       return null
     }
   }
@@ -33,7 +32,7 @@ const usePrice = () => {
 
   useEffect(() => {
     updateAvaxPrice()
-    const interval = setInterval(updateAvaxPrice, 45000)
+    const interval = setInterval(updateAvaxPrice, 60000)
     return () => clearInterval(interval)
   }, [])
 

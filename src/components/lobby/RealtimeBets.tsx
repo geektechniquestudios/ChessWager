@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { BetsState } from "../containers/BetsState"
 import { Bet } from "./bet/Bet"
 import { LobbyHeaderState } from "../containers/LobbyHeaderState"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { Auth } from "../containers/Auth"
 import { GameState } from "../containers/GameState"
 
@@ -10,8 +10,7 @@ interface Props {}
 
 export const RealtimeBets: React.FC<Props> = ({}) => {
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
-  const { bets, updateRealTimeBets, realTimeBets, setSelectedBetMap } =
-    BetsState.useContainer()
+  const { bets, updateRealTimeBets, realTimeBets } = BetsState.useContainer()
   const { gameId } = GameState.useContainer()
   const { user } = Auth.useContainer()
 
@@ -20,11 +19,11 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
   }, [bets, mostRecentButton, isDescending, user, gameId])
 
   useEffect(() => {
-    setSelectedBetMap(new Map())
+    // setSelectedBetMap(new Map())
   }, [])
 
   return (
-    <>
+    <AnimatePresence>
       {realTimeBets.length > 0 && (
         <motion.div
           layout="position"
@@ -55,6 +54,6 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
             ))}
         </motion.div>
       )}
-    </>
+    </AnimatePresence>
   )
 }
