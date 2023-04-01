@@ -52,7 +52,15 @@ const useBetState = () => {
     limit(30),
   ) as Query<Bet>
 
-  const [bets] = useCollectionData<Bet>(q, { idField: "id" })
+  const setDefaultTimestamp = (bet: Bet): Bet => {
+    return {
+      ...bet,
+      createdAt: bet.createdAt ?? Timestamp.now(),
+    }
+  }
+
+  const [rawBets] = useCollectionData<Bet>(q, { idField: "id" })
+  const bets = rawBets?.map(setDefaultTimestamp) ?? []
 
   const [selectedBetMap, setSelectedBetMap] = useState(
     new Map<string, BetMetadata>(),
@@ -111,7 +119,7 @@ const useBetState = () => {
   const { user } = Auth.useContainer()
   const { userData } = UserDataState.useContainer()
 
-  const [realTimeBets, setRealTimeBets] = useState<Bet[]>([])
+  const [realtimeBets, setRealtimeBets] = useState<Bet[]>([])
   const [refreshingBets, setRefreshingBets] = useState<Bet[]>([])
 
   const updateLobby = async (bets: Bet[]) => {
@@ -194,7 +202,7 @@ const useBetState = () => {
   }
 
   const updateRealTimeBets = async () => {
-    setRealTimeBets(await updateLobby(bets ?? []))
+    setRealtimeBets(await updateLobby(bets ?? []))
   }
 
   const updateRefreshingBets = async () => {
@@ -230,7 +238,7 @@ const useBetState = () => {
     bets,
     selectedBetMap,
     setSelectedBetMap,
-    realTimeBets,
+    realtimeBets,
     refreshingBets,
     setRefreshingBets,
     updateRealTimeBets,
@@ -238,6 +246,7 @@ const useBetState = () => {
     showWagerForm,
     setShowWagerForm,
     betsPlacedByUser,
+    rawBets,
   }
 }
 export const BetsState = createContainer(useBetState)
