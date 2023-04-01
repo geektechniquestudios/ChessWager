@@ -32,11 +32,12 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
   const { auth } = Auth.useContainer()
 
   const bigAmount = ethers.utils.parseEther(amount.toString())
+  const bigAmountUser2 = bigAmount
+    .mul(BigNumber.from((multiplier * 100).toFixed(0)))
+    .div(100)
 
   const betAmountWei =
-    auth.currentUser?.uid === user1Id
-      ? bigAmount
-      : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
+    auth.currentUser?.uid === user1Id ? bigAmount : bigAmountUser2
 
   const betForContract = {
     amount: bigAmount,

@@ -117,14 +117,15 @@ describe("Placing Bets", async () => {
   })
 
   it("Should work with a mulitplier", async () => {
-    const multiplier = 1.4
+    const multiplier = 1.37
     const gameId = randomUUID()
     const timestamp = new Date() / 1000
-    const amount = "100"
+    const amount = "93"
     const bigAmount = ethers.utils.parseEther(amount.toString())
-    const bigAmountUser2 = ethers.utils.parseEther(
-      (amount * multiplier).toString(),
-    )
+    const bigAmountUser2 = bigAmount
+      .mul(BigNumber.from((multiplier * 100).toFixed(0)))
+      .div(100)
+
     const betUser1 = {
       amount: bigAmount,
       betSide: "white",
@@ -355,7 +356,7 @@ describe("Balances", () => {
     await contract.payWinners(gameId, "white")
 
     expect(await contract.viewChessWagerBalance()).to.be.gt(0)
-    
+
     const originalOwnerBalance = await ethers.provider.getBalance(owner.address)
     contract.withdrawChessWagerBalance()
 

@@ -37,22 +37,24 @@ contract ChessWager is Ownable {
     chessWagerBalance = 0;
   }
 
-  function placeBet(Bet calldata _bet, string calldata _betId)
-    external
-    payable
-  {
+  function placeBet(
+    Bet calldata _bet,
+    string calldata _betId
+  ) external payable {
     // ensure no more than 20 seconds has passed since the bet timestamp
     // require(block.timestamp - _bet.timestamp < 20000);
-    require(gameIdToIsGameOver[_bet.gameId] != true);
+    require(gameIdToIsGameOver[_bet.gameId] != true, "Game is already over");
     require(
-      msg.sender == _bet.user1Metamask || msg.sender == _bet.user2Metamask
+      msg.sender == _bet.user1Metamask || msg.sender == _bet.user2Metamask,
+      "The user's wallet address doesn't equal the address in the bet"
     );
-    require(betIdToIsBetCompleted[_betId] == false);
+    require(betIdToIsBetCompleted[_betId] == false, "Bet is already complete");
     require(
       keccak256(abi.encodePacked(_bet.betSide)) ==
         keccak256(abi.encodePacked("white")) ||
         keccak256(abi.encodePacked(_bet.betSide)) ==
-        keccak256(abi.encodePacked("black"))
+        keccak256(abi.encodePacked("black")),
+      "Bet side must only be 'white' or 'black'"
     );
 
     totalWagered += msg.value;
@@ -64,12 +66,15 @@ contract ChessWager is Ownable {
       // make whoBetFirst mapping
       if (msg.sender == _bet.user1Metamask) {
         // user1
-        require(msg.value == _bet.amount);
+        require(msg.value == _bet.amount, "Wrong amount sent");
         betIdToWhoBetFirst[_betId] = "user1";
         emit BetPlacedStatus("user1 has paid", _betId, _bet.gameId);
       } else {
         // user2
-        require(msg.value == (_bet.amount * _bet.multiplier) / 100);
+        require(
+          ((_bet.amount * _bet.multiplier) / 100) == msg.value,
+          "Wrong amount sent"
+        );
         betIdToWhoBetFirst[_betId] = "user2";
         emit BetPlacedStatus("user2 has paid", _betId, _bet.gameId);
       }
@@ -80,25 +85,41 @@ contract ChessWager is Ownable {
       betIdToBetData[_betId] = _bet;
     } else {
       // requirements to check for matching values between user1 and user2
-      require(betIdToBetData[_betId].amount == _bet.amount);
+      require(
+        betIdToBetData[_betId].amount == _bet.amount,
+        "User 1 bet amount doesn't match user 2 bet amount"
+      );
       require(
         keccak256(abi.encodePacked(betIdToBetData[_betId].betSide)) ==
-          keccak256(abi.encodePacked(_bet.betSide))
+          keccak256(abi.encodePacked(_bet.betSide)),
+        "User 1 bet side doesn't match user 2 bet side"
       );
       require(
         keccak256(abi.encodePacked(betIdToBetData[_betId].user1Id)) ==
-          keccak256(abi.encodePacked(_bet.user1Id))
+          keccak256(abi.encodePacked(_bet.user1Id)),
+        "User 1 bet.user1Id doesn't match user 2 bet.user1Id"
       );
-      require(betIdToBetData[_betId].user1Metamask == _bet.user1Metamask);
+      require(
+        betIdToBetData[_betId].user1Metamask == _bet.user1Metamask,
+        "User 1 bet.user1Metamask doesn't match user 2 bet.user2Metamask"
+      );
       require(
         keccak256(abi.encodePacked(betIdToBetData[_betId].user2Id)) ==
-          keccak256(abi.encodePacked(_bet.user2Id))
+          keccak256(abi.encodePacked(_bet.user2Id)),
+        "User 1 bet.user2Id doesn't match user 2 bet.user2Id"
       );
-      require(betIdToBetData[_betId].user2Metamask == _bet.user2Metamask);
-      require(betIdToBetData[_betId].multiplier == _bet.multiplier);
+      require(
+        betIdToBetData[_betId].user2Metamask == _bet.user2Metamask,
+        "User 1 bet.user2Metamask doesn't match user 2 bet.user2Metamask"
+      );
+      require(
+        betIdToBetData[_betId].multiplier == _bet.multiplier,
+        "User 1 bet.user1Id doesn't match user 2 bet.user1Id amount"
+      );
       require(
         keccak256(abi.encodePacked(betIdToBetData[_betId].gameId)) ==
-          keccak256(abi.encodePacked(_bet.gameId))
+          keccak256(abi.encodePacked(_bet.gameId)),
+        "User 1 bet.gameId doesn't match user 2 bet.gameId"
       );
       // check bet amount, update prize pool based on user
       if (
@@ -106,14 +127,23 @@ contract ChessWager is Ownable {
         keccak256(abi.encodePacked("user2"))
       ) {
         // user2 bet first, so this statement is true if user1 paid during this method call
-        require(msg.sender == _bet.user1Metamask);
-        require(msg.value == _bet.amount);
+        require(
+          msg.sender == _bet.user1Metamask,
+          "User 1 wallet address doesn't match sender address"
+        );
+        require(msg.value == _bet.amount, "Wrong amount sent");
         betIdToPrizePool[_betId] += msg.value;
         emit BetPlacedStatus("user1 has paid", _betId, _bet.gameId);
       } else {
         // this runs if user2 paid this method call
-        require(msg.sender == _bet.user2Metamask);
-        require(msg.value == (_bet.amount * _bet.multiplier) / 100);
+        require(
+          msg.sender == _bet.user2Metamask,
+          "User 2 wallet address doesn't match sender address"
+        );
+        require(
+          ((_bet.amount * _bet.multiplier) / 100) == msg.value,
+          "Wrong amount sent"
+        );
         betIdToPrizePool[_betId] += msg.value;
         emit BetPlacedStatus("user2 has paid", _betId, _bet.gameId);
       }
@@ -123,11 +153,10 @@ contract ChessWager is Ownable {
   }
 
   // winning side can be "white", "black", or "draw"
-  function payWinners(string calldata _gameId, string calldata winningSide)
-    external
-    payable
-    onlyOwner
-  {
+  function payWinners(
+    string calldata _gameId,
+    string calldata winningSide
+  ) external payable onlyOwner {
     if (gameIdToIsGameOver[_gameId] == true) {
       revert("game is already paid");
     }

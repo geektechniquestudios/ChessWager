@@ -10,7 +10,8 @@ interface Props {}
 
 export const RealtimeBets: React.FC<Props> = ({}) => {
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
-  const { bets, updateRealTimeBets, realTimeBets } = BetsState.useContainer()
+  const { bets, updateRealTimeBets, realTimeBets, setSelectedBetMap } =
+    BetsState.useContainer()
   const { gameId } = GameState.useContainer()
   const { user } = Auth.useContainer()
 
@@ -19,7 +20,7 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
   }, [bets, mostRecentButton, isDescending, user, gameId])
 
   useEffect(() => {
-    // setSelectedBetMap(new Map())
+    setSelectedBetMap(new Map())
   }, [])
 
   return (

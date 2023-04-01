@@ -69,6 +69,7 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
     setIsLobbyEnabled(true)
     setCount(TIMEOUT)
   }
+
   useEffect(updateForNewGame, [gameId])
 
   return (

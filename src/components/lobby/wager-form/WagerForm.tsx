@@ -179,7 +179,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
             <motion.form
               layout
               onSubmit={createWager}
-              className={`flex h-full flex-col justify-between rounded-bl-lg bg-stone-100 p-2 dark:bg-stone-900`}
+              className="flex h-full flex-col justify-between rounded-bl-lg bg-stone-100 p-2 dark:bg-stone-900"
               onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault()
               }}
