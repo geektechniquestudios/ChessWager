@@ -202,6 +202,10 @@ const useBetState = () => {
   }
 
   const updateRealTimeBets = async () => {
+    console.log("updating rt bets", realtimeBets)
+    console.log("bets", bets)
+    console.log("raw bets", rawBets)
+    console.log("gameid", gameId)
     setRealtimeBets(await updateLobby(bets ?? []))
   }
 
