@@ -16,7 +16,7 @@ export type Bet = {
   user2PhotoURL: string
   user2DisplayName: string
   hasUser2Paid: boolean
-  createdAt: Timestamp
+  createdAt?: Timestamp
   gameId: string
   timestamp: Timestamp
   contractAddress: string

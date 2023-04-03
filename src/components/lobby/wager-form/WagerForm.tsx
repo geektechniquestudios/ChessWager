@@ -87,6 +87,13 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
           "You must be logged in to bet.",
         )
         return false
+      } else if (gameId === "") {
+        CustomSwal(
+          "error",
+          "Can't Connect to Lichess",
+          "Your browser can't fetch the current game from Lichess.",
+        )
+        return false
       } else if (betAmount === 0) {
         setIsAmountEmpty(true)
         return false
@@ -172,7 +179,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
             <motion.form
               layout
               onSubmit={createWager}
-              className={`flex h-full flex-col justify-between rounded-bl-lg bg-stone-100 p-2 dark:bg-stone-900`}
+              className="flex h-full flex-col justify-between rounded-bl-lg bg-stone-100 p-2 dark:bg-stone-900"
               onKeyDown={(e) => {
                 e.key === "Enter" && e.preventDefault()
               }}

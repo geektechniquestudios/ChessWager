@@ -3,13 +3,13 @@ import { LobbyHeaderState } from "../containers/LobbyHeaderState"
 import { CreatedByUserBets } from "./CreatedByUserBets"
 import { RefreshingBets } from "./RefreshingBets"
 import { RealtimeBets } from "./RealtimeBets"
-import { motion } from "framer-motion"
+import { LayoutGroup, motion } from "framer-motion"
 import { WagerForm } from "./wager-form/WagerForm"
 import { CreateWagerButton } from "./wager-form/CreateWagerButton"
 import { useRef } from "react"
 
 export const BettingLobby: React.FC = () => {
-  const { isRealTime } = LobbyHeaderState.useContainer()
+  const { isRealtime } = LobbyHeaderState.useContainer()
   const bettingLobbyRef = useRef<any>(null)
 
   return (
@@ -23,13 +23,12 @@ export const BettingLobby: React.FC = () => {
           <div ref={bettingLobbyRef} className="h-full w-full overflow-clip">
             <CreateWagerButton />
             <WagerForm bettingLobbyRef={bettingLobbyRef} />
-            <motion.div
-              layout
-              className="scrollbar h-full w-full overflow-y-auto overflow-x-clip pt-0.5 pl-[2.6rem]"
-            >
-              <CreatedByUserBets />
-              {isRealTime ? <RealtimeBets /> : <RefreshingBets />}
-            </motion.div>
+            <div className="scrollbar h-full w-full overflow-y-auto overflow-x-clip pl-[2.6rem] pt-0.5">
+              <LayoutGroup>
+                <CreatedByUserBets />
+                {isRealtime ? <RealtimeBets /> : <RefreshingBets />}
+              </LayoutGroup>
+            </div>
           </div>
         </div>
       </motion.div>

@@ -32,11 +32,12 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
   const { auth } = Auth.useContainer()
 
   const bigAmount = ethers.utils.parseEther(amount.toString())
+  const bigAmountUser2 = bigAmount
+    .mul(BigNumber.from((multiplier * 100).toFixed(0)))
+    .div(100)
 
   const betAmountWei =
-    auth.currentUser?.uid === user1Id
-      ? bigAmount
-      : bigAmount.mul(BigNumber.from((multiplier * 100).toFixed(0))).div(100)
+    auth.currentUser?.uid === user1Id ? bigAmount : bigAmountUser2
 
   const betForContract = {
     amount: bigAmount,
@@ -135,6 +136,7 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
 
   return (
     <motion.button
+      layout="position"
       initial={{ x: isUser1 ? -70 : 70, y: -5, opacity: 0 }}
       animate={{ x: isUser1 ? 5 : -5, y: -5, opacity: 1 }}
       exit={{ x: isUser1 ? -70 : 70, y: -5, opacity: 0 }}

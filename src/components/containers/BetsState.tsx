@@ -1,7 +1,6 @@
 import { createContainer } from "unstated-next"
 import { GameState } from "./GameState"
 import type { Bet, BetMetadata } from "../../interfaces/Bet"
-import { useCollectionData } from "react-firebase-hooks/firestore"
 import { useEffect, useState } from "react"
 import { Auth } from "./Auth"
 import { LobbyHeaderState } from "./LobbyHeaderState"
@@ -10,8 +9,9 @@ import {
   collection,
   getFirestore,
   limit,
-  Query,
+  onSnapshot,
   query,
+  QuerySnapshot,
   Timestamp,
   where,
 } from "firebase/firestore"
@@ -45,18 +45,44 @@ const genericBet: Bet = {
 
 const useBetState = () => {
   const { gameId } = GameState.useContainer()
-  const lobbyCollectionRef = collection(db, "lobby")
-  const q = query(
-    lobbyCollectionRef,
-    where("gameId", "==", gameId),
-    limit(20),
-  ) as Query<Bet>
-  const [bets, isLoading] = useCollectionData<Bet>(q, { idField: "id" }) ?? []
+  const [bets, setBets] = useState<Bet[]>([])
+
+  useEffect(() => {
+    if (gameId === "") return
+    const lobbyCollectionRef = collection(db, "lobby")
+    const q = query(
+      lobbyCollectionRef,
+      where("gameId", "==", gameId),
+      limit(30),
+    )
+
+    const setDefaultTimestamp = (bet: Bet): Bet => {
+      return {
+        ...bet,
+        createdAt: bet.createdAt ?? Timestamp.now(),
+      }
+    }
+
+    const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot) => {
+      const newBets = snapshot.docs.map((doc) => {
+        const bet = { ...doc.data(), id: doc.id } as Bet
+        return setDefaultTimestamp(bet)
+      })
+
+      setBets(newBets)
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [gameId])
+
   const [selectedBetMap, setSelectedBetMap] = useState(
     new Map<string, BetMetadata>(),
   )
 
-  const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
+  const { mostRecentButton, isDescending, isRealtime } =
+    LobbyHeaderState.useContainer()
 
   // This is for browser compatibility
   const determineSortOrder = (
@@ -106,10 +132,10 @@ const useBetState = () => {
     }
   }
 
-  const { user } = Auth.useContainer()
+  const { user, hasAuthCompleted } = Auth.useContainer()
   const { userData } = UserDataState.useContainer()
 
-  const [realTimeBets, setRealTimeBets] = useState<Bet[]>([])
+  const [realtimeBets, setRealtimeBets] = useState<Bet[]>([])
   const [refreshingBets, setRefreshingBets] = useState<Bet[]>([])
 
   const updateLobby = async (bets: Bet[]) => {
@@ -192,18 +218,20 @@ const useBetState = () => {
   }
 
   const updateRealTimeBets = async () => {
-    setRealTimeBets(await updateLobby(bets ?? []))
+    if (hasAuthCompleted) setRealtimeBets(await updateLobby(bets ?? []))
   }
 
   const updateRefreshingBets = async () => {
-    setRefreshingBets(await updateLobby(bets ?? []))
+    if (hasAuthCompleted) setRefreshingBets(await updateLobby(bets ?? []))
   }
 
-  const clearMapForLobbyChange = () => () => {
-    if (!isLoading) setSelectedBetMap(new Map())
+  const clearMapForLobbyChange = () => {
+    setSelectedBetMap(new Map())
   }
 
-  useEffect(clearMapForLobbyChange, [gameId, user])
+  useEffect(() => {
+    clearMapForLobbyChange()
+  }, [gameId, user, isRealtime])
 
   const [showWagerForm, setShowWagerForm] = useState(false)
 
@@ -215,14 +243,18 @@ const useBetState = () => {
           bet.gameId !== "" &&
           bet.status !== "funded",
       )
-      .sort((a, b) => sortBasedOnRecentButton(a, b, mostRecentButton)) ?? []
+      .sort((a, b) =>
+        determineSortOrder(
+          a?.createdAt?.toMillis() ?? Number.MAX_VALUE,
+          b?.createdAt?.toMillis() ?? Number.MAX_VALUE,
+        ),
+      ) ?? []
 
   return {
     bets,
     selectedBetMap,
     setSelectedBetMap,
-    isLoading,
-    realTimeBets,
+    realtimeBets,
     refreshingBets,
     setRefreshingBets,
     updateRealTimeBets,

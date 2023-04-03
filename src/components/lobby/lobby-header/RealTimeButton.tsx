@@ -3,18 +3,18 @@ import { LobbyHeaderState } from "../../containers/LobbyHeaderState"
 
 interface Props {}
 
-export const RealTimeButton: React.FC<Props> = ({}) => {
-  const { isRealTime, setIsRealTime } = LobbyHeaderState.useContainer()
+export const RealtimeButton: React.FC<Props> = ({}) => {
+  const { isRealtime, setIsRealtime } = LobbyHeaderState.useContainer()
   return (
     <button
-      className="color-shift clickable my-0.5 grid place-content-center rounded-md py-1 px-2 text-stone-900 hover:bg-stone-300 dark:text-stone-300 dark:hover:bg-stone-700"
+      className="color-shift clickable my-0.5 grid place-content-center rounded-md px-2 py-1 text-stone-900 hover:bg-stone-300 dark:text-stone-300 dark:hover:bg-stone-700"
       onClick={() => {
-        localStorage.setItem("isRealTime", JSON.stringify(!isRealTime))
-        setIsRealTime(!isRealTime)
+        localStorage.setItem("isRealTime", JSON.stringify(!isRealtime))
+        setIsRealtime(!isRealtime)
       }}
       title="Real-time"
     >
-      {isRealTime ? <BsFillLightningChargeFill /> : <BsLightningCharge />}
+      {isRealtime ? <BsFillLightningChargeFill /> : <BsLightningCharge />}
     </button>
   )
 }
