@@ -4,24 +4,17 @@ import { Bet } from "./bet/Bet"
 import { LobbyHeaderState } from "../containers/LobbyHeaderState"
 import { AnimatePresence, motion } from "framer-motion"
 import { Auth } from "../containers/Auth"
-import { GameState } from "../containers/GameState"
 
 interface Props {}
 
 export const RealtimeBets: React.FC<Props> = ({}) => {
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
-  const { bets, updateRealTimeBets, realtimeBets, setSelectedBetMap, rawBets } =
-    BetsState.useContainer()
-  const { gameId } = GameState.useContainer()
+  const { bets, updateRealTimeBets, realtimeBets } = BetsState.useContainer()
   const { user } = Auth.useContainer()
 
   useEffect(() => {
     updateRealTimeBets()
-  }, [rawBets, mostRecentButton, isDescending, user, gameId])
-
-  useEffect(() => {
-    setSelectedBetMap(new Map())
-  }, [])
+  }, [bets, mostRecentButton, isDescending, user])
 
   return (
     <AnimatePresence>

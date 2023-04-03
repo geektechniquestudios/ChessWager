@@ -98,7 +98,7 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
   const pointerEvents = status === "ready" && !isUser1 ? "cursor-pointer" : ""
 
   const disabledStyle =
-    !isLobbyEnabled || (user2Id && !isUser1 && !isUser2)
+    (!isLobbyEnabled && !isSelected) || (user2Id && !isUser1 && !isUser2)
       ? "opacity-50 pointer-events-none"
       : ""
 
@@ -113,7 +113,7 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
 
   return (
     <div
-      className={`${disabledStyle} color-shift flex h-16 w-full justify-center py-0.5 px-1 align-middle`}
+      className={`${disabledStyle} color-shift flex h-16 w-full justify-center px-1 py-0.5 align-middle`}
     >
       {id !== "" && (
         <motion.div

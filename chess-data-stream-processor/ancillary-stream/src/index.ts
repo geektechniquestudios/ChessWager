@@ -8,11 +8,11 @@ const redisClient = createClient({ url: "redis://redis:6379" })
 
 let isRedisConnected = false
 const attemptRedisConnection = () => {
-  console.log("Attempting redis connection")
+  console.log("Attempting Redis connection...")
   redisClient
     .connect()
     .then(() => {
-      console.log("Connected to Redis")
+      console.log("Redis connection established.")
       isRedisConnected = true
     })
     .catch((err) => {

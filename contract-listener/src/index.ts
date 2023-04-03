@@ -9,11 +9,12 @@ const redisClient = createClient({ url: "redis://redis:6379" })
 
 let isRedisConnected = false
 const attemptRedisConnection = () => {
-  console.log("attempting redis connection")
+  console.log("Attempting Redis connection...")
   redisClient
     .connect()
     .then(() => {
       isRedisConnected = true
+      console.log("Redis connection established.")
     })
     .catch((err) => {
       console.error(err)
@@ -287,22 +288,52 @@ contract.on(
         } else if (bet.status === "approved") {
           if (didUser1Pay) {
             // if only user1 paid
-            batch.update(usersCollectionRef.doc(bet.user1Id), {
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              betFundedCount: admin.firestore.FieldValue.increment(1),
-            })
             batch.update(usersCollectionRef.doc(bet.user2Id), {
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              hasNewNotifications: true,
             })
+            batch.set(
+              user1NotificationsRef.doc(bet.user1Id + Timestamp.now()),
+              {
+                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                text: "Your bet was refunded because your opponent failed to pay",
+                openToMenu: "bets",
+                isRead: false,
+              },
+            )
+            batch.set(
+              user2NotificationsRef.doc(bet.user2Id + Timestamp.now()),
+              {
+                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                text: "You failed to pay on a recent bet, affecting your trust score",
+                openToMenu: "bets",
+                isRead: false,
+              },
+            )
           } else if (didUser2Pay) {
             // if only user2 paid
             batch.update(usersCollectionRef.doc(bet.user1Id), {
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              hasNewNotifications: true,
             })
-            batch.update(usersCollectionRef.doc(bet.user2Id), {
-              betAcceptedCount: admin.firestore.FieldValue.increment(1),
-              betFundedCount: admin.firestore.FieldValue.increment(1),
-            })
+            batch.set(
+              user2NotificationsRef.doc(bet.user2Id + Timestamp.now()),
+              {
+                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                text: "Your bet was refunded because your opponent failed to pay",
+                openToMenu: "bets",
+                isRead: false,
+              },
+            )
+            batch.set(
+              user1NotificationsRef.doc(bet.user1Id + Timestamp.now()),
+              {
+                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                text: "You failed to pay on a recent bet, affecting your trust score",
+                openToMenu: "bets",
+                isRead: false,
+              },
+            )
           }
         }
         batch.commit()
