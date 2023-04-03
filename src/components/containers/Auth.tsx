@@ -205,7 +205,7 @@ const useAuth = () => {
   const doesUserHaveEnoughAvax = async (price: number) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
     const balance: BigNumber = await provider.getBalance(walletAddress!)
-    return balance.gte(parseEther(price.toString()))
+    return balance.gte(parseEther(price.toFixed(0)))
   }
 
   return {
