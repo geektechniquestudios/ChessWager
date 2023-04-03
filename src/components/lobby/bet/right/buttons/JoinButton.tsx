@@ -23,8 +23,9 @@ interface Props {
 }
 
 export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
-  const { id, user1Id, status } = bet
-  const { auth, walletAddress, connectWallet } = Auth.useContainer()
+  const { id, user1Id, status, amount, multiplier } = bet
+  const { auth, walletAddress, connectWallet, doesUserHaveEnoughAvax } =
+    Auth.useContainer()
   const { refreshLobby } = LobbyState.useContainer()
 
   const isUser1 = auth.currentUser?.uid === user1Id
@@ -43,6 +44,14 @@ export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
   ) => {
     event.stopPropagation()
     if (!isWalletConnected) await connectWallet()
+    if (!(await doesUserHaveEnoughAvax(amount * multiplier))) {
+      CustomSwal(
+        "error",
+        "Insufficient Funds",
+        "Deposit more Avax to join this bet.",
+      )
+      return
+    }
     runTransaction(db, async (transaction) => {
       const doc = await transaction.get(userDoc)
       const user2FollowThrough = [

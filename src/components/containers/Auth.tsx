@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { createContainer } from "unstated-next"
 import { BigNumber, ethers } from "ethers"
@@ -61,7 +61,11 @@ const useAuth = () => {
 
   const auth = getAuth(firebaseApp)
 
-  const [user] = useAuthState(auth)
+  const [user, isLoading] = useAuthState(auth)
+  const [hasAuthCompleted, setHasAuthCompleted] = useState(false)
+  useEffect(() => {
+    if (!isLoading) setHasAuthCompleted(true)
+  }, [isLoading])
 
   const [isWalletConnecting, setIsWalletConnecting] = useState(false)
 
@@ -201,7 +205,7 @@ const useAuth = () => {
   const doesUserHaveEnoughAvax = async (price: number) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
     const balance: BigNumber = await provider.getBalance(walletAddress!)
-    return balance.gte(parseEther(price.toString()))
+    return balance.gte(parseEther(price.toFixed(0)))
   }
 
   return {
@@ -217,6 +221,7 @@ const useAuth = () => {
     signOutWithGoogle,
     isWalletConnecting,
     doesUserHaveEnoughAvax,
+    hasAuthCompleted,
   }
 }
 

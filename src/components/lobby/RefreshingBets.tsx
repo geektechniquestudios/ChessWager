@@ -10,9 +10,10 @@ import { AnimatePresence, motion } from "framer-motion"
 interface Props {}
 
 export const RefreshingBets: React.FC<Props> = ({}) => {
+  const TIMEOUT = 4
+
   const { gameId } = GameState.useContainer()
   const { user } = Auth.useContainer()
-  const { isLoading } = BetsState.useContainer()
 
   const {
     updateRefreshingBets,
@@ -29,7 +30,7 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
     await delay(700)
     updateRefreshingBets()
     setIsLobbyEnabled(true)
-    setCount(5)
+    setCount(TIMEOUT)
   }
 
   const [count, setCount] = useState(5)
@@ -47,10 +48,9 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
 
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const updateForButtonClick = () => {
-    if (isLoading) return
     updateRefreshingBets()
     setIsLobbyEnabled(true)
-    setCount(5)
+    setCount(TIMEOUT)
   }
 
   const { dummy } = LobbyState.useContainer()
@@ -60,17 +60,16 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
     isDescending,
     user,
     dummy,
-    isLoading,
     user,
   ])
 
   const updateForNewGame = () => {
-    if (isLoading) return
     setSelectedBetMap(new Map())
     setRefreshingBets([])
     setIsLobbyEnabled(true)
-    setCount(5)
+    setCount(TIMEOUT)
   }
+
   useEffect(updateForNewGame, [gameId])
 
   return (

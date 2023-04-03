@@ -9,22 +9,16 @@ interface Props {}
 
 export const RealtimeBets: React.FC<Props> = ({}) => {
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
-  const { bets, updateRealTimeBets, realTimeBets, setSelectedBetMap } =
-    BetsState.useContainer()
-
+  const { bets, updateRealTimeBets, realtimeBets } = BetsState.useContainer()
   const { user } = Auth.useContainer()
 
   useEffect(() => {
     updateRealTimeBets()
   }, [bets, mostRecentButton, isDescending, user])
 
-  useEffect(() => {
-    setSelectedBetMap(new Map())
-  }, [])
-
   return (
     <AnimatePresence>
-      {realTimeBets.length > 0 && (
+      {realtimeBets.length > 0 && (
         <motion.div
           layout="position"
           initial="hidden"
@@ -42,7 +36,7 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
             hidden: { opacity: 0 },
           }}
         >
-          {realTimeBets
+          {realtimeBets
             .filter((bet) => bet.status !== "funded")
             .map((bet, index) => (
               <Bet

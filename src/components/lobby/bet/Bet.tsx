@@ -42,25 +42,25 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
   const [isSelected, setIsSelected] = useState(selectedState)
 
   useEffect(() => {
-    setIsSelected(selectedState)
-    // if (!selectedBetMap.get(id)) {
-    //   const newMap = new Map<string, BetData>(selectedBetMap)
-    //   newMap.set(id, {
-    //     isSelected: selectedState,
-    //     index,
-    //     id,
-    //   })
-    //   setSelectedBetMap(newMap)
-    // }
+    if (isUser2 && status !== "funded") {
+      const temp = selectedBetMap.set(id, {
+        isSelected: true,
+        index,
+        id,
+      })
+      setSelectedBetMap(temp)
+    }
   }, [auth.currentUser])
 
   const updateSelectedStatus = () => {
-    if (!auth.currentUser)
+    if (!auth.currentUser) {
       CustomSwal(
         "error",
         "Authentication Required!",
         "You must be logged in to bet.",
       )
+      return
+    }
     if (
       !isUser1 &&
       !isUser2 &&
@@ -84,36 +84,49 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
     }
   }
 
-  const innerSelectedStyle =
-    id === "" ? "border-none" : isSelected ? "bet-selected" : "bet-not-selected"
+  const selectedStyle =
+    id === ""
+      ? "border-none"
+      : status !== "ready" && !isUser1 && !isUser2
+      ? "bet-occupied"
+      : isSelected
+      ? isUser1
+        ? "bet-user1"
+        : "bet-selected"
+      : "bet-not-selected"
 
   const pointerEvents = status === "ready" && !isUser1 ? "cursor-pointer" : ""
 
   const disabledStyle =
-    !isSelected && (!isLobbyEnabled || (user2Id && !isUser1 && !isUser2))
+    (!isLobbyEnabled && !isSelected) || (user2Id && !isUser1 && !isUser2)
       ? "opacity-50 pointer-events-none"
       : ""
 
-  const betHeaderStyle = isSelected ? "bet-header-selected" : "bet-header"
+  const betHeaderStyle =
+    status !== "ready" && !isUser1 && !isUser2
+      ? "bet-header-occupied"
+      : isSelected
+      ? isUser1
+        ? "bet-header-user1"
+        : "bet-header-selected"
+      : "bet-header"
 
   return (
-    <motion.div
-      layout="position"
-      initial="hidden"
-      animate="visible"
-      variants={{
-        visible: { opacity: 1, x: 0 },
-        hidden: { opacity: 0, x: -10 },
-      }}
-      transition={{
-        type: "just",
-      }}
-      className="color-shift flex h-16 w-full justify-center py-0.5 px-1 align-middle"
+    <div
+      className={`${disabledStyle} color-shift flex h-16 w-full justify-center px-1 py-0.5 align-middle`}
     >
       {id !== "" && (
         <motion.div
           layout="position"
-          className={`${innerSelectedStyle} ${pointerEvents} ${disabledStyle} bet color-shift relative z-0 flex max-w-[38rem] grow select-none justify-center overflow-clip whitespace-nowrap rounded-lg border`}
+          variants={{
+            visible: { opacity: 1, x: 0 },
+            hidden: { opacity: 0, x: -10 },
+          }}
+          transition={{
+            type: "spring",
+            mass: 0.1,
+          }}
+          className={`${selectedStyle} ${pointerEvents} bet color-shift relative z-0 flex max-w-[38rem] grow select-none justify-center overflow-clip whitespace-nowrap rounded-lg border`}
           onClick={updateSelectedStatus}
         >
           <BetHeader bet={bet} betHeaderStyle={betHeaderStyle} />
@@ -126,6 +139,6 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
           <User2Data bet={bet} isSelected={isSelected} />
         </motion.div>
       )}
-    </motion.div>
+    </div>
   )
 }

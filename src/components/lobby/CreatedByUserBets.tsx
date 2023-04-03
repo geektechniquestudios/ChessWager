@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { Auth } from "../containers/Auth"
 import { BetsState } from "../containers/BetsState"
 import { Bet } from "./bet/Bet"
@@ -10,13 +10,12 @@ export const CreatedByUserBets: React.FC<Props> = ({}) => {
   const { betsPlacedByUser } = BetsState.useContainer()
 
   return (
-    <AnimatePresence>
+    <>
       {betsPlacedByUser.length > 0 && (
         <motion.div
           layout="position"
           initial="hidden"
           animate="visible"
-          exit="hidden"
           variants={{
             visible: {
               opacity: 1,
@@ -37,6 +36,6 @@ export const CreatedByUserBets: React.FC<Props> = ({}) => {
               ))}
         </motion.div>
       )}
-    </AnimatePresence>
+    </>
   )
 }

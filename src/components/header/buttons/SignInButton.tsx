@@ -16,7 +16,7 @@ export const SignInButton: React.FC = () => {
               duration: 0.7,
               delay: 0.3,
               type: "spring",
-              bounce: 0.1,
+              stiffness: 40,
             }}
             id="header-sign-in-button"
             onClick={signInWithGoogle}

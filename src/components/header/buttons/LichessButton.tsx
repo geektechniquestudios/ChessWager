@@ -23,7 +23,11 @@ export const LichessButton: React.FC<Props> = ({}) => {
       target="_blank"
       rel="noreferrer noopener"
     >
-      <SiLichess size="18" title="Watch on Lichess" className="font-bo" />
+      <SiLichess
+        size="18"
+        title="Watch on Lichess"
+        className="overflow-visible"
+      />
     </motion.a>
   )
 }

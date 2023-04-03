@@ -73,6 +73,11 @@ export const NotificationsList: React.FC = ({}) => {
     loadMoreNotifications().then(() => setIsLoading(false))
   }, [])
 
+  useEffect(() => {
+    if (notifications.length < 1 && (liveNotifications?.length ?? 0) < 1)
+      loadMoreNotifications()
+  }, [notifications])
+
   return (
     <div
       className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
