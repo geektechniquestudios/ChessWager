@@ -288,6 +288,9 @@ contract.on(
         } else if (bet.status === "approved") {
           if (didUser1Pay) {
             // if only user1 paid
+            batch.update(usersCollectionRef.doc(bet.user1Id), {
+              hasNewNotifications: true,
+            })
             batch.update(usersCollectionRef.doc(bet.user2Id), {
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
               hasNewNotifications: true,
@@ -314,6 +317,9 @@ contract.on(
             // if only user2 paid
             batch.update(usersCollectionRef.doc(bet.user1Id), {
               betAcceptedCount: admin.firestore.FieldValue.increment(1),
+              hasNewNotifications: true,
+            })
+            batch.update(usersCollectionRef.doc(bet.user2Id), {
               hasNewNotifications: true,
             })
             batch.set(
