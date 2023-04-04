@@ -7,7 +7,7 @@ export const SignInButton: React.FC = () => {
   return (
     <AnimatePresence mode="wait">
       {!auth?.currentUser && (
-        <div className="z-40 mx-2 flex flex-col justify-center">
+        <div className="absolute right-11 z-40 mx-2 flex flex-col justify-center whitespace-nowrap">
           <motion.button
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
