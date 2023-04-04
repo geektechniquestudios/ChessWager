@@ -47,9 +47,9 @@ export const MainHeaderButton: React.FC<Props> = ({
         <motion.button
           layout
           ref={ref}
-          initial={{ opacity: 0, translateY: -30 }}
-          animate={{ opacity: [0, 0, 1], translateY: 0 }}
-          exit={{ opacity: 0, translateY: -30 }}
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -30 }}
           transition={{
             duration: 0.7,
             delay: 0.05 * animationOffset,
