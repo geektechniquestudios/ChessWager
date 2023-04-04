@@ -22,9 +22,6 @@ steps:
   - id: Installing hardhat
     name: "gcr.io/cloud-builders/yarn"
     args: ["add", "-D", "hardhat"]
-  - id: Installing firebase functions
-    name: "gcr.io/cloud-builders/npm"
-    args: ["run", "functions-install"]
 
     # Testing
   - id: Running tests
