@@ -7,16 +7,17 @@ export const SignInButton: React.FC = () => {
   return (
     <AnimatePresence mode="wait">
       {!auth?.currentUser && (
-        <div className="absolute right-11 z-40 mx-2 flex flex-col justify-center">
+        <div className="absolute right-11 z-40 mx-2 flex flex-col justify-center whitespace-nowrap">
           <motion.button
-            initial={{ opacity: 0, translateY: -30 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            exit={{ opacity: 0, translateY: -30 }}
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
             transition={{
-              duration: 0.7,
               delay: 0.3,
               type: "spring",
-              stiffness: 40,
+              mass: 0.3,
+              bounce: 0,
+              stiffness: 120,
             }}
             id="header-sign-in-button"
             onClick={signInWithGoogle}

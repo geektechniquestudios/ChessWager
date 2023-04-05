@@ -14,13 +14,14 @@ export const AvaxPriceButton: React.FC = () => {
       {avaxPrice !== 0 && avaxPrice !== undefined && avaxPrice !== null && (
         <motion.a
           initial={{ opacity: 0, translateY: -30 }}
-          animate={{ opacity: [0, 0, 1], translateY: 0 }}
+          animate={{ opacity: 1, translateY: 0 }}
           exit={{ opacity: 0, translateY: -30 }}
           transition={{
-            duration: 0.7,
-            delay: 0.3,
+            delay: 0.1,
             type: "spring",
-            stiffness: 40,
+            mass: 0.7,
+            bounce: 0,
+            stiffness: 120,
           }}
           href="https://www.coingecko.com/en/coins/avalanche"
           className="color-shift clickable grid h-9 place-content-center rounded-md border-none border-stone-800 text-center font-bold text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white"
@@ -30,7 +31,7 @@ export const AvaxPriceButton: React.FC = () => {
           rel="noreferrer noopener"
           id="avax-price-button"
         >
-          <p className="m-1 text-xs underline sm:text-sm">
+          <p className="m-1 text-xs sm:text-sm">
             {`AVAX $${price
               ?.toFixed(2)
               .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}`}

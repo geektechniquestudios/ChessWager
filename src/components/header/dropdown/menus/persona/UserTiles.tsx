@@ -31,7 +31,7 @@ export const UserTiles: React.FC<Props> = ({
 
   const trust = `${betFundedCount} / ${betAcceptedCount}`
   return (
-    <div className="mb-1 grid w-full grid-cols-2 gap-1.5 text-sm">
+    <div className="mb-1 grid w-full grid-cols-2 gap-x-1 gap-y-1.5 text-sm">
       <UserDataTile data={trust} name="Trust" icon={<FaRegHandshake />} />
       <UserDataTile
         data={friends?.length ?? 0}
