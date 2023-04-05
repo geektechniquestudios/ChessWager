@@ -20,6 +20,7 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-main
+    onlyIf: "BRANCH_NAME == 'main'"
   - id: Decrypting test Firebase admin SDK JSON file
     name: "gcr.io/cloud-builders/gcloud"
     args:
@@ -30,6 +31,8 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-test
+    onlyIf: "BRANCH_NAME == 'test'"
+
 
   # Installing dependencies
   - id: Installing dependencies for frontend
