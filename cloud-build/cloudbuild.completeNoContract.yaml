@@ -1,5 +1,5 @@
 steps:
-  # Decrypt
+  # Decrypting
   - id: Decrypting environment variables
     name: "gcr.io/cloud-builders/gcloud"
     args:
@@ -31,7 +31,7 @@ steps:
       - --keyring=chess-wager
       - --key=chess-wager-test
 
-  # Dependencies
+  # Installing dependencies
   - id: Installing dependencies for frontend
     name: "node:18"
     entrypoint: "yarn"
@@ -56,7 +56,7 @@ steps:
       - "-c"
       - "yarn run test"
 
-    # Build docker images for k8s
+  # Building docker images for k8s
   - id: Building contract listener
     name: gcr.io/cloud-builders/docker
     args:
