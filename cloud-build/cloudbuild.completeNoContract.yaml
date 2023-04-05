@@ -1,5 +1,5 @@
 steps:
-  # Decrypt and setup
+  # Decrypt
   - id: Decrypting environment variables
     name: "gcr.io/cloud-builders/gcloud"
     args:
@@ -10,16 +10,28 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
-  - id: Decrypting Firebase admin SDK JSON files
+  - id: Decrypting main Firebase admin SDK JSON file
     name: "gcr.io/cloud-builders/gcloud"
     args:
       - kms
       - decrypt
-      - --ciphertext-file=chess-wager-$BRANCH_NAME-firebase-adminsdk-*-*.json.enc
-      - --plaintext-file=chess-wager-$BRANCH_NAME-firebase-adminsdk-*-*.json
+      - --ciphertext-file=chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json.enc
+      - --plaintext-file=chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json
       - --location=global
       - --keyring=chess-wager
-      - --key=chess-wager-$BRANCH_NAME
+      - --key=chess-wager-main
+  - id: Decrypting test Firebase admin SDK JSON file
+    name: "gcr.io/cloud-builders/gcloud"
+    args:
+      - kms
+      - decrypt
+      - --ciphertext-file=chess-wager-test-firebase-adminsdk-hl438-e85a947be8.json.enc
+      - --plaintext-file=chess-wager-test-firebase-adminsdk-hl438-e85a947be8.json
+      - --location=global
+      - --keyring=chess-wager
+      - --key=chess-wager-test
+
+  # Dependencies
   - id: Installing dependencies for frontend
     name: "node:18"
     entrypoint: "yarn"
