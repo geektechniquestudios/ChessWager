@@ -7,13 +7,14 @@ export const LichessButton: React.FC<Props> = ({}) => {
   return (
     <motion.a
       initial={{ opacity: 0, translateY: -30 }}
-      animate={{ opacity: [0, 0, 1], translateY: 0 }}
+      animate={{ opacity: 1, translateY: 0 }}
       exit={{ opacity: 0, translateY: -30 }}
       transition={{
-        duration: 1,
-        delay: 0.1,
+        delay: 0.3,
         type: "spring",
-        stiffness: 40,
+        mass: 0.7,
+        bounce: 0,
+        stiffness: 120,
       }}
       id="lichess-button"
       href="https://lichess.org/tv"

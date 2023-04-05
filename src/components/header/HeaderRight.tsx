@@ -11,6 +11,7 @@ import { firebaseApp } from "../../../firestore.config"
 import { DropdownMenu } from "./dropdown/DropdownMenu"
 import { DropdownState } from "../containers/DropdownState"
 import { LayoutGroup } from "framer-motion"
+import { RiSearch2Line } from "react-icons/ri"
 
 const db = getFirestore(firebaseApp)
 
@@ -24,7 +25,7 @@ export const HeaderRight: React.FC = () => {
       ? "dark:text-green-400 text-green-600"
       : ""
 
-  const { auth, hasAuthCompleted } = Auth.useContainer()
+  const { auth, isLoading } = Auth.useContainer()
   const setNewMessagesToFalse = () => {
     if (!userData?.hasNewMessage ?? true) return
     const userRef = doc(db, "users", auth.currentUser!.uid)
@@ -39,12 +40,12 @@ export const HeaderRight: React.FC = () => {
 
   return (
     <div className="mr-3 flex items-center justify-end gap-1.5">
-      {hasAuthCompleted && (
+      {!isLoading && (
         <LayoutGroup>
           <MainHeaderButton
             title="Search Users"
             openToMenu="searchUsers"
-            icon={<BiSearchAlt2 size="21" />}
+            icon={<RiSearch2Line size="19" />}
             authRequired
             onClick={() => {
               setMenuStack(["searchUsers"])
@@ -56,7 +57,7 @@ export const HeaderRight: React.FC = () => {
             openToMenu="notifications"
             icon={
               <RiNotification3Line
-                size="21"
+                size="20"
                 className={greenNotificationStyle}
               />
             }
@@ -82,7 +83,7 @@ export const HeaderRight: React.FC = () => {
             id="bets"
             title="Bets"
             openToMenu="bets"
-            icon={<FaRegGem size="20" />}
+            icon={<FaRegGem size="19" />}
             authRequired
             onClick={() => {
               setMenuStack(["bets"])
