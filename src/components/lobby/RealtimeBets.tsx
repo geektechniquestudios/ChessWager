@@ -37,7 +37,9 @@ export const RealtimeBets: React.FC<Props> = ({}) => {
           }}
         >
           {realtimeBets
-            .filter((bet) => bet.status !== "funded")
+            .filter(
+              (bet) => bet.status !== "funded" && bet.user1Id !== user?.uid,
+            )
             .map((bet, index) => (
               <Bet
                 key={bet.id !== "" ? bet.id : index}
