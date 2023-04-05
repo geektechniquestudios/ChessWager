@@ -1,5 +1,5 @@
 steps:
-  # Decrypt and setup
+# Decrypt and setup
   - id: Decrypting environment variables
     name: "gcr.io/cloud-builders/gcloud"
     args:
@@ -11,23 +11,27 @@ steps:
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
   - id: Installing dependencies for frontend
-    name: "gcr.io/cloud-builders/yarn:latest"
+    name: "node:18"
+    entrypoint: "yarn"
     args: ["install"]
   - id: Installing firebase tools
-    name: "gcr.io/cloud-builders/npm:latest"
+    name: "node:18"
+    entrypoint: "npm"
     args: ["install", "-g", "firebase-tools"]
   - id: Installing firebase
-    name: "gcr.io/cloud-builders/yarn:latest"
+    name: "node:18"
+    entrypoint: "yarn"
     args: ["add", "firebase"]
   - id: Installing hardhat
-    name: "gcr.io/cloud-builders/yarn:latest"
+    name: "node:18"
+    entrypoint: "yarn"
     args: ["add", "-D", "hardhat"]
 
-    # Testing
+  # Testing
   - id: Running tests
-    name: "gcr.io/cloud-builders/yarn:latest"
+    name: "node:18"
+    entrypoint: "yarn"
     args: ["run", "test"]
-
     # Build docker images for k8s
   - id: Building contract listener
     name: gcr.io/cloud-builders/docker
@@ -134,8 +138,10 @@ steps:
 
   # Building and deploying frontend
   - id: Building frontend
-    name: "gcr.io/cloud-builders/yarn:latest"
+    name: "node:18"
+    entrypoint: "yarn"
     args: ["run", "build"]
+
   - id: Selecting firebase env
     name: "gcr.io/$PROJECT_ID/firebase"
     args: ["use", "$BRANCH_NAME"]
