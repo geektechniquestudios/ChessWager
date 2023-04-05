@@ -1,5 +1,5 @@
 steps:
-# Decrypt and setup
+  # Decrypt and setup
   - id: Decrypting environment variables
     name: "gcr.io/cloud-builders/gcloud"
     args:
@@ -27,11 +27,13 @@ steps:
     entrypoint: "yarn"
     args: ["add", "-D", "hardhat"]
 
-  # Testing
   - id: Running tests
-    name: "node:18"
-    entrypoint: "yarn"
-    args: ["run", "test"]
+    name: "cypress/included:12.9.0"
+    entrypoint: "sh"
+    args:
+      - "-c"
+      - "yarn run test"
+
     # Build docker images for k8s
   - id: Building contract listener
     name: gcr.io/cloud-builders/docker
