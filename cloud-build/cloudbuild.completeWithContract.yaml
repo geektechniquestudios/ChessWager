@@ -26,7 +26,7 @@ steps:
     # Testing
   - id: Running tests
     name: "gcr.io/cloud-builders/yarn"
-    args: ["run", "test"]
+    args: ["run", "test-hardhat"]
 
     # Dependent step
   - id: Deploying contract
