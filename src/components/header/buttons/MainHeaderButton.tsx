@@ -47,19 +47,21 @@ export const MainHeaderButton: React.FC<Props> = ({
         <motion.button
           layout
           ref={ref}
-          initial={{ opacity: 0, translateY: -30 }}
-          animate={{ opacity: [0, 0, 1], translateY: 0 }}
-          exit={{ opacity: 0, translateY: -30 }}
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -30 }}
           transition={{
-            duration: 0.7,
             delay: 0.05 * animationOffset,
             type: "spring",
-            stiffness: 40,
+            mass: 0.7,
+            bounce: 0,
+            stiffness: 120,
           }}
           id={id}
           className={`${activeStyle} color-shift clickable z-50 grid h-9 w-9 place-content-center rounded-md border-none border-stone-800 text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white`}
           title={title}
           onClick={() => {
+            if (authRequired && !user) return
             // prevents opening new menu when header button is pressed that is already open
             if (activeMenu === openToMenu) {
               closeDropdownMenu()

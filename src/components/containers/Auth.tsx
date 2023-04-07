@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { createContainer } from "unstated-next"
 import { BigNumber, ethers } from "ethers"
@@ -62,11 +62,6 @@ const useAuth = () => {
   const auth = getAuth(firebaseApp)
 
   const [user, isLoading] = useAuthState(auth)
-  const [hasAuthCompleted, setHasAuthCompleted] = useState(false)
-  useEffect(() => {
-    if (!isLoading) setHasAuthCompleted(true)
-  }, [isLoading])
-
   const [isWalletConnecting, setIsWalletConnecting] = useState(false)
 
   const connectWallet = async () => {
@@ -221,7 +216,7 @@ const useAuth = () => {
     signOutWithGoogle,
     isWalletConnecting,
     doesUserHaveEnoughAvax,
-    hasAuthCompleted,
+    isLoading,
   }
 }
 

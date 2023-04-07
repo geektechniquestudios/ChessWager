@@ -42,7 +42,8 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
   //
   // use this version until mainnet
 
-  const sendPayment = async () => {
+  const sendPayment = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     const fetchWinner = async () => {
       const winner = await fetch(`https://lichess.org/api/game/${gameId}`)
         .then((res) => res.json())
@@ -109,11 +110,8 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
         <form
           onSubmit={sendPayment}
           className="flex h-60 w-60 flex-col items-center justify-evenly"
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault()
-              sendPayment()
-            }
+          onKeyDown={(e) => {
+            if (e.key === "Enter") sendPayment(e)
           }}
         >
           <input

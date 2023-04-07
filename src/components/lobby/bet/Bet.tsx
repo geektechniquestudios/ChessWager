@@ -124,7 +124,9 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
           }}
           transition={{
             type: "spring",
-            mass: 0.1,
+            mass: 0.01,
+            bounce: 0,
+            restSpeed: 0,
           }}
           className={`${selectedStyle} ${pointerEvents} bet color-shift relative z-0 flex max-w-[38rem] grow select-none justify-center overflow-clip whitespace-nowrap rounded-lg border`}
           onClick={updateSelectedStatus}

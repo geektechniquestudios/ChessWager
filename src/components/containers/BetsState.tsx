@@ -132,7 +132,7 @@ const useBetState = () => {
     }
   }
 
-  const { user, hasAuthCompleted } = Auth.useContainer()
+  const { user, isLoading } = Auth.useContainer()
   const { userData } = UserDataState.useContainer()
 
   const [realtimeBets, setRealtimeBets] = useState<Bet[]>([])
@@ -218,11 +218,11 @@ const useBetState = () => {
   }
 
   const updateRealTimeBets = async () => {
-    if (hasAuthCompleted) setRealtimeBets(await updateLobby(bets ?? []))
+    if (!isLoading) setRealtimeBets(await updateLobby(bets ?? []))
   }
 
   const updateRefreshingBets = async () => {
-    if (hasAuthCompleted) setRefreshingBets(await updateLobby(bets ?? []))
+    if (!isLoading) setRefreshingBets(await updateLobby(bets ?? []))
   }
 
   const clearMapForLobbyChange = () => {
