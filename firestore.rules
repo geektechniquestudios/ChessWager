@@ -761,8 +761,8 @@ service cloud.firestore {
       function isNotificationUpdateKeyValid () {
         let requestData = request.resource.data;
         return
-           requestData.keys().hasAll([                                          "isRead"                 ]) &&
-          requestData.keys().hasOnly(["uid", "createdAt", "text", "openToMenu", "isRead", "clickedUserId"]);
+           requestData.keys().hasAll([                                          "isRead"                          ]) &&
+          requestData.keys().hasOnly(["uid", "createdAt", "text", "openToMenu", "isRead", "clickedUserId", "betId"]);
       }
 
       allow create: if isParentDocUser() || (canCreate() && isNotificationCreateDataValid() && isNotificationCreateKeyValid());

@@ -18,24 +18,17 @@ export const BetMenu: React.FC<Props> = ({}) => {
     amount,
     betSide,
     multiplier,
-    status,
     user1Id,
-    user1Metamask,
     user1PhotoURL,
     user1DisplayName,
     hasUser1Paid,
     user2Id,
-    user2Metamask,
     user2PhotoURL,
     user2DisplayName,
     hasUser2Paid,
     createdAt,
     gameId,
-    timestamp,
     contractAddress,
-    user1FollowThrough,
-    user2FollowThrough,
-    winner,
   } = bet ?? {}
   const betAmount = amount! + amount! * multiplier!
   const { avaxPrice } = Price.useContainer()
@@ -128,11 +121,21 @@ export const BetMenu: React.FC<Props> = ({}) => {
                       <p>
                         {new Date(createdAt!.seconds * 1000).toLocaleTimeString(
                           "en-US",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                          },
                         )}
                       </p>
                       <p>
                         {new Date(createdAt!.seconds * 1000).toLocaleDateString(
                           "en-US",
+                          {
+                            year: "numeric",
+                            month: "short",
+                            day: "2-digit",
+                          },
                         )}
                       </p>
                     </div>
@@ -141,7 +144,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
                 <div className="mt-1 flex w-full items-center justify-between">
                   <a
                     href={"https://snowtrace.io/address/" + contractAddress}
-                    className="color-shift rounded-full border border-stone-400 bg-white py-1 px-2 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-800 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
+                    className="color-shift rounded-full border border-stone-400 bg-white px-2 py-1 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-800 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
                     title="View Contract on Snowtrace"
                     rel="noopener noreferrer"
                     target="_blank"

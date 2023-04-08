@@ -97,7 +97,7 @@ export const NotificationsList: React.FC = ({}) => {
           <div style={{ direction: "ltr" }} id="notification-list">
             {fullNotifications?.map((notification) => (
               <NotificationItem
-                {...notification}
+                notification={notification}
                 key={notification.id}
                 setNotifications={setNotifications}
                 notifications={notifications}

@@ -2,8 +2,9 @@ import {
   collection,
   deleteDoc,
   doc,
+  DocumentReference,
+  getDoc,
   getFirestore,
-  Timestamp,
   updateDoc,
 } from "firebase/firestore"
 import { BsX } from "react-icons/bs"
@@ -13,31 +14,26 @@ import { DropdownState } from "../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { DropdownButton } from "../persona/buttons/DropdownButton"
 import { Notification } from "../../../../../interfaces/Notification"
+import { Bet } from "../../../../../interfaces/Bet"
 
 const db = getFirestore(firebaseApp)
 
 interface Props {
-  text: string
-  openToMenu?: string
-  clickedUserId?: string
-  createdAt: Timestamp
-  isRead: boolean
+  notification: Notification
   id?: string
-  setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>
   notifications: Notification[]
+  setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>
+  openToMenu?: string
 }
 
 export const NotificationItem: React.FC<Props> = ({
-  text,
-  openToMenu,
-  clickedUserId,
-  createdAt,
-  isRead,
-  id,
+  notification,
   setNotifications,
   notifications,
 }) => {
-  const { goToMenu } = DropdownState.useContainer()
+  const { text, openToMenu, clickedUserId, createdAt, isRead, id, betId } =
+    notification
+  const { goToMenu, setBet } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { auth } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
@@ -61,19 +57,33 @@ export const NotificationItem: React.FC<Props> = ({
     ? "dark:text-stone-400 text-stone-600"
     : "font-bold dark:text-stone-300 text-stone-900"
 
+  const getBetById = async (betId: string): Promise<Bet> => {
+    const gameDoc = doc(db, "lobby", betId) as DocumentReference<Bet>
+    const bet = await getDoc(gameDoc)
+    return bet.data()! as Bet
+  }
+
   return (
     <a
-      className={`color-shift flex h-12 w-64 items-center justify-between gap-1 px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${unreadStyle}`}
+      className={`${unreadStyle} color-shift flex h-12 w-64 items-center justify-between gap-1 px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
       style={{ direction: "ltr" }}
       onClick={() => {
         clickedUserId && setClickedUserById(clickedUserId)
         if (openToMenu && openToMenu !== "") {
-          goToMenu(openToMenu)
+          if (betId)
+            getBetById(betId)
+              .then(setBet)
+              .then(() => {
+                goToMenu(openToMenu)
+              })
+          else goToMenu(openToMenu)
         }
         setAsRead()
       }}
     >
-      <p className="pointer-events-auto text-left text-xs">{text}</p>
+      <p className="pointer-events-auto line-clamp-2 text-left text-xs">
+        {text}
+      </p>
       <DropdownButton
         content={<BsX />}
         className="h-4 w-4"
