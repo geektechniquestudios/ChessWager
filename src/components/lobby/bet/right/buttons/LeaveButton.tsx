@@ -6,11 +6,11 @@ import {
   DocumentData,
   DocumentReference,
   getFirestore,
+  serverTimestamp,
   updateDoc,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../../firestore.config"
 import { Bet } from "../../../../../interfaces/Bet"
-import { motion } from "framer-motion"
 
 const db = getFirestore(firebaseApp)
 
@@ -34,6 +34,7 @@ export const LeaveButton: React.FC<Props> = ({ bet }) => {
       user2PhotoURL: "",
       user2FollowThrough: [],
       user2DisplayName: "",
+      timestamp: serverTimestamp(),
     })
       .then(refreshLobby)
       .catch(console.error)
@@ -47,7 +48,7 @@ export const LeaveButton: React.FC<Props> = ({ bet }) => {
         status === "pending" && (
           <button
             onClick={cancel}
-            className="close-button color-shift clickable absolute top-0.5 right-0.5 grid place-content-center rounded-full border p-0.5"
+            className="close-button color-shift clickable absolute right-0.5 top-0.5 grid place-content-center rounded-full border p-0.5"
             id="leave-button"
           >
             <RiCloseFill size={12} />

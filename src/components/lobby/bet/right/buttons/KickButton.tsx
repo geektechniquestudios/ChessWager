@@ -3,6 +3,7 @@ import {
   DocumentData,
   DocumentReference,
   getFirestore,
+  serverTimestamp,
   updateDoc,
 } from "firebase/firestore"
 import { motion } from "framer-motion"
@@ -28,6 +29,7 @@ export const KickButton: React.FC<Props> = ({ id }) => {
       user2PhotoURL: "",
       user2FollowThrough: [],
       user2DisplayName: "",
+      timestamp: serverTimestamp(),
     })
       .then(refreshLobby)
       .catch(console.error)

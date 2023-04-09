@@ -283,7 +283,7 @@ contract.on(
             const timestamp = Timestamp.now()
             batch.set(user1NotificationsRef.doc(bet.user1Id + timestamp), {
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
-              text: `Your recent bet with ${bet.user2DisplayName} was refunded because it ended in a draw`,
+              text: `Your bet with ${bet.user2DisplayName} ended in a draw and was refunded`,
               openToMenu: "bet",
               isRead: false,
               betId,
@@ -291,7 +291,7 @@ contract.on(
 
             batch.set(user2NotificationsRef.doc(bet.user2Id + timestamp), {
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
-              text: `Your recent bet with ${bet.user1DisplayName} was refunded because it ended in a draw`,
+              text: `Your bet with ${bet.user1DisplayName} ended in a draw and was refunded`,
               openToMenu: "bet",
               isRead: false,
               betId,
@@ -314,7 +314,7 @@ contract.on(
           })
           batch.set(user2NotificationsRef.doc(bet.user2Id + Timestamp.now()), {
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
-            text: `You failed to pay on your recent bet with ${bet.user1DisplayName}`,
+            text: `Your payment wasn't received on your recent bet with ${bet.user1DisplayName}`,
             openToMenu: "bet",
             isRead: false,
             betId,
@@ -336,7 +336,7 @@ contract.on(
           })
           batch.set(user1NotificationsRef.doc(bet.user1Id + Timestamp.now()), {
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
-            text: `You failed to pay on your recent bet with ${bet.user2DisplayName}`,
+            text: `Your payment wasn't received on your recent bet with ${bet.user2DisplayName}`,
             openToMenu: "bet",
             isRead: false,
             betId,

@@ -7,6 +7,7 @@ import {
   DocumentReference,
   getFirestore,
   runTransaction,
+  serverTimestamp,
 } from "firebase/firestore"
 import { firebaseApp } from "../../../../../../firestore.config"
 import { User } from "../../../../../interfaces/User"
@@ -65,6 +66,7 @@ export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
         user2PhotoURL: auth.currentUser?.photoURL,
         user2FollowThrough: user2FollowThrough,
         user2DisplayName: user2DisplayName,
+        timestamp: serverTimestamp(),
       })
     })
       .then(() => {
