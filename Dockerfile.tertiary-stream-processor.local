@@ -2,9 +2,8 @@ FROM node:18
 
 WORKDIR /app
 
-COPY ./chess-data-stream-processor/ancillary-stream ./chess-data-stream-processor/ancillary-stream
+COPY ./chess-data-stream-processor/tertiary-stream ./chess-data-stream-processor/tertiary-stream
 COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/contracts/ChessWager.sol/ChessWager.json
-
 # only in local
 COPY ./chess-wager-develop-firebase-adminsdk-z02bi-dfa580a7a5.json ./
 COPY ./chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json ./
@@ -12,10 +11,11 @@ COPY ./chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json ./
 COPY .env ./
 
 COPY ./chess-data-stream-processor/payment-processor ./chess-data-stream-processor/payment-processor
+
 WORKDIR /app/chess-data-stream-processor/payment-processor
 RUN npm install
 
-WORKDIR /app/chess-data-stream-processor/ancillary-stream
+WORKDIR /app/chess-data-stream-processor/tertiary-stream
 
 RUN npm install
 

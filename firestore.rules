@@ -208,8 +208,8 @@ service cloud.firestore {
       function areCreateRequestKeysValid() {
         let requestData = request.resource.data;
         return
-           requestData.keys().hasAll(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]) && 
-          requestData.keys().hasOnly(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]);
+           requestData.keys().hasAll(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "timestamp"]) && 
+          requestData.keys().hasOnly(["amount", "betSide", "createdAt", "gameId", "multiplier", "status", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "timestamp"]);
       }
 
       function isCreateRequestDataValid() {
@@ -229,6 +229,7 @@ service cloud.firestore {
           requestData.contractAddress is string &&
           requestData.hasUser1SeenUpdate is bool &&
           requestData.hasUser2SeenUpdate is bool &&
+          requestData.timestamp is timestamp &&
 
           requestData.amount > 0 &&
           (requestData.betSide == "white" || requestData.betSide == "black") &&
@@ -270,9 +271,9 @@ service cloud.firestore {
 
       function areJoinRequestKeysValid() {
           return 
-            !(request.resource.data.diff(resource.data).affectedKeys().hasAny([                                                                                                 "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"])) &&
-                                         request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]) &&
-                                          request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]);
+            !(request.resource.data.diff(resource.data).affectedKeys().hasAny([                                                                                                 "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate",            ])) &&
+                                         request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "timestamp"]) &&
+                                          request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "timestamp"]);
       }
 
       function isJoinRequestDataValid() {
@@ -285,7 +286,10 @@ service cloud.firestore {
           requestData.user2Metamask is string &&
           requestData.user2PhotoURL is string &&
           requestData.user2FollowThrough is list &&
-          requestData.user2DisplayName is string;
+          requestData.user2DisplayName is string &&
+          requestData.timestamp is timestamp &&
+
+          requestData.timestamp == request.time;
       }
 
       function isUser2Blocked() {
@@ -317,9 +321,9 @@ service cloud.firestore {
       function areLeaveRequestKeysValid() {
         let requestData = request.resource.data;
         return
-          !(requestData.diff(resource.data).affectedKeys().hasAny([                                                                                                 "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"])) &&
-                                       requestData.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]) &&
-                                        requestData.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]);
+          !(requestData.diff(resource.data).affectedKeys().hasAny([                                                                                                 "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate",            ])) &&
+                                       requestData.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "timestamp"]) &&
+                                        requestData.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "timestamp"]);
       }
 
       function isLeaveRequestDataValid() {
@@ -332,14 +336,16 @@ service cloud.firestore {
           requestData.user2Metamask is string &&
           requestData.user2PhotoURL is string &&
           requestData.user2FollowThrough is list &&
-          requestData.user2DisplayName is string;
+          requestData.user2DisplayName is string &&
+          requestData.timestamp is timestamp &&
+          requestData.timestamp == request.time;
       }
 
       function areKickRequestKeysValid() {
         return 
-          !(request.resource.data.diff(resource.data).affectedKeys().hasAny([                                                                                                 "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"])) &&
-                                       request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]) &&
-                                        request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate"]);
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny([                                                                                                 "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate",           ])) &&
+                                       request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "timestamp"]) &&
+                                        request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "timestamp"]);
       }
 
       function isKickRequestDataValid() {
@@ -351,6 +357,8 @@ service cloud.firestore {
           requestData.user2PhotoURL is string &&
           requestData.user2FollowThrough is list &&
           requestData.user2DisplayName is string &&
+          requestData.timestamp is timestamp &&
+
 
           requestData.user2Id == "" &&
           requestData.user2Metamask == "" &&
@@ -358,7 +366,8 @@ service cloud.firestore {
           requestData.user2FollowThrough == [] &&
           requestData.user2DisplayName == "" &&
           requestData.status == "ready" &&
-          resource.data.status == "pending";
+          resource.data.status == "pending" &&
+          requestData.timestamp == request.time;
       }
 
       function areApproveRequestKeysValid() {
@@ -374,7 +383,9 @@ service cloud.firestore {
           request.resource.data.status == "approved" &&
           resource.data.status == "pending" &&
           request.resource.data.timestamp is timestamp &&
-          request.resource.data.users is list;
+          request.resource.data.users is list &&
+          
+          request.resource.data.timestamp == request.time;
       }
 
       function areViewKeysFromUser1Valid() {
@@ -761,8 +772,8 @@ service cloud.firestore {
       function isNotificationUpdateKeyValid () {
         let requestData = request.resource.data;
         return
-           requestData.keys().hasAll([                                          "isRead"                 ]) &&
-          requestData.keys().hasOnly(["uid", "createdAt", "text", "openToMenu", "isRead", "clickedUserId"]);
+           requestData.keys().hasAll([                                          "isRead"                          ]) &&
+          requestData.keys().hasOnly(["uid", "createdAt", "text", "openToMenu", "isRead", "clickedUserId", "betId"]);
       }
 
       allow create: if isParentDocUser() || (canCreate() && isNotificationCreateDataValid() && isNotificationCreateKeyValid());

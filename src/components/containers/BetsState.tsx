@@ -56,20 +56,12 @@ const useBetState = () => {
       limit(30),
     )
 
-    const setDefaultTimestamp = (bet: Bet): Bet => {
-      return {
-        ...bet,
-        createdAt: bet.createdAt ?? Timestamp.now(),
-      }
-    }
-
     const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot) => {
-      const newBets = snapshot.docs.map((doc) => {
-        const bet = { ...doc.data(), id: doc.id } as Bet
-        return setDefaultTimestamp(bet)
-      })
+      const betsWithIds = snapshot.docs.map(
+        (doc) => ({ ...doc.data(), id: doc.id } as Bet),
+      )
 
-      setBets(newBets)
+      setBets(betsWithIds)
     })
 
     return () => {
@@ -84,7 +76,7 @@ const useBetState = () => {
   const { mostRecentButton, isDescending, isRealtime } =
     LobbyHeaderState.useContainer()
 
-  // This is for browser compatibility
+  // This sorting mechanism is mostly for browser compatibility
   const determineSortOrder = (
     a: number | string | Date | Timestamp,
     b: number | string | Date | Timestamp,
@@ -125,8 +117,8 @@ const useBetState = () => {
       case "":
       default: {
         return sortBasedOnDescending(
-          a?.createdAt?.toMillis() ?? Number.MAX_VALUE,
-          b?.createdAt?.toMillis() ?? Number.MAX_VALUE,
+          a?.createdAt?.toDate() ?? a?.timestamp?.toDate(),
+          b?.createdAt?.toDate() ?? b?.timestamp?.toDate(),
         )
       }
     }
@@ -245,8 +237,8 @@ const useBetState = () => {
       )
       .sort((a, b) =>
         determineSortOrder(
-          a?.createdAt?.toMillis() ?? Number.MAX_VALUE,
-          b?.createdAt?.toMillis() ?? Number.MAX_VALUE,
+          a?.createdAt?.toDate() ?? a?.timestamp?.toDate(),
+          b?.createdAt?.toDate() ?? b?.timestamp?.toDate(),
         ),
       ) ?? []
 

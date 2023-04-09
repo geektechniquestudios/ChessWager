@@ -10,45 +10,22 @@ import { UserDataState } from "../../../../containers/UserDataState"
 const db = getFirestore(firebaseApp)
 
 interface Props {
-  id?: string
-  amount?: number
-  betSide?: "black" | "white"
-  multiplier?: number
-  status?: string
-  user1Id?: string
-  user1Metamask?: string
-  user1PhotoURL?: string
-  user1DisplayName?: string
-  hasUser1Paid?: boolean
-  user2Id?: string
-  user2Metamask?: string
-  user2PhotoURL?: string
-  user2DisplayName?: string
-  hasUser2Paid?: boolean
-  createdAt?: Timestamp
-  gameId?: string
-  timestamp?: Timestamp
-  contractAddress?: string
-  user1FollowThrough?: number[]
-  user2FollowThrough?: number[]
-  bet?: Bet
-  hasUser1SeenUpdate?: boolean
-  hasUser2SeenUpdate?: boolean
+  bet: Bet
 }
 
-export const BetsListItem: React.FC<Props> = ({
-  id,
-  bet,
-  user1Id,
-  user2Id,
-  hasUser1SeenUpdate,
-  hasUser2SeenUpdate,
-  user1PhotoURL,
-  user2PhotoURL,
-  user1DisplayName,
-  user2DisplayName,
-  createdAt,
-}) => {
+export const BetsListItem: React.FC<Props> = ({ bet }) => {
+  const {
+    id,
+    user1Id,
+    user2Id,
+    hasUser1SeenUpdate,
+    hasUser2SeenUpdate,
+    user1PhotoURL,
+    user2PhotoURL,
+    user1DisplayName,
+    user2DisplayName,
+    createdAt,
+  } = bet
   const { goToMenu, setBet } = DropdownState.useContainer()
   const { auth } = Auth.useContainer()
   const betTotal =

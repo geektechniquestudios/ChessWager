@@ -1,6 +1,6 @@
 import { SignInButton } from "./buttons/SignInButton"
 import { MainHeaderButton } from "./buttons/MainHeaderButton"
-import { BiChevronDown, BiSearchAlt2 } from "react-icons/bi"
+import { BiChevronDown } from "react-icons/bi"
 import { RiChat2Line, RiNotification3Line } from "react-icons/ri"
 import { FaRegGem } from "react-icons/fa"
 import { CgProfile } from "react-icons/cg"

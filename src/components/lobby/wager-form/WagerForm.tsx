@@ -9,6 +9,7 @@ import { PlaceBet } from "./PlaceBet"
 import { QuickBet } from "./QuickBet"
 import { TheirBet } from "./TheirBet"
 import {
+  Timestamp,
   addDoc,
   collection,
   getFirestore,
@@ -122,6 +123,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
       amount: betAmount,
       betSide: betSide,
       createdAt: serverTimestamp(),
+      timestamp: Timestamp.now(), // this has to be timestamp.now() instead of serverTimestamp because predictive rendering leaves "createdAt" as null, causing sorting problems, so we fallback to this
       gameId: gameId,
       multiplier: multiplier,
       status: "ready",
@@ -153,7 +155,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
     <AnimatePresence>
       {showWagerForm && (
         <motion.div
-          className="absolute left-0 top-0 bottom-0 z-50 h-full select-none overflow-clip border-r border-stone-400 dark:border-stone-600"
+          className="absolute bottom-0 left-0 top-0 z-50 h-full select-none overflow-clip border-r border-stone-400 dark:border-stone-600"
           layout
           ref={wagerFormRef}
           initial={isFirstAnimation ? false : { width: 0 }}
