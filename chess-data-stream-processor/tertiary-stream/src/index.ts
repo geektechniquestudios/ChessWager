@@ -37,7 +37,7 @@ if (isLocal) {
 
 admin.initializeApp({ credential: cred })
 
-const defaultTime = 10
+const defaultTime = 120
 let secondsUntilRestartCheck = defaultTime
 
 let currentTime = Math.floor(Date.now() / 1000)
@@ -80,18 +80,18 @@ setInterval(async () => {
     if (!isRedisConnected) attemptRedisConnection()
     await redisClient
       .get("currentTime")
-      .then((currentTime) => (lastStoredTime = Number(currentTime) ?? 0))
+      .then((time) => (lastStoredTime = Number(time) ?? 0))
       .catch((err) => {
         console.error(err)
         isRedisConnected = false
       })
 
     if (currentTime < lastStoredTime - 20) {
-      console.log("Primary stream is behind, restarting")
+      console.log("Tertiary stream is behind, restarting")
       process.exit(0)
     } else {
       console.log(
-        "Primary stream is up to date, player is taking a while to move",
+        "Tertiary stream is up to date, player is taking a while to move",
       )
     }
     secondsUntilRestartCheck = defaultTime

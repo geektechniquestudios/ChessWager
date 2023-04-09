@@ -65,7 +65,7 @@ export const NotificationItem: React.FC<Props> = ({
 
   return (
     <a
-      className={`${unreadStyle} color-shift flex h-12 w-64 items-center justify-between gap-1 px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
+      className={`${unreadStyle} color-shift flex h-14 w-64 items-center justify-between gap-1 px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
       style={{ direction: "ltr" }}
       onClick={() => {
         clickedUserId && setClickedUserById(clickedUserId)
@@ -81,7 +81,7 @@ export const NotificationItem: React.FC<Props> = ({
         setAsRead()
       }}
     >
-      <p className="pointer-events-auto line-clamp-2 text-left text-xs">
+      <p className="pointer-events-auto line-clamp-3 text-left text-xs">
         {text}
       </p>
       <DropdownButton

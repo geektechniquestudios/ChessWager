@@ -24,6 +24,7 @@ const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestor
   db.collection("games")
 
 export const payWinnersByGameId = async (gameId: string) => {
+  if (!gameId || gameId !== "") return
   fetch(`https://lichess.org/api/game/${gameId}`)
     .then((res: any) => res.json())
     .then((gameData: any) => {
@@ -106,12 +107,11 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
         console.log("Contract has already been paid, skipping contract call")
       } else {
         console.log("paying winners for gameId: ", gameId)
-        contractDoc.set({ hasBeenPaid: true }, { merge: true })
-
         contract
           .payWinners(gameId, winningSide, overrides)
           .then((tx: any) => {
             console.log("tx: ", tx)
+            contractDoc.set({ hasBeenPaid: true }, { merge: true })
           })
           .catch((err: any) => {
             console.log("err: ", err)
