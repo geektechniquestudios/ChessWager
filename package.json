@@ -67,7 +67,7 @@
     "cypress-react-selector": "^3.0.0",
     "ethereum-waffle": "^4.0.10",
     "firebase-admin": "^11.5.0",
-    "hardhat": "^2.13.0",
+    "hardhat": "^2.13.1",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
     "prettier-plugin-solidity": "^1.1.3",
