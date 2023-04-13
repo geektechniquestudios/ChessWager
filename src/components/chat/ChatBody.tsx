@@ -15,19 +15,15 @@ export const ChatBody: React.FC<Props> = ({}) => {
       id="global-chat-body"
     >
       {messages
-        ?.filter((message) => {
-          if (userData) return !userData.blockedUsers.includes(message.uid)
-          return true
-        })
+        ?.filter(
+          (message) => !userData?.blockedUsers?.includes(message.uid) ?? true,
+        )
         .sort(
           (a: Message, b: Message) =>
             b.createdAt?.seconds - a.createdAt?.seconds,
         )
-        .map((message: Message, index: number) => (
-          <ChatMessage
-            key={message.uid + message?.createdAt + index}
-            {...message}
-          />
+        .map((message: Message) => (
+          <ChatMessage key={message.uid + message?.createdAt} {...message} />
         ))}
     </div>
   )

@@ -4,9 +4,9 @@ This repository's branch structure is designed similarly to the standard [gitflo
 
 ![](readme-assets/git-model.png)
 
-  - *Develop* could have any environmental changes at any time.
-  - *Test* will only have user testing and controlled tests running on its environment during the build process.
-  - *Main* operates in the production environment.
+- _Develop_ could have any environmental changes at any time.
+- _Test_ will only have user testing and controlled tests running on its environment during the build process.
+- _Main_ operates in the production environment.
 
 If you would like to contribute to this repo, start by opening an issue so we can discuss the feature. Create a feature branch from develop and make a pull request into develop when you're done.
 

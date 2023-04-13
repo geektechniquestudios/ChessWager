@@ -5,7 +5,7 @@ import { ChatToggle } from "./ChatToggle"
 const useWindowSize = () => {
   const [width, setWidth] = useState<number>(window.innerWidth)
   const [prevWidth, setPrevWidth] = useState(width)
-  const { setShowChat } = ChatToggle.useContainer()
+  const { setShowChat, setAreNewMessages } = ChatToggle.useContainer()
 
   const handleWindowSizeChange = () => {
     if (prevWidth >= 641 && width < 641) setShowChat(false)
@@ -13,8 +13,10 @@ const useWindowSize = () => {
       prevWidth < 641 &&
       width >= 641 &&
       localStorage.getItem("showChat") === "true"
-    )
+    ) {
       setShowChat(true)
+      setAreNewMessages(false)
+    }
     setPrevWidth(width)
     setWidth(window.innerWidth)
   }

@@ -21,6 +21,7 @@ import { Auth } from "../../../../containers/Auth"
 import { UserDataState } from "../../../../containers/UserDataState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { ConvoChatMessage } from "./ConvoChatMessage"
+import { LayoutGroup } from "framer-motion"
 
 const db = getFirestore(firebaseApp)
 
@@ -88,15 +89,19 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
         className="flex flex-col-reverse"
       >
         <div style={{ direction: "ltr" }} id="convo-body" className="pt-2">
-          {fullMessages
-            .reverse()
-            ?.filter((message) => !userData?.blockedUsers.includes(message.uid))
-            .map((message: Message) => (
-              <ConvoChatMessage
-                key={message.createdAt.toMillis()}
-                {...message}
-              />
-            ))}
+          <LayoutGroup>
+            {fullMessages
+              .reverse()
+              ?.filter(
+                (message) => !userData?.blockedUsers.includes(message.uid),
+              )
+              .map((message: Message) => (
+                <ConvoChatMessage
+                  key={message.createdAt.toDate().toDateString()}
+                  {...message}
+                />
+              ))}
+          </LayoutGroup>
         </div>
       </InfiniteScroll>
     </div>

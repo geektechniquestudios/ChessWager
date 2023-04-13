@@ -1,130 +1,30 @@
-import React, { useCallback, useEffect, useState } from "react"
-// @ts-ignore
-import ndjsonStream from "can-ndjson-stream"
+import React from "react"
 import { PlayerData } from "./PlayerData"
-import { GameState } from "../containers/GameState"
 import Chessground from "@react-chess/chessground"
 import { GameResultPopup } from "./popup/GameResultPopup"
 import { motion } from "framer-motion"
+import { useGameStream } from "./useGameStream"
 
-// We use an old version of chessground. If we ever upgarde, uncomment the styles below.
+// We use an old version of chessground because it looks better. If we ever upgarde, uncomment the styles below.
 // import "chessground/assets/chessground.base.css"
 // import "chessground/assets/chessground.brown.css"
 // import "chessground/assets/chessground.cburnett.css"
 // import "chessground/assets/chessground.base.css"
 
-interface Res {
-  value: {
-    t: string
-    d: Featured | Move
-  }
-  done: boolean
-}
-interface Featured {
-  id: string
-  orientation: "black" | "white"
-  players: Player[]
-  fen: string
-  wc: number
-  bc: number
-}
-
-interface Move {
-  fen: string
-  lm: string
-  wc: number
-  bc: number
-}
-
-interface Player {
-  color: string
-  user: {
-    name: string
-    id: string
-    title: string
-  }
-  rating: number
-  seconds: number
-}
-
 export const ChessGame: React.FC = () => {
-  const { setGameId } = GameState.useContainer()
-
-  const [fen, setFen] = useState("")
-
-  const [whiteName, setWhiteName] = useState("")
-  const [whiteTime, setWhiteTime] = useState(0)
-  const [whiteRating, setWhiteRating] = useState(0)
-  const [whiteTitle, setWhiteTitle] = useState("")
-
-  const [blackName, setBlackName] = useState("")
-  const [blackTime, setBlackTime] = useState(0)
-  const [blackRating, setBlackRating] = useState(0)
-  const [blackTitle, setBlackTitle] = useState("")
-  const [orientation, setOrientation] = useState<"white" | "black" | undefined>(
-    "white",
-  )
-
-  const [isNewGame, setIsNewGame] = useState(true)
-
-  const updateTitles = useCallback((res: Res): void => {
-    let val: Featured = res.value.d as Featured
-    const white: Player | undefined = val.players.find(
-      (player: Player) => player.color === "white",
-    )
-    const black: Player | undefined = val.players.find(
-      (player: Player) => player.color === "black",
-    )
-
-    if (black === undefined || white === undefined) return
-
-    setFen(val.fen ?? "")
-    setGameId(val.id)
-
-    const resolveOrientation = (orientation: string): "white" | "black" =>
-      "white" === orientation || "black" === orientation ? orientation : "white"
-
-    setOrientation(resolveOrientation(val.orientation))
-
-    setWhiteTitle(white.user.title ?? "")
-    setBlackTitle(black.user.title ?? "")
-    setWhiteName(white.user.name)
-    setWhiteRating(white.rating)
-
-    if (black.user.title === undefined) setBlackTitle("")
-    setBlackName(black.user.name)
-    setBlackRating(black.rating)
-  }, [])
-
-  useEffect(() => {
-    fetch("https://lichess.org/api/tv/feed", {
-      method: "get",
-    })
-      .then((data) => ndjsonStream(data.body))
-      .then((stream) => {
-        const streamReader = stream.getReader()
-        streamReader.read().then(async (res: Res) => {
-          updateTitles(res)
-          while (!res || !res.done) {
-            res = await streamReader.read()
-            if (res.value.t === "fen") {
-              // data is a move
-              setFen(res.value.d.fen)
-              setWhiteTime(res.value.d.wc)
-              setBlackTime(res.value.d.bc)
-              setIsNewGame(false)
-            } else {
-              // data is a new game
-              updateTitles(res)
-              setWhiteTime(0)
-              setBlackTime(0)
-              setIsNewGame(true)
-            }
-          }
-        })
-      })
-      .catch(console.error)
-  }, [updateTitles])
+  const {
+    fen,
+    whiteName,
+    whiteTime,
+    whiteRating,
+    whiteTitle,
+    blackName,
+    blackTime,
+    blackRating,
+    blackTitle,
+    orientation,
+    isNewGame,
+  } = useGameStream()
 
   return (
     <div className="flex h-full w-auto flex-col">
