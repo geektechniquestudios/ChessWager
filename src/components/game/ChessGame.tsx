@@ -35,8 +35,8 @@ export const ChessGame: React.FC = () => {
             initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="color-shift w-2/5 resize-x flex-col justify-center overflow-hidden rounded-xl border border-stone-500 bg-stone-100 p-1.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-            style={{ minWidth: "16.5em", maxWidth: "80vh" }}
+            className="color-shift w-[30em] resize-x flex-col justify-center overflow-hidden rounded-xl border border-stone-500 bg-stone-100 p-1.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
+            style={{ minWidth: "16.5em", maxWidth: "85vh" }}
           >
             <div className="relative flex h-full w-full resize justify-center align-middle">
               <GameResultPopup orientation={orientation} />
