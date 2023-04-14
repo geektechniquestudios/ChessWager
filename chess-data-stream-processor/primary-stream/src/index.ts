@@ -42,6 +42,11 @@ let secondsUntilRestartCheck = defaultTime
 
 let currentTime = Math.floor(Date.now() / 1000)
 
+const payWinnersWithDelay = async (gameId: string) => {
+  await new Promise((resolve) => setTimeout(resolve, 16000))
+  payWinnersByGameId(gameId)
+}
+
 const callLichessLiveTv = () => {
   let lastGameId = ""
   let gameId = ""
@@ -56,7 +61,7 @@ const callLichessLiveTv = () => {
         console.log("new game: ", obj.d.id)
         lastGameId = gameId === "" ? obj.d.id : gameId // if gameId is empty, set it to the new game id
         gameId = obj.d.id
-        payWinnersByGameId(lastGameId)
+        payWinnersWithDelay(lastGameId)
       } else {
         console.log("players moving ", obj)
       }

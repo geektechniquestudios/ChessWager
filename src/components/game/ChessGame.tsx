@@ -28,7 +28,7 @@ export const ChessGame: React.FC = () => {
 
   return (
     <div className="flex h-full w-auto flex-col">
-      <div className="scrollbar flex h-full flex-col items-center justify-center gap-2 overflow-hidden p-2">
+      <div className="flex h-full flex-col items-center justify-center gap-2 overflow-hidden p-2">
         <div className="my-0 flex w-full justify-center">
           <motion.div
             layout
