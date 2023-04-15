@@ -12,7 +12,7 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { firebaseApp } from "../../../../../../firestore.config"
