@@ -50,7 +50,8 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
 
   const loadMoreMessages = async () => {
     const amountToLoad = 15
-    const lastVisible = fullMessages?.[0]?.createdAt ?? timestamp
+    const lastVisible =
+      fullMessages?.[fullMessages.length - 1]?.createdAt ?? timestamp
     const q2 = query(
       messagesRef,
       orderBy("createdAt", "desc"),
@@ -69,41 +70,46 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
     loadMoreMessages()
   }, [])
 
-  const scrollRef = useRef<HTMLDivElement>(null)
-
   return (
     <div
       className="scrollbar flex h-96 flex-col-reverse justify-between overflow-y-auto overflow-x-hidden"
       style={{ direction: "rtl" }}
       id="convo-scroll-div"
-      ref={scrollRef}
     >
-      <InfiniteScroll
-        scrollThreshold="200px"
-        scrollableTarget="convo-scroll-div"
-        dataLength={fullMessages?.length ?? 0}
-        next={loadMoreMessages}
-        hasMore={hasMore}
-        loader={<LinearProgress />}
-        inverse
-        className="flex flex-col-reverse"
-      >
-        <div style={{ direction: "ltr" }} id="convo-body" className="pt-2">
-          <LayoutGroup>
-            {fullMessages
-              .reverse()
-              ?.filter(
-                (message) => !userData?.blockedUsers.includes(message.uid),
-              )
-              .map((message: Message) => (
-                <ConvoChatMessage
-                  key={message.createdAt.toDate().toDateString()}
-                  {...message}
-                />
-              ))}
-          </LayoutGroup>
-        </div>
-      </InfiniteScroll>
+      <div className="flex flex-col-reverse">
+        <InfiniteScroll
+          scrollThreshold="100px"
+          scrollableTarget="convo-scroll-div"
+          dataLength={fullMessages?.length ?? 0}
+          next={loadMoreMessages}
+          hasMore={hasMore}
+          loader={fullMessages.length > 6 && <LinearProgress />}
+          className="flex flex-col-reverse"
+          initialScrollY={1}
+          inverse
+        >
+          <div
+            style={{ direction: "ltr" }}
+            id="convo-body"
+            className="flex flex-col overflow-hidden pt-2"
+          >
+            <LayoutGroup>
+              {fullMessages
+                .slice()
+                .reverse()
+                ?.filter(
+                  (message) => !userData?.blockedUsers.includes(message.uid),
+                )
+                .map((message: Message) => (
+                  <ConvoChatMessage
+                    key={message.createdAt.toString()}
+                    {...message}
+                  />
+                ))}
+            </LayoutGroup>
+          </div>
+        </InfiniteScroll>
+      </div>
     </div>
   )
 }

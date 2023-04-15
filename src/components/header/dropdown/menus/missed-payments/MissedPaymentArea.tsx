@@ -88,7 +88,14 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
           if (!(await isCorrectBlockchain(provider))) {
             return
           }
-          const transaction = await contract.payWinners(gameId, winner)
+          const overrides = {
+            gasLimit: 1000000,
+          }
+          const transaction = await contract.payWinners(
+            gameId,
+            winner,
+            overrides,
+          )
           transaction.wait().then(() => {
             contract.removeAllListeners()
           })

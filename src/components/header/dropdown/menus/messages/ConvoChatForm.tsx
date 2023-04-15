@@ -13,6 +13,7 @@ import { firebaseApp } from "../../../../../../firestore.config"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { ConversationsState } from "../../../../containers/ConversationsState"
+
 const db = getFirestore(firebaseApp)
 
 interface Props {
@@ -97,7 +98,7 @@ export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
   }
 
   return (
-    <div className="w-full grow flex-col justify-start pb-2">
+    <div className="mt-1 w-full grow flex-col justify-start pb-2">
       <fieldset
         disabled={!auth.currentUser}
         className="fieldset flex justify-center"
@@ -121,7 +122,7 @@ export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
           />
           <div className="flex flex-col-reverse">
             <button
-              className="color-shift mr-2 ml-1.5 mb-1 grid place-content-center rounded-full p-1.5 hover:bg-stone-400 dark:hover:bg-stone-800"
+              className="color-shift mb-1 ml-1.5 mr-2 grid place-content-center rounded-full p-1.5 hover:bg-stone-400 dark:hover:bg-stone-800"
               title="Press Enter to Send"
             >
               <BiSend size="25" />
