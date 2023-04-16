@@ -7,8 +7,11 @@ require("dotenv").config({ path: "../../.env" })
 const redisClient = createClient({ url: "redis://redis:6379" })
 
 let isRedisConnected = false
+let isLocked = false
 const attemptRedisConnection = () => {
   console.log("Attempting Redis connection...")
+  if (isLocked) return
+  isLocked = true
   redisClient
     .connect()
     .then(() => {
@@ -18,6 +21,9 @@ const attemptRedisConnection = () => {
     .catch((err) => {
       console.error(err)
       isRedisConnected = false
+    })
+    .finally(() => {
+      isLocked = false
     })
 }
 
