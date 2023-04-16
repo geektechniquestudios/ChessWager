@@ -24,7 +24,7 @@ const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestor
   db.collection("games")
 
 export const payWinnersByGameId = async (gameId: string) => {
-  if (!gameId || gameId !== "") return
+  if (!gameId || gameId === "") return
   fetch(`https://lichess.org/api/game/${gameId}`)
     .then((res: any) => res.json())
     .then((gameData: any) => {
