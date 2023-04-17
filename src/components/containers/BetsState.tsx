@@ -237,8 +237,8 @@ const useBetState = () => {
       )
       .sort((a, b) =>
         determineSortOrder(
-          a?.createdAt?.toDate() ?? a?.timestamp?.toDate(),
-          b?.createdAt?.toDate() ?? b?.timestamp?.toDate(),
+          a?.localCreatedAt?.toDate(),
+          b?.localCreatedAt?.toDate(),
         ),
       ) ?? []
 

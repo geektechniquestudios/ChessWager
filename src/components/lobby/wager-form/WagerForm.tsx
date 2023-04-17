@@ -123,7 +123,8 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
       amount: betAmount,
       betSide: betSide,
       createdAt: serverTimestamp(),
-      timestamp: Timestamp.now(), // this has to be timestamp.now() instead of serverTimestamp because predictive rendering leaves "createdAt" as null, causing sorting problems, so we fallback to this
+      timestamp: serverTimestamp(),
+      localCreatedAt: Timestamp.now(), // this has to be timestamp.now() instead of serverTimestamp because predictive rendering leaves "createdAt" as null, causing sorting problems, so we fallback to this
       gameId: gameId,
       multiplier: multiplier,
       status: "ready",
