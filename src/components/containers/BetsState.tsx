@@ -36,11 +36,14 @@ const genericBet: Bet = {
   user2DisplayName: "",
   hasUser2Paid: false,
   createdAt: Timestamp.now(),
+  localCreatedAt: Timestamp.now(),
   gameId: "",
   timestamp: Timestamp.now(),
   contractAddress: "",
   user1FollowThrough: [],
   user2FollowThrough: [],
+  hasUser1SeenUpdate: true,
+  hasUser2SeenUpdate: true,
 }
 
 const useBetState = () => {
@@ -137,7 +140,8 @@ const useBetState = () => {
         bet.user1Id !== user?.uid &&
         bet.gameId !== "" &&
         (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
-        (!userData?.blockedUsers.includes(bet.user2Id) ?? true) &&
+        bet.user2Id !== null &&
+        (!userData?.blockedUsers.includes(bet.user2Id!) ?? true) &&
         !selectedBetMap.get(bet.id)?.isSelected
       return (
         bets

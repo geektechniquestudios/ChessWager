@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion"
 
 interface Props {
-  displayName: string
+  displayName?: string
   isUser1: boolean
 }
 

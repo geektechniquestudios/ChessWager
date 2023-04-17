@@ -83,10 +83,10 @@ export const MiniBet: React.FC<Props> = ({ bet }) => {
       <a
         className={`${
           betSide === "black" ? " dark:from-black" : "dark:from-white"
-        } grid place-content-center bg-gradient-to-l py-0.5 pr-1 pl-2 dark:to-stone-700`}
+        } grid place-content-center bg-gradient-to-l py-0.5 pl-2 pr-1 dark:to-stone-700`}
         onClick={(e) => {
           e.stopPropagation()
-          setClickedUserById(user2Id)
+          setClickedUserById(user2Id!)
           openDropdownToMenu("clickedUser")
         }}
       >
