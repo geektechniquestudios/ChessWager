@@ -38,10 +38,18 @@ export const UserBetData: React.FC<Props> = ({
         {isUserBlocked ? (
           <MdBlockFlipped className="h-8 w-8" />
         ) : (
-          <img src={photoURL} className="h-8 w-8 rounded-full" />
+          <button
+            onClick={() => {
+              setClickedUserById(id)
+              goToMenu("clickedUser")
+            }}
+            className="h-8 w-8 rounded-full"
+          >
+            <img src={photoURL} className="h-8 w-8 rounded-full" />
+          </button>
         )}
         <div
-          className="absolute top-0 right-0 m-1 grid place-content-center rounded-full bg-stone-100 p-0.5 dark:bg-stone-300"
+          className="absolute right-0 top-0 m-1 grid place-content-center rounded-full bg-stone-100 p-0.5 dark:bg-stone-300"
           title={funded ? "Payment Sent" : "No Payment Sent"}
         >
           {funded ? (
