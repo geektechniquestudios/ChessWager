@@ -1,18 +1,14 @@
-import { RiCloseFill } from "react-icons/ri"
-import { Auth } from "../../../../containers/Auth"
-import { LobbyState } from "../../../../containers/LobbyState"
 import {
   doc,
   DocumentData,
   DocumentReference,
-  getFirestore,
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
+import { RiCloseFill } from "react-icons/ri"
 import { Bet } from "../../../../../interfaces/Bet"
-
-const db = getFirestore(firebaseApp)
+import { Auth } from "../../../../containers/Auth"
+import { LobbyState } from "../../../../containers/LobbyState"
 
 interface Props {
   bet: Bet
@@ -20,7 +16,7 @@ interface Props {
 
 export const LeaveButton: React.FC<Props> = ({ bet }) => {
   const { id, user2Id, status } = bet
-  const { user, auth } = Auth.useContainer()
+  const { user, auth, db } = Auth.useContainer()
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
 
   const { refreshLobby } = LobbyState.useContainer()

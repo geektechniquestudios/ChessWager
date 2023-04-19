@@ -1,13 +1,10 @@
-import { doc, getFirestore, Timestamp, updateDoc } from "firebase/firestore"
+import { doc, updateDoc } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
-import { firebaseApp } from "../../../../../../firestore.config"
 import { Bet } from "../../../../../interfaces/Bet"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { Price } from "../../../../containers/Price"
 import { UserDataState } from "../../../../containers/UserDataState"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {
   bet: Bet
@@ -27,7 +24,7 @@ export const BetsListItem: React.FC<Props> = ({ bet }) => {
     createdAt,
   } = bet
   const { goToMenu, setBet } = DropdownState.useContainer()
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const betTotal =
     bet?.amount ?? 0 + (bet?.amount ?? 0) * (bet?.multiplier ?? 0)
   const { avaxPrice } = Price.useContainer()

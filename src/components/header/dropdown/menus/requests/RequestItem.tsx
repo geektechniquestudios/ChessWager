@@ -3,19 +3,15 @@ import {
   collection,
   deleteDoc,
   doc,
-  getFirestore,
   serverTimestamp,
   Timestamp,
   writeBatch,
 } from "firebase/firestore"
 import { BsCheck2, BsX } from "react-icons/bs"
-import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { DropdownButton } from "../persona/buttons/DropdownButton"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {
   id: string
@@ -30,7 +26,7 @@ export const RequestItem: React.FC<Props> = ({
   photoURL,
   createdAt,
 }) => {
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
 
   const targetUserRef = doc(db, "users", id)
   const notificationsCollection = collection(targetUserRef, "notifications")

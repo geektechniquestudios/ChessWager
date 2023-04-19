@@ -1,27 +1,27 @@
-import { useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { createContainer } from "unstated-next"
 import { BigNumber, ethers } from "ethers"
 import { parseEther } from "ethers/lib/utils"
 import {
-  getAuth,
   GoogleAuthProvider,
-  signInWithPopup,
   UserCredential,
+  getAuth,
+  signInWithPopup,
 } from "firebase/auth"
-import { firebaseApp } from "../../../firestore.config"
 import {
-  getFirestore,
-  doc,
-  updateDoc,
-  serverTimestamp,
-  runTransaction,
   DocumentReference,
   Timestamp,
+  doc,
+  getFirestore,
+  runTransaction,
+  serverTimestamp,
+  updateDoc,
 } from "firebase/firestore"
+import { useState } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { createContainer } from "unstated-next"
+import { firebaseApp } from "../../../firestore.config"
+import { Notification } from "../../interfaces/Notification"
 import { User } from "../../interfaces/User"
 import { CustomSwal } from "../popups/CustomSwal"
-import { Notification } from "../../interfaces/Notification"
 
 declare let window: any
 const db = getFirestore(firebaseApp)
@@ -217,6 +217,7 @@ const useAuth = () => {
     isWalletConnecting,
     doesUserHaveEnoughAvax,
     isLoading,
+    db,
   }
 }
 

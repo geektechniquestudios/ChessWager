@@ -4,19 +4,15 @@ import {
   doc,
   DocumentReference,
   getDoc,
-  getFirestore,
   updateDoc,
 } from "firebase/firestore"
 import { BsX } from "react-icons/bs"
-import { firebaseApp } from "../../../../../../firestore.config"
+import { Bet } from "../../../../../interfaces/Bet"
+import { Notification } from "../../../../../interfaces/Notification"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { DropdownButton } from "../persona/buttons/DropdownButton"
-import { Notification } from "../../../../../interfaces/Notification"
-import { Bet } from "../../../../../interfaces/Bet"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {
   notification: Notification
@@ -35,7 +31,8 @@ export const NotificationItem: React.FC<Props> = ({
     notification
   const { goToMenu, setBet } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
+
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const notificationsCollection = collection(userRef, "notifications")
   const notificationRef = doc(notificationsCollection, id)

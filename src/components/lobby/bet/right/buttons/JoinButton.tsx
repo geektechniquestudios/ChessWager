@@ -1,22 +1,18 @@
-import { Auth } from "../../../../containers/Auth"
-import { DarkMode } from "../../../../containers/DarkMode"
-import { LobbyState } from "../../../../containers/LobbyState"
 import {
   doc,
   DocumentData,
   DocumentReference,
-  getFirestore,
   runTransaction,
   serverTimestamp,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
-import { User } from "../../../../../interfaces/User"
-import { CustomSwal } from "../../../../popups/CustomSwal"
-import { Bet } from "../../../../../interfaces/Bet"
-import { GiJoint } from "react-icons/gi"
 import { AnimatePresence, motion } from "framer-motion"
-
-const db = getFirestore(firebaseApp)
+import { GiJoint } from "react-icons/gi"
+import { Bet } from "../../../../../interfaces/Bet"
+import { User } from "../../../../../interfaces/User"
+import { Auth } from "../../../../containers/Auth"
+import { DarkMode } from "../../../../containers/DarkMode"
+import { LobbyState } from "../../../../containers/LobbyState"
+import { CustomSwal } from "../../../../popups/CustomSwal"
 
 interface Props {
   bet: Bet
@@ -25,7 +21,7 @@ interface Props {
 
 export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
   const { id, user1Id, status, amount, multiplier } = bet
-  const { auth, walletAddress, connectWallet, doesUserHaveEnoughAvax } =
+  const { auth, walletAddress, connectWallet, doesUserHaveEnoughAvax, db } =
     Auth.useContainer()
   const { refreshLobby } = LobbyState.useContainer()
 

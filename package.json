@@ -4,7 +4,7 @@
   "version": "0.0.16",
   "scripts": {
     "dev": "vite",
-    "cy:run": "cypress run",
+    "cy:run": "cypress run --config video=false",
     "cy:test": "start-server-and-test dev http-get://localhost:5173 cy:run",
     "test-hardhat": "hardhat test",
     "test": "hardhat test && start-server-and-test 'yarn run dev' http-get://localhost:5173 'yarn run cy:run'",

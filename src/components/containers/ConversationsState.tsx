@@ -1,13 +1,7 @@
-import { createContainer } from "unstated-next"
-import type { Conversation } from "../../interfaces/Conversation"
-import { useCollectionData } from "react-firebase-hooks/firestore"
-import { Auth } from "./Auth"
-import { firebaseApp } from "../../../firestore.config"
 import {
   collection,
   doc,
   getDocs,
-  getFirestore,
   limit,
   orderBy,
   Query,
@@ -18,13 +12,15 @@ import {
   where,
 } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import { UserMenuState } from "./UserMenuState"
+import { useCollectionData } from "react-firebase-hooks/firestore"
+import { createContainer } from "unstated-next"
+import type { Conversation } from "../../interfaces/Conversation"
+import { Auth } from "./Auth"
 import { DropdownState } from "./DropdownState"
-
-const db = getFirestore(firebaseApp)
+import { UserMenuState } from "./UserMenuState"
 
 const useConversationsState = () => {
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
 
   const conversationsCollectionRef = collection(db, "conversations")
 

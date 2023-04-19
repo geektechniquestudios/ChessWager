@@ -1,23 +1,19 @@
-import { createContainer } from "unstated-next"
-import { GameState } from "./GameState"
-import type { Bet, BetMetadata } from "../../interfaces/Bet"
-import { useEffect, useState } from "react"
-import { Auth } from "./Auth"
-import { LobbyHeaderState } from "./LobbyHeaderState"
-import { firebaseApp } from "../../../firestore.config"
 import {
+  QuerySnapshot,
+  Timestamp,
   collection,
-  getFirestore,
   limit,
   onSnapshot,
   query,
-  QuerySnapshot,
-  Timestamp,
   where,
 } from "firebase/firestore"
+import { useEffect, useState } from "react"
+import { createContainer } from "unstated-next"
+import type { Bet, BetMetadata } from "../../interfaces/Bet"
+import { Auth } from "./Auth"
+import { GameState } from "./GameState"
+import { LobbyHeaderState } from "./LobbyHeaderState"
 import { UserDataState } from "./UserDataState"
-
-const db = getFirestore(firebaseApp)
 
 const genericBet: Bet = {
   id: "",
@@ -48,6 +44,9 @@ const genericBet: Bet = {
 
 const useBetState = () => {
   const { gameId } = GameState.useContainer()
+  const { user, isLoading, db } = Auth.useContainer()
+  const { userData } = UserDataState.useContainer()
+
   const [bets, setBets] = useState<Bet[]>([])
 
   useEffect(() => {
@@ -126,9 +125,6 @@ const useBetState = () => {
       }
     }
   }
-
-  const { user, isLoading } = Auth.useContainer()
-  const { userData } = UserDataState.useContainer()
 
   const [realtimeBets, setRealtimeBets] = useState<Bet[]>([])
   const [refreshingBets, setRefreshingBets] = useState<Bet[]>([])

@@ -3,7 +3,6 @@ import {
   collection,
   doc,
   getDocs,
-  getFirestore,
   limit,
   orderBy,
   Query,
@@ -12,24 +11,21 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore"
+import { LayoutGroup } from "framer-motion"
 import { useEffect, useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { firebaseApp } from "../../../../../../firestore.config"
 import type { Message } from "../../../../../interfaces/Message"
 import { Auth } from "../../../../containers/Auth"
 import { UserDataState } from "../../../../containers/UserDataState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { ConvoChatMessage } from "./ConvoChatMessage"
-import { LayoutGroup } from "framer-motion"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {}
 
 export const ConvoChatBody: React.FC<Props> = ({}) => {
   const { userData } = UserDataState.useContainer()
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const { userIdFromMessages } = UserMenuState.useContainer()
   const convoId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
   const messagesRef = collection(doc(db, "conversations", convoId), "messages")

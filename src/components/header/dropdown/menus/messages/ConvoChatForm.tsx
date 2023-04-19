@@ -1,20 +1,16 @@
 import { TextareaAutosize } from "@mui/material"
-import { Auth } from "../../../../containers/Auth"
-import "../../../../../style/dropdown.scss"
-import { BiSend } from "react-icons/bi"
 import {
   collection,
   doc,
-  getFirestore,
   serverTimestamp,
   writeBatch,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { BiSend } from "react-icons/bi"
+import "../../../../../style/dropdown.scss"
+import { Auth } from "../../../../containers/Auth"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { ConversationsState } from "../../../../containers/ConversationsState"
-
-const db = getFirestore(firebaseApp)
+import { UserMenuState } from "../../../../containers/UserMenuState"
 
 interface Props {
   dummy: React.RefObject<HTMLInputElement>
@@ -23,7 +19,7 @@ interface Props {
 export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
   const { convoFormValue, setConvoFormValue } = ChatFormData.useContainer()
 
-  const { user, auth } = Auth.useContainer()
+  const { user, auth, db } = Auth.useContainer()
   const { userIdFromMessages } = UserMenuState.useContainer()
   const convoId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
   const setFormValue = (formValue: string) => {

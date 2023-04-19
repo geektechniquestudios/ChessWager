@@ -1,29 +1,25 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react"
-import { GameState } from "../../containers/GameState"
-import { Auth } from "../../containers/Auth"
-import { SideChooser } from "./SideChooser"
-import { YourBet } from "./YourBet"
-import { Multiplier } from "./Multiplier"
-import { Total } from "./Total"
-import { PlaceBet } from "./PlaceBet"
-import { QuickBet } from "./QuickBet"
-import { TheirBet } from "./TheirBet"
 import {
   Timestamp,
   addDoc,
   collection,
-  getFirestore,
   serverTimestamp,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../firestore.config"
-import { UserDataState } from "../../containers/UserDataState"
-import { CustomSwal } from "../../popups/CustomSwal"
 import { AnimatePresence, motion } from "framer-motion"
+import { MutableRefObject, useEffect, useRef, useState } from "react"
+import { Auth } from "../../containers/Auth"
 import { BetsState } from "../../containers/BetsState"
-import { WagerFormHeader } from "./WagerFormHeader"
+import { GameState } from "../../containers/GameState"
+import { UserDataState } from "../../containers/UserDataState"
 import { WindowSize } from "../../containers/WindowSize"
-
-const db = getFirestore(firebaseApp)
+import { CustomSwal } from "../../popups/CustomSwal"
+import { Multiplier } from "./Multiplier"
+import { PlaceBet } from "./PlaceBet"
+import { QuickBet } from "./QuickBet"
+import { SideChooser } from "./SideChooser"
+import { TheirBet } from "./TheirBet"
+import { Total } from "./Total"
+import { WagerFormHeader } from "./WagerFormHeader"
+import { YourBet } from "./YourBet"
 
 interface Props {
   bettingLobbyRef: React.MutableRefObject<any>
@@ -37,6 +33,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
     auth,
     connectWallet,
     doesUserHaveEnoughAvax,
+    db,
   } = Auth.useContainer()
   const { showWagerForm, setShowWagerForm } = BetsState.useContainer()
 

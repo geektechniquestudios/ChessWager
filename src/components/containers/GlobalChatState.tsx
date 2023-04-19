@@ -1,6 +1,5 @@
 import {
   collection,
-  getFirestore,
   orderBy,
   Query,
   query,
@@ -11,11 +10,10 @@ import { useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { createContainer } from "unstated-next"
 import { Message } from "../../interfaces/Message"
-import { firebaseApp } from "../../../firestore.config"
-
-const db = getFirestore(firebaseApp)
+import { Auth } from "./Auth"
 
 const useGlobalChatState = () => {
+  const { db } = Auth.useContainer()
   const messagesRef = collection(db, "messages")
   const [timestamp] = useState<Timestamp>(Timestamp.now())
   const q = query(

@@ -3,14 +3,10 @@ import {
   collection,
   deleteDoc,
   doc,
-  getFirestore,
   setDoc,
 } from "firebase/firestore"
 import { CgUnblock } from "react-icons/cg"
-import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {
   userName: string
@@ -23,7 +19,7 @@ export const BlockedUserItem: React.FC<Props> = ({
   photoURL,
   uid,
 }) => {
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const blockedCollection = collection(userRef, "blocked")
   const unBlockUser = () => {

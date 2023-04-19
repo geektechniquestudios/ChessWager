@@ -1,17 +1,14 @@
-import { arrayRemove, doc, getFirestore, writeBatch } from "firebase/firestore"
+import { arrayRemove, doc, writeBatch } from "firebase/firestore"
 import { RiUserUnfollowLine } from "react-icons/ri"
-import { firebaseApp } from "../../../../../../../firestore.config"
 import { Auth } from "../../../../../containers/Auth"
 import { DropdownButton } from "./DropdownButton"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {
   id: string
 }
 
 export const RemoveFriendButton: React.FC<Props> = ({ id }) => {
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const removeFriend = () => {
     const targetUserRef = doc(db, "users", id)
     const userRef = doc(db, "users", auth.currentUser!.uid)

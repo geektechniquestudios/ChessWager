@@ -1,23 +1,15 @@
 import { TextareaAutosize } from "@mui/material"
-import { Auth } from "../../../../containers/Auth"
-import "../../../../../style/dropdown.scss"
+import { addDoc, collection, serverTimestamp } from "firebase/firestore"
 import { BiSend } from "react-icons/bi"
-import {
-  addDoc,
-  collection,
-  getFirestore,
-  serverTimestamp,
-} from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
+import "../../../../../style/dropdown.scss"
+import { Auth } from "../../../../containers/Auth"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { CustomSwal } from "../../../../popups/CustomSwal"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {}
 
 export const ContactForm: React.FC<Props> = ({}) => {
-  const { user, auth } = Auth.useContainer()
+  const { user, auth, db } = Auth.useContainer()
   const { reportFormValue, setReportFormValue } = ChatFormData.useContainer()
   const sendMessage = async (
     e:
@@ -73,7 +65,7 @@ export const ContactForm: React.FC<Props> = ({}) => {
           />
           <div className="flex flex-col-reverse">
             <button
-              className="color-shift mr-2 ml-1.5 mb-1 grid place-content-center rounded-full p-1.5 hover:bg-stone-400 dark:hover:bg-stone-800"
+              className="color-shift mb-1 ml-1.5 mr-2 grid place-content-center rounded-full p-1.5 hover:bg-stone-400 dark:hover:bg-stone-800"
               title="Press Enter to Send"
             >
               <BiSend size="25" />

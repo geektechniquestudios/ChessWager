@@ -1,17 +1,14 @@
-import "../../../../../style/scrollbar.scss"
-import { ConvoItem } from "./ConvoItem"
-import { UserMenuState } from "../../../../containers/UserMenuState"
-import { ConversationsState } from "../../../../containers/ConversationsState"
-import { Conversation, User } from "../../../../../interfaces/Conversation"
-import { Auth } from "../../../../containers/Auth"
-import { doc, getFirestore, updateDoc } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
-import { UserDataState } from "../../../../containers/UserDataState"
+import { LinearProgress } from "@mui/material"
+import { doc, updateDoc } from "firebase/firestore"
 import { useEffect } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { LinearProgress } from "@mui/material"
-
-const db = getFirestore(firebaseApp)
+import { Conversation, User } from "../../../../../interfaces/Conversation"
+import "../../../../../style/scrollbar.scss"
+import { Auth } from "../../../../containers/Auth"
+import { ConversationsState } from "../../../../containers/ConversationsState"
+import { UserDataState } from "../../../../containers/UserDataState"
+import { UserMenuState } from "../../../../containers/UserMenuState"
+import { ConvoItem } from "./ConvoItem"
 
 export const ConversationsList: React.FC = ({}) => {
   const {
@@ -29,7 +26,7 @@ export const ConversationsList: React.FC = ({}) => {
   const { setUserIdFromMessages, setUsernameFromMessages } =
     UserMenuState.useContainer()
   const { userData } = UserDataState.useContainer()
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const convoToConvoAndUser = (
     conversation: Conversation,
   ): [Conversation, User] =>
