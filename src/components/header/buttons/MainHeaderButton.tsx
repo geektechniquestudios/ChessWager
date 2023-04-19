@@ -52,10 +52,7 @@ export const MainHeaderButton: React.FC<Props> = ({
           exit={{ opacity: 0, y: -30 }}
           transition={{
             delay: 0.05 * animationOffset,
-            type: "spring",
-            mass: 0.7,
-            bounce: 0,
-            stiffness: 80,
+            type: "just",
           }}
           id={id}
           className={`${activeStyle} color-shift clickable z-50 grid h-9 w-9 place-content-center rounded-md border-none border-stone-800 text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white`}
