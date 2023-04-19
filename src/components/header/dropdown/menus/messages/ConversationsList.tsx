@@ -109,8 +109,12 @@ export const ConversationsList: React.FC = ({}) => {
                 fullConversations
                   ?.filter(
                     (conversation: Conversation) =>
-                      !userData?.blockedUsers.includes(conversation.user1.id) &&
-                      !userData?.blockedUsers.includes(conversation.user2.id),
+                      !(
+                        userData?.blockedUsers.includes(
+                          conversation.user1.id,
+                        ) ||
+                        userData?.blockedUsers.includes(conversation.user2.id)
+                      ) && conversation.messageThumbnail !== "",
                   )
                   .map(convoToConvoAndUser)
                   .map(([conversation, user], index: number) => (
