@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { RefObject, useState } from "react"
 import { createContainer } from "unstated-next"
 import { Bet } from "../../interfaces/Bet"
 
@@ -8,7 +8,9 @@ const useDropdownState = () => {
   const [menuHeight, setMenuHeight] = useState(0)
   const [bet, setBet] = useState<Bet | null>(null)
   const [menuStack, setMenuStack] = useState<string[]>([])
-  const [menuRefMap, setMenuRefMap] = useState(new Map())
+  const [menuRefMap, setMenuRefMap] = useState<
+    Map<string, RefObject<HTMLButtonElement>>
+  >(new Map())
 
   const openDropdownToMenu = (menu: string) => {
     setActiveMenu(menu)

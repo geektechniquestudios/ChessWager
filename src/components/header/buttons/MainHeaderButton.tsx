@@ -1,7 +1,7 @@
-import { Auth } from "../../containers/Auth"
-import { DropdownState } from "../../containers/DropdownState"
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useRef } from "react"
+import { Auth } from "../../containers/Auth"
+import { DropdownState } from "../../containers/DropdownState"
 
 interface Props {
   id?: string
@@ -31,7 +31,7 @@ export const MainHeaderButton: React.FC<Props> = ({
     setMenuRefMap,
   } = DropdownState.useContainer()
 
-  const ref = useRef(null)
+  const ref = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const temp = menuRefMap.set(openToMenu, ref)

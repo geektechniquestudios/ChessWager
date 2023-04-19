@@ -24,25 +24,26 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
   const { auth } = Auth.useContainer()
 
   // This map converts the stored menu name in code to the name that actually displays
-  // When you add a new menu, you need to add it here
-  const menuTitle = new Map<string, string>()
-  menuTitle.set("main", "Menu")
-  menuTitle.set("social", "Social")
-  menuTitle.set("help", "Help")
-  menuTitle.set("bets", "Bets")
-  menuTitle.set("bet", "Bet")
-  menuTitle.set("howToPlay", "How To Play")
-  menuTitle.set("requests", "Requests")
-  menuTitle.set("report", "Report")
-  menuTitle.set("searchUsers", "Search")
-  menuTitle.set("messages", "Messages")
-  menuTitle.set("conversation", "Conversation")
-  menuTitle.set("notifications", "Notifications")
-  menuTitle.set("clickedUser", clickedUser?.displayName ?? "")
-  menuTitle.set("persona", auth.currentUser?.displayName ?? "")
-  menuTitle.set("blocked", "Blocked")
-  menuTitle.set("contractData", "Contract Data")
-  menuTitle.set("missedPayments", "Missed Payments")
+  // When you add a new menu, you need to add the name here
+  const menuTitle = new Map<string, string>([
+    ["main", "Menu"],
+    ["social", "Social"],
+    ["help", "Help"],
+    ["bets", "Bets"],
+    ["bet", "Bet"],
+    ["howToPlay", "How To Play"],
+    ["requests", "Requests"],
+    ["report", "Report"],
+    ["searchUsers", "Search"],
+    ["messages", "Messages"],
+    ["conversation", "Conversation"],
+    ["notifications", "Notifications"],
+    ["clickedUser", clickedUser?.displayName ?? ""],
+    ["persona", auth.currentUser?.displayName ?? ""],
+    ["blocked", "Blocked"],
+    ["contractData", "Contract Data"],
+    ["missedPayments", "Missed Payments"],
+  ])
 
   useEffect(() => {
     menuTitle.set("clickedUser", clickedUser?.displayName ?? "")
