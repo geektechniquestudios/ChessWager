@@ -4151,9 +4151,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@truffle/hdwallet-provider@npm:^2.1.9":
-  version: 2.1.9
-  resolution: "@truffle/hdwallet-provider@npm:2.1.9"
+"@truffle/hdwallet-provider@npm:^2.1.10":
+  version: 2.1.10
+  resolution: "@truffle/hdwallet-provider@npm:2.1.10"
   dependencies:
     "@ethereumjs/common": ^2.4.0
     "@ethereumjs/tx": ^3.3.0
@@ -4167,7 +4167,7 @@ __metadata:
     ethereumjs-util: ^7.1.5
     web3: 1.8.2
     web3-provider-engine: 16.0.3
-  checksum: 8671066916c5acef9e903506e3a86d814b95f0e1750dc39acc97866f149b4a1387d1404f7a3d8b5f0acdc0fb94757464e01b6126b5304a6bf426a5d5683149ad
+  checksum: 2164b740ab09c1c65226c1de7d5e948c9990f5cdfea7246f76f233daed76629889e1111bb707045b02d8c865d9ca33330fab87b9c9f70dcb723425e3c17974e5
   languageName: node
   linkType: hard
 
@@ -5887,7 +5887,7 @@ __metadata:
     "@openzeppelin/contracts": ^4.8.3
     "@react-chess/chessground": ^1.2.2
     "@tailwindcss/aspect-ratio": ^0.4.2
-    "@truffle/hdwallet-provider": ^2.1.9
+    "@truffle/hdwallet-provider": ^2.1.10
     "@types/cross-spawn": ^6.0.2
     "@types/cypress-dotenv": ^2.0.0
     "@types/node": ^18.15.11
