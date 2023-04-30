@@ -410,7 +410,7 @@ service cloud.firestore {
         return request.resource.data.hasUser2SeenUpdate is bool;
       }
 
-      // 5 Possibilities:
+      // 6 Possibilities:
       allow update: if canCreate() && 
         // 1. User2 joins bet || Join Button *don't place this comment on the line below, it causes a compline error*
       (

@@ -21,7 +21,7 @@ export const ConvoChatMessage: React.FC<Props> = ({
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", mass: 0.1, stiffness: 200 }}
-      className="w-full gap-1.5 px-2 py-1"
+      className="gap-1.5 px-2 py-1"
     >
       <ConvoUserTitle photoURL={photoURL} userName={userName} uid={uid} />
       <MessageBody text={text} />

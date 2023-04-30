@@ -62,7 +62,7 @@ export const NotificationItem: React.FC<Props> = ({
 
   return (
     <a
-      className={`${unreadStyle} color-shift flex h-14 w-64 items-center justify-between gap-1 px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
+      className={`${unreadStyle} color-shift flex h-14 items-center justify-between gap-1 px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
       style={{ direction: "ltr" }}
       onClick={() => {
         clickedUserId && setClickedUserById(clickedUserId)

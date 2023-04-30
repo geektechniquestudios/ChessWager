@@ -1,8 +1,8 @@
 import { MdBlockFlipped } from "react-icons/md"
-import { UserDataLoading } from "./LoadingUserData"
-import { UserButtonsArea } from "./UserButtonsArea"
-import { UserTiles } from "./UserTiles"
 import { User } from "../../../../../interfaces/User"
+import { UserButtonsArea } from "./UserButtonsArea"
+import { UserDataLoading } from "./UserDataLoading"
+import { UserTiles } from "./UserTiles"
 
 interface Props {
   user?: User
@@ -26,21 +26,21 @@ export const UserData: React.FC<Props> = ({ user, isLoading }) => {
     moderatorLevel,
   } = user ?? {}
   return (
-    <div className="flex h-96 w-64 flex-col items-center justify-between py-1.5">
+    <div className="flex h-96 flex-col items-center justify-between pb-0.5 pt-1.5">
       {isLoading ? (
         <UserDataLoading />
       ) : (
-        <div className="flex h-96 w-60 flex-col items-center justify-between">
+        <div className="flex h-full w-60 flex-col items-center justify-between">
           <UserButtonsArea
             id={id ?? ""}
             displayName={displayName ?? ""}
-            photoURL={photoURL!}
-            walletAddress={walletAddress!}
-            isBanned={isBanned!}
-            moderatorLevel={moderatorLevel!}
+            photoURL={photoURL ?? ""}
+            walletAddress={walletAddress ?? ""}
+            isBanned={isBanned ?? false}
+            moderatorLevel={moderatorLevel ?? 0}
           />
           <div className="relative">
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+            <div className="absolute inset-0">
               {isBanned && (
                 <MdBlockFlipped color="red" size={90} title="User Is Banned" />
               )}

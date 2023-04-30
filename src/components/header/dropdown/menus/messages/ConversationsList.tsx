@@ -89,7 +89,7 @@ export const ConversationsList: React.FC = ({}) => {
 
   return (
     <div
-      className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden text-stone-400 dark:text-stone-400"
+      className="scrollbar-dropdown h-72 w-full overflow-y-auto text-stone-400 dark:text-stone-400"
       style={{ direction: "rtl" }}
       id="conversations-scroll-div"
     >

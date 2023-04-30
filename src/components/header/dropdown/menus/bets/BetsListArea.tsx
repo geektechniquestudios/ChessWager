@@ -51,7 +51,7 @@ export const BetsListArea: React.FC = ({}) => {
 
   return (
     <div
-      className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
+      className="scrollbar-dropdown h-72 overflow-y-auto overflow-x-clip"
       style={{ direction: "rtl" }}
       id="bets-scroll-div"
     >
@@ -76,7 +76,7 @@ export const BetsListArea: React.FC = ({}) => {
           </div>
         </InfiniteScroll>
       ) : (
-        <div className="mt-10 flex h-72 w-full justify-center text-stone-400 dark:text-stone-400">
+        <div className="mt-10 flex h-60 w-full justify-center text-stone-400 dark:text-stone-400">
           {!isLoading && "No bets yet"}
         </div>
       )}

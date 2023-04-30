@@ -76,7 +76,7 @@ export const NotificationsList: React.FC = ({}) => {
 
   return (
     <div
-      className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
+      className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden"
       style={{ direction: "rtl" }}
       id="notifications-scroll-div"
     >

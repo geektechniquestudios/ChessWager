@@ -1,7 +1,6 @@
 import { LinearProgress } from "@mui/material"
 import {
   collection,
-  doc,
   getDocs,
   limit,
   orderBy,
@@ -28,7 +27,7 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
   const { auth, db } = Auth.useContainer()
   const { userIdFromMessages } = UserMenuState.useContainer()
   const convoId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
-  const messagesRef = collection(doc(db, "conversations", convoId), "messages")
+  const messagesRef = collection(db, "conversations", convoId, "messages")
 
   const [timestamp] = useState<Timestamp>(Timestamp.now())
   const q = query(

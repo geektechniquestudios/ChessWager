@@ -1,6 +1,5 @@
 import {
   doc,
-  DocumentData,
   DocumentReference,
   runTransaction,
   serverTimestamp,
@@ -31,7 +30,11 @@ export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
     "users",
     auth.currentUser!.uid,
   ) as DocumentReference<User>
-  const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
+  const betDoc: DocumentReference = doc(
+    db,
+    "lobby",
+    id,
+  ) as DocumentReference<Bet>
 
   const user2DisplayName = auth.currentUser?.displayName
   const { isWalletConnected } = Auth.useContainer()

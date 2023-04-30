@@ -71,10 +71,10 @@ export const BetMenu: React.FC<Props> = ({}) => {
   return (
     <Menu
       menuItems={[
-        <div className="w-64">
+        <div>
           {bet && (
             <div className="flex h-full w-full flex-col justify-between gap-2 p-2 text-stone-900 dark:text-stone-300">
-              <div className="flex w-full justify-between ">
+              <div className="flex w-full justify-between gap-2">
                 <UserBetData
                   photoURL={user1PhotoURL!}
                   displayName={user1DisplayName!}
@@ -141,32 +141,31 @@ export const BetMenu: React.FC<Props> = ({}) => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-1 flex w-full items-center justify-between">
-                  <a
-                    href={"https://snowtrace.io/address/" + contractAddress}
-                    className="color-shift rounded-full border border-stone-400 bg-white px-2 py-1 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-800 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
-                    title="View Contract on Snowtrace"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {contractAddress?.substring(0, 10)}...
-                    {contractAddress?.substring(
-                      contractAddress.length - 10,
-                      contractAddress.length,
-                    )}
-                  </a>
-                  <div className="flex grow justify-center">
-                    <a
-                      href={`https://lichess.org/${gameId}`}
-                      className="color-shift clickable grid place-content-center rounded-full border border-stone-400 bg-white p-1 text-stone-800 hover:border-black hover:text-black dark:border-stone-800 dark:bg-stone-800 dark:text-stone-300 dark:hover:border-white dark:hover:text-white"
-                      title="Game Source"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      <SiLichess title="Game Source" />
-                    </a>
-                  </div>
-                </div>
+              </div>
+              <div className="flex w-full items-center justify-between">
+                <a
+                  href={"https://snowtrace.io/address/" + contractAddress}
+                  className="color-shift rounded-full border border-stone-400 bg-white px-2 py-1 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-800 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
+                  title="View Contract on Snowtrace"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {contractAddress?.substring(0, 10)}...
+                  {contractAddress?.substring(
+                    contractAddress.length - 10,
+                    contractAddress.length,
+                  )}
+                </a>
+
+                <a
+                  href={`https://lichess.org/${gameId}`}
+                  className="color-shift clickable grid place-content-center rounded-full border border-stone-400 bg-white p-1 text-stone-800 hover:border-black hover:text-black dark:border-stone-800 dark:bg-stone-800 dark:text-stone-300 dark:hover:border-white dark:hover:text-white"
+                  title="Game Source"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <SiLichess title="Game Source" />
+                </a>
               </div>
             </div>
           )}

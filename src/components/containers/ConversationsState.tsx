@@ -25,7 +25,7 @@ const useConversationsState = () => {
   const conversationsCollectionRef = collection(db, "conversations")
 
   const specificConvoCollectionRef = (docId: string) =>
-    collection(doc(db, "conversations", docId), "messages")
+    collection(db, "conversations", docId, "messages")
 
   const { userIdFromMessages } = UserMenuState.useContainer()
   const { isDropdownOpen, activeMenu } = DropdownState.useContainer()
@@ -63,7 +63,7 @@ const useConversationsState = () => {
   const fullConversations = buildFullConversations()
 
   const loadMoreConversations = async () => {
-    const amountToLoad = 7
+    const amountToLoad = 9
     const lastVisible =
       fullConversations?.[oldConversations.length - 1]?.modifiedAt ?? timestamp
     const q2 = query(

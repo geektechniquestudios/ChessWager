@@ -5,6 +5,7 @@ import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { Price } from "../../../../containers/Price"
 import { UserDataState } from "../../../../containers/UserDataState"
+import { formatDollars } from "../../../../lobby/bet/models/formatDollars"
 
 interface Props {
   bet: Bet
@@ -60,14 +61,14 @@ export const BetsListItem: React.FC<Props> = ({ bet }) => {
     // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       rel="noreferrer noopener"
-      className={`color-shift flex h-14 w-64 items-center text-stone-600 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200 ${clickedStyle}`}
+      className={`${clickedStyle} color-shift flex h-14 items-center justify-between whitespace-nowrap px-2 text-stone-600 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
       onClick={() => {
         setBet(bet!)
         goToMenu("bet")
         markBetAsRead()
       }}
     >
-      <div className="flex h-14 w-full justify-between gap-2 p-2">
+      <div className="flex h-14 w-full justify-between gap-2">
         <div className="flex w-6 flex-col items-start justify-center gap-2">
           {isUser1Blocked ? (
             <MdBlockFlipped className="h-4 w-4 rounded-full" />
@@ -80,13 +81,17 @@ export const BetsListItem: React.FC<Props> = ({ bet }) => {
             <img className="h-4 w-4 rounded-full" src={user2PhotoURL} />
           )}
         </div>
-        <div className="mx-3 flex w-full justify-between">
-          <div className="flex h-full flex-col justify-center gap-1 overflow-hidden whitespace-nowrap text-sm">
-            <div>{isUser1Blocked ? "Blocked User" : user1DisplayName}</div>
-            <div>{isUser2Blocked ? "Blocked User" : user2DisplayName}</div>
+        <div className="flex w-full justify-between">
+          <div className="flex h-full flex-col justify-center gap-1 text-sm">
+            <div className="line-clamp-1 w-28 overflow-ellipsis">
+              {isUser1Blocked ? "Blocked User" : user1DisplayName}
+            </div>
+            <div className="line-clamp-1">
+              {isUser2Blocked ? "Blocked User" : user2DisplayName}
+            </div>
           </div>
           <div className="flex flex-col items-end justify-center gap-1 text-xs">
-            <div>${(betTotal * avaxPrice).toFixed(2)} USD</div>
+            <div>${formatDollars(betTotal * avaxPrice)} USD</div>
             {new Date(createdAt!.seconds * 1000).toLocaleDateString("en-US")}
           </div>
         </div>

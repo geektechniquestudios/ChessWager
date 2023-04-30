@@ -7,6 +7,7 @@ import { DropdownState } from "../../../../containers/DropdownState"
 import { Price } from "../../../../containers/Price"
 import { UserDataState } from "../../../../containers/UserDataState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
+import { formatDollars } from "../../../../lobby/bet/models/formatDollars"
 
 interface Props {
   photoURL: string
@@ -33,7 +34,7 @@ export const UserBetData: React.FC<Props> = ({
   const { userData } = UserDataState.useContainer()
   const isUserBlocked = userData?.blockedUsers.includes(id) ?? false
   return (
-    <div className="relative flex w-28 flex-col items-start overflow-clip rounded-md border border-stone-400 bg-stone-300 text-sm dark:border-stone-800 dark:bg-stone-500">
+    <div className="relative flex w-full flex-col items-start overflow-clip rounded-md border border-stone-400 bg-stone-300 text-sm dark:border-stone-800 dark:bg-stone-500">
       <div className="my-2 flex w-full justify-center">
         {isUserBlocked ? (
           <MdBlockFlipped className="h-8 w-8" />
@@ -67,7 +68,7 @@ export const UserBetData: React.FC<Props> = ({
         ) : (
           <button
             id="user-bet-data-button"
-            className="flex hover:underline"
+            className="h-full hover:underline"
             onClick={() => {
               setClickedUserById(id)
               goToMenu("clickedUser")
@@ -76,12 +77,12 @@ export const UserBetData: React.FC<Props> = ({
             {displayName}
           </button>
         )}
-        <div className="my-1 rounded-md border border-stone-400 bg-stone-100 p-1 text-sm dark:border-stone-600 dark:bg-stone-700">
+        <div className="my-1 w-full rounded-md border border-stone-400 bg-stone-100 p-1 text-sm dark:border-stone-600 dark:bg-stone-700">
           <div className="flex justify-end text-xs">
             {amount?.toFixed(6)} AVAX
           </div>
           <div className="flex justify-end text-xs">
-            ${(amount * avaxPrice).toFixed(2)} USD
+            ${formatDollars(amount * avaxPrice)} USD
           </div>
         </div>
         <div className="flex">{hasUserPaid}</div>

@@ -42,8 +42,8 @@ export const UserButtonsArea: React.FC<Props> = ({
     <>
       <>
         {!isUser && displayName !== "" && (
-          <div className="h-22 my-1 flex w-full justify-between">
-            <div className="flex gap-3">
+          <div className="h-22 flex w-full justify-between">
+            <div className="flex gap-2">
               <SendMessageButton
                 id={id ?? ""}
                 displayName={displayName}
@@ -62,15 +62,15 @@ export const UserButtonsArea: React.FC<Props> = ({
                   />
                 )}
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               {isFriend && <RemoveFriendButton id={id} />}
               <BlockUserButton
-                id={id ?? ""}
+                id={id}
                 displayName={displayName}
                 photoURL={photoURL}
                 blockedUsers={blockedUsers}
               />
-              <ReportUserButton id={id ?? ""} />
+              <ReportUserButton id={id} />
               <BanUserButton
                 id={id}
                 displayName={displayName}

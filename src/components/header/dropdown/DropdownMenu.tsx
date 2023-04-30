@@ -64,7 +64,7 @@ export const DropdownMenu = () => {
 
   useEffect(() => {
     setMenuHeight(
-      (dropdownRef.current?.firstChild as HTMLElement)?.offsetHeight || 0,
+      (dropdownRef.current?.firstChild as HTMLElement)?.offsetHeight ?? 0,
     )
   }, [setMenuHeight])
 
@@ -76,11 +76,9 @@ export const DropdownMenu = () => {
 
   const blur = isDarkOn ? "blur(18px)" : "blur(16px)"
 
-  const firefoxColors = (): string => "bg-stone-100 dark:bg-stone-700"
-
   return (
     <div
-      className={`${firefoxColors} dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border-2 border-stone-400 text-stone-800 shadow-lg dark:border-stone-500 dark:text-stone-200`}
+      className="dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border-2 border-stone-400 text-stone-800 shadow-lg dark:border-stone-500 dark:text-stone-200"
       style={{
         height: menuHeight,
         background: bgColor,
@@ -89,31 +87,29 @@ export const DropdownMenu = () => {
       ref={dropdownRef}
       id="dropdown-menu"
     >
-      <div className="flex justify-center">
-        <Main />
-        <SocialMenu />
-        <HelpMenu />
-        <SearchUsersMenu />
-        <HowToPlay />
-        <Contact />
-        {user && (
-          <>
-            <NotificationsMenu />
-            <MessagesMenu />
-            <PersonaMenu />
-            <ClickedUserMenu />
-            <ConversationMenu />
-            <BetsMenu />
-            <BetMenu />
-            <BlockedMenu />
-            <FriendsMenu />
-            <RequestMenu />
-            <ReportMenu />
-            <ContractDataMenu />
-            <MissedPaymentsMenu />
-          </>
-        )}
-      </div>
+      <Main />
+      <SocialMenu />
+      <HelpMenu />
+      <SearchUsersMenu />
+      <HowToPlay />
+      <Contact />
+      {user && (
+        <>
+          <NotificationsMenu />
+          <MessagesMenu />
+          <PersonaMenu />
+          <ClickedUserMenu />
+          <ConversationMenu />
+          <BetsMenu />
+          <BetMenu />
+          <BlockedMenu />
+          <FriendsMenu />
+          <RequestMenu />
+          <ReportMenu />
+          <ContractDataMenu />
+          <MissedPaymentsMenu />
+        </>
+      )}
     </div>
   )
 }

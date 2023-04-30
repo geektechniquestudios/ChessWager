@@ -1,4 +1,4 @@
-import { BigNumber, ethers } from "ethers"
+import { BigNumber, ethers, providers } from "ethers"
 import { motion } from "framer-motion"
 import { BiWallet } from "react-icons/bi"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
@@ -98,7 +98,7 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
   }
 
   const sendBet = async (): Promise<void> => {
-    if (typeof window.ethereum !== undefined) {
+    if (typeof window.ethereum !== "undefined") {
       await window.ethereum.request({ method: "eth_requestAccounts" })
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer: ethers.providers.JsonRpcSigner = provider.getSigner()
@@ -110,17 +110,16 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
       try {
         if (!(await isCorrectBlockchain(provider))) return
 
-        const transaction = await contract.placeBet(
-          betForContract,
-          id,
-          overrides,
-        )
-        transaction.wait().then(() => {
-          contract.removeAllListeners()
-        })
+        const transaction: providers.TransactionResponse =
+          await contract.placeBet(betForContract, id, overrides)
+          
+        console.log("Transaction Hash:", transaction.hash)
+
+        transaction.wait().catch(console.error)
       } catch (err) {
-        contract.removeAllListeners()
         console.error(err)
+      } finally {
+        contract.removeAllListeners()
       }
     } else {
       CustomSwal(

@@ -19,7 +19,7 @@ export const BlockedList: React.FC<Props> = ({}) => {
     <div>
       {blockedUsers?.length ?? 0 > 0 ? (
         <div
-          className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
+          className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden"
           style={{ direction: "rtl" }}
         >
           {blockedUsers?.map(({ userName, photoURL, id }: BlockedUser) => (
