@@ -14,7 +14,6 @@ interface Props {
 
 export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
   const { isDarkOn } = DarkMode.useContainer()
-  const isFirefox = navigator.userAgent.indexOf("Firefox") !== -1
   const { prevGameId, gameId, buildOutcomeMessage } = GameState.useContainer()
 
   const [outcome, setOutcome] = useState<string>("")
@@ -42,16 +41,11 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
   const blackPlayer = gameData?.players?.black.userId ?? ""
   const blackRating = gameData?.players?.black.rating ?? 0
 
-  const bgColor = !isFirefox
-    ? isDarkOn
-      ? "rgba(68, 64, 60, 0.79)"
-      : "rgba(245, 245, 244, 0.60)"
-    : isDarkOn
-    ? "rgba(68, 64, 60, 0.99)"
-    : "rgba(245, 245, 244, 0.99)"
-  const blur = isDarkOn ? "blur(18px)" : "blur(16px)"
+  const bgColor = isDarkOn
+    ? "rgba(68, 64, 60, 0.79)"
+    : "rgba(245, 245, 244, 0.60)"
 
-  const firefoxColors = (): string => "bg-stone-100 dark:bg-stone-700"
+  const blur = isDarkOn ? "blur(18px)" : "blur(16px)"
 
   return (
     <>
@@ -66,7 +60,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
               type: "spring",
               stiffness: 40,
             }}
-            className={`${firefoxColors} absolute top-1/3 z-40 w-64 -translate-y-1/2 overflow-hidden rounded-md border border-stone-600 drop-shadow-2xl dark:border-stone-800`}
+            className="absolute top-1/3 z-40 w-64 -translate-y-1/2 overflow-hidden rounded-md border border-stone-600 drop-shadow-2xl dark:border-stone-800"
             style={{
               background: bgColor,
               backdropFilter: blur,
@@ -75,6 +69,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
             <header className="flex h-6 w-full justify-between border-b border-stone-400 bg-stone-300 p-1 dark:border-stone-500 dark:bg-stone-600">
               <PopupCounter count={count} setCount={setCount} />
               <DropdownButton
+                title="Close"
                 content={<BsX />}
                 className="h-4 w-4"
                 onClick={() => {

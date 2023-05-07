@@ -1,46 +1,13 @@
 import { useState } from "react"
-import { ethers } from "ethers"
 
-import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { GameData } from "../../../../../interfaces/GameData"
-import { CustomSwal } from "../../../../popups/CustomSwal"
-
-declare let window: any
-const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
+import { Auth } from "../../../../containers/Auth"
 
 interface Props {}
 
 export const MissedPaymentArea: React.FC<Props> = ({}) => {
+  const { callContract } = Auth.useContainer()
   const [gameId, setGameId] = useState<string>("")
-
-  // use this version for mainnet inclusion
-  // const isCorrectBlockchain = async (
-  //   provider: ethers.providers.Web3Provider,
-  // ) => {
-  //   const { chainId } = await provider.getNetwork()
-  //   if (isLocal && chainId !== 43113) {
-  // Swal.fire({
-  //   icon: "error",
-  //   title: "Wrong network!",
-  //   text: "You are on the wrong network. Please switch to the fuji network.",
-  // })
-  //     return false
-  //   }
-  //   else if (!isLocal && chainId !== 43114) {
-  // Swal.fire({
-  //   icon: "error",
-  //   title: "Wrong network!",
-  //   text: "You are on the wrong network. Please switch to the fuji network.",
-  // })
-  //     return false
-  //   }
-  //   else {
-  //     return true
-  //   }
-  // }
-
-  //
-  // use this version until mainnet
 
   const sendPayment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -58,57 +25,13 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
       return winner as "white" | "black" | "draw"
     }
 
-    const callSmartContract = async (winner: "white" | "black" | "draw") => {
-      const isCorrectBlockchain = async (
-        provider: ethers.providers.Web3Provider,
-      ) => {
-        const { chainId } = await provider.getNetwork()
-        if (chainId !== 43113) {
-          CustomSwal(
-            "error",
-            "Wrong Network",
-            "You are on the wrong network. Please switch to the Fuji network.",
-          )
-          return false
-        } else {
-          return true
-        }
-      }
-
-      if (typeof window.ethereum !== undefined) {
-        await window.ethereum.request({ method: "eth_requestAccounts" })
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer: ethers.providers.JsonRpcSigner = provider.getSigner()
-        const contract = new ethers.Contract(
-          contractAddress,
-          ChessWager.abi,
-          signer,
-        )
-        try {
-          if (!(await isCorrectBlockchain(provider))) {
-            return
-          }
-          const overrides = {
-            gasLimit: 1000000,
-          }
-          const transaction = await contract.payWinners(
-            gameId,
-            winner,
-            overrides,
-          )
-          transaction.wait().then(() => {
-            contract.removeAllListeners()
-          })
-        } catch (err) {
-          contract.removeAllListeners()
-          console.error(err)
-        }
-      } else {
-        CustomSwal("error", "Wallet Error", "Metamask not connected.")
-      }
-    }
-
-    fetchWinner().then(callSmartContract)
+    fetchWinner().then((winner: "white" | "black" | "draw") => {
+      callContract((contract) =>
+        contract.payWinners(gameId, winner, {
+          gasLimit: 1000000,
+        }),
+      )
+    })
   }
 
   return (

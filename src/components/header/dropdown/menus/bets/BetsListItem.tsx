@@ -58,7 +58,6 @@ export const BetsListItem: React.FC<Props> = ({ bet }) => {
   }
 
   return (
-    // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
       rel="noreferrer noopener"
       className={`${clickedStyle} color-shift flex h-14 items-center justify-between whitespace-nowrap px-2 text-stone-600 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
@@ -82,8 +81,8 @@ export const BetsListItem: React.FC<Props> = ({ bet }) => {
           )}
         </div>
         <div className="flex w-full justify-between">
-          <div className="flex h-full flex-col justify-center gap-1 text-sm">
-            <div className="line-clamp-1 w-28 overflow-ellipsis">
+          <div className="flex h-full w-32 flex-col justify-center gap-1 text-sm">
+            <div className="overflow-hidden overflow-ellipsis whitespace-nowrap">
               {isUser1Blocked ? "Blocked User" : user1DisplayName}
             </div>
             <div className="line-clamp-1">

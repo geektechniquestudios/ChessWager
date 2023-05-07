@@ -1,4 +1,4 @@
-import { BigNumber, ethers } from "ethers"
+import { BigNumber, ethers, providers } from "ethers"
 import { parseEther } from "ethers/lib/utils"
 import {
   GoogleAuthProvider,
@@ -19,12 +19,16 @@ import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { createContainer } from "unstated-next"
 import { firebaseApp } from "../../../firestore.config"
+import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Notification } from "../../interfaces/Notification"
 import { User } from "../../interfaces/User"
 import { CustomSwal } from "../popups/CustomSwal"
 
 declare let window: any
 const db = getFirestore(firebaseApp)
+
+const globalContractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
+const isMainnet = import.meta.env.IS_MAINNET
 
 // Force page refreshes on network changes
 {
@@ -75,6 +79,7 @@ const useAuth = () => {
     }
     try {
       setIsWalletConnecting(true)
+
       const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
       await provider.send("eth_requestAccounts", [])
       const signer = provider.getSigner()
@@ -203,6 +208,65 @@ const useAuth = () => {
     return balance.gte(parseEther(price.toFixed(0)))
   }
 
+  const callContract = async (
+    contractCallFunction: (
+      contract: ethers.Contract,
+    ) => Promise<providers.TransactionResponse | void>,
+    contractAddress?: string,
+    postContractCallFunction?: (result?: providers.TransactionResponse) => void,
+  ) => {
+    const isCorrectBlockchain = async (
+      provider: ethers.providers.Web3Provider,
+    ) => {
+      const { chainId } = await provider.getNetwork()
+      if (chainId !== (isMainnet ? 43114 : 43113)) {
+        const correctNetwork = isMainnet
+          ? "Avalanche Mainnet"
+          : "Avalanche Fuji Testnet"
+        CustomSwal(
+          "error",
+          "Wrong network",
+          `Switch your wallet to the ${correctNetwork}.`,
+        )
+        return false
+      } else {
+        return true
+      }
+    }
+
+    const isMetamaskConnected = (): boolean => {
+      if (typeof window.ethereum === undefined) {
+        CustomSwal("error", "Error", "Connect MetaMask to place a bet.")
+        return false
+      }
+      return true
+    }
+
+    if (!isMetamaskConnected()) return
+
+    await window.ethereum.request({ method: "eth_requestAccounts" })
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+    if (!(await isCorrectBlockchain(provider))) return
+
+    const signer: ethers.providers.JsonRpcSigner = provider.getSigner()
+    const contract = new ethers.Contract(
+      contractAddress ?? globalContractAddress,
+      ChessWager.abi,
+      signer,
+    )
+
+    try {
+      const result = await contractCallFunction(contract)
+      result?.wait && (await result.wait().catch(console.error))
+      postContractCallFunction && postContractCallFunction(result ?? undefined)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      contract.removeAllListeners()
+    }
+  }
+
   return {
     user,
     auth,
@@ -218,6 +282,7 @@ const useAuth = () => {
     doesUserHaveEnoughAvax,
     isLoading,
     db,
+    callContract,
   }
 }
 

@@ -1,8 +1,8 @@
+import Chessground from "@react-chess/chessground"
+import { motion } from "framer-motion"
 import React from "react"
 import { PlayerData } from "./PlayerData"
-import Chessground from "@react-chess/chessground"
 import { GameResultPopup } from "./popup/GameResultPopup"
-import { motion } from "framer-motion"
 import { useGameStream } from "./useGameStream"
 
 // We use an old version of chessground because it looks better. If we ever upgarde, uncomment the styles below.

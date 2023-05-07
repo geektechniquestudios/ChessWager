@@ -38,11 +38,11 @@ describe("friend requesting", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Cancel Request"]').should("not.exist")
-    cy.get('button[title="Add Friend"]').click().wait(1000)
-    cy.get('button[title="Cancel Request"]').should("exist")
-    cy.get('button[title="Cancel Request"]').click().wait(1000)
-    cy.get('button[title="Add Friend"]').should("exist")
+    cy.get('a[title="Cancel Request"]').should("not.exist")
+    cy.get('a[title="Add Friend"]').click().wait(1000)
+    cy.get('a[title="Cancel Request"]').should("exist")
+    cy.get('a[title="Cancel Request"]').click().wait(1000)
+    cy.get('a[title="Add Friend"]').should("exist")
     cy.logout()
   })
 
@@ -52,16 +52,18 @@ describe("friend requesting", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Add Friend"]').click()
-    cy.get('button[title="Cancel Request"]').click()
-    cy.get('button[title="Add Friend"]').click()
-    cy.get('button[title="Cancel Request"]').click()
+    cy.get('a[title="Add Friend"]').click()
+    cy.get('a[title="Cancel Request"]').click()
+    cy.get('a[title="Add Friend"]').click()
+    cy.get('a[title="Cancel Request"]').click()
     cy.get('div[id="header-middle"]').click().wait(1000)
     cy.logout()
 
     cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
     cy.get('button[title="Notifications"]').click().wait(1000)
-    cy.get('div[id="notification-list"]').find("a").should("have.length", 1)
+    cy.get('div[id="notification-list"]')
+      .find("button")
+      .should("have.length", 1)
     cy.logout()
   })
 
@@ -71,15 +73,15 @@ describe("friend requesting", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Add Friend"]').click().wait(1000)
+    cy.get('a[title="Add Friend"]').click().wait(1000)
     cy.get('div[id="header-middle"]').click()
     cy.logout()
 
     cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
     cy.get('button[title="Notifications"]').click()
-    cy.get('div[id="notification-list"]').find("a").eq(0).click()
+    cy.get('div[id="notification-list"]').find("button").eq(0).click()
     cy.get('div[id="requests"]').within(() => {
-      cy.get("a").first().get('button[title="Accept"]').click()
+      cy.get("a").first().get('a[title="Accept"]').click()
     })
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').clear()
@@ -96,17 +98,17 @@ describe("friend requesting", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Add Friend"]').click().wait(1000)
+    cy.get('a[title="Add Friend"]').click().wait(1000)
     cy.get('div[id="header-middle"]').click()
     cy.logout()
 
     cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').within(() => {
-      cy.get("a").first().click()
+      cy.get("button").first().click()
     })
     cy.get('div[id="requests"]').within(() => {
-      cy.get("a").first().get('button[title="Accept"]').click()
+      cy.get("a").first().get('a[title="Accept"]').click()
     })
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').clear()
@@ -114,7 +116,7 @@ describe("friend requesting", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Remove Friend"]').click()
+    cy.get('a[title="Remove Friend"]').click()
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').clear()
     cy.get("p").contains("Friends Only").click()

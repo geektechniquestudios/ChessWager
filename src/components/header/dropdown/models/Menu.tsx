@@ -76,14 +76,14 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
       nodeRef={dropdownRef}
     >
       <div
-        className="grid w-full place-content-center"
+        className="grid w-full place-content-center pb-1"
         ref={dropdownRef}
         id={thisMenu}
       >
         {[
           ...menuHeader,
           menuItems.map((item: ReactNode, index) => (
-            <div className="w-64 pb-1" key={index}>
+            <div className="w-64" key={index}>
               {item}
             </div>
           )),

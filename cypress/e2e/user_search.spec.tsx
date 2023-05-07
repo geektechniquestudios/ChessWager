@@ -51,16 +51,16 @@ describe("user search", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Add Friend"]').click().wait(2000)
+    cy.get('a[title="Add Friend"]').click().wait(2000)
     cy.logout()
 
     cy.get('button[id="main-header-button"]').click().wait(1000)
 
     cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(2000)
     cy.get('button[title="Notifications"]').click()
-    cy.get('div[id="notification-list"]').find("a").eq(0).click()
+    cy.get('div[id="notification-list"]').find("button").eq(0).click()
     cy.get('div[id="requests"]').within(() => {
-      cy.get("a").first().get('button[title="Accept"]').click()
+      cy.get("a").first().get('a[title="Accept"]').click()
     })
     cy.get('button[title="Search Users"]').click()
     cy.get("p").contains("Friends Only").click()

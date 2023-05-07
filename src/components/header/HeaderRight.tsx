@@ -15,12 +15,12 @@ export const HeaderRight: React.FC = () => {
   const { userData } = UserDataState.useContainer()
   const { auth, isLoading, db } = Auth.useContainer()
 
-  const greenMessageStyle =
-    userData?.hasNewMessage ?? false ? "dark:text-green-400 text-green-600" : ""
-  const greenNotificationStyle =
-    userData?.hasNewNotifications ?? false
-      ? "dark:text-green-400 text-green-600"
-      : ""
+  const greenMessageStyle = userData?.hasNewMessage
+    ? "dark:text-green-400 text-green-600"
+    : ""
+  const greenNotificationStyle = userData?.hasNewNotifications
+    ? "dark:text-green-400 text-green-600"
+    : ""
 
   const setNewMessagesToFalse = () => {
     if (!userData?.hasNewMessage ?? true) return

@@ -11,13 +11,14 @@ import {
   where,
 } from "firebase/firestore"
 import { LayoutGroup } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import InfiniteScroll from "react-infinite-scroll-component"
 import type { Message } from "../../../../../interfaces/Message"
 import { Auth } from "../../../../containers/Auth"
 import { UserDataState } from "../../../../containers/UserDataState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
+import { ConversationMenuHeader } from "./ConversationMenuHeader"
 import { ConvoChatMessage } from "./ConvoChatMessage"
 
 interface Props {}
@@ -65,13 +66,17 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
     loadMoreMessages()
   }, [])
 
+  const scrollingContainerRef = useRef<HTMLDivElement>(null)
+
   return (
     <div
       className="scrollbar flex h-96 flex-col-reverse justify-between overflow-y-auto overflow-x-hidden"
       style={{ direction: "rtl" }}
       id="convo-scroll-div"
+      ref={scrollingContainerRef}
     >
-      <div className="flex flex-col-reverse">
+      <ConversationMenuHeader scrollingContainerRef={scrollingContainerRef} />
+      <div className="flex h-full flex-col-reverse">
         <InfiniteScroll
           scrollThreshold="100px"
           scrollableTarget="convo-scroll-div"

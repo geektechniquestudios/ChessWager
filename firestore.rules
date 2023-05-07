@@ -410,7 +410,29 @@ service cloud.firestore {
         return request.resource.data.hasUser2SeenUpdate is bool;
       }
 
-      // 6 Possibilities:
+      function areUpdateHashKeysFromUser1Valid() {
+        return
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "localCreatedAt",                                               ])) &&
+                                       request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "localCreatedAt", "user1TransactionHash", "user2TransactionHash"]) &&
+                                        request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "localCreatedAt"                                                ]);
+      }
+
+      function isUpdateHashDataFromUser1Valid() {
+        return request.resource.data.user1TransactionHash is string;
+      }
+
+      function areUpdateHashKeysFromUser2Valid() {
+        return 
+          !(request.resource.data.diff(resource.data).affectedKeys().hasAny(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "localCreatedAt",                                               ])) &&
+                                       request.resource.data.keys().hasOnly(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "localCreatedAt", "user1TransactionHash", "user2TransactionHash"]) &&
+                                        request.resource.data.keys().hasAll(["status", "user2Id", "user2Metamask", "user2PhotoURL", "user2FollowThrough", "user2DisplayName", "amount", "betSide", "createdAt", "gameId", "multiplier", "user1Id", "user1Metamask", "user1PhotoURL", "user1DisplayName", "user1FollowThrough", "contractAddress", "timestamp", "users", "hasUser1SeenUpdate", "hasUser2SeenUpdate", "localCreatedAt",                                               ]);
+      }
+      
+      function isUpdateHashDataFromUser2Valid() {
+        return request.resource.data.user1TransactionHash is string;
+      }
+
+      // 8 Possibilities:
       allow update: if canCreate() && 
         // 1. User2 joins bet || Join Button *don't place this comment on the line below, it causes a compline error*
       (
@@ -450,6 +472,18 @@ service cloud.firestore {
           areViewKeysFromUser2Valid() &&
           isViewDataFromUser2Valid() &&
           isFromUser2()
+        ) ||
+        // 7. User1 updates transactionHash
+        (
+          isFromUser1() &&
+          areUpdateHashKeysFromUser1Valid() &&
+          isUpdateHashDataFromUser1Valid()
+        ) ||
+        // 8. User2 updates transactionHash
+        (
+          isFromUser2() &&
+          areUpdateHashKeysFromUser2Valid() &&
+          isUpdateHashDataFromUser2Valid()
         )
       );
 
@@ -867,5 +901,9 @@ service cloud.firestore {
 
       allow create: if canCreate() && isContactCreateDataValid() && isContactCreateKeyValid();
     }
+
+    // match /games/{gameId} {
+    //   allow read: if canCreate();
+    // }
   }
 }

@@ -23,6 +23,7 @@ task(
 )
 
 const accountKey = process.env.VITE_METAMASK_ACCOUNT_KEY
+const isMainnet = process.env.IS_MAINNET
 
 module.exports = {
   solidity: "0.8.11",
@@ -67,8 +68,7 @@ module.exports = {
     avalancheMainnet: {
       url: process.env.VITE_AVALANCHE_MAINNET_RPC_URL,
       gasPrice: 225000000000,
-      // chainId: 43114, // use this on mainnet launch
-      chainId: 43113,
+      chainId: isMainnet ? 43114 : 43113,
       accounts: [accountKey],
     },
   },

@@ -58,7 +58,7 @@ redisClient
   })
 
 const payWinnersWithDelay = async (gameId: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 8000))
+  await new Promise((resolve) => setTimeout(resolve, 30000))
   payWinnersByGameId(gameId)
 }
 

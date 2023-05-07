@@ -15,9 +15,8 @@ export const ConvoUserTitle: React.FC<Props> = ({
   const { goToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   return (
-    // eslint-disable-next-line jsx-a11y/anchor-is-valid
     <a
-      className="float-left mr-1 flex gap-1"
+      className="float-left mr-1 grid w-6 shrink-0 place-content-center"
       onClick={() => {
         setClickedUserById(uid)
         goToMenu("clickedUser")
@@ -27,9 +26,8 @@ export const ConvoUserTitle: React.FC<Props> = ({
         src={photoURL}
         alt=""
         title={userName}
-        className="h-4 w-4 rounded-full"
+        className="h-5 w-5 rounded-full"
       />
-      <p className="text-xs font-bold text-stone-900 hover:underline dark:text-stone-300">{`${userName}:`}</p>
     </a>
   )
 }

@@ -94,9 +94,22 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
     .collection("contracts")
     .doc(contractAddress)
 
+  const betsCollection = db.collection("lobby")
+
+  if (
+    await db
+      .collection("games")
+      .doc(gameId)
+      .get()
+      .then((doc: any) => doc.data().isBeingPaid)
+  )
+    return
+
+  db.collection("games").doc(gameId).set({ isBeingPaid: true }, { merge: true })
+
   contractDoc
     .get()
-    .then((cDoc: any) => {
+    .then(async (cDoc: any) => {
       if (!cDoc.exists) {
         console.log("No document found for gameId: ", gameId)
         return
@@ -105,16 +118,41 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
         console.log("No bets placed on this game, skipping contract call")
       } else if (cDoc.data().hasBeenPaid) {
         console.log("Contract has already been paid, skipping contract call")
+      } else if (cDoc.data().isBeingPaid) {
+        console.log("Contract is being been paid, skipping contract call")
       } else {
         console.log("paying winners for gameId: ", gameId)
+        await contractDoc.set({ isBeingPaid: true })
         contract
           .payWinners(gameId, winningSide, overrides)
           .then((tx: any) => {
             console.log("tx: ", tx)
+            return tx.wait()
+          })
+          .then((receipt: any) => {
+            console.log("Transaction was mined, receipt: ", receipt)
             contractDoc.set({ hasBeenPaid: true }, { merge: true })
+            betsCollection
+              .where("gameId", "==", gameId)
+              .where("status", "in", ["approved", "funded"])
+
+              .get()
+              .then((querySnapshot: any) => {
+                querySnapshot.forEach((doc: any) => {
+                  doc.ref.update({
+                    payoutTransactionHash: receipt.transactionHash,
+                  })
+                })
+              })
+              .catch((err: any) => {
+                console.log("err: ", err)
+              })
           })
           .catch((err: any) => {
-            console.log("err: ", err)
+            console.log("Transaction was rejected or failed, error: ", err)
+          })
+          .finally(async () => {
+            await contractDoc.set({ isBeingPaid: false })
           })
       }
     })

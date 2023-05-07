@@ -2,6 +2,7 @@ import { BetsState } from "../../../../containers/BetsState"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { Menu } from "../../models/Menu"
 import { SectionWrapper } from "./SectionWrapper"
+const isMainnet = import.meta.env.IS_MAINNET
 
 export const HowToPlay: React.FC = ({}) => {
   const { setShowWagerForm } = BetsState.useContainer()
@@ -16,11 +17,17 @@ export const HowToPlay: React.FC = ({}) => {
           />
           <SectionWrapper
             text="2. Add the Avalanche network to Metamask"
-            href="https://chainlist.org/chain/43114/"
+            href={`https://chainlist.org/chain/${
+              isMainnet ? "43114" : "43113"
+            }`}
           />
           <SectionWrapper
             text="3. Fund your wallet"
-            href="https://www.coinbase.com/price/avalanche"
+            href={
+              isMainnet
+                ? "https://www.coinbase.com/price/avalanche"
+                : "https://faucet.avax.network/"
+            }
           />
           <SectionWrapper
             text="4. Place a bet"

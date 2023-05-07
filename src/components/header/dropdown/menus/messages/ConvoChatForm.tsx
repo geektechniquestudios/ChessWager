@@ -12,11 +12,9 @@ import { ChatFormData } from "../../../../containers/ChatFormData"
 import { ConversationsState } from "../../../../containers/ConversationsState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 
-interface Props {
-  dummy: React.RefObject<HTMLInputElement>
-}
+interface Props {}
 
-export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
+export const ConvoChatForm: React.FC<Props> = ({}) => {
   const { convoFormValue, setConvoFormValue } = ChatFormData.useContainer()
 
   const { user, auth, db } = Auth.useContainer()
@@ -90,11 +88,10 @@ export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
     batch.commit()
 
     setFormValue("")
-    dummy.current?.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
-    <div className="mt-1 w-full grow flex-col justify-start pb-2">
+    <div className="my-1 w-full flex-col justify-start">
       <fieldset
         disabled={!auth.currentUser}
         className="fieldset flex justify-center"

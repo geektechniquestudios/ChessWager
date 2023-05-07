@@ -49,7 +49,7 @@ let secondsUntilRestartCheck = defaultTime
 let currentTime = Math.floor(Date.now() / 1000)
 
 const payWinnersWithDelay = async (gameId: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 16000))
+  await new Promise((resolve) => setTimeout(resolve, 60000))
   payWinnersByGameId(gameId)
 }
 

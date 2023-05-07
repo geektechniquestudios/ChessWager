@@ -218,8 +218,12 @@ contract.on(
             : "user2"
 
         const batch = db.batch()
-
-        if (didUser1Pay && didUser2Pay) {
+        if (
+          didUser1Pay &&
+          bet.hasUser1Paid &&
+          didUser2Pay &&
+          bet.hasUser2Paid
+        ) {
           // Update player stats
           batch.update(usersCollectionRef.doc(bet.user1Id), {
             betAcceptedCount: admin.firestore.FieldValue.increment(1),
@@ -303,7 +307,7 @@ contract.on(
               betId,
             })
           }
-        } else if (didUser1Pay) {
+        } else if (didUser1Pay && bet.hasUser1Paid) {
           batch.update(usersCollectionRef.doc(bet.user1Id), {
             hasNewNotifications: true,
           })
@@ -325,7 +329,7 @@ contract.on(
             isRead: false,
             betId,
           })
-        } else if (didUser2Pay) {
+        } else if (didUser2Pay && bet.hasUser2Paid) {
           batch.update(usersCollectionRef.doc(bet.user1Id), {
             betAcceptedCount: admin.firestore.FieldValue.increment(1),
             hasNewNotifications: true,

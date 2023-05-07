@@ -26,6 +26,9 @@ export type Bet = {
   winner?: "user1" | "user2" | "draw"
   hasUser1SeenUpdate: boolean
   hasUser2SeenUpdate: boolean
+  user1TransactionHash?: string
+  user2TransactionHash?: string
+  payoutTransactionHash?: string
 }
 
 export type BetMetadata = {

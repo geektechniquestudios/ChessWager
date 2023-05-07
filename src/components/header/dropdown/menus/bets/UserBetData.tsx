@@ -17,6 +17,7 @@ interface Props {
   betSide: string
   hasUserPaid: boolean
   funded: boolean
+  multiplier: number
 }
 
 export const UserBetData: React.FC<Props> = ({
@@ -27,6 +28,7 @@ export const UserBetData: React.FC<Props> = ({
   betSide,
   hasUserPaid,
   funded,
+  multiplier,
 }) => {
   const { avaxPrice } = Price.useContainer()
   const { goToMenu } = DropdownState.useContainer()
@@ -34,7 +36,7 @@ export const UserBetData: React.FC<Props> = ({
   const { userData } = UserDataState.useContainer()
   const isUserBlocked = userData?.blockedUsers.includes(id) ?? false
   return (
-    <div className="relative flex w-full flex-col items-start overflow-clip rounded-md border border-stone-400 bg-stone-300 text-sm dark:border-stone-800 dark:bg-stone-500">
+    <div className="relative flex w-full flex-col items-start overflow-clip rounded-md border border-stone-400 bg-stone-300 text-sm dark:border-stone-500 dark:bg-stone-600">
       <div className="my-2 flex w-full justify-center">
         {isUserBlocked ? (
           <MdBlockFlipped className="h-8 w-8" />
@@ -44,9 +46,9 @@ export const UserBetData: React.FC<Props> = ({
               setClickedUserById(id)
               goToMenu("clickedUser")
             }}
-            className="h-8 w-8 rounded-full"
+            className="h-9 w-9 rounded-full"
           >
-            <img src={photoURL} className="h-8 w-8 rounded-full" />
+            <img src={photoURL} className="h-9 w-9 rounded-full" />
           </button>
         )}
         <div
@@ -84,10 +86,15 @@ export const UserBetData: React.FC<Props> = ({
           <div className="flex justify-end text-xs">
             ${formatDollars(amount * avaxPrice)} USD
           </div>
+          <div className="flex w-full justify-end">
+            <div className="grid h-5 place-content-center rounded-full border px-2 text-xs dark:border-stone-500 dark:bg-stone-800">
+              x{multiplier}
+            </div>
+          </div>
         </div>
         <div className="flex">{hasUserPaid}</div>
       </div>
-      <div className="flex w-full justify-between p-1">
+      <div className="flex w-full justify-between p-1 font-bold">
         <div>{betSide}</div>
         <div
           className={`grid h-5 w-5 place-content-center rounded-full border ${
