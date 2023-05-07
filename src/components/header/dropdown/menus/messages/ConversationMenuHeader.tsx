@@ -16,14 +16,20 @@ export const ConversationMenuHeader: React.FC<Props> = ({
 
   const [scrollDirection, setScrollDirection] = useState<"up" | "down">("down")
   const [lastScrollTop, setLastScrollTop] = useState(0)
+  const [isAtBottom, setIsAtBottom] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollTop = scrollingContainerRef.current
         ? scrollingContainerRef.current.scrollTop
         : 0
+      const maxScrollTop = scrollingContainerRef.current
+        ? scrollingContainerRef.current.scrollHeight -
+          scrollingContainerRef.current.clientHeight
+        : 0
 
       setScrollDirection(currentScrollTop > lastScrollTop ? "down" : "up")
+      setIsAtBottom(currentScrollTop >= maxScrollTop)
       setLastScrollTop(currentScrollTop)
     }
 
@@ -41,8 +47,8 @@ export const ConversationMenuHeader: React.FC<Props> = ({
     }
   }, [scrollingContainerRef, lastScrollTop])
 
-  const top = scrollDirection === "up" ? -5 : 5
-  const opacity = scrollDirection === "up" ? 0 : 1
+  const top = scrollDirection === "up" && !isAtBottom ? -5 : 5
+  const opacity = scrollDirection === "up" && !isAtBottom ? 0 : 1
 
   return (
     <div className="flex w-full justify-center">
