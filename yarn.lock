@@ -6038,7 +6038,7 @@ __metadata:
     ethers: ^5.7.2
     firebase: ^9.21.0
     firebase-admin: ^11.8.0
-    framer-motion: ^10.9.1
+    framer-motion: ^10.12.9
     hardhat: ^2.14.0
     postcss: ^8.4.23
     prettier: ^2.8.8
@@ -8454,9 +8454,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^10.9.1":
-  version: 10.9.1
-  resolution: "framer-motion@npm:10.9.1"
+"framer-motion@npm:^10.12.9":
+  version: 10.12.9
+  resolution: "framer-motion@npm:10.12.9"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     tslib: ^2.4.0
@@ -8471,7 +8471,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: d2eacc83a1ab308a8cfa404b95fb5fb821b6ff821238e365b6bf0b999a1342b00287c58c9c6d29c00b84066315fdf86acc081d4289c03c17f2f4e58e5bfc2e3e
+  checksum: 8be9eeb858e4231d5b93463b3b0ee0620bffd0302a402c7e91e6fb7ce92e45521cfdbf327b50eae3d5f4e2c3ed511bdbf437999a73c00889ff0218eb5964e454
   languageName: node
   linkType: hard
 
