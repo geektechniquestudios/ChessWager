@@ -4574,7 +4574,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=12.12.47, @types/node@npm:>=13.7.0, @types/node@npm:^20.1.0":
+"@types/node@npm:*, @types/node@npm:>=12.12.47, @types/node@npm:>=13.7.0":
   version: 20.1.0
   resolution: "@types/node@npm:20.1.0"
   checksum: c6d9afa9aa78b4b4348c69ece94975be70346b144c278f1395694a10ef919d7db300018101b6f9245e6bdd76674a5327d2d14829092f3d5295e858cff5f22a66
@@ -4599,6 +4599,13 @@ __metadata:
   version: 14.18.45
   resolution: "@types/node@npm:14.18.45"
   checksum: 2857cd1912d70f6a97b9d8085088b12ab80bcaa06e4ea20535020167bfcbc6bea9469fafc437acddd34b07e3d94b1d35bcbd51d960c8841ab1a675166e97d8b9
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.1.2":
+  version: 20.1.2
+  resolution: "@types/node@npm:20.1.2"
+  checksum: 9bb2cf0a846e60cc06c44a5622c1998d8373c8675b24d11c86845a29f32c60f5bca9627f2a2535640f902be3dbcc60f126a895abe8e10f12e1467ae3deaba56d
   languageName: node
   linkType: hard
 
@@ -6018,7 +6025,7 @@ __metadata:
     "@truffle/hdwallet-provider": ^2.1.10
     "@types/cross-spawn": ^6.0.2
     "@types/cypress-dotenv": ^2.0.0
-    "@types/node": ^20.1.0
+    "@types/node": ^20.1.2
     "@types/react": ^18.2.6
     "@types/react-dom": ^18.2.4
     "@types/react-infinite-scroller": ^1.2.3
