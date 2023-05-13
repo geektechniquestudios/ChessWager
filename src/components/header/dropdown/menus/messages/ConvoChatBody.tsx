@@ -103,7 +103,7 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
                 .map((message: Message) => (
                   <ConvoChatMessage
                     key={message.createdAt.toString()}
-                    {...message}
+                    message={message}
                   />
                 ))}
             </LayoutGroup>

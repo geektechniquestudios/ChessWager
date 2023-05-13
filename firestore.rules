@@ -902,7 +902,7 @@ service cloud.firestore {
       allow create: if canCreate() && isContactCreateDataValid() && isContactCreateKeyValid();
     }
 
-    // match /games/{gameId} {
+    // match /games/{gameId=**} {
     //   allow read: if canCreate();
     // }
   }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
 // @ts-ignore
 import ndjsonStream from "can-ndjson-stream"
 import { Featured, Player, Res } from "../../interfaces/ChessGameStream"
@@ -16,9 +16,7 @@ export const useGameStream = () => {
   const [blackTime, setBlackTime] = useState(0)
   const [blackRating, setBlackRating] = useState(0)
   const [blackTitle, setBlackTitle] = useState("")
-  const [orientation, setOrientation] = useState<"white" | "black" | undefined>(
-    "white",
-  )
+  const [orientation, setOrientation] = useState<"white" | "black">("white")
   const [isNewGame, setIsNewGame] = useState(true)
 
   const updateTitles = useCallback((res: Res): void => {
@@ -30,7 +28,7 @@ export const useGameStream = () => {
       (player: Player) => player.color === "black",
     )
 
-    if (black === undefined || white === undefined) return
+    if (!black || !white) return
 
     setFen(val.fen ?? "")
     setGameId(val.id)

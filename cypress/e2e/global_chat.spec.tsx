@@ -68,4 +68,26 @@ describe("chat body", () => {
     cy.get('div[id="clickedUser"]').should("exist")
     cy.logout()
   })
+  it("should censor toxic language", () => {
+    cy.login()
+    cy.get('textArea[id="chat-form"]')
+      .type("This is a control message")
+      .wait(1000)
+    cy.get('button[id="global-chat-button"]').click().wait(1000)
+    cy.get('div[id="global-chat-body"]').should(
+      "contain",
+      "This is a control message",
+    )
+    cy.get('button[id="global-chat-button"]').click().wait(1000)
+    cy.get('textArea[id="chat-form"]')
+      .type("I'll kill your whole family")
+      .wait(1000)
+    cy.get('button[id="global-chat-button"]').click().wait(1000)
+    cy.get('button[id="global-chat-button"]').click().wait(10000)
+    cy.get('div[id="global-chat-body"]').should(
+      "contain",
+      "I'm just feeling so vulnerable and emotional.",
+    )
+    cy.logout()
+  })
 })

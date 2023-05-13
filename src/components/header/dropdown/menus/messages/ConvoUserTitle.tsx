@@ -1,17 +1,14 @@
+import { Message } from "../../../../../interfaces/Message"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 
 interface Props {
-  photoURL: string
-  userName: string
-  uid: string
+  message: Message
 }
 
-export const ConvoUserTitle: React.FC<Props> = ({
-  photoURL,
-  userName,
-  uid,
-}) => {
+export const ConvoUserTitle: React.FC<Props> = ({ message }) => {
+  const { uid, photoURL, userName } = message
+
   const { goToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   return (

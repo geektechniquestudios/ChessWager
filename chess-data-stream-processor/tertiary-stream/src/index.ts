@@ -1,7 +1,8 @@
+import { payWinnersByGameId } from "./../../payment-processor/src/index"
 // @ts-ignore
 import ndjson from "ndjson"
 import { createClient } from "redis"
-import { payWinnersByGameId } from "../../payment-processor/src/index"
+import { Featured, Res } from "./ChessGameStream"
 require("dotenv").config({ path: "../../.env" })
 
 const redisClient = createClient({ url: "redis://redis:6379" })
@@ -33,13 +34,9 @@ const admin = require("firebase-admin")
 const isLocal = process.env.VITE_BRANCH_ENV === "develop"
 const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
-let cred
-if (isLocal) {
-  const serviceAccount = require(`../../../${adminSdk}`)
-  cred = admin.credential.cert(serviceAccount)
-} else {
-  cred = admin.credential.applicationDefault()
-}
+const cred = isLocal
+  ? admin.credential.cert(require(`../../../${adminSdk}`))
+  : admin.credential.applicationDefault()
 
 admin.initializeApp({ credential: cred })
 
@@ -53,18 +50,19 @@ const callLichessLiveTv = () => {
   let gameId = ""
   hyperquest("https://lichess.org/api/tv/feed")
     .pipe(ndjson.parse())
-    .on("data", (obj: any) => {
+    .on("data", (obj: Res) => {
       currentTime = Math.floor(Date.now() / 1000)
       secondsUntilRestartCheck = defaultTime
 
       // new game
       if (obj.t === "featured") {
-        console.log("new game: ", obj.d.id)
-        lastGameId = gameId === "" ? obj.d.id : gameId // if gameId is empty, set it to the new game id
-        gameId = obj.d.id
+        const featured = obj.d as Featured
+        console.log("new game: ", featured.id)
+        lastGameId = gameId === "" ? featured.id : gameId // if gameId is empty, set it to the new game id
+        gameId = featured.id
         payWinnersByGameId(lastGameId)
       } else {
-        console.log("players moving ", obj)
+        console.log("players moving ", obj.d.fen)
       }
     })
     .on("end", () => {

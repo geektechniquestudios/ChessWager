@@ -1,23 +1,17 @@
 import { motion } from "framer-motion"
+import { Message } from "../../../../../interfaces/Message"
 import { MessageBody } from "../../../../chat/MessageBody"
 import { Auth } from "../../../../containers/Auth"
 import { ConvoUserTitle } from "./ConvoUserTitle"
 
 interface Props {
-  text: string
-  uid: string
-  photoURL: string
-  userName: string
+  message: Message
 }
 
-export const ConvoChatMessage: React.FC<Props> = ({
-  text,
-  uid,
-  photoURL,
-  userName,
-}) => {
+export const ConvoChatMessage: React.FC<Props> = ({ message }) => {
   const { user } = Auth.useContainer()
-  const isUser = user?.uid === uid
+
+  const isUser = user?.uid === message.uid
   return (
     <motion.div
       layout="position"
@@ -25,11 +19,11 @@ export const ConvoChatMessage: React.FC<Props> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", mass: 0.1, stiffness: 200 }}
       className={`${
-        isUser ? "" : "flex-row-reverse"
-      } flex items-center gap-1.5 px-2 py-1`}
+        isUser ? "pl-3 pr-10" : "flex-row-reverse pl-10 pr-3"
+      } flex items-center gap-1.5 py-1`}
     >
-      <ConvoUserTitle photoURL={photoURL} userName={userName} uid={uid} />
-      <MessageBody text={text} />
+      <ConvoUserTitle message={message} />
+      <MessageBody message={message} />
     </motion.div>
   )
 }

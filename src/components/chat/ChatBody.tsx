@@ -1,8 +1,8 @@
-import "../../style/scrollbar.scss"
-import { ChatMessage } from "./ChatMessage"
 import type { Message } from "../../interfaces/Message"
-import { UserDataState } from "../containers/UserDataState"
+import "../../style/scrollbar.scss"
 import { GlobalChatState } from "../containers/GlobalChatState"
+import { UserDataState } from "../containers/UserDataState"
+import { ChatMessage } from "./ChatMessage"
 
 interface Props {}
 
@@ -19,11 +19,13 @@ export const ChatBody: React.FC<Props> = ({}) => {
           (message) => !userData?.blockedUsers?.includes(message.uid) ?? true,
         )
         .sort(
-          (a: Message, b: Message) =>
-            b.createdAt?.seconds - a.createdAt?.seconds,
+          (a: Message, b: Message) => b.createdAt.seconds - a.createdAt.seconds,
         )
         .map((message: Message) => (
-          <ChatMessage key={message.uid + message?.createdAt} {...message} />
+          <ChatMessage
+            key={message.uid + message.createdAt}
+            message={message}
+          />
         ))}
     </div>
   )

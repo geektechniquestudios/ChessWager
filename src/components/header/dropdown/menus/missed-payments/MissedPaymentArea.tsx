@@ -1,7 +1,8 @@
-import { useState } from "react"
-
+import { FormEvent, useState } from "react"
 import { GameData } from "../../../../../interfaces/GameData"
 import { Auth } from "../../../../containers/Auth"
+
+type Outcome = "white" | "black" | "draw"
 
 interface Props {}
 
@@ -9,29 +10,29 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
   const { callContract } = Auth.useContainer()
   const [gameId, setGameId] = useState<string>("")
 
-  const sendPayment = async (e: React.FormEvent<HTMLFormElement>) => {
+  const sendPayment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const fetchWinner = async () => {
-      const winner = await fetch(`https://lichess.org/api/game/${gameId}`)
-        .then((res) => res.json())
-        .then((gameData: GameData) => {
-          if (gameData.winner === "white") return "white"
-          else if (gameData.winner === "black") return "black"
-          else if (gameData.status === "draw") return "draw"
-          else throw Error("Game is not over yet.")
-        })
-        .catch(console.error)
-      if (winner === undefined) throw Error("winner is undefined")
-      return winner as "white" | "black" | "draw"
+
+    const getOutcomeFromLichess = async (gameId: string): Promise<Outcome> => {
+      const gameData: GameData = await fetch(
+        `https://lichess.org/api/game/${gameId}`,
+      ).then((response: Response) => {
+        if (!response.ok) throw new Error(response.statusText)
+        return response.json() as Promise<GameData>
+      })
+
+      if (gameData.status === "started") throw new Error(`Game is not over`)
+
+      return gameData?.winner ?? "draw"
     }
 
-    fetchWinner().then((winner: "white" | "black" | "draw") => {
-      callContract((contract) =>
-        contract.payWinners(gameId, winner, {
-          gasLimit: 1000000,
-        }),
-      )
-    })
+    const outcome = await getOutcomeFromLichess(gameId)
+
+    callContract((contract) =>
+      contract.payWinners(gameId, outcome, {
+        gasLimit: 1000000,
+      }),
+    )
   }
 
   return (
