@@ -22,7 +22,7 @@ interface Player {
   ratingDiff: number
 }
 
-interface GameData {
+interface GameResult {
   winner?: "white" | "black"
   status:
     | "draw"
@@ -54,18 +54,18 @@ export const payWinnersByGameId = async (gameId: string): Promise<void> => {
       console.error("Error in lichess response:", response.statusText)
       return "incomplete"
     }
-    const gameData: GameData = await response.json()
+    const gameResult: GameResult = await response.json()
 
-    if (!gameData) {
+    if (!gameResult) {
       console.log("No game data in response")
       return "incomplete"
     }
-    if (gameData.status === "started") {
+    if (gameResult.status === "started") {
       console.log("Game is not finished")
       return "incomplete"
     }
 
-    return gameData?.winner ?? "draw"
+    return gameResult?.winner ?? "draw"
   }
 
   const writeOutcome = (gameId: string, outcome: Outcome) => {

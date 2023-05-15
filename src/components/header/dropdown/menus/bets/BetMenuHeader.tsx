@@ -2,7 +2,8 @@ import { GiPayMoney, GiReceiveMoney } from "react-icons/gi"
 import { RiPenNibLine } from "react-icons/ri"
 import { SiLichess } from "react-icons/si"
 import { DropdownButton } from "../persona/buttons/DropdownButton"
-const isMainnet = import.meta.env.IS_MAINNET
+
+const isMainnet = import.meta.env.VITE_IS_MAINNET === "true"
 
 interface Props {
   contractAddress: string

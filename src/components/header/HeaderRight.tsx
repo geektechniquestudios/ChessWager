@@ -14,6 +14,7 @@ import { DropdownMenu } from "./dropdown/DropdownMenu"
 export const HeaderRight: React.FC = () => {
   const { userData } = UserDataState.useContainer()
   const { auth, isLoading, db } = Auth.useContainer()
+  const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
 
   const greenMessageStyle = userData?.hasNewMessage
     ? "dark:text-green-400 text-green-600"
@@ -32,7 +33,6 @@ export const HeaderRight: React.FC = () => {
     const userRef = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userRef, { hasNewNotifications: false })
   }
-  const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
 
   return (
     <div className="mr-3 flex items-center justify-end gap-1.5">

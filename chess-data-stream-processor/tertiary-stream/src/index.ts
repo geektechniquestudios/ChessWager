@@ -32,6 +32,7 @@ const hyperquest = require("hyperquest")
 const admin = require("firebase-admin")
 
 const isLocal = process.env.VITE_BRANCH_ENV === "develop"
+const isTest = process.env.VITE_IS_TEST === "true"
 const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
 const cred = isLocal
@@ -48,7 +49,11 @@ let currentTime = Math.floor(Date.now() / 1000)
 const callLichessLiveTv = () => {
   let lastGameId = ""
   let gameId = ""
-  hyperquest("https://lichess.org/api/tv/feed")
+  hyperquest(
+    isTest
+      ? "http://localhost:8080/api/tv/feed"
+      : "https://lichess.org/api/tv/feed",
+  )
     .pipe(ndjson.parse())
     .on("data", (obj: Res) => {
       currentTime = Math.floor(Date.now() / 1000)

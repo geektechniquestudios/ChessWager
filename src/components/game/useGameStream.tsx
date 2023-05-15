@@ -4,6 +4,8 @@ import ndjsonStream from "can-ndjson-stream"
 import { Featured, Player, Res } from "../../interfaces/ChessGameStream"
 import { GameState } from "../containers/GameState"
 
+const isTest = import.meta.env.VITE_IS_TEST === "true"
+
 export const useGameStream = () => {
   const { setGameId } = GameState.useContainer()
 
@@ -48,8 +50,12 @@ export const useGameStream = () => {
     setBlackRating(black.rating)
   }, [])
 
+  const url = isTest
+    ? "http://localhost:8080/api/tv/feed"
+    : "https://lichess.org/api/tv/feed"
+
   useEffect(() => {
-    fetch("https://lichess.org/api/tv/feed", {
+    fetch(url, {
       method: "get",
     })
       .then((data) => ndjsonStream(data.body))

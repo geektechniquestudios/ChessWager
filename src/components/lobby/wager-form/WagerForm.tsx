@@ -21,6 +21,8 @@ import { Total } from "./Total"
 import { WagerFormHeader } from "./WagerFormHeader"
 import { YourBet } from "./YourBet"
 
+const isTest = import.meta.env.VITE_IS_TEST === "true"
+
 interface Props {
   bettingLobbyRef: React.MutableRefObject<any>
 }
@@ -78,6 +80,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     const canUserBet: () => Promise<boolean> = async () => {
+      if (isTest) return true
       if (!auth.currentUser) {
         CustomSwal(
           "error",
@@ -180,9 +183,6 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
               layout
               onSubmit={createWager}
               className="flex h-full flex-col justify-between rounded-bl-lg bg-stone-100 p-2 dark:bg-stone-900"
-              onKeyDown={(e) => {
-                e.key === "Enter" && e.preventDefault()
-              }}
             >
               <div className="flex h-full flex-col justify-around gap-4 pt-4">
                 <WagerFormHeader />

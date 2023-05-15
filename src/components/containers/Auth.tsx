@@ -22,13 +22,13 @@ import { firebaseApp } from "../../../firestore.config"
 import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Notification } from "../../interfaces/Notification"
 import { User } from "../../interfaces/User"
-import { CustomSwal } from "../popups/CustomSwal"
+import { CustomSwal, FirstLoginSwal } from "../popups/CustomSwal"
 
 declare let window: any
 const db = getFirestore(firebaseApp)
 
 const globalContractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
-const isMainnet = import.meta.env.IS_MAINNET
+const isMainnet = import.meta.env.VITE_IS_MAINNET === "true"
 
 // Force page refreshes on network changes
 {
@@ -173,13 +173,7 @@ const useAuth = () => {
             clickedUserId: "",
           })
           if (!auth.currentUser) return
-          CustomSwal(
-            "warning",
-            "Website Under Construction",
-            "While betting is fully functional, this website is still undergoing core changes. Only the AVAX Fuji testnet is currently supported. Sending currency may result in loss of funds.",
-            "Proceeding means you agree to our" +
-              "<a href='https://github.com/geektechniquestudios/ChessWager/blob/main/guides/TOS.md' class='underline hover:text-slate-400 mx-2' target='_blank' rel='noreferrer'>terms of service</a>",
-          )
+          FirstLoginSwal()
         } else if (doc.data().walletAddress ?? "" !== "") {
           setIsWalletConnected(true)
           localStorage.setItem("isWalletConnected", "true")
