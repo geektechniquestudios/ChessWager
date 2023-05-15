@@ -1,28 +1,23 @@
 import { TextareaAutosize } from "@mui/material"
-import { Auth } from "../../../../containers/Auth"
-import "../../../../../style/dropdown.scss"
-import { BiSend } from "react-icons/bi"
 import {
   collection,
   doc,
-  getFirestore,
   serverTimestamp,
   writeBatch,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { BiSend } from "react-icons/bi"
+import "../../../../../style/dropdown.scss"
+import { Auth } from "../../../../containers/Auth"
 import { ChatFormData } from "../../../../containers/ChatFormData"
 import { ConversationsState } from "../../../../containers/ConversationsState"
-const db = getFirestore(firebaseApp)
+import { UserMenuState } from "../../../../containers/UserMenuState"
 
-interface Props {
-  dummy: React.RefObject<HTMLInputElement>
-}
+interface Props {}
 
-export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
+export const ConvoChatForm: React.FC<Props> = ({}) => {
   const { convoFormValue, setConvoFormValue } = ChatFormData.useContainer()
 
-  const { user, auth } = Auth.useContainer()
+  const { user, auth, db } = Auth.useContainer()
   const { userIdFromMessages } = UserMenuState.useContainer()
   const convoId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
   const setFormValue = (formValue: string) => {
@@ -93,11 +88,10 @@ export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
     batch.commit()
 
     setFormValue("")
-    dummy.current?.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
-    <div className="w-full grow flex-col justify-start pb-2">
+    <div className="my-1 w-full flex-col justify-start">
       <fieldset
         disabled={!auth.currentUser}
         className="fieldset flex justify-center"
@@ -121,7 +115,7 @@ export const ConvoChatForm: React.FC<Props> = ({ dummy }) => {
           />
           <div className="flex flex-col-reverse">
             <button
-              className="color-shift mr-2 ml-1.5 mb-1 grid place-content-center rounded-full p-1.5 hover:bg-stone-400 dark:hover:bg-stone-800"
+              className="color-shift mb-1 ml-1.5 mr-2 grid place-content-center rounded-full p-1.5 hover:bg-stone-400 dark:hover:bg-stone-800"
               title="Press Enter to Send"
             >
               <BiSend size="25" />

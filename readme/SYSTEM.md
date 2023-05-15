@@ -1,0 +1,9 @@
+The client relies on a Firestore serverless infrastructure. When a page loads, the client subscribes to the LichessTV API and loads real-time data about chats, bets, and users from the Firestore database. For performance reasons, the browser never loads data directly from the contract.
+
+A few distinct programs run in an isolated cloud environment to interact with the smart contract. One of those programs listens for user payments on the smart contract. Once two users agree to a wager, their Metamask wallets will prompt each user with the appropriate amount. When a user sends a transaction to the contract, the contract listener writes an update to the Firestore database. These changes are reflected immediately in the UI, visually informing users that their payment was received. When a bet is matched, the conditions of the bet are compared in the smart contract. If the values don't perfectly match, the transaction is rejected.
+
+Another isolated backend program subscribes to the LichessTV API. At the end of each game, that program interacts with the smart contract telling it to complete the bet transactions paying the winners or refunding users accordingly.
+
+![](readme-assets/data-flow.png)
+
+This system emphasizes speed and responsiveness by using centralized systems for bet pairing and user interactions. However, many benefits of decentralization are maintained through the smart contracts ensuring that users' funds are secured and only payable to the respective accounts that placed the bet. The service is entirely non-custodial, meaning that chesswager never actually possesses your funds; they are instead stored in the smart contract on the blockchain for the duration of the bet.

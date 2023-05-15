@@ -11,20 +11,24 @@ export type Bet = {
   user1PhotoURL: string
   user1DisplayName: string
   hasUser1Paid: boolean
-  user2Id: string
-  user2Metamask: string
-  user2PhotoURL: string
-  user2DisplayName: string
+  user2Id?: string
+  user2Metamask?: string
+  user2PhotoURL?: string
+  user2DisplayName?: string
   hasUser2Paid: boolean
   createdAt?: Timestamp
+  localCreatedAt: Timestamp
   gameId: string
   timestamp: Timestamp
   contractAddress: string
   user1FollowThrough: number[]
   user2FollowThrough: number[]
   winner?: "user1" | "user2" | "draw"
-  hasUser1SeenUpdate?: boolean
-  hasUser2SeenUpdate?: boolean
+  hasUser1SeenUpdate: boolean
+  hasUser2SeenUpdate: boolean
+  user1TransactionHash?: string
+  user2TransactionHash?: string
+  payoutTransactionHash?: string
 }
 
 export type BetMetadata = {

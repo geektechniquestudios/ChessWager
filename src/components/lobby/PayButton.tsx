@@ -1,19 +1,14 @@
-import { BigNumber, ethers } from "ethers"
+import { BigNumber, ethers, providers } from "ethers"
+import { DocumentReference, doc, updateDoc } from "firebase/firestore"
 import { motion } from "framer-motion"
 import { BiWallet } from "react-icons/bi"
-import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Bet } from "../../interfaces/Bet"
 import { Auth } from "../containers/Auth"
 import { DarkMode } from "../containers/DarkMode"
-import { CustomSwal } from "../popups/CustomSwal"
-//@ts-ignore
-const isLocal = import.meta.env.VITE_BRANCH_ENV === "develop"
 
 interface Props {
   bet: Bet
 }
-
-declare let window: any
 
 export const PayButton: React.FC<Props> = ({ bet }) => {
   const {
@@ -29,7 +24,7 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
     timestamp,
     contractAddress,
   } = bet
-  const { auth } = Auth.useContainer()
+  const { auth, callContract, db } = Auth.useContainer()
 
   const bigAmount = ethers.utils.parseEther(amount.toString())
   const bigAmountUser2 = bigAmount
@@ -51,84 +46,30 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
     timestamp: BigNumber.from(timestamp.seconds),
   }
 
+  const gasPriceGwei = 33
+  const gasPriceWei = ethers.utils.parseUnits(gasPriceGwei.toString(), "gwei")
+
   const overrides = {
     value: betAmountWei,
     gasLimit: 1000000,
+    gasPrice: gasPriceWei,
   }
 
-  // use this version for mainnet inclusion
-  // const isCorrectBlockchain = async (
-  //   provider: ethers.providers.Web3Provider,
-  // ) => {
-  //   const { chainId } = await provider.getNetwork()
-  //   if (isLocal && chainId !== 43113) {
-  // Swal.fire({
-  //   icon: "error",
-  //   title: "Wrong network!",
-  //   text: `You are on the wrong network. Please switch to the fuji network.`,
-  // })
-  //     return false
-  //   }
-  //   else if (!isLocal && chainId !== 43114) {
-  // Swal.fire({
-  //   icon: "error",
-  //   title: "Wrong network!",
-  //   text: `You are on the wrong network. Please switch to the fuji network.`,
-  // })
-  //     return false
-  //   }
-  //   else {
-  //     return true
-  //   }
-  // }
-
-  //
-  // use this version until mainnet
-
-  const isCorrectBlockchain = async (
-    provider: ethers.providers.Web3Provider,
-  ) => {
-    const { chainId } = await provider.getNetwork()
-    if (chainId !== 43113) {
-      CustomSwal("error", "Wrong network", "Please switch to the Fuji network.")
-      return false
-    } else {
-      return true
+  const sendBet = () => {
+    const storeTransactionHash = (
+      result: providers.TransactionResponse | undefined,
+    ) => {
+      if (!result) return
+      const betDoc = doc(db, "lobby", id) as DocumentReference<Bet>
+      if (isUser1) updateDoc(betDoc, { user1TransactionHash: result.hash })
+      else updateDoc(betDoc, { user2TransactionHash: result.hash })
     }
-  }
 
-  const sendBet = async (): Promise<void> => {
-    if (typeof window.ethereum !== undefined) {
-      await window.ethereum.request({ method: "eth_requestAccounts" })
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer: ethers.providers.JsonRpcSigner = provider.getSigner()
-      const contract = new ethers.Contract(
-        contractAddress,
-        ChessWager.abi,
-        signer,
-      )
-      try {
-        if (!(await isCorrectBlockchain(provider))) return
-
-        const transaction = await contract.placeBet(
-          betForContract,
-          id,
-          overrides,
-        )
-        transaction.wait().then(() => {
-          contract.removeAllListeners()
-        })
-      } catch (err) {
-        contract.removeAllListeners()
-        console.error(err)
-      }
-    } else {
-      CustomSwal(
-        "error",
-        "Metamask not detected",
-        "Please install MetaMask to place a bet.",
-      )
-    }
+    callContract(
+      (contract) => contract.placeBet(betForContract, id, overrides),
+      contractAddress,
+      storeTransactionHash,
+    )
   }
 
   const isUser1 = auth.currentUser?.uid === user1Id

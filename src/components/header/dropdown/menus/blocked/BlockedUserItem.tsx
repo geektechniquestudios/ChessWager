@@ -3,14 +3,10 @@ import {
   collection,
   deleteDoc,
   doc,
-  getFirestore,
   setDoc,
 } from "firebase/firestore"
 import { CgUnblock } from "react-icons/cg"
-import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {
   userName: string
@@ -23,7 +19,7 @@ export const BlockedUserItem: React.FC<Props> = ({
   photoURL,
   uid,
 }) => {
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const blockedCollection = collection(userRef, "blocked")
   const unBlockUser = () => {
@@ -33,7 +29,7 @@ export const BlockedUserItem: React.FC<Props> = ({
 
   return (
     <div
-      className="color-shift flex h-14 w-64 items-center px-4 text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200"
+      className="color-shift flex h-14 items-center px-4 text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200"
       style={{ direction: "ltr" }}
     >
       <div className="flex w-full gap-3">

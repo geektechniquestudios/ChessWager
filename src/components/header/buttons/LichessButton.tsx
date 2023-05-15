@@ -11,10 +11,7 @@ export const LichessButton: React.FC<Props> = ({}) => {
       exit={{ opacity: 0, translateY: -30 }}
       transition={{
         delay: 0.3,
-        type: "spring",
-        mass: 0.7,
-        bounce: 0,
-        stiffness: 120,
+        type: "just",
       }}
       id="lichess-button"
       href="https://lichess.org/tv"

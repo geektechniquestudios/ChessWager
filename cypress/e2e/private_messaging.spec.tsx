@@ -20,7 +20,7 @@ describe("private messaging", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click().wait(2000)
     })
-    cy.get('button[title="Send Direct Message"]').click()
+    cy.get('a[title="Send Direct Message"]').click()
     cy.get('div[id="conversation"]').should("exist")
   })
 
@@ -30,7 +30,7 @@ describe("private messaging", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click().wait(2000)
     })
-    cy.get('button[title="Send Direct Message"]').click()
+    cy.get('a[title="Send Direct Message"]').click()
     cy.get('textArea[id="direct-message-input"]')
       .type("test message")
       .wait(1000)
@@ -47,7 +47,7 @@ describe("private messaging", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Send Direct Message"]').click()
+    cy.get('a[title="Send Direct Message"]').click()
     cy.get('textArea[id="direct-message-input"]').type("test message")
     cy.get('button[title="Press Enter to Send"]').click()
     cy.logout().wait(1000)
@@ -70,7 +70,7 @@ describe("private messaging", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
-    cy.get('button[title="Send Direct Message"]').click().wait(1000)
+    cy.get('a[title="Send Direct Message"]').click().wait(1000)
     cy.get('textArea[id="direct-message-input"]').type("test message")
     cy.get('button[title="Press Enter to Send"]').click().wait(1000)
     cy.get('button[id="main-header-button"]').click().wait(1000)

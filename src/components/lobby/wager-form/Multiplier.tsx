@@ -39,8 +39,12 @@ export const Multiplier: React.FC<Props> = ({
     }
   }
 
-  const updateSlider = (e: any) => {
-    const newSliderVal: number = Number(e.target.value ?? 0)
+  const updateSlider = (
+    _event: Event,
+    newValue: number | number[],
+    _activeThumb: number,
+  ) => {
+    const newSliderVal: number = typeof newValue === "number" ? newValue : 0
     setSliderVal(newSliderVal)
     calcMultiplier(newSliderVal)
   }
@@ -93,7 +97,7 @@ export const Multiplier: React.FC<Props> = ({
               allowNegativeValue={false}
               fixedDecimalLength={2}
               onBlur={blur}
-              onKeyPress={(e) => {
+              onKeyDown={(e) => {
                 e.key === "Enter" && e.currentTarget.blur()
               }}
               aria-label="multiplier-number-input"

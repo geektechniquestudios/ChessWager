@@ -1,17 +1,14 @@
-import "../../../../../style/scrollbar.scss"
-import { ConvoItem } from "./ConvoItem"
-import { UserMenuState } from "../../../../containers/UserMenuState"
-import { ConversationsState } from "../../../../containers/ConversationsState"
-import { Conversation, User } from "../../../../../interfaces/Conversation"
-import { Auth } from "../../../../containers/Auth"
-import { doc, getFirestore, updateDoc } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
-import { UserDataState } from "../../../../containers/UserDataState"
+import { LinearProgress } from "@mui/material"
+import { doc, updateDoc } from "firebase/firestore"
 import { useEffect } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { LinearProgress } from "@mui/material"
-
-const db = getFirestore(firebaseApp)
+import { Conversation, User } from "../../../../../interfaces/Conversation"
+import "../../../../../style/scrollbar.scss"
+import { Auth } from "../../../../containers/Auth"
+import { ConversationsState } from "../../../../containers/ConversationsState"
+import { UserDataState } from "../../../../containers/UserDataState"
+import { UserMenuState } from "../../../../containers/UserMenuState"
+import { ConvoItem } from "./ConvoItem"
 
 export const ConversationsList: React.FC = ({}) => {
   const {
@@ -29,7 +26,7 @@ export const ConversationsList: React.FC = ({}) => {
   const { setUserIdFromMessages, setUsernameFromMessages } =
     UserMenuState.useContainer()
   const { userData } = UserDataState.useContainer()
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const convoToConvoAndUser = (
     conversation: Conversation,
   ): [Conversation, User] =>
@@ -92,7 +89,7 @@ export const ConversationsList: React.FC = ({}) => {
 
   return (
     <div
-      className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden text-stone-400 dark:text-stone-400"
+      className="scrollbar-dropdown h-72 w-full overflow-y-auto text-stone-400 dark:text-stone-400"
       style={{ direction: "rtl" }}
       id="conversations-scroll-div"
     >
@@ -112,8 +109,12 @@ export const ConversationsList: React.FC = ({}) => {
                 fullConversations
                   ?.filter(
                     (conversation: Conversation) =>
-                      !userData?.blockedUsers.includes(conversation.user1.id) &&
-                      !userData?.blockedUsers.includes(conversation.user2.id),
+                      !(
+                        userData?.blockedUsers.includes(
+                          conversation.user1.id,
+                        ) ||
+                        userData?.blockedUsers.includes(conversation.user2.id)
+                      ) && conversation.messageThumbnail !== "",
                   )
                   .map(convoToConvoAndUser)
                   .map(([conversation, user], index: number) => (

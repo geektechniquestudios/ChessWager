@@ -1,64 +1,46 @@
-import { Timestamp } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
-import { UserDataLoading } from "./LoadingUserData"
+import { User } from "../../../../../interfaces/User"
 import { UserButtonsArea } from "./UserButtonsArea"
+import { UserDataLoading } from "./UserDataLoading"
 import { UserTiles } from "./UserTiles"
 
 interface Props {
-  betAcceptedCount?: number
-  betFundedCount?: number
-  photoURL?: string
-  displayName?: string
-  searchableDisplayName?: string
-  walletAddress?: string
-  id?: string
-  amountBet?: number
-  amountWon?: number
-  betWinCount?: number
-  hasNewMessage?: boolean
-  hasNewNotifications?: boolean
-  blockedUsers?: string[]
-  sentFriendRequests?: string[]
-  redactedFriendRequests?: string[]
-  friends?: string[]
-  joinDate?: Timestamp
-  isBanned?: boolean
-  moderatorLevel?: 0 | 1 | 2
-  isLoading?: boolean
+  user?: User
+  isLoading: boolean
 }
 
-export const UserData: React.FC<Props> = ({
-  betAcceptedCount = 0,
-  betFundedCount = 0,
-  displayName,
-  id,
-  photoURL,
-  walletAddress,
-  amountBet = 0,
-  amountWon = 0,
-  betWinCount = 0,
-  friends,
-  joinDate,
-  isBanned,
-  moderatorLevel,
-  isLoading,
-}) => {
+export const UserData: React.FC<Props> = ({ user, isLoading }) => {
+  const {
+    betAcceptedCount,
+    betFundedCount,
+    displayName,
+    id,
+    photoURL,
+    walletAddress,
+    amountBet,
+    amountWon,
+    betWinCount,
+    friends,
+    joinDate,
+    isBanned,
+    moderatorLevel,
+  } = user ?? {}
   return (
-    <div className="flex h-96 w-64 flex-col items-center justify-between py-1.5">
+    <div className="flex h-96 flex-col items-center justify-between pb-0.5 pt-1.5">
       {isLoading ? (
         <UserDataLoading />
       ) : (
-        <div className="flex h-96 w-60 flex-col items-center justify-between">
+        <div className="flex h-full w-60 flex-col items-center justify-between">
           <UserButtonsArea
             id={id ?? ""}
             displayName={displayName ?? ""}
-            photoURL={photoURL!}
-            walletAddress={walletAddress!}
-            isBanned={isBanned!}
-            moderatorLevel={moderatorLevel!}
+            photoURL={photoURL ?? ""}
+            walletAddress={walletAddress ?? ""}
+            isBanned={isBanned ?? false}
+            moderatorLevel={moderatorLevel ?? 0}
           />
           <div className="relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+            <div className="absolute inset-0">
               {isBanned && (
                 <MdBlockFlipped color="red" size={90} title="User Is Banned" />
               )}
@@ -88,12 +70,12 @@ export const UserData: React.FC<Props> = ({
             )}
           </div>
           <UserTiles
-            betWinCount={betWinCount}
-            betFundedCount={betFundedCount}
-            betAcceptedCount={betAcceptedCount}
-            friends={friends!}
-            amountBet={amountBet}
-            amountWon={amountWon}
+            betWinCount={betWinCount ?? 0}
+            betFundedCount={betFundedCount ?? 0}
+            betAcceptedCount={betAcceptedCount ?? 0}
+            friends={friends ?? []}
+            amountBet={amountBet ?? 0}
+            amountWon={amountWon ?? 0}
           />
         </div>
       )}

@@ -1,28 +1,20 @@
-import "../../../../../style/scrollbar.scss"
+import { collection, limit, Query, query, where } from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { UsersListItem } from "./UsersListItem"
 import type { User } from "../../../../../interfaces/User"
-import { firebaseApp } from "../../../../../../firestore.config"
-import {
-  collection,
-  getFirestore,
-  limit,
-  Query,
-  query,
-  where,
-} from "firebase/firestore"
-import { UserDataState } from "../../../../containers/UserDataState"
+import "../../../../../style/scrollbar.scss"
 import { Auth } from "../../../../containers/Auth"
+import { UserDataState } from "../../../../containers/UserDataState"
+import { UsersListItem } from "./UsersListItem"
 
-const db = getFirestore(firebaseApp)
 interface Props {
   search: string
   friendsOrEveryone: "friends" | "everyone"
 }
 
 export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
+  const { auth, db } = Auth.useContainer()
+
   const usersCollectionRef = collection(db, "users")
-  const { auth } = Auth.useContainer()
   const allUsersQuery = query(
     usersCollectionRef,
     where("searchableDisplayName", ">=", search.toLowerCase()),
@@ -49,7 +41,7 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
   const { userData } = UserDataState.useContainer()
   return (
     <div
-      className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
+      className="scrollbar-dropdown h-72 overflow-y-auto"
       style={{ direction: "rtl" }}
     >
       <div style={{ direction: "ltr" }} id="search-users-results">

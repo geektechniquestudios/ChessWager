@@ -21,7 +21,7 @@ export const AvaxPriceButton: React.FC = () => {
             type: "spring",
             mass: 0.7,
             bounce: 0,
-            stiffness: 120,
+            stiffness: 80,
           }}
           href="https://www.coingecko.com/en/coins/avalanche"
           className="color-shift clickable grid h-9 place-content-center rounded-md border-none border-stone-800 text-center font-bold text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white"

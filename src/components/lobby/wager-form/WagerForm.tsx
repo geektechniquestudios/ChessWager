@@ -1,28 +1,27 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react"
-import { GameState } from "../../containers/GameState"
-import { Auth } from "../../containers/Auth"
-import { SideChooser } from "./SideChooser"
-import { YourBet } from "./YourBet"
-import { Multiplier } from "./Multiplier"
-import { Total } from "./Total"
-import { PlaceBet } from "./PlaceBet"
-import { QuickBet } from "./QuickBet"
-import { TheirBet } from "./TheirBet"
 import {
+  Timestamp,
   addDoc,
   collection,
-  getFirestore,
   serverTimestamp,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../firestore.config"
-import { UserDataState } from "../../containers/UserDataState"
-import { CustomSwal } from "../../popups/CustomSwal"
 import { AnimatePresence, motion } from "framer-motion"
+import { MutableRefObject, useEffect, useRef, useState } from "react"
+import { Auth } from "../../containers/Auth"
 import { BetsState } from "../../containers/BetsState"
-import { WagerFormHeader } from "./WagerFormHeader"
+import { GameState } from "../../containers/GameState"
+import { UserDataState } from "../../containers/UserDataState"
 import { WindowSize } from "../../containers/WindowSize"
+import { CustomSwal } from "../../popups/CustomSwal"
+import { Multiplier } from "./Multiplier"
+import { PlaceBet } from "./PlaceBet"
+import { QuickBet } from "./QuickBet"
+import { SideChooser } from "./SideChooser"
+import { TheirBet } from "./TheirBet"
+import { Total } from "./Total"
+import { WagerFormHeader } from "./WagerFormHeader"
+import { YourBet } from "./YourBet"
 
-const db = getFirestore(firebaseApp)
+const isTest = import.meta.env.VITE_IS_TEST === "true"
 
 interface Props {
   bettingLobbyRef: React.MutableRefObject<any>
@@ -36,6 +35,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
     auth,
     connectWallet,
     doesUserHaveEnoughAvax,
+    db,
   } = Auth.useContainer()
   const { showWagerForm, setShowWagerForm } = BetsState.useContainer()
 
@@ -80,6 +80,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     const canUserBet: () => Promise<boolean> = async () => {
+      if (isTest) return true
       if (!auth.currentUser) {
         CustomSwal(
           "error",
@@ -122,6 +123,8 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
       amount: betAmount,
       betSide: betSide,
       createdAt: serverTimestamp(),
+      timestamp: serverTimestamp(),
+      localCreatedAt: Timestamp.now(), // this has to be timestamp.now() instead of serverTimestamp because predictive rendering leaves "createdAt" as null, causing sorting problems, so we fallback to this
       gameId: gameId,
       multiplier: multiplier,
       status: "ready",
@@ -153,7 +156,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
     <AnimatePresence>
       {showWagerForm && (
         <motion.div
-          className="absolute left-0 top-0 bottom-0 z-50 h-full select-none overflow-clip border-r border-stone-400 dark:border-stone-600"
+          className="absolute bottom-0 left-0 top-0 z-50 h-full select-none overflow-clip border-r border-stone-400 dark:border-stone-600"
           layout
           ref={wagerFormRef}
           initial={isFirstAnimation ? false : { width: 0 }}
@@ -180,9 +183,6 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
               layout
               onSubmit={createWager}
               className="flex h-full flex-col justify-between rounded-bl-lg bg-stone-100 p-2 dark:bg-stone-900"
-              onKeyDown={(e) => {
-                e.key === "Enter" && e.preventDefault()
-              }}
             >
               <div className="flex h-full flex-col justify-around gap-4 pt-4">
                 <WagerFormHeader />

@@ -1,17 +1,11 @@
-import { useEffect, useState } from "react"
-import { ethers } from "ethers"
-import ChessWager from "../../../../../artifacts/contracts/ChessWager.sol/ChessWager.json"
-import { Price } from "../../../../containers/Price"
 import { CircularProgress } from "@mui/material"
+import { ethers } from "ethers"
+import { useEffect, useState } from "react"
+import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
-import { CustomSwal } from "../../../../popups/CustomSwal"
-
-//@ts-ignore
-const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
+import { Price } from "../../../../containers/Price"
 
 interface Props {}
-
-declare let window: any
 
 export const ContractDataArea: React.FC<Props> = ({}) => {
   const [contractBalanceUSD, setContractBalanceUSD] = useState<number>(0)
@@ -19,80 +13,10 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const { avaxPrice } = Price.useContainer()
-
-  // use this version for mainnet inclusion
-  // const isCorrectBlockchain = async (
-  //   provider: ethers.providers.Web3Provider,
-  // ) => {
-  //   const { chainId } = await provider.getNetwork()
-  // if (isLocal && chainId !== 43113) {
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Wrong Network!",
-  //     text: "You are on the wrong network. Please switch to the fuji network.",
-  //   })
-  //   return false
-  // }
-  //   else if (!isLocal && chainId !== 43114) {
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Wrong Network!",
-  //     text: "You are on the wrong network. Please switch to the avalanche mainnet.",
-  //   })
-  //     return false
-  //   }
-  //   else {
-  //     return true
-  //   }
-  // }
-
-  //
-  // use this version until mainnet
-
-  const isCorrectBlockchain = async (
-    provider: ethers.providers.Web3Provider,
-  ) => {
-    const { chainId } = await provider.getNetwork()
-    if (chainId !== 43113) {
-      CustomSwal(
-        "error",
-        "Wrong Network",
-        "You are on the wrong network. Please switch to the Fuji network.",
-      )
-      return false
-    } else {
-      return true
-    }
-  }
-
-  const callContract = async (
-    contractCallFunction: (contract: ethers.Contract) => any,
-  ) => {
-    if (typeof window.ethereum === undefined) {
-      CustomSwal("error", "Error", "Please install MetaMask to place a bet.")
-    }
-    await window.ethereum.request({ method: "eth_requestAccounts" })
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer: ethers.providers.JsonRpcSigner = provider.getSigner()
-    const contract = new ethers.Contract(
-      contractAddress,
-      ChessWager.abi,
-      signer,
-    )
-    try {
-      if (!(await isCorrectBlockchain(provider))) {
-        return
-      }
-      await contractCallFunction(contract)
-      contract.removeAllListeners()
-    } catch (err) {
-      contract.removeAllListeners()
-      console.error(err)
-    }
-  }
+  const { callContract } = Auth.useContainer()
 
   const getBalance = async (contract: ethers.Contract) => {
-    const balance = await contract.viewChessWagerBalance()
+    const balance: number = await contract.viewChessWagerBalance()
     const balanceAVAX = Number(
       (Number(balance.toString()) / 10 ** 18).toFixed(6),
     )

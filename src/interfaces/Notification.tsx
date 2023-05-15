@@ -8,4 +8,5 @@ export type Notification = {
   openToMenu?: string
   isRead: boolean
   clickedUserId?: string
+  betId?: string
 }

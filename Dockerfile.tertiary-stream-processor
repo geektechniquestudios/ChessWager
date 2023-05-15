@@ -1,0 +1,19 @@
+FROM node:18
+
+WORKDIR /app
+
+COPY ./chess-data-stream-processor/tertiary-stream ./chess-data-stream-processor/tertiary-stream
+COPY ./src/artifacts/contracts/ChessWager.sol/ChessWager.json ./src/artifacts/contracts/ChessWager.sol/ChessWager.json
+
+COPY .env ./
+
+COPY ./chess-data-stream-processor/payment-processor ./chess-data-stream-processor/payment-processor
+
+WORKDIR /app/chess-data-stream-processor/payment-processor
+RUN npm install
+
+WORKDIR /app/chess-data-stream-processor/tertiary-stream
+
+RUN npm install
+
+CMD ["bash", "./start.sh"]

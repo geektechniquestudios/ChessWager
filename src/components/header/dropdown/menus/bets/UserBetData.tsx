@@ -7,6 +7,7 @@ import { DropdownState } from "../../../../containers/DropdownState"
 import { Price } from "../../../../containers/Price"
 import { UserDataState } from "../../../../containers/UserDataState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
+import { formatDollars } from "../../../../lobby/bet/models/formatDollars"
 
 interface Props {
   photoURL: string
@@ -16,6 +17,7 @@ interface Props {
   betSide: string
   hasUserPaid: boolean
   funded: boolean
+  multiplier: number
 }
 
 export const UserBetData: React.FC<Props> = ({
@@ -26,6 +28,7 @@ export const UserBetData: React.FC<Props> = ({
   betSide,
   hasUserPaid,
   funded,
+  multiplier,
 }) => {
   const { avaxPrice } = Price.useContainer()
   const { goToMenu } = DropdownState.useContainer()
@@ -33,15 +36,23 @@ export const UserBetData: React.FC<Props> = ({
   const { userData } = UserDataState.useContainer()
   const isUserBlocked = userData?.blockedUsers.includes(id) ?? false
   return (
-    <div className="relative flex w-28 flex-col items-start overflow-clip rounded-md border border-stone-400 bg-stone-300 text-sm dark:border-stone-800 dark:bg-stone-500">
+    <div className="relative flex w-full flex-col items-start overflow-clip rounded-md border border-stone-400 bg-stone-300 text-sm dark:border-stone-500 dark:bg-stone-600">
       <div className="my-2 flex w-full justify-center">
         {isUserBlocked ? (
           <MdBlockFlipped className="h-8 w-8" />
         ) : (
-          <img src={photoURL} className="h-8 w-8 rounded-full" />
+          <button
+            onClick={() => {
+              setClickedUserById(id)
+              goToMenu("clickedUser")
+            }}
+            className="h-9 w-9 rounded-full"
+          >
+            <img src={photoURL} className="h-9 w-9 rounded-full" />
+          </button>
         )}
         <div
-          className="absolute top-0 right-0 m-1 grid place-content-center rounded-full bg-stone-100 p-0.5 dark:bg-stone-300"
+          className="absolute right-0 top-0 m-1 grid place-content-center rounded-full bg-stone-100 p-0.5 dark:bg-stone-300"
           title={funded ? "Payment Sent" : "No Payment Sent"}
         >
           {funded ? (
@@ -59,7 +70,7 @@ export const UserBetData: React.FC<Props> = ({
         ) : (
           <button
             id="user-bet-data-button"
-            className="flex hover:underline"
+            className="h-full hover:underline"
             onClick={() => {
               setClickedUserById(id)
               goToMenu("clickedUser")
@@ -68,17 +79,22 @@ export const UserBetData: React.FC<Props> = ({
             {displayName}
           </button>
         )}
-        <div className="my-1 rounded-md border border-stone-400 bg-stone-100 p-1 text-sm dark:border-stone-600 dark:bg-stone-700">
+        <div className="my-1 w-full rounded-md border border-stone-400 bg-stone-100 p-1 text-sm dark:border-stone-600 dark:bg-stone-700">
           <div className="flex justify-end text-xs">
             {amount?.toFixed(6)} AVAX
           </div>
           <div className="flex justify-end text-xs">
-            ${(amount * avaxPrice).toFixed(2)} USD
+            ${formatDollars(amount * avaxPrice)} USD
+          </div>
+          <div className="flex w-full justify-end">
+            <div className="grid h-5 place-content-center rounded-full border px-2 text-xs dark:border-stone-500 dark:bg-stone-800">
+              x{multiplier}
+            </div>
           </div>
         </div>
         <div className="flex">{hasUserPaid}</div>
       </div>
-      <div className="flex w-full justify-between p-1">
+      <div className="flex w-full justify-between p-1 font-bold">
         <div>{betSide}</div>
         <div
           className={`grid h-5 w-5 place-content-center rounded-full border ${

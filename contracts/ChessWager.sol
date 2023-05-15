@@ -3,8 +3,9 @@ pragma solidity ^0.8.11;
 
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 
-contract ChessWager is Ownable {
+contract ChessWager is Ownable, Pausable {
   mapping(string => bool) private gameIdToIsGameOver;
   mapping(string => Bet) private betIdToBetData;
   mapping(string => uint256) private betIdToPrizePool;
@@ -40,9 +41,7 @@ contract ChessWager is Ownable {
   function placeBet(
     Bet calldata _bet,
     string calldata _betId
-  ) external payable {
-    // ensure no more than 20 seconds has passed since the bet timestamp
-    // require(block.timestamp - _bet.timestamp < 20000);
+  ) external payable whenNotPaused {
     require(gameIdToIsGameOver[_bet.gameId] != true, "Game is already over");
     require(
       msg.sender == _bet.user1Metamask || msg.sender == _bet.user2Metamask,

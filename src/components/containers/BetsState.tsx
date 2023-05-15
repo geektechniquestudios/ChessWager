@@ -1,23 +1,19 @@
-import { createContainer } from "unstated-next"
-import { GameState } from "./GameState"
-import type { Bet, BetMetadata } from "../../interfaces/Bet"
-import { useEffect, useState } from "react"
-import { Auth } from "./Auth"
-import { LobbyHeaderState } from "./LobbyHeaderState"
-import { firebaseApp } from "../../../firestore.config"
 import {
+  QuerySnapshot,
+  Timestamp,
   collection,
-  getFirestore,
   limit,
   onSnapshot,
   query,
-  QuerySnapshot,
-  Timestamp,
   where,
 } from "firebase/firestore"
+import { useEffect, useState } from "react"
+import { createContainer } from "unstated-next"
+import type { Bet, BetMetadata } from "../../interfaces/Bet"
+import { Auth } from "./Auth"
+import { GameState } from "./GameState"
+import { LobbyHeaderState } from "./LobbyHeaderState"
 import { UserDataState } from "./UserDataState"
-
-const db = getFirestore(firebaseApp)
 
 const genericBet: Bet = {
   id: "",
@@ -36,15 +32,21 @@ const genericBet: Bet = {
   user2DisplayName: "",
   hasUser2Paid: false,
   createdAt: Timestamp.now(),
+  localCreatedAt: Timestamp.now(),
   gameId: "",
   timestamp: Timestamp.now(),
   contractAddress: "",
   user1FollowThrough: [],
   user2FollowThrough: [],
+  hasUser1SeenUpdate: true,
+  hasUser2SeenUpdate: true,
 }
 
 const useBetState = () => {
   const { gameId } = GameState.useContainer()
+  const { user, isLoading, db } = Auth.useContainer()
+  const { userData } = UserDataState.useContainer()
+
   const [bets, setBets] = useState<Bet[]>([])
 
   useEffect(() => {
@@ -56,20 +58,12 @@ const useBetState = () => {
       limit(30),
     )
 
-    const setDefaultTimestamp = (bet: Bet): Bet => {
-      return {
-        ...bet,
-        createdAt: bet.createdAt ?? Timestamp.now(),
-      }
-    }
-
     const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot) => {
-      const newBets = snapshot.docs.map((doc) => {
-        const bet = { ...doc.data(), id: doc.id } as Bet
-        return setDefaultTimestamp(bet)
-      })
+      const betsWithIds = snapshot.docs.map(
+        (doc) => ({ ...doc.data(), id: doc.id } as Bet),
+      )
 
-      setBets(newBets)
+      setBets(betsWithIds)
     })
 
     return () => {
@@ -84,7 +78,7 @@ const useBetState = () => {
   const { mostRecentButton, isDescending, isRealtime } =
     LobbyHeaderState.useContainer()
 
-  // This is for browser compatibility
+  // This sorting mechanism is mostly for browser compatibility
   const determineSortOrder = (
     a: number | string | Date | Timestamp,
     b: number | string | Date | Timestamp,
@@ -125,15 +119,12 @@ const useBetState = () => {
       case "":
       default: {
         return sortBasedOnDescending(
-          a?.createdAt?.toMillis() ?? Number.MAX_VALUE,
-          b?.createdAt?.toMillis() ?? Number.MAX_VALUE,
+          a?.createdAt?.toDate() ?? a?.timestamp?.toDate(),
+          b?.createdAt?.toDate() ?? b?.timestamp?.toDate(),
         )
       }
     }
   }
-
-  const { user, isLoading } = Auth.useContainer()
-  const { userData } = UserDataState.useContainer()
 
   const [realtimeBets, setRealtimeBets] = useState<Bet[]>([])
   const [refreshingBets, setRefreshingBets] = useState<Bet[]>([])
@@ -145,7 +136,8 @@ const useBetState = () => {
         bet.user1Id !== user?.uid &&
         bet.gameId !== "" &&
         (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
-        (!userData?.blockedUsers.includes(bet.user2Id) ?? true) &&
+        bet.user2Id !== null &&
+        (!userData?.blockedUsers.includes(bet.user2Id!) ?? true) &&
         !selectedBetMap.get(bet.id)?.isSelected
       return (
         bets
@@ -245,8 +237,8 @@ const useBetState = () => {
       )
       .sort((a, b) =>
         determineSortOrder(
-          a?.createdAt?.toMillis() ?? Number.MAX_VALUE,
-          b?.createdAt?.toMillis() ?? Number.MAX_VALUE,
+          a?.localCreatedAt?.toDate(),
+          b?.localCreatedAt?.toDate(),
         ),
       ) ?? []
 

@@ -23,17 +23,17 @@ steps:
     name: "gcr.io/cloud-builders/yarn"
     args: ["add", "-D", "hardhat"]
 
-    # Testing
+  # Testing
   - id: Running tests
     name: "gcr.io/cloud-builders/yarn"
     args: ["run", "test-hardhat"]
 
-    # Dependent step
+  # Dependent step
   - id: Deploying contract
     name: "gcr.io/cloud-builders/yarn"
     args: ["run", "deploy-contract-$BRANCH_NAME"]
 
-    # Build docker images for k8s
+  # Build docker images for k8s
   - id: Building contract listener
     name: gcr.io/cloud-builders/docker
     args:
@@ -64,6 +64,16 @@ steps:
       - "-f"
       - $_DOCKERFILE_NAME_PS
     dir: $_DOCKERFILE_DIR
+  - id: Building tertiary stream
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - "-t"
+      - "$_IMAGE_NAME_TS:$COMMIT_SHA"
+      - .
+      - "-f"
+      - $_DOCKERFILE_NAME_TS
+    dir: $_DOCKERFILE_DIR
 
   # Pushing images
   - id: Pushing contract listener
@@ -81,6 +91,11 @@ steps:
     args:
       - push
       - "$_IMAGE_NAME_PS:$COMMIT_SHA"
+  - id: Pushing tertiary stream
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - "$_IMAGE_NAME_TS:$COMMIT_SHA"
 
   # Deploying to k8s
   - id: Applying Redis server to k8s
@@ -106,7 +121,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
-  - id: Clearing build folder
+  - id: Clearing build folder from contract listener
     name: bash
     args:
       - rm
@@ -121,7 +136,7 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
-  - id: Clearing build folder again
+  - id: Clearing build folder from ancillary stream
     name: bash
     args:
       - rm
@@ -136,7 +151,22 @@ steps:
       - "--cluster=$_GKE_CLUSTER"
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
-
+  - id: Clearing build folder from primary stream
+    name: bash
+    args:
+      - rm
+      - "-rf"
+      - output
+  - id: Applying tertiary stream to k8s
+    name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - "--filename=kubernetes/$BRANCH_NAME/tertiary-stream-deployment.yaml"
+      - "--image=$_IMAGE_NAME_TS:$COMMIT_SHA"
+      - "--cluster=$_GKE_CLUSTER"
+      - "--location=$_GKE_LOCATION"
+      - "--namespace=$_K8S_NAMESPACE"
+      - "--timeout=10m"
   # Building and deploying frontend
   - id: Building frontend
     name: "gcr.io/cloud-builders/yarn"
@@ -164,6 +194,10 @@ substitutions:
     gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager/contract-listener
   _DOCKERFILE_NAME_CL: >-
     Dockerfile.contract-listener
+  _IMAGE_NAME_TS: >-
+    gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager/tertiary-stream
+  _DOCKERFILE_NAME_TS: >-
+    Dockerfile.tertiary-stream-processor
   _DOCKERFILE_DIR: ""
   _GKE_CLUSTER: chess-wager-${BRANCH_NAME}-env
   _K8S_NAMESPACE: default

@@ -1,18 +1,14 @@
-import { RiCloseFill } from "react-icons/ri"
-import { Auth } from "../../../../containers/Auth"
-import { LobbyState } from "../../../../containers/LobbyState"
 import {
   doc,
   DocumentData,
   DocumentReference,
-  getFirestore,
+  serverTimestamp,
   updateDoc,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
+import { RiCloseFill } from "react-icons/ri"
 import { Bet } from "../../../../../interfaces/Bet"
-import { motion } from "framer-motion"
-
-const db = getFirestore(firebaseApp)
+import { Auth } from "../../../../containers/Auth"
+import { LobbyState } from "../../../../containers/LobbyState"
 
 interface Props {
   bet: Bet
@@ -20,7 +16,7 @@ interface Props {
 
 export const LeaveButton: React.FC<Props> = ({ bet }) => {
   const { id, user2Id, status } = bet
-  const { user, auth } = Auth.useContainer()
+  const { user, auth, db } = Auth.useContainer()
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
 
   const { refreshLobby } = LobbyState.useContainer()
@@ -34,6 +30,7 @@ export const LeaveButton: React.FC<Props> = ({ bet }) => {
       user2PhotoURL: "",
       user2FollowThrough: [],
       user2DisplayName: "",
+      timestamp: serverTimestamp(),
     })
       .then(refreshLobby)
       .catch(console.error)
@@ -47,7 +44,7 @@ export const LeaveButton: React.FC<Props> = ({ bet }) => {
         status === "pending" && (
           <button
             onClick={cancel}
-            className="close-button color-shift clickable absolute top-0.5 right-0.5 grid place-content-center rounded-full border p-0.5"
+            className="close-button color-shift clickable absolute right-0.5 top-0.5 grid place-content-center rounded-full border p-0.5"
             id="leave-button"
           >
             <RiCloseFill size={12} />

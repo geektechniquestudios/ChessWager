@@ -2,21 +2,21 @@ import {
   doc,
   DocumentData,
   DocumentReference,
-  getFirestore,
+  serverTimestamp,
   updateDoc,
 } from "firebase/firestore"
 import { motion } from "framer-motion"
 import { FiUserMinus } from "react-icons/fi"
-import { firebaseApp } from "../../../../../../firestore.config"
+import { Auth } from "../../../../containers/Auth"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { LobbyState } from "../../../../containers/LobbyState"
-const db = getFirestore(firebaseApp)
 
 interface Props {
   id: string
 }
 
 export const KickButton: React.FC<Props> = ({ id }) => {
+  const { db } = Auth.useContainer()
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
   const { refreshLobby } = LobbyState.useContainer()
   const kick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -28,6 +28,7 @@ export const KickButton: React.FC<Props> = ({ id }) => {
       user2PhotoURL: "",
       user2FollowThrough: [],
       user2DisplayName: "",
+      timestamp: serverTimestamp(),
     })
       .then(refreshLobby)
       .catch(console.error)

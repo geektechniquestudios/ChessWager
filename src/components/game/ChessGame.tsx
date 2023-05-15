@@ -1,186 +1,88 @@
-import React, { useCallback, useEffect, useState } from "react"
-// @ts-ignore
-import ndjsonStream from "can-ndjson-stream"
-import { PlayerData } from "./PlayerData"
-import { GameState } from "../containers/GameState"
 import Chessground from "@react-chess/chessground"
-import { GameResultPopup } from "./popup/GameResultPopup"
 import { motion } from "framer-motion"
+import React from "react"
+import { PlayerData } from "./PlayerData"
+import { GameResultPopup } from "./popup/GameResultPopup"
+import { useGameStream } from "./useGameStream"
 
-// We use an old version of chessground. If we ever upgarde, uncomment the styles below.
+// We use an old version of chessground because it looks better. If we ever upgarde, uncomment the styles below.
 // import "chessground/assets/chessground.base.css"
 // import "chessground/assets/chessground.brown.css"
 // import "chessground/assets/chessground.cburnett.css"
 // import "chessground/assets/chessground.base.css"
 
-interface Res {
-  value: {
-    t: string
-    d: Featured | Move
-  }
-  done: boolean
-}
-interface Featured {
-  id: string
-  orientation: "black" | "white"
-  players: Player[]
-  fen: string
-  wc: number
-  bc: number
-}
-
-interface Move {
-  fen: string
-  lm: string
-  wc: number
-  bc: number
-}
-
-interface Player {
-  color: string
-  user: {
-    name: string
-    id: string
-    title: string
-  }
-  rating: number
-  seconds: number
-}
-
 export const ChessGame: React.FC = () => {
-  const { setGameId } = GameState.useContainer()
-
-  const [fen, setFen] = useState("")
-
-  const [whiteName, setWhiteName] = useState("")
-  const [whiteTime, setWhiteTime] = useState(0)
-  const [whiteRating, setWhiteRating] = useState(0)
-  const [whiteTitle, setWhiteTitle] = useState("")
-
-  const [blackName, setBlackName] = useState("")
-  const [blackTime, setBlackTime] = useState(0)
-  const [blackRating, setBlackRating] = useState(0)
-  const [blackTitle, setBlackTitle] = useState("")
-  const [orientation, setOrientation] = useState<"white" | "black" | undefined>(
-    "white",
-  )
-
-  const [isNewGame, setIsNewGame] = useState(true)
-
-  const updateTitles = useCallback((res: Res): void => {
-    let val: Featured = res.value.d as Featured
-    const white: Player | undefined = val.players.find(
-      (player: Player) => player.color === "white",
-    )
-    const black: Player | undefined = val.players.find(
-      (player: Player) => player.color === "black",
-    )
-
-    if (black === undefined || white === undefined) return
-
-    setFen(val.fen ?? "")
-    setGameId(val.id)
-
-    const resolveOrientation = (orientation: string): "white" | "black" =>
-      "white" === orientation || "black" === orientation ? orientation : "white"
-
-    setOrientation(resolveOrientation(val.orientation))
-
-    setWhiteTitle(white.user.title ?? "")
-    setBlackTitle(black.user.title ?? "")
-    setWhiteName(white.user.name)
-    setWhiteRating(white.rating)
-
-    if (black.user.title === undefined) setBlackTitle("")
-    setBlackName(black.user.name)
-    setBlackRating(black.rating)
-  }, [])
-
-  useEffect(() => {
-    fetch("https://lichess.org/api/tv/feed", {
-      method: "get",
-    })
-      .then((data) => ndjsonStream(data.body))
-      .then((stream) => {
-        const streamReader = stream.getReader()
-        streamReader.read().then(async (res: Res) => {
-          updateTitles(res)
-          while (!res || !res.done) {
-            res = await streamReader.read()
-            if (res.value.t === "fen") {
-              // data is a move
-              setFen(res.value.d.fen)
-              setWhiteTime(res.value.d.wc)
-              setBlackTime(res.value.d.bc)
-              setIsNewGame(false)
-            } else {
-              // data is a new game
-              updateTitles(res)
-              setWhiteTime(0)
-              setBlackTime(0)
-              setIsNewGame(true)
-            }
-          }
-        })
-      })
-      .catch(console.error)
-  }, [updateTitles])
+  const {
+    fen,
+    whiteName,
+    whiteTime,
+    whiteRating,
+    whiteTitle,
+    blackName,
+    blackTime,
+    blackRating,
+    blackTitle,
+    orientation,
+    isNewGame,
+  } = useGameStream()
 
   return (
     <div className="flex h-full w-auto flex-col">
       <div className="flex h-full flex-col items-center justify-center gap-2 overflow-hidden p-2">
-        <motion.div
-          layout
-          initial={{ opacity: 0.2 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4 }}
-          className="color-shift w-2/5 resize-x flex-col justify-center overflow-hidden rounded-xl border border-stone-500 bg-stone-100 p-1.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
-          style={{ minWidth: "16.5em", maxWidth: "80vh" }}
-        >
-          <div className="relative flex h-full w-full resize justify-center align-middle">
-            <GameResultPopup orientation={orientation} />
-            <div className="flex w-full flex-col justify-center rounded-lg border border-stone-500 bg-stone-200 align-middle dark:border-stone-700 dark:bg-stone-700">
-              <div className="flex w-full justify-center">
-                <PlayerData
-                  side={orientation === "white" ? "black" : "white"}
-                  title={orientation === "white" ? blackTitle : whiteTitle}
-                  name={orientation === "white" ? blackName : whiteName}
-                  time={orientation === "white" ? blackTime : whiteTime}
-                  rating={orientation === "white" ? blackRating : whiteRating}
-                  fen={fen}
-                  isNewGame={isNewGame}
-                  isTop
-                />
-              </div>
-              <div className="aspect-h-1 aspect-w-1 border-b border-t border-stone-600 dark:border-stone-400">
-                <Chessground
-                  contained
-                  config={{
-                    fen,
-                    orientation,
-                    draggable: { enabled: false },
-                    movable: {
-                      free: false,
-                    },
-                    coordinates: false,
-                  }}
-                />
-              </div>
-              <div className="flex justify-center">
-                <PlayerData
-                  side={orientation === "white" ? "white" : "black"}
-                  title={orientation === "black" ? blackTitle : whiteTitle}
-                  name={orientation === "black" ? blackName : whiteName}
-                  time={orientation === "black" ? blackTime : whiteTime}
-                  rating={orientation === "black" ? blackRating : whiteRating}
-                  fen={fen}
-                  isNewGame={isNewGame}
-                  isTop={false}
-                />
+        <div className="my-0 flex w-full justify-center">
+          <motion.div
+            layout
+            initial={{ opacity: 0.2 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="color-shift w-[30em] resize-x flex-col justify-center overflow-hidden rounded-xl border border-stone-500 bg-stone-100 p-1.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
+            style={{ minWidth: "16.5em", maxWidth: "85vh" }}
+          >
+            <div className="relative flex h-full w-full resize justify-center align-middle">
+              <GameResultPopup orientation={orientation} />
+              <div className="flex w-full flex-col justify-center rounded-lg border border-stone-500 bg-stone-200 align-middle dark:border-stone-700 dark:bg-stone-700">
+                <div className="flex w-full justify-center">
+                  <PlayerData
+                    side={orientation === "white" ? "black" : "white"}
+                    title={orientation === "white" ? blackTitle : whiteTitle}
+                    name={orientation === "white" ? blackName : whiteName}
+                    time={orientation === "white" ? blackTime : whiteTime}
+                    rating={orientation === "white" ? blackRating : whiteRating}
+                    fen={fen}
+                    isNewGame={isNewGame}
+                    isTop
+                  />
+                </div>
+                <div className="aspect-h-1 aspect-w-1 border-b border-t border-stone-600 dark:border-stone-400">
+                  <Chessground
+                    contained
+                    config={{
+                      fen,
+                      orientation,
+                      draggable: { enabled: false },
+                      movable: {
+                        free: false,
+                      },
+                      coordinates: false,
+                    }}
+                  />
+                </div>
+                <div className="flex justify-center">
+                  <PlayerData
+                    side={orientation === "white" ? "white" : "black"}
+                    title={orientation === "black" ? blackTitle : whiteTitle}
+                    name={orientation === "black" ? blackName : whiteName}
+                    time={orientation === "black" ? blackTime : whiteTime}
+                    rating={orientation === "black" ? blackRating : whiteRating}
+                    fen={fen}
+                    isNewGame={isNewGame}
+                    isTop={false}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </div>
   )

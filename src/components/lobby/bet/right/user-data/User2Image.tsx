@@ -29,6 +29,7 @@ export const User2Image: React.FC<Props> = ({ bet }) => {
           animate={{ rotate: 0 }}
           className={`${disabledStyle} ${ringStyle} flex h-full w-full rounded-full border-4 font-extrabold`}
           onClick={(e) => {
+            if (!user2Id) return
             e.stopPropagation()
             setClickedUserById(user2Id)
             openDropdownToMenu("clickedUser")

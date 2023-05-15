@@ -32,6 +32,22 @@ services:
       - redis
     image: geektechnique/primary-stream-processor:latest
 
+  tertiary-stream-processor:
+    build:
+      context: ./
+      dockerfile: Dockerfile.tertiary-stream-processor.local
+    restart: always
+    healthcheck:
+      test: curl -sS http://127.0.0.1 || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - redis
+    links:
+      - redis
+    image: geektechnique/tertiary-stream-processor:latest
+
   contract-listener:
     build:
       context: ./

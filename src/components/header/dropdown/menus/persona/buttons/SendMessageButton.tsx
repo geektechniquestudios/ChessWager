@@ -1,18 +1,10 @@
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore"
 import { RiMailSendLine } from "react-icons/ri"
-import { DropdownState } from "../../../../../containers/DropdownState"
-import { DropdownButton } from "./DropdownButton"
 import { Auth } from "../../../../../containers/Auth"
-import { firebaseApp } from "../../../../../../../firestore.config"
-import {
-  doc,
-  getDoc,
-  getFirestore,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore"
+import { DropdownState } from "../../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../../containers/UserMenuState"
+import { DropdownButton } from "./DropdownButton"
 
-const db = getFirestore(firebaseApp)
 interface Props {
   id: string
   displayName: string
@@ -28,7 +20,7 @@ export const SendMessageButton: React.FC<Props> = ({
   const { setUserIdFromMessages, setUsernameFromMessages } =
     UserMenuState.useContainer()
 
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const docId = [auth.currentUser?.uid, id].sort().join("-")
   const convoDoc = doc(db, "conversations", docId)
 
