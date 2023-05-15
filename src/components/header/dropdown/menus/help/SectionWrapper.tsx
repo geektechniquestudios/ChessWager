@@ -4,7 +4,7 @@ interface Props {
   text: string
   href?: string
   onClick?: () => void
-  icon?: ReactNode
+  icon: ReactNode
   isComplete?: boolean
 }
 
