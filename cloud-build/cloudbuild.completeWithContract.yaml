@@ -197,7 +197,7 @@ substitutions:
   _IMAGE_NAME_TS: >-
     gcr.io/chess-wager-${BRANCH_NAME}/github.com/geektechniquestudios/chesswager/tertiary-stream
   _DOCKERFILE_NAME_TS: >-
-    Dockerfile.tertiary-stream
+    Dockerfile.tertiary-stream-processor
   _DOCKERFILE_DIR: ""
   _GKE_CLUSTER: chess-wager-${BRANCH_NAME}-env
   _K8S_NAMESPACE: default

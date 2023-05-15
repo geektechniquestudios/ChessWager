@@ -14,10 +14,7 @@ export const SignInButton: React.FC = () => {
             exit={{ opacity: 0, y: -30 }}
             transition={{
               delay: 0.3,
-              type: "spring",
-              mass: 0.3,
-              bounce: 0,
-              stiffness: 120,
+              type: "just",
             }}
             id="header-sign-in-button"
             onClick={signInWithGoogle}

@@ -6,7 +6,7 @@ export const PersonaMenu: React.FC = ({}) => {
   const { userData, isLoading } = UserDataState.useContainer()
   return (
     <Menu
-      menuItems={[<UserData {...userData} isLoading={isLoading} />]}
+      menuItems={[<UserData user={userData} isLoading={isLoading} />]}
       thisMenu={"persona"}
     />
   )

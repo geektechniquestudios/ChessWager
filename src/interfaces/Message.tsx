@@ -1,5 +1,14 @@
 import { Timestamp } from "firebase/firestore"
 
+export type AttributeScores = {
+  IDENTITY_ATTACK: number
+  SEVERE_TOXICITY: number
+  THREAT: number
+  TOXICITY: number
+  INSULT: number
+  PROFANITY: number
+}
+
 export type Message = {
   convoId?: string
   text: string
@@ -7,4 +16,5 @@ export type Message = {
   photoURL: string
   userName: string
   createdAt: Timestamp
+  attribute_scores?: AttributeScores
 }

@@ -1,9 +1,8 @@
-import "../../../../../style/scrollbar.scss"
+import { LinearProgress } from "@mui/material"
 import {
   collection,
   doc,
   getDocs,
-  getFirestore,
   limit,
   orderBy,
   Query,
@@ -12,19 +11,16 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
-import { Auth } from "../../../../containers/Auth"
-import { Notification } from "../../../../../interfaces/Notification"
-import { NotificationItem } from "./NotificationItem"
-import InfiniteScroll from "react-infinite-scroll-component"
-import { LinearProgress } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-
-const db = getFirestore(firebaseApp)
+import InfiniteScroll from "react-infinite-scroll-component"
+import { Notification } from "../../../../../interfaces/Notification"
+import "../../../../../style/scrollbar.scss"
+import { Auth } from "../../../../containers/Auth"
+import { NotificationItem } from "./NotificationItem"
 
 export const NotificationsList: React.FC = ({}) => {
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const notificationsCollection = collection(userRef, "notifications")
 
@@ -80,7 +76,7 @@ export const NotificationsList: React.FC = ({}) => {
 
   return (
     <div
-      className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
+      className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden"
       style={{ direction: "rtl" }}
       id="notifications-scroll-div"
     >

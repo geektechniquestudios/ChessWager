@@ -9,64 +9,83 @@ const admin = require("firebase-admin")
 const isLocal = process.env.VITE_BRANCH_ENV === "develop"
 const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
-let cred
-if (isLocal) {
-  const serviceAccount = require(`../../../${adminSdk}`)
-  cred = admin.credential.cert(serviceAccount)
-} else {
-  cred = admin.credential.applicationDefault()
-}
+const cred = isLocal
+  ? admin.credential.cert(require(`../../../${adminSdk}`))
+  : admin.credential.applicationDefault()
 
 admin.initializeApp({ credential: cred })
 const db = admin.firestore()
 
+interface Player {
+  userId: string
+  rating: number
+  ratingDiff: number
+}
+
+interface GameResult {
+  winner?: "white" | "black"
+  status:
+    | "draw"
+    | "stalemate"
+    | "resign"
+    | "timeout"
+    | "outoftime"
+    | "mate"
+    | "aborted"
+    | "canceled"
+    | "started"
+  players?: {
+    white: Player
+    black: Player
+  }
+}
+
+type Outcome = "white" | "black" | "draw" | "incomplete"
+
 const gameIdHistoryRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData> =
   db.collection("games")
 
-export const payWinnersByGameId = async (gameId: string) => {
-  if (!gameId || gameId !== "") return
-  fetch(`https://lichess.org/api/game/${gameId}`)
-    .then((res: any) => res.json())
-    .then((gameData: any) => {
-      console.log(gameData)
-      // check if game has been completed
-      if (gameData.hasOwnProperty("winner")) {
-        console.log("game is over, checking for winners")
-        const whiteWins = gameData.winner === "white"
-        const blackWins = gameData.winner === "black"
-        if (whiteWins) {
-          console.log("white wins, updating contract")
-          gameIdHistoryRef.doc(gameId).set({
-            outcome: "white wins",
-          })
-          payWinnersContractCall(gameId, "white")
-        } else if (blackWins) {
-          console.log("black wins, updating contract")
-          gameIdHistoryRef.doc(gameId).set({
-            outcome: "black wins",
-          })
-          payWinnersContractCall(gameId, "black")
-        }
-      } else if (
-        gameData.status === "draw" ||
-        gameData.status === "stalemate"
-      ) {
-        console.log("game is a draw")
-        gameIdHistoryRef.doc(gameId).set({
-          outcome: gameData.status,
-        })
-        payWinnersContractCall(gameId, "draw")
-      } else {
-        console.log("game is not over : ", gameData)
-      }
+export const payWinnersByGameId = async (gameId: string): Promise<void> => {
+  const getOutcomeFromLichess = async (gameId: string): Promise<Outcome> => {
+    const response: Response = await fetch(
+      `https://lichess.org/api/game/${gameId}`,
+    )
+    if (!response.ok) {
+      console.error("Error in lichess response:", response.statusText)
+      return "incomplete"
+    }
+    const gameResult: GameResult = await response.json()
+
+    if (!gameResult) {
+      console.log("No game data in response")
+      return "incomplete"
+    }
+    if (gameResult.status === "started") {
+      console.log("Game is not finished")
+      return "incomplete"
+    }
+
+    return gameResult?.winner ?? "draw"
+  }
+
+  const writeOutcome = (gameId: string, outcome: Outcome) => {
+    console.log("Writing outcome to db: ", outcome)
+    gameIdHistoryRef.doc(gameId).set({
+      outcome,
     })
-    .catch(console.error)
+  }
+
+  if (!gameId) return
+  const outcome = await getOutcomeFromLichess(gameId)
+  if (outcome === "incomplete") return
+  console.log("Outcome: ", outcome)
+  writeOutcome(gameId, outcome)
+  payWinnersContractCall(gameId, outcome)
 }
 
 const contractAddress = process.env.VITE_CONTRACT_ADDRESS!
 const contractABI = ChessWager.abi
 const metamaskKey = process.env.VITE_METAMASK_ACCOUNT_KEY
-
 let rpcUrl
 if (process.env.VITE_BRANCH_ENV === "develop") {
   rpcUrl = process.env.VITE_AVALANCHE_TESTNET_RPC_URL
@@ -88,15 +107,31 @@ const overrides = {
   gasLimit: 1000000,
 }
 
-const payWinnersContractCall = async (gameId: string, winningSide: string) => {
+export const payWinnersContractCall = async (
+  gameId: string,
+  winningSide: Outcome,
+) => {
   const contractDoc = gameIdHistoryRef
     .doc(gameId)
     .collection("contracts")
     .doc(contractAddress)
 
+  const betsCollection = db.collection("lobby")
+
+  if (
+    await db
+      .collection("games")
+      .doc(gameId)
+      .get()
+      .then((doc: any) => doc.data()?.isBeingPaid)
+  )
+    return
+
+  db.collection("games").doc(gameId).set({ isBeingPaid: true }, { merge: true })
+
   contractDoc
     .get()
-    .then((cDoc: any) => {
+    .then(async (cDoc: any) => {
       if (!cDoc.exists) {
         console.log("No document found for gameId: ", gameId)
         return
@@ -105,16 +140,41 @@ const payWinnersContractCall = async (gameId: string, winningSide: string) => {
         console.log("No bets placed on this game, skipping contract call")
       } else if (cDoc.data().hasBeenPaid) {
         console.log("Contract has already been paid, skipping contract call")
+      } else if (cDoc.data().isBeingPaid) {
+        console.log("Contract is being been paid, skipping contract call")
       } else {
         console.log("paying winners for gameId: ", gameId)
+        await contractDoc.set({ isBeingPaid: true })
         contract
           .payWinners(gameId, winningSide, overrides)
           .then((tx: any) => {
             console.log("tx: ", tx)
+            return tx.wait()
+          })
+          .then((receipt: any) => {
+            console.log("Transaction was mined, receipt: ", receipt)
             contractDoc.set({ hasBeenPaid: true }, { merge: true })
+            betsCollection
+              .where("gameId", "==", gameId)
+              .where("status", "in", ["approved", "funded"])
+
+              .get()
+              .then((querySnapshot: any) => {
+                querySnapshot.forEach((doc: any) => {
+                  doc.ref.update({
+                    payoutTransactionHash: receipt.transactionHash,
+                  })
+                })
+              })
+              .catch((err: any) => {
+                console.log("err: ", err)
+              })
           })
           .catch((err: any) => {
-            console.log("err: ", err)
+            console.log("Transaction was rejected or failed, error: ", err)
+          })
+          .finally(async () => {
+            await contractDoc.set({ isBeingPaid: false })
           })
       }
     })

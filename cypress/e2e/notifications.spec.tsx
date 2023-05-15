@@ -23,14 +23,14 @@ describe("notifications", () => {
     ).wait(2000)
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').within(() => {
-      cy.get("a").first().should("exist")
+      cy.get("button").first().should("exist")
     })
   })
 
   it("should open to new menu when notification menu item is clicked", () => {
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').within(() => {
-      cy.get("a").first().click()
+      cy.get("button").first().click()
     })
     cy.get('div[id="notification-list"]').should("not.exist")
   })
@@ -50,7 +50,7 @@ describe("notifications", () => {
     )
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').within(() => {
-      cy.get("a").first().click()
+      cy.get("button").first().click()
     })
     cy.wait(5000)
     cy.callFirestore(

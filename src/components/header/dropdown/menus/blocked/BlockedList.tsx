@@ -1,16 +1,13 @@
-import { collection, doc, getFirestore, Query } from "firebase/firestore"
+import { collection, doc, Query } from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
 import { BlockedUser } from "../../../../../interfaces/BlockedUser"
 import { Auth } from "../../../../containers/Auth"
 import { BlockedUserItem } from "./BlockedUserItem"
 
-const db = getFirestore(firebaseApp)
-
 interface Props {}
 
 export const BlockedList: React.FC<Props> = ({}) => {
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const blockedCollection = collection(
     doc(db, "users", auth.currentUser!.uid),
     "blocked",
@@ -22,7 +19,7 @@ export const BlockedList: React.FC<Props> = ({}) => {
     <div>
       {blockedUsers?.length ?? 0 > 0 ? (
         <div
-          className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
+          className="scrollbar-dropdown h-72 w-full overflow-y-auto overflow-x-hidden"
           style={{ direction: "rtl" }}
         >
           {blockedUsers?.map(({ userName, photoURL, id }: BlockedUser) => (

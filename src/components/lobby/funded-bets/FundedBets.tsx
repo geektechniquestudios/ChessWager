@@ -1,12 +1,12 @@
-import "../../../style/scrollbar.scss"
 import { AnimatePresence, motion } from "framer-motion"
 import { Bet } from "../../../interfaces/Bet"
+import "../../../style/scrollbar.scss"
 import { Auth } from "../../containers/Auth"
 import { BetsState } from "../../containers/BetsState"
 import { Price } from "../../containers/Price"
-import { MiniBet } from "./MiniBet"
 import { AscDescButton } from "../lobby-header/AscDescButton"
 import { RealtimeButton } from "../lobby-header/RealTimeButton"
+import { MiniBet } from "./MiniBet"
 
 interface Props {}
 
@@ -32,13 +32,15 @@ export const FundedBets: React.FC<Props> = ({}) => {
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
   return (
-    <div className="h-9 w-full">
+    <div className="h-11 w-full">
       <div className="flex h-full justify-start gap-1 border-b border-stone-400 bg-stone-50 px-1 dark:border-stone-700 dark:bg-stone-900">
-        <AscDescButton />
-        <RealtimeButton />
-        <div className="flex items-center justify-center gap-1 whitespace-nowrap  border-stone-400 border-r-stone-400 px-3 py-1 text-sm dark:border-black dark:border-r-stone-700 dark:text-stone-50">
-          <p className="font-bold">{`$${amountAtStake}`}</p>
-          <p className="">at Stake</p>
+        <div className="flex gap-1 py-0.5">
+          <AscDescButton />
+          <RealtimeButton />
+          <div className="flex items-center justify-center gap-1 whitespace-nowrap  border-stone-400 border-r-stone-400 px-3 py-1 text-sm dark:border-black dark:border-r-stone-700 dark:text-stone-50">
+            <p className="font-bold">{`$${amountAtStake}`}</p>
+            <p className="">at Stake</p>
+          </div>
         </div>
         <div className="scrollbar-funded my-1 flex w-full items-center justify-start gap-1 overflow-x-auto overflow-y-clip rounded-md border border-stone-400 bg-white px-0.5 dark:border-stone-700 dark:bg-stone-800">
           <AnimatePresence>

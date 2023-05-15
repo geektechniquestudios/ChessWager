@@ -1,21 +1,13 @@
-import {
-  collection,
-  CollectionReference,
-  doc,
-  getFirestore,
-} from "firebase/firestore"
+import { collection, CollectionReference, doc } from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
 import { FriendRequest } from "../../../../../interfaces/FriendRequest"
 import { Auth } from "../../../../containers/Auth"
 import { RequestItem } from "./RequestItem"
 
-const db = getFirestore(firebaseApp)
-
 interface Props {}
 
 export const RequestList: React.FC<Props> = ({}) => {
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const targetUserRef = doc(db, "users", auth.currentUser!.uid)
   const requestsCollection = collection(
     targetUserRef,
@@ -30,7 +22,7 @@ export const RequestList: React.FC<Props> = ({}) => {
       {!isLoading ? (
         (requests?.length ?? 0) > 0 ? (
           <div
-            className="scrollbar-dropdown ml-0.5 h-72 w-full overflow-y-auto overflow-x-hidden"
+            className="scrollbar-dropdown h-72 w-full overflow-y-auto"
             style={{ direction: "rtl" }}
             id="requests"
           >

@@ -1,20 +1,17 @@
-import { collection, doc, getFirestore } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
+import { collection, doc } from "firebase/firestore"
+import { BsWallet2 } from "react-icons/bs"
 import { Auth } from "../../../../containers/Auth"
+import { UserDataState } from "../../../../containers/UserDataState"
 import { AddFriendButton } from "./buttons/AddFriendButton"
+import { BanUserButton } from "./buttons/BanUserButton"
 import { BlockUserButton } from "./buttons/BlockUserButton"
+import { BlockedButton } from "./buttons/BlockedButton"
+import { CancelPendingRequestButton } from "./buttons/CancelPendingRequestButton"
+import { ContractDataButton } from "./buttons/ContractDataButton"
+import { FriendRequestsButton } from "./buttons/FriendRequestsButton"
+import { RemoveFriendButton } from "./buttons/RemoveFriendButton"
 import { ReportUserButton } from "./buttons/ReportUserButton"
 import { SendMessageButton } from "./buttons/SendMessageButton"
-import { BlockedButton } from "./buttons/BlockedButton"
-import { BsWallet2 } from "react-icons/bs"
-import { RemoveFriendButton } from "./buttons/RemoveFriendButton"
-import { CancelPendingRequestButton } from "./buttons/CancelPendingRequestButton"
-import { FriendRequestsButton } from "./buttons/FriendRequestsButton"
-import { UserDataState } from "../../../../containers/UserDataState"
-import { ContractDataButton } from "./buttons/ContractDataButton"
-import { BanUserButton } from "./buttons/BanUserButton"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {
   id: string
@@ -34,7 +31,7 @@ export const UserButtonsArea: React.FC<Props> = ({
   moderatorLevel,
 }) => {
   const { userData } = UserDataState.useContainer()
-  const { auth, isWalletConnected, connectWallet } = Auth.useContainer()
+  const { auth, isWalletConnected, connectWallet, db } = Auth.useContainer()
 
   const isFriend = userData?.friends.includes(id) ?? false
   const isUser = auth.currentUser?.uid === id
@@ -45,8 +42,8 @@ export const UserButtonsArea: React.FC<Props> = ({
     <>
       <>
         {!isUser && displayName !== "" && (
-          <div className="h-22 my-1 flex w-full justify-between">
-            <div className="flex gap-3">
+          <div className="h-22 flex w-full justify-between">
+            <div className="flex gap-2">
               <SendMessageButton
                 id={id ?? ""}
                 displayName={displayName}
@@ -65,15 +62,15 @@ export const UserButtonsArea: React.FC<Props> = ({
                   />
                 )}
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               {isFriend && <RemoveFriendButton id={id} />}
               <BlockUserButton
-                id={id ?? ""}
+                id={id}
                 displayName={displayName}
                 photoURL={photoURL}
                 blockedUsers={blockedUsers}
               />
-              <ReportUserButton id={id ?? ""} />
+              <ReportUserButton id={id} />
               <BanUserButton
                 id={id}
                 displayName={displayName}
@@ -94,7 +91,7 @@ export const UserButtonsArea: React.FC<Props> = ({
             </div>
             {isWalletConnected ? (
               <a
-                className="color-shift rounded-full border border-stone-600 bg-white py-1 px-2 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-400 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
+                className="color-shift rounded-full border border-stone-600 bg-white px-2 py-1 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-400 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
                 title={"View Wallet on Snowtrace"}
                 href={"https://snowtrace.io/address/" + walletAddress}
                 rel="noopener noreferrer"
@@ -113,7 +110,7 @@ export const UserButtonsArea: React.FC<Props> = ({
               </a>
             ) : (
               <a
-                className="color-shift rounded-full border border-stone-600 bg-white py-1 px-2 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-400 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
+                className="color-shift rounded-full border border-stone-600 bg-white px-2 py-1 text-xs hover:border-black hover:text-black hover:underline dark:border-stone-400 dark:bg-stone-800 dark:hover:border-white dark:hover:text-stone-200"
                 title={"Connect Wallet"}
                 onClick={connectWallet}
                 rel="noopener noreferrer"

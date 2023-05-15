@@ -1,9 +1,7 @@
 import { LinearProgress } from "@mui/material"
 import {
   collection,
-  doc,
   getDocs,
-  getFirestore,
   limit,
   orderBy,
   Query,
@@ -12,26 +10,25 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore"
+import { LayoutGroup } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { firebaseApp } from "../../../../../../firestore.config"
 import type { Message } from "../../../../../interfaces/Message"
 import { Auth } from "../../../../containers/Auth"
 import { UserDataState } from "../../../../containers/UserDataState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
+import { ConversationMenuHeader } from "./ConversationMenuHeader"
 import { ConvoChatMessage } from "./ConvoChatMessage"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {}
 
 export const ConvoChatBody: React.FC<Props> = ({}) => {
   const { userData } = UserDataState.useContainer()
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const { userIdFromMessages } = UserMenuState.useContainer()
   const convoId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
-  const messagesRef = collection(doc(db, "conversations", convoId), "messages")
+  const messagesRef = collection(db, "conversations", convoId, "messages")
 
   const [timestamp] = useState<Timestamp>(Timestamp.now())
   const q = query(
@@ -49,7 +46,8 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
 
   const loadMoreMessages = async () => {
     const amountToLoad = 15
-    const lastVisible = fullMessages?.[0]?.createdAt ?? timestamp
+    const lastVisible =
+      fullMessages?.[fullMessages.length - 1]?.createdAt ?? timestamp
     const q2 = query(
       messagesRef,
       orderBy("createdAt", "desc"),
@@ -68,37 +66,50 @@ export const ConvoChatBody: React.FC<Props> = ({}) => {
     loadMoreMessages()
   }, [])
 
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const scrollingContainerRef = useRef<HTMLDivElement>(null)
 
   return (
     <div
       className="scrollbar flex h-96 flex-col-reverse justify-between overflow-y-auto overflow-x-hidden"
       style={{ direction: "rtl" }}
       id="convo-scroll-div"
-      ref={scrollRef}
+      ref={scrollingContainerRef}
     >
-      <InfiniteScroll
-        scrollThreshold="200px"
-        scrollableTarget="convo-scroll-div"
-        dataLength={fullMessages?.length ?? 0}
-        next={loadMoreMessages}
-        hasMore={hasMore}
-        loader={<LinearProgress />}
-        inverse
-        className="flex flex-col-reverse"
-      >
-        <div style={{ direction: "ltr" }} id="convo-body" className="pt-2">
-          {fullMessages
-            .reverse()
-            ?.filter((message) => !userData?.blockedUsers.includes(message.uid))
-            .map((message: Message) => (
-              <ConvoChatMessage
-                key={message.createdAt.toMillis()}
-                {...message}
-              />
-            ))}
-        </div>
-      </InfiniteScroll>
+      <ConversationMenuHeader scrollingContainerRef={scrollingContainerRef} />
+      <div className="flex h-full flex-col-reverse">
+        <InfiniteScroll
+          scrollThreshold="100px"
+          scrollableTarget="convo-scroll-div"
+          dataLength={fullMessages?.length ?? 0}
+          next={loadMoreMessages}
+          hasMore={hasMore}
+          loader={fullMessages.length > 6 && <LinearProgress />}
+          className="flex flex-col-reverse"
+          initialScrollY={1}
+          inverse
+        >
+          <div
+            style={{ direction: "ltr" }}
+            id="convo-body"
+            className="flex flex-col overflow-hidden pt-2"
+          >
+            <LayoutGroup>
+              {fullMessages
+                .slice()
+                .reverse()
+                ?.filter(
+                  (message) => !userData?.blockedUsers.includes(message.uid),
+                )
+                .map((message: Message) => (
+                  <ConvoChatMessage
+                    key={message.createdAt.toString()}
+                    message={message}
+                  />
+                ))}
+            </LayoutGroup>
+          </div>
+        </InfiniteScroll>
+      </div>
     </div>
   )
 }

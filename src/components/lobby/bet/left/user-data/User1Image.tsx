@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const User1Image: React.FC<Props> = ({ bet }) => {
-  const { user1Id, betSide, user1PhotoURL, user2Id, status } = bet
+  const { user1Id, betSide, user1PhotoURL } = bet
   const { openDropdownToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { user } = Auth.useContainer()

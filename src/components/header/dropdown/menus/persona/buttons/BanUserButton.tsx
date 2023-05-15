@@ -1,11 +1,9 @@
-import { doc, getFirestore, updateDoc } from "firebase/firestore"
-import { firebaseApp } from "../../../../../../../firestore.config"
+import { doc, updateDoc } from "firebase/firestore"
+import { Auth } from "../../../../../containers/Auth"
 import { DropdownState } from "../../../../../containers/DropdownState"
 import { UserDataState } from "../../../../../containers/UserDataState"
-import { DropdownButton } from "./DropdownButton"
 import { CustomSwal } from "../../../../../popups/CustomSwal"
-
-const db = getFirestore(firebaseApp)
+import { DropdownButton } from "./DropdownButton"
 
 interface Props {
   id?: string
@@ -20,6 +18,7 @@ export const BanUserButton: React.FC<Props> = ({
   isBanned,
   moderatorLevel,
 }) => {
+  const { db } = Auth.useContainer()
   const { setIsDropdownOpen, setMenuHeight } = DropdownState.useContainer()
   const { userData } = UserDataState.useContainer()
 

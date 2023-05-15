@@ -1,31 +1,28 @@
-import { SignInButton } from "./buttons/SignInButton"
-import { MainHeaderButton } from "./buttons/MainHeaderButton"
-import { BiChevronDown } from "react-icons/bi"
-import { RiChat2Line, RiNotification3Line } from "react-icons/ri"
-import { FaRegGem } from "react-icons/fa"
-import { CgProfile } from "react-icons/cg"
-import { UserDataState } from "../containers/UserDataState"
-import { Auth } from "../containers/Auth"
-import { doc, getFirestore, updateDoc } from "firebase/firestore"
-import { firebaseApp } from "../../../firestore.config"
-import { DropdownMenu } from "./dropdown/DropdownMenu"
-import { DropdownState } from "../containers/DropdownState"
+import { doc, updateDoc } from "firebase/firestore"
 import { LayoutGroup } from "framer-motion"
-import { RiSearch2Line } from "react-icons/ri"
-
-const db = getFirestore(firebaseApp)
+import { BiChevronDown } from "react-icons/bi"
+import { CgProfile } from "react-icons/cg"
+import { FaRegGem } from "react-icons/fa"
+import { RiChat2Line, RiNotification3Line, RiSearch2Line } from "react-icons/ri"
+import { Auth } from "../containers/Auth"
+import { DropdownState } from "../containers/DropdownState"
+import { UserDataState } from "../containers/UserDataState"
+import { MainHeaderButton } from "./buttons/MainHeaderButton"
+import { SignInButton } from "./buttons/SignInButton"
+import { DropdownMenu } from "./dropdown/DropdownMenu"
 
 export const HeaderRight: React.FC = () => {
   const { userData } = UserDataState.useContainer()
+  const { auth, isLoading, db } = Auth.useContainer()
+  const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
 
-  const greenMessageStyle =
-    userData?.hasNewMessage ?? false ? "dark:text-green-400 text-green-600" : ""
-  const greenNotificationStyle =
-    userData?.hasNewNotifications ?? false
-      ? "dark:text-green-400 text-green-600"
-      : ""
+  const greenMessageStyle = userData?.hasNewMessage
+    ? "dark:text-green-400 text-green-600"
+    : ""
+  const greenNotificationStyle = userData?.hasNewNotifications
+    ? "dark:text-green-400 text-green-600"
+    : ""
 
-  const { auth, isLoading } = Auth.useContainer()
   const setNewMessagesToFalse = () => {
     if (!userData?.hasNewMessage ?? true) return
     const userRef = doc(db, "users", auth.currentUser!.uid)
@@ -36,7 +33,6 @@ export const HeaderRight: React.FC = () => {
     const userRef = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userRef, { hasNewNotifications: false })
   }
-  const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
 
   return (
     <div className="mr-3 flex items-center justify-end gap-1.5">

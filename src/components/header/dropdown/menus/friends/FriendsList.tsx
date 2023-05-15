@@ -1,19 +1,12 @@
-import "../../../../../style/scrollbar.scss"
-import { Auth } from "../../../../containers/Auth"
-import {
-  collection,
-  CollectionReference,
-  doc,
-  getFirestore,
-} from "firebase/firestore"
-import { firebaseApp } from "../../../../../../firestore.config"
+import { collection, CollectionReference, doc } from "firebase/firestore"
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore"
 import { Friend } from "../../../../../interfaces/Friend"
+import "../../../../../style/scrollbar.scss"
+import { Auth } from "../../../../containers/Auth"
 import { FriendItem } from "./FriendItem"
-const db = getFirestore(firebaseApp)
 
 export const FriendsList: React.FC = ({}) => {
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const userFriendsRef = collection(
     userRef,

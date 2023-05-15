@@ -1,19 +1,18 @@
-import { useEffect, useRef, useState } from "react"
-import { ChatHeader } from "./ChatHeader"
-import { ChatForm } from "./ChatForm"
-import { ChatBody } from "./ChatBody"
-import { ChatFormData } from "../containers/ChatFormData"
-import { collection, getFirestore } from "firebase/firestore"
-import { firebaseApp } from "../../../firestore.config"
-import { ChatToggle } from "../containers/ChatToggle"
+import { collection } from "firebase/firestore"
 import { AnimatePresence, motion } from "framer-motion"
-import { WindowSize } from "../containers/WindowSize"
+import { useEffect, useRef, useState } from "react"
 import "../../style/chat.scss"
-
-const db = getFirestore(firebaseApp)
+import { Auth } from "../containers/Auth"
+import { ChatFormData } from "../containers/ChatFormData"
+import { ChatToggle } from "../containers/ChatToggle"
+import { WindowSize } from "../containers/WindowSize"
+import { ChatBody } from "./ChatBody"
+import { ChatForm } from "./ChatForm"
+import { ChatHeader } from "./ChatHeader"
 
 export const PublicChat: React.FC = () => {
   const dummy = useRef<HTMLInputElement>(null)
+  const { db } = Auth.useContainer()
   const messagesRef = collection(db, "messages")
 
   const { chatFormValue, setChatFormValue } = ChatFormData.useContainer()

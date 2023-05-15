@@ -23,6 +23,7 @@ dotenv.config({ path: ".env" })
 // eslint-disable-next-line no-unused-vars
 import admin from "firebase-admin"
 import { plugin as cypressFirebasePlugin } from "cypress-firebase"
+import spawn from "cross-spawn"
 
 module.exports = (
   on: Cypress.PluginEvents,
@@ -37,6 +38,30 @@ module.exports = (
         configFile: path.resolve(__dirname, "..", "..", "vite.config.ts"),
       },
     })
+  })
+
+  on("task", {
+    runBuildWithEvents() {
+      return new Promise((resolve) => {
+        const buildProcess = spawn("yarn", ["build"])
+        let output = ""
+
+        buildProcess.stdout.on("data", (data) => {
+          output += data.toString()
+          console.log(data.toString())
+        })
+
+        buildProcess.stderr.on("data", (data) => {
+          output += data.toString()
+          console.error(data.toString())
+        })
+
+        buildProcess.on("close", (code) => {
+          const success = code === 0
+          resolve({ success, output })
+        })
+      })
+    },
   })
 
   config.env = process.env

@@ -1,18 +1,18 @@
-import { FaRegClock, FaRegHandshake } from "react-icons/fa"
-import { GiPayMoney, GiYinYang } from "react-icons/gi"
 import { AiOutlineCalculator } from "react-icons/ai"
 import { BsPiggyBank } from "react-icons/bs"
-import { HeaderButton } from "./LobbyHeaderButton"
+import { FaRegClock, FaRegHandshake } from "react-icons/fa"
+import { GiPayMoney, GiYinYang } from "react-icons/gi"
 import { DarkMode } from "../../containers/DarkMode"
+import { LobbyHeaderButton } from "./LobbyHeaderButton"
 
 export const LobbyHeaderButtons: React.FC = () => {
   const { isDarkOn } = DarkMode.useContainer()
   return (
     <div className="flex h-8 w-full justify-between gap-1 rounded-t-lg border-b border-stone-400 bg-white px-1 dark:border-stone-700 dark:bg-stone-800">
-      <HeaderButton buttonName="Side" buttonIcon={<GiYinYang />} />
-      <HeaderButton buttonName="Trust" buttonIcon={<FaRegHandshake />} />
-      <HeaderButton buttonName="Prize" buttonIcon={<BsPiggyBank />} />
-      <HeaderButton
+      <LobbyHeaderButton buttonName="Side" buttonIcon={<GiYinYang />} />
+      <LobbyHeaderButton buttonName="Trust" buttonIcon={<FaRegHandshake />} />
+      <LobbyHeaderButton buttonName="Prize" buttonIcon={<BsPiggyBank />} />
+      <LobbyHeaderButton
         buttonName="Cost"
         buttonIcon={
           <GiPayMoney
@@ -22,11 +22,11 @@ export const LobbyHeaderButtons: React.FC = () => {
           />
         }
       />
-      <HeaderButton
+      <LobbyHeaderButton
         buttonName="Multiplier"
         buttonIcon={<AiOutlineCalculator />}
       />
-      <HeaderButton buttonName="Time" buttonIcon={<FaRegClock />} />
+      <LobbyHeaderButton buttonName="Time" buttonIcon={<FaRegClock />} />
     </div>
   )
 }

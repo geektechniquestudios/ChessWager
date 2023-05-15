@@ -3,19 +3,15 @@ import {
   collection,
   deleteDoc,
   doc,
-  getFirestore,
   serverTimestamp,
   Timestamp,
   writeBatch,
 } from "firebase/firestore"
 import { BsCheck2, BsX } from "react-icons/bs"
-import { firebaseApp } from "../../../../../../firestore.config"
 import { Auth } from "../../../../containers/Auth"
 import { DropdownState } from "../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../containers/UserMenuState"
 import { DropdownButton } from "../persona/buttons/DropdownButton"
-
-const db = getFirestore(firebaseApp)
 
 interface Props {
   id: string
@@ -30,7 +26,7 @@ export const RequestItem: React.FC<Props> = ({
   photoURL,
   createdAt,
 }) => {
-  const { auth } = Auth.useContainer()
+  const { auth, db } = Auth.useContainer()
 
   const targetUserRef = doc(db, "users", id)
   const notificationsCollection = collection(targetUserRef, "notifications")
@@ -69,7 +65,7 @@ export const RequestItem: React.FC<Props> = ({
   const { setClickedUserById } = UserMenuState.useContainer()
   return (
     <a
-      className="color-shift flex h-12 w-64 items-center justify-between gap-3 px-4 text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200"
+      className="color-shift flex h-12 items-center justify-between gap-3 px-4 text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200"
       style={{ direction: "ltr" }}
       onClick={() => {
         setClickedUserById(id)

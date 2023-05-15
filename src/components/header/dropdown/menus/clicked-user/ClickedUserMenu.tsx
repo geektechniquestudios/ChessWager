@@ -6,7 +6,7 @@ export const ClickedUserMenu: React.FC = ({}) => {
   const { clickedUser, isLoading } = UserMenuState.useContainer()
   return (
     <Menu
-      menuItems={[<UserData {...clickedUser} isLoading={isLoading} />]}
+      menuItems={[<UserData user={clickedUser} isLoading={isLoading} />]}
       thisMenu={"clickedUser"}
     />
   )
