@@ -1,6 +1,8 @@
+import { CircularProgress } from "@mui/material"
 import { BigNumber, ethers, providers } from "ethers"
 import { DocumentReference, doc, updateDoc } from "firebase/firestore"
 import { motion } from "framer-motion"
+import { useState } from "react"
 import { BiWallet } from "react-icons/bi"
 import { Bet } from "../../interfaces/Bet"
 import { Auth } from "../containers/Auth"
@@ -55,7 +57,9 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
     gasPrice: gasPriceWei,
   }
 
-  const sendBet = () => {
+  const [isPaymentPending, setIsPaymentPending] = useState<boolean>(false)
+
+  const sendBet = async () => {
     const storeTransactionHash = (
       result: providers.TransactionResponse | undefined,
     ) => {
@@ -64,12 +68,13 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
       if (isUser1) updateDoc(betDoc, { user1TransactionHash: result.hash })
       else updateDoc(betDoc, { user2TransactionHash: result.hash })
     }
-
-    callContract(
+    setIsPaymentPending(true)
+    await callContract(
       (contract) => contract.placeBet(betForContract, id, overrides),
       contractAddress,
       storeTransactionHash,
     )
+    setIsPaymentPending(false)
   }
 
   const isUser1 = auth.currentUser?.uid === user1Id
@@ -84,12 +89,18 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
       className="bet-button color-shift flex h-6 -translate-y-1 animate-pulse items-center justify-center gap-1 rounded-md border px-1.5 font-bold"
       onClick={sendBet}
     >
-      <BiWallet
-        size="14"
-        title="Send Wager"
-        color={isDarkOn ? "#bbf7d0" : "#14532d"}
-      />
       <div className="text-xs font-bold">Pay</div>
+      <div className="grid w-5 place-content-center">
+        {isPaymentPending ? (
+          <CircularProgress size={13} />
+        ) : (
+          <BiWallet
+            size="14"
+            title="Send Wager"
+            color={isDarkOn ? "#bbf7d0" : "#14532d"}
+          />
+        )}
+      </div>
     </motion.button>
   )
 }
