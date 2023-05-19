@@ -106,6 +106,7 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
       className={`${failedStyle} ${readyStyle} color-shift flex h-6 -translate-y-1 items-center justify-between gap-1 rounded-md border px-1.5 font-bold`}
       onClick={sendBet}
       title="Send Wager"
+      disabled={paymentStatus === "pending" || paymentStatus === "succeeded"}
     >
       <div className="text-xs font-bold">Pay</div>
       <div className="grid w-5 place-content-center">
