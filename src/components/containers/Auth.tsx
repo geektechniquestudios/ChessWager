@@ -208,6 +208,7 @@ const useAuth = () => {
     ) => Promise<providers.TransactionResponse | void>,
     contractAddress?: string,
     postContractCallFunction?: (result?: providers.TransactionResponse) => void,
+    handleError?: () => void,
   ) => {
     const isCorrectBlockchain = async (
       provider: ethers.providers.Web3Provider,
@@ -256,6 +257,7 @@ const useAuth = () => {
       postContractCallFunction && postContractCallFunction(result ?? undefined)
     } catch (err) {
       console.error(err)
+      handleError && handleError() // call error handler if provided
     } finally {
       contract.removeAllListeners()
     }

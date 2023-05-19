@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import "../../../style/lobby.scss"
 import { Auth } from "../../containers/Auth"
 import { BigNumber, ethers } from "ethers"
@@ -50,7 +49,14 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
       })
       setSelectedBetMap(temp)
     }
+    return () => {
+      const newMap = new Map(selectedBetMap)
+      newMap.delete(id)
+      setSelectedBetMap(newMap)
+    }
   }, [auth.currentUser])
+
+  const [isJoining, setIsJoining] = useState<boolean>(false)
 
   const updateSelectedStatus = () => {
     if (!auth.currentUser) {
@@ -67,7 +73,8 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
       status === "ready" &&
       user &&
       id !== "" &&
-      isLobbyEnabled
+      isLobbyEnabled &&
+      !isJoining
     ) {
       const newMap = new Map(selectedBetMap)
       if (!isSelected) {
@@ -138,7 +145,12 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
             status={status}
             betHeaderStyle={betHeaderStyle}
           />
-          <User2Data bet={bet} isSelected={isSelected} />
+          <User2Data
+            bet={bet}
+            isSelected={isSelected}
+            isJoining={isJoining}
+            setIsJoining={setIsJoining}
+          />
         </motion.div>
       )}
     </div>

@@ -902,8 +902,8 @@ service cloud.firestore {
       allow create: if canCreate() && isContactCreateDataValid() && isContactCreateKeyValid();
     }
 
-    // match /games/{gameId=**} {
-    //   allow read: if canCreate();
-    // }
+    match /games/{gameId=**} {
+      allow read: if canCreate();
+    }
   }
 }
