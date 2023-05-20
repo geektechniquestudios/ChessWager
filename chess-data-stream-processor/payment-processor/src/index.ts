@@ -157,7 +157,6 @@ export const payWinnersContractCall = async (
             betsCollection
               .where("gameId", "==", gameId)
               .where("status", "in", ["approved", "funded"])
-
               .get()
               .then((querySnapshot: any) => {
                 querySnapshot.forEach((doc: any) => {
