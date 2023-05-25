@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sync"
 	"time"
 )
 
@@ -17,36 +18,52 @@ const (
 	White = "\033[97m"
 )
 
+var currentGameID = "defaultGameID"
+var previousGameID = ""
+var moveCounter = 0
+var lock sync.Mutex
+
+var startNewGame func()
+
 func main() {
 	http.HandleFunc("/api/tv/feed", func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("Responding to %s/api/tv/feed%s request\n", Cyan, Reset)
-		data := GetChessData()
-
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		w.Header().Set("Content-Type", "application/x-ndjson")
-		w.Header().Set("Transfer-Encoding", "chunked")
+		flusher, _ := w.(http.Flusher)
 
-		for _, item := range data {
-			jsonData, err := json.Marshal(item)
+		newGameCh := make(chan bool)
+		chessData := GetChessData(newGameCh)
+	
+		// Call this function whenever a new game starts.
+		startNewGame = func() {
+			newGameCh <- true
+		}
+
+		// Ensure first response is always "featured".
+		startNewGame()
+
+		for game := range chessData {
+			j, err := json.Marshal(game)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
-
-			_, err = w.Write(append(jsonData, '\n'))
-			if err != nil {
-				log.Printf("Error writing response: %v", err)
-				return
-			}
-
-			if f, ok := w.(http.Flusher); ok {
-				f.Flush()
-			}
-
-			time.Sleep(3 * time.Second)
+			fmt.Fprintf(w, "%s\n", j)
+			flusher.Flush()
 		}
-	})
+	})	
+
+	http.HandleFunc("/api/game/start", func(w http.ResponseWriter, r *http.Request) {
+		lock.Lock()
+		defer lock.Unlock()
+
+		currentGameID = fmt.Sprintf("game%d", time.Now().Unix())
+		startNewGame() // signal to start a new game
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(map[string]string{
+			"gameID": currentGameID,
+		})
+	})	
 
 	// White always wins
 	http.HandleFunc("/api/game/", func(w http.ResponseWriter, r *http.Request) {
