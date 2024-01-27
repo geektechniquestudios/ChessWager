@@ -28,7 +28,9 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
   } = bet
   const { auth, callContract, db } = Auth.useContainer()
 
-  const bigAmount = ethers.utils.parseEther(amount.toString())
+  const maxDecimals = 18
+  const trimmedAmount = Number(amount.toFixed(maxDecimals))
+  const bigAmount = ethers.utils.parseEther(trimmedAmount.toString())
   const bigAmountUser2 = bigAmount
     .mul(BigNumber.from((multiplier * 100).toFixed(0)))
     .div(100)

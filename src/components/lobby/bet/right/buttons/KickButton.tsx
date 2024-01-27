@@ -9,17 +9,15 @@ import {
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { FiUserMinus } from "react-icons/fi"
-import { Bet } from "../../../../../interfaces/Bet"
 import { Auth } from "../../../../containers/Auth"
 import { DarkMode } from "../../../../containers/DarkMode"
 import { LobbyState } from "../../../../containers/LobbyState"
 
 interface Props {
   id: string
-  bet: Bet
 }
 
-export const KickButton: React.FC<Props> = ({ id, bet }) => {
+export const KickButton: React.FC<Props> = ({ id }) => {
   const { db } = Auth.useContainer()
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
   const { refreshLobby } = LobbyState.useContainer()

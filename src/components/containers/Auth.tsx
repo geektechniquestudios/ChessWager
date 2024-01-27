@@ -23,9 +23,12 @@ import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json
 import { Notification } from "../../interfaces/Notification"
 import { User } from "../../interfaces/User"
 import { CustomSwal, FirstLoginSwal } from "../popups/CustomSwal"
+import { useLocalStorage } from "../../hooks/useLocalStorage"
 
 declare let window: any
 const db = getFirestore(firebaseApp)
+
+const isTest = import.meta.env.VITE_IS_TEST === "true"
 
 const globalContractAddress = import.meta.env.VITE_CONTRACT_ADDRESS
 const isMainnet = import.meta.env.VITE_IS_MAINNET === "true"
@@ -52,15 +55,17 @@ const isMainnet = import.meta.env.VITE_IS_MAINNET === "true"
 // window.onbeforeunload = () => true
 
 const useAuth = () => {
-  const [walletAddress, setWalletAddress] = useState(
-    localStorage.getItem("walletAddress") !== null
-      ? localStorage.getItem("walletAddress")
-      : "",
+  const [walletAddress, setWalletAddress] = useLocalStorage<string>(
+    "walletAddress",
+    "",
+    (walletAddress) =>
+      isTest ? "0x434475c716e74d15De09A2f8178221e5e0876bef" : walletAddress,
   )
-  const [isWalletConnected, setIsWalletConnected] = useState(
-    localStorage.getItem("isWalletConnected") !== null
-      ? localStorage.getItem("isWalletConnected")! === "true"
-      : false,
+
+  const [isWalletConnected, setIsWalletConnected] = useLocalStorage<boolean>(
+    "isWalletConnected",
+    false,
+    (isWalletConnected) => isTest || isWalletConnected,
   )
 
   const auth = getAuth(firebaseApp)
@@ -92,8 +97,6 @@ const useAuth = () => {
           setIsWalletConnected(true)
           setIsWalletConnecting(false)
           setWalletAddress(walletAddress)
-          localStorage.setItem("walletAddress", walletAddress)
-          localStorage.setItem("isWalletConnected", "true")
         })
         .then(() => {
           CustomSwal("success", "Success", "Wallet connected")
@@ -119,8 +122,6 @@ const useAuth = () => {
       .then(() => {
         setWalletAddress("")
         setIsWalletConnected(false)
-        localStorage.setItem("walletAddress", "")
-        localStorage.setItem("isWalletConnected", "false")
       })
       .catch(() => {
         CustomSwal("error", "Error", "Error disconnecting wallet")
@@ -176,9 +177,7 @@ const useAuth = () => {
           FirstLoginSwal()
         } else if (doc.data().walletAddress ?? "" !== "") {
           setIsWalletConnected(true)
-          localStorage.setItem("isWalletConnected", "true")
           setWalletAddress(doc.data().walletAddress)
-          localStorage.setItem("walletAddress", doc.data().walletAddress)
         }
       })
     }
@@ -192,8 +191,6 @@ const useAuth = () => {
     auth.signOut()
     setIsWalletConnected(false)
     setWalletAddress("")
-    localStorage.setItem("isWalletConnected", "false")
-    localStorage.setItem("walletAddress", "")
   }
 
   const doesUserHaveEnoughAvax = async (price: number) => {
@@ -257,7 +254,7 @@ const useAuth = () => {
       postContractCallFunction && postContractCallFunction(result ?? undefined)
     } catch (err) {
       console.error(err)
-      handleError && handleError() // call error handler if provided
+      handleError && handleError()
     } finally {
       contract.removeAllListeners()
     }

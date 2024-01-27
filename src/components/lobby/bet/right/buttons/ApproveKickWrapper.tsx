@@ -17,7 +17,7 @@ export const ApproveKickWrapper: React.FC<Props> = ({ bet }) => {
       {user && user1Id === user.uid && status === "pending" && (
         <div className="absolute bottom-0.5 right-0.5 flex flex-col items-end justify-evenly gap-0.5">
           <LayoutGroup>
-            <KickButton id={id} bet={bet} />
+            <KickButton id={id} />
             <ApproveButton bet={bet} />
           </LayoutGroup>
         </div>

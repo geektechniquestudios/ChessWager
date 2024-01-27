@@ -8,6 +8,8 @@ import { DropdownButton } from "../../header/dropdown/menus/persona/buttons/Drop
 import { PopupCounter } from "./PopupCounter"
 import { PopupTitle } from "./PopupTitle"
 
+const isTest = import.meta.env.VITE_IS_TEST === "true"
+
 interface Props {
   orientation: "black" | "white" | undefined
 }
@@ -20,10 +22,14 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
   const [gameData, setGameData] = useState<GameData>()
   const [linkId, setLinkId] = useState<string>("")
 
+  const gameURL = `${
+    isTest ? "http://localhost:8080" : "https://lichess.org"
+  }/api/game/${prevGameId}`
+
   useEffect(() => {
     setLinkId(prevGameId)
     if (prevGameId === "") return
-    fetch(`https://lichess.org/api/game/${prevGameId}`)
+    fetch(gameURL)
       .then((res) => res.json())
       .then((gameData: GameData) => {
         setGameData(gameData)
@@ -60,7 +66,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
               type: "spring",
               stiffness: 40,
             }}
-            className="absolute top-1/3 z-40 w-64 -translate-y-1/2 overflow-hidden rounded-md border border-stone-600 drop-shadow-2xl dark:border-stone-800"
+            className="absolute left-0 right-0 top-1/4 z-40 m-auto w-64 overflow-hidden rounded-md border border-stone-600 drop-shadow-2xl dark:border-stone-800"
             style={{
               background: bgColor,
               backdropFilter: blur,

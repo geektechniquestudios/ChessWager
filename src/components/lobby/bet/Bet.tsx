@@ -21,7 +21,10 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
   const { id, amount, multiplier, status, user1Id, user2Id } = bet
   const { auth, user } = Auth.useContainer()
 
-  const bigAmount = ethers.utils.parseEther(amount.toString())
+  const maxDecimals = 18
+  const trimmedAmount = Number(amount.toFixed(maxDecimals))
+  const bigAmount = ethers.utils.parseEther(trimmedAmount.toString())
+
   const potSize = ethers.utils.formatEther(
     bigAmount
       .mul(BigNumber.from((multiplier * 100).toFixed(0)))
@@ -95,12 +98,12 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
     id === ""
       ? "border-none"
       : status !== "ready" && !isUser1 && !isUser2
-      ? "bet-occupied"
-      : isSelected
-      ? isUser1
-        ? "bet-user1"
-        : "bet-selected"
-      : "bet-not-selected"
+        ? "bet-occupied"
+        : isSelected
+          ? isUser1
+            ? "bet-user1"
+            : "bet-selected"
+          : "bet-not-selected"
 
   const pointerEvents = status === "ready" && !isUser1 ? "cursor-pointer" : ""
 
@@ -113,10 +116,10 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
     status !== "ready" && !isUser1 && !isUser2
       ? "bet-header-occupied"
       : isSelected
-      ? isUser1
-        ? "bet-header-user1"
-        : "bet-header-selected"
-      : "bet-header"
+        ? isUser1
+          ? "bet-header-user1"
+          : "bet-header-selected"
+        : "bet-header"
 
   return (
     <div

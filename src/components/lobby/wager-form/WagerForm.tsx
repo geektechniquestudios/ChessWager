@@ -80,7 +80,6 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     const canUserBet: () => Promise<boolean> = async () => {
-      if (isTest) return true
       if (!auth.currentUser) {
         CustomSwal(
           "error",

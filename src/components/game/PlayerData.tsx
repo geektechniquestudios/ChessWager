@@ -22,11 +22,10 @@ export const PlayerData: React.FC<Props> = ({
   isNewGame,
   isTop,
 }) => {
+  const topStyle = isTop ? "rounded-t-xl" : "rounded-b-xl"
   return (
     <div
-      className={`flex w-full justify-between overflow-clip ${
-        isTop ? "rounded-t-lg" : "rounded-b-lg"
-      } `}
+      className={`${topStyle} z-10 flex w-full items-center justify-between overflow-clip`}
     >
       <motion.a
         layout
@@ -39,24 +38,22 @@ export const PlayerData: React.FC<Props> = ({
         href={`https://lichess.org/@/${name}`}
         rel="noreferrer noopener"
         target="_blank"
-        className="color-shift mx-1 my-2 flex h-7 min-w-[1.75rem] flex-col justify-center overflow-hidden rounded-full border border-stone-500 bg-stone-100 px-1 text-sm hover:border-black hover:bg-white hover:text-stone-900 dark:border-stone-400 dark:bg-stone-600 dark:text-stone-100 dark:hover:border-white dark:hover:bg-stone-500 dark:hover:text-white"
+        className="color-shift mx-1.5 flex h-7 w-0 min-w-[1.75rem] max-w-min grow flex-col justify-center overflow-hidden rounded-full border border-stone-500 bg-stone-100 px-1 text-sm hover:border-black hover:bg-white hover:text-stone-900 dark:border-stone-400 dark:bg-stone-600 dark:text-stone-100 dark:hover:border-white dark:hover:bg-stone-500 dark:hover:text-white"
       >
         <motion.div
-          className="mx-1.5 flex justify-center"
+          className="flex items-center justify-start gap-1.5 px-1.5"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { duration: 0.5, delay: 0.4 } }}
         >
-          <p
-            className={`${
-              (title?.length ?? 0) > 0 ? "mr-1" : ""
-            } flex font-bold text-emerald-700 dark:text-emerald-500`}
-          >
-            {title}
+          {title && (
+            <p className="font-bold text-emerald-700 dark:text-emerald-500">
+              {title}
+            </p>
+          )}
+          <p className="min-w-0 flex-1 shrink overflow-hidden overflow-ellipsis whitespace-nowrap">
+            {name}
           </p>
-          <div className="flex gap-2 whitespace-nowrap">
-            <p>{name}</p>
-            <p className="font-bold">{rating !== 0 ? rating : ""}</p>
-          </div>
+          <p className="shrink-0 font-bold">{rating !== 0 ? rating : ""}</p>
         </motion.div>
       </motion.a>
       <Countdown fen={fen} side={side} time={time} isNewGame={isNewGame} />

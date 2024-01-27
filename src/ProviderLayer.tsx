@@ -7,6 +7,7 @@ import { ConversationsState } from "./components/containers/ConversationsState"
 import { DarkMode } from "./components/containers/DarkMode"
 import { DropdownState } from "./components/containers/DropdownState"
 import { GameState } from "./components/containers/GameState"
+import { GameStream } from "./components/containers/GameStream"
 import { GlobalChatState } from "./components/containers/GlobalChatState"
 import { LobbyHeaderState } from "./components/containers/LobbyHeaderState"
 import { LobbyState } from "./components/containers/LobbyState"
@@ -53,6 +54,7 @@ export const ProviderLayer: React.FC = () => {
     UserDataState.Provider,
     GlobalChatState.Provider,
     BetsState.Provider,
+    GameStream.Provider,
   ]
 
   return (

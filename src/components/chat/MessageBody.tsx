@@ -41,7 +41,6 @@ export const MessageBody: React.FC<Props> = ({ message }) => {
     )
 
     const score = weightedSums / 4
-    console.log(score)
     return score > toxicityThreshold
   }
 

@@ -70,9 +70,7 @@ export const BetsListArea: React.FC = ({}) => {
               ?.filter(
                 (bet) => bet.status === "approved" || bet.status === "funded",
               )
-              .map((bet: Bet) => (
-                <BetsListItem key={bet.id} bet={bet} />
-              ))}
+              .map((bet: Bet) => <BetsListItem key={bet.id} bet={bet} />)}
           </div>
         </InfiniteScroll>
       ) : (

@@ -127,7 +127,10 @@ export const payWinnersContractCall = async (
   )
     return
 
-  db.collection("games").doc(gameId).set({ isBeingPaid: true }, { merge: true })
+  await db
+    .collection("games")
+    .doc(gameId)
+    .set({ isBeingPaid: true }, { merge: true })
 
   contractDoc
     .get()
@@ -154,19 +157,25 @@ export const payWinnersContractCall = async (
           .then((receipt: any) => {
             console.log("Transaction was mined, receipt: ", receipt)
             contractDoc.set({ hasBeenPaid: true }, { merge: true })
+
+            const batch = db.batch()
             betsCollection
               .where("gameId", "==", gameId)
               .where("status", "in", ["approved", "funded"])
               .get()
               .then((querySnapshot: any) => {
                 querySnapshot.forEach((doc: any) => {
-                  doc.ref.update({
+                  batch.update(doc.ref, {
                     payoutTransactionHash: receipt.transactionHash,
                   })
                 })
+                return batch.commit()
+              })
+              .then(() => {
+                console.log("Batch operations completed.")
               })
               .catch((err: any) => {
-                console.log("err: ", err)
+                console.log("Batch operations failed:", err)
               })
           })
           .catch((err: any) => {

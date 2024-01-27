@@ -41,3 +41,5 @@ If a dispute arises between users regarding payment or any other matter, ChessWa
 Users agree to cooperate with ChessWager in resolving any disputes and to provide any necessary information to do so. Users also acknowledge and agree that any decision made by ChessWager regarding a dispute is final and binding.
 
 By using ChessWager, you agree to the terms and conditions outlined in these terms of service. Thank you for using ChessWager!
+
+Copyright © 2021-2024 by Terry Dorsey. All rights reserved.

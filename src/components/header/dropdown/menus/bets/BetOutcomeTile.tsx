@@ -28,12 +28,12 @@ export const BetOutcomeTile: React.FC<Props> = ({ bet }) => {
     outcome === "Game ended in a draw" || outcome === "Game in progress"
       ? ""
       : isOnWinningSide
-      ? isDarkOn
-        ? "text-green-300"
-        : "text-green-800"
-      : isDarkOn
-      ? "text-red-300"
-      : "text-red-800"
+        ? isDarkOn
+          ? "text-green-300"
+          : "text-green-800"
+        : isDarkOn
+          ? "text-red-300"
+          : "text-red-800"
 
   useEffect(() => {
     setOutcome("")

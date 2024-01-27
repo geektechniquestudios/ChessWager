@@ -60,7 +60,7 @@ const useBetState = () => {
 
     const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot) => {
       const betsWithIds = snapshot.docs.map(
-        (doc) => ({ ...doc.data(), id: doc.id } as Bet),
+        (doc) => ({ ...doc.data(), id: doc.id }) as Bet,
       )
 
       setBets(betsWithIds)
@@ -135,9 +135,9 @@ const useBetState = () => {
         bet.status !== "funded" &&
         bet.user1Id !== user?.uid &&
         bet.gameId !== "" &&
-        (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
+        !userData?.blockedUsers.includes(bet.user1Id) &&
         bet.user2Id !== null &&
-        (!userData?.blockedUsers.includes(bet.user2Id!) ?? true) &&
+        !userData?.blockedUsers.includes(bet.user2Id!) &&
         !selectedBetMap.get(bet.id)?.isSelected
       return (
         bets

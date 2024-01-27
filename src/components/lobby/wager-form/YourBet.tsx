@@ -1,16 +1,16 @@
 import CurrencyInput from "react-currency-input-field"
 import { Price } from "../../containers/Price"
-import { useState } from "react"
+import { useState, Dispatch, SetStateAction } from "react"
 
 interface Props {
   betAmount: number
-  setBetAmount: React.Dispatch<React.SetStateAction<number>>
+  setBetAmount: Dispatch<SetStateAction<number>>
   localAvaxAmount: string
-  setLocalAvaxAmount: React.Dispatch<React.SetStateAction<string>>
+  setLocalAvaxAmount: Dispatch<SetStateAction<string>>
   localUsdAmount: string
-  setLocalUsdAmount: React.Dispatch<React.SetStateAction<string>>
+  setLocalUsdAmount: Dispatch<SetStateAction<string>>
   isAmountEmpty: boolean
-  setIsAmountEmpty: React.Dispatch<React.SetStateAction<boolean>>
+  setIsAmountEmpty: Dispatch<SetStateAction<boolean>>
 }
 
 export const YourBet: React.FC<Props> = ({
@@ -53,15 +53,16 @@ export const YourBet: React.FC<Props> = ({
               isUsdFocused
                 ? localUsdAmount
                 : betAmount * avaxPrice === 0
-                ? ""
-                : (betAmount * avaxPrice).toFixed(2)
+                  ? ""
+                  : (betAmount * avaxPrice).toFixed(2)
             }
             onValueChange={(value) => {
               setLocalUsdAmount(value!)
             }}
             allowNegativeValue={false}
             onBlur={(e) => {
-              const newValue = Number(e.target.value.replace(/,/g, "") ?? 0)
+              const num = Number(e.target.value.replace(/,/g, ""))
+              const newValue = isNaN(num) ? 0 : num
               setBetAmount(newValue / avaxPrice)
               setLocalAvaxAmount((newValue / avaxPrice).toFixed(6).toString())
               setIsUsdFocused(false)

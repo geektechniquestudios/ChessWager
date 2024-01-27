@@ -15,9 +15,7 @@ export const ChatBody: React.FC<Props> = ({}) => {
       id="global-chat-body"
     >
       {messages
-        ?.filter(
-          (message) => !userData?.blockedUsers?.includes(message.uid) ?? true,
-        )
+        ?.filter((message) => !userData?.blockedUsers?.includes(message.uid))
         .sort(
           (a: Message, b: Message) => b.createdAt.seconds - a.createdAt.seconds,
         )

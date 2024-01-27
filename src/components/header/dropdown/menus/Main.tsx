@@ -25,9 +25,6 @@ export const Main: React.FC = () => {
   const { setIsDropdownOpen, setMenuHeight, setActiveMenu, goToMenu } =
     DropdownState.useContainer()
   const { isDarkOn, setIsDarkOn } = DarkMode.useContainer()
-  const updateUserDarkPref = (isChecked: boolean) => {
-    localStorage.setItem("darkMode", isChecked.toString())
-  }
   return (
     <Menu
       menuItems={[
@@ -48,7 +45,6 @@ export const Main: React.FC = () => {
           <DropdownItem
             onClick={() => {
               setIsDarkOn(!isDarkOn)
-              updateUserDarkPref(!isDarkOn)
             }}
             rightIcon={
               <Toggle

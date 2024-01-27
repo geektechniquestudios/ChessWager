@@ -1,3 +1,9 @@
+export interface ChessStream {
+  getReader: () => {
+    read: () => Promise<Res>
+  }
+}
+
 export interface Res {
   value: {
     t: string
@@ -27,7 +33,7 @@ export interface Player {
   user: {
     name: string
     id: string
-    title: string
+    title?: string
   }
   rating: number
   seconds: number

@@ -48,15 +48,13 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
         {users
           ?.filter(
             (user: User) =>
-              (!userData?.blockedUsers.includes(user.id) ?? true) &&
+              !userData?.blockedUsers.includes(user.id) &&
               (friendsOrEveryone === "friends"
                 ? user.searchableDisplayName.startsWith(search)
                 : true),
           )
           .sort((a: User, b: User) => -(a.displayName < b.displayName))
-          .map((user: User) => (
-            <UsersListItem key={user.id} {...user} />
-          ))}
+          .map((user: User) => <UsersListItem key={user.id} {...user} />)}
       </div>
     </div>
   )

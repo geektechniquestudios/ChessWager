@@ -28,11 +28,10 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
 
     const outcome = await getOutcomeFromLichess(gameId)
 
-    callContract((contract) =>
-      contract.payWinners(gameId, outcome, {
-        gasLimit: 1000000,
-      }),
-    )
+    const overrides = {
+      gasLimit: 1000000,
+    }
+    callContract((contract) => contract.payWinners(gameId, outcome, overrides))
   }
 
   return (

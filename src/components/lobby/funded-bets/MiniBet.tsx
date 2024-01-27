@@ -26,7 +26,11 @@ export const MiniBet: React.FC<Props> = ({ bet }) => {
     user2PhotoURL,
     user2DisplayName,
   } = bet
-  const bigAmount = ethers.utils.parseEther(amount.toString())
+
+  const maxDecimals = 18
+  const trimmedAmount = Number(amount.toFixed(maxDecimals))
+  const bigAmount = ethers.utils.parseEther(trimmedAmount.toString())
+
   const potSize = ethers.utils.formatEther(
     bigAmount
       .mul(BigNumber.from((multiplier * 100).toFixed(0)))

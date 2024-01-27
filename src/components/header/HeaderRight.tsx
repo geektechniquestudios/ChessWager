@@ -24,12 +24,12 @@ export const HeaderRight: React.FC = () => {
     : ""
 
   const setNewMessagesToFalse = () => {
-    if (!userData?.hasNewMessage ?? true) return
+    if (!userData?.hasNewMessage) return
     const userRef = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userRef, { hasNewMessage: false })
   }
   const setNewNotificationsToFalse = () => {
-    if (!userData?.hasNewNotifications ?? true) return
+    if (!userData?.hasNewNotifications) return
     const userRef = doc(db, "users", auth.currentUser!.uid)
     updateDoc(userRef, { hasNewNotifications: false })
   }

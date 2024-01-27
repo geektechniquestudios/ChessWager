@@ -19,7 +19,7 @@ export const HowToPlay: React.FC = ({}) => {
           <SectionWrapper
             text="1. Add the Metamask extension to your browser"
             href="https://metamask.io/download/"
-            icon={<BiExtension size={25}/>}
+            icon={<BiExtension size={25} />}
           />
           <SectionWrapper
             text="2. Add the Avalanche network to Metamask"
