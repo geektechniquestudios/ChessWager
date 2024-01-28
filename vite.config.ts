@@ -9,6 +9,18 @@ export default defineConfig({
       this: "window",
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            // Return the directory name under `node_modules` as the chunk name.
+            return id.toString().split("node_modules/")[1].split("/")[0]
+          }
+        },
+      },
+    },
+  },
   plugins: [
     react(),
     VitePWA({
@@ -45,7 +57,4 @@ export default defineConfig({
       },
     }),
   ],
-  build: {
-    sourcemap: true,
-  },
 })

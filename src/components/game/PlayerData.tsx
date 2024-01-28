@@ -46,7 +46,7 @@ export const PlayerData: React.FC<Props> = ({
           animate={{ opacity: 1, transition: { duration: 0.5, delay: 0.4 } }}
         >
           {title && (
-            <p className="font-bold text-emerald-700 dark:text-emerald-500">
+            <p className="font-bold text-emerald-700 dark:text-emerald-300">
               {title}
             </p>
           )}
