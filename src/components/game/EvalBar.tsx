@@ -27,9 +27,10 @@ export const EvalBar: React.FC<Props> = ({ orientation, fen }) => {
   const percent = getPercentFromScore(score, fen)
 
   const shouldShowMateIn = (side: "white" | "black", mateIn: number): boolean =>
-    (side === "white" && mateIn > 0) ||
-    (side === "black" && mateIn < 0) ||
-    isCheckmate
+    isAnalysisOn &&
+    ((side === "white" && mateIn > 0) ||
+      (side === "black" && mateIn < 0) ||
+      isCheckmate)
 
   const orientationStyle = (
     orientation: "white" | "black",
