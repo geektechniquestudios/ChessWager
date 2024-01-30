@@ -7,8 +7,8 @@ import {
 } from "firebase/firestore"
 import { RiCloseFill } from "react-icons/ri"
 import { Bet } from "../../../../../interfaces/Bet"
-import { Auth } from "../../../../containers/Auth"
-import { LobbyState } from "../../../../containers/LobbyState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { LobbyState } from "../../../../../containers/LobbyState"
 
 interface Props {
   bet: Bet
@@ -16,7 +16,7 @@ interface Props {
 
 export const LeaveButton: React.FC<Props> = ({ bet }) => {
   const { id, user2Id, status } = bet
-  const { user, auth, db } = Auth.useContainer()
+  const { user, auth, db } = AuthState.useContainer()
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
 
   const { refreshLobby } = LobbyState.useContainer()

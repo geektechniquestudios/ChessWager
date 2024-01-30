@@ -7,8 +7,8 @@ import {
   writeBatch,
 } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
-import { Auth } from "../../../../../containers/Auth"
-import { DropdownState } from "../../../../../containers/DropdownState"
+import { AuthState } from "../../../../../../containers/AuthState"
+import { DropdownState } from "../../../../../../containers/DropdownState"
 import { CustomSwal } from "../../../../../popups/CustomSwal"
 import { DropdownButton } from "./DropdownButton"
 
@@ -26,7 +26,7 @@ export const BlockUserButton: React.FC<Props> = ({
   blockedUsers,
 }) => {
   const { setIsDropdownOpen, setMenuHeight } = DropdownState.useContainer()
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
 
   const blockUser = () => {

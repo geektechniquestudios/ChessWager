@@ -9,8 +9,8 @@ import {
 } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { createContainer } from "unstated-next"
-import type { Bet, BetMetadata } from "../../interfaces/Bet"
-import { Auth } from "./Auth"
+import type { Bet, BetMetadata } from "../interfaces/Bet"
+import { AuthState } from "./AuthState"
 import { GameState } from "./GameState"
 import { LobbyHeaderState } from "./LobbyHeaderState"
 import { UserDataState } from "./UserDataState"
@@ -44,7 +44,7 @@ const genericBet: Bet = {
 
 const useBetState = () => {
   const { gameId } = GameState.useContainer()
-  const { user, isLoading, db } = Auth.useContainer()
+  const { user, isLoading, db } = AuthState.useContainer()
   const { userData } = UserDataState.useContainer()
 
   const [bets, setBets] = useState<Bet[]>([])
@@ -60,7 +60,7 @@ const useBetState = () => {
 
     const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot) => {
       const betsWithIds = snapshot.docs.map(
-        (doc) => ({ ...doc.data(), id: doc.id } as Bet),
+        (doc) => ({ ...doc.data(), id: doc.id }) as Bet,
       )
 
       setBets(betsWithIds)
@@ -135,9 +135,9 @@ const useBetState = () => {
         bet.status !== "funded" &&
         bet.user1Id !== user?.uid &&
         bet.gameId !== "" &&
-        (!userData?.blockedUsers.includes(bet.user1Id) ?? true) &&
+        !userData?.blockedUsers.includes(bet.user1Id) &&
         bet.user2Id !== null &&
-        (!userData?.blockedUsers.includes(bet.user2Id!) ?? true) &&
+        !userData?.blockedUsers.includes(bet.user2Id!) &&
         !selectedBetMap.get(bet.id)?.isSelected
       return (
         bets

@@ -1,7 +1,7 @@
 import { MutableRefObject, RefObject, useEffect, useRef } from "react"
-import { Auth } from "../../containers/Auth"
-import { DarkMode } from "../../containers/DarkMode"
-import { DropdownState } from "../../containers/DropdownState"
+import { AuthState } from "../../../containers/AuthState"
+import { DarkModeState } from "../../../containers/DarkModeState"
+import { DropdownState } from "../../../containers/DropdownState"
 import { Main } from "./menus/Main"
 import { BetMenu } from "./menus/bets/BetMenu"
 import { BetsMenu } from "./menus/bets/BetsMenu"
@@ -32,7 +32,7 @@ export const DropdownMenu = () => {
     setMenuHeight,
   } = DropdownState.useContainer()
 
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
 
   const CloseMenuListener = (
     selfRef: MutableRefObject<HTMLDivElement | null>,
@@ -68,7 +68,7 @@ export const DropdownMenu = () => {
     )
   }, [setMenuHeight])
 
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
 
   const bgColor = isDarkOn
     ? "rgba(68, 64, 60, 0.79)"

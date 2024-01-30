@@ -2,11 +2,11 @@ import { AiOutlineCalculator } from "react-icons/ai"
 import { BsPiggyBank } from "react-icons/bs"
 import { FaRegClock, FaRegHandshake } from "react-icons/fa"
 import { GiPayMoney, GiYinYang } from "react-icons/gi"
-import { DarkMode } from "../../containers/DarkMode"
+import { DarkModeState } from "../../../containers/DarkModeState"
 import { LobbyHeaderButton } from "./LobbyHeaderButton"
 
 export const LobbyHeaderButtons: React.FC = () => {
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
   return (
     <div className="flex h-8 w-full justify-between gap-1 rounded-t-lg border-b border-stone-400 bg-white px-1 dark:border-stone-700 dark:bg-stone-800">
       <LobbyHeaderButton buttonName="Side" buttonIcon={<GiYinYang />} />

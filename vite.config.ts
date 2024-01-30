@@ -1,12 +1,23 @@
 import react from "@vitejs/plugin-react-swc"
-import { defineConfig } from "vite"
+import { defineConfig, PluginOption } from "vite"
 import { VitePWA } from "vite-plugin-pwa"
+import { visualizer } from "rollup-plugin-visualizer"
 
-// https://vitejs.dev/config/
 export default defineConfig({
   esbuild: {
     define: {
       this: "window",
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            return id.toString().split("node_modules/")[1].split("/")[0]
+          }
+        },
+      },
     },
   },
   plugins: [
@@ -44,5 +55,11 @@ export default defineConfig({
         ],
       },
     }),
+    visualizer({
+      open: false,
+      gzipSize: true,
+      brotliSize: true,
+      template: "flamegraph",
+    }) as unknown as PluginOption,
   ],
 })

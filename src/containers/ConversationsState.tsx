@@ -14,13 +14,13 @@ import {
 import { useEffect, useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { createContainer } from "unstated-next"
-import type { Conversation } from "../../interfaces/Conversation"
-import { Auth } from "./Auth"
+import type { Conversation } from "../interfaces/Conversation"
+import { AuthState } from "./AuthState"
 import { DropdownState } from "./DropdownState"
 import { UserMenuState } from "./UserMenuState"
 
 const useConversationsState = () => {
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
 
   const conversationsCollectionRef = collection(db, "conversations")
 

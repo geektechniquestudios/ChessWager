@@ -1,8 +1,8 @@
 import { motion } from "framer-motion"
 import { Bet } from "../../../../../interfaces/Bet"
-import { Auth } from "../../../../containers/Auth"
-import { DropdownState } from "../../../../containers/DropdownState"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DropdownState } from "../../../../../containers/DropdownState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { User2BetAmount } from "./User2BetAmount"
 import { User2FollowThrough } from "./User2FollowThrough"
 
@@ -15,7 +15,7 @@ export const User2Image: React.FC<Props> = ({ bet }) => {
   const { betSide, user2Id, user2PhotoURL } = bet
   const { openDropdownToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
   const disabledStyle = !user ? "pointer-events-none" : ""
   const ringStyle = betSide === "black" ? "white-ring" : "black-ring"
   const ringBorderStyle =

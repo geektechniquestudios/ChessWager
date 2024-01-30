@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material"
 import {
   doc,
   DocumentData,
@@ -6,21 +7,25 @@ import {
   updateDoc,
 } from "firebase/firestore"
 import { motion } from "framer-motion"
+import { useState } from "react"
 import { FiUserMinus } from "react-icons/fi"
-import { Auth } from "../../../../containers/Auth"
-import { DarkMode } from "../../../../containers/DarkMode"
-import { LobbyState } from "../../../../containers/LobbyState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DarkModeState } from "../../../../../containers/DarkModeState"
+import { LobbyState } from "../../../../../containers/LobbyState"
 
 interface Props {
   id: string
 }
 
 export const KickButton: React.FC<Props> = ({ id }) => {
-  const { db } = Auth.useContainer()
+  const { db } = AuthState.useContainer()
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
   const { refreshLobby } = LobbyState.useContainer()
+  const [isKicking, setIsKicking] = useState<boolean>(false)
+
   const kick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.stopPropagation()
+    setIsKicking(true)
     updateDoc(betDoc, {
       status: "ready",
       user2Id: "",
@@ -32,8 +37,12 @@ export const KickButton: React.FC<Props> = ({ id }) => {
     })
       .then(refreshLobby)
       .catch(console.error)
+      .finally(() => {
+        setIsKicking(false)
+      })
   }
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
+
   return (
     <motion.button
       initial={{ x: 70, opacity: 0 }}
@@ -51,7 +60,13 @@ export const KickButton: React.FC<Props> = ({ id }) => {
       title="Kick User"
     >
       <div className="text-xs font-bold">Kick</div>
-      <FiUserMinus color={isDarkOn ? "#fecaca" : "#7f1d1d"} size="12" />
+      <div className="grid w-5 place-content-center">
+        {isKicking ? (
+          <CircularProgress size={10} />
+        ) : (
+          <FiUserMinus color={isDarkOn ? "#fecaca" : "#7f1d1d"} size="12" />
+        )}
+      </div>
     </motion.button>
   )
 }

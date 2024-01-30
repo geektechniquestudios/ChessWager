@@ -1,5 +1,5 @@
 import { Bet } from "../../../../../interfaces/Bet"
-import { Price } from "../../../../containers/Price"
+import { PriceState } from "../../../../../containers/PriceState"
 import { formatDollars } from "../../../../lobby/bet/models/formatDollars"
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 export const BetMetadataTile: React.FC<Props> = ({ bet }) => {
   const { amount, createdAt, multiplier } = bet
   const betAmount = amount! + amount! * multiplier!
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
   return (
     <div className="flex w-full flex-col gap-0.5 rounded-md border border-stone-400 bg-white px-2 text-xs dark:border-stone-500 dark:bg-stone-600">
       <div className="flex w-full justify-between">

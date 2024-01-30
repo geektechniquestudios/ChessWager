@@ -4,10 +4,10 @@ import { useEffect } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { Conversation, User } from "../../../../../interfaces/Conversation"
 import "../../../../../style/scrollbar.scss"
-import { Auth } from "../../../../containers/Auth"
-import { ConversationsState } from "../../../../containers/ConversationsState"
-import { UserDataState } from "../../../../containers/UserDataState"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { ConversationsState } from "../../../../../containers/ConversationsState"
+import { UserDataState } from "../../../../../containers/UserDataState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { ConvoItem } from "./ConvoItem"
 
 export const ConversationsList: React.FC = ({}) => {
@@ -26,7 +26,7 @@ export const ConversationsList: React.FC = ({}) => {
   const { setUserIdFromMessages, setUsernameFromMessages } =
     UserMenuState.useContainer()
   const { userData } = UserDataState.useContainer()
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const convoToConvoAndUser = (
     conversation: Conversation,
   ): [Conversation, User] =>

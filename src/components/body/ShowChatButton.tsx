@@ -1,16 +1,16 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import { MdOutlineChatBubbleOutline } from "react-icons/md"
-import { ChatToggle } from "../containers/ChatToggle"
-import { DarkMode } from "../containers/DarkMode"
-import { GlobalChatState } from "../containers/GlobalChatState"
+import { ChatToggleState } from "../../containers/ChatToggleState"
+import { DarkModeState } from "../../containers/DarkModeState"
+import { GlobalChatState } from "../../containers/GlobalChatState"
 
 interface Props {}
 
 export const ShowChatButton: React.FC<Props> = ({}) => {
   const { showChat, setShowChat, areNewMessages, setAreNewMessages } =
-    ChatToggle.useContainer()
-  const { isDarkOn } = DarkMode.useContainer()
+    ChatToggleState.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
   const { messages } = GlobalChatState.useContainer()
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export const ShowChatButton: React.FC<Props> = ({}) => {
               localStorage.setItem("showChat", "true")
               setAreNewMessages(false)
             }}
-            className="color-shift sticky z-30 rounded-md border border-stone-400 bg-stone-100 bg-opacity-40 p-1.5 hover:bg-white hover:bg-opacity-100 dark:border-stone-600  dark:bg-stone-800 dark:bg-opacity-40 dark:hover:bg-stone-700 dark:hover:bg-opacity-100"
+            className="color-shift sticky z-30 rounded-md border border-stone-400 bg-stone-100 bg-opacity-40 p-1.5 hover:bg-white hover:bg-opacity-100 dark:border-stone-600 dark:bg-stone-800 dark:bg-opacity-40 dark:hover:bg-stone-700 dark:hover:bg-opacity-100"
             title="Show Chat"
           >
             <MdOutlineChatBubbleOutline

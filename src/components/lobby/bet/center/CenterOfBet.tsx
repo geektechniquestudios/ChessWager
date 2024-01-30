@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { Price } from "../../../containers/Price"
+import { PriceState } from "../../../../containers/PriceState"
 import { formatDollars } from "../models/formatDollars"
 
 interface Props {
@@ -13,7 +13,7 @@ export const CenterOfBet: React.FC<Props> = ({
   status,
   betHeaderStyle,
 }) => {
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
 
   return (
     <div className="relative z-20 flex w-1/5 flex-col items-center justify-start text-xs text-stone-200">

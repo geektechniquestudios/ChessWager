@@ -1,4 +1,4 @@
-import { Price } from "../../containers/Price"
+import { PriceState } from "../../../containers/PriceState"
 
 interface Props {
   betAmount: number
@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const Total: React.FC<Props> = ({ betAmount, multiplier }) => {
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
   const avaxTotal = betAmount * multiplier + betAmount
   const usdTotal = avaxPrice * avaxTotal
 

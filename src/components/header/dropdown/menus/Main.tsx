@@ -1,6 +1,6 @@
 import "../../../../style/dropdown.scss"
 import "react-toggle/style.css"
-import { Auth } from "../../../containers/Auth"
+import { AuthState } from "../../../../containers/AuthState"
 import { DropdownItem } from "../models/DropdownItem"
 import Toggle from "react-toggle"
 import { RiLoginCircleLine, RiLogoutCircleLine } from "react-icons/ri"
@@ -8,8 +8,8 @@ import { BsShare } from "react-icons/bs"
 import { BiHelpCircle } from "react-icons/bi"
 import { MdAttachMoney, MdMoneyOff, MdOutlineDarkMode } from "react-icons/md"
 import { BsSun } from "react-icons/bs"
-import { DropdownState } from "../../../containers/DropdownState"
-import { DarkMode } from "../../../containers/DarkMode"
+import { DropdownState } from "../../../../containers/DropdownState"
+import { DarkModeState } from "../../../../containers/DarkModeState"
 import { Menu } from "../models/Menu"
 import { MenuLine } from "../models/MenuLine"
 
@@ -21,13 +21,10 @@ export const Main: React.FC = () => {
     connectWallet,
     isWalletConnected,
     disconnectWallet,
-  } = Auth.useContainer()
+  } = AuthState.useContainer()
   const { setIsDropdownOpen, setMenuHeight, setActiveMenu, goToMenu } =
     DropdownState.useContainer()
-  const { isDarkOn, setIsDarkOn } = DarkMode.useContainer()
-  const updateUserDarkPref = (isChecked: boolean) => {
-    localStorage.setItem("darkMode", isChecked.toString())
-  }
+  const { isDarkOn, setIsDarkOn } = DarkModeState.useContainer()
   return (
     <Menu
       menuItems={[
@@ -48,7 +45,6 @@ export const Main: React.FC = () => {
           <DropdownItem
             onClick={() => {
               setIsDarkOn(!isDarkOn)
-              updateUserDarkPref(!isDarkOn)
             }}
             rightIcon={
               <Toggle

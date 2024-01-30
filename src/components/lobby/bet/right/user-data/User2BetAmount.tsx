@@ -1,7 +1,7 @@
 import { IoCloseOutline } from "react-icons/io5"
 import { Bet } from "../../../../../interfaces/Bet"
-import { DarkMode } from "../../../../containers/DarkMode"
-import { Price } from "../../../../containers/Price"
+import { DarkModeState } from "../../../../../containers/DarkModeState"
+import { PriceState } from "../../../../../containers/PriceState"
 import { formatDollars } from "../../models/formatDollars"
 
 interface Props {
@@ -9,9 +9,9 @@ interface Props {
 }
 
 export const User2BetAmount: React.FC<Props> = ({ bet }) => {
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
   const { multiplier, amount } = bet
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
 
   return (
     <>

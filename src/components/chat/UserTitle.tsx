@@ -1,6 +1,6 @@
-import { Auth } from "../containers/Auth"
-import { DropdownState } from "../containers/DropdownState"
-import { UserMenuState } from "../containers/UserMenuState"
+import { AuthState } from "../../containers/AuthState"
+import { DropdownState } from "../../containers/DropdownState"
+import { UserMenuState } from "../../containers/UserMenuState"
 
 interface Props {
   photoURL: string
@@ -11,7 +11,7 @@ interface Props {
 export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
   const { openDropdownToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
   const disabledStyle = !user ? "pointer-events-none" : ""
   return (
     <a

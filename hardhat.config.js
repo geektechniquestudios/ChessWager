@@ -26,7 +26,7 @@ const accountKey = process.env.VITE_METAMASK_ACCOUNT_KEY
 const isMainnet = process.env.VITE_IS_MAINNET === "true"
 
 module.exports = {
-  solidity: "0.8.11",
+  solidity: "0.8.24",
   paths: {
     artifacts: "./src/artifacts",
     tests: "./hardhat/test",

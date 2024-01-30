@@ -1,13 +1,13 @@
 import { collection, doc, Query } from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { BlockedUser } from "../../../../../interfaces/BlockedUser"
-import { Auth } from "../../../../containers/Auth"
+import { AuthState } from "../../../../../containers/AuthState"
 import { BlockedUserItem } from "./BlockedUserItem"
 
 interface Props {}
 
 export const BlockedList: React.FC<Props> = ({}) => {
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const blockedCollection = collection(
     doc(db, "users", auth.currentUser!.uid),
     "blocked",

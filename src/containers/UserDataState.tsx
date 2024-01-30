@@ -2,12 +2,12 @@ import { doc, DocumentReference, updateDoc } from "firebase/firestore"
 import { useEffect } from "react"
 import { useDocumentData } from "react-firebase-hooks/firestore"
 import { createContainer } from "unstated-next"
-import { User } from "../../interfaces/User"
-import { Auth } from "./Auth"
+import { User } from "../interfaces/User"
+import { AuthState } from "./AuthState"
 import { DropdownState } from "./DropdownState"
 
 export const useUserDataState = () => {
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const userRef = auth?.currentUser?.uid
     ? (doc(db, "users", auth.currentUser!.uid) as DocumentReference<User>)
     : null

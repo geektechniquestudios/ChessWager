@@ -8,7 +8,7 @@ interface Props {
 export const PopupCounter: React.FC<Props> = ({ count, setCount }) => {
   useEffect(() => {
     const interval = setInterval(() => {
-      setCount(count - 1)
+      setCount((prev) => prev - 1)
     }, 1000)
     return () => clearInterval(interval)
   }, [count])

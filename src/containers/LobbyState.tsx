@@ -4,7 +4,7 @@ import { createContainer } from "unstated-next"
 const useLobbyState = () => {
   const [dummy, setDummy] = useState(true)
   const refreshLobby = () => {
-    setDummy(!dummy)
+    setDummy((prev) => !prev)
   }
   return { dummy, setDummy, refreshLobby }
 }

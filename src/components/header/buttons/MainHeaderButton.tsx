@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useRef } from "react"
-import { Auth } from "../../containers/Auth"
-import { DropdownState } from "../../containers/DropdownState"
+import { AuthState } from "../../../containers/AuthState"
+import { DropdownState } from "../../../containers/DropdownState"
 
 interface Props {
   id?: string
@@ -22,7 +22,7 @@ export const MainHeaderButton: React.FC<Props> = ({
   id,
   animationOffset,
 }) => {
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
   const {
     activeMenu,
     openDropdownToMenu,

@@ -1,5 +1,5 @@
 import type { User } from "../../../../../interfaces/User"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { DropdownItem } from "../../models/DropdownItem"
 
 export const UsersListItem: React.FC<User> = (user: User) => {

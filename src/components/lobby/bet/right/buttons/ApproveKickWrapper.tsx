@@ -1,6 +1,6 @@
 import { AnimatePresence, LayoutGroup } from "framer-motion"
 import { Bet } from "../../../../../interfaces/Bet"
-import { Auth } from "../../../../containers/Auth"
+import { AuthState } from "../../../../../containers/AuthState"
 import { ApproveButton } from "./ApproveButton"
 import { KickButton } from "./KickButton"
 
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const ApproveKickWrapper: React.FC<Props> = ({ bet }) => {
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
   const { user1Id, status, id } = bet
 
   return (

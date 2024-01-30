@@ -1,4 +1,4 @@
-import { BetsState } from "../../containers/BetsState"
+import { BetsState } from "../../../containers/BetsState"
 import { IoIosAdd } from "react-icons/io"
 import { motion, Variants } from "framer-motion"
 

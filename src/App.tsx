@@ -3,14 +3,22 @@ import "./style/scrollbar.scss"
 
 import { MainHeader } from "./components/header/MainHeader"
 import { PublicChat } from "./components/chat/PublicChat"
-import { DarkMode } from "./components/containers/DarkMode"
+import { DarkModeState } from "./containers/DarkModeState"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { MainContent } from "./MainContent"
 import { LayoutGroup } from "framer-motion"
+import ReactGA from "react-ga4"
+
+const measurementId = import.meta.env.VITE_MEASUREMENT_ID
 
 export const App: React.FC = () => {
-  const { isDarkOn } = DarkMode.useContainer()
+  ReactGA.initialize(measurementId, {
+    gtagOptions: {
+      cookie_flags: "SameSite=None;Secure",
+    },
+  })
 
+  const { isDarkOn } = DarkModeState.useContainer()
   const dark = isDarkOn ? "dark" : ""
 
   return (

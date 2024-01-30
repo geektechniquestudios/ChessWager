@@ -1,8 +1,8 @@
 import { BiArrowFromLeft } from "react-icons/bi"
-import { ChatToggle } from "../containers/ChatToggle"
+import { ChatToggleState } from "../../containers/ChatToggleState"
 
 export const ChatHeader: React.FC = () => {
-  const { setShowChat, setAreNewMessages } = ChatToggle.useContainer()
+  const { setShowChat, setAreNewMessages } = ChatToggleState.useContainer()
   return (
     <header className="global-chat-header flex justify-between border-b border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-700">
       <button

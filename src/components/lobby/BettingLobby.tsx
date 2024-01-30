@@ -1,5 +1,5 @@
 import { LobbyHeader } from "./lobby-header/LobbyHeader"
-import { LobbyHeaderState } from "../containers/LobbyHeaderState"
+import { LobbyHeaderState } from "../../containers/LobbyHeaderState"
 import { CreatedByUserBets } from "./CreatedByUserBets"
 import { RefreshingBets } from "./RefreshingBets"
 import { RealtimeBets } from "./RealtimeBets"
@@ -23,7 +23,10 @@ export const BettingLobby: React.FC = () => {
           <div ref={bettingLobbyRef} className="h-full w-full overflow-clip">
             <CreateWagerButton />
             <WagerForm bettingLobbyRef={bettingLobbyRef} />
-            <div className="scrollbar h-full w-full overflow-y-auto overflow-x-clip pl-[2.6rem] pt-0.5">
+            <div
+              className="scrollbar h-full w-full overflow-y-auto overflow-x-clip pl-[2.6rem] pt-0.5"
+              id="lobby"
+            >
               <LayoutGroup>
                 <CreatedByUserBets />
                 {isRealtime ? <RealtimeBets /> : <RefreshingBets />}

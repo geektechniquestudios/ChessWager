@@ -1,5 +1,5 @@
-import { Auth } from "../../../../containers/Auth"
-import { DropdownState } from "../../../../containers/DropdownState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DropdownState } from "../../../../../containers/DropdownState"
 import { Menu } from "../../models/Menu"
 import { BetMenuHeader } from "./BetMenuHeader"
 import { BetMetadataTile } from "./BetMetadataTile"
@@ -29,7 +29,7 @@ export const BetMenu: React.FC<Props> = ({}) => {
     payoutTransactionHash,
   } = bet ?? {}
 
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
   const isUser1 = user?.uid === user1Id
 
   return (

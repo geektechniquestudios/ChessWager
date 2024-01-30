@@ -15,9 +15,9 @@ import { useEffect, useRef, useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import InfiniteScroll from "react-infinite-scroll-component"
 import type { Message } from "../../../../../interfaces/Message"
-import { Auth } from "../../../../containers/Auth"
-import { UserDataState } from "../../../../containers/UserDataState"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { UserDataState } from "../../../../../containers/UserDataState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { ConversationMenuHeader } from "./ConversationMenuHeader"
 import { ConvoChatMessage } from "./ConvoChatMessage"
 
@@ -25,7 +25,7 @@ interface Props {}
 
 export const ConvoChatBody: React.FC<Props> = ({}) => {
   const { userData } = UserDataState.useContainer()
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const { userIdFromMessages } = UserMenuState.useContainer()
   const convoId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
   const messagesRef = collection(db, "conversations", convoId, "messages")
