@@ -6,15 +6,15 @@ import {
   Featured,
   Player,
   Res,
-} from "../../interfaces/ChessGameStream"
+} from "../interfaces/ChessGameStream"
 import { GameState } from "./GameState"
 import { Chess } from "chess.js"
-import { useStockfish } from "../game/useStockfish"
+import { useStockfish } from "../components/game/useStockfish"
 import { createContainer } from "unstated-next"
 
 const isTest = import.meta.env.VITE_IS_TEST === "true"
 
-const useGameStream = () => {
+const useGameStreamState = () => {
   const { setGameId } = GameState.useContainer()
 
   const [fen, setFen] = useState("")
@@ -140,4 +140,4 @@ const useGameStream = () => {
   }
 }
 
-export const GameStream = createContainer(useGameStream)
+export const GameStreamState = createContainer(useGameStreamState)

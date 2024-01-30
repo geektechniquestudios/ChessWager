@@ -2,17 +2,17 @@ import { TextareaAutosize } from "@mui/material"
 import { addDoc, collection, serverTimestamp } from "firebase/firestore"
 import { BiSend } from "react-icons/bi"
 import "../../../../../style/dropdown.scss"
-import { Auth } from "../../../../containers/Auth"
-import { ChatFormData } from "../../../../containers/ChatFormData"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { ChatFormState } from "../../../../../containers/ChatFormState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { CustomSwal } from "../../../../popups/CustomSwal"
 
 interface Props {}
 
 export const ReportForm: React.FC<Props> = ({}) => {
-  const { user, auth, db } = Auth.useContainer()
+  const { user, auth, db } = AuthState.useContainer()
   const { reportedUserId } = UserMenuState.useContainer()
-  const { reportFormValue, setReportFormValue } = ChatFormData.useContainer()
+  const { reportFormValue, setReportFormValue } = ChatFormState.useContainer()
   const sendMessage = async (
     e:
       | React.FormEvent<HTMLFormElement>

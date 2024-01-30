@@ -10,9 +10,9 @@ import { useEffect } from "react"
 import { GiJoint } from "react-icons/gi"
 import { Bet } from "../../../../../interfaces/Bet"
 import { User } from "../../../../../interfaces/User"
-import { Auth } from "../../../../containers/Auth"
-import { DarkMode } from "../../../../containers/DarkMode"
-import { LobbyState } from "../../../../containers/LobbyState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DarkModeState } from "../../../../../containers/DarkModeState"
+import { LobbyState } from "../../../../../containers/LobbyState"
 import { CustomSwal } from "../../../../popups/CustomSwal"
 
 interface Props {
@@ -30,7 +30,7 @@ export const JoinButton: React.FC<Props> = ({
 }) => {
   const { id, user1Id, status, amount, multiplier } = bet
   const { auth, walletAddress, connectWallet, doesUserHaveEnoughAvax, db } =
-    Auth.useContainer()
+    AuthState.useContainer()
   const { refreshLobby } = LobbyState.useContainer()
 
   const isUser1 = auth.currentUser?.uid === user1Id
@@ -46,7 +46,7 @@ export const JoinButton: React.FC<Props> = ({
   ) as DocumentReference<Bet>
 
   const user2DisplayName = auth.currentUser?.displayName
-  const { isWalletConnected } = Auth.useContainer()
+  const { isWalletConnected } = AuthState.useContainer()
 
   const accept = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -96,7 +96,7 @@ export const JoinButton: React.FC<Props> = ({
     if (status !== "ready") setIsJoining(false)
   }, [bet.status])
 
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
 
   return (
     <AnimatePresence>

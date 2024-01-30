@@ -1,12 +1,12 @@
 import { motion } from "framer-motion"
-import { Auth } from "../containers/Auth"
-import { BetsState } from "../containers/BetsState"
+import { AuthState } from "../../containers/AuthState"
+import { BetsState } from "../../containers/BetsState"
 import { Bet } from "./bet/Bet"
 
 interface Props {}
 
 export const CreatedByUserBets: React.FC<Props> = ({}) => {
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
   const { betsPlacedByUser } = BetsState.useContainer()
 
   return (

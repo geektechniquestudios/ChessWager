@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { Auth } from "../containers/Auth"
-import { BetsState } from "../containers/BetsState"
-import { GameState } from "../containers/GameState"
-import { LobbyState } from "../containers/LobbyState"
+import { AuthState } from "../../containers/AuthState"
+import { BetsState } from "../../containers/BetsState"
+import { GameState } from "../../containers/GameState"
+import { LobbyState } from "../../containers/LobbyState"
 import { Bet } from "./bet/Bet"
-import { LobbyHeaderState } from "../containers/LobbyHeaderState"
+import { LobbyHeaderState } from "../../containers/LobbyHeaderState"
 import { AnimatePresence, motion } from "framer-motion"
 
 interface Props {}
@@ -13,7 +13,7 @@ export const RefreshingBets: React.FC<Props> = ({}) => {
   const TIMEOUT = 4
 
   const { gameId } = GameState.useContainer()
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
 
   const {
     updateRefreshingBets,

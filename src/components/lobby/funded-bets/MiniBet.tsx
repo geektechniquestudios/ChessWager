@@ -3,10 +3,10 @@ import { BigNumber, ethers } from "ethers"
 import { motion } from "framer-motion"
 import { Bet } from "../../../interfaces/Bet"
 import "../../../style/lobby.scss"
-import { Auth } from "../../containers/Auth"
-import { DropdownState } from "../../containers/DropdownState"
-import { Price } from "../../containers/Price"
-import { UserMenuState } from "../../containers/UserMenuState"
+import { AuthState } from "../../../containers/AuthState"
+import { DropdownState } from "../../../containers/DropdownState"
+import { PriceState } from "../../../containers/PriceState"
+import { UserMenuState } from "../../../containers/UserMenuState"
 import { formatDollars } from "../bet/models/formatDollars"
 import { MiniBetHeader } from "./MiniBetHeader"
 
@@ -40,8 +40,8 @@ export const MiniBet: React.FC<Props> = ({ bet }) => {
 
   const { openDropdownToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
-  const { avaxPrice } = Price.useContainer()
-  const { auth } = Auth.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
+  const { auth } = AuthState.useContainer()
   const isBetRelatedToUser = (bet: Bet): boolean => {
     return (
       auth.currentUser?.uid === bet.user1Id ||

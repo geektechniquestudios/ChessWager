@@ -1,9 +1,9 @@
 import { CircularProgress } from "@mui/material"
 import { ethers } from "ethers"
 import { useEffect, useState } from "react"
-import { Auth } from "../../../../containers/Auth"
-import { DropdownState } from "../../../../containers/DropdownState"
-import { Price } from "../../../../containers/Price"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DropdownState } from "../../../../../containers/DropdownState"
+import { PriceState } from "../../../../../containers/PriceState"
 
 interface Props {}
 
@@ -12,8 +12,8 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
   const [contractBalanceAVAX, setContractBalanceAVAX] = useState<number>(0)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const { avaxPrice } = Price.useContainer()
-  const { callContract } = Auth.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
+  const { callContract } = AuthState.useContainer()
 
   const getBalance = async (contract: ethers.Contract) => {
     const balance: number = await contract.viewChessWagerBalance()

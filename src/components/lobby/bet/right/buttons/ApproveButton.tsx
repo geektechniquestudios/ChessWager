@@ -10,9 +10,9 @@ import { motion } from "framer-motion"
 import { useState } from "react"
 import { FiUserCheck } from "react-icons/fi"
 import { Bet } from "../../../../../interfaces/Bet"
-import { Auth } from "../../../../containers/Auth"
-import { DarkMode } from "../../../../containers/DarkMode"
-import { LobbyState } from "../../../../containers/LobbyState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DarkModeState } from "../../../../../containers/DarkModeState"
+import { LobbyState } from "../../../../../containers/LobbyState"
 
 interface Props {
   bet: Bet
@@ -20,7 +20,7 @@ interface Props {
 
 export const ApproveButton: React.FC<Props> = ({ bet }) => {
   const { id, user1Id, user2Id } = bet
-  const { db } = Auth.useContainer()
+  const { db } = AuthState.useContainer()
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
   const { refreshLobby } = LobbyState.useContainer()
   const approve = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -38,7 +38,7 @@ export const ApproveButton: React.FC<Props> = ({ bet }) => {
       })
   }
 
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
 
   const [isApproving, setIsApprovinng] = useState<boolean>(false)
 

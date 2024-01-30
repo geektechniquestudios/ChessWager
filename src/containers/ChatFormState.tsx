@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { createContainer } from "unstated-next"
 
-const useChatFormData = () => {
+const useChatFormState = () => {
   const [chatFormValue, setChatFormValue] = useState("")
   const [convoFormValue, setConvoFormValue] = useState<Map<string, string>>(
     new Map(),
@@ -20,4 +20,4 @@ const useChatFormData = () => {
   }
 }
 
-export const ChatFormData = createContainer(useChatFormData)
+export const ChatFormState = createContainer(useChatFormState)

@@ -1,12 +1,12 @@
 import { AnimatePresence } from "framer-motion"
-import { WindowSize } from "../containers/WindowSize"
+import { WindowSizeState } from "../../containers/WindowSizeState"
 import { AvaxPriceButton } from "./buttons/AvaxPriceButton"
 import { LichessButton } from "./buttons/LichessButton"
-import { Auth } from "../containers/Auth"
+import { AuthState } from "../../containers/AuthState"
 
 export const HeaderLeft: React.FC = () => {
-  const { width } = WindowSize.useContainer()
-  const { isLoading } = Auth.useContainer()
+  const { width } = WindowSizeState.useContainer()
+  const { isLoading } = AuthState.useContainer()
   return (
     <AnimatePresence mode="popLayout">
       {width > 370 && !isLoading && (

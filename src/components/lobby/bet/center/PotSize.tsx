@@ -1,11 +1,11 @@
-import { Price } from "../../../containers/Price"
+import { PriceState } from "../../../../containers/PriceState"
 
 interface Props {
   potSize: string
 }
 
 export const PotSize: React.FC<Props> = ({ potSize }) => {
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
   return (
     <div className="grid place-content-center text-xs font-bold text-stone-900 dark:text-stone-300 md:text-sm">
       <p className="px-1">{`$${(Number(potSize) * avaxPrice)

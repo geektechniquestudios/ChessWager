@@ -1,16 +1,16 @@
 import { useEffect } from "react"
-import { BetsState } from "../containers/BetsState"
+import { BetsState } from "../../containers/BetsState"
 import { Bet } from "./bet/Bet"
-import { LobbyHeaderState } from "../containers/LobbyHeaderState"
+import { LobbyHeaderState } from "../../containers/LobbyHeaderState"
 import { AnimatePresence, motion } from "framer-motion"
-import { Auth } from "../containers/Auth"
+import { AuthState } from "../../containers/AuthState"
 
 interface Props {}
 
 export const RealtimeBets: React.FC<Props> = ({}) => {
   const { mostRecentButton, isDescending } = LobbyHeaderState.useContainer()
   const { bets, updateRealTimeBets, realtimeBets } = BetsState.useContainer()
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
 
   useEffect(() => {
     updateRealTimeBets()

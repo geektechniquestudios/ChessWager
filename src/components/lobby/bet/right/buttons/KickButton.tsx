@@ -9,16 +9,16 @@ import {
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { FiUserMinus } from "react-icons/fi"
-import { Auth } from "../../../../containers/Auth"
-import { DarkMode } from "../../../../containers/DarkMode"
-import { LobbyState } from "../../../../containers/LobbyState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DarkModeState } from "../../../../../containers/DarkModeState"
+import { LobbyState } from "../../../../../containers/LobbyState"
 
 interface Props {
   id: string
 }
 
 export const KickButton: React.FC<Props> = ({ id }) => {
-  const { db } = Auth.useContainer()
+  const { db } = AuthState.useContainer()
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
   const { refreshLobby } = LobbyState.useContainer()
   const [isKicking, setIsKicking] = useState<boolean>(false)
@@ -41,7 +41,7 @@ export const KickButton: React.FC<Props> = ({ id }) => {
         setIsKicking(false)
       })
   }
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
 
   return (
     <motion.button

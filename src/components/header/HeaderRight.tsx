@@ -4,16 +4,16 @@ import { BiChevronDown } from "react-icons/bi"
 import { CgProfile } from "react-icons/cg"
 import { FaRegGem } from "react-icons/fa"
 import { RiChat2Line, RiNotification3Line, RiSearch2Line } from "react-icons/ri"
-import { Auth } from "../containers/Auth"
-import { DropdownState } from "../containers/DropdownState"
-import { UserDataState } from "../containers/UserDataState"
+import { AuthState } from "../../containers/AuthState"
+import { DropdownState } from "../../containers/DropdownState"
+import { UserDataState } from "../../containers/UserDataState"
 import { MainHeaderButton } from "./buttons/MainHeaderButton"
 import { SignInButton } from "./buttons/SignInButton"
 import { DropdownMenu } from "./dropdown/DropdownMenu"
 
 export const HeaderRight: React.FC = () => {
   const { userData } = UserDataState.useContainer()
-  const { auth, isLoading, db } = Auth.useContainer()
+  const { auth, isLoading, db } = AuthState.useContainer()
   const { isDropdownOpen, setMenuStack } = DropdownState.useContainer()
 
   const greenMessageStyle = userData?.hasNewMessage

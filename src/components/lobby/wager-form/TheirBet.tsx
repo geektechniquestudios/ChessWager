@@ -1,4 +1,4 @@
-import { Price } from "../../containers/Price"
+import { PriceState } from "../../../containers/PriceState"
 
 interface Props {
   multiplier: number
@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const TheirBet: React.FC<Props> = ({ multiplier, betAmount }) => {
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
   return (
     <div className="color-shift flex rounded-md border border-stone-400 bg-stone-200 px-1 dark:border-stone-500 dark:bg-stone-700">
       <p className="m-2 grid place-content-center font-bold text-stone-900 dark:text-stone-300">

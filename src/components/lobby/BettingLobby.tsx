@@ -1,5 +1,5 @@
 import { LobbyHeader } from "./lobby-header/LobbyHeader"
-import { LobbyHeaderState } from "../containers/LobbyHeaderState"
+import { LobbyHeaderState } from "../../containers/LobbyHeaderState"
 import { CreatedByUserBets } from "./CreatedByUserBets"
 import { RefreshingBets } from "./RefreshingBets"
 import { RealtimeBets } from "./RealtimeBets"

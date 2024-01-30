@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
-import { DropdownState } from "../../../../containers/DropdownState"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { DropdownState } from "../../../../../containers/DropdownState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 
 interface Props {
   scrollingContainerRef: React.RefObject<HTMLElement>

@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import { Price } from "../../containers/Price"
+import { PriceState } from "../../../containers/PriceState"
 
 interface Props {
   setBetAmount: React.Dispatch<React.SetStateAction<number>>
@@ -14,7 +14,7 @@ export const QuickBet: React.FC<Props> = ({
   setLocalAvaxAmount,
   setIsAmountEmpty,
 }) => {
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
 
   const updateBetValues = (usdAmount: number) => {
     setBetAmount(usdAmount / avaxPrice)

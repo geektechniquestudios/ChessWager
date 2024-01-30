@@ -1,5 +1,5 @@
 import { BsArrowDown, BsArrowDownUp, BsArrowUp } from "react-icons/bs"
-import { LobbyHeaderState } from "../../containers/LobbyHeaderState"
+import { LobbyHeaderState } from "../../../containers/LobbyHeaderState"
 
 export const AscDescButton: React.FC = () => {
   const { isDescending, mostRecentButton, setIsDescending } =

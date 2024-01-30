@@ -1,5 +1,5 @@
-import { BetsState } from "../../../../containers/BetsState"
-import { DropdownState } from "../../../../containers/DropdownState"
+import { BetsState } from "../../../../../containers/BetsState"
+import { DropdownState } from "../../../../../containers/DropdownState"
 import { Menu } from "../../models/Menu"
 import { SectionWrapper } from "./SectionWrapper"
 import { TbNetwork } from "react-icons/tb"

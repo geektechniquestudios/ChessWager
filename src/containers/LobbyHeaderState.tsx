@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { createContainer } from "unstated-next"
-import { useLocalStorage } from "../../hooks/useLocalStorage"
+import { useLocalStorage } from "../hooks/useLocalStorage"
 
 const useLobbyHeaderState = () => {
   const [isDescending, setIsDescending] = useState(true)

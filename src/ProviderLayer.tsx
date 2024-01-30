@@ -1,20 +1,20 @@
 import { App } from "./App"
-import { Auth } from "./components/containers/Auth"
-import { BetsState } from "./components/containers/BetsState"
-import { ChatFormData } from "./components/containers/ChatFormData"
-import { ChatToggle } from "./components/containers/ChatToggle"
-import { ConversationsState } from "./components/containers/ConversationsState"
-import { DarkMode } from "./components/containers/DarkMode"
-import { DropdownState } from "./components/containers/DropdownState"
-import { GameState } from "./components/containers/GameState"
-import { GameStream } from "./components/containers/GameStream"
-import { GlobalChatState } from "./components/containers/GlobalChatState"
-import { LobbyHeaderState } from "./components/containers/LobbyHeaderState"
-import { LobbyState } from "./components/containers/LobbyState"
-import { Price } from "./components/containers/Price"
-import { UserDataState } from "./components/containers/UserDataState"
-import { UserMenuState } from "./components/containers/UserMenuState"
-import { WindowSize } from "./components/containers/WindowSize"
+import { AuthState } from "./containers/AuthState"
+import { BetsState } from "./containers/BetsState"
+import { ChatFormState } from "./containers/ChatFormState"
+import { ChatToggleState } from "./containers/ChatToggleState"
+import { ConversationsState } from "./containers/ConversationsState"
+import { DarkModeState } from "./containers/DarkModeState"
+import { DropdownState } from "./containers/DropdownState"
+import { GameState } from "./containers/GameState"
+import { GameStreamState } from "./containers/GameStreamState"
+import { GlobalChatState } from "./containers/GlobalChatState"
+import { LobbyHeaderState } from "./containers/LobbyHeaderState"
+import { LobbyState } from "./containers/LobbyState"
+import { PriceState } from "./containers/PriceState"
+import { UserDataState } from "./containers/UserDataState"
+import { UserMenuState } from "./containers/UserMenuState"
+import { WindowSizeState } from "./containers/WindowSizeState"
 
 type Provider = React.ComponentType<{
   children: React.ReactNode
@@ -39,14 +39,14 @@ const CombineProviders: React.FC<CombineProvidersProps> = ({
 
 export const ProviderLayer: React.FC = () => {
   const providers = [
-    ChatToggle.Provider,
-    WindowSize.Provider,
+    ChatToggleState.Provider,
+    WindowSizeState.Provider,
     LobbyState.Provider,
-    Auth.Provider,
+    AuthState.Provider,
     GameState.Provider,
-    Price.Provider,
-    ChatFormData.Provider,
-    DarkMode.Provider,
+    PriceState.Provider,
+    ChatFormState.Provider,
+    DarkModeState.Provider,
     DropdownState.Provider,
     LobbyHeaderState.Provider,
     UserMenuState.Provider,
@@ -54,7 +54,7 @@ export const ProviderLayer: React.FC = () => {
     UserDataState.Provider,
     GlobalChatState.Provider,
     BetsState.Provider,
-    GameStream.Provider,
+    GameStreamState.Provider,
   ]
 
   return (

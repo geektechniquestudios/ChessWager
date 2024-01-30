@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { PlayerData } from "./PlayerData"
 import { GameResultPopup } from "./popup/GameResultPopup"
 import { EvalBar } from "./EvalBar"
-import { GameStream } from "../containers/GameStream"
+import { GameStreamState } from "../../containers/GameStreamState"
 
 // We use an old version of chessground because it looks better. If we ever upgarde, uncomment the styles below.
 // import "chessground/assets/chessground.base.css"
@@ -26,7 +26,7 @@ export const ChessGame: React.FC = () => {
     isNewGame,
     isCheckmate,
     isWhiteTurn,
-  } = GameStream.useContainer()
+  } = GameStreamState.useContainer()
 
   const shouldShowCheckmate: "white" | "black" | false = isCheckmate
     ? isWhiteTurn

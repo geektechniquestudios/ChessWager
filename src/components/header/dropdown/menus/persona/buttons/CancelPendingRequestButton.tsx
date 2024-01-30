@@ -1,6 +1,6 @@
 import { arrayUnion, collection, doc, writeBatch } from "firebase/firestore"
 import { RiUserFollowLine } from "react-icons/ri"
-import { Auth } from "../../../../../containers/Auth"
+import { AuthState } from "../../../../../../containers/AuthState"
 import { DropdownButton } from "./DropdownButton"
 
 interface Props {
@@ -12,7 +12,7 @@ export const CancelPendingRequestButton: React.FC<Props> = ({
   className,
   id,
 }) => {
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const targetUserRef = doc(db, "users", id)
   const requestsCollection = collection(targetUserRef, "requests")

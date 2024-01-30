@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { GameStream } from "../containers/GameStream"
+import { GameStreamState } from "../../containers/GameStreamState"
 
 interface Props {
   fen: string
@@ -11,7 +11,7 @@ interface Props {
 export const Countdown: React.FC<Props> = ({ fen, side, time, isNewGame }) => {
   const [count, setCount] = useState(0)
 
-  const { isCheckmate, shouldShowHours } = GameStream.useContainer()
+  const { isCheckmate, shouldShowHours } = GameStreamState.useContainer()
 
   const formatTime = (inSeconds: number): string => {
     const prependZeros = (num: number): string =>

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { createContainer } from "unstated-next"
 
-const useChatToggle = () => {
+const useChatToggleState = () => {
   const [showChat, setShowChat] = useState(
     window.innerWidth > 640 &&
       (localStorage.getItem("showChat") === "true" ||
@@ -19,4 +19,4 @@ const useChatToggle = () => {
   }
 }
 
-export const ChatToggle = createContainer(useChatToggle)
+export const ChatToggleState = createContainer(useChatToggleState)

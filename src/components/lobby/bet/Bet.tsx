@@ -1,11 +1,11 @@
 import "../../../style/lobby.scss"
-import { Auth } from "../../containers/Auth"
+import { AuthState } from "../../../containers/AuthState"
 import { BigNumber, ethers } from "ethers"
 import { User1Data } from "./left/user-data/User1Data"
 import { User2Data } from "./right/user-data/User2Data"
 import { CenterOfBet } from "./center/CenterOfBet"
 import { useEffect, useState } from "react"
-import { BetsState } from "../../containers/BetsState"
+import { BetsState } from "../../../containers/BetsState"
 import { motion } from "framer-motion"
 import { CustomSwal } from "../../popups/CustomSwal"
 import { Bet as BetInterface } from "../../../interfaces/Bet"
@@ -19,7 +19,7 @@ interface Props {
 
 export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
   const { id, amount, multiplier, status, user1Id, user2Id } = bet
-  const { auth, user } = Auth.useContainer()
+  const { auth, user } = AuthState.useContainer()
 
   const maxDecimals = 18
   const trimmedAmount = Number(amount.toFixed(maxDecimals))

@@ -1,8 +1,8 @@
 import { motion } from "framer-motion"
-import { Price } from "../../containers/Price"
+import { PriceState } from "../../../containers/PriceState"
 
 export const AvaxPriceButton: React.FC = () => {
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
 
   return (
     <motion.a

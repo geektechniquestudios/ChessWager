@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { EvalMarkings } from "./EvalMarkings"
-import { GameStream } from "../containers/GameStream"
+import { GameStreamState } from "../../containers/GameStreamState"
 
 interface Props {
   orientation: "black" | "white"
@@ -9,7 +9,7 @@ interface Props {
 
 export const EvalBar: React.FC<Props> = ({ orientation, fen }) => {
   const { score, mateIn, isAnalysisOn, setIsAnalysisOn, isCheckmate } =
-    GameStream.useContainer()
+    GameStreamState.useContainer()
 
   const getPercentFromScore = (score: number, fen: string): number => {
     if (!fen || !isAnalysisOn) return 50

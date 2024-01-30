@@ -1,6 +1,6 @@
 import { RefObject, useState } from "react"
 import { createContainer } from "unstated-next"
-import { Bet } from "../../interfaces/Bet"
+import { Bet } from "../interfaces/Bet"
 
 const useDropdownState = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)

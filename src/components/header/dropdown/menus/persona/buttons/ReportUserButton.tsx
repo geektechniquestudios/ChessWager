@@ -1,6 +1,6 @@
 import { FiFlag } from "react-icons/fi"
-import { DropdownState } from "../../../../../containers/DropdownState"
-import { UserMenuState } from "../../../../../containers/UserMenuState"
+import { DropdownState } from "../../../../../../containers/DropdownState"
+import { UserMenuState } from "../../../../../../containers/UserMenuState"
 import { DropdownButton } from "./DropdownButton"
 
 interface Props {

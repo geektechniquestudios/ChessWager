@@ -2,8 +2,8 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import { BsX } from "react-icons/bs"
 import { GameData } from "../../../interfaces/GameData"
-import { DarkMode } from "../../containers/DarkMode"
-import { GameState } from "../../containers/GameState"
+import { DarkModeState } from "../../../containers/DarkModeState"
+import { GameState } from "../../../containers/GameState"
 import { DropdownButton } from "../../header/dropdown/menus/persona/buttons/DropdownButton"
 import { PopupCounter } from "./PopupCounter"
 import { PopupTitle } from "./PopupTitle"
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
   const { prevGameId, gameId, buildOutcomeMessage } = GameState.useContainer()
 
   const [outcome, setOutcome] = useState<string>("")

@@ -1,7 +1,7 @@
 import { collection, doc } from "firebase/firestore"
 import { BsWallet2 } from "react-icons/bs"
-import { Auth } from "../../../../containers/Auth"
-import { UserDataState } from "../../../../containers/UserDataState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { UserDataState } from "../../../../../containers/UserDataState"
 import { AddFriendButton } from "./buttons/AddFriendButton"
 import { BanUserButton } from "./buttons/BanUserButton"
 import { BlockUserButton } from "./buttons/BlockUserButton"
@@ -31,7 +31,8 @@ export const UserButtonsArea: React.FC<Props> = ({
   moderatorLevel,
 }) => {
   const { userData } = UserDataState.useContainer()
-  const { auth, isWalletConnected, connectWallet, db } = Auth.useContainer()
+  const { auth, isWalletConnected, connectWallet, db } =
+    AuthState.useContainer()
 
   const isFriend = userData?.friends.includes(id) ?? false
   const isUser = auth.currentUser?.uid === id

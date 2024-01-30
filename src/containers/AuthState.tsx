@@ -18,12 +18,12 @@ import {
 import { useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { createContainer } from "unstated-next"
-import { firebaseApp } from "../../../firestore.config"
-import ChessWager from "../../artifacts/contracts/ChessWager.sol/ChessWager.json"
-import { Notification } from "../../interfaces/Notification"
-import { User } from "../../interfaces/User"
-import { CustomSwal, FirstLoginSwal } from "../popups/CustomSwal"
-import { useLocalStorage } from "../../hooks/useLocalStorage"
+import { firebaseApp } from "../../firestore.config"
+import ChessWager from "../artifacts/contracts/ChessWager.sol/ChessWager.json"
+import { Notification } from "../interfaces/Notification"
+import { User } from "../interfaces/User"
+import { CustomSwal, FirstLoginSwal } from "../components/popups/CustomSwal"
+import { useLocalStorage } from "../hooks/useLocalStorage"
 
 declare let window: any
 const db = getFirestore(firebaseApp)
@@ -279,4 +279,4 @@ const useAuth = () => {
   }
 }
 
-export const Auth = createContainer(useAuth)
+export const AuthState = createContainer(useAuth)

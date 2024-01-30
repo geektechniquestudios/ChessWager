@@ -1,5 +1,5 @@
 import { Bet } from "../../../../../interfaces/Bet"
-import { Auth } from "../../../../containers/Auth"
+import { AuthState } from "../../../../../containers/AuthState"
 import { ApproveKickWrapper } from "./ApproveKickWrapper"
 import { JoinButton } from "./JoinButton"
 import { User2PayButton } from "./User2PayButton"
@@ -17,7 +17,7 @@ export const RightButtons: React.FC<Props> = ({
   isJoining,
   setIsJoining,
 }) => {
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
   return (
     <>
       {user && (

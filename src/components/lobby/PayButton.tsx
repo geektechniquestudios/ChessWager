@@ -5,8 +5,8 @@ import { motion } from "framer-motion"
 import { useState } from "react"
 import { BsSend, BsSendCheck, BsSendExclamation } from "react-icons/bs"
 import { Bet } from "../../interfaces/Bet"
-import { Auth } from "../containers/Auth"
-import { DarkMode } from "../containers/DarkMode"
+import { AuthState } from "../../containers/AuthState"
+import { DarkModeState } from "../../containers/DarkModeState"
 
 interface Props {
   bet: Bet
@@ -26,7 +26,7 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
     timestamp,
     contractAddress,
   } = bet
-  const { auth, callContract, db } = Auth.useContainer()
+  const { auth, callContract, db } = AuthState.useContainer()
 
   const maxDecimals = 18
   const trimmedAmount = Number(amount.toFixed(maxDecimals))
@@ -89,7 +89,7 @@ export const PayButton: React.FC<Props> = ({ bet }) => {
   }
 
   const isUser1 = auth.currentUser?.uid === user1Id
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
 
   const failedStyle =
     paymentStatus === "failed" ? "bet-button-failed" : "bet-button"

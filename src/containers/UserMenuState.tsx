@@ -1,11 +1,11 @@
 import { doc, getDoc } from "firebase/firestore"
 import { useState } from "react"
 import { createContainer } from "unstated-next"
-import type { User } from "../../interfaces/User"
-import { Auth } from "./Auth"
+import type { User } from "../interfaces/User"
+import { AuthState } from "./AuthState"
 
 const useUserMenuState = () => {
-  const { db } = Auth.useContainer()
+  const { db } = AuthState.useContainer()
 
   const [clickedUser, setClickedUser] = useState<User>()
   const [userIdFromMessages, setUserIdFromMessages] = useState<string>("")

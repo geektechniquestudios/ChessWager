@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { createContainer } from "unstated-next"
-import { useLocalStorage } from "../../hooks/useLocalStorage"
+import { useLocalStorage } from "../hooks/useLocalStorage"
 
 const usePrice = () => {
   const [avaxPrice, setAvaxPrice] = useLocalStorage<number>("avaxPrice", 0)
@@ -32,4 +32,4 @@ const usePrice = () => {
   return { avaxPrice }
 }
 
-export const Price = createContainer(usePrice)
+export const PriceState = createContainer(usePrice)

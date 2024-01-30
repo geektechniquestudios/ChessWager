@@ -1,7 +1,7 @@
 import type { Message } from "../../interfaces/Message"
 import "../../style/scrollbar.scss"
-import { GlobalChatState } from "../containers/GlobalChatState"
-import { UserDataState } from "../containers/UserDataState"
+import { GlobalChatState } from "../../containers/GlobalChatState"
+import { UserDataState } from "../../containers/UserDataState"
 import { ChatMessage } from "./ChatMessage"
 
 interface Props {}

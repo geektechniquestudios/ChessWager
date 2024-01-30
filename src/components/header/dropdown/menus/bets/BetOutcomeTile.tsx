@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { Auth } from "../../../../containers/Auth"
-import { GameState } from "../../../../containers/GameState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { GameState } from "../../../../../containers/GameState"
 import { GameData } from "../../../../../interfaces/GameData"
 import { Bet } from "../../../../../interfaces/Bet"
-import { DarkMode } from "../../../../containers/DarkMode"
+import { DarkModeState } from "../../../../../containers/DarkModeState"
 
 interface Props {
   bet: Bet
@@ -13,7 +13,7 @@ export const BetOutcomeTile: React.FC<Props> = ({ bet }) => {
   const { id, betSide, user1Id, gameId } = bet ?? {}
   const [outcome, setOutcome] = useState<string>("")
   const { buildOutcomeMessage } = GameState.useContainer()
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
 
   const isUser1 = user?.uid === user1Id
 
@@ -23,7 +23,7 @@ export const BetOutcomeTile: React.FC<Props> = ({ bet }) => {
     : (betSide === "white" && outcome.startsWith("Black won")) ||
       (betSide === "black" && outcome.startsWith("White won"))
 
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
   const resultStyle =
     outcome === "Game ended in a draw" || outcome === "Game in progress"
       ? ""

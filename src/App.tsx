@@ -3,7 +3,7 @@ import "./style/scrollbar.scss"
 
 import { MainHeader } from "./components/header/MainHeader"
 import { PublicChat } from "./components/chat/PublicChat"
-import { DarkMode } from "./components/containers/DarkMode"
+import { DarkModeState } from "./containers/DarkModeState"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { MainContent } from "./MainContent"
 import { LayoutGroup } from "framer-motion"
@@ -18,7 +18,7 @@ export const App: React.FC = () => {
     },
   })
 
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
   const dark = isDarkOn ? "dark" : ""
 
   return (

@@ -1,16 +1,16 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import { MdOutlineChatBubbleOutline } from "react-icons/md"
-import { ChatToggle } from "../containers/ChatToggle"
-import { DarkMode } from "../containers/DarkMode"
-import { GlobalChatState } from "../containers/GlobalChatState"
+import { ChatToggleState } from "../../containers/ChatToggleState"
+import { DarkModeState } from "../../containers/DarkModeState"
+import { GlobalChatState } from "../../containers/GlobalChatState"
 
 interface Props {}
 
 export const ShowChatButton: React.FC<Props> = ({}) => {
   const { showChat, setShowChat, areNewMessages, setAreNewMessages } =
-    ChatToggle.useContainer()
-  const { isDarkOn } = DarkMode.useContainer()
+    ChatToggleState.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
   const { messages } = GlobalChatState.useContainer()
 
   useEffect(() => {

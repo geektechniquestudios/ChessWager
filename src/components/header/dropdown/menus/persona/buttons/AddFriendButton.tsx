@@ -8,8 +8,8 @@ import {
   writeBatch,
 } from "firebase/firestore"
 import { RiUserAddLine } from "react-icons/ri"
-import { Auth } from "../../../../../containers/Auth"
-import { UserDataState } from "../../../../../containers/UserDataState"
+import { AuthState } from "../../../../../../containers/AuthState"
+import { UserDataState } from "../../../../../../containers/UserDataState"
 import { DropdownButton } from "./DropdownButton"
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const AddFriendButton: React.FC<Props> = ({ id }) => {
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const { userData } = UserDataState.useContainer()
   const addFriend = () => {
     const targetUserRef = doc(db, "users", id)

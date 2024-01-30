@@ -9,8 +9,8 @@ import {
 } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { createContainer } from "unstated-next"
-import type { Bet, BetMetadata } from "../../interfaces/Bet"
-import { Auth } from "./Auth"
+import type { Bet, BetMetadata } from "../interfaces/Bet"
+import { AuthState } from "./AuthState"
 import { GameState } from "./GameState"
 import { LobbyHeaderState } from "./LobbyHeaderState"
 import { UserDataState } from "./UserDataState"
@@ -44,7 +44,7 @@ const genericBet: Bet = {
 
 const useBetState = () => {
   const { gameId } = GameState.useContainer()
-  const { user, isLoading, db } = Auth.useContainer()
+  const { user, isLoading, db } = AuthState.useContainer()
   const { userData } = UserDataState.useContainer()
 
   const [bets, setBets] = useState<Bet[]>([])

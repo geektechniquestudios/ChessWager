@@ -1,5 +1,5 @@
 import { CollectionReference, DocumentData } from "firebase/firestore"
-import { DropdownState } from "../../../../containers/DropdownState"
+import { DropdownState } from "../../../../../containers/DropdownState"
 
 interface Props {
   isRead: boolean

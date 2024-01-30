@@ -11,9 +11,9 @@ import { useState } from "react"
 import { BsX } from "react-icons/bs"
 import { Bet } from "../../../../../interfaces/Bet"
 import { Notification } from "../../../../../interfaces/Notification"
-import { Auth } from "../../../../containers/Auth"
-import { DropdownState } from "../../../../containers/DropdownState"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DropdownState } from "../../../../../containers/DropdownState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { DropdownButton } from "../persona/buttons/DropdownButton"
 
 interface Props {
@@ -32,7 +32,7 @@ export const NotificationItem: React.FC<Props> = ({
   const { text, openToMenu, clickedUserId, isRead, id, betId } = notification
   const { goToMenu, setBet } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
 
   const [isHovered, setIsHovered] = useState<boolean>(false)
 

@@ -1,5 +1,5 @@
 import { Friend } from "../../../../../interfaces/Friend"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { DropdownItem } from "../../models/DropdownItem"
 
 export const FriendItem: React.FC<Friend> = ({

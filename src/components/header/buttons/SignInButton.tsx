@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion"
-import { Auth } from "../../containers/Auth"
+import { AuthState } from "../../../containers/AuthState"
 
 export const SignInButton: React.FC = () => {
-  const { signInWithGoogle, auth } = Auth.useContainer()
+  const { signInWithGoogle, auth } = AuthState.useContainer()
 
   return (
     <AnimatePresence mode="wait">

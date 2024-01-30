@@ -1,5 +1,5 @@
 import CurrencyInput from "react-currency-input-field"
-import { Price } from "../../containers/Price"
+import { PriceState } from "../../../containers/PriceState"
 import { useState, Dispatch, SetStateAction } from "react"
 
 interface Props {
@@ -23,7 +23,7 @@ export const YourBet: React.FC<Props> = ({
   isAmountEmpty,
   setIsAmountEmpty,
 }) => {
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
   const borderWarning = isAmountEmpty
     ? " border-red-600"
     : "border-stone-400 dark:border-stone-500 "
