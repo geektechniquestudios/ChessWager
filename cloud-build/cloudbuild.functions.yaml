@@ -18,9 +18,6 @@ steps:
   - id: Installing firebase
     name: "gcr.io/cloud-builders/npm"
     args: ["install", "--save", "firebase"]
-  - id: Installing firebase functions
-    name: "gcr.io/cloud-builders/npm"
-    args: ["run", "functions-install"]
 
   # - id: Running tests
   #   name: "gcr.io/cloud-builders/npm"
