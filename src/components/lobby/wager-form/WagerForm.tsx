@@ -6,11 +6,11 @@ import {
 } from "firebase/firestore"
 import { AnimatePresence, motion } from "framer-motion"
 import { MutableRefObject, useEffect, useRef, useState } from "react"
-import { Auth } from "../../containers/Auth"
-import { BetsState } from "../../containers/BetsState"
-import { GameState } from "../../containers/GameState"
-import { UserDataState } from "../../containers/UserDataState"
-import { WindowSize } from "../../containers/WindowSize"
+import { AuthState } from "../../../containers/AuthState"
+import { BetsState } from "../../../containers/BetsState"
+import { GameState } from "../../../containers/GameState"
+import { UserDataState } from "../../../containers/UserDataState"
+import { WindowSizeState } from "../../../containers/WindowSizeState"
 import { CustomSwal } from "../../popups/CustomSwal"
 import { Multiplier } from "./Multiplier"
 import { PlaceBet } from "./PlaceBet"
@@ -36,7 +36,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
     connectWallet,
     doesUserHaveEnoughAvax,
     db,
-  } = Auth.useContainer()
+  } = AuthState.useContainer()
   const { showWagerForm, setShowWagerForm } = BetsState.useContainer()
 
   const wagerFormRef = useRef<any>(null)
@@ -80,7 +80,6 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
 
   const createWager = async (e: React.FormEvent<HTMLFormElement>) => {
     const canUserBet: () => Promise<boolean> = async () => {
-      if (isTest) return true
       if (!auth.currentUser) {
         CustomSwal(
           "error",
@@ -149,7 +148,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
     setIsFirstAnimation(false)
   }, [])
 
-  const { width } = WindowSize.useContainer()
+  const { width } = WindowSizeState.useContainer()
   const formWidth = width >= 768 ? "21rem" : "19rem"
 
   return (

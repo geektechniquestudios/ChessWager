@@ -82,6 +82,10 @@ a:hover {
   @apply border-stone-500 hover:bg-stone-300 dark:border-stone-300 dark:bg-stone-800 dark:text-stone-100 dark:hover:bg-stone-600;
 }
 
+.bet-button-failed {
+  @apply border-amber-500 hover:bg-stone-300 dark:border-amber-300 dark:bg-stone-800 dark:text-stone-100 dark:hover:bg-stone-600;
+}
+
 .white-ring {
   @apply border-white dark:border-white;
 }

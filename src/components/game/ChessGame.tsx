@@ -1,9 +1,9 @@
 import Chessground from "@react-chess/chessground"
 import { motion } from "framer-motion"
-import React from "react"
 import { PlayerData } from "./PlayerData"
 import { GameResultPopup } from "./popup/GameResultPopup"
-import { useGameStream } from "./useGameStream"
+import { EvalBar } from "./EvalBar"
+import { GameStreamState } from "../../containers/GameStreamState"
 
 // We use an old version of chessground because it looks better. If we ever upgarde, uncomment the styles below.
 // import "chessground/assets/chessground.base.css"
@@ -24,12 +24,20 @@ export const ChessGame: React.FC = () => {
     blackTitle,
     orientation,
     isNewGame,
-  } = useGameStream()
+    isCheckmate,
+    isWhiteTurn,
+  } = GameStreamState.useContainer()
+
+  const shouldShowCheckmate: "white" | "black" | false = isCheckmate
+    ? isWhiteTurn
+      ? "white"
+      : "black"
+    : false
 
   return (
     <div className="flex h-full w-auto flex-col">
       <div className="flex h-full flex-col items-center justify-center gap-2 overflow-hidden p-2">
-        <div className="my-0 flex w-full justify-center">
+        <div className="relative my-0 flex w-full justify-center">
           <motion.div
             layout
             initial={{ opacity: 0.2 }}
@@ -38,25 +46,26 @@ export const ChessGame: React.FC = () => {
             className="color-shift w-[30em] resize-x flex-col justify-center overflow-hidden rounded-xl border border-stone-500 bg-stone-100 p-1.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
             style={{ minWidth: "16.5em", maxWidth: "85vh" }}
           >
-            <div className="relative flex h-full w-full resize justify-center align-middle">
-              <GameResultPopup orientation={orientation} />
-              <div className="flex w-full flex-col justify-center rounded-lg border border-stone-500 bg-stone-200 align-middle dark:border-stone-700 dark:bg-stone-700">
-                <div className="flex w-full justify-center">
-                  <PlayerData
-                    side={orientation === "white" ? "black" : "white"}
-                    title={orientation === "white" ? blackTitle : whiteTitle}
-                    name={orientation === "white" ? blackName : whiteName}
-                    time={orientation === "white" ? blackTime : whiteTime}
-                    rating={orientation === "white" ? blackRating : whiteRating}
-                    fen={fen}
-                    isNewGame={isNewGame}
-                    isTop
-                  />
-                </div>
+            <GameResultPopup orientation={orientation} />
+            <div className="flex h-full w-full items-center justify-center gap-2">
+              <EvalBar fen={fen} orientation={orientation} />
+              <div className="flex w-full flex-col justify-center rounded-xl  border border-stone-500 bg-stone-200 align-middle dark:border-stone-500 dark:bg-stone-700">
+                <PlayerData
+                  side={orientation === "white" ? "black" : "white"}
+                  title={orientation === "white" ? blackTitle : whiteTitle}
+                  name={orientation === "white" ? blackName : whiteName}
+                  time={orientation === "white" ? blackTime : whiteTime}
+                  rating={orientation === "white" ? blackRating : whiteRating}
+                  fen={fen}
+                  isNewGame={isNewGame}
+                  isTop
+                />
+
                 <div className="aspect-h-1 aspect-w-1 border-b border-t border-stone-600 dark:border-stone-400">
                   <Chessground
                     contained
                     config={{
+                      check: shouldShowCheckmate,
                       fen,
                       orientation,
                       draggable: { enabled: false },
@@ -67,18 +76,17 @@ export const ChessGame: React.FC = () => {
                     }}
                   />
                 </div>
-                <div className="flex justify-center">
-                  <PlayerData
-                    side={orientation === "white" ? "white" : "black"}
-                    title={orientation === "black" ? blackTitle : whiteTitle}
-                    name={orientation === "black" ? blackName : whiteName}
-                    time={orientation === "black" ? blackTime : whiteTime}
-                    rating={orientation === "black" ? blackRating : whiteRating}
-                    fen={fen}
-                    isNewGame={isNewGame}
-                    isTop={false}
-                  />
-                </div>
+
+                <PlayerData
+                  side={orientation === "white" ? "white" : "black"}
+                  title={orientation === "black" ? blackTitle : whiteTitle}
+                  name={orientation === "black" ? blackName : whiteName}
+                  time={orientation === "black" ? blackTime : whiteTime}
+                  rating={orientation === "black" ? blackRating : whiteRating}
+                  fen={fen}
+                  isNewGame={isNewGame}
+                  isTop={false}
+                />
               </div>
             </div>
           </motion.div>

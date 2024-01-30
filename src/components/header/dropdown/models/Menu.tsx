@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useRef } from "react"
 import { BiArrowBack } from "react-icons/bi"
 import { CSSTransition } from "react-transition-group"
-import { Auth } from "../../../containers/Auth"
-import { DropdownState } from "../../../containers/DropdownState"
-import { UserMenuState } from "../../../containers/UserMenuState"
+import { AuthState } from "../../../../containers/AuthState"
+import { DropdownState } from "../../../../containers/DropdownState"
+import { UserMenuState } from "../../../../containers/UserMenuState"
 import { DropdownItem } from "./DropdownItem"
 import { MenuLine } from "./MenuLine"
 
@@ -16,7 +16,7 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
   const { activeMenu, setMenuHeight, menuStack } = DropdownState.useContainer()
   const { clickedUser } = UserMenuState.useContainer()
 
-  const { auth } = Auth.useContainer()
+  const { auth } = AuthState.useContainer()
 
   // This map converts the stored menu name in code to the name that actually displays
   // When you add a new menu, you need to add the name here

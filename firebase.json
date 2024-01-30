@@ -15,6 +15,17 @@
           "source": "**",
           "destination": "/index.html"
         }
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(js|css|wasm|png|jpg|jpeg|svg|ico|xml|txt)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=31536000"
+            }
+          ]
+        }
       ]
     }
   ],

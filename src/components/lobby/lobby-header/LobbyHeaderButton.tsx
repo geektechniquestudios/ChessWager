@@ -1,4 +1,4 @@
-import { LobbyHeaderState } from "../../containers/LobbyHeaderState"
+import { LobbyHeaderState } from "../../../containers/LobbyHeaderState"
 
 interface Props {
   buttonName: string

@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { createContainer } from "unstated-next"
+import { useLocalStorage } from "../hooks/useLocalStorage"
 
 const usePrice = () => {
-  const [avaxPrice, setAvaxPrice] = useState<number>(
-    localStorage.getItem("avaxPrice")
-      ? parseFloat(localStorage.getItem("avaxPrice") as string)
-      : 0,
-  )
+  const [avaxPrice, setAvaxPrice] = useLocalStorage<number>("avaxPrice", 0)
 
   const fetchAvaxPrice = async (): Promise<number | null> => {
     try {
@@ -22,12 +19,8 @@ const usePrice = () => {
 
   const updateAvaxPrice = async () => {
     const fetchedPrice = await fetchAvaxPrice()
-    const newPrice =
-      fetchedPrice ??
-      parseFloat(localStorage.getItem("avaxPrice") as string) ??
-      0
+    const newPrice = fetchedPrice ?? avaxPrice
     setAvaxPrice(newPrice)
-    localStorage.setItem("avaxPrice", newPrice.toString())
   }
 
   useEffect(() => {
@@ -39,4 +32,4 @@ const usePrice = () => {
   return { avaxPrice }
 }
 
-export const Price = createContainer(usePrice)
+export const PriceState = createContainer(usePrice)

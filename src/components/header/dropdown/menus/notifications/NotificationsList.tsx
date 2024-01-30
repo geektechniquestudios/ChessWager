@@ -16,11 +16,11 @@ import { useCollectionData } from "react-firebase-hooks/firestore"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { Notification } from "../../../../../interfaces/Notification"
 import "../../../../../style/scrollbar.scss"
-import { Auth } from "../../../../containers/Auth"
+import { AuthState } from "../../../../../containers/AuthState"
 import { NotificationItem } from "./NotificationItem"
 
 export const NotificationsList: React.FC = ({}) => {
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const notificationsCollection = collection(userRef, "notifications")
 

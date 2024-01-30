@@ -1,10 +1,10 @@
 import { doc, updateDoc } from "firebase/firestore"
 import { MdBlockFlipped } from "react-icons/md"
 import { Bet } from "../../../../../interfaces/Bet"
-import { Auth } from "../../../../containers/Auth"
-import { DropdownState } from "../../../../containers/DropdownState"
-import { Price } from "../../../../containers/Price"
-import { UserDataState } from "../../../../containers/UserDataState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DropdownState } from "../../../../../containers/DropdownState"
+import { PriceState } from "../../../../../containers/PriceState"
+import { UserDataState } from "../../../../../containers/UserDataState"
 import { formatDollars } from "../../../../lobby/bet/models/formatDollars"
 
 interface Props {
@@ -25,10 +25,10 @@ export const BetsListItem: React.FC<Props> = ({ bet }) => {
     createdAt,
   } = bet
   const { goToMenu, setBet } = DropdownState.useContainer()
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const betTotal =
     bet?.amount ?? 0 + (bet?.amount ?? 0) * (bet?.multiplier ?? 0)
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
   const { userData } = UserDataState.useContainer()
 
   const isUser1Blocked = userData?.blockedUsers.includes(user1Id ?? "") ?? false

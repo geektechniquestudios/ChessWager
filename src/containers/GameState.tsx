@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { createContainer } from "unstated-next"
-import { GameData } from "../../interfaces/GameData"
+import { GameData } from "../interfaces/GameData"
 
 const useGameState = () => {
   const [gameId, setGameId] = useState("")

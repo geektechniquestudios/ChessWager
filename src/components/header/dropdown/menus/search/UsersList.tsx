@@ -2,8 +2,8 @@ import { collection, limit, Query, query, where } from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import type { User } from "../../../../../interfaces/User"
 import "../../../../../style/scrollbar.scss"
-import { Auth } from "../../../../containers/Auth"
-import { UserDataState } from "../../../../containers/UserDataState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { UserDataState } from "../../../../../containers/UserDataState"
 import { UsersListItem } from "./UsersListItem"
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
 
   const usersCollectionRef = collection(db, "users")
   const allUsersQuery = query(
@@ -48,15 +48,13 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
         {users
           ?.filter(
             (user: User) =>
-              (!userData?.blockedUsers.includes(user.id) ?? true) &&
+              !userData?.blockedUsers.includes(user.id) &&
               (friendsOrEveryone === "friends"
                 ? user.searchableDisplayName.startsWith(search)
                 : true),
           )
           .sort((a: User, b: User) => -(a.displayName < b.displayName))
-          .map((user: User) => (
-            <UsersListItem key={user.id} {...user} />
-          ))}
+          .map((user: User) => <UsersListItem key={user.id} {...user} />)}
       </div>
     </div>
   )

@@ -1,10 +1,9 @@
-const fs = require("fs")
-const os = require("os")
 const hre = require("hardhat")
 const admin = require("firebase-admin")
 const env = process.env.VITE_BRANCH_ENV
 const isLocal = env === "develop"
 const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
+const setEnvValue = require("../../updateEnv.js")
 require("dotenv").config({ path: "../../.env" })
 
 let cred
@@ -18,28 +17,6 @@ if (isLocal) {
 admin.initializeApp({ credential: cred })
 
 const db = admin.firestore()
-
-function setEnvValue(key, value) {
-  const filePath = ".env"
-  const fileContents = fs.readFileSync(filePath, "utf8")
-
-  // Split the file contents into an array of lines
-  const lines = fileContents.split(/\r?\n/)
-
-  // Find the index of the line that starts with the key
-  const targetLineIndex = lines.findIndex((line) => line.startsWith(`${key}=`))
-
-  if (targetLineIndex !== -1) {
-    // Replace the value of the target line with the new value
-    lines[targetLineIndex] = `${key}=${value}`
-  } else {
-    // Append the new key/value pair to the end of the file
-    lines.push(`${key}=${value}`)
-  }
-
-  // Write the modified contents back to the file
-  fs.writeFileSync(filePath, lines.join("\n"))
-}
 
 const contractRef = db.collection("contracts")
 

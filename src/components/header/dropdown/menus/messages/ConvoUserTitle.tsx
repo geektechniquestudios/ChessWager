@@ -1,6 +1,6 @@
 import { Message } from "../../../../../interfaces/Message"
-import { DropdownState } from "../../../../containers/DropdownState"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { DropdownState } from "../../../../../containers/DropdownState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 
 interface Props {
   message: Message

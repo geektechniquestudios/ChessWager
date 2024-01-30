@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material"
 import {
   doc,
   DocumentReference,
@@ -5,23 +6,31 @@ import {
   serverTimestamp,
 } from "firebase/firestore"
 import { AnimatePresence, motion } from "framer-motion"
+import { useEffect } from "react"
 import { GiJoint } from "react-icons/gi"
 import { Bet } from "../../../../../interfaces/Bet"
 import { User } from "../../../../../interfaces/User"
-import { Auth } from "../../../../containers/Auth"
-import { DarkMode } from "../../../../containers/DarkMode"
-import { LobbyState } from "../../../../containers/LobbyState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DarkModeState } from "../../../../../containers/DarkModeState"
+import { LobbyState } from "../../../../../containers/LobbyState"
 import { CustomSwal } from "../../../../popups/CustomSwal"
 
 interface Props {
   bet: Bet
   isSelected: boolean
+  isJoining: boolean
+  setIsJoining: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
+export const JoinButton: React.FC<Props> = ({
+  bet,
+  isSelected,
+  isJoining,
+  setIsJoining,
+}) => {
   const { id, user1Id, status, amount, multiplier } = bet
   const { auth, walletAddress, connectWallet, doesUserHaveEnoughAvax, db } =
-    Auth.useContainer()
+    AuthState.useContainer()
   const { refreshLobby } = LobbyState.useContainer()
 
   const isUser1 = auth.currentUser?.uid === user1Id
@@ -37,7 +46,7 @@ export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
   ) as DocumentReference<Bet>
 
   const user2DisplayName = auth.currentUser?.displayName
-  const { isWalletConnected } = Auth.useContainer()
+  const { isWalletConnected } = AuthState.useContainer()
 
   const accept = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -52,6 +61,8 @@ export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
       )
       return
     }
+
+    setIsJoining(true)
     runTransaction(db, async (transaction) => {
       const doc = await transaction.get(userDoc)
       const user2FollowThrough = [
@@ -72,6 +83,7 @@ export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
         refreshLobby()
       })
       .catch(() => {
+        setIsJoining(false)
         CustomSwal(
           "error",
           "Couldn't join",
@@ -80,7 +92,11 @@ export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
       })
   }
 
-  const { isDarkOn } = DarkMode.useContainer()
+  useEffect(() => {
+    if (status !== "ready") setIsJoining(false)
+  }, [bet.status])
+
+  const { isDarkOn } = DarkModeState.useContainer()
 
   return (
     <AnimatePresence>
@@ -96,7 +112,14 @@ export const JoinButton: React.FC<Props> = ({ bet, isSelected }) => {
           className="bet-button color-shift absolute bottom-1 right-1 flex h-6 shrink-0 animate-pulse items-center justify-center gap-1 rounded-md border px-1.5 font-bold"
         >
           <div className="text-xs">Join</div>
-          <GiJoint size="12" color={isDarkOn ? "#bbf7d0" : "#14532d"} />
+
+          <div className="grid w-5 place-content-center">
+            {isJoining ? (
+              <CircularProgress size={13} />
+            ) : (
+              <GiJoint size="12" color={isDarkOn ? "#bbf7d0" : "#14532d"} />
+            )}
+          </div>
         </motion.button>
       )}
     </AnimatePresence>

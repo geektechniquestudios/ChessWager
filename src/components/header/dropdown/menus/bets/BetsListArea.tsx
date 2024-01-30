@@ -14,11 +14,11 @@ import { useEffect, useState } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { Bet } from "../../../../../interfaces/Bet"
 import "../../../../../style/scrollbar.scss"
-import { Auth } from "../../../../containers/Auth"
+import { AuthState } from "../../../../../containers/AuthState"
 import { BetsListItem } from "./BetsListItem"
 
 export const BetsListArea: React.FC = ({}) => {
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const betsRef = collection(db, "lobby")
 
   const [hasMore, setHasMore] = useState(true)
@@ -70,9 +70,7 @@ export const BetsListArea: React.FC = ({}) => {
               ?.filter(
                 (bet) => bet.status === "approved" || bet.status === "funded",
               )
-              .map((bet: Bet) => (
-                <BetsListItem key={bet.id} bet={bet} />
-              ))}
+              .map((bet: Bet) => <BetsListItem key={bet.id} bet={bet} />)}
           </div>
         </InfiniteScroll>
       ) : (

@@ -3,10 +3,10 @@ import {
   MdOutlineAttachMoney,
   MdOutlineMoneyOffCsred,
 } from "react-icons/md"
-import { DropdownState } from "../../../../containers/DropdownState"
-import { Price } from "../../../../containers/Price"
-import { UserDataState } from "../../../../containers/UserDataState"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { DropdownState } from "../../../../../containers/DropdownState"
+import { PriceState } from "../../../../../containers/PriceState"
+import { UserDataState } from "../../../../../containers/UserDataState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { formatDollars } from "../../../../lobby/bet/models/formatDollars"
 
 interface Props {
@@ -30,7 +30,7 @@ export const UserBetData: React.FC<Props> = ({
   funded,
   multiplier,
 }) => {
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
   const { goToMenu } = DropdownState.useContainer()
   const { setClickedUserById } = UserMenuState.useContainer()
   const { userData } = UserDataState.useContainer()

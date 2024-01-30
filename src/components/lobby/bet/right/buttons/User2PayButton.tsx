@@ -1,6 +1,6 @@
 import { AnimatePresence } from "framer-motion"
 import { Bet } from "../../../../../interfaces/Bet"
-import { Auth } from "../../../../containers/Auth"
+import { AuthState } from "../../../../../containers/AuthState"
 import { PayButton } from "../../../PayButton"
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const User2PayButton: React.FC<Props> = ({ bet }) => {
-  const { auth } = Auth.useContainer()
+  const { auth } = AuthState.useContainer()
   const { user2Id, hasUser2Paid, timestamp, status } = bet
   const isUser2 = auth.currentUser?.uid === user2Id
 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { createContainer } from "unstated-next"
-import { ChatToggle } from "./ChatToggle"
+import { ChatToggleState } from "./ChatToggleState"
 
 const useWindowSize = () => {
   const [width, setWidth] = useState<number>(window.innerWidth)
   const [prevWidth, setPrevWidth] = useState(width)
-  const { setShowChat, setAreNewMessages } = ChatToggle.useContainer()
+  const { setShowChat, setAreNewMessages } = ChatToggleState.useContainer()
 
   const handleWindowSizeChange = () => {
     if (prevWidth >= 641 && width < 641) setShowChat(false)
@@ -31,4 +31,4 @@ const useWindowSize = () => {
   return { width }
 }
 
-export const WindowSize = createContainer(useWindowSize)
+export const WindowSizeState = createContainer(useWindowSize)

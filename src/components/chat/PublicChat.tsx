@@ -2,22 +2,22 @@ import { collection } from "firebase/firestore"
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import "../../style/chat.scss"
-import { Auth } from "../containers/Auth"
-import { ChatFormData } from "../containers/ChatFormData"
-import { ChatToggle } from "../containers/ChatToggle"
-import { WindowSize } from "../containers/WindowSize"
+import { AuthState } from "../../containers/AuthState"
+import { ChatFormState } from "../../containers/ChatFormState"
+import { ChatToggleState } from "../../containers/ChatToggleState"
+import { WindowSizeState } from "../../containers/WindowSizeState"
 import { ChatBody } from "./ChatBody"
 import { ChatForm } from "./ChatForm"
 import { ChatHeader } from "./ChatHeader"
 
 export const PublicChat: React.FC = () => {
   const dummy = useRef<HTMLInputElement>(null)
-  const { db } = Auth.useContainer()
+  const { db } = AuthState.useContainer()
   const messagesRef = collection(db, "messages")
 
-  const { chatFormValue, setChatFormValue } = ChatFormData.useContainer()
-  const { showChat } = ChatToggle.useContainer()
-  const { width } = WindowSize.useContainer()
+  const { chatFormValue, setChatFormValue } = ChatFormState.useContainer()
+  const { showChat } = ChatToggleState.useContainer()
+  const { width } = WindowSizeState.useContainer()
 
   const [isFirstAnimation, setIsFirstAnimation] = useState<boolean>(true)
 

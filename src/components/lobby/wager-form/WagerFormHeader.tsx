@@ -1,5 +1,5 @@
 import { HiMinus } from "react-icons/hi"
-import { BetsState } from "../../containers/BetsState"
+import { BetsState } from "../../../containers/BetsState"
 
 interface Props {}
 

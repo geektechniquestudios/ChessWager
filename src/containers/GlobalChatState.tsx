@@ -9,11 +9,11 @@ import {
 import { useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { createContainer } from "unstated-next"
-import { Message } from "../../interfaces/Message"
-import { Auth } from "./Auth"
+import { Message } from "../interfaces/Message"
+import { AuthState } from "./AuthState"
 
 const useGlobalChatState = () => {
-  const { db } = Auth.useContainer()
+  const { db } = AuthState.useContainer()
   const messagesRef = collection(db, "messages")
   const [timestamp] = useState<Timestamp>(Timestamp.now())
   const q = query(

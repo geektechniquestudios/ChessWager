@@ -3,7 +3,7 @@ import { FaRegHandPeace, FaRegHandshake } from "react-icons/fa"
 import { FiPercent, FiUsers } from "react-icons/fi"
 import { GiPayMoney } from "react-icons/gi"
 import { RiHandCoinLine } from "react-icons/ri"
-import { DarkMode } from "../../../../containers/DarkMode"
+import { DarkModeState } from "../../../../../containers/DarkModeState"
 import { UserDataTile } from "./UserDataTile"
 
 interface Props {
@@ -23,7 +23,7 @@ export const UserTiles: React.FC<Props> = ({
   amountBet,
   amountWon,
 }) => {
-  const { isDarkOn } = DarkMode.useContainer()
+  const { isDarkOn } = DarkModeState.useContainer()
   const winPercent =
     betWinCount !== 0 && betFundedCount !== 0
       ? ((betWinCount / betFundedCount) * 100).toFixed(2)

@@ -38,6 +38,14 @@ contract ChessWager is Ownable, Pausable {
     chessWagerBalance = 0;
   }
 
+  function pause() public onlyOwner {
+    _pause();
+  }
+
+  function unpause() public onlyOwner {
+    _unpause();
+  }
+
   function placeBet(
     Bet calldata _bet,
     string calldata _betId

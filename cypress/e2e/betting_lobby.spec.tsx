@@ -1,5 +1,5 @@
-// import firebase from "firebase/compat/app"
-// import "firebase/compat/firestore"
+import firebase from "firebase/compat/app"
+import "firebase/compat/firestore"
 
 // This module cannot be tested currently because of some technical hurdles
 // We need to be able to use metamask in the test to click on bet buttons, which isn't easy. Synpress does not seem to work
@@ -9,21 +9,40 @@
 // need to replace chesstv api with specific game api using env variables
 // control 2 bots to play moves
 
+// const clearBets = () => {
+//   cy.get('button[title="Delete"]').each((el) => {
+//     cy.wrap(el).click()
+//   })
+// }
+
 // beforeEach(() => {
-//   // set wallet address to not be enmpty for both users
 //   cy.visit("/")
 //   cy.login().wait(1000)
 // })
-// afterEach(cy.logout)
+
+// afterEach(async () => {
+//   cy.logout()
+//   await fetch("http://localhost:8080/api/new-game")
+// })
+
+// const createBet = () => {
+//   cy.get('button[title="Create Bet"]').click()
+//   cy.get("button").contains("$20").click().wait(1000)
+//   cy.get("button").contains("Place Bet").click().wait(1000)
+// }
+
+// const checkBetExistence = () => {
+//   cy.get('div[id="lobby"]').within(() => {
+//     cy.get("div").first().should("exist")
+//   })
+// }
 
 // describe("betting lobby", () => {
-  // it("should allow a user to create a bet", () => {
-  //   cy.get('button[title="Create Bet"]').click().wait(1000)
-  //   cy.get('button').contains("$20").click().wait(1000)
-  //   cy.get('button').contains("Place Bet").click().wait(1000)
-    
-  // })
-  
+//   it("should allow a signed-in user to create a bet", () => {
+//     // createBet()
+//     // checkBetExistence()
+//   })
+
   // it("should allow logged in users to click on a bet, making it selected", () => {
   //   // create bet with call firestore
   //   // get bet body, look for new bet
@@ -34,8 +53,8 @@
 
   // it("shouldn't allow unauthenticated users to click bets", () => {
   //   // create bet with call firestore
-  //   cy.logout()
-  //   cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
+  //   // cy.logout()
+  //   // cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
   //   // get bet body, look for new bet
   //   // check state of bet "isSelected"
   //   // click on bet
@@ -44,8 +63,8 @@
 
   // it("should keep selected bets in place as other bets move around", () => {
   //   // create 3 bets with call firestore
-  //   cy.logout()
-  //   cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
+  //   // cy.logout()
+  //   // cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2")
   //   // get bet body, get middle bet, click on it
   //   // reorder bets with sorting button "created at"
   //   // check that middle bet has same "created at" as before

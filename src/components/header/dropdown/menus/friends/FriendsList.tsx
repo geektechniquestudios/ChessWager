@@ -2,11 +2,11 @@ import { collection, CollectionReference, doc } from "firebase/firestore"
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore"
 import { Friend } from "../../../../../interfaces/Friend"
 import "../../../../../style/scrollbar.scss"
-import { Auth } from "../../../../containers/Auth"
+import { AuthState } from "../../../../../containers/AuthState"
 import { FriendItem } from "./FriendItem"
 
 export const FriendsList: React.FC = ({}) => {
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
   const userRef = doc(db, "users", auth.currentUser!.uid)
   const userFriendsRef = collection(
     userRef,

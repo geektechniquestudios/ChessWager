@@ -8,9 +8,9 @@ import {
   writeBatch,
 } from "firebase/firestore"
 import { BsCheck2, BsX } from "react-icons/bs"
-import { Auth } from "../../../../containers/Auth"
-import { DropdownState } from "../../../../containers/DropdownState"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { DropdownState } from "../../../../../containers/DropdownState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { DropdownButton } from "../persona/buttons/DropdownButton"
 
 interface Props {
@@ -26,7 +26,7 @@ export const RequestItem: React.FC<Props> = ({
   photoURL,
   createdAt,
 }) => {
-  const { auth, db } = Auth.useContainer()
+  const { auth, db } = AuthState.useContainer()
 
   const targetUserRef = doc(db, "users", id)
   const notificationsCollection = collection(targetUserRef, "notifications")

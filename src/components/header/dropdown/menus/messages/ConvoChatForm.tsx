@@ -7,17 +7,17 @@ import {
 } from "firebase/firestore"
 import { BiSend } from "react-icons/bi"
 import "../../../../../style/dropdown.scss"
-import { Auth } from "../../../../containers/Auth"
-import { ChatFormData } from "../../../../containers/ChatFormData"
-import { ConversationsState } from "../../../../containers/ConversationsState"
-import { UserMenuState } from "../../../../containers/UserMenuState"
+import { AuthState } from "../../../../../containers/AuthState"
+import { ChatFormState } from "../../../../../containers/ChatFormState"
+import { ConversationsState } from "../../../../../containers/ConversationsState"
+import { UserMenuState } from "../../../../../containers/UserMenuState"
 
 interface Props {}
 
 export const ConvoChatForm: React.FC<Props> = ({}) => {
-  const { convoFormValue, setConvoFormValue } = ChatFormData.useContainer()
+  const { convoFormValue, setConvoFormValue } = ChatFormState.useContainer()
 
-  const { user, auth, db } = Auth.useContainer()
+  const { user, auth, db } = AuthState.useContainer()
   const { userIdFromMessages } = UserMenuState.useContainer()
   const convoId = [auth.currentUser?.uid, userIdFromMessages].sort().join("-")
   const setFormValue = (formValue: string) => {

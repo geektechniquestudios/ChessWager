@@ -1,13 +1,13 @@
 import { FormEvent, useState } from "react"
 import { GameData } from "../../../../../interfaces/GameData"
-import { Auth } from "../../../../containers/Auth"
+import { AuthState } from "../../../../../containers/AuthState"
 
 type Outcome = "white" | "black" | "draw"
 
 interface Props {}
 
 export const MissedPaymentArea: React.FC<Props> = ({}) => {
-  const { callContract } = Auth.useContainer()
+  const { callContract } = AuthState.useContainer()
   const [gameId, setGameId] = useState<string>("")
 
   const sendPayment = async (e: FormEvent<HTMLFormElement>) => {
@@ -28,11 +28,10 @@ export const MissedPaymentArea: React.FC<Props> = ({}) => {
 
     const outcome = await getOutcomeFromLichess(gameId)
 
-    callContract((contract) =>
-      contract.payWinners(gameId, outcome, {
-        gasLimit: 1000000,
-      }),
-    )
+    const overrides = {
+      gasLimit: 1000000,
+    }
+    callContract((contract) => contract.payWinners(gameId, outcome, overrides))
   }
 
   return (

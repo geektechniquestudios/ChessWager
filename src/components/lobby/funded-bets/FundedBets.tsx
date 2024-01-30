@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { Bet } from "../../../interfaces/Bet"
 import "../../../style/scrollbar.scss"
-import { Auth } from "../../containers/Auth"
-import { BetsState } from "../../containers/BetsState"
-import { Price } from "../../containers/Price"
+import { AuthState } from "../../../containers/AuthState"
+import { BetsState } from "../../../containers/BetsState"
+import { PriceState } from "../../../containers/PriceState"
 import { AscDescButton } from "../lobby-header/AscDescButton"
 import { RealtimeButton } from "../lobby-header/RealTimeButton"
 import { MiniBet } from "./MiniBet"
@@ -11,9 +11,9 @@ import { MiniBet } from "./MiniBet"
 interface Props {}
 
 export const FundedBets: React.FC<Props> = ({}) => {
-  const { avaxPrice } = Price.useContainer()
+  const { avaxPrice } = PriceState.useContainer()
   const { bets } = BetsState.useContainer()
-  const { auth } = Auth.useContainer()
+  const { auth } = AuthState.useContainer()
 
   const isBetRelatedToUser = (bet: Bet): boolean => {
     return (

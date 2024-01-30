@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { Message } from "../../../../../interfaces/Message"
 import { MessageBody } from "../../../../chat/MessageBody"
-import { Auth } from "../../../../containers/Auth"
+import { AuthState } from "../../../../../containers/AuthState"
 import { ConvoUserTitle } from "./ConvoUserTitle"
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const ConvoChatMessage: React.FC<Props> = ({ message }) => {
-  const { user } = Auth.useContainer()
+  const { user } = AuthState.useContainer()
 
   const isUser = user?.uid === message.uid
   return (

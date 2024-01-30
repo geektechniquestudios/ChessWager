@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { GameStreamState } from "../../containers/GameStreamState"
 
 interface Props {
   fen: string
@@ -9,52 +10,52 @@ interface Props {
 
 export const Countdown: React.FC<Props> = ({ fen, side, time, isNewGame }) => {
   const [count, setCount] = useState(0)
-  const [isPlayerTurn, setIsPlayerTurn] = useState(false)
 
-  const prependZeros = (num: number): string =>
-    num < 10 ? "0" + String(num) : String(num)
+  const { isCheckmate, shouldShowHours } = GameStreamState.useContainer()
 
   const formatTime = (inSeconds: number): string => {
+    const prependZeros = (num: number): string =>
+      num < 10 ? "0" + String(num) : String(num)
+
     const hours = Math.floor(inSeconds / 3600)
     const minutes = Math.floor((inSeconds % 3600) / 60)
     const outSeconds = inSeconds % 60
 
-    return hours > 0
-      ? prependZeros(hours) + ":"
-      : "" + prependZeros(minutes) + ":" + prependZeros(outSeconds)
+    return shouldShowHours
+      ? hours + ":" + prependZeros(minutes) + ":" + prependZeros(outSeconds)
+      : prependZeros(minutes) + ":" + prependZeros(outSeconds)
   }
 
-  useEffect(() => {
-    // (side from game stream) === (side being displayed) ie: if it is the player's turn
-    if (fen.split(" ")[1] === side.slice(0, 1)) {
-      setIsPlayerTurn(true)
-      const interval = setInterval(() => {
-        setCount(count + 1)
-      }, 1000)
-      return () => {
-        clearInterval(interval)
-      }
-    } else {
-      setIsPlayerTurn(false)
+  const getIsPlayerTurn = (fen: string, side: "white" | "black") => {
+    const sideThatMovedLast = fen.split(" ")[1]
+    const sideBeingRendered = side.slice(0, 1)
+    return sideThatMovedLast === sideBeingRendered
+  }
+
+  const isPlayerTurn = getIsPlayerTurn(fen, side)
+
+  const decrementClock = () => {
+    if (isCheckmate || !isPlayerTurn) return
+
+    const interval = setInterval(() => {
+      setCount(count + 1)
+    }, 1000)
+    return () => {
+      clearInterval(interval)
     }
-    return
-  }, [fen, side, count])
+  }
+
+  useEffect(decrementClock, [fen, side, count])
 
   useEffect(() => {
     setCount(0)
   }, [time])
 
-  const secondsToShow = (num: number) => {
-    if (num < 0) {
-      return 0
-    } else {
-      return num
-    }
-  }
+  const seconds = Math.max(0, time - count - 1)
 
   const buildStyles = () => {
-    const lowTime = secondsToShow(time - count - 1) < 20
-    const veryLowTime = secondsToShow(time - count - 1) < 3
+    const lowTime = seconds < 20
+    const veryLowTime = seconds < 3
     const bgColor =
       isPlayerTurn && !lowTime && !isNewGame
         ? "bg-teal-50 dark:bg-green-800"
@@ -69,14 +70,17 @@ export const Countdown: React.FC<Props> = ({ fen, side, time, isNewGame }) => {
         : ""
     const baseColor = isPlayerTurn ? "" : "bg-stone-300 dark:bg-stone-600"
     const newGameStyle = isNewGame ? "animate-pulse" : ""
-    return `${bgColor} ${lowTimeColor} ${veryLowTimeColor} ${newGameStyle} ${baseColor}`
+    const width = shouldShowHours ? "w-26" : "w-20"
+    return `${bgColor} ${lowTimeColor} ${veryLowTimeColor} ${newGameStyle} ${baseColor} ${width}`
   }
+
+  const clock = isNewGame ? "??:??" : formatTime(seconds)
 
   return (
     <div
-      className={`${buildStyles()} flex w-20 justify-center border-l border-stone-900 p-1.5 text-2xl text-stone-900 dark:text-stone-200`}
+      className={`${buildStyles()} color-shift -z-50 flex items-center justify-center border-l border-stone-900 p-1.5 text-2xl text-stone-900 dark:text-stone-200`}
     >
-      {!isNewGame ? formatTime(secondsToShow(time - count - 1)) : "??:??"}
+      {clock}
     </div>
   )
 }

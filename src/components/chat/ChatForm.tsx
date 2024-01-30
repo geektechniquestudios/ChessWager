@@ -1,5 +1,5 @@
 import { TextareaAutosize } from "@mui/material"
-import { Auth } from "../containers/Auth"
+import { AuthState } from "../../containers/AuthState"
 import "../../style/scrollbar.scss"
 import {
   addDoc,
@@ -23,8 +23,8 @@ export const ChatForm: React.FC<Props> = ({
   formValue,
   setFormValue,
 }) => {
-  const { auth } = Auth.useContainer()
-  const { signInWithGoogle } = Auth.useContainer()
+  const { auth } = AuthState.useContainer()
+  const { signInWithGoogle } = AuthState.useContainer()
 
   const sendMessage = async (
     e:

@@ -7,7 +7,7 @@ import {
 import { RiCloseFill } from "react-icons/ri"
 import { Bet } from "../../../../../interfaces/Bet"
 import "../../../../../style/lobby.scss"
-import { Auth } from "../../../../containers/Auth"
+import { AuthState } from "../../../../../containers/AuthState"
 
 interface Props {
   bet: Bet
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const DeleteBetButton: React.FC<Props> = ({ bet, isSelected }) => {
-  const { user, auth, db } = Auth.useContainer()
+  const { user, auth, db } = AuthState.useContainer()
   const { id, user1Id, status } = bet
   const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
   const deleteCurrentBet = (

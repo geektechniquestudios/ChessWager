@@ -1,12 +1,11 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import "../../../style/lobby.scss"
-import { Auth } from "../../containers/Auth"
+import { AuthState } from "../../../containers/AuthState"
 import { BigNumber, ethers } from "ethers"
 import { User1Data } from "./left/user-data/User1Data"
 import { User2Data } from "./right/user-data/User2Data"
 import { CenterOfBet } from "./center/CenterOfBet"
 import { useEffect, useState } from "react"
-import { BetsState } from "../../containers/BetsState"
+import { BetsState } from "../../../containers/BetsState"
 import { motion } from "framer-motion"
 import { CustomSwal } from "../../popups/CustomSwal"
 import { Bet as BetInterface } from "../../../interfaces/Bet"
@@ -20,9 +19,12 @@ interface Props {
 
 export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
   const { id, amount, multiplier, status, user1Id, user2Id } = bet
-  const { auth, user } = Auth.useContainer()
+  const { auth, user } = AuthState.useContainer()
 
-  const bigAmount = ethers.utils.parseEther(amount.toString())
+  const maxDecimals = 18
+  const trimmedAmount = Number(amount.toFixed(maxDecimals))
+  const bigAmount = ethers.utils.parseEther(trimmedAmount.toString())
+
   const potSize = ethers.utils.formatEther(
     bigAmount
       .mul(BigNumber.from((multiplier * 100).toFixed(0)))
@@ -50,7 +52,14 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
       })
       setSelectedBetMap(temp)
     }
+    return () => {
+      const newMap = new Map(selectedBetMap)
+      newMap.delete(id)
+      setSelectedBetMap(newMap)
+    }
   }, [auth.currentUser])
+
+  const [isJoining, setIsJoining] = useState<boolean>(false)
 
   const updateSelectedStatus = () => {
     if (!auth.currentUser) {
@@ -67,7 +76,8 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
       status === "ready" &&
       user &&
       id !== "" &&
-      isLobbyEnabled
+      isLobbyEnabled &&
+      !isJoining
     ) {
       const newMap = new Map(selectedBetMap)
       if (!isSelected) {
@@ -88,12 +98,12 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
     id === ""
       ? "border-none"
       : status !== "ready" && !isUser1 && !isUser2
-      ? "bet-occupied"
-      : isSelected
-      ? isUser1
-        ? "bet-user1"
-        : "bet-selected"
-      : "bet-not-selected"
+        ? "bet-occupied"
+        : isSelected
+          ? isUser1
+            ? "bet-user1"
+            : "bet-selected"
+          : "bet-not-selected"
 
   const pointerEvents = status === "ready" && !isUser1 ? "cursor-pointer" : ""
 
@@ -106,10 +116,10 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
     status !== "ready" && !isUser1 && !isUser2
       ? "bet-header-occupied"
       : isSelected
-      ? isUser1
-        ? "bet-header-user1"
-        : "bet-header-selected"
-      : "bet-header"
+        ? isUser1
+          ? "bet-header-user1"
+          : "bet-header-selected"
+        : "bet-header"
 
   return (
     <div
@@ -138,7 +148,12 @@ export const Bet: React.FC<Props> = ({ bet, index, isLobbyEnabled = true }) => {
             status={status}
             betHeaderStyle={betHeaderStyle}
           />
-          <User2Data bet={bet} isSelected={isSelected} />
+          <User2Data
+            bet={bet}
+            isSelected={isSelected}
+            isJoining={isJoining}
+            setIsJoining={setIsJoining}
+          />
         </motion.div>
       )}
     </div>
