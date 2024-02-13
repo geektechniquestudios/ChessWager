@@ -1,0 +1,23 @@
+important:
+----------
+-e2e betting tests
+-jest unit tests
+-non-realtime bets need to update instantly, but they're waiting until the next tick. Feature needs work. Consider removing, at least temporarily.
+-when placing a bet, ensure wallet address from browser == stored address; if user is connected to wrong wallet, they can still place a bet
+-bet form shows NaN if you type 0 then k, allows neg/dash to be typed
+-move permanent operations to gcp
+-contract verification
+-Error: Request method eth_getBalance is not supported ---- when hitting place bet if wallet is connected, but not logged in I think
+-in the same vein, !!!!!!!!
+	Uncaught (in promise) Error: missing provider (argument="provider", value=undefined, code=INVALID_ARGUMENT, version=providers/5.7.2)
+
+	When trying to place bet but in a browser without wallet. Need to prompt user to install metamask
+-we are vulnerable to an attack where our wallet is drained to refund malicious players making a high volume of bets but not paying both sides, does that force us to pay the refund transaction fee? I think it does, need to test
+	**idea: write function into smart contract that lets me ban player at the protocol level by id
+		goes back to limiting number of bets per user per game. Contract and firebase need to be in sync
+-the lobby needs to be able to limit the number of bets one player can have at a time or on one game
+-we should add a check to see if payment systems are online somehow
+-module upgrade
+-messaging needs to support whitespace and newlines
+-add help button to bet menu to report bet not being paid out
+-repair cloud build, removed functions folder so cd in functions should be removed

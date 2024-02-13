@@ -1,0 +1,26 @@
+not important
+-------------
+-revamp documentation, improve logo and design, divide into sections
+-redesign show chat button
+-unified text style
+-restyle reply button in global chat, create
+-support wallets other than metamask
+-apply user multiplier to the chat filter calculation. When a message is considered toxic, increase user multiplier by x amount
+-redesign dropdown, better encapsulation (an exercise in pain)
+-flex from flex-col main content on superwide window
+-chess game should reestablish in the event of lost connection
+-delete button on conversations
+-when building for prod using `yarn build`, we often get our chessboard dissapearing. This happens because the repo holding the chessground code for the board is unstable. To fix, delete node_modules and yarn.lock, then run yarn, then delete node modules, modify yarn.lock to use old data for chessground from git, run yarn again. Fixed, until next time.
+	-consider moving to bun, or at least document strange yarn bug with chessground
+-our stockfish implementation uses two instances, one for each side to solve problem with score not lining up with fen, sometimes inverting score negatively for a moment between moves. It would be nice to only use a single instance. Good luck. If you decide to try to improve on the current design, use performance monitoring
+-make close chat button lighter
+-chatgpt legal - https://chat.openai.com/share/d2df56a5-0431-4df3-8fa0-cb3a3e9a9cd9 
+-update the code in every place where state is updated based on previous state to use setFoo(prev => !prev) style over setFoo(!foo)
+-This is reused a lot: const userRef = doc(db, "users", auth.currentUser!.uid)
+	move to using firestore container, instead of reinvoking this over and over, just export user from container
+-build new chessboard, replace chessground
+-upgrade framer-motion, animation breaks, fix animation issues on upgrade
+-automate payout if multiple people report single game not paid
+-convert backend to yarn from npm including build pipelines
+-upgrade openZeppelin contracts
+-badges/leveling system with bet caps
