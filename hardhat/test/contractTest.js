@@ -189,7 +189,7 @@ describe("Placing Bets", async () => {
     expect(balance1AfterBet).to.be.lt(balance1AfterPay)
   })
 
-  it("Shouldn't allow bets on already paid out games", async () => {
+  it("Should not allow bets on already paid out games", async () => {
     const multiplier = 1
     const gameId = randomUUID()
     const timestamp = new Date() / 1000
@@ -368,5 +368,159 @@ describe("Balances", () => {
 
   it("Should allow balance checking", async () => {
     expect(await contract.viewChessWagerBalance()).to.equal(0)
+  })
+
+  it("Should not allow non-owners to withdraw", async () => {
+    const multiplier = 1
+    const gameId = randomUUID()
+    const timestamp = new Date() / 1000
+    const amount = "100"
+    const bigAmount = ethers.utils.parseEther(amount.toString())
+    const betUser1 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betUser2 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betId = randomUUID()
+    const overrides = {
+      value: bigAmount,
+    }
+
+    await contract
+      .connect(account1)
+      .placeBet(betUser1, betId, overrides)
+      .catch(console.error)
+
+    await contract
+      .connect(account2)
+      .placeBet(betUser2, betId, overrides)
+      .catch(console.error)
+
+    await contract.payWinners(gameId, "white").catch(console.error)
+
+    expect(await contract.viewChessWagerBalance()).to.be.gt(0)
+
+    await expect(contract.connect(account1).withdrawChessWagerBalance()).to.be
+      .reverted
+  })
+})
+
+describe("Banning Users", () => {
+  it("Should not allow banned users to bet", async () => {
+    const userToBan = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    const multiplier = 1
+    const gameId = randomUUID()
+    const timestamp = new Date() / 1000
+    const amount = "100"
+    const bigAmount = ethers.utils.parseEther(amount.toString())
+    const betUser1 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: userToBan,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betUser2 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: userToBan,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betId = randomUUID()
+    const overrides = {
+      value: bigAmount,
+    }
+
+    await contract.banUserByWalletAddress(userToBan)
+
+    await expect(
+      contract.connect(account1).placeBet(betUser1, betId, overrides),
+    ).to.be.reverted
+
+    await expect(
+      contract.connect(account2).placeBet(betUser2, betId, overrides),
+    ).to.be.reverted
+  })
+
+  it("Should not allow normal users to bet against banned users", async () => {
+    const multiplier = 1
+    const gameId = randomUUID()
+    const timestamp = new Date() / 1000
+    const amount = "100"
+    const bigAmount = ethers.utils.parseEther(amount.toString())
+    const betUser1 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betUser2 = {
+      amount: bigAmount,
+      betSide: "white",
+      user1Id: "testUid1",
+      user1Metamask: account1.address,
+      user2Id: "testUid2",
+      user2Metamask: account2.address,
+      multiplier: multiplier * 100,
+      gameId: gameId,
+      timestamp: BigNumber.from(timestamp.toFixed(0)),
+    }
+
+    const betId = randomUUID()
+    const overrides = {
+      value: bigAmount,
+    }
+
+    await contract.banUserByWalletAddress(account2.address)
+
+    await expect(
+      contract.connect(account1).placeBet(betUser1, betId, overrides),
+    ).to.be.reverted
+
+    await expect(
+      contract.connect(account2).placeBet(betUser2, betId, overrides),
+    ).to.be.reverted
+  })
+
+  it("Should not allow non-owners to ban users", async () => {
+    const userToBan = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+    await expect(contract.connect(account1).banUserByWalletAddress(userToBan))
+      .to.be.reverted
   })
 })

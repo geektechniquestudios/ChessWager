@@ -24,3 +24,4 @@ not important
 -convert backend to yarn from npm including build pipelines
 -upgrade openZeppelin contracts
 -badges/leveling system with bet caps
+-break up contract test into multiple files

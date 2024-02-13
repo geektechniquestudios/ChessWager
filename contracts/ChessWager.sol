@@ -12,6 +12,7 @@ contract ChessWager is Ownable, Pausable {
   mapping(string => bool) private betIdToIsBetMatched;
   mapping(string => bool) private betIdToIsBetCompleted;
   mapping(string => string) private betIdToWhoBetFirst; // enum {user1, user2}
+  mapping(address => bool) private bannedUsers;
   struct Bet {
     uint256 amount;
     string betSide; // which side user1 bets on
@@ -46,6 +47,10 @@ contract ChessWager is Ownable, Pausable {
     _unpause();
   }
 
+  function banUserByWalletAddress(address _user) external onlyOwner {
+    bannedUsers[_user] = true;
+  }
+
   function placeBet(
     Bet calldata _bet,
     string calldata _betId
@@ -69,6 +74,7 @@ contract ChessWager is Ownable, Pausable {
     if (betIdToBetData[_betId].multiplier == 0) {
       // bet is new
       betIdToIsBetMatched[_betId] = false;
+      require(!bannedUsers[_bet.user1Metamask] && !bannedUsers[_bet.user2Metamask], "At least one user in this wager is banned");
 
       // make whoBetFirst mapping
       if (msg.sender == _bet.user1Metamask) {
@@ -90,7 +96,7 @@ contract ChessWager is Ownable, Pausable {
 
       gameIdToGameData[_bet.gameId].betIdArray.push(_betId); // this is iterated over when payout occurs
       betIdToBetData[_betId] = _bet;
-    } else {
+    } else { 
       // requirements to check for matching values between user1 and user2
       require(
         betIdToBetData[_betId].amount == _bet.amount,
