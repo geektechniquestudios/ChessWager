@@ -29,7 +29,7 @@ code {
     "game  chat";
   grid-template-columns: minmax(0, 1fr) minmax(0, auto);
   grid-template-rows: $header-size calc(100vh - $header-size - $gap-size);
-  @apply bg-gradient-to-b from-stone-100 via-stone-50 to-white dark:bg-gradient-to-b dark:from-stone-950 dark:via-stone-900 dark:to-stone-900;
+  @apply bg-gradient-to-b from-stone-200 via-stone-100 to-stone-100 dark:bg-gradient-to-b dark:from-stone-950 dark:via-stone-900 dark:to-stone-900;
 }
 
 #page > header {
