@@ -1,9 +1,10 @@
-import { doc, updateDoc } from "firebase/firestore"
+import { DocumentReference, doc, updateDoc } from "firebase/firestore"
 import { AuthState } from "../../../../../../containers/AuthState"
 import { DropdownState } from "../../../../../../containers/DropdownState"
 import { UserDataState } from "../../../../../../containers/UserDataState"
 import { CustomSwal } from "../../../../../popups/CustomSwal"
 import { DropdownButton } from "./DropdownButton"
+import { User } from "../../../../../../interfaces/User"
 
 interface Props {
   id?: string
@@ -23,7 +24,7 @@ export const BanUserButton: React.FC<Props> = ({
   const { userData } = UserDataState.useContainer()
 
   const banUser = async () => {
-    const userDoc = doc(db, "users", id!)
+    const userDoc = doc(db, "users", id!) as DocumentReference<User>
     updateDoc(userDoc, {
       isBanned: true,
     }).then(() => {
@@ -33,20 +34,23 @@ export const BanUserButton: React.FC<Props> = ({
     })
   }
 
+  const shouldShowButton =
+    id &&
+    displayName &&
+    (userData?.moderatorLevel ?? 0) > (moderatorLevel ?? 0) &&
+    id !== (userData?.id ?? "") &&
+    !isBanned
+
   return (
     <>
-      {id &&
-        displayName &&
-        (userData?.moderatorLevel ?? 0) > (moderatorLevel ?? 0) &&
-        id !== (userData?.id ?? "") &&
-        !isBanned && (
-          <DropdownButton
-            content={<div className="px-0.5 text-xs">Ban User</div>}
-            onClick={banUser}
-            title="Ban User"
-            className="font-bold text-red-700 hover:border-red-600 hover:text-red-500 dark:text-red-300 dark:hover:border-red-400 dark:hover:text-red-400"
-          />
-        )}
+      {shouldShowButton && (
+        <DropdownButton
+          content={<div className="px-0.5 text-xs">Ban User</div>}
+          onClick={banUser}
+          title="Ban User"
+          className="font-bold text-red-700 hover:border-red-600 hover:text-red-500 dark:text-red-300 dark:hover:border-red-400 dark:hover:text-red-400"
+        />
+      )}
     </>
   )
 }

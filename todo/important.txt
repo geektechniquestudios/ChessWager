@@ -21,3 +21,5 @@ important:
 -messaging needs to support whitespace and newlines
 -add help button to bet menu to report bet not being paid out
 -repair cloud build, removed functions folder so cd in functions should be removed
+-firestore database backup policy
+-eval bar cypress test for on/off functionality 

@@ -38,6 +38,7 @@ export const Menu: React.FC<Props> = ({ thisMenu, menuItems }) => {
     ["blocked", "Blocked"],
     ["contractData", "Contract Data"],
     ["missedPayments", "Missed Payments"],
+    ["banUser", "Ban User"],
   ])
 
   useEffect(() => {

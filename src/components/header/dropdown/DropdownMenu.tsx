@@ -21,6 +21,7 @@ import { PersonaMenu } from "./menus/persona/PersonaMenu"
 import { ReportMenu } from "./menus/report/ReportMenu"
 import { RequestMenu } from "./menus/requests/RequestMenu"
 import { SearchUsersMenu } from "./menus/search/SearchUsersMenu"
+import { BanUserMenu } from "./menus/ban-user/BanUserMenu"
 
 export const DropdownMenu = () => {
   const {
@@ -108,6 +109,7 @@ export const DropdownMenu = () => {
           <ReportMenu />
           <ContractDataMenu />
           <MissedPaymentsMenu />
+          <BanUserMenu />
         </>
       )}
     </div>
