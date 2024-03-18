@@ -41,7 +41,7 @@ export const PublicChat: React.FC = () => {
         >
           <div
             id="global-chat"
-            className="color-shift flex w-full flex-col border-l border-stone-400 bg-stone-50 dark:border-stone-700 dark:bg-stone-900"
+            className="color-shift flex w-full flex-col border-l border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-900"
             style={{ minWidth: "20rem" }}
           >
             <ChatHeader />
