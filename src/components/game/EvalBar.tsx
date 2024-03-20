@@ -38,8 +38,8 @@ export const EvalBar: React.FC<Props> = ({ orientation, fen }) => {
   ) => {
     const isTop = side === "top"
     const isBlack = orientation === "white"
-    const black = "bg-stone-800 dark:bg-stone-900"
-    const white = "bg-stone-200 dark:bg-stone-200"
+    const black = "bg-stone-700 dark:bg-stone-900"
+    const white = "bg-stone-100 dark:bg-stone-200"
     return isTop ? (isBlack ? black : white) : isBlack ? white : black
   }
 
