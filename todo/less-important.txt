@@ -10,7 +10,6 @@ less important
 -remove react firebase hooks bc they keep breaking code on upgrade, reimplement on my own
 -one of the menus still need to be stored in a container
 -add perf test to pipeline
--add pausability testing to hardhat test
 -add ban testing to hardhat test
 -update text fields with useLocalStorage
 -write test to ensure chess board renders
