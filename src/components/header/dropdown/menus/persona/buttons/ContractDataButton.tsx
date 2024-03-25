@@ -9,7 +9,8 @@ interface Props {}
 
 export const ContractDataButton: React.FC<Props> = ({}) => {
   const { userData } = UserDataState.useContainer()
-  const isCreator = (userData?.walletAddress ?? 1) === (adminWallet ?? 2)
+  const isCreator =
+    userData?.walletAddress && userData?.walletAddress === adminWallet
   const { goToMenu } = DropdownState.useContainer()
   return (
     <>
