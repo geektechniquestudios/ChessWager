@@ -21,13 +21,16 @@ describe("Balances", () => {
     expect(await contract.viewChessWagerBalance()).to.equal(vig)
 
     const originalOwnerBalance = await ethers.provider.getBalance(owner.address)
-    contract.withdrawChessWagerBalance()
+
+    const tx = await contract.withdrawChessWagerBalance()
+    const txReceipt = await tx.wait()
+    const gasCost = txReceipt.gasUsed.mul(tx.gasPrice)
 
     expect(await contract.viewChessWagerBalance()).to.equal(0)
 
     const newOwnerBalance = await ethers.provider.getBalance(owner.address)
 
-    expect(newOwnerBalance).to.be.gt(originalOwnerBalance)
+    expect(newOwnerBalance).to.equal(originalOwnerBalance.add(vig).sub(gasCost))
   })
 
   it("Should allow balance checking", async () => {
@@ -39,7 +42,8 @@ describe("Balances", () => {
   it("Should not allow non-owners to withdraw", async () => {
     await fullBetWithPayout(account1, account2)
 
-    await expect(contract.connect(account1).withdrawChessWagerBalance()).to.be
-      .reverted
+    await expect(
+      contract.connect(account1).withdrawChessWagerBalance(),
+    ).to.be.revertedWith("Ownable: caller is not the owner")
   })
 })

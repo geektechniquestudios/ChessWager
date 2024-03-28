@@ -24,6 +24,6 @@ not important
 -convert backend to yarn from npm including build pipelines
 -upgrade openZeppelin contracts
 -badges/leveling system with bet caps
--break up contract test into multiple files
 -update hardhat deploy and test from js to ts
 -rework naming conventions for smart contract menu, ie: "manage contract funds" on hover to "manage contract"
+-option to hide unavailable bets, such as when 2 players are mid agreement
