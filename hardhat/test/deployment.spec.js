@@ -15,7 +15,7 @@ describe("Deployment", function () {
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
       address: contract.address,
     })
-    contractRef
+    await contractRef
       .doc(contract.address)
       .get()
       .then((doc) => {

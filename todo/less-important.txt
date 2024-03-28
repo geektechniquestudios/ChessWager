@@ -15,7 +15,7 @@ less important
 -write test to ensure chess board renders
 -stockfish repeatedly fetches resource from server, but fetch is 0kb. Stop making network requests and cache locally
 -add post deploy production test to end of pipeline
--scrollbar transparency stopped working
+-scrollbar track transparency stopped working
 -contract tests should use exact amounts for multiplier calculations
 -cypress test for banning
 -when payment is rejected from contract, it should turn yellow, but shows green if blocked is cause for failure

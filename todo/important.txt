@@ -3,6 +3,7 @@ important:
 -e2e betting tests
 -jest unit tests
 -non-realtime bets need to update instantly, but they're waiting until the next tick. Feature needs work. Consider removing, at least temporarily.
+-bug: if you select a bet, then switch from tick to real-time, then bet shows as you joined, but refreshes as not selected
 -when placing a bet, ensure wallet address from browser == stored address; if user is connected to wrong wallet, they can still place a bet
 -bet form shows NaN if you type 0 then k, allows neg/dash to be typed
 -move permanent operations to gcp
@@ -15,7 +16,8 @@ important:
 	**idea: write function into smart contract that lets me ban player at the protocol level by id
 		goes back to limiting number of bets per user per game. Contract and firebase need to be in sync
 	**idea: subtract the expected gas price from players when processing refund, send to owner wallet. If they don't have enough, they can't make the bet, so will require setting new minimum above 0.
--the lobby needs to be able to limit the number of bets one player can have at a time or on one game
+	**idea: withhold refunds from banned users so that payout can happen normally after failing from such an attack
+-the lobby and contract need to be able to limit the number of bets one player can have at a time or on one game
 -we should add a check to see if payment systems are online somehow
 -module upgrade
 -messaging needs to support whitespace and newlines

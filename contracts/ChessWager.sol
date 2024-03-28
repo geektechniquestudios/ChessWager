@@ -38,16 +38,24 @@ contract ChessWager is Ownable, Pausable {
     chessWagerBalance = 0;
   }
 
-  function pause() public onlyOwner {
+  function pause() external onlyOwner {
     _pause();
   }
 
-  function unpause() public onlyOwner {
+  function unpause() external onlyOwner {
     _unpause();
   }
 
   function banUserByWalletAddress(address _user) external onlyOwner {
     bannedUsers[_user] = true;
+  }
+
+  function banMultipleUsersByWalletAddress(
+    address[] calldata _users
+  ) external onlyOwner {
+    for (uint256 i = 0; i < _users.length; i++) {
+      bannedUsers[_users[i]] = true;
+    }
   }
 
   function unbanUserByWalletAddress(address _user) external onlyOwner {
