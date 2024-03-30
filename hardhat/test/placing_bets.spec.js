@@ -34,7 +34,7 @@ describe("Placing Bets", async () => {
     contract.connect(account1).placeBet(betUser1, betId, user1Overrides)
     await expect(
       contract.connect(account1).placeBet(betUser2, betId, user2Overrides),
-    ).to.be.reverted
+    ).to.be.revertedWith("User 2 wallet address doesn't match sender address")
   })
 
   it("Should not allow bets on already paid out games", async () => {
@@ -47,12 +47,13 @@ describe("Placing Bets", async () => {
           betDetails.betId,
           betDetails.user1Overrides,
         ),
-    ).to.be.reverted
+    ).to.be.revertedWith("Only 2 users can particiapte in a bet")
   })
 
   it("Should not allow bets on games if side is not white or black", async () => {
-    await expect(fullBetWithPayout(account1, account2, 1, "93", "red")).to.be
-      .reverted
+    await expect(
+      fullBetWithPayout(account1, account2, 1, "93", "red"),
+    ).to.be.revertedWith("Bet side must only be 'white' or 'black'")
   })
 
   it("Should not allow bet if the user's wallet address doesn't equal the address in the bet", async () => {
@@ -66,7 +67,9 @@ describe("Placing Bets", async () => {
 
     await expect(
       contract.connect(account1).placeBet(wrongBetUser1, betId, user1Overrides),
-    ).to.be.reverted
+    ).to.be.revertedWith(
+      "The user's wallet address doesn't equal the address in the bet",
+    )
 
     const wrongBetUser2 = {
       ...betUser2,
@@ -75,7 +78,9 @@ describe("Placing Bets", async () => {
 
     await expect(
       contract.connect(account2).placeBet(wrongBetUser2, betId, user2Overrides),
-    ).to.be.reverted
+    ).to.be.revertedWith(
+      "The user's wallet address doesn't equal the address in the bet",
+    )
   })
 
   it("Should not allow bet if bet is complete", async () => {
@@ -87,7 +92,7 @@ describe("Placing Bets", async () => {
 
     await expect(
       contract.connect(account1).placeBet(betUser1, betId, user1Overrides),
-    ).to.be.reverted
+    ).to.be.revertedWith("Only 2 users can particiapte in a bet")
   })
 
   it("Should not allow bet if game is already over", async () => {
@@ -95,7 +100,7 @@ describe("Placing Bets", async () => {
     const { betUser1, betId, user1Overrides } = betDetails
     await expect(
       contract.connect(account1).placeBet(betUser1, betId, user1Overrides),
-    ).to.be.reverted
+    ).to.be.revertedWith("Only 2 users can particiapte in a bet")
   })
 
   it("Should not allow bet if wrong amount is sent", async () => {
@@ -111,7 +116,7 @@ describe("Placing Bets", async () => {
 
     await expect(
       contract.connect(account1).placeBet(betUser1, betId, wrongUser1Overrides),
-    ).to.be.reverted
+    ).to.be.revertedWith("Wrong amount sent")
   })
 
   it("Should not allow bet if a third user bets on the same betId", async () => {
@@ -119,11 +124,13 @@ describe("Placing Bets", async () => {
     const { betUser2, betId, user1Overrides } = betDetails
     await expect(
       contract.connect(owner).placeBet(betUser2, betId, user1Overrides),
-    ).to.be.reverted
+    ).to.be.revertedWith("Only 2 users can particiapte in a bet")
   })
 
   it("Should not allow amount to be 0 or less", async () => {
-    await expect(fullBetWithPayout(account1, account2, 1, "0")).to.be.reverted
+    await expect(
+      fullBetWithPayout(account1, account2, 1, "0"),
+    ).to.be.revertedWith("Amount must be more than 0")
   })
 
   const testInvalidBet = async (
@@ -287,6 +294,6 @@ describe("Placing Bets", async () => {
 
     await expect(
       contract.connect(account1).placeBet(betUser1, betId, wrongUser1Overrides),
-    ).to.be.reverted
+    ).to.be.revertedWith("Wrong amount sent")
   })
 })
