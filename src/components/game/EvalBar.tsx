@@ -38,14 +38,16 @@ export const EvalBar: React.FC<Props> = ({ orientation, fen }) => {
   ) => {
     const isTop = side === "top"
     const isBlack = orientation === "white"
-    const black = "bg-stone-800 dark:bg-stone-900"
-    const white = "bg-stone-200 dark:bg-stone-200"
+    const black =
+      "bg-stone-700 dark:bg-stone-900 text-stone-100 dark:text-stone-200"
+    const white =
+      "bg-stone-100 dark:bg-stone-200 text-stone-900 dark:text-stone-950"
     return isTop ? (isBlack ? black : white) : isBlack ? white : black
   }
 
   const roundedStyle = percent === 0 || percent === 100 ? "rounded-full" : ""
   const borderStyle = percent === 0 || percent === 100 ? "border" : ""
-  const commonBarStyle = `${roundedStyle} ${borderStyle} color-shift flex items-center border-stone-600 dark:border-stone-500 flex flex-col-reverse items-center dark:border-stone-500`
+  const commonBarStyle = `${roundedStyle} ${borderStyle} color-shift border-stone-600 dark:border-stone-500 flex flex-col-reverse items-center`
   const topBarStyle = `${orientationStyle(
     orientation,
     "top",
@@ -59,8 +61,8 @@ export const EvalBar: React.FC<Props> = ({ orientation, fen }) => {
     <motion.div
       className="relative flex h-full w-5 shrink-0 cursor-pointer flex-col justify-center overflow-clip rounded-full p-0 text-xs font-bold"
       initial={{ opacity: 1 }}
-      animate={{ opacity: isAnalysisOn ? 1 : 0.6 }}
-      whileHover={{ opacity: isAnalysisOn ? 1 : 0.7 }}
+      animate={{ opacity: isAnalysisOn ? 1 : 0.5 }}
+      whileHover={{ opacity: isAnalysisOn ? 1 : 0.6 }}
       transition={{ duration: 0.2 }}
       onClick={() => {
         setIsAnalysisOn((prev) => !prev)
@@ -76,7 +78,7 @@ export const EvalBar: React.FC<Props> = ({ orientation, fen }) => {
         }}
         transition={{ duration: 0.3 }}
       >
-        <div className="grid w-4 grow-0 place-content-center mix-blend-exclusion">
+        <div className="z-50 grid w-4 grow-0 place-content-center">
           {shouldShowMateIn(
             orientation === "white" ? "black" : "white",
             mateIn,
@@ -98,7 +100,7 @@ export const EvalBar: React.FC<Props> = ({ orientation, fen }) => {
         }}
         transition={{ duration: 0.3 }}
       >
-        <div className="grid w-4 grow-0 place-content-center mix-blend-exclusion">
+        <div className="z-50 grid w-4 grow-0 place-content-center">
           {shouldShowMateIn(orientation, mateIn) && (
             <div className="flex">
               <div style={{ fontSize: "0.5rem" }}>#</div>

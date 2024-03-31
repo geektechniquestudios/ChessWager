@@ -38,7 +38,7 @@ export const PlayerData: React.FC<Props> = ({
         href={`https://lichess.org/@/${name}`}
         rel="noreferrer noopener"
         target="_blank"
-        className="color-shift mx-1.5 flex h-7 w-0 min-w-[1.75rem] max-w-min grow flex-col justify-center overflow-hidden rounded-full border border-stone-500 bg-stone-100 px-1 text-sm hover:border-black hover:bg-white hover:text-stone-900 dark:border-stone-400 dark:bg-stone-600 dark:text-stone-100 dark:hover:border-white dark:hover:bg-stone-500 dark:hover:text-white"
+        className="color-shift mx-1.5 flex h-7 w-0 min-w-[1.75rem] max-w-min grow flex-col justify-center overflow-hidden rounded-full border border-stone-500 bg-white px-1 text-sm hover:border-black hover:bg-stone-200 hover:text-stone-900 dark:border-stone-400 dark:bg-stone-600 dark:text-stone-100 dark:hover:border-white dark:hover:bg-stone-500 dark:hover:text-white"
       >
         <motion.div
           className="flex items-center justify-start gap-1.5 px-1.5"
