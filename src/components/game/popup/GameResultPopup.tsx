@@ -72,7 +72,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
               backdropFilter: blur,
             }}
           >
-            <header className="flex h-6 w-full justify-between border-b border-stone-400 bg-stone-100 p-1 dark:border-stone-500 dark:bg-stone-600">
+            <header className="flex h-6 w-full justify-between border-b border-stone-400 bg-stone-300 p-1 dark:border-stone-500 dark:bg-stone-600">
               <PopupCounter count={count} setCount={setCount} />
               <DropdownButton
                 title="Close"
@@ -85,7 +85,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
               />
             </header>
             <main className="flex h-full w-full flex-col">
-              <div className="m-2 flex flex-col justify-between rounded-md border border-stone-400 bg-stone-50 p-2 dark:border-stone-500 dark:bg-stone-600">
+              <div className="m-2 flex flex-col justify-between rounded-md border border-stone-400 bg-stone-200 p-2 dark:border-stone-500 dark:bg-stone-600">
                 <PopupTitle
                   playerName={whitePlayer}
                   playerRating={whiteRating}

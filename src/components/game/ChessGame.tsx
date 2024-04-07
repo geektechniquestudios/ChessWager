@@ -43,13 +43,13 @@ export const ChessGame: React.FC = () => {
             initial={{ opacity: 0.2 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="color-shift w-[30em] resize-x flex-col justify-center overflow-hidden rounded-xl border border-stone-500 bg-stone-50 p-1.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
+            className="color-shift w-[30em] resize-x flex-col justify-center overflow-hidden rounded-xl border border-stone-500 bg-stone-100 p-1.5 align-middle text-stone-900 shadow-lg dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300"
             style={{ minWidth: "16.5em", maxWidth: "85vh" }}
           >
             <GameResultPopup orientation={orientation} />
             <div className="flex h-full w-full items-center justify-center gap-2">
               <EvalBar fen={fen} orientation={orientation} />
-              <div className="flex w-full flex-col justify-center rounded-xl border border-stone-500 bg-stone-100 align-middle dark:border-stone-500 dark:bg-stone-700">
+              <div className="flex w-full flex-col justify-center rounded-xl  border border-stone-500 bg-stone-200 align-middle dark:border-stone-500 dark:bg-stone-700">
                 <PlayerData
                   side={orientation === "white" ? "black" : "white"}
                   title={orientation === "white" ? blackTitle : whiteTitle}
