@@ -68,7 +68,7 @@ export const Countdown: React.FC<Props> = ({ fen, side, time, isNewGame }) => {
       isPlayerTurn && veryLowTime && !isNewGame
         ? "bg-red-200 dark:bg-red-800"
         : ""
-    const baseColor = isPlayerTurn ? "" : "bg-stone-300 dark:bg-stone-600"
+    const baseColor = isPlayerTurn ? "" : "bg-stone-200 dark:bg-stone-600"
     const newGameStyle = isNewGame ? "animate-pulse" : ""
     const width = shouldShowHours ? "w-26" : "w-20"
     return `${bgColor} ${lowTimeColor} ${veryLowTimeColor} ${newGameStyle} ${baseColor} ${width}`
