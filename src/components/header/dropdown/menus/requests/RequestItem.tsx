@@ -82,7 +82,7 @@ export const RequestItem: React.FC<Props> = ({
           }}
           content={<BsCheck2 />}
           title="Accept"
-          className="h-4 w-4"
+          className="h-4 w-4 hover:bg-teal-100 dark:hover:bg-green-900"
         />
         <DropdownButton
           onClick={(e) => {
@@ -91,7 +91,7 @@ export const RequestItem: React.FC<Props> = ({
           }}
           content={<BsX />}
           title="Decline"
-          className="h-4 w-4"
+          className="h-4 w-4 hover:bg-stone-400 dark:hover:bg-black"
         />
       </div>
     </a>
