@@ -1,0 +1,23 @@
+less important
+--------------
+-revamp backend, typescript, modern firebase
+-make user images load into a react container so http calls aren't repeated
+-aggressive onboarding flow
+-write tests to run on deployed test branch to ensure deploy is working
+-limit number of bets each person can place. 5 max per person?
+-need a waitlist signup
+-peformance limit tests on integration pipeline
+-remove react firebase hooks bc they keep breaking code on upgrade, reimplement on my own
+-one of the menus still need to be stored in a container
+-add perf test to pipeline
+-update text fields with useLocalStorage
+-write test to ensure chess board renders
+-stockfish repeatedly fetches resource from server, but fetch is 0kb. Stop making network requests and cache locally
+-add post deploy production test to end of pipeline
+-scrollbar track transparency stopped working
+-contract tests should use exact amounts for multiplier calculations
+-cypress test for banning
+-when payment is rejected from contract, it should turn yellow, but shows green if blocked is cause for failure
+-adjust gas limit and gas price for contract calls
+-optimize contract
+-payment pending after games are over and user is awaiting payment indicators

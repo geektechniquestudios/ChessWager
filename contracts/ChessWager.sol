@@ -12,6 +12,7 @@ contract ChessWager is Ownable, Pausable {
   mapping(string => bool) private betIdToIsBetMatched;
   mapping(string => bool) private betIdToIsBetCompleted;
   mapping(string => string) private betIdToWhoBetFirst; // enum {user1, user2}
+  mapping(address => bool) private bannedUsers;
   struct Bet {
     uint256 amount;
     string betSide; // which side user1 bets on
@@ -33,23 +34,51 @@ contract ChessWager is Ownable, Pausable {
   uint256 public totalWagered; // overall amount spent on contract
 
   constructor() {
-    // store chesswageraddress
     chessWagerAddress = payable(msg.sender);
     chessWagerBalance = 0;
   }
 
-  function pause() public onlyOwner {
+  function pause() external onlyOwner {
     _pause();
   }
 
-  function unpause() public onlyOwner {
+  function unpause() external onlyOwner {
     _unpause();
+  }
+
+  function banUserByWalletAddress(address _user) external onlyOwner {
+    bannedUsers[_user] = true;
+  }
+
+  function banMultipleUsersByWalletAddress(
+    address[] calldata _users
+  ) external onlyOwner {
+    for (uint256 i = 0; i < _users.length; i++) {
+      bannedUsers[_users[i]] = true;
+    }
+  }
+
+  function unbanUserByWalletAddress(address _user) external onlyOwner {
+    bannedUsers[_user] = false;
   }
 
   function placeBet(
     Bet calldata _bet,
     string calldata _betId
   ) external payable whenNotPaused {
+    require(msg.value > 0, "Amount must be more than 0");
+    require(
+      betIdToIsBetMatched[_betId] != true,
+      "Only 2 users can particiapte in a bet"
+    );
+    require(
+      keccak256(abi.encodePacked(_bet.user1Id)) !=
+        keccak256(abi.encodePacked(_bet.user2Id)),
+      "User 1 and User 2 can't be the same user"
+    );
+    // 10,000 because you need to divide by 100 to get the actual multiplier
+    require(_bet.multiplier <= 10000, "Multiplier can't be more than 100");
+    require(_bet.multiplier > 0, "Multiplier must be greater than 0");
     require(gameIdToIsGameOver[_bet.gameId] != true, "Game is already over");
     require(
       msg.sender == _bet.user1Metamask || msg.sender == _bet.user2Metamask,
@@ -69,6 +98,10 @@ contract ChessWager is Ownable, Pausable {
     if (betIdToBetData[_betId].multiplier == 0) {
       // bet is new
       betIdToIsBetMatched[_betId] = false;
+      require(
+        !bannedUsers[_bet.user1Metamask] && !bannedUsers[_bet.user2Metamask],
+        "At least one user in this wager is banned"
+      );
 
       // make whoBetFirst mapping
       if (msg.sender == _bet.user1Metamask) {
@@ -91,15 +124,16 @@ contract ChessWager is Ownable, Pausable {
       gameIdToGameData[_bet.gameId].betIdArray.push(_betId); // this is iterated over when payout occurs
       betIdToBetData[_betId] = _bet;
     } else {
+      // second user has placed bet
       // requirements to check for matching values between user1 and user2
       require(
         betIdToBetData[_betId].amount == _bet.amount,
-        "User 1 bet amount doesn't match user 2 bet amount"
+        "User 1 bet.amount doesn't match user 2 bet.amount"
       );
       require(
         keccak256(abi.encodePacked(betIdToBetData[_betId].betSide)) ==
           keccak256(abi.encodePacked(_bet.betSide)),
-        "User 1 bet side doesn't match user 2 bet side"
+        "User 1 bet.betSide doesn't match user 2 bet.betSide"
       );
       require(
         keccak256(abi.encodePacked(betIdToBetData[_betId].user1Id)) ==
@@ -108,7 +142,7 @@ contract ChessWager is Ownable, Pausable {
       );
       require(
         betIdToBetData[_betId].user1Metamask == _bet.user1Metamask,
-        "User 1 bet.user1Metamask doesn't match user 2 bet.user2Metamask"
+        "User 1 bet.user1Metamask doesn't match user 2 bet.user1Metamask"
       );
       require(
         keccak256(abi.encodePacked(betIdToBetData[_betId].user2Id)) ==
@@ -121,13 +155,18 @@ contract ChessWager is Ownable, Pausable {
       );
       require(
         betIdToBetData[_betId].multiplier == _bet.multiplier,
-        "User 1 bet.user1Id doesn't match user 2 bet.user1Id amount"
+        "User 1 bet.multiplier doesn't match user 2 bet.multiplier"
       );
       require(
         keccak256(abi.encodePacked(betIdToBetData[_betId].gameId)) ==
           keccak256(abi.encodePacked(_bet.gameId)),
         "User 1 bet.gameId doesn't match user 2 bet.gameId"
       );
+      require(
+        betIdToBetData[_betId].timestamp == _bet.timestamp,
+        "User 1 bet.timestamp doesn't match user 2 bet.timestamp"
+      );
+
       // check bet amount, update prize pool based on user
       if (
         keccak256(abi.encodePacked(betIdToWhoBetFirst[_betId])) ==
@@ -154,7 +193,7 @@ contract ChessWager is Ownable, Pausable {
         betIdToPrizePool[_betId] += msg.value;
         emit BetPlacedStatus("user2 has paid", _betId, _bet.gameId);
       }
-      // bet is matched, second person pays
+      // bet is matched, both users have paid
       betIdToIsBetMatched[_betId] = true;
     }
   }
@@ -164,9 +203,8 @@ contract ChessWager is Ownable, Pausable {
     string calldata _gameId,
     string calldata winningSide
   ) external payable onlyOwner {
-    if (gameIdToIsGameOver[_gameId] == true) {
-      revert("game is already paid");
-    }
+    require(gameIdToIsGameOver[_gameId] != true, "Game is already paid");
+
     gameIdToIsGameOver[_gameId] = true; // prevents new bets on old games
     for (uint256 i = 0; i < gameIdToGameData[_gameId].betIdArray.length; i++) {
       // going over each bet for this gameId
@@ -199,7 +237,7 @@ contract ChessWager is Ownable, Pausable {
           );
         } else {
           // user2 was the only one that paid
-          bet.user2Metamask.transfer((prizePool * bet.multiplier) / 100);
+          bet.user2Metamask.transfer(prizePool);
 
           emit PayoutStatus(
             gameIdToGameData[_gameId].betIdArray[i],
@@ -226,7 +264,7 @@ contract ChessWager is Ownable, Pausable {
         keccak256(abi.encodePacked(winningSide)) ==
         keccak256(abi.encodePacked("draw"))
       ) {
-        uint256 user1BetAmount = (prizePool / (1 + (bet.multiplier / 100)));
+        uint256 user1BetAmount = bet.amount;
         bet.user1Metamask.transfer(user1BetAmount);
         bet.user2Metamask.transfer(prizePool - user1BetAmount);
         continue;

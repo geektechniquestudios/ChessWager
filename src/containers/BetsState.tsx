@@ -78,7 +78,7 @@ const useBetState = () => {
   const { mostRecentButton, isDescending, isRealtime } =
     LobbyHeaderState.useContainer()
 
-  // This sorting mechanism is mostly for browser compatibility
+  // Ensures sorting is uniform across all browsers
   const determineSortOrder = (
     a: number | string | Date | Timestamp,
     b: number | string | Date | Timestamp,
