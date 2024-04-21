@@ -32,14 +32,11 @@ require("dotenv").config({ path: "../.env" })
 const isLocal = process.env.VITE_BRANCH_ENV === "develop"
 const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
-let cred
-if (isLocal) {
-  const serviceAccount = require(`../../${adminSdk}`)
-  cred = admin.credential.cert(serviceAccount)
-} else {
-  cred = admin.credential.applicationDefault()
-}
+const credential = isLocal
+  ? admin.credential.cert(require(`../../${adminSdk}`))
+  : admin.credential.applicationDefault()
 
+admin.initializeApp({ credential })
 type Bet = {
   id: string
   amount: number
@@ -67,7 +64,6 @@ type Bet = {
   hasUser2SeenUpdate?: boolean
 }
 
-admin.initializeApp({ credential: cred })
 
 const db = admin.firestore()
 
@@ -214,8 +210,8 @@ contract.on(
           winningSide !== "white" && winningSide !== "black"
             ? "draw"
             : winningSide === bet.betSide
-            ? "user1"
-            : "user2"
+              ? "user1"
+              : "user2"
 
         const batch = db.batch()
         if (
