@@ -17,7 +17,7 @@ important:
 		goes back to limiting number of bets per user per game. Contract and firebase need to be in sync
 	**idea: subtract the expected gas price from players when processing refund, send to owner wallet. If they don't have enough, they can't make the bet, so will require setting new minimum above 0.
 	**idea: withhold refunds from banned users so that payout can happen normally after failing from such an attack
--the lobby and contract need to be able to limit the number of bets one player can have at a time or on one game
+-the lobby and contract need to be able to limit the number of bets one player can have at a time or on one game; don't let people create the same bet multiple times
 -we should add a check to see if payment systems are online somehow
 -module upgrade
 -messaging needs to support whitespace and newlines

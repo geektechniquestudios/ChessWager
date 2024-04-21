@@ -66,9 +66,7 @@ export const ChatForm: React.FC<Props> = ({
           maxRows={4}
           minRows={1}
           onKeyDown={(e) => {
-            if (!e.shiftKey && e.key === "Enter") {
-              sendMessage(e)
-            }
+            if (!e.shiftKey && e.key === "Enter") sendMessage(e)
           }}
         />
         <div className="flex w-full justify-end p-2">
