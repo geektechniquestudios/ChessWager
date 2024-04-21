@@ -35,11 +35,11 @@ const isLocal = process.env.VITE_BRANCH_ENV === "develop"
 const isTest = process.env.VITE_IS_TEST === "true"
 const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
-const cred = isLocal
+const credential = isLocal
   ? admin.credential.cert(require(`../../../${adminSdk}`))
   : admin.credential.applicationDefault()
 
-admin.initializeApp({ credential: cred })
+admin.initializeApp({ credential })
 
 const defaultTime = 120
 let secondsUntilRestartCheck = defaultTime

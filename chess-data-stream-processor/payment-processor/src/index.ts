@@ -9,11 +9,11 @@ const admin = require("firebase-admin")
 const isLocal = process.env.VITE_BRANCH_ENV === "develop"
 const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 
-const cred = isLocal
+const credential = isLocal
   ? admin.credential.cert(require(`../../../${adminSdk}`))
   : admin.credential.applicationDefault()
 
-admin.initializeApp({ credential: cred })
+admin.initializeApp({ credential })
 const db = admin.firestore()
 
 interface Player {
