@@ -23,15 +23,34 @@ steps:
     name: "gcr.io/cloud-builders/yarn"
     args: ["add", "-D", "hardhat"]
 
-  # Testing
+  # # Testing
+  # - id: Running tests
+  #   name: "gcr.io/cloud-builders/yarn"
+  #   args: ["run", "test"]
+
+  - id: Set Node.js version
+    name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "run",
+        "--entrypoint",
+        "/bin/sh",
+        "-v",
+        "/workspace:/workspace",
+        "node:20",
+        "-c",
+        "cp /usr/local/bin/node /workspace/node",
+      ]
+
   - id: Running tests
     name: "gcr.io/cloud-builders/yarn"
+    entrypoint: "/workspace/node"
     args: ["run", "test"]
 
-  # Dependent step
-  - id: Deploying contract
-    name: "gcr.io/cloud-builders/yarn"
-    args: ["run", "deploy-contract-$BRANCH_NAME"]
+  # # Dependent step
+  # - id: Deploying contract
+  #   name: "gcr.io/cloud-builders/yarn"
+  #   args: ["run", "deploy-contract-$BRANCH_NAME"]
 
   # Build docker images for k8s
   - id: Building contract listener
