@@ -36,7 +36,7 @@ export const UserBetData: React.FC<Props> = ({
   const { userData } = UserDataState.useContainer()
   const isUserBlocked = userData?.blockedUsers.includes(id) ?? false
   return (
-    <div className="relative flex w-full flex-col items-start overflow-clip rounded-md border border-stone-400 bg-stone-300 text-sm dark:border-stone-500 dark:bg-stone-600">
+    <div className="relative flex w-full flex-col items-start overflow-clip rounded-md border border-stone-400 bg-stone-200 text-sm dark:border-stone-500 dark:bg-stone-600">
       <div className="my-2 flex w-full justify-center">
         {isUserBlocked ? (
           <MdBlockFlipped className="h-8 w-8" />
@@ -52,7 +52,7 @@ export const UserBetData: React.FC<Props> = ({
           </button>
         )}
         <div
-          className="absolute right-0 top-0 m-1 grid place-content-center rounded-full bg-stone-100 p-0.5 dark:bg-stone-300"
+          className="absolute right-0 top-0 m-1 grid place-content-center rounded-full bg-stone-50 p-0.5 dark:bg-stone-300"
           title={funded ? "Payment Sent" : "No Payment Sent"}
         >
           {funded ? (
@@ -87,7 +87,7 @@ export const UserBetData: React.FC<Props> = ({
             ${formatDollars(amount * avaxPrice)} USD
           </div>
           <div className="flex w-full justify-end">
-            <div className="grid h-5 place-content-center rounded-full border px-2 text-xs dark:border-stone-500 dark:bg-stone-800">
+            <div className="grid h-5 place-content-center rounded-full border border-stone-400 bg-stone-50 px-2 text-xs dark:border-stone-500 dark:bg-stone-800">
               x{multiplier}
             </div>
           </div>

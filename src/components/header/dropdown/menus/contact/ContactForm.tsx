@@ -54,7 +54,7 @@ export const ContactForm: React.FC<Props> = ({}) => {
             onChange={(e) => {
               setReportFormValue(e.target.value)
             }}
-            className="scrollbar text-md ml-2 inline-block grow resize-none break-words rounded-md border border-stone-400 bg-stone-300 p-2 outline-none dark:border-stone-700 dark:bg-stone-800 dark:text-stone-50"
+            className="scrollbar text-md ml-2 inline-block grow resize-none break-words rounded-md border border-stone-400 bg-stone-100 p-2 outline-none dark:border-stone-700 dark:bg-stone-800 dark:text-stone-50"
             placeholder={
               auth.currentUser ? "Send a Message" : "Sign in to write"
             }
