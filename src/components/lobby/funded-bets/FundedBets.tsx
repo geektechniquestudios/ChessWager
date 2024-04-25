@@ -33,7 +33,7 @@ export const FundedBets: React.FC<Props> = ({}) => {
 
   return (
     <div className="h-11 w-full">
-      <div className="flex h-full justify-start gap-1 border-b border-stone-400 bg-stone-50 px-1 dark:border-stone-700 dark:bg-stone-900">
+      <div className="flex h-full justify-start gap-1 border-b border-stone-400 bg-stone-100 px-1 dark:border-stone-700 dark:bg-stone-900">
         <div className="flex gap-1 py-0.5">
           <AscDescButton />
           <RealtimeButton />
@@ -42,7 +42,7 @@ export const FundedBets: React.FC<Props> = ({}) => {
             <p className="">at Stake</p>
           </div>
         </div>
-        <div className="scrollbar-funded my-1 flex w-full items-center justify-start gap-1 overflow-x-auto overflow-y-clip rounded-md border border-stone-400 bg-white px-0.5 dark:border-stone-700 dark:bg-stone-800">
+        <div className="scrollbar-funded my-1 flex w-full items-center justify-start gap-1 overflow-x-auto overflow-y-clip rounded-md border border-stone-400 bg-stone-200 px-0.5 dark:border-stone-700 dark:bg-stone-800">
           <AnimatePresence>
             {bets && (bets?.length ?? 0) > 0 && (
               <motion.div
