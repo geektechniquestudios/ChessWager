@@ -15,7 +15,7 @@ export const LichessButton: React.FC<Props> = ({}) => {
       }}
       id="lichess-button"
       href="https://lichess.org/tv"
-      className="color-shift clickable grid h-9 w-9 shrink-0 place-content-center rounded-md border-none border-stone-800 text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white"
+      className="color-shift clickable grid h-9 w-9 shrink-0 place-content-center rounded-md border-none border-stone-800 text-stone-800 hover:border-black hover:bg-slate-200 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white"
       title="Watch on Lichess"
       data-toggle="tooltip"
       target="_blank"
