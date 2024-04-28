@@ -14,6 +14,7 @@ export const SearchUsersMenu: React.FC = ({}) => {
     <Menu
       menuItems={[
         <SearchArea search={search} setSearch={setSearch} />,
+        <MenuLine />,
         <SearchToggle
           friendsOrEveryone={friendsOrEveryOne}
           setFriendsOrEveryone={setFriendsOrEveryOne}
