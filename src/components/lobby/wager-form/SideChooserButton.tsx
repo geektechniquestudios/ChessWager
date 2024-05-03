@@ -24,8 +24,8 @@ export const SideChooserButton: React.FC<Props> = ({
         isSelected
           ? ` ${
               thisSide === "black"
-                ? "border-stone-600 bg-stone-400 dark:border-stone-800 dark:bg-stone-500  "
-                : "border-stone-200 bg-stone-500 dark:border-stone-500 dark:bg-stone-800  "
+                ? "border-stone-600 bg-stone-400 dark:border-stone-800 dark:bg-stone-500"
+                : "border-stone-200 bg-stone-500 dark:border-stone-500 dark:bg-stone-800"
             }`
           : "border-transparent"
       }
