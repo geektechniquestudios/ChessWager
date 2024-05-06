@@ -6,7 +6,7 @@ export const AscDescButton: React.FC = () => {
     LobbyHeaderState.useContainer()
   return (
     <button
-      className="color-shift clickable my-0.5 grid w-10 place-content-center rounded-md px-2 py-1 text-stone-900 hover:bg-slate-300 dark:text-stone-300 dark:hover:bg-stone-700"
+      className="color-shift clickable my-0.5 grid w-10 place-content-center rounded-md px-2 py-1 text-stone-900 hover:bg-stone-200 dark:text-stone-300 dark:hover:bg-stone-700"
       onClick={() => {
         setIsDescending(!isDescending)
       }}
