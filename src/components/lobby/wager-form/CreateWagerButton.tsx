@@ -70,7 +70,7 @@ export const CreateWagerButton: React.FC<Props> = ({}) => {
   return (
     <motion.button
       layout="position"
-      className="absolute z-50 flex items-center justify-center border-r border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-900"
+      className="absolute z-50 flex items-center justify-center border-r border-stone-400 bg-stone-300 dark:border-stone-700 dark:bg-stone-900"
       onClick={() => {
         setShowWagerForm(true)
       }}
