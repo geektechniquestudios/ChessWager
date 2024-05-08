@@ -25,3 +25,4 @@ important:
 -repair cloud build, removed functions folder so cd in functions should be removed
 -firestore database backup policy
 -eval bar cypress test for on/off functionality 
+-user cannot see another user with the same name when they search users
