@@ -8,7 +8,7 @@ import { LobbyHeaderButton } from "./LobbyHeaderButton"
 export const LobbyHeaderButtons: React.FC = () => {
   const { isDarkOn } = DarkModeState.useContainer()
   return (
-    <div className="flex h-8 w-full justify-between gap-1 rounded-t-lg border-b border-stone-400 bg-white px-1 dark:border-stone-700 dark:bg-stone-800">
+    <div className="flex h-8 w-full justify-between gap-1 rounded-t-lg border-b border-stone-400 bg-stone-50 px-1 dark:border-stone-700 dark:bg-stone-800">
       <LobbyHeaderButton buttonName="Side" buttonIcon={<GiYinYang />} />
       <LobbyHeaderButton buttonName="Trust" buttonIcon={<FaRegHandshake />} />
       <LobbyHeaderButton buttonName="Prize" buttonIcon={<BsPiggyBank />} />

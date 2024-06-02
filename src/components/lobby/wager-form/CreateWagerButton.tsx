@@ -70,7 +70,7 @@ export const CreateWagerButton: React.FC<Props> = ({}) => {
   return (
     <motion.button
       layout="position"
-      className="absolute z-50 flex items-center justify-center border-r border-stone-400 bg-stone-200 dark:border-stone-700 dark:bg-stone-900"
+      className="absolute z-50 flex items-center justify-center border-r border-stone-400 bg-stone-300 dark:border-stone-700 dark:bg-stone-900"
       onClick={() => {
         setShowWagerForm(true)
       }}
@@ -83,7 +83,7 @@ export const CreateWagerButton: React.FC<Props> = ({}) => {
       transition={{ duration: 0.2 }}
     >
       <motion.div
-        className="color-shift rounded-full p-1 text-stone-900  dark:border-stone-400  dark:text-stone-50"
+        className="color-shift rounded-full p-1 text-stone-900 dark:border-stone-400 dark:text-stone-50"
         whileTap={{
           scale: 0.99,
         }}

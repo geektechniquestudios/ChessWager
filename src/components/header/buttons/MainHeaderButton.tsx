@@ -39,7 +39,7 @@ export const MainHeaderButton: React.FC<Props> = ({
   }, [])
 
   const activeStyle =
-    activeMenu === openToMenu ? "bg-slate-200 dark:bg-stone-700" : ""
+    activeMenu === openToMenu ? "bg-stone-300 dark:bg-stone-700" : ""
 
   return (
     <AnimatePresence mode="wait">
@@ -55,7 +55,7 @@ export const MainHeaderButton: React.FC<Props> = ({
             type: "just",
           }}
           id={id}
-          className={`${activeStyle} color-shift clickable z-50 grid h-9 w-9 place-content-center rounded-md border-none border-stone-800 text-stone-800 hover:border-black hover:bg-slate-200 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white`}
+          className={`${activeStyle} color-shift clickable z-50 grid h-9 w-9 place-content-center rounded-md border-none border-stone-800 text-stone-800 hover:border-black hover:bg-stone-300 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white`}
           title={title}
           onClick={() => {
             // prevents opening new menu when header button is pressed that is already open
