@@ -10,7 +10,7 @@ import { useRef } from "react"
 
 export const BettingLobby: React.FC = () => {
   const { isRealtime } = LobbyHeaderState.useContainer()
-  const bettingLobbyRef = useRef<any>(null)
+  const bettingLobbyRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className="flex justify-center gap-2 px-2 pb-2">

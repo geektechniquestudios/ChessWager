@@ -25,3 +25,5 @@ important:
 -repair cloud build, removed functions folder so cd in functions should be removed
 -firestore database backup policy
 -eval bar cypress test for on/off functionality 
+-bet sorting bug over time when toggling real-time. hard to reproduce.
+

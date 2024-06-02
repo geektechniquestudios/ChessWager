@@ -32,6 +32,7 @@ const useGameStreamState = () => {
   const chess = fen ? new Chess(fen) : null
   const isCheck = chess?.isCheck() || false
   const isCheckmate = chess?.isCheckmate() || false
+  const isStalemate = chess?.isStalemate() || false
 
   const streamLichessTV = () => {
     const updatePlayerData = (res: Res) => {
@@ -130,6 +131,7 @@ const useGameStreamState = () => {
     isNewGame,
     isCheck,
     isCheckmate,
+    isStalemate,
     depth,
     score,
     mateIn,
