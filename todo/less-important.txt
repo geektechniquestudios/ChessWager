@@ -1,5 +1,6 @@
 less important
 --------------
+-wager form can be visually overflowed by betting 500m or other large number, use number formatter to fix this
 -revamp backend, typescript, modern firebase
 -make user images load into a react container so http calls aren't repeated
 -aggressive onboarding flow
