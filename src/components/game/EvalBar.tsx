@@ -46,8 +46,7 @@ export const EvalBar: React.FC<Props> = ({ orientation, fen }) => {
   }
 
   const roundedStyle = percent === 0 || percent === 100 ? "rounded-full" : ""
-  const borderStyle = percent === 0 || percent === 100 ? "border" : ""
-  const commonBarStyle = `${roundedStyle} ${borderStyle} color-shift border-stone-600 dark:border-stone-500 flex flex-col-reverse items-center dark:border-stone-500`
+  const commonBarStyle = `${roundedStyle} color-shift border-stone-600 dark:border-stone-500 flex flex-col-reverse items-center dark:border-stone-500`
   const topBarStyle = `${orientationStyle(
     orientation,
     "top",

@@ -8,7 +8,7 @@ interface Props {
   isComplete?: boolean
 }
 
-export const SectionWrapper: React.FC<Props> = ({
+export const HowToPlaySection: React.FC<Props> = ({
   text,
   href,
   onClick,
@@ -20,7 +20,7 @@ export const SectionWrapper: React.FC<Props> = ({
       <p className="grid place-content-center">{text}</p>
       <div className="grid place-content-center">
         <a
-          className="color-shift grid h-9 w-9 shrink-0 place-content-center rounded-md border border-stone-300 hover:bg-white hover:border-stone-400 dark:border-stone-400 dark:hover:border-stone-500 dark:hover:bg-stone-500"
+          className="color-shift grid h-9 w-9 shrink-0 place-content-center rounded-md border border-stone-300 hover:border-stone-400 hover:bg-white dark:border-stone-400 dark:hover:border-stone-400 dark:hover:bg-stone-500"
           href={href}
           target="_blank"
           rel="noopener noreferrer"
