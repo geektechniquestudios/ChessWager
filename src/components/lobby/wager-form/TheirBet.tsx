@@ -8,7 +8,7 @@ interface Props {
 export const TheirBet: React.FC<Props> = ({ multiplier, betAmount }) => {
   const { avaxPrice } = PriceState.useContainer()
   return (
-    <div className="color-shift flex rounded-md border border-stone-400 bg-stone-200 px-1 dark:border-stone-500 dark:bg-stone-700">
+    <div className="wager-form-tile flex px-1">
       <p className="m-2 grid place-content-center font-bold text-stone-900 dark:text-stone-300">
         Their Bet
       </p>
