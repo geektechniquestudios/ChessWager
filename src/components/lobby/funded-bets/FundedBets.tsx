@@ -23,7 +23,7 @@ export const FundedBets: React.FC<Props> = ({}) => {
 
   return (
     <div className="h-11 w-full">
-      <div className="flex h-full justify-start gap-1 border-b border-stone-400 bg-stone-300 px-1 dark:border-stone-700 dark:bg-stone-900">
+      <div className="flex h-full justify-start gap-1 border-b border-stone-400 bg-stone-200 px-1 dark:border-stone-700 dark:bg-stone-900">
         <div className="flex gap-1 py-0.5">
           <AscDescButton />
           <RealtimeButton />

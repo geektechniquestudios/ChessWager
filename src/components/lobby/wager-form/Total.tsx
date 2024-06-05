@@ -20,7 +20,7 @@ export const Total: React.FC<Props> = ({ betAmount, multiplier }) => {
   }
 
   return (
-    <div className="color-shift flex rounded-md border border-stone-400 bg-stone-200 dark:border-stone-500 dark:bg-stone-700">
+    <div className="wager-form-tile flex">
       <p className=" m-2 grid place-content-center border-r-2 border-stone-900 pr-2 font-bold text-stone-900 dark:border-stone-500 dark:text-stone-300">
         Pot
       </p>

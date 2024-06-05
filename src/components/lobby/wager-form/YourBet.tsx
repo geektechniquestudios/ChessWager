@@ -24,15 +24,13 @@ export const YourBet: React.FC<Props> = ({
   setIsAmountEmpty,
 }) => {
   const { avaxPrice } = PriceState.useContainer()
-  const borderWarning = isAmountEmpty
-    ? " border-red-600"
-    : "border-stone-400 dark:border-stone-500 "
+  const borderWarning = isAmountEmpty ? "!border-red-600" : ""
   const [isUsdFocused, setIsUsdFocused] = useState(false)
 
   return (
     <div
       id="bet-amount"
-      className={`${borderWarning} color-shift flex rounded-md border bg-stone-200 px-1 dark:bg-stone-700`}
+      className={`${borderWarning} wager-form-tile flex px-1`}
     >
       <p className="m-2 grid place-content-center font-bold text-stone-900 dark:text-stone-300">
         Your Bet
@@ -45,7 +43,7 @@ export const YourBet: React.FC<Props> = ({
           </div>
 
           <CurrencyInput
-            className="ml-1 w-28 grow rounded-md bg-stone-100 p-1 text-stone-900 dark:bg-stone-800 dark:text-stone-300"
+            className="ml-1 w-28 grow rounded-md bg-white p-1 text-stone-900 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue=""
@@ -81,7 +79,7 @@ export const YourBet: React.FC<Props> = ({
             AVAX
           </div>
           <CurrencyInput
-            className="ml-1 w-28 grow rounded-md bg-stone-100 p-1 text-stone-900 dark:bg-stone-800 dark:text-stone-300"
+            className="ml-1 w-28 grow rounded-md bg-white p-1 text-stone-900 dark:bg-stone-800 dark:text-stone-300"
             autoComplete="off"
             placeholder="Choose your bet"
             defaultValue=""
