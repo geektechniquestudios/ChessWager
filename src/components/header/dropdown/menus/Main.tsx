@@ -41,23 +41,22 @@ export const Main: React.FC = () => {
           text="Help"
           onClick={() => goToMenu("help")}
         />,
-        <div id="dark-mode">
-          <DropdownItem
-            onClick={() => {
-              setIsDarkOn(!isDarkOn)
-            }}
-            rightIcon={
-              <Toggle
-                icons={false}
-                className="toggle pointer-events-none"
-                checked={isDarkOn}
-                readOnly
-              />
-            }
-            leftIcon={isDarkOn ? <MdOutlineDarkMode /> : <BsSun />}
-            text={isDarkOn ? "Dark Mode" : "Light Mode"}
-          />
-        </div>,
+        <DropdownItem
+          id="dark-mode"
+          onClick={() => {
+            setIsDarkOn(!isDarkOn)
+          }}
+          rightIcon={
+            <Toggle
+              icons={false}
+              className="toggle pointer-events-none"
+              checked={isDarkOn}
+              readOnly
+            />
+          }
+          leftIcon={isDarkOn ? <MdOutlineDarkMode /> : <BsSun />}
+          text={isDarkOn ? "Dark Mode" : "Light Mode"}
+        />,
         <MenuLine />,
         <div>
           {!isWalletConnected && (

@@ -68,7 +68,7 @@ export const Multiplier: React.FC<Props> = ({
   }
 
   return (
-    <div className="color-shift flex w-full rounded-md border border-stone-400 bg-stone-200 p-2 dark:border-stone-500 dark:bg-stone-700">
+    <div className="wager-form-tile flex w-full p-2">
       <div className="grid place-content-center">
         <p className="font-bold text-stone-900 dark:text-stone-300">
           Multiplier
@@ -93,7 +93,7 @@ export const Multiplier: React.FC<Props> = ({
               onValueChange={(value) => {
                 setLocalMultiplier(value!)
               }}
-              className="w-14 rounded-sm bg-stone-200 p-1 text-center font-bold text-stone-900 dark:bg-stone-800 dark:text-stone-200"
+              className="w-14 rounded-sm bg-white p-1 text-center font-bold text-stone-900 dark:bg-stone-800 dark:text-stone-200"
               allowNegativeValue={false}
               fixedDecimalLength={2}
               onBlur={blur}

@@ -1,7 +1,6 @@
 import react from "@vitejs/plugin-react-swc"
 import { defineConfig, PluginOption } from "vite"
 import { VitePWA } from "vite-plugin-pwa"
-import { visualizer } from "rollup-plugin-visualizer"
 
 export default defineConfig({
   esbuild: {
@@ -55,11 +54,5 @@ export default defineConfig({
         ],
       },
     }),
-    visualizer({
-      open: false,
-      gzipSize: true,
-      brotliSize: true,
-      template: "flamegraph",
-    }) as unknown as PluginOption,
   ],
 })

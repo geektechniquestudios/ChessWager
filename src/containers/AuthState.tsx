@@ -22,10 +22,11 @@ import { firebaseApp } from "../../firestore.config"
 import ChessWager from "../artifacts/contracts/ChessWager.sol/ChessWager.json"
 import { Notification } from "../interfaces/Notification"
 import { User } from "../interfaces/User"
-import { CustomSwal, FirstLoginSwal } from "../components/popups/CustomSwal"
+import { CustomSwal } from "../components/popups/CustomSwal"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 
 declare let window: any
+
 const db = getFirestore(firebaseApp)
 
 const isTest = import.meta.env.VITE_IS_TEST === "true"
@@ -51,7 +52,7 @@ const isMainnet = import.meta.env.VITE_IS_MAINNET === "true"
   }
 }
 
-// Enable navigation prompt
+// Enable navigation prompt: "Are you sure you want to leave this page?"
 // window.onbeforeunload = () => true
 
 const useAuth = () => {
@@ -129,6 +130,29 @@ const useAuth = () => {
   }
 
   const signInWithGoogle = async (): Promise<void> => {
+    const FirstLoginSwal = () => {
+      CustomSwal(
+        "info",
+        "Welcome to ChessWager",
+        `
+    <div class='flex flex-col gap-3'>
+      <div class='text-lg font-bold'>Bet on real-time master-level chess with instant payout</div>
+      <div class='text-sm text-stone-400'>We can't legally accept a mainnet currency yet, but we will soon. You can play right now on the Avalanche Fuji Testnet. <span class='text-green-400 font-bold'>Placing a bet before our mainnet launch will earn you a special badge at the time of launch.</span> Read the help section for more information.</div>
+    </div>
+    `,
+        `
+    <div class='text-xs text-stone-400 text-center'>
+      <span>By continuing, you are setting up a ChessWager account and agree to our</span>
+      <a href='https://github.com/geektechniquestudios/ChessWager/blob/main/guides/TOS.md' class='underline hover:text-slate-400' target='_blank' rel='noreferrer'>
+        Terms of Service
+      </a>
+    </div>
+    `,
+        undefined,
+        false,
+      )
+    }
+
     const addToUsers = async (userCred: UserCredential | null) => {
       if (!userCred?.user?.uid || !auth.currentUser) return
       const userDoc = doc(

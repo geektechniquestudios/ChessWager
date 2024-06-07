@@ -83,7 +83,7 @@ export const CreateWagerButton: React.FC<Props> = ({}) => {
       transition={{ duration: 0.2 }}
     >
       <motion.div
-        className="color-shift rounded-full p-1 text-stone-900  dark:border-stone-400  dark:text-stone-50"
+        className="color-shift rounded-full p-1 text-stone-900 dark:border-stone-400 dark:text-stone-50"
         whileTap={{
           scale: 0.99,
         }}

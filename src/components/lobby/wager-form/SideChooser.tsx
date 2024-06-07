@@ -12,7 +12,7 @@ export const SideChooser: React.FC<Props> = ({
   title = "Side",
 }) => {
   return (
-    <div className="color-shift flex rounded-md border border-stone-400 bg-stone-200 p-2 dark:border-stone-500 dark:bg-stone-700">
+    <div className="wager-form-tile flex p-2">
       <p className="m-2 grid place-content-center font-bold text-stone-900 dark:text-stone-300">
         {title}
       </p>

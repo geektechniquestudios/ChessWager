@@ -6,15 +6,11 @@ const adminSdk = process.env.VITE_FIREBASE_ADMIN_SDK
 const setEnvValue = require("../../updateEnv.js")
 require("dotenv").config({ path: "../../.env" })
 
-let cred
-if (isLocal) {
-  const serviceAccount = require(`../../${adminSdk}`)
-  cred = admin.credential.cert(serviceAccount)
-} else {
-  cred = admin.credential.applicationDefault()
-}
+const credential = isLocal
+  ? admin.credential.cert(require(`../../${adminSdk}`))
+  : admin.credential.applicationDefault()
 
-admin.initializeApp({ credential: cred })
+admin.initializeApp({ credential })
 
 const db = admin.firestore()
 

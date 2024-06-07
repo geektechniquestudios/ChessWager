@@ -10,13 +10,13 @@ import { useRef } from "react"
 
 export const BettingLobby: React.FC = () => {
   const { isRealtime } = LobbyHeaderState.useContainer()
-  const bettingLobbyRef = useRef<any>(null)
+  const bettingLobbyRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className="flex justify-center gap-2 px-2 pb-2">
       <motion.div
         layout
-        className="max-w-7xl grow rounded-lg border border-stone-400 bg-white dark:border-stone-600 dark:bg-stone-800"
+        className="max-w-7xl grow rounded-lg border border-stone-400 bg-stone-50 dark:border-stone-600 dark:bg-stone-800"
       >
         <LobbyHeader />
         <div className="scrollbar relative flex h-[36em] flex-col overflow-hidden">

@@ -5,7 +5,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore"
 import { AnimatePresence, motion } from "framer-motion"
-import { MutableRefObject, useEffect, useRef, useState } from "react"
+import { RefObject, useEffect, useRef, useState } from "react"
 import { AuthState } from "../../../containers/AuthState"
 import { BetsState } from "../../../containers/BetsState"
 import { GameState } from "../../../containers/GameState"
@@ -22,9 +22,10 @@ import { WagerFormHeader } from "./WagerFormHeader"
 import { YourBet } from "./YourBet"
 
 const isTest = import.meta.env.VITE_IS_TEST === "true"
+const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS!
 
 interface Props {
-  bettingLobbyRef: React.MutableRefObject<any>
+  bettingLobbyRef: RefObject<HTMLDivElement>
 }
 
 export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
@@ -39,17 +40,17 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
   } = AuthState.useContainer()
   const { showWagerForm, setShowWagerForm } = BetsState.useContainer()
 
-  const wagerFormRef = useRef<any>(null)
+  const wagerFormRef = useRef<HTMLDivElement>(null)
 
   const CloseMenuListener = (
-    selfRef: MutableRefObject<any>,
-    bettingLobbyRef: MutableRefObject<any>,
+    selfRef: RefObject<HTMLDivElement>,
+    bettingLobbyRef: RefObject<HTMLDivElement>,
   ) => {
     useEffect(() => {
       const handleClickOutside = (event: Event) => {
         if (
-          !selfRef.current?.contains(event.target) &&
-          bettingLobbyRef.current?.contains(event.target)
+          !selfRef.current?.contains(event.target as Node) &&
+          bettingLobbyRef.current?.contains(event.target as Node)
         )
           setShowWagerForm(false)
       }
@@ -135,8 +136,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
         userData!.betFundedCount,
         userData!.betAcceptedCount,
       ],
-      //@ts-ignore
-      contractAddress: import.meta.env.VITE_CONTRACT_ADDRESS,
+      contractAddress,
       hasUser1SeenUpdate: false,
       hasUser2SeenUpdate: false,
     }).catch(console.error)
@@ -181,7 +181,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
             <motion.form
               layout
               onSubmit={createWager}
-              className="flex h-full flex-col justify-between rounded-bl-lg bg-stone-100 p-2 dark:bg-stone-900"
+              className="flex h-full flex-col justify-between rounded-bl-lg bg-stone-200 p-2 dark:bg-stone-900"
             >
               <div className="flex h-full flex-col justify-around gap-4 pt-4">
                 <WagerFormHeader />
