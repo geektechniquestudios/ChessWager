@@ -1,7 +1,7 @@
 import { BetsState } from "../../../../../containers/BetsState"
 import { DropdownState } from "../../../../../containers/DropdownState"
 import { Menu } from "../../models/Menu"
-import { SectionWrapper } from "./SectionWrapper"
+import { HowToPlaySection } from "./HowToPlaySection"
 import { TbNetwork } from "react-icons/tb"
 import { CiCoinInsert } from "react-icons/ci"
 import { FaRegHandshake } from "react-icons/fa"
@@ -16,19 +16,19 @@ export const HowToPlay: React.FC = ({}) => {
     <Menu
       menuItems={[
         <div className="my-2 flex w-full flex-col justify-center gap-2 px-2">
-          <SectionWrapper
+          <HowToPlaySection
             text="1. Add the Metamask extension to your browser"
             href="https://metamask.io/download/"
             icon={<BiExtension size={25} />}
           />
-          <SectionWrapper
+          <HowToPlaySection
             text="2. Add the Avalanche network to Metamask"
             href={`https://chainlist.org/chain/${
               isMainnet ? "43114" : "43113"
             }`}
             icon={<TbNetwork size={25} />}
           />
-          <SectionWrapper
+          <HowToPlaySection
             text="3. Fund your wallet"
             href={
               isMainnet
@@ -37,7 +37,7 @@ export const HowToPlay: React.FC = ({}) => {
             }
             icon={<CiCoinInsert size={30} />}
           />
-          <SectionWrapper
+          <HowToPlaySection
             text="4. Place a bet"
             onClick={() => {
               setShowWagerForm(true)

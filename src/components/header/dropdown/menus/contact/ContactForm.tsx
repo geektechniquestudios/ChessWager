@@ -54,7 +54,7 @@ export const ContactForm: React.FC<Props> = ({}) => {
             onChange={(e) => {
               setReportFormValue(e.target.value)
             }}
-            className="scrollbar text-md ml-2 inline-block grow resize-none break-words rounded-md border border-stone-400 bg-stone-300 p-2 outline-none dark:border-stone-700 dark:bg-stone-800 dark:text-stone-50"
+            className="scrollbar text-md ml-2 inline-block grow resize-none break-words rounded-md border border-stone-400 bg-white p-2 outline-none dark:border-stone-700 dark:bg-stone-800 dark:text-stone-50"
             placeholder={
               auth.currentUser ? "Send a Message" : "Sign in to write"
             }
@@ -65,7 +65,7 @@ export const ContactForm: React.FC<Props> = ({}) => {
           />
           <div className="flex flex-col-reverse">
             <button
-              className="color-shift mb-1 ml-1.5 mr-2 grid place-content-center rounded-full p-1.5 hover:bg-stone-400 dark:hover:bg-stone-800"
+              className="color-shift mb-1 ml-1.5 mr-2 grid place-content-center rounded-full p-1.5 hover:bg-stone-300 dark:hover:bg-stone-800"
               title="Press Enter to Send"
             >
               <BiSend size="25" />

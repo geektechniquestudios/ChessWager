@@ -11,7 +11,8 @@ interface Props {
 export const Countdown: React.FC<Props> = ({ fen, side, time, isNewGame }) => {
   const [count, setCount] = useState(0)
 
-  const { isCheckmate, shouldShowHours } = GameStreamState.useContainer()
+  const { isCheckmate, isStalemate, shouldShowHours } =
+    GameStreamState.useContainer()
 
   const formatTime = (inSeconds: number): string => {
     const prependZeros = (num: number): string =>
@@ -35,7 +36,7 @@ export const Countdown: React.FC<Props> = ({ fen, side, time, isNewGame }) => {
   const isPlayerTurn = getIsPlayerTurn(fen, side)
 
   const decrementClock = () => {
-    if (isCheckmate || !isPlayerTurn) return
+    if (isCheckmate || isStalemate || !isPlayerTurn) return
 
     const interval = setInterval(() => {
       setCount(count + 1)

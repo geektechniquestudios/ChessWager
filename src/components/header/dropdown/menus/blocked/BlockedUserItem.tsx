@@ -41,7 +41,7 @@ export const BlockedUserItem: React.FC<Props> = ({
       <div className="flex flex-col justify-center">
         <button
           onClick={unBlockUser}
-          className="color-shift clickable grid h-9 w-9 place-content-center rounded-md border border-stone-800 text-stone-800 hover:border-black hover:bg-stone-100 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white"
+          className="color-shift clickable grid h-9 w-9 place-content-center rounded-md border border-stone-800 text-stone-800 hover:border-black hover:bg-stone-50 hover:text-black dark:border-stone-300 dark:text-stone-300 dark:hover:border-white dark:hover:bg-stone-700 dark:hover:text-white"
           title="Unblock"
         >
           <CgUnblock className="text-green-600" />

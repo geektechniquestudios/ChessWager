@@ -1,5 +1,6 @@
 less important
 --------------
+-wager form can be visually overflowed by betting 500m or other large number, use number formatter to fix this
 -revamp backend, typescript, modern firebase
 -make user images load into a react container so http calls aren't repeated
 -aggressive onboarding flow
@@ -21,3 +22,12 @@ less important
 -adjust gas limit and gas price for contract calls
 -optimize contract
 -payment pending after games are over and user is awaiting payment indicators
+-update all firebase doc calls to be strongly typed like this: 
+  const betDoc: DocumentReference<DocumentData> = doc(db, "lobby", id)
+  const userDoc = doc(
+    db,
+    "users",
+    auth.currentUser!.uid,
+  ) as DocumentReference<User>
+-add test for firebase deploy
+

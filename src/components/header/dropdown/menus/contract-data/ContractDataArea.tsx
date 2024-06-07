@@ -64,7 +64,7 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
           )}
         </>
         <button
-          className="color-shift clickable rounded-md border border-stone-500 bg-stone-200 px-2 py-1.5 font-bold text-stone-800 hover:border-black hover:bg-white hover:text-stone-800 dark:border-stone-500 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-300"
+          className="color-shift clickable rounded-md border border-stone-500 bg-stone-100 px-2 py-1.5 font-bold text-stone-800 hover:border-black hover:bg-white hover:text-stone-800 dark:border-stone-500 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-300"
           onClick={() => {
             callContract(withdrawBalance)
           }}
@@ -72,7 +72,7 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
           Withdraw Balance
         </button>
         <button
-          className="color-shift clickable rounded-md border border-stone-500 bg-stone-200 px-2 py-1.5 font-bold text-stone-800 hover:border-black hover:bg-white hover:text-stone-800 dark:border-stone-500 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-300"
+          className="color-shift clickable rounded-md border border-stone-500 bg-stone-100 px-2 py-1.5 font-bold text-stone-800 hover:border-black hover:bg-white hover:text-stone-800 dark:border-stone-500 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-300"
           onClick={() => {
             goToMenu("missedPayments")
           }}
@@ -80,7 +80,7 @@ export const ContractDataArea: React.FC<Props> = ({}) => {
           Missed Payments
         </button>
         <button
-          className="color-shift clickable rounded-md border border-stone-500 bg-stone-200 px-2 py-1.5 font-bold text-stone-800 hover:border-black hover:bg-white hover:text-stone-800 dark:border-stone-500 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-300"
+          className="color-shift clickable rounded-md border border-stone-500 bg-stone-100 px-2 py-1.5 font-bold text-stone-800 hover:border-black hover:bg-white hover:text-stone-800 dark:border-stone-500 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-stone-300 dark:hover:bg-stone-800 dark:hover:text-stone-300"
           onClick={() => {
             goToMenu("banUser")
           }}

@@ -16,7 +16,7 @@ export const SearchToggleButton: React.FC<Props> = ({
   text,
 }) => {
   const selectedStyle =
-    "border-stone-400 dark:border-stone-500 text-stone-800 dark:text-stone-300 bg-white dark:bg-stone-600"
+    "border-stone-400 dark:border-stone-500 text-stone-800 dark:text-stone-300 bg-stone-50 dark:bg-stone-600"
   return (
     <button
       className={`color-shift flex items-center gap-2 rounded-full border pl-1 hover:border-stone-500 hover:text-black dark:hover:border-stone-400 dark:hover:text-white ${

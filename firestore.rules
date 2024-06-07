@@ -904,6 +904,8 @@ service cloud.firestore {
 
     // match /games/{gameId=**} {
     //   allow read: if canCreate();
+    //   // allow read if user placed bet on game
+    //   // useful to know if game is being paid out
     // }
   }
 }
