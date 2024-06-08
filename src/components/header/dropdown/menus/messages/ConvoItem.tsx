@@ -39,7 +39,7 @@ export const ConvoItem: React.FC<Props> = ({
       href={url ?? "#"}
       target={url ? "_blank" : ""}
       rel="noreferrer noopener"
-      className={`${unreadStyle} color-shift flex h-12 items-center text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
+      className={`${unreadStyle} color-shift flex h-12 items-center text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
       onClick={() => {
         onClick && onClick()
         goToMenu && goToMenuDropdown(goToMenu)
