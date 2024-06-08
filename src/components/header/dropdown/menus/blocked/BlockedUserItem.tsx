@@ -29,7 +29,7 @@ export const BlockedUserItem: React.FC<Props> = ({
 
   return (
     <div
-      className="color-shift flex h-14 items-center px-4 text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200"
+      className="color-shift flex h-14 items-center px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200"
       style={{ direction: "ltr" }}
     >
       <div className="flex w-full gap-3">
