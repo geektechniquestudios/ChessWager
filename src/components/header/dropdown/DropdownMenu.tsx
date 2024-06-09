@@ -69,21 +69,11 @@ export const DropdownMenu = () => {
     )
   }, [setMenuHeight])
 
-  const { isDarkOn } = DarkModeState.useContainer()
-
-  const bgColor = isDarkOn
-    ? "rgba(68, 64, 60, 0.79)"
-    : "rgba(245, 245, 244, 0.60)"
-
-  const blur = isDarkOn ? "blur(18px)" : "blur(16px)"
-
   return (
     <div
-      className="dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border-2 border-stone-400 text-stone-800 shadow-lg dark:border-stone-500 dark:text-stone-200"
+      className="dropdown absolute right-5 top-10 z-50 w-64 overflow-hidden rounded-md border-2 border-stone-400 bg-stone-100 bg-opacity-70 text-stone-800 shadow-lg backdrop-blur-md dark:border-stone-500 dark:bg-stone-700 dark:bg-opacity-70 dark:text-stone-200 dark:backdrop-blur-lg"
       style={{
         height: menuHeight,
-        background: bgColor,
-        backdropFilter: blur,
       }}
       ref={dropdownRef}
       id="dropdown-menu"

@@ -65,7 +65,7 @@ export const RequestItem: React.FC<Props> = ({
   const { setClickedUserById } = UserMenuState.useContainer()
   return (
     <a
-      className="color-shift flex h-12 items-center justify-between gap-3 px-4 text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200"
+      className="color-shift flex h-12 items-center justify-between gap-3 px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200"
       style={{ direction: "ltr" }}
       onClick={() => {
         setClickedUserById(id)

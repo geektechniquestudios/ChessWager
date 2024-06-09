@@ -52,7 +52,9 @@ export const MessageBody: React.FC<Props> = ({ message }) => {
   return (
     <div className="break-words text-sm text-stone-900 dark:text-stone-300">
       {!isMessageBlocked ? (
-        <p id="message">{text}</p>
+        <p id="message" className="whitespace-pre-wrap">
+          {text}
+        </p>
       ) : (
         <p>{responseFilter(text)}</p>
       )}
