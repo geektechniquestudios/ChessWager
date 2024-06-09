@@ -110,7 +110,7 @@ export const ConvoChatForm: React.FC<Props> = ({}) => {
             placeholder="Send a Message"
             maxRows={4}
             onKeyDown={(e) => {
-              e.key === "Enter" && sendMessage(e)
+              if (!e.shiftKey && e.key === "Enter") sendMessage(e)
             }}
           />
           <div className="flex flex-col-reverse">
