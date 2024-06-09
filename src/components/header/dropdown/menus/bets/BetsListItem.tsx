@@ -60,7 +60,7 @@ export const BetsListItem: React.FC<Props> = ({ bet }) => {
   return (
     <a
       rel="noreferrer noopener"
-      className={`${clickedStyle} color-shift flex h-14 items-center justify-between whitespace-nowrap px-2 text-stone-600 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
+      className={`${clickedStyle} color-shift flex h-14 items-center justify-between whitespace-nowrap px-2 text-stone-600 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
       onClick={() => {
         setBet(bet!)
         goToMenu("bet")

@@ -36,7 +36,7 @@ export const DropdownItem: React.FC<Props> = ({
       href={address}
       target={url ? "_blank" : ""}
       rel="noreferrer noopener"
-      className={`${backStyle} color-shift flex items-center px-4 text-stone-900 hover:bg-stone-300 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
+      className={`${backStyle} color-shift flex items-center px-4 text-stone-900 hover:bg-stone-200 dark:text-stone-200 dark:hover:bg-stone-600 dark:hover:text-stone-200`}
       onClick={() => {
         onClick && onClick()
         goToMenu && goToMenuDropdown(goToMenu)
