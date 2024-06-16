@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import "../../style/chat.scss"
 import { AuthState } from "../../containers/AuthState"
-import { ChatFormState } from "../../containers/ChatFormState"
 import { ChatToggleState } from "../../containers/ChatToggleState"
 import { WindowSizeState } from "../../containers/WindowSizeState"
 import { ChatBody } from "./ChatBody"
@@ -11,13 +10,12 @@ import { ChatForm } from "./ChatForm"
 import { ChatHeader } from "./ChatHeader"
 
 export const PublicChat: React.FC = () => {
-  const dummy = useRef<HTMLInputElement>(null)
-  const { db } = AuthState.useContainer()
-  const messagesRef = collection(db, "messages")
-
-  const { chatFormValue, setChatFormValue } = ChatFormState.useContainer()
   const { showChat } = ChatToggleState.useContainer()
   const { width } = WindowSizeState.useContainer()
+  const { db } = AuthState.useContainer()
+
+  const messagesRef = collection(db, "messages")
+  const bottomOfChatRef = useRef<HTMLInputElement>(null)
 
   const [isFirstAnimation, setIsFirstAnimation] = useState<boolean>(true)
 
@@ -47,12 +45,10 @@ export const PublicChat: React.FC = () => {
             <ChatHeader />
             <main className="global-chat-main flex min-w-full flex-col-reverse">
               <ChatForm
-                dummy={dummy}
+                bottomOfChatRef={bottomOfChatRef}
                 messagesRef={messagesRef}
-                formValue={chatFormValue}
-                setFormValue={setChatFormValue}
               />
-              <span ref={dummy} />
+              <span ref={bottomOfChatRef} />
               <ChatBody />
             </main>
           </div>
