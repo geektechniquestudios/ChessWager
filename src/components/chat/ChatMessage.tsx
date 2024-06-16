@@ -26,10 +26,10 @@ export const ChatMessage: React.FC<Props> = ({ message }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", mass: 0.1, stiffness: 200 }}
-      className={`color-shift w-full gap-1.5 rounded-md p-2 text-sm hover:bg-stone-100 dark:hover:bg-stone-950`}
+      className="color-shift w-full gap-1.5 rounded-md border border-transparent p-2 text-sm hover:border-stone-300 hover:bg-stone-100 dark:hover:border-stone-800 dark:hover:bg-stone-700"
       layout
     >
-      <div className={`${showMore ? "" : "line-clamp-3"}`}>
+      <div className={`${showMore ? "" : "line-clamp-4"} overflow-clip`}>
         <UserTitle photoURL={photoURL} userName={userName} uid={uid} />
         <MessageBody message={message} messageRef={messageRef} />
       </div>
