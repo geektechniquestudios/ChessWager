@@ -4,7 +4,7 @@ import { responseFilter } from "./ResponseFilter"
 
 interface Props {
   message: Message
-  messageRef: React.RefObject<HTMLDivElement>
+  messageRef?: React.RefObject<HTMLDivElement>
 }
 
 export const MessageBody: React.FC<Props> = ({ message, messageRef }) => {
