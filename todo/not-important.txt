@@ -30,3 +30,4 @@ not important
 -gpt powered help system for new users
 -menu closes on click outside while swal is open and won't close until button is pressed
 -how to play sections should have checkmark if completed
+-countdown should not start until second move

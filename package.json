@@ -7,7 +7,7 @@
     "mock-chess-server": "cd mock-chess-server && go run .",
     "cy:run": "cypress run --config video=false",
     "cy:open": "cypress open",
-    "cy:test": "hardhat test && start-server-and-test dev http-get://localhost:5173 cy:run",
+    "cy:test": "node pretest.js && start-server-and-test dev http-get://localhost:5173 cy:run; node posttest.js",
     "test-hardhat": "hardhat test",
     "test": "node pretest.js && hardhat test && start-server-and-test 'yarn run dev' http-get://localhost:5173 'yarn run cy:run'; node posttest.js",
     "build": "tsc && vite build",

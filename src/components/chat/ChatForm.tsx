@@ -7,24 +7,19 @@ import {
   DocumentData,
   serverTimestamp,
 } from "firebase/firestore"
+import { CustomSwal } from "../popups/CustomSwal"
+import { ChatFormState } from "../../containers/ChatFormState"
+import { CharacterConuter } from "./CharacterConuter"
 
 interface Props {
-  dummy: React.RefObject<HTMLInputElement>
+  bottomOfChatRef: React.RefObject<HTMLInputElement>
   messagesRef: CollectionReference<DocumentData>
-  formValue: string
-  setFormValue:
-    | React.Dispatch<React.SetStateAction<string>>
-    | ((formValue: string) => void)
 }
 
-export const ChatForm: React.FC<Props> = ({
-  dummy,
-  messagesRef,
-  formValue,
-  setFormValue,
-}) => {
+export const ChatForm: React.FC<Props> = ({ bottomOfChatRef, messagesRef }) => {
   const { auth } = AuthState.useContainer()
   const { signInWithGoogle } = AuthState.useContainer()
+  const { chatFormValue, setChatFormValue } = ChatFormState.useContainer()
 
   const sendMessage = async (
     e:
@@ -32,36 +27,45 @@ export const ChatForm: React.FC<Props> = ({
       | React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
     e.preventDefault()
+    if (chatFormValue.length > 500) {
+      console.log("Message too long")
+      CustomSwal(
+        "error",
+        "Message too long",
+        "Please keep messages under 500 characters.",
+      )
+      return
+    }
     if (!auth.currentUser) signInWithGoogle()
-    if (formValue.trim() === "" || !auth.currentUser) return
+    if (chatFormValue.trim() === "" || !auth.currentUser) return
 
     const { uid, photoURL } = auth.currentUser
 
     addDoc(messagesRef, {
-      text: formValue,
+      text: chatFormValue,
       createdAt: serverTimestamp(),
       uid,
       photoURL,
       userName: auth.currentUser.displayName,
     })
 
-    setFormValue("")
-    dummy.current?.scrollIntoView({ behavior: "smooth" })
+    setChatFormValue("")
+    bottomOfChatRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
-    <fieldset className="fieldset flex justify-center">
+    <fieldset className="fieldset ">
       <form
         onSubmit={sendMessage}
         className="form w-full justify-center whitespace-nowrap pb-1"
       >
         <TextareaAutosize
           id="chat-form"
-          value={formValue}
+          value={chatFormValue}
           onChange={(e) => {
-            setFormValue(e.target.value)
+            setChatFormValue(e.target.value)
           }}
-          className="scrollbar inline-block w-full resize-none break-words bg-stone-50 p-2 text-lg outline-none dark:bg-stone-800 dark:text-stone-50"
+          className="scrollbar inline-block w-full resize-none break-words border-b border-t border-stone-200 bg-stone-50 p-2 text-lg outline-none dark:border-stone-900 dark:bg-stone-800 dark:text-stone-50"
           placeholder={auth.currentUser ? "Send a Message" : "Sign in to Chat"}
           maxRows={4}
           minRows={1}
@@ -69,11 +73,7 @@ export const ChatForm: React.FC<Props> = ({
             if (!e.shiftKey && e.key === "Enter") sendMessage(e)
           }}
         />
-        <div className="flex w-full justify-end p-2">
-          <button className="cw-button" type="submit" id="global-chat-button">
-            Chat
-          </button>
-        </div>
+        <CharacterConuter />
       </form>
     </fieldset>
   )

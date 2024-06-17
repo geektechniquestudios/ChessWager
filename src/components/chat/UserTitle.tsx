@@ -15,7 +15,7 @@ export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
   const disabledStyle = !user ? "pointer-events-none" : ""
   return (
     <a
-      className={`float-left mr-1 flex gap-1 ${disabledStyle}`}
+      className={`${disabledStyle} float-left mr-1 flex items-center gap-1`}
       onClick={() => {
         setClickedUserById(uid)
         openDropdownToMenu("clickedUser")
@@ -23,11 +23,10 @@ export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
     >
       <img
         src={photoURL}
-        alt=""
         title={userName}
         className="h-4 w-4 rounded-full"
       />
-      <p className="text-xs font-bold text-stone-900 hover:underline dark:text-stone-200">{`${userName}:`}</p>
+      <p className="font-bold text-stone-900 hover:underline dark:text-stone-200">{`${userName}:`}</p>
     </a>
   )
 }
