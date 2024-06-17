@@ -4,9 +4,10 @@ import { responseFilter } from "./ResponseFilter"
 
 interface Props {
   message: Message
+  messageRef?: React.RefObject<HTMLDivElement>
 }
 
-export const MessageBody: React.FC<Props> = ({ message }) => {
+export const MessageBody: React.FC<Props> = ({ message, messageRef }) => {
   const { text, attribute_scores } = message
   const {
     IDENTITY_ATTACK,
@@ -49,15 +50,15 @@ export const MessageBody: React.FC<Props> = ({ message }) => {
     [IDENTITY_ATTACK, SEVERE_TOXICITY, THREAT, TOXICITY, INSULT, PROFANITY],
   )
 
+  const textToShow = isMessageBlocked ? responseFilter(text) : text
+
   return (
-    <div className="break-words text-sm text-stone-900 dark:text-stone-300">
-      {!isMessageBlocked ? (
-        <p id="message" className="whitespace-pre-wrap">
-          {text}
-        </p>
-      ) : (
-        <p>{responseFilter(text)}</p>
-      )}
-    </div>
+    <p
+      ref={messageRef}
+      id="message"
+      className="whitespace-pre-wrap break-words text-stone-900 dark:text-stone-300"
+    >
+      {textToShow}
+    </p>
   )
 }
