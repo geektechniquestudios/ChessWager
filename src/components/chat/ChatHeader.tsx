@@ -4,7 +4,7 @@ import { ChatToggleState } from "../../containers/ChatToggleState"
 export const ChatHeader: React.FC = () => {
   const { setShowChat, setAreNewMessages } = ChatToggleState.useContainer()
   return (
-    <header className="global-chat-header flex justify-between border-b border-stone-400 bg-stone-100 dark:border-stone-700 dark:bg-stone-700">
+    <header className="global-chat-header flex justify-between border-b border-stone-400 bg-stone-100 dark:border-stone-600 dark:bg-stone-700">
       <button
         id="hide-chat-button"
         onClick={() => {
