@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { createContainer } from "unstated-next"
+import { ReplyingTo } from "../components/chat/ReplyingTo"
 
 const useChatFormState = () => {
   const [chatFormValue, setChatFormValue] = useState("")
@@ -8,6 +9,8 @@ const useChatFormState = () => {
   )
   const [reportFormValue, setReportFormValue] = useState("")
   const [contactFormValue, setContactFormValue] = useState("")
+  const [replyingTo, setReplyingTo] = useState("")
+
   return {
     chatFormValue,
     setChatFormValue,
@@ -17,6 +20,8 @@ const useChatFormState = () => {
     setReportFormValue,
     contactFormValue,
     setContactFormValue,
+    replyingTo,
+    setReplyingTo
   }
 }
 
