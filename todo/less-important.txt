@@ -32,3 +32,6 @@ less important
 -add test for firebase deploy
 -chat timeout
 -when a user is banned, they should be removed from all games and chats. Bets that have already been placed but not paid need to be handled
+-messages need reciept and retry functionality
+-add firebase "onRejected" and "onFulfilled" to numerous situations to handle when a promise is rejected
+-test need to be added for chat replies

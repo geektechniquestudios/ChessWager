@@ -1,14 +1,13 @@
 import { TextareaAutosize } from "@mui/material"
-import { AuthState } from "../../containers/AuthState"
-import "../../style/scrollbar.scss"
+import { AuthState } from "../../../containers/AuthState"
 import {
   addDoc,
   CollectionReference,
   DocumentData,
   serverTimestamp,
 } from "firebase/firestore"
-import { CustomSwal } from "../popups/CustomSwal"
-import { ChatFormState } from "../../containers/ChatFormState"
+import { CustomSwal } from "../../popups/CustomSwal"
+import { ChatFormState } from "../../../containers/ChatFormState"
 import { CharacterConuter } from "./CharacterConuter"
 import { ReplyingTo } from "./ReplyingTo"
 
@@ -18,9 +17,17 @@ interface Props {
 }
 
 export const ChatForm: React.FC<Props> = ({ bottomOfChatRef, messagesRef }) => {
-  const { auth } = AuthState.useContainer()
-  const { signInWithGoogle } = AuthState.useContainer()
-  const { chatFormValue, setChatFormValue, replyingTo } = ChatFormState.useContainer()
+  const { auth, signInWithGoogle } = AuthState.useContainer()
+  const {
+    chatFormValue,
+    setChatFormValue,
+    replyingToMessageId,
+    setReplyingToMessageId,
+  } = ChatFormState.useContainer()
+
+  const { currentUser } = auth
+
+  let isSendingDisabled = false
 
   const sendMessage = async (
     e:
@@ -28,6 +35,8 @@ export const ChatForm: React.FC<Props> = ({ bottomOfChatRef, messagesRef }) => {
       | React.KeyboardEvent<HTMLTextAreaElement>,
   ) => {
     e.preventDefault()
+    if (isSendingDisabled) return
+    isSendingDisabled = true
     if (chatFormValue.length > 500) {
       console.log("Message too long")
       CustomSwal(
@@ -37,21 +46,28 @@ export const ChatForm: React.FC<Props> = ({ bottomOfChatRef, messagesRef }) => {
       )
       return
     }
-    if (!auth.currentUser) signInWithGoogle()
-    if (chatFormValue.trim() === "" || !auth.currentUser) return
+    if (!currentUser) signInWithGoogle()
+    if (chatFormValue.trim() === "" || !currentUser) return
 
-    const { uid, photoURL } = auth.currentUser
+    const { uid, photoURL, displayName } = currentUser
 
     addDoc(messagesRef, {
       text: chatFormValue,
       createdAt: serverTimestamp(),
       uid,
       photoURL,
-      userName: auth.currentUser.displayName,
-      // replyingTo
+      userName: displayName,
+      replyingToMessageId,
     })
+      .then(() => {
+        setChatFormValue("")
+        setReplyingToMessageId("")
+      })
+      .catch(console.error)
+      .finally(() => {
+        isSendingDisabled = false
+      })
 
-    setChatFormValue("")
     bottomOfChatRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 

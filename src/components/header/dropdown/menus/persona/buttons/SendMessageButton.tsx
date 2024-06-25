@@ -31,7 +31,6 @@ export const SendMessageButton: React.FC<Props> = ({
       goToMenu("conversation")
     }
 
-    // this will be removed in favor of storing all coversationIds in an arr in the user doc
     const convo = await getDoc(convoDoc)
 
     if (!convo.exists()) {
