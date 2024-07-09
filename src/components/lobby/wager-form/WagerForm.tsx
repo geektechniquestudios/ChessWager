@@ -114,7 +114,7 @@ export const WagerForm: React.FC<Props> = ({ bettingLobbyRef }) => {
 
     e.preventDefault()
 
-    if (!(showWagerForm || (await canUserBet()))) return
+    if (!(await canUserBet())) return
     setShowWagerForm(false)
 
     const { uid, photoURL, displayName } = auth.currentUser!

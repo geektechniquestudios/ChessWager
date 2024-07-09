@@ -5,7 +5,7 @@ import { UserTitle } from "./UserTitle"
 import { useEffect, useRef, useState } from "react"
 import { ReplyButton } from "./ReplyButton"
 import { ShowMoreButton } from "./ShowMoreButton"
-import { ReplyTo } from "./ReplyTo"
+import { ReplyingToInMessage } from "./ReplyingToInMessage"
 import { GlobalChatState } from "../../../containers/GlobalChatState"
 
 interface Props {
@@ -20,6 +20,14 @@ export const ChatMessage: React.FC<Props> = ({ message }) => {
 
   const messageRef = useRef<HTMLDivElement>(null)
 
+  const { messageIdBeingRepliedTo, setMessageIdBeingRepliedTo } =
+    GlobalChatState.useContainer()
+
+  useEffect(() => {
+    if (message.id === messageIdBeingRepliedTo)
+      messageRef.current?.scrollIntoView()
+  }, [messageIdBeingRepliedTo])
+
   useEffect(() => {
     const element = messageRef.current
     if (!element) return
@@ -28,8 +36,6 @@ export const ChatMessage: React.FC<Props> = ({ message }) => {
     if (element.scrollHeight > lineHeight * 4) setIsClampable(true)
   }, [])
 
-  const { messageIdBeingRepliedTo, setMessageIdBeingRepliedTo } =
-    GlobalChatState.useContainer()
   const repliedMessageStyle =
     message.id === messageIdBeingRepliedTo
       ? "border dark:!border-stone-500 !border-stone-600 dark:bg-stone-600 bg-stone-100 cursor-pointer"
@@ -48,7 +54,7 @@ export const ChatMessage: React.FC<Props> = ({ message }) => {
       }}
     >
       <ReplyButton messageId={message.id} uid={uid} />
-      <ReplyTo message={message} />
+      <ReplyingToInMessage message={message} />
       <div className={`${showMore ? "" : "line-clamp-4"} overflow-clip`}>
         <UserTitle photoURL={photoURL} userName={userName} uid={uid} />
         <MessageBody message={message} messageRef={messageRef} />

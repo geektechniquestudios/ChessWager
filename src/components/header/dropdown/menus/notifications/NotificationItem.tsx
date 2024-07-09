@@ -95,7 +95,7 @@ export const NotificationItem: React.FC<Props> = ({
           >
             <DropdownButton
               content={<BsX />}
-              className="h-4 w-4 hover:bg-red-200 dark:hover:bg-red-700"
+              className="!hover:bg-red-200 !dark:hover:bg-red-700 h-4 w-4"
               onClick={(e) => {
                 e.stopPropagation()
                 deleteDoc(notificationRef!)

@@ -9,7 +9,7 @@ import {
 import { CustomSwal } from "../../popups/CustomSwal"
 import { ChatFormState } from "../../../containers/ChatFormState"
 import { CharacterConuter } from "./CharacterConuter"
-import { ReplyingTo } from "./ReplyingTo"
+import { ReplyingToInForm } from "./ReplyingToInForm"
 
 interface Props {
   bottomOfChatRef: React.RefObject<HTMLInputElement>
@@ -73,7 +73,7 @@ export const ChatForm: React.FC<Props> = ({ bottomOfChatRef, messagesRef }) => {
 
   return (
     <div className="flex flex-col">
-      <ReplyingTo />
+      <ReplyingToInForm />
       <fieldset className="fieldset">
         <form
           onSubmit={sendMessage}

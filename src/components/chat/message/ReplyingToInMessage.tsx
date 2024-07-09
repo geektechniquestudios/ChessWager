@@ -8,7 +8,7 @@ interface Props {
   message: Message
 }
 
-export const ReplyTo: React.FC<Props> = ({ message }) => {
+export const ReplyingToInMessage: React.FC<Props> = ({ message }) => {
   const { db } = AuthState.useContainer()
   const { messages, setMessageIdBeingRepliedTo } =
     GlobalChatState.useContainer()
@@ -37,17 +37,18 @@ export const ReplyTo: React.FC<Props> = ({ message }) => {
     }
 
     fetchReplyingToMessageData()
-  }, [message, messages, db])
+  }, [])
 
   return (
     <>
       {replyingToMessageData && (
         <button
-          className="color-shift flex gap-0.5 px-4 text-xs text-stone-600 hover:text-stone-700 dark:text-stone-400 hover:dark:text-stone-300"
+          className="color-shift flex gap-0.5 px-3 text-xs text-stone-600 hover:text-stone-700 dark:text-stone-400 hover:dark:text-stone-300"
           onClick={() =>
             setMessageIdBeingRepliedTo(message.replyingToMessageId)
           }
         >
+          <p className="font-extrabold">↩</p>
           <div className="line-clamp-1 shrink-0 font-semibold">Replying to</div>
           <div className="line-clamp-1 shrink-0 font-semibold">
             {replyingToMessageData.userName}:
