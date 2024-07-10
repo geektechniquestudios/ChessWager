@@ -8,12 +8,12 @@ interface Props {}
 
 export const MainContent: React.FC<Props> = ({}) => {
   return (
-    <motion.main className="scrollbar flex justify-center overflow-y-auto">
+    <main className="scrollbar flex justify-center overflow-y-auto">
       <div className="flex h-full w-[10rem] grow flex-col justify-between overflow-x-clip">
         <ShowChatButton />
         <ChessGame />
         <BettingLobby />
       </div>
-    </motion.main>
+    </main>
   )
 }

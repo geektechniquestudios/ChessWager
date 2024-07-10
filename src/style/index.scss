@@ -48,6 +48,10 @@ code {
   @apply transition-colors duration-300 ease-in-out;
 }
 
+.opacity-shift {
+  @apply transition-opacity duration-300 ease-in-out;
+}
+
 // Has to be in traditional CSS because of the selective use of !important.
 .swal-popup {
   background-color: rgba(68, 64, 60, 0.95) !important;

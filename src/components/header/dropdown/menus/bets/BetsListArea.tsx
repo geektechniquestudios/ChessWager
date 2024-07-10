@@ -13,7 +13,6 @@ import {
 import { useEffect, useState } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { Bet } from "../../../../../interfaces/Bet"
-import "../../../../../style/scrollbar.scss"
 import { AuthState } from "../../../../../containers/AuthState"
 import { BetsListItem } from "./BetsListItem"
 

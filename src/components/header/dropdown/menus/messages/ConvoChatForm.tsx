@@ -85,9 +85,9 @@ export const ConvoChatForm: React.FC<Props> = ({}) => {
     } else {
       throw new Error("User not in conversation")
     }
-    batch.commit()
-
-    setFormValue("")
+    batch.commit().then(() => {
+      setFormValue("")
+    })
   }
 
   return (

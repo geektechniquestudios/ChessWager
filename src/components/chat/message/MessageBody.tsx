@@ -1,6 +1,6 @@
 import { useMemo } from "react"
-import { AttributeScores, Message } from "../../interfaces/Message"
-import { responseFilter } from "./ResponseFilter"
+import { AttributeScores, Message } from "../../../interfaces/Message"
+import { responseFilter } from "../ResponseFilter"
 
 interface Props {
   message: Message
