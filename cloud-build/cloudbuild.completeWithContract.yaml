@@ -23,15 +23,6 @@ steps:
     name: "gcr.io/cloud-builders/yarn"
     args: ["add", "-D", "hardhat"]
 
-  # Testing
-  - id: Running Hardhat tests
-    name: "gcr.io/cloud-builders/yarn"
-    args: ["run", "test-hardhat"]
-
-  - id: Running Cypress tests
-    name: "gcr.io/cloud-builders/yarn"
-    args: ["run", "cy:test"]
-
   - id: Set Node.js version
     name: "gcr.io/cloud-builders/docker"
     args:
@@ -46,10 +37,14 @@ steps:
         "cp /usr/local/bin/node /workspace/node",
       ]
 
-  - id: Running tests
+  # Testing
+  - id: Running Hardhat tests
     name: "gcr.io/cloud-builders/yarn"
-    entrypoint: "/workspace/node"
-    args: ["run", "test"]
+    args: ["run", "test-hardhat"]
+
+  - id: Running Cypress tests
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["run", "cy:test"]
 
   # Dependent step
   - id: Deploying contract
