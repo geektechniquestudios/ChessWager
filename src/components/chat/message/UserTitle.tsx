@@ -1,6 +1,6 @@
-import { AuthState } from "../../containers/AuthState"
-import { DropdownState } from "../../containers/DropdownState"
-import { UserMenuState } from "../../containers/UserMenuState"
+import { AuthState } from "../../../containers/AuthState"
+import { DropdownState } from "../../../containers/DropdownState"
+import { UserMenuState } from "../../../containers/UserMenuState"
 
 interface Props {
   photoURL: string
@@ -21,11 +21,7 @@ export const UserTitle: React.FC<Props> = ({ photoURL, userName, uid }) => {
         openDropdownToMenu("clickedUser")
       }}
     >
-      <img
-        src={photoURL}
-        title={userName}
-        className="h-4 w-4 rounded-full"
-      />
+      <img src={photoURL} title={userName} className="h-4 w-4 rounded-full" />
       <p className="font-bold text-stone-900 hover:underline dark:text-stone-200">{`${userName}:`}</p>
     </a>
   )

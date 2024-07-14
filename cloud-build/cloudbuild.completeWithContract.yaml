@@ -26,7 +26,20 @@ steps:
   # # Testing
   # - id: Running tests
   #   name: "gcr.io/cloud-builders/yarn"
-  #   args: ["run", "test"]
+  #   args: ["run", "test-hardhat"]
+
+  # Testing
+  - id: Running Hardhat tests
+    name: "gcr.io/cloud-builders/yarn"
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        yarn run test-hardhat
+        if [ $? -ne 0 ]; then
+          echo "Hardhat tests failed. Stopping the build."
+          exit 1
+        fi
 
   - id: Set Node.js version
     name: "gcr.io/cloud-builders/docker"
@@ -47,10 +60,10 @@ steps:
     entrypoint: "/workspace/node"
     args: ["run", "test"]
 
-  # # Dependent step
-  # - id: Deploying contract
-  #   name: "gcr.io/cloud-builders/yarn"
-  #   args: ["run", "deploy-contract-$BRANCH_NAME"]
+  # Dependent step
+  - id: Deploying contract
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["run", "deploy-contract-$BRANCH_NAME"]
 
   # Build docker images for k8s
   - id: Building contract listener

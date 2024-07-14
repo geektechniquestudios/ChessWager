@@ -1,4 +1,4 @@
-import { ChatFormState } from "../../containers/ChatFormState"
+import { ChatFormState } from "../../../containers/ChatFormState"
 
 interface Props {}
 

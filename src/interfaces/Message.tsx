@@ -10,6 +10,8 @@ export type AttributeScores = {
 }
 
 export type Message = {
+  id: string
+  replyingToMessageId: string
   convoId?: string
   text: string
   uid: string

@@ -64,7 +64,7 @@ export const ReportForm: React.FC<Props> = ({}) => {
           />
           <div className="flex flex-col-reverse">
             <button
-              className="color-shift mb-1 ml-1.5 mr-2 grid place-content-center rounded-full p-1.5 hover:bg-stone-400 dark:hover:bg-stone-800"
+              className="color-shift mb-1 ml-1.5 mr-2 grid place-content-center rounded-full p-1.5 hover:bg-stone-300 dark:hover:bg-stone-800"
               title="Press Enter to Send"
             >
               <BiSend size="25" />

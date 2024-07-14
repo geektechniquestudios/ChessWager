@@ -15,7 +15,6 @@ import { useEffect, useState } from "react"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { Notification } from "../../../../../interfaces/Notification"
-import "../../../../../style/scrollbar.scss"
 import { AuthState } from "../../../../../containers/AuthState"
 import { NotificationItem } from "./NotificationItem"
 

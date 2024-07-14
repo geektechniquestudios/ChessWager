@@ -1,7 +1,6 @@
 import { collection, CollectionReference, doc } from "firebase/firestore"
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore"
 import { Friend } from "../../../../../interfaces/Friend"
-import "../../../../../style/scrollbar.scss"
 import { AuthState } from "../../../../../containers/AuthState"
 import { FriendItem } from "./FriendItem"
 

@@ -9,7 +9,7 @@
     "cy:open": "cypress open",
     "cy:test": "node pretest.js && start-server-and-test dev http-get://localhost:5173 cy:run; node posttest.js",
     "test-hardhat": "hardhat test",
-    "test": "node pretest.js && hardhat test && start-server-and-test 'yarn run dev' http-get://localhost:5173 'yarn run cy:run'; node posttest.js",
+    "test": "yarn test-hardhat && yarn cy:test",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "deploy-contract-develop": "yarn hardhat run hardhat/scripts/deploy.js --network fuji",
