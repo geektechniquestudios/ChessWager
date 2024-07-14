@@ -10,32 +10,26 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
+
+
+  # Installing dependencies
   - id: Installing dependencies for frontend
-    name: "gcr.io/cloud-builders/yarn"
+    name: "node:20"
+    entrypoint: "yarn"
     args: ["install"]
   - id: Installing firebase tools
-    name: "gcr.io/cloud-builders/npm"
+    name: "node:20"
+    entrypoint: "npm"
     args: ["install", "-g", "firebase-tools"]
   - id: Installing firebase
-    name: "gcr.io/cloud-builders/yarn"
+    name: "node:20"
+    entrypoint: "yarn"
     args: ["add", "firebase"]
   - id: Installing hardhat
-    name: "gcr.io/cloud-builders/yarn"
+    name: "node:20"
+    entrypoint: "yarn"
     args: ["add", "-D", "hardhat"]
 
-  - id: Set Node.js version
-    name: "gcr.io/cloud-builders/docker"
-    args:
-      [
-        "run",
-        "--entrypoint",
-        "/bin/sh",
-        "-v",
-        "/workspace:/workspace",
-        "node:20",
-        "-c",
-        "cp /usr/local/bin/node /workspace/node",
-      ]
 
   # Testing
   - id: Running Hardhat tests
@@ -185,10 +179,13 @@ steps:
       - "--location=$_GKE_LOCATION"
       - "--namespace=$_K8S_NAMESPACE"
       - "--timeout=10m"
+
   # Building and deploying frontend
   - id: Building frontend
-    name: "gcr.io/cloud-builders/yarn"
+    name: "node:18"
+    entrypoint: "yarn"
     args: ["run", "build"]
+    
   - id: Selecting firebase env
     name: "gcr.io/$PROJECT_ID/firebase"
     args: ["use", "$BRANCH_NAME"]
