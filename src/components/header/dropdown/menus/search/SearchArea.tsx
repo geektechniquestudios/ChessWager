@@ -16,7 +16,7 @@ export const SearchArea: React.FC<Props> = ({ search, setSearch }) => {
     <input
       id="search-users-input"
       ref={searchInput}
-      type="search"
+      type="text"
       value={search}
       onChange={(e) => setSearch(e.target.value)}
       className="inline-block h-10 w-full resize-none bg-stone-100 p-2 text-lg outline-none dark:bg-stone-800 dark:text-stone-50"
