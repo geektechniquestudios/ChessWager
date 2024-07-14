@@ -23,23 +23,14 @@ steps:
     name: "gcr.io/cloud-builders/yarn"
     args: ["add", "-D", "hardhat"]
 
-  # # Testing
-  # - id: Running tests
-  #   name: "gcr.io/cloud-builders/yarn"
-  #   args: ["run", "test-hardhat"]
-
   # Testing
   - id: Running Hardhat tests
     name: "gcr.io/cloud-builders/yarn"
-    entrypoint: bash
-    args:
-      - -c
-      - |
-        yarn run test-hardhat
-        if [ $? -ne 0 ]; then
-          echo "Hardhat tests failed. Stopping the build."
-          exit 1
-        fi
+    args: ["run", "test-hardhat"]
+
+  - id: Running Cypress tests
+    name: "gcr.io/cloud-builders/yarn"
+    args: ["run", "cy:test"]
 
   - id: Set Node.js version
     name: "gcr.io/cloud-builders/docker"

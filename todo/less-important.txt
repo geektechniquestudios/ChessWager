@@ -36,3 +36,4 @@ less important
 -add firebase "onRejected" and "onFulfilled" to numerous situations to handle when a promise is rejected
 -test need to be added for chat replies
 -wager form can have 2 bets created at once if button spammed in low teir mobile throttling
+-debounce in search area
