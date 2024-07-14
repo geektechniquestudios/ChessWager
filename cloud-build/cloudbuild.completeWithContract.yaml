@@ -1,8 +1,7 @@
 steps:
   # Decrypt and setup
   - id: Decrypting environment variables
-    name: "node:20"
-    entrypoint: "yarn"    
+    name: "gcr.io/cloud-builders/gcloud"
     args:
       - kms
       - decrypt
@@ -11,7 +10,6 @@ steps:
       - --location=global
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
-
 
   # Installing dependencies
   - id: Installing dependencies for frontend
