@@ -55,7 +55,8 @@ export const YourBet: React.FC<Props> = ({
                   : (betAmount * avaxPrice).toFixed(2)
             }
             onValueChange={(value) => {
-              setLocalUsdAmount(value!)
+              if (value?.includes("k") || value?.includes("m")) return
+              setLocalUsdAmount(value ?? "")
             }}
             allowNegativeValue={false}
             onBlur={(e) => {
@@ -86,6 +87,7 @@ export const YourBet: React.FC<Props> = ({
             decimalsLimit={6}
             value={localAvaxAmount}
             onValueChange={(value) => {
+              if (value?.includes("k") || value?.includes("m")) return
               setLocalAvaxAmount(value!)
             }}
             allowNegativeValue={false}

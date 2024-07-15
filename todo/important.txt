@@ -7,7 +7,6 @@ important:
 -showcase video
 -bug: if you select a bet, then switch from tick to real-time, then bet shows as you joined, but refreshes as not selected
 -when placing a bet, ensure wallet address from browser == stored address; if user is connected to wrong wallet, they can still place a bet
--bet form shows NaN if you type 0 then k, allows neg/dash to be typed
 -move permanent operations to gcp
 -contract verification
 -Error: Request method eth_getBalance is not supported ---- when hitting place bet if wallet is connected, but not logged in I think
@@ -29,3 +28,4 @@ important:
 -firestore database backup policy
 -eval bar cypress test for on/off functionality 
 -bet sorting bug over time when toggling real-time. hard to reproduce.
+-if wallet is on wrong network, it should say switch to avax, but instead it says insufficient funds. Logic already written in frozr in wallet.tsx
