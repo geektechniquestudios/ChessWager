@@ -31,16 +31,8 @@ steps:
     entrypoint: "yarn"
     args: ["run", "test-hardhat"]
 
-  - name: "node:20"
-    entrypoint: "bash"
-    args:
-      - "-c"
-      - |
-        apt-get install -y xvfb
-        yarn run cy:test
-
   - id: Running Cypress tests
-    name: "node:20"
+    name: "cypress/included:13.6.4"
     entrypoint: "yarn"
     args: ["run", "cy:test"]
 
@@ -186,10 +178,23 @@ steps:
       - "--timeout=10m"
 
   # Building and deploying frontend
-  - id: Deploying Firebase
+
+  - id: Building frontend
     name: "node:20"
     entrypoint: "yarn"
-    args: ["deploy-firebase-$BRANCH_NAME"]
+    args: ["run", "build"]
+
+  - id: Selecting firebase env
+    name: "gcr.io/$PROJECT_ID/firebase:latest"
+    args: ["use", "$BRANCH_NAME"]
+  - id: Deploying to firebase
+    name: "gcr.io/$PROJECT_ID/firebase:latest"
+    args: ["deploy", "--project=$PROJECT_ID"]
+
+  # - id: Deploying Firebase
+  #   name: "node:20"
+  #   entrypoint: "yarn"
+  #   args: ["deploy-firebase-$BRANCH_NAME"]
 
 timeout: 3600s
 options:
