@@ -11,6 +11,20 @@ steps:
       - --keyring=chess-wager
       - --key=chess-wager-$BRANCH_NAME
 
+  - id: Decrypting Firebase admin SDK JSON files
+    name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - -c
+      - |
+          if [ "$BRANCH_NAME" == "main" ]; then
+            gcloud kms decrypt --ciphertext-file=chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json.enc --plaintext-file=chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json --location=global --keyring=chess-wager --key=chess-wager-main
+          elif [ "$BRANCH_NAME" == "test" ]; then
+            gcloud kms decrypt --ciphertext-file=chess-wager-test-firebase-adminsdk-hl438-e85a947be8.json.enc --plaintext-file=chess-wager-test-firebase-adminsdk-hl438-e85a947be8.json --location=global --keyring=chess-wager --key=chess-wager-test
+          else
+            echo "Unknown branch name. Skipping decryption."
+          fi
+
   # Installing dependencies
   - id: Installing dependencies for frontend
     name: "node:20"
