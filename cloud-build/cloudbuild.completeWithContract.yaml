@@ -34,21 +34,21 @@ steps:
     name: "node:20"
     entrypoint: "npm"
     args: ["install", "-g", "firebase-tools"]
-  - id: Installing hardhat
-    name: "node:20"
-    entrypoint: "yarn"
-    args: ["add", "-D", "hardhat"]
+  # - id: Installing hardhat
+  #   name: "node:20"
+  #   entrypoint: "yarn"
+  #   args: ["add", "-D", "hardhat"]
 
-  # Testing
+  # Testing @todo: Uncomment when tests are ready
   - id: Running Hardhat Tests
     name: "node:20"
     entrypoint: "yarn"
     args: ["run", "test-hardhat"]
 
-  - id: Running Cypress tests
-    name: "cypress/included:13.6.4"
-    entrypoint: "yarn"
-    args: ["run", "cy:test"]
+  # - id: Running Cypress tests
+  #   name: "cypress/included:13.6.4"
+  #   entrypoint: "yarn"
+  #   args: ["run", "cy:test"]
 
   # Dependent step @todo: Uncomment when deploy is ready
   # - id: Deploying contract
@@ -56,140 +56,140 @@ steps:
   #   entrypoint: "yarn"
   #   args: ["run", "deploy-contract-$BRANCH_NAME"]
 
-  # Build docker images for k8s
-  - id: Building contract listener
-    name: gcr.io/cloud-builders/docker
-    args:
-      - build
-      - "-t"
-      - "$_IMAGE_NAME_CL:$COMMIT_SHA"
-      - .
-      - "-f"
-      - $_DOCKERFILE_NAME_CL
-    dir: $_DOCKERFILE_DIR
-  - id: Building ancillary stream
-    name: gcr.io/cloud-builders/docker
-    args:
-      - build
-      - "-t"
-      - "$_IMAGE_NAME_AS:$COMMIT_SHA"
-      - .
-      - "-f"
-      - $_DOCKERFILE_NAME_AS
-    dir: $_DOCKERFILE_DIR
-  - id: Building primary stream
-    name: gcr.io/cloud-builders/docker
-    args:
-      - build
-      - "-t"
-      - "$_IMAGE_NAME_PS:$COMMIT_SHA"
-      - .
-      - "-f"
-      - $_DOCKERFILE_NAME_PS
-    dir: $_DOCKERFILE_DIR
-  - id: Building tertiary stream
-    name: gcr.io/cloud-builders/docker
-    args:
-      - build
-      - "-t"
-      - "$_IMAGE_NAME_TS:$COMMIT_SHA"
-      - .
-      - "-f"
-      - $_DOCKERFILE_NAME_TS
-    dir: $_DOCKERFILE_DIR
+  # # Build docker images for k8s
+  # - id: Building contract listener
+  #   name: gcr.io/cloud-builders/docker
+  #   args:
+  #     - build
+  #     - "-t"
+  #     - "$_IMAGE_NAME_CL:$COMMIT_SHA"
+  #     - .
+  #     - "-f"
+  #     - $_DOCKERFILE_NAME_CL
+  #   dir: $_DOCKERFILE_DIR
+  # - id: Building ancillary stream
+  #   name: gcr.io/cloud-builders/docker
+  #   args:
+  #     - build
+  #     - "-t"
+  #     - "$_IMAGE_NAME_AS:$COMMIT_SHA"
+  #     - .
+  #     - "-f"
+  #     - $_DOCKERFILE_NAME_AS
+  #   dir: $_DOCKERFILE_DIR
+  # - id: Building primary stream
+  #   name: gcr.io/cloud-builders/docker
+  #   args:
+  #     - build
+  #     - "-t"
+  #     - "$_IMAGE_NAME_PS:$COMMIT_SHA"
+  #     - .
+  #     - "-f"
+  #     - $_DOCKERFILE_NAME_PS
+  #   dir: $_DOCKERFILE_DIR
+  # - id: Building tertiary stream
+  #   name: gcr.io/cloud-builders/docker
+  #   args:
+  #     - build
+  #     - "-t"
+  #     - "$_IMAGE_NAME_TS:$COMMIT_SHA"
+  #     - .
+  #     - "-f"
+  #     - $_DOCKERFILE_NAME_TS
+  #   dir: $_DOCKERFILE_DIR
 
-  # Pushing images
-  - id: Pushing contract listener
-    name: gcr.io/cloud-builders/docker
-    args:
-      - push
-      - "$_IMAGE_NAME_CL:$COMMIT_SHA"
-  - id: Pushing ancillary stream
-    name: gcr.io/cloud-builders/docker
-    args:
-      - push
-      - "$_IMAGE_NAME_AS:$COMMIT_SHA"
-  - id: Pushing primary stream
-    name: gcr.io/cloud-builders/docker
-    args:
-      - push
-      - "$_IMAGE_NAME_PS:$COMMIT_SHA"
-  - id: Pushing tertiary stream
-    name: gcr.io/cloud-builders/docker
-    args:
-      - push
-      - "$_IMAGE_NAME_TS:$COMMIT_SHA"
+  # # Pushing images
+  # - id: Pushing contract listener
+  #   name: gcr.io/cloud-builders/docker
+  #   args:
+  #     - push
+  #     - "$_IMAGE_NAME_CL:$COMMIT_SHA"
+  # - id: Pushing ancillary stream
+  #   name: gcr.io/cloud-builders/docker
+  #   args:
+  #     - push
+  #     - "$_IMAGE_NAME_AS:$COMMIT_SHA"
+  # - id: Pushing primary stream
+  #   name: gcr.io/cloud-builders/docker
+  #   args:
+  #     - push
+  #     - "$_IMAGE_NAME_PS:$COMMIT_SHA"
+  # - id: Pushing tertiary stream
+  #   name: gcr.io/cloud-builders/docker
+  #   args:
+  #     - push
+  #     - "$_IMAGE_NAME_TS:$COMMIT_SHA"
 
-  # Deploying to k8s
-  - id: Applying Redis server to k8s
-    name: gcr.io/cloud-builders/gke-deploy
-    args:
-      - run
-      - "--filename=kubernetes/redis-deployment.yaml"
-      - "--cluster=$_GKE_CLUSTER"
-      - "--location=$_GKE_LOCATION"
-      - "--namespace=$_K8S_NAMESPACE"
-  - id: Clearing build folder from Redis
-    name: bash
-    args:
-      - rm
-      - "-rf"
-      - output
-  - id: Applying contract listener to k8s
-    name: gcr.io/cloud-builders/gke-deploy
-    args:
-      - run
-      - "--filename=kubernetes/$BRANCH_NAME/contract-listener-deployment.yaml"
-      - "--image=$_IMAGE_NAME_CL:$COMMIT_SHA"
-      - "--cluster=$_GKE_CLUSTER"
-      - "--location=$_GKE_LOCATION"
-      - "--namespace=$_K8S_NAMESPACE"
-  - id: Clearing build folder from contract listener
-    name: bash
-    args:
-      - rm
-      - "-rf"
-      - output
-  - id: Applying ancillary stream to k8s
-    name: gcr.io/cloud-builders/gke-deploy
-    args:
-      - run
-      - "--filename=kubernetes/$BRANCH_NAME/ancillary-stream-deployment.yaml"
-      - "--image=$_IMAGE_NAME_AS:$COMMIT_SHA"
-      - "--cluster=$_GKE_CLUSTER"
-      - "--location=$_GKE_LOCATION"
-      - "--namespace=$_K8S_NAMESPACE"
-  - id: Clearing build folder from ancillary stream
-    name: bash
-    args:
-      - rm
-      - "-rf"
-      - output
-  - id: Applying primary stream to k8s
-    name: gcr.io/cloud-builders/gke-deploy
-    args:
-      - run
-      - "--filename=kubernetes/$BRANCH_NAME/primary-stream-deployment.yaml"
-      - "--image=$_IMAGE_NAME_PS:$COMMIT_SHA"
-      - "--cluster=$_GKE_CLUSTER"
-      - "--location=$_GKE_LOCATION"
-      - "--namespace=$_K8S_NAMESPACE"
-  - id: Clearing build folder from primary stream
-    name: bash
-    args:
-      - rm
-      - "-rf"
-      - output
-  - id: Applying tertiary stream to k8s
-    name: gcr.io/cloud-builders/gke-deploy
-    args:
-      - run
-      - "--filename=kubernetes/$BRANCH_NAME/tertiary-stream-deployment.yaml"
-      - "--image=$_IMAGE_NAME_TS:$COMMIT_SHA"
-      - "--cluster=$_GKE_CLUSTER"
-      - "--location=$_GKE_LOCATION"
-      - "--namespace=$_K8S_NAMESPACE"
-      - "--timeout=10m"
+  # # Deploying to k8s
+  # - id: Applying Redis server to k8s
+  #   name: gcr.io/cloud-builders/gke-deploy
+  #   args:
+  #     - run
+  #     - "--filename=kubernetes/redis-deployment.yaml"
+  #     - "--cluster=$_GKE_CLUSTER"
+  #     - "--location=$_GKE_LOCATION"
+  #     - "--namespace=$_K8S_NAMESPACE"
+  # - id: Clearing build folder from Redis
+  #   name: bash
+  #   args:
+  #     - rm
+  #     - "-rf"
+  #     - output
+  # - id: Applying contract listener to k8s
+  #   name: gcr.io/cloud-builders/gke-deploy
+  #   args:
+  #     - run
+  #     - "--filename=kubernetes/$BRANCH_NAME/contract-listener-deployment.yaml"
+  #     - "--image=$_IMAGE_NAME_CL:$COMMIT_SHA"
+  #     - "--cluster=$_GKE_CLUSTER"
+  #     - "--location=$_GKE_LOCATION"
+  #     - "--namespace=$_K8S_NAMESPACE"
+  # - id: Clearing build folder from contract listener
+  #   name: bash
+  #   args:
+  #     - rm
+  #     - "-rf"
+  #     - output
+  # - id: Applying ancillary stream to k8s
+  #   name: gcr.io/cloud-builders/gke-deploy
+  #   args:
+  #     - run
+  #     - "--filename=kubernetes/$BRANCH_NAME/ancillary-stream-deployment.yaml"
+  #     - "--image=$_IMAGE_NAME_AS:$COMMIT_SHA"
+  #     - "--cluster=$_GKE_CLUSTER"
+  #     - "--location=$_GKE_LOCATION"
+  #     - "--namespace=$_K8S_NAMESPACE"
+  # - id: Clearing build folder from ancillary stream
+  #   name: bash
+  #   args:
+  #     - rm
+  #     - "-rf"
+  #     - output
+  # - id: Applying primary stream to k8s
+  #   name: gcr.io/cloud-builders/gke-deploy
+  #   args:
+  #     - run
+  #     - "--filename=kubernetes/$BRANCH_NAME/primary-stream-deployment.yaml"
+  #     - "--image=$_IMAGE_NAME_PS:$COMMIT_SHA"
+  #     - "--cluster=$_GKE_CLUSTER"
+  #     - "--location=$_GKE_LOCATION"
+  #     - "--namespace=$_K8S_NAMESPACE"
+  # - id: Clearing build folder from primary stream
+  #   name: bash
+  #   args:
+  #     - rm
+  #     - "-rf"
+  #     - output
+  # - id: Applying tertiary stream to k8s
+  #   name: gcr.io/cloud-builders/gke-deploy
+  #   args:
+  #     - run
+  #     - "--filename=kubernetes/$BRANCH_NAME/tertiary-stream-deployment.yaml"
+  #     - "--image=$_IMAGE_NAME_TS:$COMMIT_SHA"
+  #     - "--cluster=$_GKE_CLUSTER"
+  #     - "--location=$_GKE_LOCATION"
+  #     - "--namespace=$_K8S_NAMESPACE"
+  #     - "--timeout=10m"
 
   # Building and deploying frontend
 
@@ -198,17 +198,20 @@ steps:
     entrypoint: "yarn"
     args: ["run", "build"]
 
-  - id: Selecting firebase env
-    name: "gcr.io/$PROJECT_ID/firebase:latest"
-    args: ["use", "$BRANCH_NAME"]
-  - id: Deploying to firebase
-    name: "gcr.io/$PROJECT_ID/firebase:latest"
-    args: ["deploy", "--project=$PROJECT_ID"]
 
-  # - id: Deploying Firebase
-  #   name: "node:20"
-  #   entrypoint: "yarn"
-  #   args: ["deploy-firebase-$BRANCH_NAME"]
+
+# ---Attempt #1
+  # - id: Selecting firebase env
+  #   name: "gcr.io/$PROJECT_ID/firebase:latest"
+  #   args: ["use", "$BRANCH_NAME"]
+  # - id: Deploying to firebase
+  #   name: "gcr.io/$PROJECT_ID/firebase:latest"
+  #   args: ["deploy", "--project=$PROJECT_ID"]
+# ---Attempt #2
+  - id: Deploying Firebase
+    name: "node:20"
+    entrypoint: "yarn"
+    args: ["run", "deploy-firebase-$BRANCH_NAME"]
 
 timeout: 3600s
 options:
