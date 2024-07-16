@@ -17,14 +17,14 @@ steps:
     args:
       - -c
       - |
-          set -x
-          if [ "$BRANCH_NAME" == "main" ]; then
-            gcloud kms decrypt --ciphertext-file=chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json.enc --plaintext-file=chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json --location=global --keyring=chess-wager --key=chess-wager-main
-          elif [ "$BRANCH_NAME" == "test" ]; then
-            gcloud kms decrypt --ciphertext-file=chess-wager-test-firebase-adminsdk-hl438-e85a947be8.json.enc --plaintext-file=chess-wager-test-firebase-adminsdk-hl438-e85a947be8.json --location=global --keyring=chess-wager --key=chess-wager-test
-          else
-            echo "Unknown branch name. Skipping decryption."
-          fi
+        set -x
+        if [ "$BRANCH_NAME" == "main" ]; then
+          gcloud kms decrypt --ciphertext-file=chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json.enc --plaintext-file=chess-wager-main-firebase-adminsdk-bgzkv-ae51fbde5c.json --location=global --keyring=chess-wager --key=chess-wager-main
+        elif [ "$BRANCH_NAME" == "test" ]; then
+          gcloud kms decrypt --ciphertext-file=chess-wager-test-firebase-adminsdk-hl438-e85a947be8.json.enc --plaintext-file=chess-wager-test-firebase-adminsdk-hl438-e85a947be8.json --location=global --keyring=chess-wager --key=chess-wager-test
+        else
+          echo "Unknown branch name. Skipping decryption."
+        fi
 
   # Installing dependencies
   - id: Installing dependencies for frontend
@@ -35,16 +35,12 @@ steps:
     name: "node:20"
     entrypoint: "npm"
     args: ["install", "-g", "firebase-tools"]
-  # - id: Installing hardhat
-  #   name: "node:20"
-  #   entrypoint: "yarn"
-  #   args: ["add", "-D", "hardhat"]
 
   # Testing @todo: Uncomment when tests are ready
-  - id: Running Hardhat Tests
-    name: "node:20"
-    entrypoint: "yarn"
-    args: ["run", "test-hardhat"]
+  # - id: Running Hardhat Tests
+  #   name: "node:20"
+  #   entrypoint: "yarn"
+  #   args: ["run", "test-hardhat"]
 
   # - id: Running Cypress tests
   #   name: "cypress/included:13.6.4"
@@ -199,28 +195,33 @@ steps:
     entrypoint: "yarn"
     args: ["run", "build"]
 
-
-
-# ---Attempt #1
+  # ---Attempt #1
   # - id: Selecting firebase env
   #   name: "gcr.io/$PROJECT_ID/firebase:latest"
   #   args: ["use", "$BRANCH_NAME"]
   # - id: Deploying to firebase
   #   name: "gcr.io/$PROJECT_ID/firebase:latest"
   #   args: ["deploy", "--project=$PROJECT_ID"]
-# ---Attempt #2
+  # ---Attempt #2
   # - id: Deploying Firebase
   #   name: "node:20"
   #   entrypoint: "yarn"
   #   args: ["run", "deploy-firebase-$BRANCH_NAME"]
-  
-    # Deploy to Firebase
+
+  # Deploy to Firebase
   - id: Selecting firebase env
-    name: "gcr.io/$PROJECT_ID/firebase"
-    args: ["use", "$BRANCH_NAME"]
+    name: "node:20"
+    entrypoint: "sh"
+    env:
+      - "FIREBASE_TOKEN=${VITE_FIREBASE_TOKEN}"
+    args: ["-c", "firebase use $BRANCH_NAME"]
+
   - id: Deploying to firebase
-    name: "gcr.io/$PROJECT_ID/firebase"
-    args: ["deploy", "--project=$PROJECT_ID"]
+    name: "node:20"
+    entrypoint: "sh"
+    env:
+      - "FIREBASE_TOKEN=${VITE_FIREBASE_TOKEN}"
+    args: ["-c", "firebase deploy --project=$PROJECT_ID"]
 
 timeout: 3600s
 options:
