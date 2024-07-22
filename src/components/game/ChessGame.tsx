@@ -1,9 +1,9 @@
-import Chessground from "@react-chess/chessground"
 import { motion } from "framer-motion"
 import { PlayerData } from "./PlayerData"
 import { GameResultPopup } from "./popup/GameResultPopup"
 import { EvalBar } from "./EvalBar"
 import { GameStreamState } from "../../containers/GameStreamState"
+import { Chessboard } from "kokopu-react"
 
 // We use an old version of chessground because it looks better. If we ever upgarde, uncomment the styles below.
 // import "chessground/assets/chessground.base.css"
@@ -62,18 +62,12 @@ export const ChessGame: React.FC = () => {
                 />
 
                 <div className="aspect-h-1 aspect-w-1 border-b border-t border-stone-600 dark:border-stone-400">
-                  <Chessground
-                    contained
-                    config={{
-                      check: shouldShowCheckmate,
-                      fen,
-                      orientation,
-                      draggable: { enabled: false },
-                      movable: {
-                        free: false,
-                      },
-                      coordinates: false,
-                    }}
+                  <Chessboard
+                    position={fen}
+                    flipped={orientation === "white" ? false : true}
+                    turnVisible={false}
+                    coordinateVisible={false}
+                    animated
                   />
                 </div>
 

@@ -24,7 +24,6 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.14",
     "@openzeppelin/contracts": "^4.8.3",
-    "@react-chess/chessground": "^1.2.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@truffle/hdwallet-provider": "^2.1.15",
     "can-ndjson-stream": "^1.0.2",
@@ -33,6 +32,8 @@
     "ethers": "^5.7.2",
     "firebase": "^10.9.0",
     "framer-motion": "^10.9.1",
+    "kokopu": "^4.11.2",
+    "kokopu-react": "^3.3.0",
     "react": "^18.2.0",
     "react-currency-input-field": "^3.8.0",
     "react-dom": "^18.2.0",
@@ -90,7 +91,6 @@
       "cypress-firebase",
       "react-firebase-hooks",
       "ethers",
-      "@react-chess/chessground",
       "framer-motion",
       "@openzeppelin/contracts"
     ]

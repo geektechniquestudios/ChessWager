@@ -17,7 +17,9 @@ const isTest = import.meta.env.VITE_IS_TEST === "true"
 const useGameStreamState = () => {
   const { setGameId } = GameState.useContainer()
 
-  const [fen, setFen] = useState("")
+  const [fen, setFen] = useState(
+    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+  )
   const [whiteName, setWhiteName] = useState("")
   const [whiteTime, setWhiteTime] = useState(0)
   const [whiteRating, setWhiteRating] = useState(0)
