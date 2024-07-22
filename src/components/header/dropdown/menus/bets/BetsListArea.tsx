@@ -40,12 +40,14 @@ export const BetsListArea: React.FC = ({}) => {
       bet.id = d.id
       return bet
     }) as Bet[]
-    setBets([...(bets ?? []), ...(oldBets ?? [])])
+    setBets([...bets, ...oldBets])
     if (oldBets.length < amountToLoad) setHasMore(false)
   }
 
   useEffect(() => {
-    loadMoreBets().then(() => setIsLoading(false))
+    loadMoreBets().then(() => {
+      setIsLoading(false)
+    })
   }, [])
 
   return (
