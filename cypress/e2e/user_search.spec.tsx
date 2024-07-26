@@ -25,8 +25,8 @@ describe("user search", () => {
   it("should open to clicked user menu if list item is clicked", () => {
     cy.get('button[title="Search Users"]').click().wait(2000)
     cy.get('input[id="search-users-input"]')
-      .type("terry")
-      .should("have.value", "terry")
+      .type("ter")
+      .should("have.value", "ter")
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().click()
     })
