@@ -93,8 +93,7 @@ export const useStockfish = (fen: string) => {
   const [areWorkersReady, setAreWorkersReady] = useState(false)
 
   useEffect(() => {
-    if (!areWorkersReady) return
-    analyzeFen(fen)
+    if (areWorkersReady) analyzeFen(fen)
   }, [fen])
 
   useEffect(() => {
