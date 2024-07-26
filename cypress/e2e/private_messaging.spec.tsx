@@ -3,13 +3,20 @@ describe("private messaging", () => {
     cy.visit("/").wait(2000)
     cy.login().wait(1000)
 
+    const [leftUser, rightUser] = [
+      Cypress.env("CYPRESS_TEST_UID"),
+      Cypress.env("CYPRESS_TEST_UID_2"),
+    ].sort()
+
+    const conversationId = `${leftUser}-${rightUser}`
+
     cy.callFirestore(
       "delete",
-      `conversations/${Cypress.env("CYPRESS_TEST_UID_2")}-${Cypress.env("CYPRESS_TEST_UID")}/messages`,
+      `conversations/${conversationId}/messages`,
     ).wait(2000)
     cy.callFirestore(
       "delete",
-      `conversations/${Cypress.env("CYPRESS_TEST_UID_2")}-${Cypress.env("CYPRESS_TEST_UID")}`,
+      `conversations/${conversationId}`,
     ).wait(2000)
   })
   afterEach(cy.logout)

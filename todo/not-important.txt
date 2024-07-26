@@ -32,4 +32,4 @@ not important
 -how to play sections should have checkmark if completed
 -countdown should not start until second move
 -scrollbar appears when resizing narrow window with only chat showing
-
+-sign in button should match chat and place bet
