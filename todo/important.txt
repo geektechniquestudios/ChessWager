@@ -29,3 +29,5 @@ important:
 -eval bar cypress test for on/off functionality 
 -bet sorting bug over time when toggling real-time. hard to reproduce.
 -if wallet is on wrong network, it should say switch to avax, but instead it says insufficient funds. Logic already written in frozr in wallet.tsx
+-build pipeline needs to skip cypress tests for main branch because it overwrites db
+-message if lichess or payment systems are down
