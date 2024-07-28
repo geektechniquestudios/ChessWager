@@ -22,8 +22,7 @@ export const Main: React.FC = () => {
     isWalletConnected,
     disconnectWallet,
   } = AuthState.useContainer()
-  const { setIsDropdownOpen, setMenuHeight, setActiveMenu, goToMenu } =
-    DropdownState.useContainer()
+  const { goToMenu, closeDropdownMenu } = DropdownState.useContainer()
   const { isDarkOn, setIsDarkOn } = DarkModeState.useContainer()
   return (
     <Menu
@@ -62,9 +61,7 @@ export const Main: React.FC = () => {
           {!isWalletConnected && (
             <DropdownItem
               onClick={() => {
-                setIsDropdownOpen(false)
-                setActiveMenu("")
-                setMenuHeight(0)
+                closeDropdownMenu()
                 connectWallet()
               }}
               leftIcon={<MdAttachMoney />}
@@ -88,9 +85,7 @@ export const Main: React.FC = () => {
             <DropdownItem
               id="dropdown-sign-in-button"
               onClick={() => {
-                setIsDropdownOpen(false)
-                setActiveMenu("")
-                setMenuHeight(0)
+                closeDropdownMenu()
                 signInWithGoogle()
               }}
               leftIcon={<RiLoginCircleLine />}
@@ -101,10 +96,9 @@ export const Main: React.FC = () => {
         <div>
           {user && (
             <DropdownItem
+              id="dropdown-sign-out-button"
               onClick={() => {
-                setIsDropdownOpen(false)
-                setActiveMenu("")
-                setMenuHeight(0)
+                closeDropdownMenu()
                 signOutWithGoogle()
               }}
               leftIcon={<RiLogoutCircleLine />}

@@ -1,4 +1,5 @@
 beforeEach(() => {
+  cy.logout()
   cy.visit("/")
 })
 
@@ -48,9 +49,14 @@ describe("login/logout flow", () => {
   it("should toggle the 'sign in' and 'sign out' buttons in the dropdown menu", () => {
     cy.get('button[id="main-header-button"]').click()
     cy.get("a[id='dropdown-sign-in-button']").should("exist")
+
     cy.login()
+    cy.get('button[id="main-header-button"]')
     cy.get("a[id='dropdown-sign-in-button']").should("not.exist")
+    cy.get("a[id='dropdown-sign-out-button']").should("exist")
+
     cy.logout()
+    cy.get('button[id="main-header-button"]')
     cy.get("a[id='dropdown-sign-in-button']").should("exist")
   })
 })
