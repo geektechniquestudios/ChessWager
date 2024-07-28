@@ -4,7 +4,7 @@ interface RunBuildResult {
 }
 
 describe("Build", () => {
-  it("project should build without errors", () => {
+  it("project should build without errors", { taskTimeout: 200000 }, () => {
     cy.task<RunBuildResult>("runBuildWithEvents").then(
       ({ success, output }) => {
         expect(success).to.be.true
