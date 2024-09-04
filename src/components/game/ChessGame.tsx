@@ -4,12 +4,9 @@ import { PlayerData } from "./PlayerData"
 import { GameResultPopup } from "./popup/GameResultPopup"
 import { EvalBar } from "./EvalBar"
 import { GameStreamState } from "../../containers/GameStreamState"
-
-// We use an old version of chessground because it looks better. If we ever upgarde, uncomment the styles below.
-// import "chessground/assets/chessground.base.css"
-// import "chessground/assets/chessground.brown.css"
-// import "chessground/assets/chessground.cburnett.css"
-// import "chessground/assets/chessground.base.css"
+import "../../style/chessground.base.scss"
+import "../../style/chessground.brown.scss"
+import "../../style/chessground.cburnett.scss"
 
 export const ChessGame: React.FC = () => {
   const {

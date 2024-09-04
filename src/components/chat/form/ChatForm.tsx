@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore"
 import { CustomSwal } from "../../popups/CustomSwal"
 import { ChatFormState } from "../../../containers/ChatFormState"
-import { CharacterConuter } from "./CharacterConuter"
+import { CharacterCounter } from "./CharacterCounter"
 import { ReplyingToInForm } from "./ReplyingToInForm"
 
 interface Props {
@@ -95,7 +95,7 @@ export const ChatForm: React.FC<Props> = ({ bottomOfChatRef, messagesRef }) => {
               if (!e.shiftKey && e.key === "Enter") sendMessage(e)
             }}
           />
-          <CharacterConuter />
+          <CharacterCounter />
         </form>
       </fieldset>
     </div>
