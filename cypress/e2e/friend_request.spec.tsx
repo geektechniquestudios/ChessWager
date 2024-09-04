@@ -12,7 +12,7 @@ describe("friend requesting", () => {
       friends: [],
       blockedUsers: [],
     })
-    cy.callFirestore("update", `users/XGXaJZxzR9gArv6wKEHZ5MuvSnd2`, {
+    cy.callFirestore("update", `users/${Cypress.env("CYPRESS_TEST_UID_2")}`, {
       sentFriendRequests: [],
       redactedFriendRequests: [],
       friends: [],
@@ -21,7 +21,7 @@ describe("friend requesting", () => {
 
     cy.callFirestore(
       "delete",
-      `users/XGXaJZxzR9gArv6wKEHZ5MuvSnd2/notifications`,
+      `users/${Cypress.env("CYPRESS_TEST_UID_2")}/notifications`,
     )
     cy.callFirestore(
       "delete",
@@ -59,7 +59,7 @@ describe("friend requesting", () => {
     cy.get('div[id="header-middle"]').click().wait(1000)
     cy.logout()
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
+    cy.login(Cypress.env("CYPRESS_TEST_UID_2")).wait(1000)
     cy.get('button[title="Notifications"]').click().wait(1000)
     cy.get('div[id="notification-list"]')
       .find("button")
@@ -77,7 +77,7 @@ describe("friend requesting", () => {
     cy.get('div[id="header-middle"]').click()
     cy.logout()
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
+    cy.login(Cypress.env("CYPRESS_TEST_UID_2")).wait(1000)
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').find("button").eq(0).click()
     cy.get('div[id="requests"]').within(() => {
@@ -102,7 +102,7 @@ describe("friend requesting", () => {
     cy.get('div[id="header-middle"]').click()
     cy.logout()
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
+    cy.login(Cypress.env("CYPRESS_TEST_UID_2")).wait(1000)
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').within(() => {
       cy.get("button").first().click()

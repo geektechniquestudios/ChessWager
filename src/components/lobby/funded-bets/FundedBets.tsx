@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { Bet } from "../../../interfaces/Bet"
-import "../../../style/scrollbar.scss"
 import { AuthState } from "../../../containers/AuthState"
 import { BetsState } from "../../../containers/BetsState"
 import { AscDescButton } from "../lobby-header/AscDescButton"

@@ -1,8 +1,8 @@
-import { ChatFormState } from "../../containers/ChatFormState"
+import { ChatFormState } from "../../../containers/ChatFormState"
 
 interface Props {}
 
-export const CharacterConuter: React.FC<Props> = ({}) => {
+export const CharacterCounter: React.FC<Props> = ({}) => {
   const { chatFormValue } = ChatFormState.useContainer()
 
   const textOverColor =

@@ -1,7 +1,6 @@
 import { collection, limit, Query, query, where } from "firebase/firestore"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import type { User } from "../../../../../interfaces/User"
-import "../../../../../style/scrollbar.scss"
 import { AuthState } from "../../../../../containers/AuthState"
 import { UserDataState } from "../../../../../containers/UserDataState"
 import { UsersListItem } from "./UsersListItem"

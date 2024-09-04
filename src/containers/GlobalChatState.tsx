@@ -21,8 +21,16 @@ const useGlobalChatState = () => {
     orderBy("createdAt", "desc"),
     where("createdAt", ">", timestamp),
   ) as Query<Message>
-  const [messages] = useCollectionData<Message>(q)
-  return { messages }
+  const [messages, isLoading] =
+    useCollectionData<Message>(q, { idField: "id" }) ?? []
+  const [messageIdBeingRepliedTo, setMessageIdBeingRepliedTo] =
+    useState<string>("")
+  return {
+    messages,
+    messageIdBeingRepliedTo,
+    setMessageIdBeingRepliedTo,
+    isLoading,
+  }
 }
 
 export const GlobalChatState = createContainer(useGlobalChatState)

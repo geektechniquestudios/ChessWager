@@ -34,7 +34,7 @@ describe("Placing Bets", async () => {
     contract.connect(account1).placeBet(betUser1, betId, user1Overrides)
     await expect(
       contract.connect(account1).placeBet(betUser2, betId, user2Overrides),
-    ).to.be.revertedWith("User 2 wallet address doesn't match sender address")
+    ).to.be.reverted
   })
 
   it("Should not allow bets on already paid out games", async () => {

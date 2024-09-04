@@ -6,7 +6,7 @@ import { AuthState } from "../../containers/AuthState"
 import { ChatToggleState } from "../../containers/ChatToggleState"
 import { WindowSizeState } from "../../containers/WindowSizeState"
 import { ChatBody } from "./ChatBody"
-import { ChatForm } from "./ChatForm"
+import { ChatForm } from "./form/ChatForm"
 import { ChatHeader } from "./ChatHeader"
 
 export const PublicChat: React.FC = () => {

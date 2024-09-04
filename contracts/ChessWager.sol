@@ -93,10 +93,12 @@ contract ChessWager is Ownable, Pausable {
       "Bet side must only be 'white' or 'black'"
     );
 
-    totalWagered += msg.value;
-
     if (betIdToBetData[_betId].multiplier == 0) {
       // bet is new
+      require(
+        bytes(betIdToWhoBetFirst[_betId]).length == 0,
+        "Bet already initialized"
+      );
       betIdToIsBetMatched[_betId] = false;
       require(
         !bannedUsers[_bet.user1Metamask] && !bannedUsers[_bet.user2Metamask],
@@ -125,6 +127,10 @@ contract ChessWager is Ownable, Pausable {
       betIdToBetData[_betId] = _bet;
     } else {
       // second user has placed bet
+      require(
+        bytes(betIdToWhoBetFirst[_betId]).length > 0,
+        "Bet not initialized"
+      );
       // requirements to check for matching values between user1 and user2
       require(
         betIdToBetData[_betId].amount == _bet.amount,
@@ -196,6 +202,8 @@ contract ChessWager is Ownable, Pausable {
       // bet is matched, both users have paid
       betIdToIsBetMatched[_betId] = true;
     }
+
+    totalWagered += msg.value;
   }
 
   // winning side can be "white", "black", or "draw"

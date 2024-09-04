@@ -34,7 +34,7 @@ describe("user search", () => {
   })
 
   it("should list friend if 'friends only' is selected", () => {
-    cy.callFirestore("update", `users/XGXaJZxzR9gArv6wKEHZ5MuvSnd2`, {
+    cy.callFirestore("update", `users/${Cypress.env("CYPRESS_TEST_UID_2")}`, {
       sentFriendRequests: [],
       redactedFriendRequests: [],
       friends: [],
@@ -56,7 +56,7 @@ describe("user search", () => {
 
     cy.get('button[id="main-header-button"]').click().wait(1000)
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(2000)
+    cy.login(Cypress.env("CYPRESS_TEST_UID_2")).wait(2000)
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').find("button").eq(0).click()
     cy.get('div[id="requests"]').within(() => {

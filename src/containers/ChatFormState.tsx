@@ -8,6 +8,8 @@ const useChatFormState = () => {
   )
   const [reportFormValue, setReportFormValue] = useState("")
   const [contactFormValue, setContactFormValue] = useState("")
+  const [replyingToMessageId, setReplyingToMessageId] = useState("")
+
   return {
     chatFormValue,
     setChatFormValue,
@@ -17,6 +19,8 @@ const useChatFormState = () => {
     setReportFormValue,
     contactFormValue,
     setContactFormValue,
+    replyingToMessageId,
+    setReplyingToMessageId,
   }
 }
 

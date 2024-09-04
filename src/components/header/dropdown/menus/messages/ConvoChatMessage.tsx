@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { Message } from "../../../../../interfaces/Message"
-import { MessageBody } from "../../../../chat/MessageBody"
+import { MessageBody } from "../../../../chat/message/MessageBody"
 import { AuthState } from "../../../../../containers/AuthState"
 import { ConvoUserTitle } from "./ConvoUserTitle"
 

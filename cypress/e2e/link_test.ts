@@ -6,7 +6,7 @@ export const linkTest = (link: string, id: string, componentToTest: string) => {
 
   describe(componentToTest, () => {
     beforeEach(() => {
-      cy.visit("/")
+      cy.visit("/").wait(2000)
     })
     beforeEach(openToSocialsMenu)
 
@@ -16,7 +16,7 @@ export const linkTest = (link: string, id: string, componentToTest: string) => {
     })
 
     it("should open to the correct url", () => {
-      cy.get(`a[id=${id}]`).should("have.attr", "href", link).wait(1000)
+      cy.get(`a[id=${id}]`).should("have.attr", "href", link)
     })
   })
 }

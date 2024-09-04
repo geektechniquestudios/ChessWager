@@ -13,12 +13,12 @@ describe("notifications", () => {
       "set",
       `users/${Cypress.env("CYPRESS_TEST_UID")}/notifications/testid`,
       {
-        clickedUserId: "XGXaJZxzR9gArv6wKEHZ5MuvSnd2",
+        clickedUserId: Cypress.env("CYPRESS_TEST_UID_2"),
         createdAt: firebase.firestore.Timestamp.now(),
         isRead: false,
         openToMenu: "clickedUser",
         text: "Sumpro Molar accepted your friend request.",
-        uid: "XGXaJZxzR9gArv6wKEHZ5MuvSnd2",
+        uid: Cypress.env("CYPRESS_TEST_UID_2"),
       },
     ).wait(2000)
     cy.get('button[title="Notifications"]').click()
@@ -40,12 +40,12 @@ describe("notifications", () => {
       "set",
       `users/${Cypress.env("CYPRESS_TEST_UID")}/notifications/testid`,
       {
-        clickedUserId: "XGXaJZxzR9gArv6wKEHZ5MuvSnd2",
+        clickedUserId: Cypress.env("CYPRESS_TEST_UID_2"),
         createdAt: firebase.firestore.Timestamp.now(),
         isRead: false,
         openToMenu: "clickedUser",
         text: "Sumpro Molar accepted your friend request.",
-        uid: "XGXaJZxzR9gArv6wKEHZ5MuvSnd2",
+        uid: Cypress.env("CYPRESS_TEST_UID_2"),
       },
     )
     cy.get('button[title="Notifications"]').click()

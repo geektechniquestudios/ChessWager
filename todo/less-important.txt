@@ -31,3 +31,10 @@ less important
   ) as DocumentReference<User>
 -add test for firebase deploy
 -chat timeout
+-when a user is banned, they should be removed from all games and chats. Bets that have already been placed but not paid need to be handled
+-messages need reciept and retry functionality
+-add firebase "onRejected" and "onFulfilled" to numerous situations to handle when a promise is rejected
+-test need to be added for chat replies
+-wager form can have 2 bets created at once if button spammed in low teir mobile throttling
+-debounce in search area
+-in the main dropdown, notifications and bets history should be moved into container so that the data doesn't need to be refetched when dropdown is reopened. Refer to ConversationsList for reference. 

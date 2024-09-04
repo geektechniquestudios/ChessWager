@@ -3,13 +3,20 @@ describe("private messaging", () => {
     cy.visit("/").wait(2000)
     cy.login().wait(1000)
 
+    const [leftUser, rightUser] = [
+      Cypress.env("CYPRESS_TEST_UID"),
+      Cypress.env("CYPRESS_TEST_UID_2"),
+    ].sort()
+
+    const conversationId = `${leftUser}-${rightUser}`
+
     cy.callFirestore(
       "delete",
-      "conversations/XGXaJZxzR9gArv6wKEHZ5MuvSnd2-l4UCe97h60ZCgqlZBh42rajEBp73/messages",
+      `conversations/${conversationId}/messages`,
     ).wait(2000)
     cy.callFirestore(
       "delete",
-      "conversations/XGXaJZxzR9gArv6wKEHZ5MuvSnd2-l4UCe97h60ZCgqlZBh42rajEBp73",
+      `conversations/${conversationId}`,
     ).wait(2000)
   })
   afterEach(cy.logout)
@@ -54,7 +61,7 @@ describe("private messaging", () => {
 
     cy.get('button[id="main-header-button"]').click().wait(1000)
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
+    cy.login(Cypress.env("CYPRESS_TEST_UID_2")).wait(1000)
     cy.get('button[title="Messages"]').click()
     cy.get('div[id="conversations-list"]').within(() => {
       cy.get("a").first().click().wait(2000)
@@ -76,7 +83,8 @@ describe("private messaging", () => {
     cy.get('button[id="main-header-button"]').click().wait(1000)
     cy.logout()
 
-    cy.login("XGXaJZxzR9gArv6wKEHZ5MuvSnd2").wait(1000)
+    cy.login(Cypress.env("CYPRESS_TEST_UID_2")).wait(1000)
+
     cy.get('button[title="Messages"]').click().wait(2000)
     cy.get('div[id="conversations-list"]').within(() => {
       cy.get("a").first().should("have.css", "font-weight", "700").click()
