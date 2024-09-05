@@ -34,7 +34,7 @@
     "chess.js": "^1.0.0-beta.8",
     "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
-    "firebase": "^10.9.0",
+    "firebase": "^10.13.1",
     "framer-motion": "^11.3.31",
     "react": "^18.2.0",
     "react-currency-input-field": "^3.8.0",

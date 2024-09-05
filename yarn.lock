@@ -6107,7 +6107,7 @@ __metadata:
     dotenv: ^16.4.5
     ethereum-waffle: ^4.0.10
     ethers: ^5.7.2
-    firebase: ^10.9.0
+    firebase: ^10.13.1
     firebase-admin: ^12.0.0
     framer-motion: ^11.3.31
     hardhat: ^2.22.1
@@ -7256,9 +7256,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.4":
-  version: 1.5.14
-  resolution: "electron-to-chromium@npm:1.5.14"
-  checksum: ce01d022011dc802e9129cdff9505656cb25848d851611c7da977f7c9d040b925d600a0679b62ce775528c8e0d8a79d3426565e1354b2d3834c5c18ccbc83afe
+  version: 1.5.15
+  resolution: "electron-to-chromium@npm:1.5.15"
+  checksum: 2064b4d326569c949d82463ce196b342e2b89f85fe8cf8bc2a454475c7e7c359a0c654c54e587fcb9360fd2a9b112ef62b5217c3c521eee6e005da7a4b15c7c5
   languageName: node
   linkType: hard
 
@@ -8614,7 +8614,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"firebase@npm:^10.9.0":
+"firebase@npm:^10.13.1":
   version: 10.13.1
   resolution: "firebase@npm:10.13.1"
   dependencies:
