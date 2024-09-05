@@ -1390,14 +1390,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/mount-utils@npm:^4.0.0":
+"@cypress/mount-utils@npm:^4.1.1":
   version: 4.1.1
   resolution: "@cypress/mount-utils@npm:4.1.1"
   checksum: b72aae136d3abd357d654984efdce1c404adf78ebda15d0154cb25b6693e04b09546e45cc9a3a27b1e4b4db135af2879bdf3d0f220e7e24b42e630318e0949be
   languageName: node
   linkType: hard
 
-"@cypress/react@npm:^8.0.0":
+"@cypress/react@npm:^8.0.2":
   version: 8.0.2
   resolution: "@cypress/react@npm:8.0.2"
   peerDependencies:
@@ -1413,8 +1413,8 @@ __metadata:
   linkType: hard
 
 "@cypress/request@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@cypress/request@npm:3.0.1"
+  version: 3.0.2
+  resolution: "@cypress/request@npm:3.0.2"
   dependencies:
     aws-sign2: ~0.7.0
     aws4: ^1.8.0
@@ -1423,7 +1423,7 @@ __metadata:
     extend: ~3.0.2
     forever-agent: ~0.6.1
     form-data: ~2.3.2
-    http-signature: ~1.3.6
+    http-signature: ~1.4.0
     is-typedarray: ~1.0.0
     isstream: ~0.1.2
     json-stringify-safe: ~5.0.1
@@ -1434,11 +1434,11 @@ __metadata:
     tough-cookie: ^4.1.3
     tunnel-agent: ^0.6.0
     uuid: ^8.3.2
-  checksum: 7175522ebdbe30e3c37973e204c437c23ce659e58d5939466615bddcd58d778f3a8ea40f087b965ae8b8138ea8d102b729c6eb18c6324f121f3778f4a2e8e727
+  checksum: ab7dd1cf2576699bfef3b332155f33ec52b80521856e3d200aad8b62bb55b8354da8b3f4adf5bca270550bb789b9c594a3e75bfd3392430388052cadfc95e4b1
   languageName: node
   linkType: hard
 
-"@cypress/vite-dev-server@npm:^5.0.7":
+"@cypress/vite-dev-server@npm:^5.2.0":
   version: 5.2.0
   resolution: "@cypress/vite-dev-server@npm:5.2.0"
   dependencies:
@@ -4679,7 +4679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.2.19":
+"@types/react-dom@npm:^18.3.0":
   version: 18.3.0
   resolution: "@types/react-dom@npm:18.3.0"
   dependencies:
@@ -4706,7 +4706,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-transition-group@npm:^4.4.10, @types/react-transition-group@npm:^4.4.11":
+"@types/react-transition-group@npm:^4.4.11":
   version: 4.4.11
   resolution: "@types/react-transition-group@npm:4.4.11"
   dependencies:
@@ -4715,7 +4715,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.56":
+"@types/react@npm:*, @types/react@npm:^18.3.5":
   version: 18.3.5
   resolution: "@types/react@npm:18.3.5"
   dependencies:
@@ -4853,7 +4853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react-swc@npm:^3.6.0":
+"@vitejs/plugin-react-swc@npm:^3.7.0":
   version: 3.7.0
   resolution: "@vitejs/plugin-react-swc@npm:3.7.0"
   dependencies:
@@ -5350,7 +5350,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.4.17":
+"autoprefixer@npm:^10.4.20":
   version: 10.4.20
   resolution: "autoprefixer@npm:10.4.20"
   dependencies:
@@ -6075,9 +6075,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "chess-wager@workspace:."
   dependencies:
-    "@cypress/mount-utils": ^4.0.0
-    "@cypress/react": ^8.0.0
-    "@cypress/vite-dev-server": ^5.0.7
+    "@cypress/mount-utils": ^4.1.1
+    "@cypress/react": ^8.0.2
+    "@cypress/vite-dev-server": ^5.2.0
     "@emotion/react": ^11.13.3
     "@emotion/styled": ^11.13.0
     "@mui/material": ^6.0.2
@@ -6089,18 +6089,18 @@ __metadata:
     "@truffle/hdwallet-provider": ^2.1.15
     "@types/cross-spawn": ^6.0.6
     "@types/cypress-dotenv": ^2.0.3
-    "@types/react": ^18.2.56
-    "@types/react-dom": ^18.2.19
+    "@types/react": ^18.3.5
+    "@types/react-dom": ^18.3.0
     "@types/react-infinite-scroller": ^1.2.5
     "@types/react-toggle": ^4.0.5
-    "@types/react-transition-group": ^4.4.10
-    "@vitejs/plugin-react-swc": ^3.6.0
-    autoprefixer: ^10.4.17
+    "@types/react-transition-group": ^4.4.11
+    "@vitejs/plugin-react-swc": ^3.7.0
+    autoprefixer: ^10.4.20
     can-ndjson-stream: ^1.0.2
     chai: ^4.3.7
     chess.js: ^1.0.0-beta.8
     cross-spawn: ^7.0.3
-    cypress: ^13.6.4
+    cypress: ^13.14.2
     cypress-dotenv: ^2.0.0
     cypress-firebase: ^2.2.3
     cypress-react-selector: ^3.0.0
@@ -6108,34 +6108,34 @@ __metadata:
     ethereum-waffle: ^4.0.10
     ethers: ^5.7.2
     firebase: ^10.13.1
-    firebase-admin: ^12.0.0
+    firebase-admin: ^12.4.0
     framer-motion: ^11.5.4
-    hardhat: ^2.22.1
-    postcss: ^8.4.35
-    prettier: ^3.2.5
-    prettier-plugin-solidity: ^1.3.1
-    prettier-plugin-tailwindcss: ^0.5.11
-    react: ^18.2.0
+    hardhat: ^2.22.10
+    postcss: ^8.4.45
+    prettier: ^3.3.3
+    prettier-plugin-solidity: ^1.4.1
+    prettier-plugin-tailwindcss: ^0.6.6
+    react: ^18.3.1
     react-currency-input-field: ^3.8.0
-    react-dom: ^18.2.0
+    react-dom: ^18.3.1
     react-firebase-hooks: ^4.0.2
     react-ga4: ^2.1.0
-    react-icons: ^5.0.1
+    react-icons: ^5.3.0
     react-infinite-scroll-component: ^6.1.0
-    react-test-renderer: ^18.2.0
+    react-test-renderer: ^18.3.1
     react-toggle: ^4.1.3
     react-transition-group: ^4.4.5
-    sass: ^1.72.0
-    start-server-and-test: ^2.0.3
-    sweetalert2: ^11.10.7
+    sass: ^1.78.0
+    start-server-and-test: ^2.0.5
+    sweetalert2: ^11.13.2
     tailwind: ^4.0.0
-    tailwindcss: ^3.4.1
-    typescript: ^5.3.3
+    tailwindcss: ^3.4.10
+    typescript: ^5.5.4
     unstated-next: ^1.1.0
-    vite: ^5.1.3
-    vite-plugin-pwa: ^0.19.4
-    web-vitals: ^3.5.2
-    yarn-upgrade-all: ^0.7.2
+    vite: ^5.4.3
+    vite-plugin-pwa: ^0.20.5
+    web-vitals: ^4.2.3
+    yarn-upgrade-all: ^0.7.4
   languageName: unknown
   linkType: soft
 
@@ -6793,7 +6793,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^13.6.4":
+"cypress@npm:^13.14.2":
   version: 13.14.2
   resolution: "cypress@npm:13.14.2"
   dependencies:
@@ -6924,7 +6924,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:4.3.6, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.3.5":
+"debug@npm:4, debug@npm:4.3.6, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:^4.3.5, debug@npm:^4.3.6":
   version: 4.3.6
   resolution: "debug@npm:4.3.6"
   dependencies:
@@ -8416,7 +8416,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.2":
+"fast-glob@npm:^3.3.0":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -8485,6 +8485,18 @@ __metadata:
   dependencies:
     pend: ~1.2.0
   checksum: c8585fd5713f4476eb8261150900d2cb7f6ff2d87f8feb306ccc8a1122efd152f1783bdb2b8dc891395744583436bfd8081d8e63ece0ec8687eeefea394d4ff2
+  languageName: node
+  linkType: hard
+
+"fdir@npm:^6.2.0":
+  version: 6.3.0
+  resolution: "fdir@npm:6.3.0"
+  peerDependencies:
+    picomatch: ^3 || ^4
+  peerDependenciesMeta:
+    picomatch:
+      optional: true
+  checksum: c0fe6ddd4aa0a315a55401d468974b582b1880908c8f7b1b1c40db4cd2feb2c04402d2fbdbd6ad049f6261e0d7cd6e629cc5ae678f8883f245ebc1f94b6ff9e6
   languageName: node
   linkType: hard
 
@@ -8590,7 +8602,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"firebase-admin@npm:^12.0.0":
+"firebase-admin@npm:^12.4.0":
   version: 12.4.0
   resolution: "firebase-admin@npm:12.4.0"
   dependencies:
@@ -9325,7 +9337,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hardhat@npm:^2.22.1":
+"hardhat@npm:^2.22.10":
   version: 2.22.10
   resolution: "hardhat@npm:2.22.10"
   dependencies:
@@ -9600,14 +9612,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-signature@npm:~1.3.6":
-  version: 1.3.6
-  resolution: "http-signature@npm:1.3.6"
+"http-signature@npm:~1.4.0":
+  version: 1.4.0
+  resolution: "http-signature@npm:1.4.0"
   dependencies:
     assert-plus: ^1.0.0
     jsprim: ^2.0.2
-    sshpk: ^1.14.1
-  checksum: 10be2af4764e71fee0281392937050201ee576ac755c543f570d6d87134ce5e858663fe999a7adb3e4e368e1e356d0d7fec6b9542295b875726ff615188e7a0c
+    sshpk: ^1.18.0
+  checksum: f07f4cc0481e4461c68b9b7d1a25bf2ec4cef8e0061812b989c1e64f504b4b11f75f88022102aea05d25d47a87789599f1a310b1f8a56945a50c93e54c7ee076
   languageName: node
   linkType: hard
 
@@ -12358,6 +12370,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"picomatch@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "picomatch@npm:4.0.2"
+  checksum: a7a5188c954f82c6585720e9143297ccd0e35ad8072231608086ca950bee672d51b0ef676254af0788205e59bd4e4deb4e7708769226bed725bf13370a7d1464
+  languageName: node
+  linkType: hard
+
 "pify@npm:^2.2.0, pify@npm:^2.3.0":
   version: 2.3.0
   resolution: "pify@npm:2.3.0"
@@ -12463,7 +12482,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.23, postcss@npm:^8.4.35, postcss@npm:^8.4.43":
+"postcss@npm:^8.4.23, postcss@npm:^8.4.43, postcss@npm:^8.4.45":
   version: 8.4.45
   resolution: "postcss@npm:8.4.45"
   dependencies:
@@ -12481,7 +12500,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-solidity@npm:^1.3.1":
+"prettier-plugin-solidity@npm:^1.4.1":
   version: 1.4.1
   resolution: "prettier-plugin-solidity@npm:1.4.1"
   dependencies:
@@ -12493,9 +12512,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-tailwindcss@npm:^0.5.11":
-  version: 0.5.14
-  resolution: "prettier-plugin-tailwindcss@npm:0.5.14"
+"prettier-plugin-tailwindcss@npm:^0.6.6":
+  version: 0.6.6
+  resolution: "prettier-plugin-tailwindcss@npm:0.6.6"
   peerDependencies:
     "@ianvs/prettier-plugin-sort-imports": "*"
     "@prettier/plugin-pug": "*"
@@ -12508,6 +12527,7 @@ __metadata:
     prettier-plugin-import-sort: "*"
     prettier-plugin-jsdoc: "*"
     prettier-plugin-marko: "*"
+    prettier-plugin-multiline-arrays: "*"
     prettier-plugin-organize-attributes: "*"
     prettier-plugin-organize-imports: "*"
     prettier-plugin-sort-imports: "*"
@@ -12534,6 +12554,8 @@ __metadata:
       optional: true
     prettier-plugin-marko:
       optional: true
+    prettier-plugin-multiline-arrays:
+      optional: true
     prettier-plugin-organize-attributes:
       optional: true
     prettier-plugin-organize-imports:
@@ -12544,7 +12566,7 @@ __metadata:
       optional: true
     prettier-plugin-svelte:
       optional: true
-  checksum: 205a774e53cdd9f8e61640ae3b778402758fad3d215fc57dd31172f12cf2b145095f5f973a431d495a6551b638bbb7e54c9f3a49848f0a0f755f5ad975b7c321
+  checksum: b78a1a9c47e23f8ff1fb61456f8b0710eabce573f0d644cde6480e103a5d4c2b266ad09e890604a3bb8703669b304efdd2ac3cd1db47beae95792c212b513585
   languageName: node
   linkType: hard
 
@@ -12557,7 +12579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.2.5":
+"prettier@npm:^3.3.3":
   version: 3.3.3
   resolution: "prettier@npm:3.3.3"
   bin:
@@ -12872,7 +12894,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0":
+"react-dom@npm:^18.3.1":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
   dependencies:
@@ -12901,7 +12923,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-icons@npm:^5.0.1":
+"react-icons@npm:^5.3.0":
   version: 5.3.0
   resolution: "react-icons@npm:5.3.0"
   peerDependencies:
@@ -12947,7 +12969,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-test-renderer@npm:^18.2.0":
+"react-test-renderer@npm:^18.3.1":
   version: 18.3.1
   resolution: "react-test-renderer@npm:18.3.1"
   dependencies:
@@ -12988,7 +13010,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0":
+"react@npm:^18.3.1":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
   dependencies:
@@ -13525,7 +13547,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.72.0":
+"sass@npm:^1.78.0":
   version: 1.78.0
   resolution: "sass@npm:1.78.0"
   dependencies:
@@ -14007,7 +14029,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sshpk@npm:^1.14.1, sshpk@npm:^1.7.0":
+"sshpk@npm:^1.18.0, sshpk@npm:^1.7.0":
   version: 1.18.0
   resolution: "sshpk@npm:1.18.0"
   dependencies:
@@ -14053,7 +14075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"start-server-and-test@npm:^2.0.3":
+"start-server-and-test@npm:^2.0.5":
   version: 2.0.5
   resolution: "start-server-and-test@npm:2.0.5"
   dependencies:
@@ -14394,7 +14416,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sweetalert2@npm:^11.10.7":
+"sweetalert2@npm:^11.13.2":
   version: 11.13.2
   resolution: "sweetalert2@npm:11.13.2"
   checksum: 6207e914657407b62054ecdd76f6295f91f8737ed15367d66d186383cab172e41a58ffbe769b03bf77016048122dc5f2568444de32e7da6649f3e5aedee0ef59
@@ -14448,7 +14470,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.4.1":
+"tailwindcss@npm:^3.4.10":
   version: 3.4.10
   resolution: "tailwindcss@npm:3.4.10"
   dependencies:
@@ -14606,6 +14628,16 @@ __metadata:
   version: 1.0.0
   resolution: "timer2@npm:1.0.0"
   checksum: e902a40f04c4b0130b4fef9251f7541963af8f9ca58e6b49e1c3b41487f861e96cd2a389a8e115fee0daa8da4a18858e4e2a98b45086b6a70949e02d9df69f56
+  languageName: node
+  linkType: hard
+
+"tinyglobby@npm:^0.2.0":
+  version: 0.2.5
+  resolution: "tinyglobby@npm:0.2.5"
+  dependencies:
+    fdir: ^6.2.0
+    picomatch: ^4.0.2
+  checksum: 04d01bb603c10a94d44045236bab6a5402c59ead6a02a7317f119647d31c250394189cee152fddbf13e80496697987b29d90d75786b12f76358a936cff307d35
   languageName: node
   linkType: hard
 
@@ -14909,7 +14941,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.3.3":
+"typescript@npm:^5.5.4":
   version: 5.5.4
   resolution: "typescript@npm:5.5.4"
   bin:
@@ -14919,7 +14951,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.3.3#~builtin<compat/typescript>":
+"typescript@patch:typescript@^5.5.4#~builtin<compat/typescript>":
   version: 5.5.4
   resolution: "typescript@patch:typescript@npm%3A5.5.4#~builtin<compat/typescript>::version=5.5.4&hash=bda367"
   bin:
@@ -15309,28 +15341,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-pwa@npm:^0.19.4":
-  version: 0.19.8
-  resolution: "vite-plugin-pwa@npm:0.19.8"
+"vite-plugin-pwa@npm:^0.20.5":
+  version: 0.20.5
+  resolution: "vite-plugin-pwa@npm:0.20.5"
   dependencies:
-    debug: ^4.3.4
-    fast-glob: ^3.3.2
+    debug: ^4.3.6
     pretty-bytes: ^6.1.1
-    workbox-build: ^7.0.0
-    workbox-window: ^7.0.0
+    tinyglobby: ^0.2.0
+    workbox-build: ^7.1.0
+    workbox-window: ^7.1.0
   peerDependencies:
-    "@vite-pwa/assets-generator": ^0.2.4
+    "@vite-pwa/assets-generator": ^0.2.6
     vite: ^3.1.0 || ^4.0.0 || ^5.0.0
-    workbox-build: ^7.0.0
-    workbox-window: ^7.0.0
+    workbox-build: ^7.1.0
+    workbox-window: ^7.1.0
   peerDependenciesMeta:
     "@vite-pwa/assets-generator":
       optional: true
-  checksum: ab33ad6c77f61349f1a119347134ff54fe44c27e249deab524318b255e3f6b186340660fe256d6538a2872e2cb5eed00bd9f229ab9aa074bf5676e2107150c82
+  checksum: 976a1d99b4115ae3c5dc75650ba2ffa07ad45d475e4f82049a86c0030cbf71971d5a5f5da7a5a4a88936ed8d9661b6cb4715425bcf4efebf07c2ed4b6ef8f239
   languageName: node
   linkType: hard
 
-"vite@npm:^5.1.3":
+"vite@npm:^5.4.3":
   version: 5.4.3
   resolution: "vite@npm:5.4.3"
   dependencies:
@@ -15388,10 +15420,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-vitals@npm:^3.5.2":
-  version: 3.5.2
-  resolution: "web-vitals@npm:3.5.2"
-  checksum: 4c208bb9384073c772055e9265a4cad4560dbbaeb111ec615ee23e71bbb952aacdf4e6bb8ffbfbe02b23540ac4f08d569d49fc0cd1e5d29c6c0ced566965320a
+"web-vitals@npm:^4.2.3":
+  version: 4.2.3
+  resolution: "web-vitals@npm:4.2.3"
+  checksum: 6d916af95a93a7b12ef99e21fe6f6f914c23d6499e1389ceb197505e620e89faf7deaff1f2a3854a21e384d5fc9740a9cbfa7bba97902e184ddb95f54e3928c1
   languageName: node
   linkType: hard
 
@@ -15856,7 +15888,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workbox-build@npm:^7.0.0":
+"workbox-build@npm:^7.1.0":
   version: 7.1.1
   resolution: "workbox-build@npm:7.1.1"
   dependencies:
@@ -16017,7 +16049,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workbox-window@npm:7.1.0, workbox-window@npm:^7.0.0":
+"workbox-window@npm:7.1.0, workbox-window@npm:^7.1.0":
   version: 7.1.0
   resolution: "workbox-window@npm:7.1.0"
   dependencies:
@@ -16285,7 +16317,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yarn-upgrade-all@npm:^0.7.2":
+"yarn-upgrade-all@npm:^0.7.4":
   version: 0.7.4
   resolution: "yarn-upgrade-all@npm:0.7.4"
   dependencies:
