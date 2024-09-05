@@ -6109,7 +6109,7 @@ __metadata:
     ethers: ^5.7.2
     firebase: ^10.13.1
     firebase-admin: ^12.0.0
-    framer-motion: ^11.3.31
+    framer-motion: ^11.5.4
     hardhat: ^2.22.1
     postcss: ^8.4.35
     prettier: ^3.2.5
@@ -8794,7 +8794,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^11.3.31":
+"framer-motion@npm:^11.5.4":
   version: 11.5.4
   resolution: "framer-motion@npm:11.5.4"
   dependencies:
