@@ -1556,7 +1556,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:^11.11.0":
+"@emotion/styled@npm:^11.13.0":
   version: 11.13.0
   resolution: "@emotion/styled@npm:11.13.0"
   dependencies:
@@ -6076,7 +6076,7 @@ __metadata:
     "@cypress/react": ^8.0.0
     "@cypress/vite-dev-server": ^5.0.7
     "@emotion/react": ^11.13.3
-    "@emotion/styled": ^11.11.0
+    "@emotion/styled": ^11.13.0
     "@mui/material": ^5.15.14
     "@nomiclabs/hardhat-ethers": ^2.2.3
     "@nomiclabs/hardhat-waffle": ^2.0.6
