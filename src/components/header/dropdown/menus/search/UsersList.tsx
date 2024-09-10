@@ -18,11 +18,6 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
     usersCollectionRef,
     where("searchableDisplayName", ">=", search.toLowerCase()),
     where("searchableDisplayName", "<=", search.toLowerCase() + "\uf8ff"),
-    where(
-      "searchableDisplayName",
-      "!=",
-      auth.currentUser?.displayName?.toLocaleLowerCase() ?? "",
-    ),
     limit(10),
   )
 
@@ -48,6 +43,7 @@ export const UsersList: React.FC<Props> = ({ search, friendsOrEveryone }) => {
           ?.filter(
             (user: User) =>
               !userData?.blockedUsers.includes(user.id) &&
+              user.id !== auth.currentUser?.uid &&
               (friendsOrEveryone === "friends"
                 ? user.searchableDisplayName.startsWith(search)
                 : true),
