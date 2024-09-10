@@ -1,0 +1,13 @@
+visual-test-checklist
+
+Login/logout
+Public chat opens/closes
+Chat messages send
+Chat "replying to" highlights original message
+Long chat message pops open when Show More clicked
+LiChess/Avax slides in/out on small screens
+Dropdown opens/closes
+Dropdown navigation through menus looks smooth
+Bets can be created
+Bets can be reordered by another user
+Mini-bet is created upon payment completion
