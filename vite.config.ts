@@ -3,6 +3,13 @@ import { defineConfig, PluginOption } from "vite"
 import { VitePWA } from "vite-plugin-pwa"
 
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler'
+      }
+    }
+  },
   esbuild: {
     define: {
       this: "window",
