@@ -4,7 +4,6 @@ cy.on("uncaught:exception", (err) => {
 })
 
 describe("friend requesting", () => {
-  before(cy.logout)
   beforeEach(() => {
     cy.callFirestore("update", `users/${Cypress.env("CYPRESS_TEST_UID")}`, {
       sentFriendRequests: [],
@@ -28,8 +27,12 @@ describe("friend requesting", () => {
       `users/${Cypress.env("CYPRESS_TEST_UID")}/notifications`,
     )
 
-    cy.visit("/")
+    cy.visit("/").wait(2000)
     cy.login()
+  })
+
+  afterEach(() => {
+    cy.logout().wait(2000)
   })
 
   it("should send and cancel friend request to user", () => {
@@ -43,7 +46,6 @@ describe("friend requesting", () => {
     cy.get('a[title="Cancel Request"]').should("exist")
     cy.get('a[title="Cancel Request"]').click().wait(1000)
     cy.get('a[title="Add Friend"]').should("exist")
-    cy.logout()
   })
 
   it("should send notification to user only first time button is clicked", () => {
@@ -64,7 +66,6 @@ describe("friend requesting", () => {
     cy.get('div[id="notification-list"]')
       .find("button")
       .should("have.length", 1)
-    cy.logout()
   })
 
   it("should accept friend request from other user", () => {
@@ -80,16 +81,17 @@ describe("friend requesting", () => {
     cy.login(Cypress.env("CYPRESS_TEST_UID_2")).wait(1000)
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').find("button").eq(0).click()
-    cy.get('div[id="requests"]').within(() => {
-      cy.get("a").first().get('a[title="Accept"]').click()
-    })
+    cy.get('div[id="requests"]')
+      .first()
+      .within(() => {
+        cy.get("a").first().get('a[title="Accept"]').click()
+      })
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').clear()
     cy.get("p").contains("Friends Only").click()
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").first().should("exist")
     })
-    cy.logout()
   })
 
   it("should unfriend user", () => {
@@ -107,9 +109,11 @@ describe("friend requesting", () => {
     cy.get('div[id="notification-list"]').within(() => {
       cy.get("button").first().click()
     })
-    cy.get('div[id="requests"]').within(() => {
-      cy.get("a").first().get('a[title="Accept"]').click()
-    })
+    cy.get('div[id="requests"]')
+      .first()
+      .within(() => {
+        cy.get("a").first().get('a[title="Accept"]').click()
+      })
     cy.get('button[title="Search Users"]').click()
     cy.get('input[id="search-users-input"]').clear()
     cy.get("p").contains("Friends Only").click()
@@ -123,6 +127,5 @@ describe("friend requesting", () => {
     cy.get('div[id="search-users-results"]').within(() => {
       cy.get("a").should("not.exist")
     })
-    cy.logout()
   })
 })
