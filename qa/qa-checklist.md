@@ -16,3 +16,4 @@
 - Bet phase changes complete as expected
 - Mini-bet is created upon payment completion
 - Notification of win/loss/draw is created at end of game
+- Bet menu items should link to buy-in/payout transactions as well as the game source
