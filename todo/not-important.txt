@@ -33,3 +33,5 @@ not important
 -countdown should not start until second move
 -scrollbar appears when resizing narrow window with only chat showing
 -sign in button should match chat and place bet
+-disable game eval on test
+-consider rephrasing "You didn't win on your bet with..." to "You didn't win your bet with..."
