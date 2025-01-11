@@ -31,3 +31,6 @@ important:
 -if wallet is on wrong network, it should say switch to avax, but instead it says insufficient funds. Logic already written in frozr in wallet.tsx
 -build pipeline needs to skip cypress tests for main branch because it overwrites db
 -message if lichess or payment systems are down
+-remove react-firebase-hooks as a dependency. Will require a lot of refactoring. The project is no longer maintained. useauthState is causing
+	firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?VER=8&database=projects%2Fchess-wager-develop%2Fdatabases%2F(default)&gsessionid=TyststYS8je0XHdLbE4fO9wWseagw94CEjhwU2qdbjA&SID=qR516uRzFAN6M7GkTouIyw&RID=93215&TYPE=terminate&zx=ntwp8wg8uwt2:1
+       Failed to load resource: the server responded with a status of 400 ()
