@@ -112,7 +112,7 @@ export const PopupWarning: React.FC = () => {
               with significant contributions from
               <a
                 href="https://github.com/spaceC00kie"
-                className="mx-1 font-bold text-blue-600 hover:underline dark:text-blue-400"
+                className="ml-1 font-bold text-blue-600 hover:underline dark:text-blue-400"
                 rel="noreferrer noopener"
                 target="_blank"
               >
