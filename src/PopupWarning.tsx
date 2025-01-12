@@ -2,14 +2,21 @@ import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { IoMdPause, IoMdPlay, IoMdClose } from "react-icons/io"
 import { default as scammer } from "/src/assets/scammer.png"
+import { useLocalStorage } from "./hooks/useLocalStorage"
 
 export const PopupWarning: React.FC = () => {
   const [showPopup, setShowPopup] = useState(true)
   const [count, setCount] = useState(8)
   const [paused, setPaused] = useState(false)
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
+  const [dontShowAgain, setDontShowAgain] = useLocalStorage<boolean>(
+    "dontShowAgain",
+    false,
+  )
 
   useEffect(() => {
-    if (count <= 0) {
+    setIsInitialLoad(false)
+    if (count <= 0 || dontShowAgain) {
       setShowPopup(false)
       return
     }
@@ -21,14 +28,6 @@ export const PopupWarning: React.FC = () => {
     }
   }, [count, paused])
 
-  const handlePause = () => {
-    setPaused(!paused)
-  }
-
-  const handleClose = () => {
-    setShowPopup(false)
-  }
-
   return (
     <AnimatePresence>
       {showPopup && (
@@ -39,21 +38,21 @@ export const PopupWarning: React.FC = () => {
           exit={{ opacity: 0 }}
           transition={{
             duration: 0.7,
-            delay: 0.5,
+            delay: isInitialLoad ? 0.5 : 0,
           }}
         >
           <div className="absolute -z-50 h-60 w-60 rounded-full bg-red-600 opacity-50 blur-2xl" />
           <header className="absolute right-1 top-1 flex items-center justify-center gap-2 rounded-full border border-stone-400 bg-stone-200 px-1 py-1 text-stone-800 dark:border-stone-500 dark:bg-stone-700 dark:text-stone-300">
             <p className="mx-2 text-xs font-medium">Closing in {count}...</p>
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               <button
-                onClick={handlePause}
+                onClick={() => setPaused(!paused)}
                 className="color-shift rounded-full p-1.5 text-stone-800 hover:bg-white focus:outline-none dark:text-stone-300 dark:hover:bg-stone-500"
               >
                 {paused ? <IoMdPlay /> : <IoMdPause />}
               </button>
               <button
-                onClick={handleClose}
+                onClick={() => setShowPopup(false)}
                 className="color-shift rounded-full p-1.5 text-stone-800 hover:bg-white focus:outline-none dark:text-stone-300 dark:hover:bg-stone-500"
               >
                 <IoMdClose />
@@ -79,7 +78,7 @@ export const PopupWarning: React.FC = () => {
             />
           </a>
 
-          <div className="max-w-96 rounded-md border-2 border-stone-300 bg-stone-200 p-2 text-xs text-stone-900 dark:bg-stone-700 dark:text-stone-100">
+          <div className="max-w-96 rounded-md border border-stone-300 bg-stone-200 p-2 text-xs text-stone-900 dark:border-stone-400 dark:bg-stone-600 dark:text-stone-100">
             <a
               href="https://github.com/synaptik69"
               className="float-left mr-0.5 font-bold text-blue-600 hover:underline dark:text-blue-400"
@@ -120,6 +119,17 @@ export const PopupWarning: React.FC = () => {
               </a>
               .
             </p>
+          </div>
+          <div className="flex flex-col items-center">
+            <button
+              className="cw-button"
+              onClick={() => {
+                setDontShowAgain(true)
+                setShowPopup(false)
+              }}
+            >
+              Don't Show Again
+            </button>
           </div>
         </motion.div>
       )}
