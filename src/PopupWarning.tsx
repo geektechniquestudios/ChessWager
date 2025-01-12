@@ -33,7 +33,7 @@ export const PopupWarning: React.FC = () => {
     <AnimatePresence>
       {showPopup && (
         <motion.div
-          className="scrollbar absolute left-1/2 top-1/2 z-[51] flex h-full w-full -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-evenly overflow-auto rounded-3xl border-2 border-stone-300 bg-stone-100 bg-opacity-70 p-2 shadow-lg backdrop-blur-md dark:border-stone-700 dark:bg-stone-800 dark:bg-opacity-90 sm:h-3/4 sm:w-3/4"
+          className="scrollbar absolute left-1/2 top-1/2 z-[51] flex h-full w-full -translate-x-1/2 -translate-y-1/2 transform flex-col items-center justify-evenly overflow-auto rounded-3xl border-2 border-stone-300 bg-stone-100 bg-opacity-70 p-2 pt-6 shadow-lg backdrop-blur-md dark:border-stone-700 dark:bg-stone-800 dark:bg-opacity-90 sm:h-3/4 sm:w-3/4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
