@@ -5,7 +5,7 @@ import { default as scammer } from "/src/assets/scammer.png"
 
 export const PopupWarning: React.FC = () => {
   const [showPopup, setShowPopup] = useState(true)
-  const [count, setCount] = useState(7)
+  const [count, setCount] = useState(8)
   const [paused, setPaused] = useState(false)
 
   useEffect(() => {
@@ -89,11 +89,12 @@ export const PopupWarning: React.FC = () => {
               Synaptik69
             </a>
             <p>
-              has fraudulently reuploaded a new repo of our code and replaced
-              our commit signatures with their own in a blatant act of
-              plagiarism. They did not fork our repo. They are also doing this
-              to numerous other projects. This message will be removed once our
-              DMCA is processed and their illegal content is taken down.
+              has reuploaded a repository containing our entire codebase without
+              any attribution and replaced our commit signatures with their own.
+              This action constitutes plagiarism and infringes upon our software
+              copyright. Additionally, similar actions have been observed in
+              their other projects. We have filed a DMCA takedown request, and
+              this message will be removed once the issue is resolved.
             </p>
           </div>
 
