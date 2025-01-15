@@ -35,3 +35,4 @@ not important
 -sign in button should match chat and place bet
 -disable game eval on test
 -consider rephrasing "You didn't win on your bet with..." to "You didn't win your bet with..."
+-when deleting bets in firefox, the bets do not animate. Works fine in chrome

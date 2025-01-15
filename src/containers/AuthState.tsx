@@ -217,12 +217,24 @@ const useAuth = () => {
     setWalletAddress("")
   }
 
-  const doesUserHaveEnoughAvax = async (price: number) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
-    const balance: BigNumber = await provider.getBalance(walletAddress!)
-    return balance.gte(parseEther(price.toFixed(0)))
-  }
+  const doesUserHaveEnoughAvax = async (price: number): Promise<boolean> => {
+    try {
+      if (!window.ethereum) {
+        throw new Error(
+          "Ethereum provider not found. Ensure you have a wallet like MetaMask installed.",
+        )
+      }
+      const provider = new ethers.providers.Web3Provider(window.ethereum, "any")
+      await provider.ready
+      const balance: BigNumber = await provider.getBalance(walletAddress)
+      const priceInWei = ethers.utils.parseUnits(price.toString(), "ether")
 
+      return balance.gte(priceInWei)
+    } catch (error) {
+      console.error("Error checking balance:", error)
+      return false
+    }
+  }
   const callContract = async (
     contractCallFunction: (
       contract: ethers.Contract,
