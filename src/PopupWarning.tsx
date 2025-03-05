@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { IoMdPause, IoMdPlay, IoMdClose } from "react-icons/io"
-import { default as scammer } from "/src/assets/scammer.png"
+import { default as scammerGitHub } from "/src/assets/scammerGithub.png"
+import { default as scammerLinkedIn } from "/src/assets/scammerLinkedIn.png"
 import { useLocalStorage } from "./hooks/useLocalStorage"
 
 export const PopupWarning: React.FC = () => {
@@ -62,21 +63,34 @@ export const PopupWarning: React.FC = () => {
 
           <div className="p-4 text-center">
             <div className="text-xl font-bold text-stone-900 dark:text-stone-100">
-              This GitHub user is plagiarizing our work!
+              Rotsen Merecido is plagiarizing our work!
             </div>
           </div>
 
-          <a
-            href="https://github.com/synaptik69"
-            rel="noreferrer noopener"
-            target="_blank"
-          >
-            <img
-              src={scammer}
-              alt="Scammer evidence"
-              className="h-60 rounded-lg border-2 border-red-600 dark:border-red-500"
-            />
-          </a>
+          <div className="flex gap-2">
+            <a
+              href="https://www.linkedin.com/in/rotsen-merecido-6688a91a5/"
+              rel="noreferrer noopener"
+              target="_blank"
+            >
+              <img
+                src={scammerGitHub}
+                alt="Scammer GitHub"
+                className="h-60 rounded-lg border-2 border-red-600 dark:border-red-500"
+              />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/rotsen-merecido-6688a91a5/"
+              rel="noreferrer noopener"
+              target="_blank"
+            >
+              <img
+                src={scammerLinkedIn}
+                alt="Scammer LinkedIn"
+                className="h-60 rounded-lg border-2 border-red-600 dark:border-red-500"
+              />
+            </a>
+          </div>
 
           <div className="max-w-96 rounded-md border border-stone-300 bg-stone-200 p-2 text-xs text-stone-900 dark:border-stone-400 dark:bg-stone-600 dark:text-stone-100">
             <a
@@ -85,7 +99,7 @@ export const PopupWarning: React.FC = () => {
               rel="noreferrer noopener"
               target="_blank"
             >
-              Synaptik69
+              Synaptik69 AKA CipherMind AKA BBBlock
             </a>
             <p>
               has reuploaded a repository containing our entire codebase without
