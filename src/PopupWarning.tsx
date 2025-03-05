@@ -69,7 +69,7 @@ export const PopupWarning: React.FC = () => {
 
           <div className="flex gap-2">
             <a
-              href="https://www.linkedin.com/in/rotsen-merecido-6688a91a5/"
+              href="https://github.com/synaptik69"
               rel="noreferrer noopener"
               target="_blank"
             >
