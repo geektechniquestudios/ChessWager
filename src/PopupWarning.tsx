@@ -5,8 +5,9 @@ import { default as scammerGitHub } from "/src/assets/scammerGithub.png"
 import { default as scammerLinkedIn } from "/src/assets/scammerLinkedIn.png"
 import { useLocalStorage } from "./hooks/useLocalStorage"
 
+const isTest = import.meta.env.VITE_IS_TEST === "true"
+
 export const PopupWarning: React.FC = () => {
-  const [showPopup, setShowPopup] = useState(true)
   const [count, setCount] = useState(8)
   const [paused, setPaused] = useState(false)
   const [isInitialLoad, setIsInitialLoad] = useState(true)
@@ -14,6 +15,7 @@ export const PopupWarning: React.FC = () => {
     "dontShowAgain",
     false,
   )
+  const [showPopup, setShowPopup] = useState(!isTest || dontShowAgain)
 
   useEffect(() => {
     setIsInitialLoad(false)
