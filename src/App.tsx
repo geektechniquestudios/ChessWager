@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { MainContent } from "./MainContent"
 import { LayoutGroup } from "framer-motion"
 import ReactGA from "react-ga4"
+import { PopupWarning } from "./PopupWarning"
 
 const measurementId = import.meta.env.VITE_MEASUREMENT_ID
 
@@ -39,6 +40,10 @@ export const App: React.FC = () => {
           className="color-shift grid overflow-hidden bg-stone-300 dark:bg-black"
           id="page"
         >
+          {/* We have recurring issues with people forging our commits instead of forking. 
+          When that happens, use this popup warning with their identity; 
+          Github took 3 months for the DMCA to process last time. */}
+          {/* <PopupWarning /> */}
           <LayoutGroup>
             <MainHeader />
             <MainContent />

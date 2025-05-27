@@ -38,3 +38,4 @@ less important
 -wager form can have 2 bets created at once if button spammed in low teir mobile throttling
 -debounce in search area
 -in the main dropdown, notifications and bets history should be moved into container so that the data doesn't need to be refetched when dropdown is reopened. Refer to ConversationsList for reference. 
+-need modal message for when game stream doesn't exist

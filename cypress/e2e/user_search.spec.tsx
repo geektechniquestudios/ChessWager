@@ -1,9 +1,11 @@
 describe("user search", () => {
   beforeEach(() => {
+    cy.visit("/").wait(2000)
     cy.login()
-    cy.visit("/")
   })
-  afterEach(cy.logout)
+  afterEach(() => {
+    cy.logout().wait(2000)
+  })
 
   it("should allow the user to type in the search menu", () => {
     cy.get('button[title="Search Users"]').click().wait(2000)
@@ -59,9 +61,11 @@ describe("user search", () => {
     cy.login(Cypress.env("CYPRESS_TEST_UID_2")).wait(2000)
     cy.get('button[title="Notifications"]').click()
     cy.get('div[id="notification-list"]').find("button").eq(0).click()
-    cy.get('div[id="requests"]').within(() => {
-      cy.get("a").first().get('a[title="Accept"]').click()
-    })
+    cy.get('div[id="requests"]')
+      .first()
+      .within(() => {
+        cy.get("a").first().get('a[title="Accept"]').click()
+      })
     cy.get('button[title="Search Users"]').click()
     cy.get("p").contains("Friends Only").click()
     cy.get('input[id="search-users-input"]').clear()
