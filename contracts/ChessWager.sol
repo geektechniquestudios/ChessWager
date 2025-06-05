@@ -69,7 +69,7 @@ contract ChessWager is Ownable, Pausable {
     require(msg.value > 0, "Amount must be more than 0");
     require(
       betIdToIsBetMatched[_betId] != true,
-      "Only 2 users can particiapte in a bet"
+      "Only 2 users can participate in a bet"
     );
     require(
       keccak256(abi.encodePacked(_bet.user1Id)) !=
