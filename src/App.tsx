@@ -40,7 +40,10 @@ export const App: React.FC = () => {
           className="color-shift grid overflow-hidden bg-stone-300 dark:bg-black"
           id="page"
         >
-          <PopupWarning />
+          {/* We have recurring issues with people forging our commits instead of forking. 
+          When that happens, use this popup warning with their identity; 
+          Github took 3 months for the DMCA to process last time. */}
+          {/* <PopupWarning /> */}
           <LayoutGroup>
             <MainHeader />
             <MainContent />

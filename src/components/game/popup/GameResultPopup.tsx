@@ -23,7 +23,7 @@ export const GameResultPopup: React.FC<Props> = ({ orientation }) => {
   const [linkId, setLinkId] = useState<string>("")
 
   const gameURL = `${
-    isTest ? "http://localhost:8080" : "https://lichess.org"
+    isTest ? "http://localhost:8080" : "https://lichess.orgsearch"
   }/api/game/${prevGameId}`
 
   useEffect(() => {
