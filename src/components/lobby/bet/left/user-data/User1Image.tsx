@@ -4,6 +4,7 @@ import { DropdownState } from "../../../../../containers/DropdownState"
 import { UserMenuState } from "../../../../../containers/UserMenuState"
 import { User1BetAmount } from "./User1BetAmount"
 import { User1FollowThrough } from "./User1FollowThrough"
+import { ActivityOrb } from "../../right/user-data/ActivityOrb"
 
 interface Props {
   bet: Bet
@@ -19,8 +20,15 @@ export const User1Image: React.FC<Props> = ({ bet }) => {
   const ringBorderStyle =
     betSide === "white" ? "white-ring-border" : "black-ring-border"
 
+  const isUserThinking = bet.status === "pending"
+
   return (
     <div className={`${ringBorderStyle} relative shrink-0 rounded-full border`}>
+      <ActivityOrb
+        bet={bet}
+        isUserThinking={isUserThinking}
+        hasUserPaid={bet.hasUser1Paid}
+      />
       <a
         className={`${disabledStyle} ${ringStyle} flex h-full w-full rounded-full border-4 font-extrabold`}
         onClick={(e) => {
