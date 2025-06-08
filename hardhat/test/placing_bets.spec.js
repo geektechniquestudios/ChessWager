@@ -31,7 +31,7 @@ describe("Placing Bets", async () => {
     const { betUser1, betUser2, betId, user1Overrides, user2Overrides } =
       generateBetDetails(account1, account2)
 
-    contract.connect(account1).placeBet(betUser1, betId, user1Overrides)
+    await contract.connect(account1).placeBet(betUser1, betId, user1Overrides)
     await expect(
       contract.connect(account1).placeBet(betUser2, betId, user2Overrides),
     ).to.be.reverted
@@ -47,7 +47,7 @@ describe("Placing Bets", async () => {
           betDetails.betId,
           betDetails.user1Overrides,
         ),
-    ).to.be.revertedWith("Only 2 users can particiapte in a bet")
+    ).to.be.revertedWith("Only 2 users can participate in a bet")
   })
 
   it("Should not allow bets on games if side is not white or black", async () => {
@@ -92,7 +92,7 @@ describe("Placing Bets", async () => {
 
     await expect(
       contract.connect(account1).placeBet(betUser1, betId, user1Overrides),
-    ).to.be.revertedWith("Only 2 users can particiapte in a bet")
+    ).to.be.revertedWith("Only 2 users can participate in a bet")
   })
 
   it("Should not allow bet if game is already over", async () => {
@@ -100,7 +100,7 @@ describe("Placing Bets", async () => {
     const { betUser1, betId, user1Overrides } = betDetails
     await expect(
       contract.connect(account1).placeBet(betUser1, betId, user1Overrides),
-    ).to.be.revertedWith("Only 2 users can particiapte in a bet")
+    ).to.be.revertedWith("Only 2 users can participate in a bet")
   })
 
   it("Should not allow bet if wrong amount is sent", async () => {
@@ -124,7 +124,7 @@ describe("Placing Bets", async () => {
     const { betUser2, betId, user1Overrides } = betDetails
     await expect(
       contract.connect(owner).placeBet(betUser2, betId, user1Overrides),
-    ).to.be.revertedWith("Only 2 users can particiapte in a bet")
+    ).to.be.revertedWith("Only 2 users can participate in a bet")
   })
 
   it("Should not allow amount to be 0 or less", async () => {
